@@ -1,5 +1,14 @@
 on: push
 jobs:
+  linting-and-formatting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: chartboost/ruff-action@v1
+        with:
+          args: check --output-format=github
+          src: './src'
+
   build-and-push:
     uses: ./.github/workflows/build-and-push.yml
     with:
