@@ -1,0 +1,47 @@
+# Default values for laa-access-civil-legal-aid.
+# These can be overwritten by values defined in environment specific values files.
+replicaCount: 1
+
+image:
+  repository: laa-access-civil-legal-aid
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: latest
+
+imagePullSecrets: []
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+  allowPrivilegeEscalation: false
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  tls: []
+  whitelist:
+    # GlobalProtect VPN (Digital Mac)
+    - 18.169.147.172/32
+    - 35.176.93.186/32
+    - 18.130.148.126/32
+    - 35.176.148.126/32
+
+resources: {}
+
+volumes: []
+
+volumeMounts: []
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

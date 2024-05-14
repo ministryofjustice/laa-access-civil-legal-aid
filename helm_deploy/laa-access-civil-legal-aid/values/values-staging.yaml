@@ -1,0 +1,10 @@
+# Default values for cla-backend in the staging environment.
+environment: "staging"
+
+ingress:
+  enabled: true
+  hosts:
+    - host: "access-civil-legal-aid-staging.cloud-platform.service.justice.gov.uk"
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
