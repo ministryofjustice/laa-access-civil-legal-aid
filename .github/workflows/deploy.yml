@@ -99,6 +99,7 @@ jobs:
 
   staging:
     name: Deploy to Staging
+    environment: staging
     needs: uat
     runs-on: ubuntu-latest
     permissions:
@@ -136,6 +137,7 @@ jobs:
 
   production:
     name: Deploy to Production
+    environment: production
     needs: staging
     runs-on: ubuntu-latest
     permissions:
