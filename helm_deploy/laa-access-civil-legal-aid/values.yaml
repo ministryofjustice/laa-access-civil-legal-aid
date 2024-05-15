@@ -39,6 +39,9 @@ ingress:
 
 resources: {}
 
+autoscaling:
+  enabled: false
+
 volumes: []
 
 volumeMounts: []
