@@ -6,6 +6,7 @@ on: push
 
 jobs:
   linting-and-formatting:
+    name: Linting and Formatting
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,6 +16,7 @@ jobs:
           src: './src'
 
   build-and-push:
+    name: Build and Push to ECR
     uses: ./.github/workflows/build-and-push.yml
     with:
       ECR_REGION: ${{vars.ECR_REGION}}
