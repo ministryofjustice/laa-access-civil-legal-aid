@@ -22,16 +22,16 @@ jobs:
       contents: read  # This is required for actions/checkout
     steps:
       # Checkout GitHub repository
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # Assume role in Cloud Platform
-      - uses: aws-actions/configure-aws-credentials@v2
+      - uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
           aws-region: ${{ inputs.ECR_REGION }}
 
       # Login to container repository
-      - uses: aws-actions/amazon-ecr-login@v1
+      - uses: aws-actions/amazon-ecr-login@v2
         id: login-ecr
         with:
           mask-password: true
