@@ -35,8 +35,8 @@ ingress:
   className: ""
   annotations: {}
   cluster:
-    name: ~
-    weight: ~
+    name: green
+    weight: '100'
   tls: []
   whitelist:
     # GlobalProtect VPN (Digital Mac)
