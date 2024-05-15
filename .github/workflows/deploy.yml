@@ -101,6 +101,7 @@ jobs:
     name: Deploy to Staging
     environment: staging
     needs: uat
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       id-token: write # This is required for requesting the JWT
@@ -139,6 +140,7 @@ jobs:
     name: Deploy to Production
     environment: production
     needs: staging
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       id-token: write # This is required for requesting the JWT
