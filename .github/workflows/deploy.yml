@@ -61,7 +61,6 @@ jobs:
 
   uat:
     name: Deploy to UAT
-    needs: dev
     runs-on: ubuntu-latest
     permissions:
       id-token: write # This is required for requesting the JWT
