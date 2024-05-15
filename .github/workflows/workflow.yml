@@ -1,6 +1,6 @@
 name: Build, Test and Deploy
 
-run-name: Build, Test and Deploy ${{ github.ref_name }}
+run-name: ${{ github.ref_name }}
 
 on: push
 
