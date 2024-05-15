@@ -11,6 +11,14 @@ on:
     secrets:
       ECR_ROLE_TO_ASSUME:
         required: true
+      KUBE_CERT:
+        required: true
+      KUBE_CLUSTER:
+        required: true
+      KUBE_NAMESPACE:
+        required: true
+      KUBE_TOKEN:
+        required: true
 
 
 jobs:

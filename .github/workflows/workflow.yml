@@ -34,3 +34,7 @@ jobs:
       ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
     secrets:
       ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+      KUBE_CERT: ${{ secrets.KUBE_CERT }}
+      KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
+      KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+      KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
