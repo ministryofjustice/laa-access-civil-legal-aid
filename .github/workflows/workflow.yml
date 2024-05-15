@@ -26,10 +26,11 @@ jobs:
       ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
 
   deploy-dev:
-    name: Deploy
-    uses: ./.github/workflows/deploy/dev.yml
+    name: Dev
+    uses: ./.github/workflows/deploy.yml
     needs: build-and-push
     with:
+      environment: dev
       ECR_REGION: ${{vars.ECR_REGION}}
       ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
     secrets:
@@ -40,10 +41,11 @@ jobs:
       KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
 
   deploy-uat:
-    name: Deploy
-    uses: ./.github/workflows/deploy/uat.yml
+    name: UAT
+    uses: ./.github/workflows/deploy.yml
     needs: build-and-push
     with:
+      environment: uat
       ECR_REGION: ${{vars.ECR_REGION}}
       ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
     secrets:
@@ -54,11 +56,12 @@ jobs:
       KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
 
   deploy-staging:
-    name: Deploy
-    uses: ./.github/workflows/deploy/uat.yml
+    name: Staging
+    uses: ./.github/workflows/deploy.yml
     if: github.ref == 'refs/heads/master'
     needs: build-and-push
     with:
+      environment: staging
       ECR_REGION: ${{vars.ECR_REGION}}
       ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
     secrets:
@@ -69,11 +72,12 @@ jobs:
       KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
 
   deploy-production:
-    name: Deploy
-    uses: ./.github/workflows/deploy/production.yml
+    name: Production
+    uses: ./.github/workflows/deploy.yml
     if: github.ref == 'refs/heads/master'
-    needs: build-and-push
+    needs: deploy-staging
     with:
+      environment: production
       ECR_REGION: ${{vars.ECR_REGION}}
       ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
     secrets:

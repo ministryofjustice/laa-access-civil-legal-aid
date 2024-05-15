@@ -1,7 +1,10 @@
-name: Deploy image to the production environment
+name: Deploy image to the dev environment
 on:
   workflow_call:
     inputs:
+      environment:
+        required: true
+        type: string
       ECR_REGION:
         required: true
         type: string
@@ -22,9 +25,9 @@ on:
 
 
 jobs:
-  production:
-    name: Production
-    environment: production
+  deploy:
+    name: Deploy
+    environment: ${{ input.environment }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write # This is required for requesting the JWT
@@ -53,7 +56,7 @@ jobs:
           helm upgrade laa-access-civil-legal-aid \
           ${HELM_DIR} \
           --namespace=${{ secrets.KUBE_NAMESPACE }} \
-          --values ${HELM_DIR}/values/values-dev.yaml \
+          --values ${HELM_DIR}/values/values-${{ input.environment }}.yaml \
           --set image.repository=$REPOSITORY \
           --set image.tag=$IMAGE_TAG \
           --force \
