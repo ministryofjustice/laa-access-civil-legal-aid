@@ -30,7 +30,6 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     needs: build-and-push
     with:
-      environment: dev
       ECR_REGION: ${{vars.ECR_REGION}}
       ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
     secrets:
