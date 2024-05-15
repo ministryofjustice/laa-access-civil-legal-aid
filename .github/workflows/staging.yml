@@ -1,0 +1,60 @@
+name: Deploy image to the staging environment
+on:
+  workflow_call:
+    inputs:
+      ECR_REGION:
+        required: true
+        type: string
+      ECR_REPOSITORY:
+        required: true
+        type: string
+    secrets:
+      ECR_ROLE_TO_ASSUME:
+        required: true
+      KUBE_CERT:
+        required: true
+      KUBE_CLUSTER:
+        required: true
+      KUBE_NAMESPACE:
+        required: true
+      KUBE_TOKEN:
+        required: true
+
+
+jobs:
+  staging:
+    name: Staging
+    environment: staging
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
+    steps:
+      - name: Checkout GitHub repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to the cluster
+        env:
+          KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+          KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
+        run: |
+          echo "${{ secrets.KUBE_CERT }}" > ca.crt
+          kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
+          kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
+          kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${KUBE_NAMESPACE}
+          kubectl config use-context ${KUBE_CLUSTER}
+
+      - name: Upgrade the Helm chart
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+          REPOSITORY: ${{ inputs.ECR_REPOSITORY }}
+          HELM_DIR: "helm_deploy/laa-access-civil-legal-aid"
+        run: |
+          helm upgrade laa-access-civil-legal-aid \
+          ${HELM_DIR} \
+          --namespace=${{ secrets.KUBE_NAMESPACE }} \
+          --values ${HELM_DIR}/values/values-dev.yaml \
+          --set image.repository=$REPOSITORY \
+          --set image.tag=$IMAGE_TAG \
+          --force \
+          --install

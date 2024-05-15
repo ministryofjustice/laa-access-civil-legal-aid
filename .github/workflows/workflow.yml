@@ -25,9 +25,53 @@ jobs:
     secrets:
       ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
 
-  deploy:
+  deploy-dev:
     name: Deploy
-    uses: ./.github/workflows/deploy.yml
+    uses: ./.github/workflows/deploy/dev.yml
+    needs: build-and-push
+    with:
+      ECR_REGION: ${{vars.ECR_REGION}}
+      ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
+    secrets:
+      ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+      KUBE_CERT: ${{ secrets.KUBE_CERT }}
+      KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
+      KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+      KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
+
+  deploy-uat:
+    name: Deploy
+    uses: ./.github/workflows/deploy/uat.yml
+    needs: build-and-push
+    with:
+      ECR_REGION: ${{vars.ECR_REGION}}
+      ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
+    secrets:
+      ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+      KUBE_CERT: ${{ secrets.KUBE_CERT }}
+      KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
+      KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+      KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
+
+  deploy-staging:
+    name: Deploy
+    uses: ./.github/workflows/deploy/uat.yml
+    if: github.ref == 'refs/heads/master'
+    needs: build-and-push
+    with:
+      ECR_REGION: ${{vars.ECR_REGION}}
+      ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
+    secrets:
+      ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+      KUBE_CERT: ${{ secrets.KUBE_CERT }}
+      KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
+      KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+      KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
+
+  deploy-production:
+    name: Deploy
+    uses: ./.github/workflows/deploy/production.yml
+    if: github.ref == 'refs/heads/master'
     needs: build-and-push
     with:
       ECR_REGION: ${{vars.ECR_REGION}}
