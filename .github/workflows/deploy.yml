@@ -50,7 +50,6 @@ jobs:
           REPOSITORY: ${{ inputs.ECR_REPOSITORY }}
           HELM_DIR: "helm_deploy/laa-access-civil-legal-aid"
         run: |
-          ls
           helm upgrade laa-access-civil-legal-aid \
           ${HELM_DIR} \
           --namespace=${{ secrets.KUBE_NAMESPACE }} \
@@ -74,13 +73,12 @@ jobs:
 
       - name: Authenticate to the cluster
         env:
-          KUBE_CERT: ${{ secrets.KUBE_CERT }}
-          KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
+          KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
           KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
         run: |
-          echo "${KUBE_CERT}" > ca.crt
+          echo "${{ secrets.KUBE_CERT }}" > ca.crt
           kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
-          kubectl config set-credentials deploy-user --token=${KUBE_TOKEN}
+          kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
           kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${KUBE_NAMESPACE}
           kubectl config use-context ${KUBE_CLUSTER}
 
@@ -88,12 +86,12 @@ jobs:
         env:
           IMAGE_TAG: ${{ github.sha }}
           REPOSITORY: ${{ inputs.ECR_REPOSITORY }}
-          HELM_DIR: "$ROOT/../helm_deploy/laa-access-civil-legal-aid/"
+          HELM_DIR: "helm_deploy/laa-access-civil-legal-aid"
         run: |
           helm upgrade laa-access-civil-legal-aid \
-          $HELM_DIR \
+          ${HELM_DIR} \
           --namespace=${{ secrets.KUBE_NAMESPACE }} \
-          --values ${HELM_DIR}/values/values-uat.yaml \
+          --values ${HELM_DIR}/values/values-dev.yaml \
           --set image.repository=$REPOSITORY \
           --set image.tag=$IMAGE_TAG \
           --force \
@@ -112,25 +110,24 @@ jobs:
 
       - name: Authenticate to the cluster
         env:
-          KUBE_CERT: ${{ secrets.KUBE_CERT }}
-          KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
+          KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
           KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
         run: |
-          echo "${KUBE_CERT}" > ca.crt
+          echo "${{ secrets.KUBE_CERT }}" > ca.crt
           kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
-          kubectl config set-credentials deploy-user --token=${KUBE_TOKEN}
-          kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${{ secrets.KUBE_NAMESPACE }}
+          kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
+          kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${KUBE_NAMESPACE}
           kubectl config use-context ${KUBE_CLUSTER}
 
       - name: Upgrade the Helm chart
         env:
           IMAGE_TAG: ${{ github.sha }}
           REPOSITORY: ${{ inputs.ECR_REPOSITORY }}
-          HELM_DIR: "$ROOT/../helm_deploy/laa-access-civil-legal-aid/"
+          HELM_DIR: "helm_deploy/laa-access-civil-legal-aid"
         run: |
           helm upgrade laa-access-civil-legal-aid \
-          $HELM_DIR \
-          --namespace=${KUBE_NAMESPACE} \
+          ${HELM_DIR} \
+          --namespace=${{ secrets.KUBE_NAMESPACE }} \
           --values ${HELM_DIR}/values/values-staging.yaml \
           --set image.repository=$REPOSITORY \
           --set image.tag=$IMAGE_TAG \
@@ -150,24 +147,23 @@ jobs:
 
       - name: Authenticate to the cluster
         env:
-          KUBE_CERT: ${{ secrets.KUBE_CERT }}
-          KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
+          KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
           KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
         run: |
-          echo "${KUBE_CERT}" > ca.crt
+          echo "${{ secrets.KUBE_CERT }}" > ca.crt
           kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
-          kubectl config set-credentials deploy-user --token=${KUBE_TOKEN}
-          kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${{ secrets.KUBE_NAMESPACE }}
+          kubectl config set-credentials deploy-user --token=${{ secrets.KUBE_TOKEN }}
+          kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${KUBE_NAMESPACE}
           kubectl config use-context ${KUBE_CLUSTER}
 
       - name: Upgrade the Helm chart
         env:
           IMAGE_TAG: ${{ github.sha }}
           REPOSITORY: ${{ inputs.ECR_REPOSITORY }}
-          HELM_DIR: "$ROOT/../helm_deploy/laa-access-civil-legal-aid/"
+          HELM_DIR: "helm_deploy/laa-access-civil-legal-aid"
         run: |
           helm upgrade laa-access-civil-legal-aid \
-          $HELM_DIR \
+          ${HELM_DIR} \
           --namespace=${{ secrets.KUBE_NAMESPACE }} \
           --values ${HELM_DIR}/values/values-production.yaml \
           --set image.repository=$REPOSITORY \
