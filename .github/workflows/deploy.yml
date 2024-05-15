@@ -54,7 +54,7 @@ jobs:
           helm upgrade laa-access-civil-legal-aid \
           ${HELM_DIR} \
           --namespace=${{ secrets.KUBE_NAMESPACE }} \
-          --values ${HELM_DIR}/values-staging.yaml \
+          --values ${HELM_DIR}/values/values-dev.yaml \
           --set image.repository=$REPOSITORY \
           --set image.tag=$IMAGE_TAG \
           --force \
@@ -93,7 +93,7 @@ jobs:
           helm upgrade laa-access-civil-legal-aid \
           $HELM_DIR \
           --namespace=${{ secrets.KUBE_NAMESPACE }} \
-          --values ${HELM_DIR}/values-staging.yaml \
+          --values ${HELM_DIR}/values/values-uat.yaml \
           --set image.repository=$REPOSITORY \
           --set image.tag=$IMAGE_TAG \
           --force \
@@ -131,7 +131,7 @@ jobs:
           helm upgrade laa-access-civil-legal-aid \
           $HELM_DIR \
           --namespace=${KUBE_NAMESPACE} \
-          --values ${HELM_DIR}/values-staging.yaml \
+          --values ${HELM_DIR}/values/values-staging.yaml \
           --set image.repository=$REPOSITORY \
           --set image.tag=$IMAGE_TAG \
           --force \
@@ -169,7 +169,7 @@ jobs:
           helm upgrade laa-access-civil-legal-aid \
           $HELM_DIR \
           --namespace=${{ secrets.KUBE_NAMESPACE }} \
-          --values ${HELM_DIR}/values-staging.yaml \
+          --values ${HELM_DIR}/values/values-production.yaml \
           --set image.repository=$REPOSITORY \
           --set image.tag=$IMAGE_TAG \
           --force \
