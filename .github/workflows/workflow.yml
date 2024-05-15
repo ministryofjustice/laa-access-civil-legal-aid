@@ -24,3 +24,13 @@ jobs:
       ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
     secrets:
       ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+
+  deploy:
+    name: Deploy
+    uses: ./.github/workflows/deploy.yml
+    needs: build-and-push
+    with:
+      ECR_REGION: ${{vars.ECR_REGION}}
+      ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
+    secrets:
+      ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}

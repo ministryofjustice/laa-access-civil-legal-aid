@@ -1,0 +1,168 @@
+name: Deploy image to cluster
+on:
+  workflow_call:
+    inputs:
+      ECR_REGION:
+        required: true
+        type: string
+      ECR_REPOSITORY:
+        required: true
+        type: string
+    secrets:
+      ECR_ROLE_TO_ASSUME:
+        required: true
+
+
+jobs:
+  dev:
+    name: Deploy to Dev
+    environment: dev
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
+    steps:
+      - name: Checkout GitHub repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to the cluster
+        env:
+          KUBE_CERT: ${{ secrets.KUBE_CERT }}
+          KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
+          KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
+        run: |
+          echo "${KUBE_CERT}" > ca.crt
+          kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
+          kubectl config set-credentials deploy-user --token=${KUBE_TOKEN}
+          kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${{ secrets.KUBE_NAMESPACE }}
+          kubectl config use-context ${KUBE_CLUSTER}
+
+      - name: Upgrade the Helm chart
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+          REPOSITORY: ${{ inputs.ECR_REPOSITORY }}
+          HELM_DIR: "$ROOT/../helm_deploy/laa-access-civil-legal-aid/"
+        run: |
+          helm upgrade laa-access-civil-legal-aid \
+          $HELM_DIR \
+          --namespace=${{ secrets.KUBE_NAMESPACE }} \
+          --values ${HELM_DIR}/values-staging.yaml \
+          --set image.repository=$REPOSITORY \
+          --set image.tag=$IMAGE_TAG \
+          --force \
+          --install
+
+  uat:
+    name: Deploy to UAT
+    environment: uat
+    needs: dev
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
+    steps:
+      - name: Checkout GitHub repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to the cluster
+        env:
+          KUBE_CERT: ${{ secrets.KUBE_CERT }}
+          KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
+          KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
+        run: |
+          echo "${KUBE_CERT}" > ca.crt
+          kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
+          kubectl config set-credentials deploy-user --token=${KUBE_TOKEN}
+          kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${KUBE_NAMESPACE}
+          kubectl config use-context ${KUBE_CLUSTER}
+
+      - name: Upgrade the Helm chart
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+          REPOSITORY: ${{ inputs.ECR_REPOSITORY }}
+          HELM_DIR: "$ROOT/../helm_deploy/laa-access-civil-legal-aid/"
+        run: |
+          helm upgrade laa-access-civil-legal-aid \
+          $HELM_DIR \
+          --namespace=${{ secrets.KUBE_NAMESPACE }} \
+          --values ${HELM_DIR}/values-staging.yaml \
+          --set image.repository=$REPOSITORY \
+          --set image.tag=$IMAGE_TAG \
+          --force \
+          --install
+
+  staging:
+    name: Deploy to Staging
+    needs: uat
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
+    steps:
+      - name: Checkout GitHub repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to the cluster
+        env:
+          KUBE_CERT: ${{ secrets.KUBE_CERT }}
+          KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
+          KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
+        run: |
+          echo "${KUBE_CERT}" > ca.crt
+          kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
+          kubectl config set-credentials deploy-user --token=${KUBE_TOKEN}
+          kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${{ secrets.KUBE_NAMESPACE }}
+          kubectl config use-context ${KUBE_CLUSTER}
+
+      - name: Upgrade the Helm chart
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+          REPOSITORY: ${{ inputs.ECR_REPOSITORY }}
+          HELM_DIR: "$ROOT/../helm_deploy/laa-access-civil-legal-aid/"
+        run: |
+          helm upgrade laa-access-civil-legal-aid \
+          $HELM_DIR \
+          --namespace=${KUBE_NAMESPACE} \
+          --values ${HELM_DIR}/values-staging.yaml \
+          --set image.repository=$REPOSITORY \
+          --set image.tag=$IMAGE_TAG \
+          --force \
+          --install
+
+  production:
+    name: Deploy to Production
+    needs: staging
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
+    steps:
+      - name: Checkout GitHub repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to the cluster
+        env:
+          KUBE_CERT: ${{ secrets.KUBE_CERT }}
+          KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
+          KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
+        run: |
+          echo "${KUBE_CERT}" > ca.crt
+          kubectl config set-cluster ${KUBE_CLUSTER} --certificate-authority=./ca.crt --server=https://${KUBE_CLUSTER}
+          kubectl config set-credentials deploy-user --token=${KUBE_TOKEN}
+          kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${{ secrets.KUBE_NAMESPACE }}
+          kubectl config use-context ${KUBE_CLUSTER}
+
+      - name: Upgrade the Helm chart
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+          REPOSITORY: ${{ inputs.ECR_REPOSITORY }}
+          HELM_DIR: "$ROOT/../helm_deploy/laa-access-civil-legal-aid/"
+        run: |
+          helm upgrade laa-access-civil-legal-aid \
+          $HELM_DIR \
+          --namespace=${{ secrets.KUBE_NAMESPACE }} \
+          --values ${HELM_DIR}/values-staging.yaml \
+          --set image.repository=$REPOSITORY \
+          --set image.tag=$IMAGE_TAG \
+          --force \
+          --install
