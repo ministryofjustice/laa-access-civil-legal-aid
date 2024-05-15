@@ -48,8 +48,9 @@ jobs:
         env:
           IMAGE_TAG: ${{ github.sha }}
           REPOSITORY: ${{ inputs.ECR_REPOSITORY }}
-          HELM_DIR: "${ROOT}/../helm_deploy/laa-access-civil-legal-aid/"
+          HELM_DIR: "helm_deploy/laa-access-civil-legal-aid"
         run: |
+          ls
           helm upgrade laa-access-civil-legal-aid \
           ${HELM_DIR} \
           --namespace=${{ secrets.KUBE_NAMESPACE }} \
