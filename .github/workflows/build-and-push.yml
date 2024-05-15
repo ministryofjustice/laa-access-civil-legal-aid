@@ -14,7 +14,8 @@ on:
 
 
 jobs:
-  ecr:
+  build-and-push-to-ecr:
+    name: Build and Push to ECR
     runs-on: ubuntu-latest
     permissions:
       id-token: write # This is required for requesting the JWT
@@ -32,6 +33,8 @@ jobs:
       # Login to container repository
       - uses: aws-actions/amazon-ecr-login@v1
         id: login-ecr
+        with:
+          mask-password: true
 
       # Build and push a Docker image to the container repository
       - run: |

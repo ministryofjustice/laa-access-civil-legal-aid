@@ -16,7 +16,7 @@ jobs:
           src: './src'
 
   build-and-push:
-    name: Build and Push
+    name: Build
     uses: ./.github/workflows/build-and-push.yml
     needs: linting-and-formatting
     with:
