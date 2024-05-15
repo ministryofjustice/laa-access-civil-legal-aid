@@ -19,9 +19,10 @@ serviceAccount:
 podAnnotations: {}
 podLabels: {}
 
-podSecurityContext:
-  runAsNonRoot: true
+podSecurityContext: {
+  runAsNonRoot: true,
   allowPrivilegeEscalation: false
+}
 
 securityContext: {}
 
@@ -33,6 +34,9 @@ ingress:
   enabled: false
   className: ""
   annotations: {}
+  cluster:
+    name: ~
+    weight: ~
   tls: []
   whitelist:
     # GlobalProtect VPN (Digital Mac)
