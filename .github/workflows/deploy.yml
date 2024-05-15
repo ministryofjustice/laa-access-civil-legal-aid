@@ -48,10 +48,10 @@ jobs:
         env:
           IMAGE_TAG: ${{ github.sha }}
           REPOSITORY: ${{ inputs.ECR_REPOSITORY }}
-          HELM_DIR: "$ROOT/../helm_deploy/laa-access-civil-legal-aid/"
+          HELM_DIR: "${ROOT}/../helm_deploy/laa-access-civil-legal-aid/"
         run: |
           helm upgrade laa-access-civil-legal-aid \
-          $HELM_DIR \
+          ${HELM_DIR} \
           --namespace=${{ secrets.KUBE_NAMESPACE }} \
           --values ${HELM_DIR}/values-staging.yaml \
           --set image.repository=$REPOSITORY \
