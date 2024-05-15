@@ -16,8 +16,9 @@ jobs:
           src: './src'
 
   build-and-push:
-    name: Build and Push to ECR
+    name: Build and Push
     uses: ./.github/workflows/build-and-push.yml
+    needs: linting-and-formatting
     with:
       ECR_REGION: ${{vars.ECR_REGION}}
       ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
