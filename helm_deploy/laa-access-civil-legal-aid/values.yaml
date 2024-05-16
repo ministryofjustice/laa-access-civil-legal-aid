@@ -27,7 +27,7 @@ securityContext:
   seccompProfile:
     type: RuntimeDefault
   capabilities:
-        drop: ["ALL"]
+    drop: ["ALL"]
 
 service:
   type: ClusterIP
