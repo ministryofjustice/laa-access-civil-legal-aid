@@ -14,7 +14,7 @@ jobs:
 
   build-and-push:
     name: Build
-    uses: ./.github/workflows/build-and-push.yml
+    uses: ./.github/workflows/build.yml
     needs: linting-and-formatting
     with:
       ECR_REGION: ${{vars.ECR_REGION}}
