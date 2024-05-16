@@ -5,6 +5,7 @@ on: workflow_call
 jobs:
   test:
     name: Pytest
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout the repository
       uses: actions/checkout@v4
