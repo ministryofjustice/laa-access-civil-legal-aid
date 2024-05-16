@@ -1,5 +1,4 @@
 FROM python:3.12-slim
-USER 1000
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
