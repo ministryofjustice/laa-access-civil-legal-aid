@@ -15,7 +15,6 @@ jobs:
   test:
     name: Test
     uses: ./.github/workflows/test.yml
-    needs: static-analysis
 
   build-and-push:
     name: Build
