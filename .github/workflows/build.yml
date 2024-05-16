@@ -37,7 +37,8 @@ jobs:
           mask-password: true
 
       # Build and push a Docker image to the container repository
-      - run: |
+      - id: docker-build
+        run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
         env:

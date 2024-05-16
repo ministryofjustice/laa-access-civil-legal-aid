@@ -1,0 +1,24 @@
+name: Test
+
+on: workflow-call
+
+jobs:
+  test:
+    name: Pytest
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+
+    - name: Test with pytest
+      run: |
+        pip install pytest pytest-cov
+        pytest tests.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
