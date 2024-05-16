@@ -16,11 +16,6 @@ jobs:
     name: Test
     uses: ./.github/workflows/test.yml
     needs: static-analysis
-    with:
-      ECR_REGION: ${{vars.ECR_REGION}}
-      ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
-    secrets:
-      ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
 
   build-and-push:
     name: Build
