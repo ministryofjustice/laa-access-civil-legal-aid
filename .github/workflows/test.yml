@@ -2,11 +2,6 @@ name: Test
 
 on: workflow_call
 
-permissions:
-  contents: write
-  checks: write
-  pull-requests: write
-
 jobs:
   test:
     name: Pytest
@@ -27,11 +22,12 @@ jobs:
     - name: Test with pytest
       run: |
         pip install pytest pytest-cov
-        pytest tests.py --doctest-modules --junitxml=pytest.xml --cov=com --cov-report=xml --cov-report=html
+        pytest tests.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
 
-    - name: Pytest coverage comment
-      uses: MishaKav/pytest-coverage-comment@main
+    - name: Upload pytest test results
+      uses: actions/upload-artifact@v4
       with:
-        junitxml-path: ./pytest.xml
+        name: pytest-results-${{ matrix.python-version }}
+        path: junit/test-results-${{ matrix.python-version }}.xml
       # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
