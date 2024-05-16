@@ -19,10 +19,7 @@ serviceAccount:
 podAnnotations: {}
 podLabels: {}
 
-podSecurityContext: {
-  runAsNonRoot: true,
-  allowPrivilegeEscalation: false
-}
+podSecurityContext: {}
 
 securityContext: {}
 
