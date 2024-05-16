@@ -24,6 +24,10 @@ podSecurityContext: {}
 securityContext:
   runAsNonRoot: true
   allowPrivilegeEscalation: false
+  seccompProfile:
+    type: RuntimeDefault
+  capabilities:
+        drop: ["ALL"]
 
 service:
   type: ClusterIP
