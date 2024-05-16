@@ -15,7 +15,7 @@ jobs:
   build-and-push:
     name: Build
     uses: ./.github/workflows/build.yml
-    needs: linting-and-formatting
+    needs: static-analysis
     with:
       ECR_REGION: ${{vars.ECR_REGION}}
       ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
