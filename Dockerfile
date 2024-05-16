@@ -7,7 +7,7 @@ ENV FLASK_RUN_PORT=8000
 WORKDIR /usr/src/app
 
 # Change ownership of the working directory to the non-root user
-RUN chown -R containeruser:containeruser /usr/src/app
+RUN chown -R 1000:1000 /usr/src/app
 
 # Copy the dependencies file to the working directory
 COPY requirements.in ./
