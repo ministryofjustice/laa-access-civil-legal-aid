@@ -21,23 +21,23 @@ jobs:
       id-token: write # This is required for requesting the JWT
       contents: read  # This is required for actions/checkout
     steps:
-      # Checkout GitHub repository
-      - uses: actions/checkout@v4
+      - name: Checkout GitHub repository 
+        uses: actions/checkout@v4
 
-      # Assume role in Cloud Platform
-      - uses: aws-actions/configure-aws-credentials@v4
+      - name: Assume role in Cloud Platform
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
           aws-region: ${{ inputs.ECR_REGION }}
 
-      # Login to container repository
-      - uses: aws-actions/amazon-ecr-login@v2
+      - name: Login to container repository
+        uses: aws-actions/amazon-ecr-login@v2
         id: login-ecr
         with:
           mask-password: true
 
-      # Build and push a Docker image to the container repository
-      - id: docker-build
+      - name:  Build and push a Docker image to the container repository
+        id: docker-build
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
