@@ -19,11 +19,11 @@ serviceAccount:
 podAnnotations: {}
 podLabels: {}
 
-podSecurityContext:
+podSecurityContext: {}
+
+securityContext:
   runAsNonRoot: true
   allowPrivilegeEscalation: false
-
-securityContext: {}
 
 service:
   type: ClusterIP
