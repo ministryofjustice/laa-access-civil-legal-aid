@@ -69,7 +69,7 @@ jobs:
           ${HELM_DIR} \
           --namespace=${{ secrets.KUBE_NAMESPACE }} \
           --values ${HELM_DIR}/values/values-${{ inputs.environment }}.yaml \
-          --set image.repository=${REPOSITORY} \
+          --set image.repository=${REGISTRY} \
           --set image.tag=${IMAGE_TAG} \
           --force \
           --install
