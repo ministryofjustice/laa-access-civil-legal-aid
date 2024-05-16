@@ -1,19 +1,16 @@
-name: Build, Test and Deploy
+name: Release
 
 run-name: ${{ github.ref_name }}
 
-on: push
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  linting-and-formatting:
-    name: Linting and Formatting
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: chartboost/ruff-action@v1
-        with:
-          args: check --output-format=github
-          src: './src'
+  static-analysis:
+    name: Static Analysis
+    uses: ./.github/workflows/static-analysis.yml
 
   build-and-push:
     name: Build
@@ -24,36 +21,6 @@ jobs:
       ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
     secrets:
       ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
-
-  deploy-dev:
-    name: Dev
-    uses: ./.github/workflows/deploy.yml
-    needs: build-and-push
-    with:
-      environment: dev
-      ECR_REGION: ${{vars.ECR_REGION}}
-      ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
-    secrets:
-      ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
-      KUBE_CERT: ${{ secrets.KUBE_CERT }}
-      KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
-      KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-      KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
-
-  deploy-uat:
-    name: UAT
-    uses: ./.github/workflows/deploy.yml
-    needs: build-and-push
-    with:
-      environment: uat
-      ECR_REGION: ${{vars.ECR_REGION}}
-      ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
-    secrets:
-      ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
-      KUBE_CERT: ${{ secrets.KUBE_CERT }}
-      KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
-      KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-      KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
 
   deploy-staging:
     name: Staging
