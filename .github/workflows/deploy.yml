@@ -63,13 +63,14 @@ jobs:
           REPOSITORY: ${{ inputs.ECR_REPOSITORY }}
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           HELM_DIR: "helm_deploy/laa-access-civil-legal-aid"
+          TEAM_NAME: "laa-get-access"
         run: |
           echo ${REGISTRY}
           helm upgrade laa-access-civil-legal-aid \
           ${HELM_DIR} \
           --namespace=${{ secrets.KUBE_NAMESPACE }} \
           --values ${HELM_DIR}/values/values-${{ inputs.environment }}.yaml \
-          --set image.repository=${REGISTRY} \
+          --set image.repository=${REGISTRY}/${REPOSITORY} \
           --set image.tag=${IMAGE_TAG} \
           --force \
           --install
