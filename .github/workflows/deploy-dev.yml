@@ -77,6 +77,6 @@ jobs:
           --set image.tag=${IMAGE_TAG} \
           --set fullnameOverride=${CLEANED_BRANCH_NAME} \
           --set ingress.hosts[0].host=${CLEANED_BRANCH_NAME}.${DEV_HOST} \
-          --set tls.hosts[0].host=${CLEANED_BRANCH_NAME}.${DEV_HOST} \
+          --set ingress.tls[0].hosts[0]=${CLEANED_BRANCH_NAME}.${DEV_HOST} \
           --force \
           --install
