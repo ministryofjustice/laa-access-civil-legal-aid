@@ -28,7 +28,7 @@ jobs:
 
   deploy-dev:
     name: Dev
-    uses: ./.github/workflows/deploy.yml
+    uses: ./.github/workflows/deploy-dev.yml
     needs: build-and-push
     with:
       environment: dev

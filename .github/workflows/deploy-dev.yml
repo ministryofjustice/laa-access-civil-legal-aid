@@ -1,4 +1,4 @@
-name: Deploy to a Cloud Platform environment
+name: Deploy image to the dev environment
 on:
   workflow_call:
     inputs:
@@ -63,12 +63,17 @@ jobs:
           REPOSITORY: ${{ inputs.ECR_REPOSITORY }}
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           HELM_DIR: "helm_deploy/laa-access-civil-legal-aid"
+          DEV_HOST: "access-cla.cloud-platform.service.justice.gov.uk"
         run: |
-          helm upgrade laa-access-civil-legal-aid \
+          export CLEANED_BRANCH_NAME=$(echo ${{ github.ref_name }}}} | sed 's/^feature[-/]//' | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | tr '[:upper:]' '[:lower:]' | cut -c1-28 | sed 's/-$//')
+
+          helm upgrade ${CLEANED_BRANCH_NAME} \
           ${HELM_DIR} \
           --namespace=${{ secrets.KUBE_NAMESPACE }} \
           --values ${HELM_DIR}/values/values-${{ inputs.environment }}.yaml \
           --set image.repository=${REGISTRY}/${REPOSITORY} \
           --set image.tag=${IMAGE_TAG} \
+          --set fullnameOverride=${CLEANED_BRANCH_NAME}
+          --set ingress.hosts[0].host=${CLEANED_BRANCH_NAME}-${DEV_HOST}
           --force \
           --install
