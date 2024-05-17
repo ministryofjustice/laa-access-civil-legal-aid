@@ -16,7 +16,7 @@ on:
 jobs:
   build-and-push-to-ecr:
     name: Build and Push
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read  # This is required for actions/checkout
