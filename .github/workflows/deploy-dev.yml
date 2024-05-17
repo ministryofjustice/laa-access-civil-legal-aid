@@ -74,6 +74,6 @@ jobs:
           --set image.repository=${REGISTRY}/${REPOSITORY} \
           --set image.tag=${IMAGE_TAG} \
           --set fullnameOverride=${CLEANED_BRANCH_NAME} \
-          --set ingress.hosts[0].host=${CLEANED_BRANCH_NAME}-${DEV_HOST} \
+          --set ingress.hosts[0].host=${CLEANED_BRANCH_NAME}.${DEV_HOST} \
           --force \
           --install
