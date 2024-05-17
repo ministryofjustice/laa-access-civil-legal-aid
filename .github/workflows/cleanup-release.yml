@@ -1,7 +1,7 @@
 # Uninstalls the dev helm chart when a PR is merged, or closed
-name: Clean up the dev release when the PR is closed
+name: Clean up the dev release
 
-run-name: Clean up ${{ github.ref_name }}
+run-name: Clean up ${{ github.head_ref }}
 
 on:
   pull_request:
@@ -30,5 +30,5 @@ jobs:
 
       - name: Uninstall the helm chart
         run: |
-            export CLEANED_BRANCH_NAME=$(echo ${{ github.ref_name }} | sed 's/^feature[-/]//' | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | tr '[:upper:]' '[:lower:]' | cut -c1-28 | sed 's/-$//')
+            export CLEANED_BRANCH_NAME=$(echo ${{ github.head_ref }} | sed 's/^feature[-/]//' | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | tr '[:upper:]' '[:lower:]' | cut -c1-28 | sed 's/-$//')
             helm uninstall ${CLEANED_BRANCH_NAME}
