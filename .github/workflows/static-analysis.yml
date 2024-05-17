@@ -4,7 +4,7 @@ on: workflow_call
 jobs:
   lint:
     name: Ruff
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: chartboost/ruff-action@v1
