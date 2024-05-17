@@ -5,6 +5,9 @@ environment: "dev"
 
 ingress:
   enabled: true
+  tls:
+    - hosts:
+        - "access-civil-legal-aid-dev.cloud-platform.service.justice.gov.uk"
   hosts:
     - host: "access-civil-legal-aid-dev.cloud-platform.service.justice.gov.uk"
       paths:
