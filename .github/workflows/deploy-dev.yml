@@ -68,6 +68,7 @@ jobs:
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         run: |
           export CLEANED_BRANCH_NAME=$(echo ${BRANCH_NAME} | sed 's/^feature[-/]//' | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | tr '[:upper:]' '[:lower:]' | cut -c1-28 | sed 's/-$//')
+          export HOST_NAME=${CLEANED_BRANCH_NAME}-${DEV_HOST}
 
           helm upgrade ${CLEANED_BRANCH_NAME} \
           ${HELM_DIR} \
@@ -76,7 +77,7 @@ jobs:
           --set image.repository=${REGISTRY}/${REPOSITORY} \
           --set image.tag=${IMAGE_TAG} \
           --set fullnameOverride=${CLEANED_BRANCH_NAME} \
-          --set ingress.hosts[0].host=${CLEANED_BRANCH_NAME}.${DEV_HOST} \
-          --set ingress.tls[0].hosts[0]=${CLEANED_BRANCH_NAME}.${DEV_HOST} \
+          --set ingress.hosts[0].host=${HOST_NAME} \
+          --set ingress.tls[0].hosts[0]=${HOST_NAME} \
           --force \
           --install
