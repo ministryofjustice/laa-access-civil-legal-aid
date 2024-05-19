@@ -1,6 +1,6 @@
 name: Feature Branch
 
-run-name: ${{ github.head_ref || github.ref_name }}
+run-name: Feature - ${{ github.head_ref || github.ref_name }}
 
 on:
   push:
