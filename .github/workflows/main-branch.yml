@@ -13,10 +13,14 @@ jobs:
     name: Static Analysis
     uses: ./.github/workflows/static-analysis.yml
 
+  test:
+    name: Test
+    uses: ./.github/workflows/test.yml
+
   build-and-push:
     name: Build
     uses: ./.github/workflows/build.yml
-    needs: static-analysis
+    needs: [static-analysis, test]
     with:
       ECR_REGION: ${{vars.ECR_REGION}}
       ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
@@ -26,7 +30,6 @@ jobs:
   deploy-staging:
     name: Staging
     uses: ./.github/workflows/deploy.yml
-    if: github.ref == 'refs/heads/master'
     needs: build-and-push
     with:
       environment: staging
@@ -42,7 +45,6 @@ jobs:
   deploy-production:
     name: Production
     uses: ./.github/workflows/deploy.yml
-    if: github.ref == 'refs/heads/master'
     needs: deploy-staging
     with:
       environment: production
