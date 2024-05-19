@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - main
+      - feature/LGA-3086-ci-cd-setup
 
 jobs:
   static-analysis:
