@@ -47,21 +47,11 @@ jobs:
           kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${KUBE_NAMESPACE}
           kubectl config use-context ${KUBE_CLUSTER}
 
-      - name: Assume role in Cloud Platform
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
-          aws-region: ${{ inputs.ECR_REGION }}
-
-      - name: Login to container registry
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-
       - name: Upgrade the Helm chart
         env:
           IMAGE_TAG: ${{ github.sha }}
+          REGISTRY: ${{ secrets.ECR_REGISTRY }}
           REPOSITORY: ${{ inputs.ECR_REPOSITORY }}
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           HELM_DIR: "helm_deploy/laa-access-civil-legal-aid"
           DEV_HOST: "access-cla.cloud-platform.service.justice.gov.uk"
           # head_ref is set if the workflow was triggered by a PR, ref_name is used if the workflow was trigged by a push.
