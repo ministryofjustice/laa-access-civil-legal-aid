@@ -1,0 +1,60 @@
+name: Feature Branch
+
+run-name: Feature - ${{ github.head_ref || github.ref_name }}
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+    types:
+      - reopened
+
+jobs:
+  static-analysis:
+    name: Static Analysis
+    uses: ./.github/workflows/static-analysis.yml
+
+  test:
+    name: Test
+    uses: ./.github/workflows/test.yml
+
+  build-and-push:
+    name: Build
+    uses: ./.github/workflows/build.yml
+    needs: static-analysis
+    with:
+      ECR_REGION: ${{vars.ECR_REGION}}
+      ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
+    secrets:
+      ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+
+  deploy-dev:
+    name: Dev
+    uses: ./.github/workflows/deploy-dev.yml
+    needs: build-and-push
+    with:
+      environment: dev
+      ECR_REGION: ${{vars.ECR_REGION}}
+      ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
+    secrets:
+      ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+      KUBE_CERT: ${{ secrets.KUBE_CERT }}
+      KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
+      KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+      KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
+
+  deploy-uat:
+    name: UAT
+    uses: ./.github/workflows/deploy.yml
+    needs: [build-and-push, test]
+    with:
+      environment: uat
+      ECR_REGION: ${{vars.ECR_REGION}}
+      ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
+    secrets:
+      ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+      KUBE_CERT: ${{ secrets.KUBE_CERT }}
+      KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
+      KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+      KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}

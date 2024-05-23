@@ -1,0 +1,20 @@
+# Default values for laa-access-civil-legal-aid in the dev environment.
+# The laa-access-civil-legal-aid-dev namespace installs an new helm release per feature branch
+# this is then uninstalled when the branch is merged.
+environment: "dev"
+
+ingress:
+  enabled: true
+  tls:
+    - hosts:
+        - "access-civil-legal-aid-dev.cloud-platform.service.justice.gov.uk"
+  hosts:
+    - host: "access-civil-legal-aid-dev.cloud-platform.service.justice.gov.uk"
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+
+# Lists don't deep merge, so this list of envVars overrides anything defined in an earlier values file
+envVars:
+  DEBUG:
+    value: "True"
