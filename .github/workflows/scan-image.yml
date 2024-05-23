@@ -15,7 +15,7 @@ on:
         required: true
 
 jobs:
-  scan-image:
+  trivy-image-scan:
     runs-on: ubuntu-latest
     permissions:
       id-token: write # This is required for requesting the JWT
@@ -33,16 +33,6 @@ jobs:
         with:
           mask-password: true
 
-      - name: Scan for vulnerabilities (informative, non-breaking)
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: ${{ secrets.ECR_REGISTRY }}/${{ inputs.ECR_REPOSITORY }}:${{ github.sha }}
-          format: 'table'
-          exit-code: '0'
-          ignore-unfixed: false
-          vuln-type: 'os,library'
-          severity: 'UNKNOWN,LOW,MEDIUM,CRITICAL,HIGH'
-
       - name: Scan for breaking vulnerabilities
         uses: aquasecurity/trivy-action@master
         with:
@@ -52,3 +42,13 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
+
+      - name: Scan for vulnerabilities (informative, non-breaking)
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ secrets.ECR_REGISTRY }}/${{ inputs.ECR_REPOSITORY }}:${{ github.sha }}
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: false
+          vuln-type: 'os,library'
+          severity: 'UNKNOWN,LOW,MEDIUM,CRITICAL,HIGH'
