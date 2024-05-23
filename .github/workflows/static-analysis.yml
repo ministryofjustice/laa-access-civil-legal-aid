@@ -1,6 +1,9 @@
 name: Static Analysis
-on: workflow_call
-
+on:
+  workflow_call:
+    secrets:
+      SONAR_TOKEN:
+        required: true
 jobs:
   lint:
     name: Ruff
@@ -11,3 +14,20 @@ jobs:
         with:
           args: check --output-format=github
           src: './src'
+
+  sonarcloud:
+    name: Sonar cloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Number of commits to fetch. 0 indicates all history for all branches and tags.
+          # Default: 1
+          fetch-depth: 0
+      - uses: sonarsource/sonarcloud-github-action@master
+        with:
+          args: >
+            -Dsonar.python.version=3.12
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
