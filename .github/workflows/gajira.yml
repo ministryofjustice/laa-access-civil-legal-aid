@@ -25,14 +25,11 @@ jobs:
     - name: Process PR data
       id: process_pr_data
       run: |
-        # Extract repository name
         repo_name=$(basename "$GITHUB_REPOSITORY")
 
-        # Strip HTML from PR body
         pr_body="${{ github.event.pull_request.body }}"
         stripped_body=$(echo "$pr_body" | sed 's/<[^>]*>//g')
 
-        # Set outputs
         echo "repo_name=$repo_name" >> $GITHUB_ENV
         echo "stripped_body=$stripped_body" >> $GITHUB_ENV
 
