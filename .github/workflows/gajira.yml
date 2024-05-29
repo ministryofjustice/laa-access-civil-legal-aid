@@ -1,4 +1,4 @@
-name: Gajira
+name: Raise Jira Issue
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   gajira:
-    name: Transition Issue
+    name: Raise Jira Issue
     runs-on: ubuntu-latest
     steps:
     - name: Check if pull request was created by Snyk
