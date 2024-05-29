@@ -25,7 +25,7 @@ jobs:
     - name: Process PR data
       id: process_pr_data
       run: |
-        repo_name=$(basename "$GITHUB_REPOSITORY")
+        repo_name=$(echo "$GITHUB_REPOSITORY" | cut -d'/' -f2)
 
         pr_body="${{ github.event.pull_request.body }}"
         stripped_body=$(echo "$pr_body" | sed 's/<[^>]*>//g')
