@@ -39,5 +39,5 @@ jobs:
       with:
           project: LGA
           issuetype: Task
-          summary: ${{ env.repo_name }} - ${{ github.event.pull_request.title }}
+          summary: "[Snyk] -  ${{ env.repo_name }} -  ${{ github.event.pull_request.title }}"
           description: ${{ env.stripped_body }}
