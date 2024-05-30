@@ -26,6 +26,16 @@ jobs:
     secrets:
       ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
 
+  scan-image:
+    uses: ./.github/workflows/scan-image.yml
+    needs: build-and-push
+    with:
+      ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
+      ECR_REGION: ${{vars.ECR_REGION}}
+    secrets:
+      ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+      ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+
   deploy-staging:
     name: Staging
     uses: ./.github/workflows/deploy.yml
