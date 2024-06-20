@@ -4,3 +4,11 @@
 
 
 A Flask based web service used by the public to get access to Civil Legal Aid services.
+
+# MOJ Flask Skeleton
+
+To retrieve the most recent updates from the flask skeleton, run:
+
+```shell
+git subtree pull --prefix=flask_skeleton https://github.com/ministryofjustice/moj-flask-govuk-skeleton.git main --squash
+```
