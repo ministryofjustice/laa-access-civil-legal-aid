@@ -12,9 +12,9 @@ The MOJ Flask Skeleton is set as a subtree from https://github.com/ministryofjus
 
 To retrieve the most recent updates from the flask skeleton, run:
 ```shell
-git subtree pull --prefix=laa_access_civil_legal_aid https://github.com/ministryofjustice/moj-flask-govuk-skeleton.git main
+git subtree pull --prefix=laa_access_civil_legal_aid https://github.com/ministryofjustice/moj-flask-govuk-skeleton.git main --squash
 ```
-This will get all the updates from the flask skeleton and pull them in; you can add --squash to merge in the subtree in a single commit. This should only be done on a feature branch to prevent issues with main.
+This will get all the updates from the flask skeleton and pull them in. This should only be done on a feature branch to prevent issues with main.
 For further guidance on subtrees https://www.atlassian.com/git/tutorials/git-subtree.
 
 
