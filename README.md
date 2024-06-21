@@ -10,11 +10,10 @@ A Flask based web service used by the public to get access to Civil Legal Aid se
 The MOJ Flask Skeleton is set as a subtree from https://github.com/ministryofjustice/moj-flask-govuk-skeleton and is kept in the laa_access_civil_legal_aid folder.
 
 
-To retrieve the most recent updates from the flask skeleton, run:
+To retrieve the most recent updates from the flask skeleton to your feature branch, run:
 ```shell
 git subtree pull --prefix=laa_access_civil_legal_aid https://github.com/ministryofjustice/moj-flask-govuk-skeleton.git main --squash
 ```
-This will get all the updates from the flask skeleton and pull them in. This should only be done on a feature branch to prevent issues with main.
 For further guidance on subtrees https://www.atlassian.com/git/tutorials/git-subtree.
 
 
