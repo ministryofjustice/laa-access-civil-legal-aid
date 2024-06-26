@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "gov-js": "cp -R node_modules/govuk-frontend/dist/govuk/govuk-frontend.min.* app/static",
+    "gov-images": "cp -R node_modules/govuk-frontend/dist/govuk/assets/ app/static",
+    "build": "npm run gov-js && npm run gov-images"
+  },
+  "dependencies": {
+    "govuk-frontend": "^5.3.1"
+  }
+}
