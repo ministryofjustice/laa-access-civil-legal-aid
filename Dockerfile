@@ -1,4 +1,5 @@
-FROM python:3.12-slim
+ARG BASE_IMAGE=python:3.12-slim
+FROM $BASE_IMAGE AS base
 
 ARG REQUIREMENTS=requirements_production.txt
 
@@ -43,5 +44,11 @@ USER app
 # Expose the Flask port
 EXPOSE 8000
 
-# Run the Flask application for development
+# Run the Flask application for production
+FROM base as production
+# TODO: Use a production ready WSGI
 CMD ["flask", "run"]
+
+# Run the Flask application for development
+FROM base as development
+CMD ["flask", "run", "--debug"]

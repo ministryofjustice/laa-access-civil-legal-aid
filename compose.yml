@@ -5,6 +5,8 @@ services:
       context: .
       args:
         REQUIREMENTS: requirements_development.txt
+        BASE_IMAGE: python:3.12-bookworm
+      target: development
     restart: always
     environment:
       - CONTACT_EMAIL=[contact email]
@@ -17,6 +19,6 @@ services:
       - SERVICE_URL=[url of service]
     ports:
       - "8000:8000"
-#    volumes:
-#      - .:/home/app/access
+    volumes:
+      - .:/home/app/access
   
