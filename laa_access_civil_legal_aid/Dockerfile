@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.12-alpine
 
 # Set environment variables
 ENV FLASK_APP=govuk-frontend-flask.py
@@ -6,41 +6,36 @@ ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=8000
 ENV PYTHONUNBUFFERED=1
 
-# Set the working directory in the container
-WORKDIR /usr/src/app
+RUN apk add --no-cache \
+      tzdata
 
 # Create a non-root user
-RUN adduser --disabled-password --gecos '' containeruser
-# Change ownership of the working directory to the non-root user
-RUN chown -R containeruser:containeruser /usr/src/app
+RUN adduser -D app && \
+    cp /usr/share/zoneinfo/Europe/London /etc/localtime
+
+RUN mkdir /home/app/access
+WORKDIR /home/app/access
 
 # Install node
-RUN apt-get update \
-  && apt-get -y install nodejs npm \
-  && apt-get clean
-
-# Copy the dependencies file to the working directory
-COPY govuk-frontend-flask.py config.py requirements.in package*.json ./
-
+RUN apk add nodejs npm libsass build-base
+COPY package*.json .
 RUN npm install
 
-# Install any needed dependencies
-RUN pip install --no-cache-dir -r requirements.in
+COPY requirements/generated/requirements_production.txt requirements.txt
+RUN pip install -r requirements.txt
 
-# Copy the project code into the working directory
-COPY . .
 
-# Run node script to copy GOVUK files needed for developement and production
-RUN npm run build
+COPY app .
+COPY govuk-frontend-flask.py .
 
-# Give user permission to the following:
-RUN chown -R containeruser:containeruser /usr/src/app/app/static/.webassets-cache/
+# Change ownership of the working directory to the non-root user
+RUN chown -R app:app /home/app
 
 # Switch to the non-root user
-USER containeruser
+USER app
 
 # Expose the Flask port
 EXPOSE 8000
 
 # Run the Flask application for development
-CMD ["flask", "run", "--cert=adhoc"]
+CMD ["flask", "run"]
