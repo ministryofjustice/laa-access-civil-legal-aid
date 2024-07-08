@@ -1,25 +1,40 @@
-FROM python:3.12-slim
+FROM python:3.12-alpine
 
+# Set environment variables
+ENV FLASK_APP=govuk-frontend-flask.py
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=8000
+ENV PYTHONUNBUFFERED=1
 
-# Set the working directory in the container
-WORKDIR /usr/src/app
+RUN apk add --no-cache \
+      tzdata
+
+# Create a non-root user
+RUN adduser -D app && \
+    cp /usr/share/zoneinfo/Europe/London /etc/localtime
+
+RUN mkdir /home/app/access
+WORKDIR /home/app/access
+
+# Install node
+RUN apk add nodejs npm libsass build-base
+COPY package*.json .
+RUN npm install
+
+COPY requirements/generated/requirements_production.txt requirements.txt
+RUN pip install -r requirements.txt
+
+
+COPY app ./app
+COPY govuk-frontend-flask.py .
+
+RUN npm run build
 
 # Change ownership of the working directory to the non-root user
-RUN chown -R 1000:1000 /usr/src/app
-
-# Copy the dependencies file to the working directory
-COPY requirements.in ./
-
-# Install any needed dependencies
-RUN pip install --no-cache-dir -r requirements.in
-
-# Copy the project code into the working directory
-COPY . .
+RUN chown -R app:app /home/app
 
 # Switch to the non-root user
-USER 1000
+USER app
 
 # Expose the Flask port
 EXPOSE 8000

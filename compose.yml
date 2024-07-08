@@ -14,6 +14,6 @@ services:
       - SERVICE_URL=[url of service]
     ports:
       - "8000:8000"
-    volumes:
-      - .:/home/app/access
+#    volumes:
+#      - .:/home/app/access
   
