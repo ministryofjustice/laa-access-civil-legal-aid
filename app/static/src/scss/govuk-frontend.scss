@@ -1,0 +1,5 @@
+/* Import GOVUK frontend SCSS to be compiled to CSS */
+@import "node_modules/govuk-frontend/dist/govuk/all";
+
+/* Import your custom SCSS below to be compiled into one by Flask Assets */
+@import "./custom";
