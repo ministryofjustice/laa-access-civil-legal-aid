@@ -1,4 +1,6 @@
-FROM python:3.12-alpine
+FROM python:3.12-slim
+
+ARG REQUIREMENTS=requirements_production.txt
 
 # Set environment variables
 ENV FLASK_APP=govuk-frontend-flask.py
@@ -6,22 +8,24 @@ ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=8000
 ENV PYTHONUNBUFFERED=1
 
-RUN apk add --no-cache \
-      tzdata
+RUN apt-get install tzdata
 
 # Create a non-root user
-RUN adduser -D app && \
+RUN adduser --disabled-password app && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime
 
 RUN mkdir /home/app/access
 WORKDIR /home/app/access
 
 # Install node
-RUN apk add nodejs npm libsass build-base
+RUN apt-get update \
+  && apt-get -y install nodejs npm \
+  && apt-get clean
 COPY package*.json .
 RUN npm install
 
-COPY requirements/generated/requirements_production.txt requirements.txt
+COPY requirements/generated/$REQUIREMENTS requirements.txt
+RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 
