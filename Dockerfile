@@ -1,15 +1,13 @@
 ARG BASE_IMAGE=python:3.12-slim
 FROM $BASE_IMAGE AS base
 
-ARG REQUIREMENTS=requirements_production.txt
+ARG REQUIREMENTS=requirements-production.txt
 
 # Set environment variables
 ENV FLASK_APP=govuk-frontend-flask.py
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=8000
 ENV PYTHONUNBUFFERED=1
-
-RUN apt-get install tzdata
 
 # Create a non-root user
 RUN adduser --disabled-password app && \
@@ -26,7 +24,7 @@ COPY package-lock.json .
 COPY package.json .
 RUN npm install
 
-COPY requirements/generated/$REQUIREMENTS requirements.txt
+COPY requirements/$REQUIREMENTS requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 

@@ -5,7 +5,6 @@ Flask-Limiter
 flask-talisman
 Flask-WTF
 govuk-frontend-wtf
-click
 python-dotenv
 requests
 cssmin  # used by Flask-Assets
