@@ -11,9 +11,12 @@ services:
     environment:
       - CONTACT_EMAIL=${CONTACT_EMAIL}
       - CONTACT_PHONE=${CONTACT_PHONE}
-      - DEPARTMENT_NAME=${DEPARTMENT_NAME}
+      - DEPARTMENT_NAME = os.environ.get("DEPARTMENT_NAME", "LAA")
       - DEPARTMENT_URL=${DEPARTMENT_URL}
       - SECRET_KEY=CHANGE_ME
+      - SERVICE_NAME = os.environ.get("SERVICE_NAME", "Access Civil Legal Aid")
+      - SERVICE_PHASE = os.environ.get("SERVICE_PHASE")
+      - SERVICE_URL = os.environ.get("SERVICE_URL")
     ports:
       - "8000:8000"
     volumes:
