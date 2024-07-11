@@ -5,6 +5,6 @@
     "build": "npm run gov-js && npm run gov-images"
   },
   "dependencies": {
-    "govuk-frontend": "^5.3.1"
+    "govuk-frontend": "^5.4.0"
   }
 }

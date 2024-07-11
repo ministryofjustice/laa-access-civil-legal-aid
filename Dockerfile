@@ -22,7 +22,8 @@ WORKDIR /home/app/access
 RUN apt-get update \
   && apt-get -y install nodejs npm \
   && apt-get clean
-COPY package*.json .
+COPY package-lock.json .
+COPY package.json .
 RUN npm install
 
 COPY requirements/generated/$REQUIREMENTS requirements.txt
@@ -45,10 +46,10 @@ USER app
 EXPOSE 8000
 
 # Run the Flask application for production
-FROM base as production
+FROM base AS production
 # TODO: Use a production ready WSGI
 CMD ["flask", "run"]
 
 # Run the Flask application for development
-FROM base as development
+FROM base AS development
 CMD ["flask", "run", "--debug"]

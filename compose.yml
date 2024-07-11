@@ -9,14 +9,11 @@ services:
       target: development
     restart: always
     environment:
-      - CONTACT_EMAIL=[contact email]
-      - CONTACT_PHONE=[contact phone]
-      - DEPARTMENT_NAME=[name of department]
-      - DEPARTMENT_URL=[url of department]
+      - CONTACT_EMAIL=${CONTACT_EMAIL}
+      - CONTACT_PHONE=${CONTACT_PHONE}
+      - DEPARTMENT_NAME=${DEPARTMENT_NAME}
+      - DEPARTMENT_URL=${DEPARTMENT_URL}
       - SECRET_KEY=CHANGE_ME
-      - SERVICE_NAME=[name of service]
-      - SERVICE_PHASE=[phase]
-      - SERVICE_URL=[url of service]
     ports:
       - "8000:8000"
     volumes:
