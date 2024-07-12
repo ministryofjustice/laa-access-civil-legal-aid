@@ -1,0 +1,17 @@
+services:
+  web:
+    container_name: govuk-frontend-flask
+    build:
+      context: .
+      args:
+        BASE_IMAGE: python:3.12-bookworm
+      target: development
+    restart: always
+    environment:
+      - SECRET_KEY=CHANGE_ME
+      - FLASK_RUN_PORT=8020
+    ports:
+      - "8020:8020"
+    volumes:
+      - ./app:/home/app/access/app
+  

@@ -12,6 +12,8 @@ on:
         required: true
         type: string
     secrets:
+      ECR_REGISTRY:
+        required: true
       ECR_ROLE_TO_ASSUME:
         required: true
       KUBE_CERT:

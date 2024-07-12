@@ -1,0 +1,13 @@
+Flask
+Flask-Assets
+Flask-Compress
+Flask-Limiter
+flask-talisman
+Flask-WTF
+govuk-frontend-wtf
+python-dotenv
+requests
+cssmin  # used by Flask-Assets
+jsmin  # used by Flask-Assets
+libsass # used by Flask-Assets
+PyYAML

@@ -1,5 +1,0 @@
-black
-flake8-bugbear
-isort
-pytest-playwright
-playwright

@@ -1,0 +1,5 @@
+-r requirements-base.in
+ruff
+isort
+pytest-playwright
+playwright
