@@ -64,3 +64,24 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{- define "laa-access-civil-legal-aid.app.vars" -}}
+{{ range $name, $data := .Values.envVars }}
+- name: {{ $name }}
+{{- if $data.value }}
+  value: "{{ $data.value }}"
+{{- else if $data.secret }}
+  valueFrom:
+    secretKeyRef:
+      name: {{ $data.secret.name }}
+      key: {{ $data.secret.key }}
+      optional: {{ $data.secret.optional | default false }}
+{{- else if $data.configmap }}
+  valueFrom:
+    configMapKeyRef:
+      name: {{ $data.configmap.name }}
+      key: {{ $data.configmap.key }}
+      optional: {{ $data.configmap.optional | default false }}
+{{- end -}}
+{{- end -}}
+{{- end -}}

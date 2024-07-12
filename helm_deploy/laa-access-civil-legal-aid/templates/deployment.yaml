@@ -36,10 +36,8 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- with .Values.envVars }}
           env:
-            {{- toYaml . | nindent 8 }}
-          {{- end }}
+            {{ include "laa-access-civil-legal-aid.app.vars" . | nindent 12 }}
           ports:
             - name: http
               containerPort: {{ .Values.image.containerPort }}
