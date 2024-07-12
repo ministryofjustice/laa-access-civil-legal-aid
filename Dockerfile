@@ -37,6 +37,9 @@ RUN npm run build
 # Change ownership of the working directory to the non-root user
 RUN chown -R app:app /home/app
 
+# Cleanup container
+RUN rm -rf /var/lib/apt/lists/*
+
 # Switch to the non-root user
 USER app
 
