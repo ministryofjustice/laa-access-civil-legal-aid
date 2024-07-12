@@ -18,3 +18,8 @@ ingress:
 envVars:
   DEBUG:
     value: "True"
+  SECRET_KEY:
+    secret:
+      name: secret-key
+      key: value
+      optional: false
