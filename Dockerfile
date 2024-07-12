@@ -10,7 +10,7 @@ ENV FLASK_RUN_PORT=${FLASK_RUN_PORT:-8000}
 ENV PYTHONUNBUFFERED=1
 
 # Create a non-root user
-RUN adduser --disabled-password app && \
+RUN adduser --disabled-password app -u 1000 && \
     cp /usr/share/zoneinfo/Europe/London /etc/localtime
 
 RUN mkdir /home/app/access
