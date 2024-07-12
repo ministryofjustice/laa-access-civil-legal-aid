@@ -13,5 +13,5 @@ services:
     ports:
       - "8020:8020"
     volumes:
-      - .:/home/app/access
+      - ./app:/home/app/access/app
   

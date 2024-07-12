@@ -20,7 +20,8 @@ WORKDIR /home/app/access
 RUN apt-get update \
   && apt-get -y install nodejs npm \
   && apt-get clean
-COPY package*.json .
+
+COPY package*.json ./
 RUN npm install
 
 COPY requirements/$REQUIREMENTS requirements.txt

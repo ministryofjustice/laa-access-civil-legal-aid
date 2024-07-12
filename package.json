@@ -5,7 +5,7 @@
     "build": "npm run gov-js && npm run gov-images"
   },
   "dependencies": {
-    "dart-sass": "^1.25.0",
-    "govuk-frontend": "^5.4.0"
+    "govuk-frontend": "^5.4.0",
+    "sass": "^1.77.8"
   }
 }
