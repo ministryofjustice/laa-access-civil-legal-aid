@@ -7,7 +7,10 @@ services:
         BASE_IMAGE: python:3.12-bookworm
       target: development
     restart: always
+    environment:
+      - SECRET_KEY=CHANGE_ME
     ports:
       - "8000:8000"
     volumes:
       - .:/home/app/access
+  

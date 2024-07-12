@@ -28,9 +28,8 @@ COPY requirements/$REQUIREMENTS requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-
-COPY app ./app
 COPY govuk-frontend-flask.py .
+COPY app ./app
 
 RUN npm run build
 
