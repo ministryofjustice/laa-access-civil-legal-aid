@@ -9,8 +9,9 @@ services:
     restart: always
     environment:
       - SECRET_KEY=CHANGE_ME
+      - FLASK_RUN_PORT=8020
     ports:
-      - "8000:8000"
+      - "8020:8020"
     volumes:
       - .:/home/app/access
   

@@ -6,7 +6,7 @@ ARG REQUIREMENTS=requirements-production.txt
 # Set environment variables
 ENV FLASK_APP=govuk-frontend-flask.py
 ENV FLASK_RUN_HOST=0.0.0.0
-ENV FLASK_RUN_PORT=8000
+ENV FLASK_RUN_PORT=${FLASK_RUN_PORT:-8000}
 ENV PYTHONUNBUFFERED=1
 
 # Create a non-root user
@@ -43,7 +43,7 @@ RUN rm -rf /var/lib/apt/lists/*
 USER app
 
 # Expose the Flask port
-EXPOSE 8000
+EXPOSE $FLASK_RUN_PORT
 
 # Run the Flask application for production
 FROM base AS production
