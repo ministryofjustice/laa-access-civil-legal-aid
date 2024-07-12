@@ -1,3 +1,8 @@
 [project]
 name = "access-civil-legal-aid"
 requires-python = ">= 3.12"
+dynamic = ["dependencies", "optional-dependencies"]
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements/requirements-production.in"] }
+optional-dependencies = { file = ["requirements-development.in"] }
