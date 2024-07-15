@@ -13,7 +13,7 @@ jobs:
       if: ${{ !contains(github.event.pull_request.labels, 'snyk') }}
       run: |
         echo "Pull request not created by Snyk"
-        exit 0
+        exit 1
 
     - name: Login
       uses: atlassian/gajira-login@master
