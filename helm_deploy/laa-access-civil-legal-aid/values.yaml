@@ -63,3 +63,14 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+envVars:
+  SECRET_KEY:
+    secret:
+      name: secret-key
+      key: value
+      optional: false
+  SENTRY_DSN:
+    secret:
+      name: sentry
+      key: dsn

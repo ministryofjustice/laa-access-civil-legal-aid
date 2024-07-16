@@ -10,4 +10,5 @@ requests
 cssmin  # used by Flask-Assets
 jsmin  # used by Flask-Assets
 libsass # used by Flask-Assets
+sentry-sdk[flask]
 PyYAML

@@ -8,13 +8,8 @@ jobs:
   gajira:
     name: Raise Jira Issue
     runs-on: ubuntu-latest
+    if: ${{ contains(github.event.pull_request.labels, 'snyk') }}
     steps:
-    - name: Check if pull request was created by Snyk
-      if: ${{ !contains(github.event.pull_request.labels, 'snyk') }}
-      run: |
-        echo "Pull request not created by Snyk"
-        exit 0
-
     - name: Login
       uses: atlassian/gajira-login@master
       env:
