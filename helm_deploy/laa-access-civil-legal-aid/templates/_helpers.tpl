@@ -66,6 +66,8 @@ Create the name of the service account to use
 {{- end }}
 
 {{- define "laa-access-civil-legal-aid.app.vars" -}}
+- name: CLA_ENVIRONMENT
+  value: {{.Values.environment}}
 {{ range $name, $data := .Values.envVars }}
 - name: {{ $name }}
 {{- if $data.value }}
