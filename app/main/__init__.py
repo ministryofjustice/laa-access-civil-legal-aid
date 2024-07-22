@@ -15,7 +15,7 @@ def get_gtm_anon_id():
 
 def get_gtm_anon_id_from_cookie():
     uuid_pattern = re.compile(r"^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$")
-    anon_id_cookie = request.cookies.get("gtm_anon_id")
+    anon_id_cookie = request.cookies.get("gtm_anon_id", default="")
     if not uuid_pattern.match(anon_id_cookie):
         return None
     return anon_id_cookie
