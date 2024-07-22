@@ -13,11 +13,8 @@ repos:
         files: requirements-(base|production).in
         args: [requirements/source/requirements-production.in, "--output-file", requirements/generated/requirements-production.txt]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    # Ruff version.
     rev: v0.5.4
     hooks:
-      # Run the linter.
       - id: ruff
         args: [ --fix ]
-      # Run the formatter.
       - id: ruff-format
