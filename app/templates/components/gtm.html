@@ -14,4 +14,8 @@ It should be included in the base template if the user has enabled tracking cook
   gtag('js', new Date());
 
   gtag('config', '{{ gtm_measurement_id }}');
+
+  {% if gtm_anon_id %}
+  window.dataLayer.push({ user_id: "{{ gtm_anon_id }}" });
+  {% endif %}
 </script>
