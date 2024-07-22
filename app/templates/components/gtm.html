@@ -1,0 +1,17 @@
+{#
+This component enables Google Tag Manager.
+It should be included in the base template if the user has enabled tracking cookies.
+#}
+
+{% set gtm_measurement_id = 'G-S8M7DQZ6N0' %}
+
+<script nonce="{{ csp_nonce() }}" async src="https://www.googletagmanager.com/gtag/js?id={{ gtm_measurement_id }}"></script>
+<script nonce="{{ csp_nonce() }}">
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag('js', new Date());
+
+  gtag('config', '{{ gtm_measurement_id }}');
+</script>
