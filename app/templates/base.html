@@ -10,14 +10,7 @@
 {% block pageTitle %}{{config['SERVICE_NAME']}} – GOV.UK{% endblock %}
 
 {% block head %}
-    <script nonce="{{ csp_nonce() }}" async src="https://www.googletagmanager.com/gtag/js?id=YOUR_TRACKING_ID"></script>
-    <script nonce="{{ csp_nonce() }}">
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'YOUR_TRACKING_ID');
-  </script>
+    {% include "components/gtm.html" %}
     <meta name="description" content="{{config['SERVICE_NAME']}}">
     <meta name="keywords" content="GOV.UK, govuk, gov, government, uk, frontend, ui, user interface, jinja, python, flask, port, template, templating, macro, component, design system, html, forms, wtf, wtforms, widget, widgets, example">
     <meta name="author" content="{{config['DEPARTMENT_NAME']}}">
