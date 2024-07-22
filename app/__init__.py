@@ -26,7 +26,11 @@ if Config.SENTRY_DSN:
         # of sampled transactions.
         # We recommend adjusting this value in production.
         profiles_sample_rate=0.2,
+        # This can either be dev, uat, staging, or production.
+        # It is set by CLA_ENVIRONMENT in the helm charts.
+        environment=Config.ENVIRONMENT,
     )
+
 
 def create_app(config_class=Config):
     app = Flask(__name__, static_url_path="/assets")
