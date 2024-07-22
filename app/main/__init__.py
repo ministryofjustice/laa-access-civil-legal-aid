@@ -24,15 +24,17 @@ def get_gtm_anon_id_from_cookie():
 @bp.before_app_request
 def detect_gtm_anon_id():
     # gtm_anon_id is used to track user anonymously across services for Google Tag Manager.
-    if "gtm_anon_id" not in session:
-        anon_id_cookie = get_gtm_anon_id_from_cookie()
-        if anon_id_cookie:
-            session["gtm_anon_id"] = anon_id_cookie
-            return
+    if "gtm_anon_id" in session:
+        return
 
-        @after_this_request
-        def remember_gtm_anon_id(response):
-            session["gtm_anon_id"] = str(uuid.uuid4())
-            expiration_date = datetime.now(UTC) + timedelta(days=30)
-            response.set_cookie("gtm_anon_id", session.get("gtm_anon_id"), expires=expiration_date)
-            return response
+    anon_id_cookie = get_gtm_anon_id_from_cookie()
+    if anon_id_cookie:
+        session["gtm_anon_id"] = anon_id_cookie
+        return
+
+    @after_this_request
+    def remember_gtm_anon_id(response):
+        session["gtm_anon_id"] = str(uuid.uuid4())
+        expiration_date = datetime.now(UTC) + timedelta(days=30)
+        response.set_cookie("gtm_anon_id", session.get("gtm_anon_id"), expires=expiration_date)
+        return response
