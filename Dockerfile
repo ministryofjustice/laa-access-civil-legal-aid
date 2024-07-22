@@ -24,7 +24,7 @@ RUN apt-get update \
 COPY package*.json ./
 RUN npm install
 
-COPY requirements/$REQUIREMENTS requirements.txt
+COPY requirements/generated/$REQUIREMENTS requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
