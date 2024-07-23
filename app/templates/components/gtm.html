@@ -3,6 +3,9 @@ This component enables Google Tag Manager.
 It should be included in the base template if the user has enabled tracking cookies.
 #}
 
+{% if "cookies_policy" in request.cookies %}
+{% if request.cookies.cookies_policy | dict | get_item("analytics") == "yes" %}
+
 {% set gtm_measurement_id = 'G-S8M7DQZ6N0' %}
 
 <script nonce="{{ csp_nonce() }}" async src="https://www.googletagmanager.com/gtag/js?id={{ gtm_measurement_id }}"></script>
@@ -19,3 +22,5 @@ It should be included in the base template if the user has enabled tracking cook
   window.dataLayer.push({ user_id: "{{ gtm_anon_id }}" });
   {% endif %}
 </script>
+{% endif %}
+{% endif %}
