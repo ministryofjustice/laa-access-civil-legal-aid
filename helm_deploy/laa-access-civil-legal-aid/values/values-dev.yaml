@@ -1,5 +1,5 @@
 # Default values for laa-access-civil-legal-aid in the dev environment.
-# The laa-access-civil-legal-aid-dev namespace installs an new helm release per feature branch
+# The laa-access-civil-legal-aid-dev namespace installs a new helm release per feature branch
 # this is then uninstalled when the branch is merged.
 environment: "dev"
 
