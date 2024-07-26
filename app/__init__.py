@@ -7,7 +7,7 @@ from flask_talisman import Talisman
 from flask_wtf.csrf import CSRFProtect
 from govuk_frontend_wtf.main import WTFormsHelpers
 from jinja2 import ChoiceLoader, PackageLoader, PrefixLoader
-from .main import get_gtm_anon_id
+from .main.gtm import get_gtm_anon_id
 import sentry_sdk
 
 from app.config import Config
