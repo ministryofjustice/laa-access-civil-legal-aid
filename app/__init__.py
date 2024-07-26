@@ -7,6 +7,7 @@ from flask_talisman import Talisman
 from flask_wtf.csrf import CSRFProtect
 from govuk_frontend_wtf.main import WTFormsHelpers
 from jinja2 import ChoiceLoader, PackageLoader, PrefixLoader
+from .main.gtm import get_gtm_anon_id
 import sentry_sdk
 
 from app.config import Config
@@ -130,13 +131,23 @@ def create_app(config_class=Config):
         filters="jsmin",
         output="dist/js/application-%(version)s.min.js",
     )
+    # Concat all headscripts seperately so they can be loaded into the DOM head.
+    headscripts = Bundle(
+        "src/js/headscripts/*.js",
+        filters="jsmin",
+        output="dist/js/headscripts.min.js"
+    )
     if "css" not in assets:
         assets.register("css", css)
     if "js" not in assets:
         assets.register("js", js)
+    if "headscripts" not in assets:
+        assets.register("headscripts", headscripts)
 
     # Register blueprints
     from app.main import bp as main_bp
+
+    main_bp.context_processor(get_gtm_anon_id)
 
     app.register_blueprint(main_bp)
 

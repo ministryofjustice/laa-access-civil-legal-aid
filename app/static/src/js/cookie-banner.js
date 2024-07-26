@@ -19,6 +19,7 @@
           'cookies_policy={"analytics": "yes", "functional": "yes"}; max-age=31557600; path=/; secure; samesite=lax';
         defaultMessage.hidden = true;
         acceptedMessage.hidden = false;
+        window.dispatchEvent(new Event("cookies_approved"));
       });
 
     // Reject additional cookies
