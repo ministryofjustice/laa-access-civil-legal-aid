@@ -4,13 +4,19 @@
 {%- from 'govuk_frontend_jinja/components/error-summary/macro.html' import govukErrorSummary-%}
 {%- from 'govuk_frontend_jinja/components/notification-banner/macro.html' import govukNotificationBanner -%}
 {%- from 'govuk_frontend_jinja/components/phase-banner/macro.html' import govukPhaseBanner -%}
+{% from 'components/gtm.html' import gtm_head, gtm_body %}
 
 {% set assetPath = url_for('static', filename='').rstrip('/') %}
 
 {% block pageTitle %}{{config['SERVICE_NAME']}} – GOV.UK{% endblock %}
 
 {% block head %}
-    {% include "components/gtm.html" %}
+  {% assets "headscripts" %}
+    <script nonce="{{ csp_nonce() }}">
+        gtm_anon_id = '{{ gtm_anon_id }}';
+    </script>
+    <script nonce="{{ csp_nonce() }}" type="module" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
     <meta name="description" content="{{config['SERVICE_NAME']}}">
     <meta name="keywords" content="GOV.UK, govuk, gov, government, uk, frontend, ui, user interface, jinja, python, flask, port, template, templating, macro, component, design system, html, forms, wtf, wtforms, widget, widgets, example">
     <meta name="author" content="{{config['DEPARTMENT_NAME']}}">
@@ -18,6 +24,7 @@
 {% endblock %}
 
 {% block bodyStart %}
+{{ gtm_body() }}
 {% if "cookies_policy" not in request.cookies %}
 {% set html %}
 <p class="govuk-body">We use some essential cookies to make this service work.</p>
