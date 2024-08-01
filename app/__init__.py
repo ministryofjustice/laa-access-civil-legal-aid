@@ -1,5 +1,4 @@
 from flask import Flask
-from flask_assets import Bundle, Environment
 from flask_compress import Compress
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -34,8 +33,7 @@ if Config.SENTRY_DSN:
 
 
 def create_app(config_class=Config):
-    app = Flask(__name__, static_url_path="/assets")
-    assets = Environment(app)
+    app = Flask(__name__, static_url_path="/assets", static_folder=Config.STATIC_DIR)
     app.config.from_object(config_class)
     app.jinja_env.lstrip_blocks = True
     app.jinja_env.trim_blocks = True
@@ -98,7 +96,6 @@ def create_app(config_class=Config):
     }
 
     # Initialise app extensions
-    assets.init_app(app)
     compress.init_app(app)
     csrf.init_app(app)
     limiter.init_app(app)
@@ -117,32 +114,6 @@ def create_app(config_class=Config):
 
     app.config["ASSETS_AUTO_BUILD"] = True  # Enable automatic rebuilding of assets
     app.config["ASSETS_MANIFEST"] = "cache"  # Enable cache manifest
-
-    # Create static asset bundles
-    css = Bundle(
-        "src/scss/govuk-frontend.scss",
-        filters="libsass, cssmin",  # Use SCSS filter to convert SCSS to CSS, then CSS minification
-        output="dist/css/application-%(version)s.min.css",
-    )
-    # Concat all JS files into one.
-    js = Bundle(
-        "src/js/*.js",
-        "*.js",
-        filters="jsmin",
-        output="dist/js/application-%(version)s.min.js",
-    )
-    # Concat all headscripts seperately so they can be loaded into the DOM head.
-    headscripts = Bundle(
-        "src/js/headscripts/*.js",
-        filters="jsmin",
-        output="dist/js/headscripts.min.js"
-    )
-    if "css" not in assets:
-        assets.register("css", css)
-    if "js" not in assets:
-        assets.register("js", js)
-    if "headscripts" not in assets:
-        assets.register("headscripts", headscripts)
 
     # Register blueprints
     from app.main import bp as main_bp

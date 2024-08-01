@@ -5,7 +5,13 @@
     "build": "npm run gov-js && npm run gov-images"
   },
   "dependencies": {
-    "govuk-frontend": "^5.4.0",
+    "govuk-frontend": "^5.4.0"
+  },
+  "devDependencies": {
+    "gulp": "^5.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-minify": "^3.1.0",
+    "gulp-sass": "^5.1.0",
     "sass": "^1.77.8"
   }
 }

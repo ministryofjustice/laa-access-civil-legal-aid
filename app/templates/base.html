@@ -10,16 +10,15 @@
 {% block pageTitle %}{{config['SERVICE_NAME']}} – GOV.UK{% endblock %}
 
 {% block head %}
-  {% assets "headscripts" %}
     <script nonce="{{ csp_nonce() }}">
         gtm_anon_id = '{{ gtm_anon_id }}';
     </script>
-    <script nonce="{{ csp_nonce() }}" type="module" src="{{ ASSET_URL }}"></script>
-  {% endassets %}
+    <script nonce="{{ csp_nonce() }}" type="module" src="{{ url_for('static', filename='scripts.js') }}"></script>
     <meta name="description" content="{{config['SERVICE_NAME']}}">
     <meta name="keywords" content="GOV.UK, govuk, gov, government, uk, frontend, ui, user interface, jinja, python, flask, port, template, templating, macro, component, design system, html, forms, wtf, wtforms, widget, widgets, example">
     <meta name="author" content="{{config['DEPARTMENT_NAME']}}">
-    {% assets "css" %}<link type="text/css" href="{{ ASSET_URL }}" rel="stylesheet">{% endassets %}
+    <link type="text/css" href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+
 {% endblock %}
 
 {% block bodyStart %}
@@ -166,10 +165,8 @@
 {% endblock %}
 
 {% block bodyEnd %}
-    {% assets "js" %}
         <script nonce="{{ csp_nonce() }}" type="module">
-            import { initAll } from "{{ ASSET_URL }}";
+            import { initAll } from "{{ url_for('static', filename='scripts.js') }}";
             initAll();
         </script>
-    {% endassets %}
 {% endblock %}
