@@ -4,6 +4,9 @@ from dotenv import load_dotenv
 # Allows .env to be used in project for local development.
 load_dotenv()
 
+here = lambda *x: os.path.join(os.path.abspath(os.path.dirname(__file__)), *x)
+PROJECT_ROOT = here("..")
+root = lambda *x: os.path.join(os.path.abspath(PROJECT_ROOT), *x)
 
 class Config(object):
     ENVIRONMENT = os.environ.get("CLA_ENVIRONMENT", "production")
@@ -20,3 +23,4 @@ class Config(object):
     SESSION_COOKIE_HTTPONLY = True
     # SESSION_COOKIE_SECURE = True
     SENTRY_DSN = os.environ.get("SENTRY_DSN")
+    STATIC_DIR = os.path.join(root(), "static/dist")

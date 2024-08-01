@@ -27,14 +27,11 @@ deprecated==1.2.14
 flask==3.0.3
     # via
     #   -r requirements/source/requirements-base.in
-    #   flask-assets
     #   flask-compress
     #   flask-limiter
     #   flask-wtf
     #   govuk-frontend-wtf
     #   sentry-sdk
-flask-assets==2.1.0
-    # via -r requirements/source/requirements-base.in
 flask-compress==1.15
     # via -r requirements/source/requirements-base.in
 flask-limiter==3.8.0
@@ -135,8 +132,6 @@ urllib3==2.2.2
     # via
     #   requests
     #   sentry-sdk
-webassets==2.0
-    # via flask-assets
 werkzeug==3.0.3
     # via flask
 wrapt==1.16.0
