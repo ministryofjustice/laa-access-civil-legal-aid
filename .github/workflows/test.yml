@@ -23,6 +23,7 @@ jobs:
       run: |
         pip install pytest pytest-cov
         pytest tests.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
+        pytest
 
     - name: Upload pytest test results
       uses: actions/upload-artifact@v4
@@ -33,7 +34,7 @@ jobs:
       if: ${{ always() }}
 
     - name: Upload Axe results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: axe-results
         path: playwright/axe/
