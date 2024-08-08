@@ -4,9 +4,14 @@ from playwright.sync_api import Page
 from axe_core_python.sync_playwright import Axe
 import json
 import pytest
+import os
 
 @pytest.fixture()
 def test_accessibility(page: Page):
+    directory = "playwright/axe"
+    if not os.path.exists(directory):
+        os.makedirs(directory, exist_ok=True)
+
     axe = Axe()
     results = axe.run(page)
     sanitized_title = re.sub(r'[\/:*?"<>|]', '_', page.title())
