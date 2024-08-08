@@ -882,3 +882,7 @@ FodyWeavers.xsd
 # Additional files built by Visual Studio
 
 # End of https://www.toptal.com/developers/gitignore/api/git,osx,venv,flask,linux,macos,python,windows,certificates,visualstudio,jetbrains+all,visualstudiocode
+
+
+# Playwright axe file
+*axe_results*.json
