@@ -9,7 +9,8 @@ import pytest
 def test_accessibility(page: Page):
     axe = Axe()
     results = axe.run(page)
-    file_path = f"playwright/axe/{page.title()}_axe_results.json"
+    sanitized_title = re.sub(r'[\/:*?"<>|]', '_', page.title())
+    file_path = f"playwright/axe/{sanitized_title}_axe_results.json"
     with open(file_path, "w+") as file:
         json.dump(results.get('violations'), file, indent=4)
 
