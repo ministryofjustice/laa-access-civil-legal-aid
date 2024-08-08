@@ -2,4 +2,4 @@
 ruff
 isort
 pytest-playwright
-axe-playwright-python
+axe-core-python

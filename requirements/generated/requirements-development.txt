@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file=requirements/generated/requirements-development.txt requirements/source/requirements-development.in
 #
-axe-playwright-python==0.1.4
+axe-core-python==0.1.0
     # via -r requirements/source/requirements-development.in
 blinker==1.8.2
     # via
@@ -93,9 +93,7 @@ packaging==24.1
     #   limits
     #   pytest
 playwright==1.45.0
-    # via
-    #   axe-playwright-python
-    #   pytest-playwright
+    # via pytest-playwright
 pluggy==1.5.0
     # via pytest
 pyee==11.1.0
