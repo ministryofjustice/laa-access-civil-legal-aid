@@ -36,7 +36,7 @@ jobs:
       if: ${{ always() }}
 
     - name: Upload axe results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: axe-results
         path: playwright/axe/*.json
