@@ -5,4 +5,4 @@ import pytest
 
 @pytest.fixture(autouse=True)
 def open_base_url(page: Page):
-    page.goto("https://playwright.dev/")
+    page.goto("http://127.0.0.1:8020/")

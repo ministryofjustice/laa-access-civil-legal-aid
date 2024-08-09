@@ -18,10 +18,14 @@ def test_accessibility(page: Page):
     axe = Axe()
     results = axe.run(page)
 
-    wcag_violations = [violation for violation in results['violations'] if any(tag.startswith("wcag") for tag in violation['tags'])]
+    wcag_violations = [violation for violation in results['violations'] if any(tag in violation['tags'] for tag in ["wcag2aa"])]
     
-    sanitized_title = re.sub(r'[\/:*?"<>|]', '_', page.title())
-    file_path = f"playwright/axe/{sanitized_title}_axe_results.json"
-    with open(file_path, "w") as file:
-        json.dump(wcag_violations, file, indent=4)
+    if len(wcag_violations) == 0:
+        assert f"No WCAG accessibility issues found"
+    else:
+        sanitized_title = re.sub(r'[\/:*?"<>|]', '_', page.title())
+        file_path = f"playwright/axe/axe_results_{sanitized_title[:30]}.json"
+        with open(file_path, "w") as file:
+            json.dump(wcag_violations, file, indent=4)
+        assert not wcag_violations, f"WCAG accessibility issues found: {wcag_violations}"
 
