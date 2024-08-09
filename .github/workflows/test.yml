@@ -35,7 +35,7 @@ jobs:
 
     - name: Functional test with pytest
       run: |
-        pip install pytest pytest-cov
+        npm install
         playwright install
         pytest tests/functional_tests
 
@@ -44,3 +44,4 @@ jobs:
       with:
         name: axe-results
         path: tests/axe/*.json
+      if: ${{ always() }}
