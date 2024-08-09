@@ -8,6 +8,9 @@ import os
 
 @pytest.fixture()
 def test_accessibility(page: Page):
+    # Ensures run after test
+    yield
+    
     directory = "playwright/axe"
     if not os.path.exists(directory):
         os.makedirs(directory, exist_ok=True)
