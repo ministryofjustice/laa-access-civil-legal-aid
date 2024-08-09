@@ -21,7 +21,7 @@ def test_accessibility(page: Page):
     wcag_violations = [violation for violation in results['violations'] if any(tag in violation['tags'] for tag in ["wcag2a", "wcag2aa"])]
     
     if len(wcag_violations) == 0:
-        assert f"No WCAG accessibility issues found"
+        assert "No WCAG accessibility issues found"
     else:
         sanitized_title = re.sub(r'[\/:*?"<>|]', '_', page.title())
         file_path = f"tests/functional_tests/accessibility_output/axe_results_{sanitized_title[:30]}.json"

@@ -1,7 +1,6 @@
 import pytest
 from app import Config
 from app import create_app
-from playwright.sync_api import Page
 from flask import url_for
 
 class TestConfig(Config):
