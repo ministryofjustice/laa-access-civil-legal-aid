@@ -9,7 +9,7 @@ class TestConfig(Config):
     DEBUG = True
     SERVER_NAME = "localhost"
     RATELIMIT_ENABLED = False
-
+    SECRET_KEY = "TEST_KEY"
 
 @pytest.fixture(scope="session")
 def app():
