@@ -10,15 +10,18 @@ import os
 def test_accessibility(page: Page):
     # Ensures run after test
     yield
-    
+
     directory = "playwright/axe"
     if not os.path.exists(directory):
         os.makedirs(directory, exist_ok=True)
 
     axe = Axe()
     results = axe.run(page)
+
+    wcag_violations = [violation for violation in results['violations'] if any(tag.startswith("wcag") for tag in violation['tags'])]
+    
     sanitized_title = re.sub(r'[\/:*?"<>|]', '_', page.title())
     file_path = f"playwright/axe/{sanitized_title}_axe_results.json"
-    with open(file_path, "w+") as file:
-        json.dump(results.get('violations'), file, indent=4)
+    with open(file_path, "w") as file:
+        json.dump(wcag_violations, file, indent=4)
 
