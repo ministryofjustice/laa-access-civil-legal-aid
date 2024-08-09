@@ -1,5 +1,6 @@
 -r requirements-base.in
 ruff
 isort
+pytest-flask
 pytest-playwright
 axe-core-python
