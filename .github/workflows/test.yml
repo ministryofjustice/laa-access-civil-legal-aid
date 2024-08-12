@@ -27,7 +27,6 @@ jobs:
     - name: Unit test with pytest
       run: |
         pip install pytest pytest-cov
-        playwright install
         pytest tests/unit_tests --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
 
     - name: Upload pytest test results
