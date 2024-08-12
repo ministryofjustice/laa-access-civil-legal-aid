@@ -75,6 +75,12 @@ To run tests:
 pytest
 ```
 
+To run specific tests point to the folder/file:
+
+```shell
+pytest tests/unit_tests
+```
+
 Run tests in headed mode:
 
 ```shell
