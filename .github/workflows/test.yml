@@ -27,7 +27,7 @@ jobs:
     - name: Unit test with pytest
       run: |
         pip install pytest pytest-cov
-        pytest unit_tests --doctest-modules --junitxml=junit/unit-test-results.xml --cov=com --cov-report=xml --cov-report=html
+        pytest tests/unit_tests --doctest-modules --junitxml=junit/unit-test-results.xml --cov=com --cov-report=xml --cov-report=html
 
     - name: Upload pytest test results
       uses: actions/upload-artifact@v4
@@ -69,33 +69,9 @@ jobs:
       # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
 
-  accessibility_test:
-    name: Accessibility Test
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.12'
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install -r requirements/generated/requirements-development.txt
-
-    - name: Accessibility test with pytest
-      run: |
-        pip install pytest pytest-cov
-        npm install
-        playwright install
-        pytest tests/accessibility_tests
-
     - name: Upload axe results
       uses: actions/upload-artifact@v4
       with:
         name: axe-results
-        path: tests/accessiblity_tests/accessibility_output/*.json
+        path: tests/functional_tests/accessibility_output/*.json
       if: ${{ always() }}

@@ -78,13 +78,13 @@ pytest
 To run unit tests:
 
 ```shell
-pytest unit_tests
+pytest tests/unit_tests
 ```
 
 To run functional/non-functional tests:
 
 ```shell
-pytest tests
+pytest tests/functional_tests
 ```
 
 Run tests in headed mode:
