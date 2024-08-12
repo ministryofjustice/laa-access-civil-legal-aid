@@ -52,6 +52,7 @@ jobs:
 
     - name: Functional test with pytest
       run: |
+        export SECRET_KEY='TEST_KEY'
         pip install pytest pytest-cov
         npm install
         playwright install
