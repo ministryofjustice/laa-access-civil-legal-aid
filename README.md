@@ -69,16 +69,22 @@ python -m pytest --cov=app --cov-report=term-missing --cov-branch
 
 ## Playwright Testing
 
-To run tests:
+To run all tests:
 
 ```shell
 pytest
 ```
 
-To run specific tests point to the folder/file:
+To run unit tests:
 
 ```shell
-pytest tests/unit_tests
+pytest unit_tests
+```
+
+To run functional/non-functional tests:
+
+```shell
+pytest tests
 ```
 
 Run tests in headed mode:
