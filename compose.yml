@@ -4,7 +4,7 @@ services:
     build:
       context: .
       args:
-        BASE_IMAGE: python:3.11-bookworm
+        BASE_IMAGE: python:3.11.9-bullseye
       target: development
     restart: always
     environment:

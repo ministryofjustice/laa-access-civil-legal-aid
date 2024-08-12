@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=python:3.11-slim
+ARG BASE_IMAGE=python:3.11.9-bullseye
 FROM $BASE_IMAGE AS base
 
 ARG REQUIREMENTS=requirements-production.txt
