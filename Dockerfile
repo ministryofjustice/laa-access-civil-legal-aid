@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=python:3.11.9-alpine3.20
+ARG BASE_IMAGE=python:3.11-alpine
 FROM $BASE_IMAGE AS base
 
 ARG REQUIREMENTS=requirements-production.txt
