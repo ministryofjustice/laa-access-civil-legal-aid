@@ -17,6 +17,7 @@ jobs:
 
     - name: Install dependencies
       run: |
+        export SECRET_KEY='TEST_KEY'
         python -m pip install --upgrade pip
         python -m pip install -r requirements/generated/requirements-development.txt
 
@@ -52,6 +53,7 @@ jobs:
 
     - name: Functional test with pytest
       run: |
+        export SECRET_KEY='TEST_KEY'
         pip install pytest pytest-cov
         pytest tests/functional_tests --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
 
