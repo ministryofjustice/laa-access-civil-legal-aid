@@ -38,6 +38,11 @@ def startup(app, page):
 
 @pytest.fixture(scope="function", autouse=True)
 def test_accessibility(page: Page):
+    '''
+    Inserts axe core python into a page at the yield step
+    to run accessibility based testing. This is set to autouse
+    to run on every functional test.
+    '''
     directory = "tests/functional_tests/accessibility_output"
     if not os.path.exists(directory):
         os.makedirs(directory, exist_ok=True)
