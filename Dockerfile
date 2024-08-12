@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=python:3.12-slim
+ARG BASE_IMAGE=python:3.11-slim
 FROM $BASE_IMAGE AS base
 
 ARG REQUIREMENTS=requirements-production.txt
@@ -27,6 +27,7 @@ RUN npm install
 COPY requirements/generated/$REQUIREMENTS requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
+RUN pip install --upgrade setuptools
 
 COPY govuk-frontend-flask.py .
 COPY app ./app
