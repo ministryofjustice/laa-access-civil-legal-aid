@@ -27,13 +27,13 @@ jobs:
     - name: Unit test with pytest
       run: |
         pip install pytest pytest-cov
-        pytest unit_tests --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
+        pytest unit_tests --doctest-modules --junitxml=junit/unit-test-results.xml --cov=com --cov-report=xml --cov-report=html
 
     - name: Upload pytest test results
       uses: actions/upload-artifact@v4
       with:
         name: pytest-results
-        path: junit/test-results.xml
+        path: junit/unit-test-results.xml
       # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
 
@@ -59,13 +59,13 @@ jobs:
         pip install pytest pytest-cov
         npm install
         playwright install
-        pytest tests/functional_tests --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
+        pytest tests/functional_tests --doctest-modules --junitxml=junit/functional-test-results.xml --cov=com --cov-report=xml --cov-report=html
 
     - name: Upload pytest test results
       uses: actions/upload-artifact@v4
       with:
         name: pytest-results
-        path: junit/test-results.xml
+        path: junit/functional-test-results.xml
       # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
 
