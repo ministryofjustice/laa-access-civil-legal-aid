@@ -2,11 +2,12 @@ name: Test
 
 on: workflow_call
 
+env:
+  SECRET_KEY: "TEST_KEY"
 
 
 jobs:
   unit_test:
-    environment: SECRET_KEY='TEST_KEY'
     name: Unit Test
     runs-on: ubuntu-latest
     steps:
@@ -37,7 +38,6 @@ jobs:
       if: ${{ always() }}
 
   functional_test:
-    environment: SECRET_KEY='TEST_KEY'
     name: Functional Test
     runs-on: ubuntu-latest
     steps:
@@ -68,7 +68,6 @@ jobs:
       if: ${{ always() }}
 
   accessibility_test:
-    environment: SECRET_KEY='TEST_KEY'
     name: Accessibility Test
     runs-on: ubuntu-latest
     steps:
