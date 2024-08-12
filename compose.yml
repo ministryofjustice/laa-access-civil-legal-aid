@@ -4,7 +4,7 @@ services:
     build:
       context: .
       args:
-        BASE_IMAGE: python:3.12-bookworm
+        BASE_IMAGE: python:3.11-bookworm
       target: development
     restart: always
     environment:

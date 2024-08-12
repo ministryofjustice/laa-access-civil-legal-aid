@@ -13,7 +13,7 @@ class Config(object):
     DEPARTMENT_URL = os.environ.get("DEPARTMENT_URL", "https://mojdigital.blog.gov.uk/")
     RATELIMIT_HEADERS_ENABLED = True
     RATELIMIT_STORAGE_URI = os.environ.get("REDIS_URL")
-    SECRET_KEY = os.environ.get("SECRET_KEY", "TEST_KEY")
+    SECRET_KEY = os.environ["SECRET_KEY"]
     SERVICE_NAME = os.environ.get("SERVICE_NAME", "Access Civil Legal Aid")
     SERVICE_PHASE = os.environ.get("SERVICE_PHASE", "Beta")
     SERVICE_URL = os.environ.get("SERVICE_URL", "")
