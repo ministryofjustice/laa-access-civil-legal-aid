@@ -17,11 +17,21 @@ jobs:
         JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
         JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
 
+    - name: Process PR data
+      id: process_pr_data
+      run: |
+
+        pr_body="${{ github.event.pull_request.body }}"
+        stripped_body=$("$pr_body" | sed 's/<[^>]*>//g')
+
+        echo "repo_name=$(basename ${{ github.repository }})" >> $GITHUB_ENV
+        echo "stripped_body='$stripped_body'" >> $GITHUB_ENV
+
     - name: Create
       id: create
       uses: atlassian/gajira-create@master
       with:
           project: LGA
           issuetype: Task
-          summary: "[Snyk] -  '$(basename ${{ github.repository }})' -  ${{ github.event.pull_request.title }}"
-          description: "$('${{ github.event.pull_request.body }}' | sed 's/<[^>]*>//g')"
+          summary: "[Snyk] -  $(basename ${{ github.repository }}) -  ${{ github.event.pull_request.title }}"
+          description: ${{ env.stripped_body }}
