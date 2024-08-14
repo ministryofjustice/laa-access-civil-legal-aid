@@ -22,12 +22,13 @@ jobs:
       run: |
         repo_name=$(basename ${{ github.repository }})
 
+        pr_body="${{ github.event.pull_request.body }}"
         python -c "
         import html
         import re
         import os
 
-        pr_body="${{ github.event.pull_request.body }}"
+        pr_body = os.getenv('PR_BODY', '')
         clean_body = re.sub(r'<[^>]+>', '', html.unescape(pr_body))
         print(f'::set-output name=clean_body::{clean_body}')
                   "
