@@ -20,13 +20,16 @@ jobs:
     - name: Process PR data
       id: process_pr_data
       run: |
-        repo_name=$(echo "$GITHUB_REPOSITORY" | cut -d'/' -f2)
+        repo_name=$(basename ${{ github.repository }}
 
         pr_body="${{ github.event.pull_request.body }}"
-        stripped_body=$("$pr_body" | sed 's/<[^>]*>//g')
+        STRIPPED_BODY=$(node -e "
+            const sanitizeHtml = require('sanitize-html');
+            console.log(sanitizeHtml('$PR_BODY', { allowedTags: [], allowedAttributes: {} }));
+          ")
+          echo "::set-output name=clean_body::$STRIPPED_BODY" >> $GITHUB_ENV
 
         echo "repo_name=$repo_name" >> $GITHUB_ENV
-        echo "stripped_body='$stripped_body'" >> $GITHUB_ENV
 
     - name: Create
       id: create
