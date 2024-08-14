@@ -36,7 +36,8 @@ def check_accessibility(page: Page):
             sanitized_title = re.sub(invalid_filename_chars, '_', page.title())
 
             max_title_len = 30
-            file_path = f"{directory}/axe_results_{sanitized_title[:max_title_len]}.json"
+            file_name = f"axe_results_{sanitized_title[:max_title_len]}.json"
+            file_path = os.path.join(directory, file_name)
             with open(file_path, "w") as file:
                 json.dump(wcag_violations, file, indent=4)
 
