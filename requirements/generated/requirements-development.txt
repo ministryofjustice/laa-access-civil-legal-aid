@@ -4,6 +4,8 @@
 #
 #    pip-compile --output-file=requirements/generated/requirements-development.txt requirements/source/requirements-development.in
 #
+axe-core-python==0.1.0
+    # via -r requirements/source/requirements-development.in
 blinker==1.8.2
     # via
     #   flask
@@ -32,6 +34,7 @@ flask==3.0.3
     #   flask-limiter
     #   flask-wtf
     #   govuk-frontend-wtf
+    #   pytest-flask
     #   sentry-sdk
 flask-assets==2.1.0
     # via -r requirements/source/requirements-base.in
@@ -91,9 +94,7 @@ packaging==24.1
     #   limits
     #   pytest
 playwright==1.45.0
-    # via
-    #   -r requirements/source/requirements-development.in
-    #   pytest-playwright
+    # via pytest-playwright
 pluggy==1.5.0
     # via pytest
 pyee==11.1.0
@@ -103,9 +104,12 @@ pygments==2.18.0
 pytest==8.3.1
     # via
     #   pytest-base-url
+    #   pytest-flask
     #   pytest-playwright
 pytest-base-url==2.1.0
     # via pytest-playwright
+pytest-flask==1.3.0
+    # via -r requirements/source/requirements-development.in
 pytest-playwright==0.5.1
     # via -r requirements/source/requirements-development.in
 python-dotenv==1.0.1
@@ -138,7 +142,9 @@ urllib3==2.2.2
 webassets==2.0
     # via flask-assets
 werkzeug==3.0.3
-    # via flask
+    # via
+    #   flask
+    #   pytest-flask
 wrapt==1.16.0
     # via deprecated
 wtforms==3.1.2
