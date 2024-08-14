@@ -8,7 +8,7 @@ jobs:
   gajira:
     name: Raise Jira Issue
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.pull_request.labels, 'snyk') }}
+    if: ${{ contains(github.event.pull_request.title, 'snyk') }}
     steps:
     - name: Login
       uses: atlassian/gajira-login@master
