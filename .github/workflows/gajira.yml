@@ -23,5 +23,5 @@ jobs:
       with:
           project: LGA
           issuetype: Task
-          summary: "[Snyk] -  $(basename ${{ github.repository }}) -  ${{ github.event.pull_request.title }}"
-          description: $("${{ github.event.pull_request.body }}" | sed 's/<[^>]*>//g')
+          summary: "[Snyk] -  '$(basename ${{ github.repository }})' -  ${{ github.event.pull_request.title }}"
+          description: "$('${{ github.event.pull_request.body }}' | sed 's/<[^>]*>//g')"
