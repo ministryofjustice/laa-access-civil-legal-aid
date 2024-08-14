@@ -2,10 +2,7 @@ name: Raise Jira Issue
 
 on:
   pull_request:
-    types: [opened]
-  push:
-    branches-ignore:
-      - main
+    types: [opened, reopened]
 
 jobs:
   gajira:
