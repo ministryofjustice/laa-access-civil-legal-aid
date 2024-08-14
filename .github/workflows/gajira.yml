@@ -3,6 +3,9 @@ name: Raise Jira Issue
 on:
   pull_request:
     types: [opened]
+  push:
+    branches-ignore:
+      - main
 
 jobs:
   gajira:
@@ -26,7 +29,7 @@ jobs:
         stripped_body=$(echo "$pr_body" | sed 's/<[^>]*>//g')
 
         echo "repo_name=$repo_name" >> $GITHUB_ENV
-        echo "stripped_body=$stripped_body" >> $GITHUB_ENV
+        echo "stripped_body='$stripped_body"' >> $GITHUB_ENV
 
     - name: Create
       id: create
