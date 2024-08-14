@@ -20,18 +20,11 @@ jobs:
     - name: Process PR data
       id: process_pr_data
       run: |
-        repo_name=$(basename ${{ github.repository }})
+        repo_name=$(basename ${{ github.repository }}
 
-        pr_body="${{ github.event.pull_request.body }}"
-        python -c "
-        import html
-        import re
-        import os
-
-        pr_body = os.getenv('PR_BODY', '')
-        clean_body = re.sub(r'<[^>]+>', '', html.unescape(pr_body))
-        print(f'::set-output name=clean_body::{clean_body}')
-                  "
+        echo "${{ github.event.pull_request.body }}" > pr_body.txt
+        clean_body=$(sed 's/<[^>]*>//g' pr_body.txt)
+        
         echo "repo_name=$repo_name" >> $GITHUB_ENV
         echo "stripped_body='$clean_body'" >> $GITHUB_ENV
 
