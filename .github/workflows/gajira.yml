@@ -20,7 +20,7 @@ jobs:
     - name: Process PR data
       id: process_pr_data
       run: |
-        repo_name=$(basename ${{ github.repository }}
+        repo_name=$(basename ${{ github.repository }})
 
         pr_body="${{ github.event.pull_request.body }}"
         python -c "
