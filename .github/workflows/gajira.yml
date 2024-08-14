@@ -20,14 +20,10 @@ jobs:
     - name: Process PR data
       id: process_pr_data
       run: |
-        repo_name=$(basename ${{ github.repository }})
+        stripped_body=$("${{ github.event.pull_request.body }}" | sed 's/<[^>]*>//g')
 
-        "${{ github.event.pull_request.body }}" > pr_body.txt
-        sed 's/<[^>]*>//g' pr_body.txt > clean_body.txt
-        cleaned_body=$(cat clean_body.txt | sed ':a;N;$!ba;s/\n/\\n/g')
-
-        echo "repo_name=$repo_name" >> $GITHUB_ENV
-        echo "stripped_body='$cleaned_body'" >> $GITHUB_ENV
+        echo "repo_name=$(basename ${{ github.repository }})" >> $GITHUB_ENV
+        echo "stripped_body='$stripped_body'" >> $GITHUB_ENV
 
     - name: Create
       id: create
