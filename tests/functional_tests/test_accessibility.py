@@ -36,18 +36,17 @@ def check_accessibility(page: Page):
             sanitized_title = re.sub(invalid_filename_chars, '_', page.title())
 
             max_title_len = 30
-            file_path = f"tests/functional_tests/accessibility_output/axe_results_{sanitized_title[:max_title_len]}.json"
+            file_path = f"{directory}/axe_results_{sanitized_title[:max_title_len]}.json"
             with open(file_path, "w") as file:
                 json.dump(wcag_violations, file, indent=4)
 
 
 @pytest.mark.usefixtures("live_server")
 def test_all_page_accessibility(app, page: Page):
+    ignored_routes = ['static', '/']
     routes = app.view_functions
     for route in routes:
-        if route == 'static' or route == '/':
-            pass
-        else:
+        if route not in ignored_routes:
             full_url = url_for(route, _external=True)
             page.goto(full_url)
             check_accessibility(page)
