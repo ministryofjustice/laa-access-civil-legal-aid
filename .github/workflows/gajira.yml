@@ -26,6 +26,8 @@ jobs:
         
         stripped_body=$(echo "$pr_body" | sed 's/<[^>]*>//g')
 
+        echo "::debug::stripped_body=$stripped_body"
+
         echo "repo_name=$repo_name" >> $GITHUB_OUTPUT
         echo "stripped_body=$stripped_body" >> $GITHUB_OUTPUT
 
