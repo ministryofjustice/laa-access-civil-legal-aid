@@ -20,7 +20,7 @@ jobs:
     - name: Process PR data
       id: process_pr_data
       run: |
-        'pr_body="${{ github.event.pull_request.body }}"'
+        echo '::set-output pr_body="${{ github.event.pull_request.body }}"'
         'stripped_body=$("$pr_body" | sed 's/<[^>]*>//g')'
 
         "repo_name=$(basename ${{ github.repository }})" >> $GITHUB_ENV
