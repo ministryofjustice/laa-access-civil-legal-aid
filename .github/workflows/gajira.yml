@@ -26,8 +26,8 @@ jobs:
         
         stripped_body=$(cat pr_body.txt | sed 's/<[^>]*>//g')
 
-        echo "repo_name=$repo_name" >> $GITHUB_OUTPUT
-        echo "stripped_body=$stripped_body" >> $GITHUB_OUTPUT
+        echo "repo_name=$repo_name" >> $GITHUB_ENV
+        echo "stripped_body=$stripped_body" >> $GITHUB_ENV
 
     - name: Create
       id: create
@@ -35,5 +35,5 @@ jobs:
       with:
           project: LGA
           issuetype: Task
-          summary: "[Snyk] -  ${{ steps.process_pr_data.outputs.repo_name }} -  ${{ github.event.pull_request.title }}"
-          description: ${{ steps.process_pr_data.outputs.stripped_body }}
+          summary: "[Snyk] -  ${{ env.repo_name }} -  ${{ github.event.pull_request.title }}"
+          description: ${{ env.stripped_body }}
