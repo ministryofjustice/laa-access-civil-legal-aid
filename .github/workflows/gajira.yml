@@ -24,9 +24,7 @@ jobs:
 
         pr_body="${{ github.event.pull_request.body }}"
         
-        stripped_body=$(echo "$pr_body" | sed 's/<[^>]*>//g')
-
-        echo "::debug::stripped_body=$stripped_body"
+        stripped_body=$(echo "$pr_body" | sed 's/<[^>]*>//g' | sed "s/'//g" | sed 's/"//g')
 
         echo "repo_name=$repo_name" >> $GITHUB_OUTPUT
         echo "stripped_body=$stripped_body" >> $GITHUB_OUTPUT
