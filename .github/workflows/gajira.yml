@@ -20,10 +20,13 @@ jobs:
     - name: Process PR data
       id: process_pr_data
       run: |
-        echo "pr_body=$(${{ github.event.pull_request.body }} | sed 's/<[^>]*>//g')" >> $GITHUB_OUTPUT
+        repo_name=$(basename ${{ github.repository }})
+        
+        pr_body="${{ github.event.pull_request.body }}"
+        stripped_body=$("$pr_body" | sed 's/<[^>]*>//g')
 
-        "repo_name=$(basename ${{ github.repository }})" >> $GITHUB_ENV
-        "stripped_body='$stripped_body'" >> $GITHUB_ENV
+        echo "repo_name=$repo_name" >> $GITHUB_OUTPUT
+        echo "stripped_body='$stripped_body'" >> $GITHUB_OUTPUT
 
     - name: Create
       id: create
@@ -31,5 +34,5 @@ jobs:
       with:
           project: LGA
           issuetype: Task
-          summary: "[Snyk] -  ${{ env.repo_name }} -  ${{ github.event.pull_request.title }}"
-          description: ${{ env.stripped_body }}
+          summary: "[Snyk] -  ${{ steps.set_outputs.outputs.repo_name }} -  ${{ github.event.pull_request.title }}"
+          description: ${{ steps.set_outputs.outputs.stripped_body }}
