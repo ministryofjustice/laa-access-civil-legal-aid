@@ -14,7 +14,7 @@ from app.config import Config
 
 compress = Compress()
 csrf = CSRFProtect()
-limiter = Limiter(get_remote_address, default_limits=["2 per second", "60 per minute"])
+limiter = Limiter(get_remote_address, default_limits=["5 per second", "60 per minute"])
 talisman = Talisman()
 
 if Config.SENTRY_DSN:
@@ -133,9 +133,7 @@ def create_app(config_class=Config):
     )
     # Concat all headscripts seperately so they can be loaded into the DOM head.
     headscripts = Bundle(
-        "src/js/headscripts/*.js",
-        filters="jsmin",
-        output="dist/js/headscripts.min.js"
+        "src/js/headscripts/*.js", filters="jsmin", output="dist/js/headscripts.min.js"
     )
     if "css" not in assets:
         assets.register("css", css)
@@ -146,9 +144,11 @@ def create_app(config_class=Config):
 
     # Register blueprints
     from app.main import bp as main_bp
+    from app.categories import bp as categories_bp
 
     main_bp.context_processor(get_gtm_anon_id)
 
     app.register_blueprint(main_bp)
+    app.register_blueprint(categories_bp)
 
     return app

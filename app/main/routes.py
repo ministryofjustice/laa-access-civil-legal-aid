@@ -1,4 +1,12 @@
-from flask import flash, json, make_response, redirect, render_template, request
+from flask import (
+    flash,
+    json,
+    make_response,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
 from flask_wtf.csrf import CSRFError
 from werkzeug.exceptions import HTTPException
 
@@ -6,9 +14,9 @@ from app.main import bp
 from app.main.forms import CookiesForm
 
 
-@bp.route("/", methods=["GET"])
+@bp.route("/main", methods=["GET"])
 def index():
-    return render_template("index.html")
+    return redirect(url_for("categories.index"))
 
 
 @bp.route("/accessibility", methods=["GET"])

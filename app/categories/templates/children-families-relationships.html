@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
+{%- from 'components/list-items.html' import list_item, list_item_small -%}
+
+{% block beforeContent%}
+{{ super() }}
+{{ govukBackLink({
+    'href': url_for('categories.index'),
+    'text': "Back"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">Children, families and relationships</h1>
+
+        {{ list_item("Children and social services, children in care",
+                     "Help for any problem where social services or the council are involved with a child. Includes children in care, child being adopted. Also special guardianship.",
+                     url_for("categories.children_families_relationships")) }}
+
+        {{ list_item("During divorce or separation: children and money",
+             "Help with decisions about children, money and living arrangements during divorce or separation. Includes family mediation.",
+             url_for("categories.index")) }}
+
+        {{ list_item("Problems with an ex-partner: children or money",
+             "Includes problems with money and children - contact with children, child custody. If an ex-partner is not doing what they agreed in court or mediation. If you're worried about a child.",
+             url_for("categories.index")) }}
+    </div>
+</div>
+{% endblock %}

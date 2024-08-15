@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
+{%- from 'govuk_frontend_jinja/components/panel/macro.html' import govukPanel -%}
+
+{% block beforeContent%}
+{{ super() }}
+{{ govukBackLink({
+    'href': back_link,
+    'text': "Back"
+  }) }}
+{% endblock %}
+
+{% macro list_item(title, description, link) -%}
+    <h2 class="govuk-heading-m random-class">
+        <a class="govuk-link govuk-link--no-visited-state" href="{{ link }}">{{ title }}</a>
+    </h2>
+    <p class="govuk-body">{{ description }}</p>
+{%- endmacro %}
+
+{% macro list_item_small(title, description, link) -%}
+    <h2 class="govuk-heading-s">
+        <a class="govuk-link govuk-link--no-visited-state" href="{{ link }}">{{ title }}</a>
+    </h2>
+    <p class="govuk-body">{{ description }}</p>
+{%- endmacro %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">You are eligible for Legal Aid</h1>
+
+        {{ govukPanel({
+            "titleText": "Form complete",
+            "html": "Your case reference number is:<br><strong>AB-1234-5678</strong>"
+        }) }}
+    </div>
+</div>
+{% endblock %}
