@@ -22,7 +22,7 @@ jobs:
       run: |
         repo_name=$(basename ${{ github.repository }})
 
-        pr_body="${{ github.event.pull_request.body }}"
+        pr_body=$(jq -r '.pull_request.body' <<< '${{ toJson(github.event) }}')
         stripped_body=$(echo "$pr_body" | sed 's/<[^>]*>//g' | tr '\n' ' ' | tr -s ' ')
 
         echo "repo_name=$repo_name" >> $GITHUB_ENV
