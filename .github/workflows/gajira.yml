@@ -22,10 +22,12 @@ jobs:
       run: |
         repo_name=$(basename ${{ github.repository }})
 
-        pr_body=${{ github.event.pull_request.body }}
+        pr_body=$(cat <<EOF
+                  ${{ github.event.pull_request.body }}
+                  EOF
+                  )
         
-        stripped_body=$(echo "$pr_body" | sed 's/<[^>]*>//g' | sed "s/'//g" | sed 's/"//g')
-
+        stripped_body=$(echo "$pr_body" | sed 's/<[^>]*>//g')
 
         echo "repo_name=$repo_name" >> $GITHUB_OUTPUT
         echo "stripped_body=$stripped_body" >> $GITHUB_OUTPUT
