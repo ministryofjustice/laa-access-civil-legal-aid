@@ -1,12 +1,12 @@
 {% macro list_item(title, description, link) -%}
-    <h2 class="govuk-heading-m random-class">
+    <h2 class="govuk-heading-m small-margin">
         <a class="govuk-link govuk-link--no-visited-state" href="{{ link }}">{{ title }}</a>
     </h2>
     <p class="govuk-body">{{ description }}</p>
 {%- endmacro %}
 
 {% macro list_item_small(title, description, link) -%}
-    <h2 class="govuk-heading-s">
+    <h2 class="govuk-heading-s small-margin">
         <a class="govuk-link govuk-link--no-visited-state" href="{{ link }}">{{ title }}</a>
     </h2>
     <p class="govuk-body">{{ description }}</p>

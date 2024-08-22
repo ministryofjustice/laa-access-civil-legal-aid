@@ -2,14 +2,6 @@
 {%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
 {%- from 'govuk_frontend_jinja/components/panel/macro.html' import govukPanel -%}
 
-{% block beforeContent%}
-{{ super() }}
-{{ govukBackLink({
-    'href': back_link,
-    'text': "Back"
-  }) }}
-{% endblock %}
-
 {% macro list_item(title, description, link) -%}
     <h2 class="govuk-heading-m random-class">
         <a class="govuk-link govuk-link--no-visited-state" href="{{ link }}">{{ title }}</a>
