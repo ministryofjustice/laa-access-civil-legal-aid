@@ -8,12 +8,13 @@ import os
 
 ACCESSIBILITY_STANDARDS = ["wcag2a", "wcag2aa"]
 
+
 def check_accessibility(page: Page):
-    '''
+    """
     Inserts axe core python into a page at the yield step
     to run accessibility based testing. Axe will run on
     the page defined in the function.
-    '''
+    """
     if page.title() != "localhost":
         directory = "tests/functional_tests/accessibility_output"
         if not os.path.exists(directory):
@@ -24,16 +25,16 @@ def check_accessibility(page: Page):
 
         wcag_violations = []
 
-        for violation in results['violations']:
+        for violation in results["violations"]:
             if set(violation["tags"]) & set(ACCESSIBILITY_STANDARDS):
                 wcag_violations.append(violation)
-        
+
         if len(wcag_violations) == 0:
             assert "No WCAG accessibility issues found"
         else:
             # Cleans the URL to remove any invalid characters and replace with _
             invalid_filename_chars = r'[\/:*?"<>|]'
-            sanitized_title = re.sub(invalid_filename_chars, '_', page.title())
+            sanitized_title = re.sub(invalid_filename_chars, "_", page.title())
 
             max_title_len = 30
             file_name = f"axe_results_{sanitized_title[:max_title_len]}.json"
@@ -44,7 +45,7 @@ def check_accessibility(page: Page):
 
 @pytest.mark.usefixtures("live_server")
 def test_all_page_accessibility(app, page: Page):
-    ignored_routes = ['static', '/']
+    ignored_routes = ["static", "/"]
     routes = app.view_functions
     for route in routes:
         if route not in ignored_routes:
@@ -52,9 +53,10 @@ def test_all_page_accessibility(app, page: Page):
             page.goto(full_url)
             check_accessibility(page)
 
+
 def test_accessibility_folder():
-    path = 'tests/functional_tests/accessibility_output'
+    path = "tests/functional_tests/accessibility_output"
     if not any(os.scandir(path)):
         assert True
     else:
-        assert not 'WCAG accessibility issues found'
+        assert not "WCAG accessibility issues found"
