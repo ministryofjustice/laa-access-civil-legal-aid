@@ -91,7 +91,7 @@ class Category:
 class DiscriminationQuestions:
     question_forms = [DiscriminationForm, DiscriminationWhyForm]
 
-    def summary_form(self):
+    def summary_form(self, where, why):
         form = [
             {
                 "key": {"text": "Category"},
@@ -117,9 +117,10 @@ class DiscriminationQuestions:
                     "items": [
                         {
                             "href": url_for(
-                                "categories.discrimination.index",
-                                previous_answer=session["discrimination"]["where"],
-                                change=True,
+                                "categories.discrimination.result",
+                                where=where,
+                                why=why,
+                                change="where",
                             ),
                             "text": "Change",
                             "visuallyHiddenText": self.question_forms[0]().title,
@@ -138,10 +139,10 @@ class DiscriminationQuestions:
                     "items": [
                         {
                             "href": url_for(
-                                "categories.discrimination.protected_characteristics",
-                                where=session["discrimination"]["where"],
-                                previous_answer=session["discrimination"]["why"],
-                                change=True,
+                                "categories.discrimination.result",
+                                where=where,
+                                why=why,
+                                change="why",
                             ),
                             "text": "Change",
                             "visuallyHiddenText": self.question_forms[0]().title,

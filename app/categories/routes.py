@@ -1,5 +1,5 @@
 from app.categories import bp
-from flask import render_template
+from flask import render_template, session
 
 
 @bp.route("/")
@@ -19,4 +19,5 @@ def children_families_relationships():
 
 @bp.route("/result")
 def result():
+    session["discrimination"] = {}
     return render_template("result.html")

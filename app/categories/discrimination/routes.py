@@ -9,22 +9,17 @@ from app.categories.utils import get_items_with_divisor, check_radio_field
 
 
 @bp.get("/discrimination")
-def index():
-    change_answer = request.args.get("change")
-    if "discrimination" in session and not change_answer:
-        if "where" in session["discrimination"]:
-            return redirect(
-                url_for(
-                    "categories.discrimination.protected_characteristics",
-                    where=session["discrimination"]["where"],
-                )
-            )
-
+def index(selected_answer=None):
     form = DiscriminationForm()
 
     items = get_items_with_divisor(form.question.choices)
 
-    previous_answer = request.args.get("previous_answer")
+    session_answer = None
+    if "discrimination" in session and "where" in session["discrimination"]:
+        session_answer = session["discrimination"]["where"]
+    previous_answer = (
+        request.args.get("previous_answer") or selected_answer or session_answer
+    )
     if previous_answer:
         items = check_radio_field(form.question, previous_answer, items)
 
@@ -37,25 +32,7 @@ def index():
 
 
 @bp.get("/discrimination/<string:where>")
-def protected_characteristics(where: str):
-    change_answer = request.args.get("change", False)
-    if "discrimination" in session and not change_answer:
-        if "where" in session["discrimination"]:
-            if "why" in session["discrimination"]:
-                return redirect(
-                    url_for(
-                        "categories.discrimination.result",
-                        where=session["discrimination"]["where"],
-                        why=session["discrimination"]["why"],
-                    )
-                )
-            return redirect(
-                url_for(
-                    "categories.discrimination.protected_characteristics",
-                    where=session["discrimination"]["where"],
-                )
-            )
-
+def protected_characteristics(where: str, selected_answer=None):
     form = DiscriminationWhyForm()
 
     if where not in DiscriminationForm().valid_choices:
@@ -63,7 +40,13 @@ def protected_characteristics(where: str):
 
     items = get_items_with_divisor(form.question.choices)
 
-    previous_answer = request.args.get("previous_answer")
+    session_answer = None
+    print(session)
+    if "discrimination" in session and "where" in session["discrimination"]:
+        session_answer = session["discrimination"]["why"]
+    previous_answer = (
+        request.args.get("previous_answer") or selected_answer or session_answer
+    )
     if previous_answer:
         items = check_radio_field(form.question, previous_answer, items)
 
@@ -85,13 +68,20 @@ def result(where: str, why: str):
             url_for("categories.discrimination.protected_characteristics", where=where)
         )
 
+    change_answer = request.args.get("change")
+    if change_answer:
+        if change_answer == "where":
+            return index(selected_answer=where)
+        if change_answer == "why":
+            return protected_characteristics(where, selected_answer=why)
+
     if "discrimination" not in session:
         session["discrimination"] = {}
 
     session["discrimination"]["where"] = where
     session["discrimination"]["why"] = why
 
-    summary_form = DiscriminationQuestions().summary_form()
+    summary_form = DiscriminationQuestions().summary_form(where, why)
 
     return render_template(
         "review-your-answers.html",
@@ -99,7 +89,6 @@ def result(where: str, why: str):
             "categories.discrimination.protected_characteristics",
             where=where,
             previous_answer=why,
-            change=True,
         ),
         summary_form=summary_form,
     )
@@ -115,6 +104,7 @@ def where_form():
                 where=form.question.data,
             )
         )
+    return redirect(url_for("categories.discrimination.index"))
 
 
 @bp.post("/discrimination/<string:where>")
@@ -125,4 +115,25 @@ def why_form(where):
             url_for(
                 "categories.discrimination.result", where=where, why=form.question.data
             )
+        )
+
+
+@bp.post("/discrimination/<string:where>/<string:why>")
+def change_answer(where, why):
+    answer_to_change = request.args.get("change")
+
+    form = None
+    if answer_to_change == "where":
+        form = DiscriminationForm()
+        where = form.question.data
+    if answer_to_change == "why":
+        form = DiscriminationWhyForm()
+        why = form.question.data
+
+    if not form:
+        raise Exception()
+
+    if form.validate_on_submit():
+        return redirect(
+            url_for("categories.discrimination.result", where=where, why=why)
         )
