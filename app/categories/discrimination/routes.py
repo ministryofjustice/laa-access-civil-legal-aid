@@ -9,8 +9,8 @@ from app.categories.utils import get_items_with_divisor, check_radio_field
 
 
 @bp.get("/discrimination")
-def index(selected_answer=None):
-    form = DiscriminationForm()
+def index(selected_answer=None, prev_form=None):
+    form = prev_form if prev_form else DiscriminationForm()
 
     items = get_items_with_divisor(form.question.choices)
 
@@ -32,8 +32,8 @@ def index(selected_answer=None):
 
 
 @bp.get("/discrimination/<string:where>")
-def protected_characteristics(where: str, selected_answer=None):
-    form = DiscriminationWhyForm()
+def protected_characteristics(where: str, selected_answer=None, prev_form=None):
+    form = prev_form if prev_form else DiscriminationWhyForm()
 
     if where not in DiscriminationForm().valid_choices:
         redirect(url_for("categories.discrimination.index"))
@@ -80,6 +80,7 @@ def result(where: str, why: str):
 
     session["discrimination"]["where"] = where
     session["discrimination"]["why"] = why
+    session.modified = True
 
     summary_form = DiscriminationQuestions().summary_form(where, why)
 
@@ -104,7 +105,7 @@ def where_form():
                 where=form.question.data,
             )
         )
-    return redirect(url_for("categories.discrimination.index"))
+    return index(prev_form=form)
 
 
 @bp.post("/discrimination/<string:where>")
@@ -116,6 +117,7 @@ def why_form(where):
                 "categories.discrimination.result", where=where, why=form.question.data
             )
         )
+    return protected_characteristics(where=where, prev_form=form)
 
 
 @bp.post("/discrimination/<string:where>/<string:why>")
