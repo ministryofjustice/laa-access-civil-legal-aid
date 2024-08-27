@@ -4,6 +4,7 @@ from flask import render_template, session
 
 @bp.route("/")
 def index():
+    session["discrimination"] = {}
     return render_template("main.html")
 
 
