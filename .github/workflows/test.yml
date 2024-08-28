@@ -27,8 +27,7 @@ jobs:
     - name: Unit test with pytest
       run: |
         pip install pytest pytest-cov
-        pytest tests/unit_tests --doctest-modules --junitxml=junit/unit-test-results.xml
-        coverage run -m pytest tests/unit_tests
+        coverage run -m pytest tests/unit_tests --doctest-modules --junitxml=junit/unit-test-results.xml
         coverage xml
 
     - name: Upload pytest test results
