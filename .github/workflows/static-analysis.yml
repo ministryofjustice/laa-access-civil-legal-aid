@@ -34,11 +34,16 @@ jobs:
     name: Ruff
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: chartboost/ruff-action@v1
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Lint
+        uses: chartboost/ruff-action@v1
         with:
           args: check --output-format=github
-          src: './src'
+      - name: Format
+        uses: chartboost/ruff-action@v1
+        with:
+          args: format --check
 
   sonarcloud:
     name: Sonar cloud

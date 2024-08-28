@@ -133,9 +133,7 @@ def create_app(config_class=Config):
     )
     # Concat all headscripts seperately so they can be loaded into the DOM head.
     headscripts = Bundle(
-        "src/js/headscripts/*.js",
-        filters="jsmin",
-        output="dist/js/headscripts.min.js"
+        "src/js/headscripts/*.js", filters="jsmin", output="dist/js/headscripts.min.js"
     )
     if "css" not in assets:
         assets.register("css", css)
