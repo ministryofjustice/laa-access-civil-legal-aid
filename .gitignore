@@ -886,3 +886,4 @@ FodyWeavers.xsd
 
 # Playwright axe file
 *axe_results*.json
+unit-test-results.xml
