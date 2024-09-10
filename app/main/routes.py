@@ -9,6 +9,7 @@ from flask import (
     request,
     current_app,
     abort,
+    url_for,
 )
 from flask_wtf.csrf import CSRFError
 from werkzeug.exceptions import HTTPException
@@ -44,6 +45,12 @@ def set_locale(locale):
         "locale", locale, expires=expires, secure=(not current_app.debug), httponly=True
     )
     return response
+
+@bp.route("/maintenance-mode", methods=["GET"])
+def maintenance_mode_page():
+    if not current_app.config["MAINTENANCE_MODE"]:
+        return redirect(url_for("main.index"))
+    return render_template("maintenance-mode.html"), 503
 
 
 @bp.route("/accessibility", methods=["GET"])
@@ -100,3 +107,10 @@ def http_exception(error):
 def csrf_error(error):
     flash("The form you were submitting has expired. Please try again.")
     return redirect(request.full_path)
+
+
+@bp.before_request
+def maintenance_mode_middleware():
+    maintenance_url = url_for("main.maintenance_mode_page")
+    if current_app.config["MAINTENANCE_MODE"] and request.path != maintenance_url:
+        return redirect(maintenance_url)

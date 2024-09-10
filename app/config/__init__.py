@@ -20,3 +20,4 @@ class Config(object):
     SESSION_COOKIE_HTTPONLY = True
     SENTRY_DSN = os.environ.get("SENTRY_DSN")
     LANGUAGES = {"en": "English", "cy": "Welsh"}
+    MAINTENANCE_MODE = os.environ.get("MAINTENANCE_MODE", "False").lower() == "true"
