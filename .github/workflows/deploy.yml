@@ -55,6 +55,7 @@ jobs:
           REGISTRY: ${{ secrets.ECR_REGISTRY }}
           REPOSITORY: ${{ inputs.ECR_REPOSITORY }}
           HELM_DIR: "helm_deploy/laa-access-civil-legal-aid"
+          SHARED_IP_RANGES_LAA: $(curl -s https://raw.githubusercontent.com/ministryofjustice/laa-ip-allowlist/main/cidrs.txt | tr -d ' ' | tr '\n' ',' | sed 's/,/\\,/g' | sed 's/\\,$//')
         run: |
           helm upgrade laa-access-civil-legal-aid \
           ${HELM_DIR} \
@@ -62,5 +63,6 @@ jobs:
           --values ${HELM_DIR}/values/values-${{ inputs.environment }}.yaml \
           --set image.repository=${REGISTRY}/${REPOSITORY} \
           --set image.tag=${IMAGE_TAG} \
+          --set-string sharedIPRangesLAA=$SHARED_IP_RANGES_LAA \
           --force \
           --install
