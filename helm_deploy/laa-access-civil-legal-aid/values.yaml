@@ -44,6 +44,7 @@ ingress:
     weight: '100'
   tls: []
   whitelist:
+    - 35.176.93.186/32
 
 resources: {}
 
