@@ -36,15 +36,14 @@ service:
   port: 80
 
 ingress:
-  enabled: false
+  enabled: true
   className: "default"
   annotations: {}
   cluster:
     name: green
     weight: '100'
   tls: []
-  whitelist:
-    - 35.176.93.186/32
+  whitelist: []
 
 resources: {}
 
