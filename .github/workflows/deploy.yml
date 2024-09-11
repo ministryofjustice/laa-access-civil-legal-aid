@@ -68,6 +68,6 @@ jobs:
           --values ${HELM_DIR}/values/values-${{ inputs.environment }}.yaml \
           --set image.repository=${REGISTRY}/${REPOSITORY} \
           --set image.tag=${IMAGE_TAG} \
-          --set-string sharedIPRangesLAA=$SHARED_IP_RANGES_LAA \
           --force \
+          --set-string sharedIPRangesLAA=$SHARED_IP_RANGES_LAA \
           --install
