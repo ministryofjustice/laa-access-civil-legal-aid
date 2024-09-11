@@ -46,6 +46,10 @@ def set_locale(locale):
     )
     return response
 
+@bp.route("/status", methods=["GET"])
+def status():
+    return "OK"
+
 @bp.route("/maintenance-mode", methods=["GET"])
 def maintenance_mode_page():
     if not current_app.config["MAINTENANCE_MODE"]:
@@ -112,5 +116,9 @@ def csrf_error(error):
 @bp.before_request
 def maintenance_mode_middleware():
     maintenance_url = url_for("main.maintenance_mode_page")
-    if current_app.config["MAINTENANCE_MODE"] and request.path != maintenance_url:
+    exempt_urls = [
+        maintenance_url,
+        url_for("main.status"),
+    ]
+    if current_app.config["MAINTENANCE_MODE"] and request.path not in exempt_urls:
         return redirect(maintenance_url)
