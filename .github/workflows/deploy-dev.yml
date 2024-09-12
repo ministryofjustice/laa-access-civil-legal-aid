@@ -55,7 +55,7 @@ jobs:
           REGISTRY: ${{ secrets.ECR_REGISTRY }}
           REPOSITORY: ${{ inputs.ECR_REPOSITORY }}
           HELM_DIR: "helm_deploy/laa-access-civil-legal-aid"
-          SHARED_IP_RANGES_LAA: $(cat https://raw.githubusercontent.com/ministryofjustice/laa-ip-allowlist/main/cidrs.txt | sed ':a;N;$!ba;s/\n/,/g;s/,$//')${{ env.SHARED_IP_RANGES_LAA }}
+          SHARED_IP_RANGES_LAA: $(cat https://raw.githubusercontent.com/ministryofjustice/laa-ip-allowlist/main/cidrs.txt | sed ':a;N;$!ba;s/\n/,/g;s/,$//')
           DEV_HOST: "access-cla.cloud-platform.service.justice.gov.uk"
           # head_ref is set if the workflow was triggered by a PR, ref_name is used if the workflow was trigged by a push.
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
