@@ -43,7 +43,6 @@ ingress:
     name: green
     weight: '100'
   tls: []
-  whitelist: []
 
 resources: {}
 
