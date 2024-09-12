@@ -58,11 +58,11 @@ jobs:
           SHARED_IP_RANGES_LAA: $(cat https://raw.githubusercontent.com/ministryofjustice/laa-ip-allowlist/main/cidrs.txt | sed ':a;N;$!ba;s/\n/,/g;s/,$//')
         run: |
           helm upgrade laa-access-civil-legal-aid \
+          echo "$SHARED_IP_RANGES_LAA"
           ${HELM_DIR} \
           --namespace=${{ secrets.KUBE_NAMESPACE }} \
           --values ${HELM_DIR}/values/values-${{ inputs.environment }}.yaml \
           --set image.repository=${REGISTRY}/${REPOSITORY} \
           --set image.tag=${IMAGE_TAG} \
-          --set-string sharedIPRangesLAA=$SHARED_IP_RANGES_LAA \
           --force \
           --install
