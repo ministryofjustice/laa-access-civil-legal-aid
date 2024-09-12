@@ -24,9 +24,8 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{- define "laa-access-civil-legal-aid.whitelist" -}}
-{{- $whitelist := join "," (append .Values.ingress.whitelist (split "," .Values.sharedIPRangesLAA)) }}
-{{- printf "DEBUG: Whitelist value is: %s\n" $whitelist -}}
-{{- $whitelist -}}
+{{ join "," .Values.ingress.whitelist }}
+{{- if .Values.sharedIPRangesLAA}},{{.Values.sharedIPRangesLAA}}{{- end }}
 {{- end -}}
 
 {{/*

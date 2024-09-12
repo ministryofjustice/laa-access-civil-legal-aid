@@ -36,7 +36,7 @@ service:
   port: 80
 
 ingress:
-  enabled: false
+  enabled: true
   className: "default"
   annotations: {}
   cluster:
