@@ -27,9 +27,7 @@ jobs:
     - name: Unit test with pytest
       run: |
         pip install pytest pytest-cov
-        npm install
-        playwright install
-        coverage run -m pytest tests
+        coverage run -m pytest tests/unit_tests
         coverage xml
 
     - name: Upload coverage report
