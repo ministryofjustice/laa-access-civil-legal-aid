@@ -67,11 +67,11 @@ jobs:
           ${HELM_DIR} \
           --namespace=${{ secrets.KUBE_NAMESPACE }} \
           --values ${HELM_DIR}/values/values-${{ inputs.environment }}.yaml \
+          --set-string sharedIPRangesLAA=$SHARED_IP_RANGES_LAA \
           --set image.repository=${REGISTRY}/${REPOSITORY} \
           --set image.tag=${IMAGE_TAG} \
           --set fullnameOverride=${CLEANED_BRANCH_NAME} \
           --set ingress.hosts[0].host=${HOST_NAME} \
           --set ingress.tls[0].hosts[0]=${HOST_NAME} \
           --force \
-          --set-string sharedIPRangesLAA=$SHARED_IP_RANGES_LAA \
           --install

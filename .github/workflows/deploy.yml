@@ -61,8 +61,8 @@ jobs:
           ${HELM_DIR} \
           --namespace=${{ secrets.KUBE_NAMESPACE }} \
           --values ${HELM_DIR}/values/values-${{ inputs.environment }}.yaml \
+          --set-string sharedIPRangesLAA=$SHARED_IP_RANGES_LAA \
           --set image.repository=${REGISTRY}/${REPOSITORY} \
           --set image.tag=${IMAGE_TAG} \
           --force \
-          --set-string sharedIPRangesLAA=$SHARED_IP_RANGES_LAA \
           --install
