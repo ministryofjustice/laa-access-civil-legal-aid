@@ -79,6 +79,6 @@ jobs:
           --set fullnameOverride=${CLEANED_BRANCH_NAME} \
           --set ingress.hosts[0].host=${HOST_NAME} \
           --set ingress.tls[0].hosts[0]=${HOST_NAME} \
-          --set-string ingress.whitelist=$SHARED_IP_RANGES_LAA \
+          --set-string sharedIPRangesLAA=$SHARED_IP_RANGES_LAA \
           --force \
           --install
