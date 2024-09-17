@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask
 from flask_babel import Babel
 from flask_assets import Bundle, Environment
 from flask_compress import Compress
@@ -8,10 +8,12 @@ from flask_talisman import Talisman
 from flask_wtf.csrf import CSRFProtect
 from govuk_frontend_wtf.main import WTFormsHelpers
 from jinja2 import ChoiceLoader, PackageLoader, PrefixLoader
-from .main.gtm import get_gtm_anon_id
+from app.main.gtm import get_gtm_anon_id
+from app.main import get_locale
 import sentry_sdk
 
 from app.config import Config
+
 
 compress = Compress()
 csrf = CSRFProtect()
@@ -32,14 +34,6 @@ if Config.SENTRY_DSN:
         # It is set by CLA_ENVIRONMENT in the helm charts.
         environment=Config.ENVIRONMENT,
     )
-
-
-def get_locale():
-    if request and request.cookies.get("locale"):
-        return request.cookies.get("locale")[:2]
-
-    language_keys = [key for key, _ in Config.LANGUAGES]
-    return request.accept_languages.best_match(language_keys) or "en"
 
 
 def create_app(config_class=Config):
