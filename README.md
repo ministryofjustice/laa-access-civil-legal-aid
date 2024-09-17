@@ -142,7 +142,7 @@ There are 3 key components to translating text on the website.
 3. pybabel compile - Should be run after updating any messages.po files. The full command is given in the output of translate.sh script
 
 ### How to translate text in template
-1. Wrap text in {% trans %}...{% endtrans %}
+1. Wrap text in `{% trans %}...{% endtrans %}`
 2. Run `bash translate.sh`
 3. Update `app/translations/cy/LC_MESSAGES/messages.po` with welsh text
 4. Run `pybabel compile -d app/translations -l cy -f`
