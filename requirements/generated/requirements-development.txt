@@ -6,6 +6,8 @@
 #
 axe-core-python==0.1.0
     # via -r requirements/source/requirements-development.in
+babel==2.16.0
+    # via flask-babel
 blinker==1.8.2
     # via
     #   flask
@@ -30,6 +32,7 @@ flask==3.0.3
     # via
     #   -r requirements/source/requirements-base.in
     #   flask-assets
+    #   flask-babel
     #   flask-compress
     #   flask-limiter
     #   flask-wtf
@@ -37,6 +40,8 @@ flask==3.0.3
     #   pytest-flask
     #   sentry-sdk
 flask-assets==2.1.0
+    # via -r requirements/source/requirements-base.in
+flask-babel==4.0.0
     # via -r requirements/source/requirements-base.in
 flask-compress==1.15
     # via -r requirements/source/requirements-base.in
@@ -69,6 +74,7 @@ itsdangerous==2.2.0
 jinja2==3.1.4
     # via
     #   flask
+    #   flask-babel
     #   govuk-frontend-jinja
     #   govuk-frontend-wtf
 jsmin==3.0.1
@@ -116,6 +122,8 @@ python-dotenv==1.0.1
     # via -r requirements/source/requirements-base.in
 python-slugify==8.0.4
     # via pytest-playwright
+pytz==2024.2
+    # via flask-babel
 pyyaml==6.0.1
     # via -r requirements/source/requirements-base.in
 requests==2.32.3

@@ -1,4 +1,5 @@
-from flask import Flask
+from flask import Flask, request
+from flask_babel import Babel
 from flask_assets import Bundle, Environment
 from flask_compress import Compress
 from flask_limiter import Limiter
@@ -31,6 +32,14 @@ if Config.SENTRY_DSN:
         # It is set by CLA_ENVIRONMENT in the helm charts.
         environment=Config.ENVIRONMENT,
     )
+
+
+def get_locale():
+    if request and request.cookies.get("locale"):
+        return request.cookies.get("locale")[:2]
+
+    language_keys = [key for key, _ in Config.LANGUAGES]
+    return request.accept_languages.best_match(language_keys) or "en"
 
 
 def create_app(config_class=Config):
@@ -141,6 +150,8 @@ def create_app(config_class=Config):
         assets.register("js", js)
     if "headscripts" not in assets:
         assets.register("headscripts", headscripts)
+
+    Babel(app, locale_selector=get_locale)
 
     # Register blueprints
     from app.main import bp as main_bp

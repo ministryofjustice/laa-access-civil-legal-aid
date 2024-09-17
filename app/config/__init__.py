@@ -18,5 +18,5 @@ class Config(object):
     SERVICE_PHASE = os.environ.get("SERVICE_PHASE", "Beta")
     SERVICE_URL = os.environ.get("SERVICE_URL", "")
     SESSION_COOKIE_HTTPONLY = True
-    # SESSION_COOKIE_SECURE = True
     SENTRY_DSN = os.environ.get("SENTRY_DSN")
+    LANGUAGES = [("en", "English"), ("cy", "Welsh")]

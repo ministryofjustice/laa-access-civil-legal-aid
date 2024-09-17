@@ -4,6 +4,8 @@
 #
 #    pip-compile --output-file=requirements/generated/requirements-production.txt requirements/source/requirements-production.in
 #
+babel==2.16.0
+    # via flask-babel
 blinker==1.8.2
     # via
     #   flask
@@ -28,12 +30,15 @@ flask==3.0.3
     # via
     #   -r requirements/source/requirements-base.in
     #   flask-assets
+    #   flask-babel
     #   flask-compress
     #   flask-limiter
     #   flask-wtf
     #   govuk-frontend-wtf
     #   sentry-sdk
 flask-assets==2.1.0
+    # via -r requirements/source/requirements-base.in
+flask-babel==4.0.0
     # via -r requirements/source/requirements-base.in
 flask-compress==1.15
     # via -r requirements/source/requirements-base.in
@@ -60,6 +65,7 @@ itsdangerous==2.2.0
 jinja2==3.1.4
     # via
     #   flask
+    #   flask-babel
     #   govuk-frontend-jinja
     #   govuk-frontend-wtf
 jsmin==3.0.1
@@ -86,6 +92,8 @@ pygments==2.18.0
     # via rich
 python-dotenv==1.0.1
     # via -r requirements/source/requirements-base.in
+pytz==2024.2
+    # via flask-babel
 pyyaml==6.0.1
     # via -r requirements/source/requirements-base.in
 requests==2.32.3
