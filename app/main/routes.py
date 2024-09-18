@@ -40,7 +40,9 @@ def set_locale(locale):
 
     response = redirect("".join(redirect_url))
     expires = datetime.datetime.now() + datetime.timedelta(days=30)
-    response.set_cookie("locale", locale, expires=expires)
+    response.set_cookie(
+        "locale", locale, expires=expires, secure=(not current_app.debug), httponly=True
+    )
     return response
 
 
