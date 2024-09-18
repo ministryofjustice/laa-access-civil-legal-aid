@@ -1,7 +1,6 @@
 ARG BASE_IMAGE=python:3.12-slim
 FROM $BASE_IMAGE AS base
-
-ARG REQUIREMENTS=requirements-production.txt
+ARG REQUIREMENTS_FILE=requirements-production.txt
 
 # Set environment variables
 ENV FLASK_APP=govuk-frontend-flask.py
@@ -24,7 +23,7 @@ RUN apt-get update \
 COPY package*.json ./
 RUN npm install
 
-COPY requirements/generated/$REQUIREMENTS requirements.txt
+COPY requirements/generated/$REQUIREMENTS_FILE requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
