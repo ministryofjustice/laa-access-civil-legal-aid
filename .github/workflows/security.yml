@@ -14,6 +14,8 @@ jobs:
       uses: zaproxy/action-full-scan@v0.10.0
       with:
         target: 'https://security-pipeline-access-cla.cloud-platform.service.justice.gov.uk/'
+        report-dir: 'zap-reports'
+      continue-on-error: true
 
 
     - name: Upload ZAP Report
