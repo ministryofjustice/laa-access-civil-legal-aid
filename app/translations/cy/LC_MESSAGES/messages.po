@@ -4,5 +4,5 @@ msgstr "Welsh Privacy notice"
 
 #: app/templates/main/privacy.html:20
 msgid "Start of privacy notice"
-msgstr "WESLSH Start of privacy notice\""
+msgstr "WESLSH Start of privacy notice"
 
