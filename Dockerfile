@@ -20,6 +20,10 @@ RUN apt-get update \
   && apt-get -y install nodejs npm \
   && apt-get clean
 
+# This is required because there has been an upgrade of this package which hasn't yet been updated in the base image
+# This can be removed when the base image is updated with the upgrade
+RUN apt-get install --only-upgrade libexpat1
+
 COPY package*.json ./
 RUN npm install
 
