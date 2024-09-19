@@ -15,5 +15,4 @@ jobs:
       with:
         target: 'https://security-pipeline-access-cla.cloud-platform.service.justice.gov.uk/'
         artifact_name: 'zap_report'
-        rules_file_name: '.zap/rules.tsv'
       continue-on-error: true
