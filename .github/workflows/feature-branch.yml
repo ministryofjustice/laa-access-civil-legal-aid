@@ -24,7 +24,7 @@ jobs:
 
   security:
     name: Security
-    needs: build-and-push
+    needs: deploy-dev
     uses: ./.github/workflows/security.yml
 
   build-and-push:
