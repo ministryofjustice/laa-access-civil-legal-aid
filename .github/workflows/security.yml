@@ -13,7 +13,7 @@ jobs:
     - name: ZAP Full Scan
       uses: zaproxy/action-full-scan@v0.10.0
       with:
-        target: ${{ env.HOST_NAME }}
+        target: ${{ env.CLEANED_BRANCH_NAME }}
         artifact_name: 'zap_report'
       continue-on-error: true
 
