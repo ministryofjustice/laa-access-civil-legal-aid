@@ -10,10 +10,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Read HOST_NAME
+      id: read-hostname
+      run: echo "The hostname is ${{ env.HOST_NAME }}"
+
     - name: ZAP Full Scan
       uses: zaproxy/action-full-scan@v0.10.0
       with:
-        target: ${{ env.CLEANED_BRANCH_NAME }}
+        target: ${{ env.HOST_NAME }}
         artifact_name: 'zap_report'
       continue-on-error: true
 

@@ -70,7 +70,7 @@ jobs:
           export CLEANED_BRANCH_NAME=$(echo ${BRANCH_NAME} | sed 's/^feature[-/]//' | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | tr '[:upper:]' '[:lower:]' | cut -c1-28 | sed 's/-$//')
           export HOST_NAME=${CLEANED_BRANCH_NAME}-${DEV_HOST}
 
-          echo "CLEANED_BRANCH_NAME=${CLEANED_BRANCH_NAME}" >> $GITHUB_ENV
+          echo "HOST_NAME=${HOST_NAME}" >> $GITHUB_ENV
 
           helm upgrade ${CLEANED_BRANCH_NAME} \
           ${HELM_DIR} \
