@@ -2,9 +2,6 @@ name: Security
 
 on: workflow_call
 
-env:
-    ACTIONS_STEP_DEBUG = true
-
 jobs:
   zap_scan:
     runs-on: ubuntu-latest
@@ -24,3 +21,4 @@ jobs:
       with:
         name: zap_report
         path: 'full-scan-report.html'
+    
