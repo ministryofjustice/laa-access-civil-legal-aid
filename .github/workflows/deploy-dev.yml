@@ -31,6 +31,8 @@ jobs:
     name: Deploy
     environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
+    outputs:
+      hostname: ${{ steps.export-hostname.outputs.hostname }}
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read  # This is required for actions/checkout
@@ -87,4 +89,4 @@ jobs:
 
       - name: Set HOST_NAME as output
         id: export-hostname
-        run: echo "::set-output name=hostname::${{ env.HOST_NAME }}"
+        run: echo "hostname=${{ env.HOST_NAME }}" >> $GITHUB_OUTPUT
