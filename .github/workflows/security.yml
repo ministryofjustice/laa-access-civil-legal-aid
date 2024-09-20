@@ -20,14 +20,11 @@ jobs:
       run: |
         HOST_NAME=$(cat hostname.txt)
         echo "HOST_NAME=${HOST_NAME}" >> $GITHUB_ENV
-          
-    - name: Use HOST_NAME
-      run: echo "The hostname is ${{ env.HOST_NAME }}"
 
     - name: ZAP Full Scan
       uses: zaproxy/action-full-scan@v0.10.0
       with:
-        target: ${{ env.HOST_NAME }}
+        target: "http://${{ env.HOST_NAME }}"
         artifact_name: 'zap_report'
       continue-on-error: true
 
