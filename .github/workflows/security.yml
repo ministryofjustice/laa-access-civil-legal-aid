@@ -15,6 +15,12 @@ jobs:
       with:
         name: host-name
 
+    - name: Read HOST_NAME from file
+      id: read-hostname
+      run: |
+        HOST_NAME=$(cat hostname.txt)
+        echo "HOST_NAME=${HOST_NAME}" >> $GITHUB_ENV
+          
     - name: Use HOST_NAME
       run: echo "The hostname is ${{ env.HOST_NAME }}"
 
