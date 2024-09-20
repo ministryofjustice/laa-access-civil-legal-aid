@@ -17,7 +17,10 @@ jobs:
       uses: zaproxy/action-full-scan@v0.10.0
       with:
         target: 'https://security-pipeline-access-cla.cloud-platform.service.justice.gov.uk/'
-        artifact_name: 'zap_report'
-        rules_file_name: '.zap/rules.tsv'
-        cmd_options: '-a'
       continue-on-error: true
+
+    - name: Upload ZAP Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: zap_report
+        path: 'full-scan-report.html'
