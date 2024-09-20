@@ -13,7 +13,7 @@ jobs:
     - name: ZAP Full Scan
       uses: zaproxy/action-full-scan@v0.10.0
       with:
-        target: 'https://security-pipeline-access-cla.cloud-platform.service.justice.gov.uk/'
+        target: ${{ env.HOST_NAME }}
         artifact_name: 'zap_report'
       continue-on-error: true
 
