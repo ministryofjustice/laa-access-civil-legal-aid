@@ -2,6 +2,9 @@ name: Security
 
 on: workflow_call
 
+env:
+    ACTIONS_STEP_DEBUG = true
+
 jobs:
   zap_scan:
     runs-on: ubuntu-latest
@@ -15,4 +18,6 @@ jobs:
       with:
         target: 'https://security-pipeline-access-cla.cloud-platform.service.justice.gov.uk/'
         artifact_name: 'zap_report'
+        rules_file_name: '.zap/rules.tsv'
+        cmd_options: '-a'
       continue-on-error: true
