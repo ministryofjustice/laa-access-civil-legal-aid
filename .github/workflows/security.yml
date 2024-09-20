@@ -10,9 +10,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Read HOST_NAME
-      id: read-hostname
-      run: echo "The hostname is ${{ needs.helm_upgrade.outputs.hostname }}"
+    - name: Download HOST_NAME artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: host-name
+
+    - name: Use HOST_NAME
+      run: echo "The hostname is ${{ env.HOST_NAME }}"
 
     - name: ZAP Full Scan
       uses: zaproxy/action-full-scan@v0.10.0
