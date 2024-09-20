@@ -20,5 +20,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: zap_report
-        path: 'full-scan-report.html'
+        path: 'zap_scan.html'
     
