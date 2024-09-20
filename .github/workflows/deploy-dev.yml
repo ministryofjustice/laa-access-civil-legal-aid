@@ -84,3 +84,7 @@ jobs:
           --set sharedIPRangesLAA=$SHARED_IP_RANGES_LAA \
           --force \
           --install
+
+      - name: Set HOST_NAME as output
+        id: export-hostname
+        run: echo "::set-output name=hostname::${{ env.HOST_NAME }}"

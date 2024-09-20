@@ -12,7 +12,7 @@ jobs:
 
     - name: Read HOST_NAME
       id: read-hostname
-      run: echo "The hostname is ${{ env.HOST_NAME }}"
+      run: echo "The hostname is ${{ needs.helm_upgrade.outputs.hostname }}"
 
     - name: ZAP Full Scan
       uses: zaproxy/action-full-scan@v0.10.0
