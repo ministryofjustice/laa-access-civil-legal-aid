@@ -26,6 +26,8 @@ jobs:
 
     - name: Unit test with pytest
       run: |
+        # Remove this after we move from build assets in-app to esbuild
+        npm install
         pip install pytest pytest-cov
         coverage run -m pytest tests/unit_tests
         coverage xml
