@@ -27,7 +27,7 @@ def set_locale(locale):
     """
     Set locale cookie
     """
-    if locale[:2] not in [code for code, label in current_app.config["LANGUAGES"]]:
+    if locale not in [code for code, label in current_app.config["LANGUAGES"]]:
         abort(404)
 
     if request.referrer:
