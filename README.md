@@ -136,10 +136,11 @@ ruff format
 ```
 ## Translation
 We are using the [Flask-Babel](https://python-babel.github.io/flask-babel/#) package to translate text.
-There are 3 key components to translating text on the website.
+There are 4 key components to translating text on the website.
 1. babel.cfg - Identifies which files to look for strings that can be translated
 2. translate.sh - Script to collect/update all translatable strings
 3. pybabel compile - Should be run after updating any messages.po files. The full command is given in the output of translate.sh script
+4. There are two languages(English and Welsh) available on the site. No translation is provided for English as that is the default language
 
 ### How to translate text in template
 1. Wrap text in `{% trans %}...{% endtrans %}`
