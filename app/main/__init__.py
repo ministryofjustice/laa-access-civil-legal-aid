@@ -8,10 +8,11 @@ from app.main import filters  # noqa: E402,F401
 
 
 def get_locale():
-    if request and request.cookies.get("locale"):
-        return request.cookies.get("locale")
+    locale = request.cookies.get("locale")
+    if locale in current_app.config["LANGUAGES"]:
+        return locale
 
-    language_keys = [key for key, _ in current_app.config["LANGUAGES"]]
+    language_keys = current_app.config["LANGUAGES"].keys()
     return request.accept_languages.best_match(language_keys) or "en"
 
 

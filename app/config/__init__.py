@@ -19,4 +19,4 @@ class Config(object):
     SERVICE_URL = os.environ.get("SERVICE_URL", "")
     SESSION_COOKIE_HTTPONLY = True
     SENTRY_DSN = os.environ.get("SENTRY_DSN")
-    LANGUAGES = [("en", "English"), ("cy", "Welsh")]
+    LANGUAGES = {"en": "English", "cy": "Welsh"}
