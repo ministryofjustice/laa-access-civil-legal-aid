@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block pageTitle %}Sorry, the service is unavailable – {{config['SERVICE_NAME']}} – GOV.UK{% endblock %}
+{% block pageTitle %}Sorry, the service is unavailable{% endblock %}
 
 {% set mainClasses = "govuk-main-wrapper--l" %}
 
@@ -8,7 +8,27 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-l">Sorry, the service is unavailable</h1>
-        <p class="govuk-body">You will be able to use the service from 9am on Monday 19&nbsp;November&nbsp;2018.</p>
+        <p class="govuk-body">The service will be available again soon - try in the next hour.</p>
+
+        <p class="govuk-body">If you already started using the service, your answers will not be saved.</p>
+        <h2 class="govuk-heading-m">If you need urgent help</h2>
+        <p class="govuk-body">Contact the Civil Legal Advice (CLA) helpline.</p>
+        <p class="govuk-body">
+            Telephone: 0345 345 4345 <br />
+            <a class="govuk-link--no-underline" href="https://www.relayuk.bt.com/">Relay UK</a> (textphone and app): 18001 then 0345 345 4345
+        </p>
+        <p class="govuk-body">
+            Monday to Friday, 9am to 8pm <br />
+            Saturday, 9am to 12:30pm <br />
+            <a class="govuk-link--no-underline" href="https://www.gov.uk/call-charges">Find out about call charges</a>
+        </p>
+        <p class="govuk-body">
+            If you’re worried about the cost of a call:
+            <ul class="govuk-list govuk-list--bullet">
+                <li>ask the helpline to call you back, or</li>
+                <li>text ‘legalaid’ and your name to 8001 for a call back within 24 hours</li>
+            </ul>
+        </p>
     </div>
 </div>
 {% endblock %}

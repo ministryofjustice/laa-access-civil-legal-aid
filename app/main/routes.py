@@ -10,6 +10,7 @@ from flask import (
     current_app,
     abort,
     url_for,
+    abort,
 )
 from flask_wtf.csrf import CSRFError
 from werkzeug.exceptions import HTTPException
@@ -50,11 +51,12 @@ def set_locale(locale):
 def status():
     return "OK"
 
-@bp.route("/maintenance-mode", methods=["GET"])
-def maintenance_mode_page():
-    if not current_app.config["MAINTENANCE_MODE"]:
+
+@bp.route("/service-unavailable", methods=["GET"])
+def service_unavailable_page():
+    if not current_app.config["SERVICE_UNAVAILABLE"]:
         return redirect(url_for("main.index"))
-    return render_template("maintenance-mode.html"), 503
+    abort(503)
 
 
 @bp.route("/accessibility", methods=["GET"])
@@ -114,11 +116,11 @@ def csrf_error(error):
 
 
 @bp.before_request
-def maintenance_mode_middleware():
-    maintenance_url = url_for("main.maintenance_mode_page")
+def service_unavailable_middleware():
+    service_unavailable_url = url_for("main.service_unavailable_page")
     exempt_urls = [
-        maintenance_url,
+        service_unavailable_url,
         url_for("main.status"),
     ]
-    if current_app.config["MAINTENANCE_MODE"] and request.path not in exempt_urls:
-        return redirect(maintenance_url)
+    if current_app.config["SERVICE_UNAVAILABLE"] and request.path not in exempt_urls:
+        return redirect(service_unavailable_url)
