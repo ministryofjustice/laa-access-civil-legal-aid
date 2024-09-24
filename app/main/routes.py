@@ -8,7 +8,6 @@ from flask import (
     render_template,
     request,
     current_app,
-    abort,
     url_for,
     abort,
 )
@@ -46,6 +45,7 @@ def set_locale(locale):
         "locale", locale, expires=expires, secure=(not current_app.debug), httponly=True
     )
     return response
+
 
 @bp.route("/status", methods=["GET"])
 def status():
