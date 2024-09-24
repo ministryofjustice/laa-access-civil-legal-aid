@@ -7,26 +7,26 @@
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l">Sorry, the service is unavailable</h1>
-        <p class="govuk-body">The service will be available again soon - try in the next hour.</p>
+        <h1 class="govuk-heading-l">{% trans %}Sorry, the service is unavailable{% endtrans%}</h1>
+        <p class="govuk-body">{% trans %}The service will be available again soon - try in the next hour.{% endtrans%}</p>
 
-        <p class="govuk-body">If you already started using the service, your answers will not be saved.</p>
-        <h2 class="govuk-heading-m">If you need urgent help</h2>
-        <p class="govuk-body">Contact the Civil Legal Advice (CLA) helpline.</p>
+        <p class="govuk-body">{% trans %}If you already started using the service, your answers will not be saved.{% endtrans%}</p>
+        <h2 class="govuk-heading-m">{% trans %}If you need urgent help{% endtrans%}</h2>
+        <p class="govuk-body">{% trans %}Contact the Civil Legal Advice (CLA) helpline.{% endtrans%}</p>
         <p class="govuk-body">
-            Telephone: 0345 345 4345 <br />
-            <a class="govuk-link--no-underline" href="https://www.relayuk.bt.com/">Relay UK</a> (textphone and app): 18001 then 0345 345 4345
+            {% trans %}Telephone{% endtrans%}: 0345 345 4345 <br />
+            <a class="govuk-link--no-underline" href="https://www.relayuk.bt.com/">{% trans %}Relay UK{% endtrans%}</a> {% trans %}(textphone and app): 18001 then 0345 345 4345{% endtrans%}
         </p>
         <p class="govuk-body">
-            Monday to Friday, 9am to 8pm <br />
-            Saturday, 9am to 12:30pm <br />
-            <a class="govuk-link--no-underline" href="https://www.gov.uk/call-charges">Find out about call charges</a>
+            {% trans %}Monday to Friday, 9am to 8pm{% endtrans%} <br />
+            {% trans %}Saturday, 9am to 12:30pm{% endtrans%} <br />
+            <a class="govuk-link--no-underline" href="https://www.gov.uk/call-charges">{% trans %}Find out about call charges{% endtrans%}</a>
         </p>
         <p class="govuk-body">
-            If you’re worried about the cost of a call:
+            {% trans %}If you’re worried about the cost of a call{% endtrans%}:
             <ul class="govuk-list govuk-list--bullet">
-                <li>ask the helpline to call you back, or</li>
-                <li>text ‘legalaid’ and your name to 8001 for a call back within 24 hours</li>
+                <li>{% trans %}ask the helpline to call you back, or{% endtrans%}</li>
+                <li{% trans %}>text ‘legalaid’ and your name to 8001 for a call back within 24 hours{% endtrans%}</li>
             </ul>
         </p>
     </div>
