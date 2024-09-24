@@ -1,7 +1,6 @@
 ARG BASE_IMAGE=python:3.12-slim
 FROM $BASE_IMAGE AS base
-
-ARG REQUIREMENTS=requirements-production.txt
+ARG REQUIREMENTS_FILE=requirements-production.txt
 
 # Set environment variables
 ENV FLASK_APP=govuk-frontend-flask.py
@@ -21,10 +20,14 @@ RUN apt-get update \
   && apt-get -y install nodejs npm \
   && apt-get clean
 
+# This is required because there has been an upgrade of this package which hasn't yet been updated in the base image
+# This can be removed when the base image is updated with the upgrade
+RUN apt-get install --only-upgrade libexpat1 -y
+
 COPY package*.json ./
 RUN npm install
 
-COPY requirements/generated/$REQUIREMENTS requirements.txt
+COPY requirements/generated/$REQUIREMENTS_FILE requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 

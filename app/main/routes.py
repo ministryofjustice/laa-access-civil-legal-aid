@@ -1,4 +1,15 @@
-from flask import flash, json, make_response, redirect, render_template, request
+import datetime
+from urllib.parse import urlparse
+from flask import (
+    flash,
+    json,
+    make_response,
+    redirect,
+    render_template,
+    request,
+    current_app,
+    abort,
+)
 from flask_wtf.csrf import CSRFError
 from werkzeug.exceptions import HTTPException
 
@@ -9,6 +20,30 @@ from app.main.forms import CookiesForm
 @bp.route("/", methods=["GET"])
 def index():
     return render_template("index.html")
+
+
+@bp.route("/locale/<locale>")
+def set_locale(locale):
+    """
+    Set locale cookie
+    """
+    if locale not in current_app.config["LANGUAGES"]:
+        abort(404)
+
+    if request.referrer:
+        parse = urlparse(request.referrer)
+        redirect_url = ["/", parse.path.strip("/")]
+        if parse.query:
+            redirect_url.append("?" + parse.query)
+    else:
+        redirect_url = ["/"]
+
+    response = redirect("".join(redirect_url))
+    expires = datetime.datetime.now() + datetime.timedelta(days=30)
+    response.set_cookie(
+        "locale", locale, expires=expires, secure=(not current_app.debug), httponly=True
+    )
+    return response
 
 
 @bp.route("/accessibility", methods=["GET"])

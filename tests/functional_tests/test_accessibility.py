@@ -45,7 +45,7 @@ def check_accessibility(page: Page):
 
 @pytest.mark.usefixtures("live_server")
 def test_all_page_accessibility(app, page: Page):
-    ignored_routes = ["static", "/"]
+    ignored_routes = ["static", "/", "main.set_locale"]
     routes = app.view_functions
     for route in routes:
         if route not in ignored_routes:

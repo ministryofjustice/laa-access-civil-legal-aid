@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_babel import Babel
 from flask_assets import Bundle, Environment
 from flask_compress import Compress
 from flask_limiter import Limiter
@@ -7,10 +8,12 @@ from flask_talisman import Talisman
 from flask_wtf.csrf import CSRFProtect
 from govuk_frontend_wtf.main import WTFormsHelpers
 from jinja2 import ChoiceLoader, PackageLoader, PrefixLoader
-from .main.gtm import get_gtm_anon_id
+from app.main.gtm import get_gtm_anon_id
+from app.main import get_locale
 import sentry_sdk
 
 from app.config import Config
+
 
 compress = Compress()
 csrf = CSRFProtect()
@@ -141,6 +144,8 @@ def create_app(config_class=Config):
         assets.register("js", js)
     if "headscripts" not in assets:
         assets.register("headscripts", headscripts)
+
+    Babel(app, locale_selector=get_locale)
 
     # Register blueprints
     from app.main import bp as main_bp

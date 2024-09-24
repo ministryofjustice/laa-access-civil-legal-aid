@@ -5,6 +5,7 @@ services:
       context: .
       args:
         BASE_IMAGE: python:3.12-bookworm
+        REQUIREMENTS_FILE: "requirements-development.txt"
       target: development
     restart: always
     environment:
