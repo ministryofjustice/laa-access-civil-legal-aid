@@ -117,10 +117,13 @@ def csrf_error(error):
 
 @bp.before_request
 def service_unavailable_middleware():
+    if not current_app.config["SERVICE_UNAVAILABLE"]:
+        return
+
     service_unavailable_url = url_for("main.service_unavailable_page")
     exempt_urls = [
         service_unavailable_url,
         url_for("main.status"),
     ]
-    if current_app.config["SERVICE_UNAVAILABLE"] and request.path not in exempt_urls:
+    if request.path not in exempt_urls:
         return redirect(service_unavailable_url)
