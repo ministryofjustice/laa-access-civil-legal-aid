@@ -4,9 +4,7 @@ on: workflow_call
 
 jobs:
   zap_scan:
-    runs-on:
-      - self-hosted
-      - laa-access-civil-legal-aid-runner
+    runs-on: ubuntu-latest
     name: Scan the web application
     steps:
     - name: Checkout code
