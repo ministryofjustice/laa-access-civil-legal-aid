@@ -4,7 +4,7 @@ on: workflow_call
 
 jobs:
   zap_scan:
-    runs-on: [self-hosted, ubuntu-latest]
+    runs-on: [self-hosted]
     name: Scan the web application
     steps:
     - name: Checkout code
