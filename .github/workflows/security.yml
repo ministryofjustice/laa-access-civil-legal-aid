@@ -4,7 +4,9 @@ on: workflow_call
 
 jobs:
   zap_scan:
-    runs-on: [laa-access-civil-legal-aid-runner]
+    runs-on:
+      - self-hosted
+      - laa-access-civil-legal-aid-runner
     name: Scan the web application
     steps:
     - name: Checkout code
