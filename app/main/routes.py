@@ -124,6 +124,11 @@ def service_unavailable_middleware():
     exempt_urls = [
         service_unavailable_url,
         url_for("main.status"),
+        url_for("main.cookies"),
+        url_for("main.accessibility"),
+        url_for("main.privacy"),
+        url_for("main.set_locale", locale="en"),
+        url_for("main.set_locale", locale="cy"),
     ]
     if request.path not in exempt_urls:
         return redirect(service_unavailable_url)
