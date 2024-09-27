@@ -8,7 +8,6 @@ from flask_talisman import Talisman
 from flask_wtf.csrf import CSRFProtect
 from govuk_frontend_wtf.main import WTFormsHelpers
 from jinja2 import ChoiceLoader, PackageLoader, PrefixLoader
-from app.main.gtm import get_gtm_anon_id
 from app.main import get_locale
 import sentry_sdk
 
@@ -149,8 +148,6 @@ def create_app(config_class=Config):
 
     # Register blueprints
     from app.main import bp as main_bp
-
-    main_bp.context_processor(get_gtm_anon_id)
 
     app.register_blueprint(main_bp)
 
