@@ -1,4 +1,8 @@
 {
+  "engines": {
+    "node": "^20.9.0",
+    "npm": "^10.1.0"
+  },
   "scripts": {
     "gov-js": "cp -R node_modules/govuk-frontend/dist/govuk/govuk-frontend.min.* app/static",
     "gov-images": "cp -R node_modules/govuk-frontend/dist/govuk/assets/. app/static",
