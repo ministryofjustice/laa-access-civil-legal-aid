@@ -8,6 +8,7 @@ from flask import (
     render_template,
     request,
     current_app,
+    url_for,
     abort,
 )
 from flask_wtf.csrf import CSRFError
@@ -44,6 +45,18 @@ def set_locale(locale):
         "locale", locale, expires=expires, secure=(not current_app.debug), httponly=True
     )
     return response
+
+
+@bp.route("/status", methods=["GET"])
+def status():
+    return "OK"
+
+
+@bp.route("/service-unavailable", methods=["GET"])
+def service_unavailable_page():
+    if not current_app.config["SERVICE_UNAVAILABLE"]:
+        return redirect(url_for("main.index"))
+    abort(503)
 
 
 @bp.route("/accessibility", methods=["GET"])
@@ -100,3 +113,22 @@ def http_exception(error):
 def csrf_error(error):
     flash("The form you were submitting has expired. Please try again.")
     return redirect(request.full_path)
+
+
+@bp.before_request
+def service_unavailable_middleware():
+    if not current_app.config["SERVICE_UNAVAILABLE"]:
+        return
+
+    service_unavailable_url = url_for("main.service_unavailable_page")
+    exempt_urls = [
+        service_unavailable_url,
+        url_for("main.status"),
+        url_for("main.cookies"),
+        url_for("main.accessibility"),
+        url_for("main.privacy"),
+        url_for("main.set_locale", locale="en"),
+        url_for("main.set_locale", locale="cy"),
+    ]
+    if request.path not in exempt_urls:
+        return redirect(service_unavailable_url)

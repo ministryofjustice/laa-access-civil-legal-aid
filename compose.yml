@@ -10,6 +10,7 @@ services:
     restart: always
     environment:
       - SECRET_KEY=CHANGE_ME
+      - MAINTENANCE_MODE=FALSE
       - FLASK_RUN_PORT=8020
       - SENTRY_DSN=${SENTRY_DSN:-}
     ports:

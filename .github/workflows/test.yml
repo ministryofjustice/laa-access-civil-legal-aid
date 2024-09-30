@@ -4,6 +4,7 @@ on: workflow_call
 
 env:
   SECRET_KEY: "TEST_KEY"
+  ENVIRONMENT: CI
 
 
 jobs:
@@ -23,12 +24,17 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install -r requirements/generated/requirements-development.txt
+        
 
     - name: Unit test with pytest
       run: |
         # Remove this after we move from build assets in-app to esbuild
         npm install
         pip install pytest pytest-cov
+        # This is required because at the moment the assets are being built in the app
+        # When the app tries to access sass files in node_modules it will fail unless this is included
+        npm install
+        
         coverage run -m pytest tests/unit_tests
         coverage xml
 

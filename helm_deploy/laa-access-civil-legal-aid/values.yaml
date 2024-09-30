@@ -68,3 +68,8 @@ envVars:
     secret:
       name: sentry
       key: dsn
+  MAINTENANCE_MODE:
+    configmap:
+      name: maintenance-mode
+      key: enabled
+      optional: true
