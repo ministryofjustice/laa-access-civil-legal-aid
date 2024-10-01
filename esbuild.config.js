@@ -4,28 +4,31 @@ const { sassPlugin } = require('esbuild-sass-plugin');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-async function build() {
-  try {
-      await esbuild.build({
-      plugins: [sassPlugin({
-        quietDeps: true
-      })],
-      entryPoints: ["app/static/src/js/scripts.js", "app/static/src/scss/styles.scss"],
-      bundle: true,
-      entryNames: '[name]',
-      outdir: 'app/static/dist',   // Output directory,
-      minify: isProduction,
-      sourcemap: !isProduction,
-      external: ['/assets/*'],
-    });
-    console.log('Build succeeded');
-  } catch (error) {
-    console.error('Build failed:', error);
-    process.exit(1);
-  }
+async function build(should_watch) {
+    const context = {
+        plugins: [sassPlugin({
+            quietDeps: true
+        })],
+        entryPoints: ["app/static/src/js/scripts.js", "app/static/src/scss/styles.scss"],
+        bundle: true,
+        entryNames: '[name]',
+        outdir: 'app/static/dist',   // Output directory,
+        minify: isProduction,
+        sourcemap: !isProduction,
+        external: ['/assets/*'],
+        logLevel: 'info',
+    };
+
+    if(should_watch) {
+        esbuild.context(context).then(function(ctx){
+            ctx.watch();
+            ctx.rebuild();
+        });
+    }
+    else {
+        esbuild.build(context);
+    }
 }
 
-
-(async () => {
-  await build();
-})();
+const shoudl_watch = process.argv.includes("--watch");
+build(shoudl_watch);
