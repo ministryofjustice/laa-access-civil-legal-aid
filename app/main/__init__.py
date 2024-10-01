@@ -16,7 +16,7 @@ def get_locale():
     return request.accept_languages.best_match(language_keys) or "en"
 
 
-@bp.context_processor
+@bp.app_context_processor
 def inject_language_switcher():
     locale = get_locale()
     code = "cy" if locale == "en" else "en"
