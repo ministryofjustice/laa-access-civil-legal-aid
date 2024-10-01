@@ -1,9 +1,17 @@
 ARG BASE_IMAGE=python:3.12-slim
+
+FROM node:lts-iron as node_build
+WORKDIR /home/node
+COPY esbuild.config.js package.json package-lock.json ./
+COPY app/static/src app/static/src
+RUN npm install
+RUN npm run build
+
+
 FROM $BASE_IMAGE AS base
 ARG REQUIREMENTS_FILE=requirements-production.txt
 
 # Set environment variables
-ENV FLASK_APP=govuk-frontend-flask.py
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=${FLASK_RUN_PORT:-8000}
 ENV PYTHONUNBUFFERED=1
@@ -15,26 +23,13 @@ RUN adduser --disabled-password app -u 1000 && \
 RUN mkdir /home/app/access
 WORKDIR /home/app/access
 
-# Install node
-RUN apt-get update \
-  && apt-get -y install nodejs npm \
-  && apt-get clean
-
-# This is required because there has been an upgrade of this package which hasn't yet been updated in the base image
-# This can be removed when the base image is updated with the upgrade
-RUN apt-get install --only-upgrade libexpat1 -y
-
-COPY package*.json ./
-RUN npm install
+COPY --from=node_build /home/node/app/static/dist/ app/static/dist/
 
 COPY requirements/generated/$REQUIREMENTS_FILE requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-COPY govuk-frontend-flask.py .
 COPY app ./app
-
-RUN npm run build
 
 # Change ownership of the working directory to the non-root user
 RUN chown -R app:app /home/app
