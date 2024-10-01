@@ -22,8 +22,6 @@ charset-normalizer==3.3.2
     # via requests
 click==8.1.7
     # via flask
-cssmin==0.2.0
-    # via -r requirements/source/requirements-base.in
 deepmerge==1.1.1
     # via govuk-frontend-wtf
 deprecated==1.2.14
@@ -31,7 +29,6 @@ deprecated==1.2.14
 flask==3.0.3
     # via
     #   -r requirements/source/requirements-base.in
-    #   flask-assets
     #   flask-babel
     #   flask-compress
     #   flask-limiter
@@ -39,8 +36,6 @@ flask==3.0.3
     #   govuk-frontend-wtf
     #   pytest-flask
     #   sentry-sdk
-flask-assets==2.1.0
-    # via -r requirements/source/requirements-base.in
 flask-babel==4.0.0
     # via -r requirements/source/requirements-base.in
 flask-compress==1.15
@@ -77,10 +72,6 @@ jinja2==3.1.4
     #   flask-babel
     #   govuk-frontend-jinja
     #   govuk-frontend-wtf
-jsmin==3.0.1
-    # via -r requirements/source/requirements-base.in
-libsass==0.23.0
-    # via -r requirements/source/requirements-base.in
 limits==3.13.0
     # via flask-limiter
 markdown-it-py==3.0.0
@@ -147,8 +138,6 @@ urllib3==2.2.2
     # via
     #   requests
     #   sentry-sdk
-webassets==2.0
-    # via flask-assets
 werkzeug==3.0.3
     # via
     #   flask
