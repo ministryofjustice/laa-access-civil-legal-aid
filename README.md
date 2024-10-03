@@ -18,15 +18,24 @@ pip install -r requirements.in -r requirements_dev.in
 
 ### Assets setup
 
-For this you'll need to install node. 
+For this you'll need to install node > v20.9.0.
 
-`npm install`
+```bash
+nvm install --lts
+nvm use --lts
+```
+
+```bash
+npm install
+```
 
 Once installed you now have access to GOVUK components, stylesheets and JS via the `node_module`
 
 To copy some of the assets you'll need into your project, run the following:
 
-`npm run build`
+```bash
+npm run build
+```
 
 Ensure you do this before starting your Flask project as you're JS and SCSS imports will fail in the flask run.
 
