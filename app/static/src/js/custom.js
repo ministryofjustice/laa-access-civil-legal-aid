@@ -1,1 +1,2 @@
-// Example of a custom js file. Which is combined with all JS files into one application JS file by Flask Assets.
+import { initAll } from 'govuk-frontend/dist/govuk/all.bundle.js';
+initAll();

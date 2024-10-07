@@ -12,7 +12,7 @@
 
 {% block head %}
     <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet" nonce="{{ csp_nonce() }}" />
-    <script src="{{ url_for('static', filename='scripts.js') }}" nonce="{{ csp_nonce() }}" ></script>
+    <script src="{{ url_for('static', filename='headscripts.js') }}" nonce="{{ csp_nonce() }}" ></script>
     <meta name="description" content="{{config['SERVICE_NAME']}}">
     <meta name="author" content="{{config['DEPARTMENT_NAME']}}">
 {% endblock %}
@@ -163,4 +163,8 @@
       'html': 'Built by <a href="' + config['DEPARTMENT_URL'] +'" class="govuk-footer__link">' + config['DEPARTMENT_NAME'] + '</a>'
     }
   }) }}
+{% endblock %}
+
+{% block bodyEnd %}
+<script src="{{ url_for('static', filename='scripts.js') }}" nonce="{{ csp_nonce() }}" ></script>
 {% endblock %}

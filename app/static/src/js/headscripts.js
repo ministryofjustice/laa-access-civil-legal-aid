@@ -1,0 +1,1 @@
+import './headscripts/gtm.js';

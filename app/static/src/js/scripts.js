@@ -1,3 +1,2 @@
-import './cookie-banner.js'
-import './gtm.js'
-import './custom.js'
+import './cookie-banner.js';
+import './custom.js';
