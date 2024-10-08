@@ -1,6 +1,6 @@
 from flask import session, request, after_this_request
 from app.main import bp
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import uuid
 import re
 
@@ -32,7 +32,7 @@ def detect_gtm_anon_id():
     @after_this_request
     def remember_gtm_anon_id(response):
         session["gtm_anon_id"] = str(uuid.uuid4())
-        expiration_date = datetime.utcnow() + timedelta(days=30)
+        expiration_date = datetime.now(timezone.utc) + timedelta(days=30)
         response.set_cookie(
             "gtm_anon_id", session.get("gtm_anon_id"), expires=expiration_date
         )
