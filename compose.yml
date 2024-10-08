@@ -1,4 +1,13 @@
 services:
+  watcher:
+    container_name: watcher
+    build:
+      dockerfile: node.Dockerfile
+      context: .
+    restart: always
+    volumes:
+      - ./app/static:/home/node/app/static
+
   web:
     container_name: govuk-frontend-flask
     build:
