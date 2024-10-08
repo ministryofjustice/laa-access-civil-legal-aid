@@ -1,0 +1,35 @@
+name: Security
+
+on: workflow_call
+
+jobs:
+  zap_scan:
+    runs-on: ubuntu-latest
+    name: Scan the web application
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Download HOST_NAME artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: host-name
+
+    - name: Read HOST_NAME from file
+      id: read-hostname
+      run: |
+        HOST_NAME=$(cat hostname.txt)
+        echo "HOST_NAME=${HOST_NAME}" >> $GITHUB_ENV
+
+    - name: ZAP Full Scan
+      uses: zaproxy/action-full-scan@v0.10.0
+      with:
+        target: "http://${{ env.HOST_NAME }}"
+        artifact_name: 'zap_report'
+      continue-on-error: true
+
+    - name: Upload ZAP Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: zap_report
+        path: 'report_html.html'
