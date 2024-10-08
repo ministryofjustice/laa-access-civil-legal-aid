@@ -2,7 +2,7 @@ const esbuild = require('esbuild');
 const { sassPlugin } = require('esbuild-sass-plugin');
 
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.CLA_ENVIRONMENT === 'production';
 
 async function build(should_watch) {
     const context = {
