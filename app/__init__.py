@@ -120,7 +120,7 @@ def create_app(config_class=Config):
     # Register blueprints
     from app.main import bp as main_bp
 
-    main_bp.context_processor(get_gtm_anon_id)
+    main_bp.app_context_processor(get_gtm_anon_id)
 
     app.register_blueprint(main_bp)
 
