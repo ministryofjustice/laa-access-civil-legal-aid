@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-23 21:52+0100\n"
+"POT-Creation-Date: 2024-10-11 16:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,62 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
+
+#: app/templates/main/503.html:3 app/templates/main/503.html:10
+msgid "Sorry, the service is unavailable"
+msgstr ""
+
+#: app/templates/main/503.html:11
+msgid "The service will be available again soon - try in the next hour."
+msgstr ""
+
+#: app/templates/main/503.html:13
+msgid "If you already started using the service, your answers will not be saved."
+msgstr ""
+
+#: app/templates/main/503.html:14
+msgid "If you need urgent help"
+msgstr ""
+
+#: app/templates/main/503.html:15
+msgid "Contact the Civil Legal Advice (CLA) helpline."
+msgstr ""
+
+#: app/templates/main/503.html:17
+msgid "Telephone"
+msgstr ""
+
+#: app/templates/main/503.html:18
+msgid "Relay UK"
+msgstr ""
+
+#: app/templates/main/503.html:18
+msgid "(textphone and app): 18001 then 0345 345 4345"
+msgstr ""
+
+#: app/templates/main/503.html:21
+msgid "Monday to Friday, 9am to 8pm"
+msgstr ""
+
+#: app/templates/main/503.html:22
+msgid "Saturday, 9am to 12:30pm"
+msgstr ""
+
+#: app/templates/main/503.html:23
+msgid "Find out about call charges"
+msgstr ""
+
+#: app/templates/main/503.html:26
+msgid "If you’re worried about the cost of a call"
+msgstr ""
+
+#: app/templates/main/503.html:28
+msgid "ask the helpline to call you back, or"
+msgstr ""
+
+#: app/templates/main/503.html:29
+msgid "text ‘legalaid’ and your name to 80010 for a call back within 24 hours"
+msgstr ""
 
 #: app/templates/main/privacy.html:19
 msgid "Privacy notice"
