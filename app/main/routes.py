@@ -18,7 +18,7 @@ from app.main import bp
 from app.main.forms import CookiesForm
 
 
-@bp.route("/main")
+@bp.get("/main")
 def index():
     return redirect(url_for("categories.index"))
 
@@ -115,7 +115,7 @@ def csrf_error(error):
     return redirect(request.full_path)
 
 
-@bp.before_request
+@bp.before_app_request
 def service_unavailable_middleware():
     if not current_app.config["SERVICE_UNAVAILABLE"]:
         return
