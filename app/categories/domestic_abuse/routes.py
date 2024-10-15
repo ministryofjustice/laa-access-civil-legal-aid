@@ -1,5 +1,5 @@
 from app.categories.domestic_abuse import bp
-from flask import render_template, url_for, redirect
+from flask import render_template, url_for, redirect, flash
 from app.categories.domestic_abuse.forms import AreYouAtRiskOfHarmForm
 
 
@@ -18,6 +18,7 @@ def are_you_at_immediate_risk_of_harm():
     if form.validate_on_submit():
         if form.question.data == "yes":
             return redirect("https://checklegalaid.service.gov.uk/contact")
+        flash("End of prototype")
 
     return render_template(
         "question-page.html",
