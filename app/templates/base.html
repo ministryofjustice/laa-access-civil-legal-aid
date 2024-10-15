@@ -111,9 +111,9 @@
 
 {% block header %}
     {{ govukHeader({
-    'homepageUrl': url_for('main.index'),
+    'homepageUrl': url_for('categories.index'),
     'serviceName': config['SERVICE_NAME'],
-    'serviceUrl': url_for('main.index'),
+    'serviceUrl': url_for('categories.index'),
     'useTudorCrown': true
   }) }}
 {% endblock %}

@@ -8,3 +8,16 @@
     background: $govuk-brand-colour;
   }
 }
+
+.watermark{
+	transform: translate(-15%, -50%) rotate(332deg);
+	font-size: 15em;
+	color: rgba(255, 5, 5, 0.17);
+	position: fixed;
+	font-family: "GDS Transport", arial, sans-serif;
+	text-transform:uppercase;
+    font-weight: bold;
+	padding-left: 0;
+    pointer-events: none;
+	z-index: 1000;
+}

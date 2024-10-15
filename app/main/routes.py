@@ -18,11 +18,6 @@ from app.main import bp
 from app.main.forms import CookiesForm
 
 
-@bp.route("/", methods=["GET"])
-def index():
-    return render_template("index.html")
-
-
 @bp.route("/locale/<locale>")
 def set_locale(locale):
     """
