@@ -120,16 +120,17 @@
 
 {% block beforeContent %}
     {{ govukPhaseBanner({
-    'tag': {
-      'text': config['SERVICE_PHASE']
-    },
-    'html': 'This is a new service – your <a class="govuk-link" href="mailto:' + config['CONTACT_EMAIL'] + '">feedback</a> will help us to improve it.'
-  }) }}
+        'tag': {
+          'text': config['SERVICE_PHASE']
+        },
+        'html': 'This is a new service – your <a class="govuk-link" href="mailto:' + config['CONTACT_EMAIL'] + '">feedback</a> will help us to improve it.'
+    }) }}
+
+    <p class="watermark">Just a prototype</p>
 {% endblock %}
 
 {% block content %}
 
-    <p class="watermark">Just a prototype</p>
 
     {% if form and form.errors %}
         {{ govukErrorSummary(wtforms_errors(form)) }}
