@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
+{%- from 'components/list-item.html' import list_item, list_item_small -%}
+
+{% block beforeContent%}
+{{ super() }}
+{{ govukBackLink({
+    'href': url_for('categories.index'),
+    'text': "Back"
+  }) }}
+{% endblock %}
+
+{% block content %}
+
+<p class="watermark">Just a prototype</p>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">Domestic Abuse</h1>
+
+        {{ list_item("Help to protect you and your children",
+                     "This includes advice about keeping you and your family safe, getting court orders and help if someone is ignoring a court order. Also, if you’re being stalked or harassed. ",
+                     url_for("categories.domestic_abuse.are_you_at_immediate_risk_of_harm")) }}
+
+        {{ list_item("Leaving an abusive relationship",
+             "Help with divorce or separation. It includes making plans for the children, money, and housing. It also covers child contact and where the children will live.",
+             url_for("categories.index")) }}
+
+        {{ list_item("Problems with an ex-partner: children or money",
+             "Includes contact with children, where children live; money; when an ex-partner doesn’t follow court orders or agreements. Also if you’re worried about a child; child taken or kept without your permission.",
+             url_for("categories.index")) }}
+    </div>
+</div>
+{% endblock %}
