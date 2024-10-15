@@ -74,21 +74,31 @@ jobs:
       runs-on: ubuntu-latest
   
       steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
+      - name: Checkout the repository
+        uses: actions/checkout@v4
   
-        - name: Install TruffleHog
-          run: |
-            python -m venv venv
-            source venv/bin/activate
-            pip install truffleHog3
-  
-        - name: Run TruffleHog Scan
-          run: |
-            venv/bin/trufflehog3 github --org ${{ github.repository_owner }} --repo ${{ github.repository }} --branches main
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  
-        - name: Check for Secrets
-          if: failure()
-          run: exit 1
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements/generated/requirements-development.txt
+
+      - name: Install TruffleHog
+        run: |
+          source venv/bin/activate
+          pip install truffleHog3
+
+      - name: Run TruffleHog Scan
+        run: |
+          source venv/bin/activate
+          venv/bin/trufflehog3 git --directory .
+
+      - name: Check for Secrets
+        if: failure()
+        run: exit 1
