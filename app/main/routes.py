@@ -18,6 +18,11 @@ from app.main import bp
 from app.main.forms import CookiesForm
 
 
+@bp.route("/main")
+def index():
+    return redirect(url_for("categories.index"))
+
+
 @bp.route("/locale/<locale>")
 def set_locale(locale):
     """
