@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 
-{%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
 {%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton -%}
 {%- from 'components/list-item.html' import list_item, list_item_small -%}
 
@@ -11,8 +10,11 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl">Find problems covered by legal aid</h1>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">Find problems covered by legal aid</h1>
+
         <p class="govuk-body">These are all the problems covered by legal aid. Choose the problem you need help with.</p>
+
+        <br>
 
         {{ list_item("Children, families and relationships",
                      "Includes children and social services, children in care. Also, help with children and finances in a divorce or separation.",
