@@ -3,6 +3,7 @@ exclude: # exclude matching issues
     paths:
       - build/**
       - dist/**
+      - python3.12/**
       - package-lock.json
       - README.md
   - message: Examples and data necessary for running auto-tests
