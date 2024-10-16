@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
 
+{% block pageTitle %}{%- if form.errors %}Error: {% endif -%}{{ form.title }} - GOV.UK{% endblock %}
+
 {% block beforeContent%}
 {{ super() }}
 {{ govukBackLink({
@@ -18,12 +20,10 @@
 
         <h1 class="govuk-heading-xl">{{ form.category }}</h1>
 
-        <h2 class="govuk-heading-l">{{ form.title }}</h2>
-
         <form action="" method="post" novalidate>
             {{ form.csrf_token }}
 
-            {{ form.question(params={'items': items }) }}
+            {{ form.question() }}
 
             {{ form.submit }}
         </form>
