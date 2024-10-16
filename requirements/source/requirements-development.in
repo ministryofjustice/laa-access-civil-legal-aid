@@ -4,3 +4,4 @@ isort
 pytest-flask
 pytest-playwright
 axe-core-python
+trufflehog3

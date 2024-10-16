@@ -3,6 +3,8 @@ exclude: # exclude matching issues
     paths:
       - build/**
       - dist/**
+      - package-lock.json
+      - README.md
   - message: Examples and data necessary for running auto-tests
     paths:
       - docs/*.html
@@ -57,7 +59,6 @@ ignore_nosecret: false # ignore inline 'nosecret' annotations
 no_entropy: false # disable entropy checks
 no_pattern: false # disable pattern checks
 
-branch: master # name of the repo branch to scan
 depth: 10000 # max commits depth for searching, only used if `no_history` is false
 since: null # scan from the given commit hash, only used if `no_history` is false
 no_current: false # disable current status check
