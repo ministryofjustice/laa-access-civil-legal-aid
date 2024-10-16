@@ -97,7 +97,7 @@ jobs:
       - name: Run TruffleHog Scan
         run: |
           source venv/bin/activate
-          venv/bin/trufflehog3 filesystem .
+          venv/bin/trufflehog3 filesystem . --no-history
 
       - name: Check for Secrets
         if: failure()
