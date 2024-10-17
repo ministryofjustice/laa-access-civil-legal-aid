@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-09-23 21:52+0100\n"
+"POT-Creation-Date: 2024-10-16 09:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,51 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
 
-#: app/templates/main/privacy.html:19
+msgid "Sorry, the service is unavailable"
+msgstr ""
+
+msgid "The service will be available again soon - try in the next hour."
+msgstr ""
+
+msgid "If you already started using the service, your answers will not be saved."
+msgstr ""
+
+msgid "If you need urgent help"
+msgstr ""
+
+msgid "Contact the Civil Legal Advice (CLA) helpline."
+msgstr ""
+
+msgid "Telephone"
+msgstr ""
+
+msgid "Relay UK"
+msgstr ""
+
+msgid "(textphone and app): 18001 then 0345 345 4345"
+msgstr ""
+
+msgid "Monday to Friday, 9am to 8pm"
+msgstr ""
+
+msgid "Saturday, 9am to 12:30pm"
+msgstr ""
+
+msgid "Find out about call charges"
+msgstr ""
+
+msgid "If you’re worried about the cost of a call"
+msgstr ""
+
+msgid "ask the helpline to call you back, or"
+msgstr ""
+
+msgid "text ‘legalaid’ and your name to 80010 for a call back within 24 hours"
+msgstr ""
+
 msgid "Privacy notice"
 msgstr ""
 
-#: app/templates/main/privacy.html:20
 msgid "Start of privacy notice"
 msgstr ""
 
