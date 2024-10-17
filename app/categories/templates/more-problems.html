@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink-%}
+{%- from 'components/list-item.html' import list_item, list_item_small -%}
+
+{% block beforeContent%}
+{{ super() }}
+{{ govukBackLink({
+    'href': url_for('categories.index'),
+    'text': "Back"
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-m">More problems covered by legal aid</h1>
+        <br>
+
+        {{ list_item_small("Appeal a decision that you cannot work with children or vulnerable adults ",
+                     "Including if you’re on a ‘barred list’ or disqualified from teaching.",
+                     url_for("categories.index")) }}
+
+        {{ list_item_small("Anti-social behaviour and gangs",
+             "If you’re accused or taken to court for anti-social behaviour, including being in a gang.",
+             url_for("categories.index")) }}
+
+        {{ list_item_small("Clinical negligence in babies",
+             "Help if a baby has brain or nerve damage caused during pregnancy, childbirth or up to 8 weeks old.",
+             "https://checklegalaid.service.gov.uk/scope/refer/legal-adviser?category=clinneg&hlpas=no"
+) }}
+
+        {{ list_item_small("Compensation for abuse, assault or neglect",
+             "Includes child abuse, sexual assault, abuse of a vulnerable adult. Claims can be against a person or an organisation.",
+             url_for("categories.index")) }}
+
+        {{ list_item_small("Environmental pollution",
+             "Issues about air, water or land pollution that is harming you or the environment.",
+             url_for("categories.index")) }}
+
+        {{ list_item_small("Female genital mutilation (FGM)",
+             "If you or someone else is at risk of FGM.",
+             url_for("categories.index")) }}
+
+        {{ list_item_small("Forced Marriage",
+             "Help with forced marriage and Forced Marriage Protection Orders.",
+             url_for("categories.index")) }}
+
+        {{ list_item_small("Inquests for family members",
+             "Advice and help to prepare for the inquest of a family member.",
+             url_for("categories.index")) }}
+
+        {{ list_item_small("Proceeds of Crime Act",
+             "If you’re facing legal action to take your money or other assets.",
+             url_for("categories.index")) }}
+
+        {{ list_item_small("Terrorism",
+             "If you’re accused of terrorism or financing terrorist groups.",
+             url_for("categories.index")) }}
+
+        {{ list_item_small("Trafficking, modern slavery",
+             "Help if you’re a victim of human trafficking or modern slavery.",
+             url_for("categories.index")) }}
+
+        <br>
+        <br>
+
+        <div class="govuk-inset-text">
+            <p class="govuk-heading-s">If you cannot find the right problem on this page</p>
+            <a class="govuk-link govuk-link--no-visited-state" href="{{ url_for('categories.index') }}">Find other help</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
