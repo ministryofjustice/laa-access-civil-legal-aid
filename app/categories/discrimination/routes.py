@@ -31,7 +31,7 @@ def where_did_the_discrimination_happen():
     )
 
 
-@bp.route("/<string:where>", methods=["GET", "POST"])
+@bp.route("/<string:where>", methods=["GET", "POST"], defaults={"where": "work"})
 def why_were_you_treated_differently(where):
     form = DiscriminationWhyForm()
 
