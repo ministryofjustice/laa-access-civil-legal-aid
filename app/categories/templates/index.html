@@ -30,7 +30,7 @@
 
         {{ list_item("Discrimination",
              "Treated unfairly because of things like your race, sex, disability or health condition, religion or age.",
-             url_for("categories.index")) }}
+             url_for("categories.discrimination.where_did_the_discrimination_happen")) }}
 
         {{ list_item("Asylum and immigration",
              "Help if you’re seeking asylum. Help to stay in the UK if you’re a victim of domestic abuse.",
@@ -72,7 +72,7 @@
 
         {{ govukButton({
             'text': "More problems covered by legal aid",
-            'href': url_for('categories.index')
+            'href': url_for('categories.more_problems')
 
         }) }}
 

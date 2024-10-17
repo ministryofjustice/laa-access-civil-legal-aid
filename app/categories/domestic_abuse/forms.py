@@ -5,7 +5,7 @@ from wtforms.validators import InputRequired
 
 
 class AreYouAtRiskOfHarmForm(QuestionForm):
-    category = "Discrimination"
+    category = "Domestic Abuse"
 
     title = "Are you or your children at immediate risk of harm?"
 
