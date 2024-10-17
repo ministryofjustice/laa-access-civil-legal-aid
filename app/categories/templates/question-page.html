@@ -23,7 +23,11 @@
         <form action="" method="post" novalidate>
             {{ form.csrf_token }}
 
-            {{ form.question() }}
+            {% if items %}
+                {{ form.question(params={'items': items }) }}
+            {% else %}
+                {{ form.question() }}
+            {% endif %}
 
             {{ form.submit }}
         </form>

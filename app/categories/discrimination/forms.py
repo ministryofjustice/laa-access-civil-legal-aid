@@ -12,20 +12,26 @@ class DiscriminationWhereForm(QuestionForm):
     question = RadioField(
         title,
         widget=CategoryRadioInput(),
-        validators=[
-            InputRequired(message="Select where the discrimination happened")
-        ],
+        validators=[InputRequired(message="Select where the discrimination happened")],
         choices=[
             ("work", "Work - including colleagues, employer or employment agency"),
             ("school", "School, college, university or other education settings"),
-            ("business", "Businesses or service provision - like a shop, restaurant, train, hotel, bank, law firm"),
+            (
+                "business",
+                "Businesses or service provision - like a shop, restaurant, train, hotel, bank, law firm",
+            ),
             ("healthcare", "Health or care - like a hospital or care home"),
             ("housing", "Housing provision - like a landlord or estate agent"),
-            ("public", "Public services and authorities - like the police, social services, council or local authority, jobcentre, government"),
+            (
+                "public",
+                "Public services and authorities - like the police, social services, council or local authority, jobcentre, government",
+            ),
             ("club", "Clubs and associations - like a sports club"),
-            ("notsure", "Not sure")
+            ("", ""),
+            ("notsure", "Not sure"),
         ],
     )
+
 
 class DiscriminationWhyForm(QuestionForm):
     category = "Discrimination"
@@ -35,9 +41,7 @@ class DiscriminationWhyForm(QuestionForm):
     question = RadioField(
         title,
         widget=CategoryRadioInput(),
-        validators=[
-            InputRequired(message="Select where the discrimination happened")
-        ],
+        validators=[InputRequired(message="Select where the discrimination happened")],
         choices=[
             ("race", "Race, colour of skin, ethnicity"),
             ("sex", "Sex (male or female)"),
@@ -47,7 +51,11 @@ class DiscriminationWhyForm(QuestionForm):
             ("sexualorientation", "Sexual orientation - gay, bi, other sexuality"),
             ("gender", "Gender - trans, gender reassignment, other gender issue"),
             ("pregnancy", "Pregnancy or being a mother"),
-            ("marriage", "Married status - being married, in a civil partnership, unmarried"),
-            ("none", "None of the above")
+            (
+                "marriage",
+                "Married status - being married, in a civil partnership, unmarried",
+            ),
+            ("", ""),
+            ("none", "None of the above"),
         ],
     )
