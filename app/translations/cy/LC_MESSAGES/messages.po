@@ -1,8 +1,48 @@
-#: app/templates/main/privacy.html:19
+msgid "Sorry, the service is unavailable"
+msgstr "Yn anffodus, dydy'r gwasanaeth hwn ddim ar gael"
+
+msgid "The service will be available again soon - try in the next hour."
+msgstr "Bydd y gwasanaeth ar gael eto’n fuan - rhowch gynnig arall arni yn yr awr nesaf."
+
+msgid "If you already started using the service, your answers will not be saved."
+msgstr "Os ydych chi eisoes wedi dechrau defnyddio'r gwasanaeth, fydd eich atebion ddim yn cael eu cadw."
+
+msgid "If you need urgent help"
+msgstr "Os oes angen cymorth brys arnoch"
+
+msgid "Contact the Civil Legal Advice (CLA) helpline."
+msgstr "Cysylltwch â llinell gymorth Cyngor Cyfreithiol Sifil (y CLA)."
+
+msgid "Telephone"
+msgstr "Ffôn"
+
+msgid "Relay UK"
+msgstr "Relay UK"
+
+msgid "(textphone and app): 18001 then 0345 345 4345"
+msgstr "ffôn testun ac ap: 18001 yna 0345 345 4345"
+
+msgid "Monday to Friday, 9am to 8pm"
+msgstr "O ddydd Llun i ddydd Gwener rhwng 9am a 8pm"
+
+msgid "Saturday, 9am to 12:30pm"
+msgstr "Dydd Sadwrn, rhwng 9am a 12:30pm"
+
+msgid "Find out about call charges"
+msgstr "Rhagor o wybodaeth am gost galwadau"
+
+msgid "If you’re worried about the cost of a call"
+msgstr "Os ydych chi’n poeni am gost yr alwad"
+
+msgid "ask the helpline to call you back, or"
+msgstr "gofynnwch i’r llinell gymorth eich ffonio’n ôl, neu"
+
+msgid "text ‘legalaid’ and your name to 80010 for a call back within 24 hours"
+msgstr "tecstiwch ‘legalaid’ a’ch enw i 80010 a byddan nhw’n eich ffonio’n ôl o fewn 24 awr"
+
 msgid "Privacy notice"
 msgstr "Welsh Privacy notice"
 
-#: app/templates/main/privacy.html:20
 msgid "Start of privacy notice"
 msgstr "WELSH Start of privacy notice"
 
