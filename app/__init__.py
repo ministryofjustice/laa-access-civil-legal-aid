@@ -64,7 +64,7 @@ def create_app(config_class=Config):
             "'self'",
             "*.google-analytics.com",
         ],
-        "img-src": ["'self'", "*.googletagmanager.com"],
+        "img-src": ["'self'", "*.googletagmanager.com", "www.gov.uk"],
     }
 
     # Set permissions policy

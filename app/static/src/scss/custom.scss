@@ -20,3 +20,25 @@
     pointer-events: none;
 	z-index: 1000;
 }
+
+.arrow-box {
+	display: table;
+}
+
+.arrow-box::before {
+	content: "";
+	display: table-cell;
+	// The below is just for demoing the prototype, this should be served from our static assets
+	background-image: url("https://www.gov.uk/assets/frontend/govuk_publishing_components/action-link-arrow--light-f58b707cfd62c1d0fd8fec7d160351debafe0e8a8767691836a3c967835188bb.svg");
+	width: 57px;
+	height: 40px;
+	background-size: 40px auto;
+    background-repeat: no-repeat;
+}
+
+.category-column {
+	display: flex;
+	flex-wrap: wrap;
+	flex-grow: 1;
+	align-content: space-between;
+}

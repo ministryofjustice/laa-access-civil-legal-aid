@@ -1,7 +1,8 @@
+{# This page was built as a prototype #}
 {% extends "base.html" %}
 
 {%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton -%}
-{%- from 'components/list-item.html' import list_item, list_item_small -%}
+{%- from 'components/list-item.html' import list_item, list_item_small, list_item_arrow -%}
 
 
 {% block content %}
@@ -9,73 +10,87 @@
 {{ super() }}
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-column-full">
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">Find problems covered by legal aid</h1>
 
-        <p class="govuk-body">These are all the problems covered by legal aid. Choose the problem you need help with.</p>
+        <p class="govuk-body-l">Choose the problem you need help with.</p>
+
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-4">Most searched problems</h2>
 
         <br>
 
-        {{ list_item("Children, families and relationships",
-                     "Includes children and social services, children in care. Also, help with children and finances in a divorce or separation.",
-                     url_for("categories.index")) }}
+        <div class="govuk-grid-column-one-half govuk-!-padding-left-0 govuk-!-padding-right-6">
+            {{ list_item_arrow("Children, families and relationships",
+                         "Includes children and social services, children in care. Also, help with children and finances in a divorce or separation.",
+                         url_for("categories.index")) }}
 
-        {{ list_item("Housing, homelessness, losing your home",
-             "Includes being evicted or forced to sell your home. Problems with landlords, repairs, neighbours or council housing.",
-             url_for("categories.index")) }}
+            {{ list_item_arrow("Housing, homelessness, losing your home",
+                 "Includes being evicted or forced to sell your home. Problems with landlords, repairs, neighbours or council housing.",
+                 url_for("categories.index")) }}
 
-        {{ list_item("Domestic abuse",
-             "Abuse by a partner, ex-partner, or family member.",
-             url_for("categories.domestic_abuse.index")) }}
+            {{ list_item_arrow("Domestic abuse",
+                 "Abuse by a partner, ex-partner, or family member.",
+                 url_for("categories.domestic_abuse.index")) }}
+        </div>
 
-        {{ list_item("Discrimination",
-             "Treated unfairly because of things like your race, sex, disability or health condition, religion or age.",
-             url_for("categories.discrimination.where_did_the_discrimination_happen")) }}
+        <div class="govuk-grid-column-one-half govuk-!-padding-left-0">
+            {{ list_item_arrow("Discrimination",
+                 "Treated unfairly because of things like your race, sex, disability or health condition, religion or age.",
+                 url_for("categories.discrimination.where_did_the_discrimination_happen")) }}
 
-        {{ list_item("Asylum and immigration",
-             "Help if you’re seeking asylum. Help to stay in the UK if you’re a victim of domestic abuse.",
-             url_for("categories.index")) }}
+            {{ list_item_arrow("Asylum and immigration",
+                 "Help if you’re seeking asylum. Help to stay in the UK if you’re a victim of domestic abuse.",
+                 url_for("categories.index")) }}
 
-        {{ list_item("Special educational needs and disability (SEND)",
-             "Help if your child has SEND.",
-             url_for("categories.index")) }}
-
-        <br>
-
-        <h3 class="govuk-heading-m">Other problems</h3>
-
-        <br>
-
-        {{ list_item_small("Benefits",
-             "Appeal a decision about your benefits",
-             url_for("categories.index")) }}
-
-        {{ list_item_small("Legal action against public organisations",
-             "Includes schools, the police, government, prisons, NHS, the council.",
-             url_for("categories.index")) }}
-
-        {{ list_item_small("Care for old age, health issues or disability",
-             "Problems with social care. Neglect and bad-quality care. This includes getting care from the council or local authority, paying for care, care homes and other residential homes.",
-             url_for("categories.index")) }}
-
-        {{ list_item_small("Mental capacity, mental health",
-             "Help if someone cannot make decisions about their health, day-to-day life or care. Help at mental health tribunals.",
-             url_for("categories.index")) }}
-
-        {{ list_item_small("Harassment and stalking",
-             "Going to court to stop someone harassing you.",
-             url_for("categories.index")) }}
+            {{ list_item_arrow("Special educational needs and disability (SEND)",
+                 "Help if your child has SEND.",
+                 url_for("categories.index")) }}
+        </div>
 
         <br>
 
-        <br>
+        </div>
 
-        {{ govukButton({
-            'text': "More problems covered by legal aid",
-            'href': url_for('categories.more_problems'),
-            'classes': "govuk-button--secondary"
+        <div class="govuk-grid-column-two-thirds">
 
-        }) }}
+            <br>
+
+            <h3 class="govuk-heading-m">Other problems covered by legal aid</h3>
+
+            <br>
+
+            {{ list_item_small("Benefits",
+                 "Appeal a decision about your benefits",
+                 url_for("categories.index")) }}
+
+            {{ list_item_small("Legal action against public organisations",
+                 "Includes schools, the police, government, prisons, NHS, the council.",
+                 url_for("categories.index")) }}
+
+            {{ list_item_small("Care for old age, health issues or disability",
+                 "Problems with social care. Neglect and bad-quality care. This includes getting care from the council or local authority, paying for care, care homes and other residential homes.",
+                 url_for("categories.index")) }}
+
+            {{ list_item_small("Mental capacity, mental health",
+                 "Help if someone cannot make decisions about their health, day-to-day life or care. Help at mental health tribunals.",
+                 url_for("categories.index")) }}
+
+            {{ list_item_small("Harassment and stalking",
+                 "Going to court to stop someone harassing you.",
+                 url_for("categories.index")) }}
+
+            <br>
+
+            <br>
+
+            {{ govukButton({
+                'text': "More problems covered by legal aid",
+                'href': url_for('categories.more_problems'),
+                'classes': "govuk-button--secondary"
+
+            }) }}
+
+        </div>
 
     </div>
 
