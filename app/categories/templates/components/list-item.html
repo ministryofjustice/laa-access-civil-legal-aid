@@ -14,12 +14,12 @@
 {%- endmacro %}
 
 {% macro list_item_arrow(title, description, link) -%}
-    <span class="arrow-box">
+    <div class="govuk-grid-column-one-half govuk-!-padding-left-0 govuk-!-padding-right-6 arrow-box">
         <span>
             <h2 class="govuk-heading-m">
                 <a class="govuk-link govuk-link--no-visited-state" href="{{ link }}">{{ title }}</a>
             </h2>
             <p class="govuk-body">{{ description }}</p>
         </span>
-    </span>
+    </div>
 {%- endmacro %}

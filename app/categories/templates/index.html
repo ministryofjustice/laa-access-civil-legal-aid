@@ -19,28 +19,33 @@
 
         <br>
 
-        <div class="govuk-grid-column-one-half govuk-!-padding-left-0 govuk-!-padding-right-6">
+        <div class="govuk-grid-column-full govuk-!-padding-left-0">
             {{ list_item_arrow("Children, families and relationships",
-                         "Includes children and social services, children in care. Also, help with children and finances in a divorce or separation.",
+                         "Includes children and social services, children in care. Also, help with children and finances if you divorce or split up.",
                          url_for("categories.index")) }}
+
+            {{ list_item_arrow("Discrimination",
+                 "Treated unfairly because of things like your disability or health condition, race, age, sex, religion or pregnancy.",
+                 url_for("categories.discrimination.where_did_the_discrimination_happen")) }}
+        </div>
+
+        <div class="govuk-grid-column-full govuk-!-padding-left-0">
 
             {{ list_item_arrow("Housing, homelessness, losing your home",
                  "Includes being evicted or forced to sell your home. Problems with landlords, repairs, neighbours or council housing.",
                  url_for("categories.index")) }}
 
-            {{ list_item_arrow("Domestic abuse",
-                 "Abuse by a partner, ex-partner, or family member.",
-                 url_for("categories.domestic_abuse.index")) }}
-        </div>
-
-        <div class="govuk-grid-column-one-half govuk-!-padding-left-0">
-            {{ list_item_arrow("Discrimination",
-                 "Treated unfairly because of things like your race, sex, disability or health condition, religion or age.",
-                 url_for("categories.discrimination.where_did_the_discrimination_happen")) }}
-
             {{ list_item_arrow("Asylum and immigration",
                  "Help if you’re seeking asylum. Help to stay in the UK if you’re a victim of domestic abuse.",
                  url_for("categories.index")) }}
+
+        </div>
+
+        <div class="govuk-grid-column-full govuk-!-padding-left-0">
+
+            {{ list_item_arrow("Domestic abuse",
+                 "Includes controlling behaviour, emotional abuse, or if someone is harassing, threatening or hurting you or a child. This could be by a partner, ex-partner, or family member.",
+                 url_for("categories.domestic_abuse.index")) }}
 
             {{ list_item_arrow("Special educational needs and disability (SEND)",
                  "Help if your child has SEND.",
