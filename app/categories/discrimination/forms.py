@@ -41,7 +41,7 @@ class DiscriminationWhyForm(QuestionForm):
     question = RadioField(
         title,
         widget=CategoryRadioInput(),
-        validators=[InputRequired(message="Select where the discrimination happened")],
+        validators=[InputRequired(message="Select why you were treated differently")],
         choices=[
             ("race", "Race, colour of skin, ethnicity"),
             ("sex", "Sex (male or female)"),
