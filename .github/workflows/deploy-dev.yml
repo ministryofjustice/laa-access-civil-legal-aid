@@ -82,6 +82,6 @@ jobs:
           --set ingress.hosts[0].host=${HOST_NAME} \
           --set ingress.tls[0].hosts[0]=${HOST_NAME} \
           --set sharedIPRangesLAA=$SHARED_IP_RANGES_LAA \
-          --set pingdomIPRanges=$PINGDOM_IP_RANGES \
+          --set pingdomIPs=$PINGDOM_IP_RANGES \
           --force \
           --install

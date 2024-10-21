@@ -73,6 +73,6 @@ jobs:
           --set image.repository=${REGISTRY}/${REPOSITORY} \
           --set image.tag=${IMAGE_TAG} \
           --set sharedIPRangesLAA=$SHARED_IP_RANGES_LAA \
-          --set pingdomIPRanges=$PINGDOM_IP_RANGES \
+          --set pingdomIPs=$PINGDOM_IP_RANGES \
           --force \
           --install
