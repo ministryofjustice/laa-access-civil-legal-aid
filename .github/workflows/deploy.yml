@@ -49,7 +49,7 @@ jobs:
           kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${KUBE_NAMESPACE}
           kubectl config use-context ${KUBE_CLUSTER}
 
-      - name: Fetch and set SHARED_IP_RANGES_LAA environment variable
+      - name: Fetch and set whitelist IP environment variables
         run: |
           # Pull ranges from shared LAA IP ranges and then remove spaces,
           # replace linebreaks with commas, remove last comma, and escape commas for helm input
