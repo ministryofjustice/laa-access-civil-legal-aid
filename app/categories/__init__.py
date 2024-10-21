@@ -7,5 +7,3 @@ bp.register_blueprint(domestic_abuse_bp)
 bp.register_blueprint(discrimination_bp)
 
 from app.categories import routes  # noqa: E402,F401
-
-__all__ = ["bp"]
