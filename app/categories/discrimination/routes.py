@@ -1,5 +1,5 @@
 from app.categories.discrimination import bp
-from flask import render_template, url_for, flash, redirect
+from flask import render_template, url_for, flash, redirect, current_app
 from app.categories.discrimination.forms import (
     DiscriminationWhereForm,
     DiscriminationWhyForm,
@@ -14,17 +14,10 @@ def where_did_the_discrimination_happen():
     items = get_items_with_divisor(form.question.choices)
 
     if form.validate_on_submit():
-        if form.question.data == "work":
-            return redirect(
-                url_for(
-                    "categories.discrimination.why_were_you_treated_differently",
-                    where=form.question.data,
-                )
-            )
         flash("End of prototype")
 
     return render_template(
-        "question-page.html",
+        "categories/question-page.html",
         form=form,
         items=items,
         back_link=url_for("categories.index"),
@@ -40,12 +33,12 @@ def why_were_you_treated_differently(where):
     if form.validate_on_submit():
         if form.question.data == "disability":
             return redirect(
-                "https://checklegalaid.service.gov.uk/legal-aid-available?hlpas=no"
+                f"{current_app.config['CLA_PUBLIC_URL']}/discrimination_means"
             )
         flash("End of prototype")
 
     return render_template(
-        "question-page.html",
+        "categories/question-page.html",
         form=form,
         items=items,
         back_link=url_for(

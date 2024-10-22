@@ -1,7 +1,7 @@
 {# This page was built as a prototype #}
 {% extends "base.html" %}
 {%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink-%}
-{%- from 'components/list-item.html' import list_item, list_item_small -%}
+{%- from 'categories/components/list-item.html' import list_item, list_item_small -%}
 
 {% block beforeContent%}
 {{ super() }}
@@ -27,8 +27,7 @@
 
         {{ list_item_small("Clinical negligence in babies",
              "Help if a baby has brain or nerve damage caused during pregnancy, childbirth or up to 8 weeks old.",
-             "https://checklegalaid.service.gov.uk/scope/refer/legal-adviser?category=clinneg&hlpas=no"
-) }}
+             "https://checklegalaid.service.gov.uk/scope/refer/legal-adviser?category=clinneg&hlpas=no") }}
 
         {{ list_item_small("Compensation for abuse, assault or neglect",
              "Includes child abuse, sexual assault, abuse of a vulnerable adult. Claims can be against a person or an organisation.",

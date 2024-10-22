@@ -1,7 +1,8 @@
 {# This page was built as a prototype #}
 {% extends "base.html" %}
 {%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
-{%- from 'components/list-item.html' import list_item, list_item_small -%}
+{%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
+{%- from 'categories/components/list-item.html' import list_item, list_item_small -%}
 
 {% block pageTitle %}Domestic Abuse - GOV.UK{% endblock %}
 
@@ -11,6 +12,9 @@
     'href': url_for('categories.index'),
     'text': "Back"
   }) }}
+
+{{ govukExitThisPage("Exit this page")}}
+
 {% endblock %}
 
 {% block content %}

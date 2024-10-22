@@ -1,6 +1,7 @@
 {# This page was built as a prototype #}
 {% extends "base.html" %}
 {%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
+{%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
 
 {% block pageTitle %}{%- if form.errors %}Error: {% endif -%}{{ form.title }} - GOV.UK{% endblock %}
 
@@ -10,6 +11,11 @@
     'href': back_link,
     'text': "Back"
   }) }}
+
+{% if form.category == "Domestic Abuse" %}
+    {{ govukExitThisPage("Exit this page")}}
+{% endif %}
+
 {% endblock %}
 
 {% block content %}
