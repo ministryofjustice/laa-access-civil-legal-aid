@@ -1,0 +1,104 @@
+{# This page was built as a prototype #}
+{% extends "base.html" %}
+
+{%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton -%}
+{%- from 'categories/components/list-item.html' import list_item, list_item_small, list_item_arrow -%}
+
+
+{% block content %}
+
+{{ super() }}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">Find problems covered by legal aid</h1>
+
+        <p class="govuk-body-l">Choose the problem you need help with.</p>
+
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-4">Most searched problems</h2>
+
+        <br>
+
+        <div class="govuk-grid-column-full govuk-!-padding-left-0">
+            {{ list_item_arrow("Children, families and relationships",
+                         "Includes children and social services, children in care. Also, help with children and finances if you divorce or split up.",
+                         url_for("categories.index")) }}
+
+            {{ list_item_arrow("Discrimination",
+                 "Treated unfairly because of things like your disability or health condition, race, age, sex, religion or pregnancy.",
+                 url_for("categories.discrimination.where_did_the_discrimination_happen")) }}
+        </div>
+
+        <div class="govuk-grid-column-full govuk-!-padding-left-0">
+
+            {{ list_item_arrow("Housing, homelessness, losing your home",
+                 "Includes being evicted or forced to sell your home. Problems with landlords, repairs, neighbours or council housing.",
+                 url_for("categories.index")) }}
+
+            {{ list_item_arrow("Asylum and immigration",
+                 "Help if you’re seeking asylum. Help to stay in the UK if you experienced domestic abuse.",
+                 url_for("categories.index")) }}
+
+        </div>
+
+        <div class="govuk-grid-column-full govuk-!-padding-left-0">
+
+            {{ list_item_arrow("Domestic abuse",
+                 "Includes controlling behaviour, emotional abuse, or if someone is harassing, threatening or hurting you or a child. This could be by a partner, ex-partner, or family member.",
+                 url_for("categories.domestic_abuse.index")) }}
+
+            {{ list_item_arrow("Special educational needs and disability (SEND)",
+                 "Help if your child has SEND.",
+                 url_for("categories.index")) }}
+        </div>
+
+        <br>
+
+        </div>
+
+        <div class="govuk-grid-column-two-thirds">
+
+            <br>
+
+            <h3 class="govuk-heading-m">Other problems covered by legal aid</h3>
+
+            <br>
+
+            {{ list_item_small("Benefits",
+                 "Appeal a decision about your benefits",
+                 url_for("categories.index")) }}
+
+            {{ list_item_small("Legal action against public organisations",
+                 "Includes schools, the police, government, prisons, NHS, the council.",
+                 url_for("categories.index")) }}
+
+            {{ list_item_small("Care for old age, health issues or disability",
+                 "Problems with social care. Neglect and bad-quality care. This includes getting care from the council or local authority, paying for care, care homes and other residential homes.",
+                 url_for("categories.index")) }}
+
+            {{ list_item_small("Mental capacity, mental health",
+                 "Help if someone cannot make decisions about their health, day-to-day life or care. Help at mental health tribunals.",
+                 url_for("categories.index")) }}
+
+            {{ list_item_small("Harassment and stalking",
+                 "Get legal advice or go to court to stop someone harassing you.",
+                 url_for("categories.index")) }}
+
+            <br>
+
+            <br>
+
+            {{ govukButton({
+                'text': "More problems covered by legal aid",
+                'href': url_for('categories.more_problems'),
+                'classes': "govuk-button--secondary"
+
+            }) }}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -30,5 +30,5 @@ async function build(should_watch) {
     }
 }
 
-const shoudl_watch = process.argv.includes("--watch");
-build(shoudl_watch);
+const should_watch = process.argv.includes("--watch");
+build(should_watch);

@@ -7,7 +7,6 @@ from flask_talisman import Talisman
 from flask_wtf.csrf import CSRFProtect
 from govuk_frontend_wtf.main import WTFormsHelpers
 from jinja2 import ChoiceLoader, PackageLoader, PrefixLoader
-from app.main.gtm import get_gtm_anon_id
 from app.main import get_locale
 import sentry_sdk
 
@@ -37,6 +36,7 @@ if Config.SENTRY_DSN:
 
 def create_app(config_class=Config):
     app = Flask(__name__, static_url_path="/assets", static_folder="static/dist")
+    app.url_map.strict_slashes = False  # This allows www.host.gov.uk/category to be routed to www.host.gov.uk/category/
     app.config.from_object(config_class)
     app.jinja_env.lstrip_blocks = True
     app.jinja_env.trim_blocks = True
@@ -64,7 +64,7 @@ def create_app(config_class=Config):
             "'self'",
             "*.google-analytics.com",
         ],
-        "img-src": ["'self'", "*.googletagmanager.com"],
+        "img-src": ["'self'", "*.googletagmanager.com", "www.gov.uk"],
     }
 
     # Set permissions policy
@@ -119,9 +119,9 @@ def create_app(config_class=Config):
 
     # Register blueprints
     from app.main import bp as main_bp
-
-    main_bp.app_context_processor(get_gtm_anon_id)
+    from app.categories import bp as categories_bp
 
     app.register_blueprint(main_bp)
+    app.register_blueprint(categories_bp)
 
     return app
