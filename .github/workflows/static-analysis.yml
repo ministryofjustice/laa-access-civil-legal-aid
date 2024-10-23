@@ -69,3 +69,29 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  trufflehog-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        python -m pip install --upgrade pip
+        python -m pip install -r requirements/generated/requirements-development.txt
+    - name: Run TruffleHog Scan
+      run: |
+        source venv/bin/activate
+        venv/bin/trufflehog3 filesystem .
+    - name: Check for Secrets
+      if: failure()
+      run: exit 1
