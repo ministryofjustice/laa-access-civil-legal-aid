@@ -9,6 +9,4 @@ def test_discrimination(page: Page):
     page.get_by_role("button", name="Continue").click()
     page.get_by_label("Disability").check()
     page.get_by_role("button", name="Continue").click()
-    expect(
-        page.get_by_role("link", name="Check if you can get legal aid")
-    ).to_be_visible()
+    expect(page.get_by_text("End of prototype")).to_be_visible()
