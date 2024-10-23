@@ -5,6 +5,7 @@ exclude: # exclude matching issues
       - dist/**
       - python3.12/**
       - package-lock.json
+      - README.md
       - .ruff_cache
   - message: Examples and data necessary for running auto-tests
     paths:
