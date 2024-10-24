@@ -4,66 +4,61 @@
   Routing Logic Map
 {% endblock %}
 
-{% block bodyStart %}
+{% block content %}
+<div class="govuk-grid-row govuk-width-container">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-xl">User Journeys</h1>
 
-{% endblock %}
-
-{% block main %}
-<main class="govuk-main-wrapper govuk-!-padding-bottom-0" id="main-content">
-  <div class="govuk-grid-row govuk-width-container">
-    <div class="govuk-grid-column-full">
-      <h1 class="govuk-heading-xl">User Journeys</h1>
-
-      <table class="govuk-table">
-        <thead class="govuk-table__head">
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Category</th>
+          <th scope="col" class="govuk-table__header">Answer 1</th>
+          <th scope="col" class="govuk-table__header">Answer 2</th>
+          <th scope="col" class="govuk-table__header">Answer 3</th>
+          <th scope="col" class="govuk-table__header">Result</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        {% for path in paths %}
           <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">Category</th>
-            <th scope="col" class="govuk-table__header">Answer 1</th>
-            <th scope="col" class="govuk-table__header">Answer 2</th>
-            <th scope="col" class="govuk-table__header">Answer 3</th>
-            <th scope="col" class="govuk-table__header">Result</th>
-          </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-          {% for path in paths %}
-            <tr class="govuk-table__row">
-              {% set current_path = [] %}
-              {% set found_default = false %}
-              {% for item in path[:-1] %}
-                {% set _ = current_path.append(item) %}
-                <td class="govuk-table__cell">
-                  {% if found_default or item == 'default' %}
-                    {{ item }}
-                    {% if item == 'default' %}
-                      {% set found_default = true %}
-                    {% endif %}
-                  {% else %}
-                    <a href="{{ url_for('categories.question_page', path='/'.join(current_path)) }}" class="govuk-link govuk-link--no-visited-state">
-                      {{ item }}
-                    </a>
-                  {% endif %}
-                </td>
-              {% endfor %}
-              {# Pad out answers so that results populate the final column #}
-              {% for _ in range(4 - (path|length - 1)) %}
-                <td class="govuk-table__cell"></td>
-              {% endfor %}
-              {# The results should populate the last column #}
+            {% set current_path = [] %}
+            {% set found_default = false %}
+            {% for item in path[:-1] %}
+              {% set _ = current_path.append(item) %}
               <td class="govuk-table__cell">
-                {% if path[-1].endswith('means') %}
-                  <span class="govuk-tag govuk-tag--blue">Means Assessment</span>
-                {% elif path[-1].endswith('contact') %}
-                  <span class="govuk-tag govuk-tag--green">Contact</span>
-                {% elif 'scope/refer' in path[-1] %}
-                   <span class="govuk-tag govuk-tag--turquoise">FALA</span>
+                {% if found_default or item == 'default' %}
+                  {{ item }}
+                  {% if item == 'default' %}
+                    {% set found_default = true %}
+                  {% endif %}
                 {% else %}
-                  <span class="govuk-tag govuk-tag--orange">Undefined</span>
+                  <a href="{{ url_for('categories.question_page', path='/'.join(current_path)) }}" class="govuk-link govuk-link--no-visited-state">
+                    {{ item }}
+                  </a>
                 {% endif %}
               </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+            {% endfor %}
+            {# Pad out answers so that results populate the final column #}
+            {% for _ in range(4 - (path|length - 1)) %}
+              <td class="govuk-table__cell"></td>
+            {% endfor %}
+            {# The results should populate the last column #}
+            <td class="govuk-table__cell">
+              {% if path[-1].endswith('means') %}
+                <span class="govuk-tag govuk-tag--blue">Means Assessment</span>
+              {% elif path[-1].endswith('contact') %}
+                <span class="govuk-tag govuk-tag--green">Contact</span>
+              {% elif 'scope/refer' in path[-1] %}
+                 <span class="govuk-tag govuk-tag--turquoise">FALA</span>
+              {% else %}
+                <span class="govuk-tag govuk-tag--orange">Undefined</span>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
+</div>
 {% endblock %}
