@@ -12,7 +12,7 @@ class CategoryTraversal:
         "discrimination": DiscriminationWhereForm,
         "domestic-abuse": DomesticAbuseTraversal,
         "clinical-negligence": redirect(
-            "http://127.0.0.1:5000/scope/refer/legal-adviser?category=clinneg"
+            "https://checklegalaid.service.gov.uk/scope/refer/legal-adviser?category=clinneg"
         ),
     }
 
