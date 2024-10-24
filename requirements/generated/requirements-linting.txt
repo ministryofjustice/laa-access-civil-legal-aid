@@ -6,123 +6,19 @@
 #
 attrs==20.3.0
     # via trufflehog3
-babel==2.16.0
-    # via flask-babel
-blinker==1.8.2
-    # via
-    #   flask
-    #   sentry-sdk
-brotli==1.1.0
-    # via flask-compress
-certifi==2024.8.30
-    # via
-    #   requests
-    #   sentry-sdk
-charset-normalizer==3.4.0
-    # via requests
-click==8.1.7
-    # via flask
-deepmerge==2.0
-    # via govuk-frontend-wtf
-deprecated==1.2.14
-    # via limits
-flask==3.0.3
-    # via
-    #   -r requirements/source/requirements-base.in
-    #   flask-babel
-    #   flask-compress
-    #   flask-limiter
-    #   flask-wtf
-    #   govuk-frontend-wtf
-    #   sentry-sdk
-flask-babel==4.0.0
-    # via -r requirements/source/requirements-base.in
-flask-compress==1.17
-    # via -r requirements/source/requirements-base.in
-flask-limiter==3.8.0
-    # via -r requirements/source/requirements-base.in
-flask-talisman==1.1.0
-    # via -r requirements/source/requirements-base.in
-flask-wtf==1.2.2
-    # via
-    #   -r requirements/source/requirements-base.in
-    #   govuk-frontend-wtf
 gitdb==4.0.11
     # via gitpython
 gitpython==3.1.41
     # via trufflehog3
-govuk-frontend-jinja==3.4.0
-    # via govuk-frontend-wtf
-govuk-frontend-wtf==3.2.0
-    # via -r requirements/source/requirements-base.in
-idna==3.10
-    # via requests
-importlib-resources==6.4.5
-    # via limits
-itsdangerous==2.2.0
-    # via
-    #   flask
-    #   flask-wtf
 jinja2==3.1.4
-    # via
-    #   flask
-    #   flask-babel
-    #   govuk-frontend-jinja
-    #   govuk-frontend-wtf
-    #   trufflehog3
-limits==3.13.0
-    # via flask-limiter
-markdown-it-py==3.0.0
-    # via rich
+    # via trufflehog3
 markupsafe==3.0.2
-    # via
-    #   jinja2
-    #   sentry-sdk
-    #   werkzeug
-    #   wtforms
-mdurl==0.1.2
-    # via markdown-it-py
-ordered-set==4.1.0
-    # via flask-limiter
-packaging==24.1
-    # via limits
-pygments==2.18.0
-    # via rich
-python-dotenv==1.0.1
-    # via -r requirements/source/requirements-base.in
-pytz==2024.2
-    # via flask-babel
+    # via jinja2
 pyyaml==6.0.1
-    # via
-    #   -r requirements/source/requirements-base.in
-    #   trufflehog3
-requests==2.32.3
-    # via -r requirements/source/requirements-base.in
-rich==13.9.3
-    # via flask-limiter
+    # via trufflehog3
 ruff==0.6.2
     # via -r requirements/source/requirements-linting.in
-sentry-sdk[flask]==2.17.0
-    # via -r requirements/source/requirements-base.in
 smmap==5.0.1
     # via gitdb
 trufflehog3==3.0.10
     # via -r requirements/source/requirements-linting.in
-typing-extensions==4.12.2
-    # via
-    #   flask-limiter
-    #   limits
-urllib3==2.2.3
-    # via
-    #   requests
-    #   sentry-sdk
-werkzeug==3.0.4
-    # via flask
-wrapt==1.16.0
-    # via deprecated
-wtforms==3.2.1
-    # via
-    #   flask-wtf
-    #   govuk-frontend-wtf
-zstandard==0.23.0
-    # via flask-compress
