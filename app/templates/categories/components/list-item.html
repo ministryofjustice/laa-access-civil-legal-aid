@@ -1,0 +1,23 @@
+{# These macros are used to populate the items in the category information list. #}
+{% macro list_item(title, description, link) -%}
+    <h2 class="govuk-heading-m govuk-!-margin-bottom-1">
+        <a class="govuk-link govuk-link--no-visited-state" href="{{ link|safe }}">{{ title }}</a>
+    </h2>
+    <p class="govuk-body">{{ description }}</p>
+{%- endmacro %}
+
+{% macro list_item_small(title, description, link) -%}
+    <h2 class="govuk-heading-s govuk-!-margin-bottom-1">
+        <a class="govuk-link govuk-link--no-visited-state" href="{{ link|safe }}">{{ title }}</a>
+    </h2>
+    <p class="govuk-body">{{ description }}</p>
+{%- endmacro %}
+
+{% macro list_item_arrow(title, description, link) -%}
+    <div class="govuk-grid-column-one-half govuk-!-padding-left-0 govuk-!-padding-right-6 arrow-box">
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-1">
+            <a class="govuk-link govuk-link--no-visited-state" href="{{ link|safe }}">{{ title }}</a>
+        </h2>
+        <p class="govuk-body">{{ description }}</p>
+    </div>
+{%- endmacro %}
