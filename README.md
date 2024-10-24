@@ -126,6 +126,7 @@ For further guidance on writing tests https://playwright.dev/python/docs/writing
 The following will:
 - Generate requirement.txt files from files inside requirements/source/*.in and put them into requirements/generated/*.txt
 - Run linting checks with ruff
+- Run secret detection via trufflehog3
 
 ```shell
 pre-commit install
@@ -143,6 +144,15 @@ To format all files in the directory, run:
 ```shell
 ruff format
 ```
+
+### Manually running secret detection
+The trufflehog3 package looks for any exposed secrets in your project.
+
+To use trufflehog on your current project, run:
+```shell
+trufflehog3 filesystem .
+```
+
 ## Translation
 We are using the [Flask-Babel](https://python-babel.github.io/flask-babel/#) package to translate text.
 There are 4 key components to translating text on the website.

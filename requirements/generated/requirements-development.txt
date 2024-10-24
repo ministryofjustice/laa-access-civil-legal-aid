@@ -123,8 +123,6 @@ requests==2.32.3
     #   pytest-base-url
 rich==13.7.1
     # via flask-limiter
-ruff==0.6.2
-    # via -r requirements/source/requirements-development.in
 sentry-sdk[flask]==2.10.0
     # via -r requirements/source/requirements-base.in
 text-unidecode==1.3
