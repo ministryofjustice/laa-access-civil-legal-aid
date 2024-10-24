@@ -9,7 +9,7 @@
 {% block beforeContent%}
 {{ super() }}
 {{ govukBackLink({
-    'href': url_for('categories.index'),
+    'href': back_link,
     'text': "Back"
   }) }}
 
@@ -29,7 +29,7 @@
 
         {{ list_item("Help to protect you and your children",
                      "This includes advice about keeping you and your family safe, getting court orders and help if someone is ignoring a court order. Also, if you’re being stalked or harassed. ",
-                     url_for("categories.domestic_abuse.are_you_at_immediate_risk_of_harm")) }}
+                     url_for("categories.question_page", path="domestic-abuse/protect-you-and-your-children")) }}
 
         {{ list_item("Leaving an abusive relationship",
              "Help with divorce or separation. It includes making plans for the children, money, and housing. It also covers child contact and where the children will live.",

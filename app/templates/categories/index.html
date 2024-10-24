@@ -26,14 +26,14 @@
 
             {{ list_item_arrow("Discrimination",
                  "Treated unfairly because of things like your disability or health condition, race, age, sex, religion or pregnancy.",
-                 url_for("categories.discrimination.where_did_the_discrimination_happen")) }}
+                 url_for("categories.question_page", path="discrimination")) }}
         </div>
 
         <div class="govuk-grid-column-full govuk-!-padding-left-0">
 
             {{ list_item_arrow("Housing, homelessness, losing your home",
                  "Includes being evicted or forced to sell your home. Problems with landlords, repairs, neighbours or council housing.",
-                 url_for("categories.index")) }}
+                 url_for("categories.question_page", path='debt-and-housing')) }}
 
             {{ list_item_arrow("Asylum and immigration",
                  "Help if you’re seeking asylum. Help to stay in the UK if you experienced domestic abuse.",
@@ -45,7 +45,7 @@
 
             {{ list_item_arrow("Domestic abuse",
                  "Includes controlling behaviour, emotional abuse, or if someone is harassing, threatening or hurting you or a child. This could be by a partner, ex-partner, or family member.",
-                 url_for("categories.domestic_abuse.index")) }}
+                 url_for("categories.question_page", path="domestic-abuse")) }}
 
             {{ list_item_arrow("Special educational needs and disability (SEND)",
                  "Help if your child has SEND.",
