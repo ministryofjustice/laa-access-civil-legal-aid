@@ -111,23 +111,27 @@
 
 {% block header %}
     {{ govukHeader({
-    'homepageUrl': url_for('main.index'),
+    'homepageUrl': url_for('categories.index'),
     'serviceName': config['SERVICE_NAME'],
-    'serviceUrl': url_for('main.index'),
+    'serviceUrl': url_for('categories.index'),
     'useTudorCrown': true
   }) }}
 {% endblock %}
 
 {% block beforeContent %}
     {{ govukPhaseBanner({
-    'tag': {
-      'text': config['SERVICE_PHASE']
-    },
-    'html': 'This is a new service – your <a class="govuk-link" href="mailto:' + config['CONTACT_EMAIL'] + '">feedback</a> will help us to improve it.'
-  }) }}
+        'tag': {
+          'text': config['SERVICE_PHASE'],
+        },
+        'html': '<a class="govuk-link" href="here">Contact us</a> if you need help or would like to give feedback to improve this service'
+    }) }}
+
+    <p class="watermark">Prototype</p>
 {% endblock %}
 
 {% block content %}
+
+
     {% if form and form.errors %}
         {{ govukErrorSummary(wtforms_errors(form)) }}
     {% endif %}

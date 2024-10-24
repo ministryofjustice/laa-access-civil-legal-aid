@@ -5,6 +5,7 @@ import uuid
 import re
 
 
+@bp.app_context_processor
 def get_gtm_anon_id():
     gtm_anon_id = session.get("gtm_anon_id", "")
     return {"gtm_anon_id": gtm_anon_id}
