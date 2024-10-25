@@ -57,7 +57,6 @@ def create_app(config_class=Config):
         "default-src": "'self'",
         "script-src": [
             "'self'",
-            "'sha256-GUQ5ad8JK5KmEWmROf3LZd9ge94daqNvd8xy9YS1iDw='",
             "*.googletagmanager.com",
         ],
         "connect-src": [
