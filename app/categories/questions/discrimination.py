@@ -2,24 +2,6 @@ from app.categories.forms import QuestionForm
 from wtforms import RadioField
 from app.categories.widgets import CategoryRadioInput
 from wtforms.validators import InputRequired
-from flask import redirect
-
-
-class HowOldAreYouForm(QuestionForm):
-    category = "Discrimination"
-
-    title = "How old are you?"
-
-    routing_logic = {
-        "default": redirect("https://checklegalaid.service.gov.uk/discrimination_means")
-    }
-
-    question = RadioField(
-        title,
-        widget=CategoryRadioInput(),
-        validators=[InputRequired(message="Select why you were treated differently")],
-        choices=[("under-18", "Under 18"), ("18-or-older", "18 or older")],
-    )
 
 
 class DiscriminationWhyForm(QuestionForm):
@@ -27,7 +9,7 @@ class DiscriminationWhyForm(QuestionForm):
 
     title = "Why were you treated differently?"
 
-    routing_logic = {"age": HowOldAreYouForm, "default": HowOldAreYouForm}
+    routing_logic = {"disability": "categories.index"}
 
     question = RadioField(
         title,
@@ -59,7 +41,7 @@ class DiscriminationWhereForm(QuestionForm):
 
     title = "Where did the discrimination happen?"
 
-    routing_logic = {"work": DiscriminationWhyForm, "default": DiscriminationWhyForm}
+    routing_logic = {"work": DiscriminationWhyForm}
 
     question = RadioField(
         title,

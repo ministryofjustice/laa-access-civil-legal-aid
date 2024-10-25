@@ -21,3 +21,6 @@ class Config(object):
     SENTRY_DSN = os.environ.get("SENTRY_DSN")
     LANGUAGES = {"en": "English", "cy": "Welsh"}
     SERVICE_UNAVAILABLE = os.environ.get("MAINTENANCE_MODE", "False").lower() == "true"
+    CLA_PUBLIC_URL = os.environ.get(
+        "CLA_PUBLIC_URL", "https://staging.checklegalaid.service.gov.uk"
+    )

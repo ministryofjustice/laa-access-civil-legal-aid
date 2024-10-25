@@ -29,7 +29,7 @@ def question_page(path):
     if isinstance(form_or_response, Response):
         return form_or_response
 
-    form: QuestionForm = form_or_response(request.args)
+    form: type[QuestionForm] = form_or_response(request.args)
 
     back_link: str = category_traversal.get_previous_page_from_path(path)
 
@@ -45,13 +45,10 @@ def question_page(path):
     if previous_answer:
         items = check_radio_field(form.question, previous_answer, items)
 
-    question_map = category_traversal.get_question_answer_map_from_path(path)
-
     return render_template(
         "categories/question-page.html",
         form=form,
         items=items,
-        routing=question_map,
         back_link=back_link,
     )
 

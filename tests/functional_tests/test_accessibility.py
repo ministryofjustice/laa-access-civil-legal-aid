@@ -6,6 +6,7 @@ from axe_core_python.sync_playwright import Axe
 import json
 import os
 import shutil
+from app.categories.traversal import category_traversal
 
 
 ACCESSIBILITY_STANDARDS = ["wcag2a", "wcag2aa"]
@@ -45,9 +46,27 @@ def check_accessibility(page: Page):
                 json.dump(wcag_violations, file, indent=4)
 
 
+def test_question_page_accessibility(app, page: Page):
+    """As the question page URLs depend on the question routes we need get all permutations and test
+    each variation of the question page.
+    """
+    all_question_pages_paths = category_traversal.get_all_question_page_urls()
+    for path in all_question_pages_paths:
+        full_url = url_for("categories.question_page", path=path, _external=True)
+        page.goto(full_url)
+        check_accessibility(page)
+
+
 @pytest.mark.usefixtures("live_server")
 def test_all_page_accessibility(app, page: Page):
-    ignored_routes = ["static", "/", "main.status", "main.set_locale"]
+    # categories.question_page is ignored as we want to run accessibility testing against each question individually.
+    ignored_routes = [
+        "static",
+        "/",
+        "main.status",
+        "main.set_locale",
+        "categories.question_page",
+    ]
     shutil.rmtree("tests/functional_tests/accessibility_output", ignore_errors=True)
     routes = app.view_functions
     for route in routes:
@@ -55,6 +74,7 @@ def test_all_page_accessibility(app, page: Page):
             full_url = url_for(route, _external=True)
             page.goto(full_url)
             check_accessibility(page)
+    test_question_page_accessibility(app, page)
 
 
 def test_accessibility_folder():

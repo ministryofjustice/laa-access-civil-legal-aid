@@ -21,10 +21,8 @@ class CategoryTraversal:
         If a response is returned then the user has concluded the category diagnosis and should be directed to the
         onward page.
 
-        If an
-
         :param path: Full endpoint path i.e. "discrimination/work/age"
-        :return: QuestionForm or a HTTP Response
+        :return: QuestionForm or an HTTP Response
         """
         path = path.split("/")
 
@@ -47,11 +45,7 @@ class CategoryTraversal:
             if node not in question_form.valid_choices():
                 return question_form
             if node not in question_form.routing_logic:
-                if "default" not in question_form.routing_logic:
-                    return redirect(
-                        url_for("categories.index")
-                    )  # If the answer isn't valid then stop
-                node = "default"
+                return question_form
 
             next_page: QuestionForm | str = question_form.routing_logic[node]
 
@@ -146,6 +140,51 @@ class CategoryTraversal:
         return url_for(
             "categories.question_page", path=new_path, previous_answer=previous_answer
         )
+
+    @classmethod
+    def get_all_question_page_urls(cls) -> list[str]:
+        """Get a list of all valid category question URL paths"""
+        routing_map = cls.map_routing_logic()[cls.__name__]
+
+        def get_url_permutations(data, prefix="", results=None):
+            """
+            Recursively extract all possible URL endpoints from a nested dictionary structure.
+
+            Args:
+                data: The input dictionary containing nested routes
+                prefix: The current URL prefix (used in recursion)
+                results: Set to store unique URL endpoints
+
+            Returns:
+                list: Sorted list of all possible URL endpoints
+            """
+            if results is None:
+                results = set()
+
+            # If we have a non-empty prefix, add it to results
+            if prefix:
+                results.add(prefix)
+
+            # Base case: if data is a string (redirect URL) or not a dict
+            if not isinstance(data, dict):
+                return results
+
+            # Recursive case: traverse through dictionary
+            for key, value in data.items():
+                # Skip special form keys that shouldn't be part of the URL
+                if key.endswith("Form"):
+                    new_prefix = prefix
+                else:
+                    # Create new prefix by joining current prefix and key
+                    new_prefix = f"{prefix}/{key}".lstrip("/")
+                    results.add(new_prefix)
+
+                # Recursively process nested dictionaries
+                get_url_permutations(value, new_prefix, results)
+
+            return sorted(list(results))
+
+        return get_url_permutations(routing_map)
 
 
 category_traversal = CategoryTraversal()

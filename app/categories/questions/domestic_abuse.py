@@ -3,6 +3,7 @@ from wtforms import RadioField
 from app.categories.widgets import CategoryRadioInput
 from wtforms.validators import InputRequired
 from flask import redirect
+from app.config import Config
 
 
 class AreYouAtRiskOfHarmForm(QuestionForm):
@@ -11,7 +12,7 @@ class AreYouAtRiskOfHarmForm(QuestionForm):
     title = "Are you or your children at immediate risk of harm?"
 
     routing_logic = {
-        "yes": redirect("https://checklegalaid.service.gov.uk/domestic_abuse_contact"),
+        "yes": redirect(f"{Config.CLA_PUBLIC_URL}/domestic_abuse_contact"),
         "no": "categories.index",
     }
 
@@ -29,10 +30,7 @@ class AreYouAtRiskOfHarmForm(QuestionForm):
 
 
 class DomesticAbuseTraversal(QuestionForm):
-    routing_logic = {
-        "protect-you-and-your-children": AreYouAtRiskOfHarmForm,
-        "default": AreYouAtRiskOfHarmForm,
-    }
+    routing_logic = {"protect-you-and-your-children": AreYouAtRiskOfHarmForm}
 
     title = "Domestic Abuse"
 
