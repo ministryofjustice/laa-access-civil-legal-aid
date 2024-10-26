@@ -1,8 +1,8 @@
+from werkzeug.exceptions import NotFound
+
 from app.categories import bp
-from flask import render_template, redirect, url_for, request
-from werkzeug.wrappers.response import Response
-from app.categories.forms import QuestionForm
-from app.categories.traversal import category_traversal
+from flask import render_template, redirect, url_for, request, abort
+from app.categories.traversal import category_traversal, NavigationResult
 from app.categories.utils import (
     get_items_with_divisor,
     check_radio_field,
@@ -22,16 +22,20 @@ def more_problems():
 
 @bp.get("/<path:path>")
 def question_page(path):
-    form_or_response: QuestionForm | Response = (
-        category_traversal.get_onward_question_from_path(path)
-    )
+    print(category_traversal.get_question_answer_map(path))
+    try:
+        path_result: NavigationResult = category_traversal.navigate_path(path)
+    except NotFound:
+        abort(404)
 
-    if isinstance(form_or_response, Response):
-        return form_or_response
+    if path_result.internal_redirect:
+        return redirect(url_for(path_result.internal_redirect))
 
-    form: type[QuestionForm] = form_or_response(request.args)
+    if path_result.external_redirect:
+        return path_result.external_redirect
 
-    back_link: str = category_traversal.get_previous_page_from_path(path)
+    form = path_result.question_form(request.args)
+    back_link: str = category_traversal.get_previous_page_url(path)
 
     if form.submit.data and form.validate():
         path += f"/{form.question.data}"
@@ -39,6 +43,7 @@ def question_page(path):
 
     previous_answer = request.args.get("previous_answer")
 
+    # TODO: Make an override of the GOV.UK WTForms radio field class to support divisors.
     items = None
     if form.show_or_divisor:
         items = get_items_with_divisor(form.question.choices)

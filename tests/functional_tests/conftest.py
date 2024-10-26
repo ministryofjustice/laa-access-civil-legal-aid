@@ -6,7 +6,7 @@ from flask import url_for
 
 class TestConfig(Config):
     TESTING = True
-    DEBUG = True
+    DEBUG = False
     SERVER_NAME = "localhost"
     RATELIMIT_ENABLED = False
     SECRET_KEY = "TEST_KEY"

@@ -1,133 +1,135 @@
 import pytest
+from werkzeug.exceptions import NotFound
+from werkzeug.utils import redirect
 from werkzeug.wrappers.response import Response
+from app.categories.forms import QuestionForm
+from app.categories.traversal import CategoryTraversal, InitialCategoryQuestion
 
 
-class MockQuestionForm:
-    def __init__(self, title, valid_choices, routing_logic):
-        self.title = title
-        self._valid_choices = valid_choices
-        self.routing_logic = routing_logic
+@pytest.fixture
+def mock_nested_form():
+    class MockNestedForm(QuestionForm):
+        routing_logic = {"final_a": "final-endpoint-a", "final_b": "final-endpoint-b"}
 
-    def valid_choices(self):
-        return self._valid_choices
+    return MockNestedForm
 
 
-class MockResponse(Response):
-    def __init__(self, status=302, location=None):
-        super().__init__(status=status)
-        if location:
-            self.location = location
-
-
-def mock_redirect(location):
-    return MockResponse(location=location, status=302)
-
-
-def mock_url_for(endpoint):
-    return f"/mocked/{endpoint}"
-
-
-def mock_abort(status_code):
-    return MockResponse(status=status_code)
-
-
-class TestCategoryTraversal:
-    @pytest.fixture
-    def mock_flask_redirects(self, monkeypatch):
-        monkeypatch.setattr("app.categories.traversal.redirect", mock_redirect)
-        monkeypatch.setattr("app.categories.traversal.url_for", mock_url_for)
-        monkeypatch.setattr("app.categories.traversal.abort", mock_abort)
-
-    @pytest.fixture
-    def mock_form(self):
-        """Creates an example form hierarchy for testing"""
-        return MockQuestionForm(
-            title="Question 1",
-            valid_choices=["answer_a", "answer_b"],
-            routing_logic={
-                "answer_a": MockQuestionForm(
-                    title="Question 2",
-                    valid_choices=["answer_c", "answer_d"],
-                    routing_logic={
-                        "answer_c": "internal.endpoint.b",
-                        "answer_d": MockResponse(
-                            location="https://external-url-two.com"
-                        ),
-                    },
-                ),
-                "answer_b": "internal.endpoint.c",
-            },
-        )
-
-    @pytest.fixture
-    def category_traversal(self, mock_form, mock_flask_redirects):
-        """Creates a CategoryTraversal instance with mocked routing logic"""
-        from app.categories.traversal import CategoryTraversal
-
-        CategoryTraversal.routing_logic = {
-            "category_a": mock_form,
-            "category_b": "internal.endpoint",
-            "category_c": MockResponse(location="https://external-url.com"),
+@pytest.fixture
+def mock_subcategory_form_a(mock_nested_form):
+    class MockSubCategoryFormA(QuestionForm):
+        routing_logic = {
+            "to_form": mock_nested_form,  # Leads to another form
+            "to_internal": "internal-endpoint",  # Internal redirect
+            "to_external": redirect("www.external-redirect-a.gov.uk"),
         }
 
-        return CategoryTraversal()
+    return MockSubCategoryFormA
 
-    def test_invalid_category_returns_404(self, category_traversal):
-        result = category_traversal.get_onward_question_from_path("invalid-category")
-        assert isinstance(result, MockResponse)
-        assert result.status_code == 404
 
-    def test_internal_endpoint_category(self, category_traversal):
-        result = category_traversal.get_onward_question_from_path("category_b")
-        assert isinstance(result, MockResponse)
-        assert result.location == "/mocked/internal.endpoint"
+@pytest.fixture
+def mock_subcategory_form_b(mock_nested_form):
+    class MockSubCategoryFormB(QuestionForm):
+        routing_logic = {
+            "to_form": mock_nested_form,
+            "to_internal": "internal-endpoint-b",
+            "to_external": redirect("www.external-redirect-b.gov.uk"),
+        }
 
-    def test_external_redirect_category(self, category_traversal):
-        result = category_traversal.get_onward_question_from_path("category_c")
-        assert isinstance(result, MockResponse)
-        assert result.location == "https://external-url.com"
+    return MockSubCategoryFormB
 
-    def test_valid_path(self, category_traversal, mock_form):
-        """You should either get a QuestionForm, an internal endpoint string or an HTTP Response"""
-        # Test first level - Question Form
-        result = category_traversal.get_onward_question_from_path("category_a")
-        assert isinstance(result, MockQuestionForm)
-        assert result.title == "Question 1"
 
-        # Test second level - Question Form
-        result = category_traversal.get_onward_question_from_path("category_a/answer_a")
-        assert isinstance(result, MockQuestionForm)
-        assert result.title == "Question 2"
+@pytest.fixture
+def test_initial_form(mock_subcategory_form_a, mock_subcategory_form_b):
+    external_redirect = Response(response="Root External Redirect", status=302)
 
-        # Test second level
-        result = category_traversal.get_onward_question_from_path("category_a/answer_a")
-        assert isinstance(result, MockQuestionForm)
-        assert result.title == "Question 2"
+    class TestInitialForm(InitialCategoryQuestion):
+        routing_logic = {
+            "category_a": mock_subcategory_form_a,
+            "category_b": mock_subcategory_form_b,
+            "category_c": external_redirect,
+        }
 
-        # Test third level
-        result = category_traversal.get_onward_question_from_path(
-            "category_a/answer_a/answer_c"
-        )
-        assert isinstance(result, MockResponse)
-        assert result.location == "/mocked/internal.endpoint.b"
+        category_labels = {
+            "category_a": "Category A Label",
+            "category_b": "Category B Label",
+            "category_c": "Category C Label",
+        }
 
-        # Test third level - External Redirect
-        result = category_traversal.get_onward_question_from_path(
-            "category_a/answer_a/answer_d"
-        )
-        assert isinstance(result, MockResponse)
-        assert result.location == "https://external-url-two.com"
+    return TestInitialForm
 
-    def test_invalid_path(self, category_traversal):
-        """Asserts that you are taken back to the last valid answer you entered"""
-        # Test invalid second level
-        result = category_traversal.get_onward_question_from_path("category_a/invalid")
-        assert isinstance(result, MockQuestionForm)
-        assert result.title == "Question 1"
 
-        # Test invalid third level
-        result = category_traversal.get_onward_question_from_path(
-            "category_a/answer_a/invalid"
-        )
-        assert isinstance(result, MockQuestionForm)
-        assert result.title == "Question 2"
+def test_category_traversal(test_initial_form):
+    traversal = CategoryTraversal(test_initial_form)
+
+    assert "category_a/to_form/final_a" in traversal.route_cache
+    assert "category_a/to_form/final_b" in traversal.route_cache
+
+    result_a = traversal.navigate_path("category_a/to_form/final_a")
+    assert result_a.internal_redirect == "final-endpoint-a"
+
+    result_b = traversal.navigate_path("category_a/to_form/final_b")
+    assert result_b.internal_redirect == "final-endpoint-b"
+
+
+def test_category_traversal_invalid_path(test_initial_form):
+    traversal = CategoryTraversal(test_initial_form)
+
+    with pytest.raises(NotFound):
+        traversal.navigate_path("invalid/path")
+
+    with pytest.raises(NotFound):
+        traversal.navigate_path("category_a/invalid")
+
+    with pytest.raises(NotFound):
+        traversal.navigate_path("category_a/to_form/invalid")
+
+
+def test_category_traversal_empty_path(test_initial_form):
+    traversal = CategoryTraversal(test_initial_form)
+
+    result = traversal.navigate_path("")
+    assert result.question_form == test_initial_form
+    assert result.is_redirect is False
+
+
+@pytest.mark.parametrize(
+    "path,expected_type",
+    [
+        ("", "question_form"),
+        ("category_a", "question_form"),
+        ("category_a/to_form", "question_form"),
+        ("category_a/to_internal", "internal_redirect"),
+        ("category_a/to_external", "external_redirect"),
+        ("category_a/to_form/final_a", "internal_redirect"),
+        ("category_c", "external_redirect"),
+    ],
+)
+def test_category_traversal_navigation_result_types(
+    test_initial_form, path, expected_type
+):
+    traversal = CategoryTraversal(test_initial_form)
+    result = traversal.navigate_path(path)
+
+    if expected_type == "question_form":
+        assert result.question_form is not None
+        assert result.internal_redirect is None
+        assert result.external_redirect is None
+    elif expected_type == "internal_redirect":
+        assert result.question_form is None
+        assert result.internal_redirect is not None
+        assert result.external_redirect is None
+    else:  # external_redirect
+        assert result.question_form is None
+        assert result.internal_redirect is None
+        assert result.external_redirect is not None
+
+
+def test_initial_category_question_get_label(test_initial_form):
+    assert test_initial_form.get_label("category_a") == "Category A Label"
+    assert test_initial_form.get_label("category_b") == "Category B Label"
+    assert test_initial_form.get_label("unknown") == "unknown"
+
+
+def test_initial_category_question_valid_choices(test_initial_form):
+    choices = test_initial_form.valid_choices()
+    assert set(choices) == {"category_a", "category_b", "category_c"}

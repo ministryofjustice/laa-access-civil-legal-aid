@@ -1,13 +1,16 @@
-from flask import redirect, url_for, abort
+from dataclasses import dataclass
+from flask import redirect, url_for
+from werkzeug.exceptions import NotFound
+from werkzeug.wrappers.response import Response
+
+from app.categories.forms import QuestionForm
 from app.categories.questions.discrimination import DiscriminationWhereForm
 from app.categories.questions.domestic_abuse import DomesticAbuseTraversal
-from werkzeug.wrappers.response import Response
-from app.categories.forms import QuestionForm
 
 
-class CategoryTraversal:
-    #  Maps each category to the first question
-    #  This can either be a QuestionForm or an endpoint string
+class InitialCategoryQuestion(QuestionForm):
+    title = "Choose the problem you need help with"
+
     routing_logic = {
         "discrimination": DiscriminationWhereForm,
         "domestic-abuse": DomesticAbuseTraversal,
@@ -16,183 +19,151 @@ class CategoryTraversal:
         ),
     }
 
-    def get_onward_question_from_path(self, path: str) -> QuestionForm | Response:
-        """Takes in the users URL endpoint as a path and returns either an onward question form or a response.
-        If a response is returned then the user has concluded the category diagnosis and should be directed to the
-        onward page.
-
-        :param path: Full endpoint path i.e. "discrimination/work/age"
-        :return: QuestionForm or an HTTP Response
-        """
-        path = path.split("/")
-
-        if len(path) == 0:
-            return redirect(url_for("categories.index"))
-
-        if path[0] not in self.routing_logic:
-            return abort(404)
-        category = path[0]
-        question_form: QuestionForm = self.routing_logic[category]
-
-        if isinstance(question_form, str):
-            return redirect(url_for(question_form))
-
-        # Traverse down the diagnosis tree
-        # If an invalid category value is found then stop
-        for node in path[
-            1:
-        ]:  # Start iterating from the 2nd element as the category is the first
-            if node not in question_form.valid_choices():
-                return question_form
-            if node not in question_form.routing_logic:
-                return question_form
-
-            next_page: QuestionForm | str = question_form.routing_logic[node]
-
-            if isinstance(next_page, Response):
-                return next_page
-
-            # If the next page is not a question we are at the end of the tree and want to show the user an onward page
-            if isinstance(next_page, str):
-                return redirect(url_for(next_page))
-
-            question_form = next_page
-
-        return question_form
-
-    def get_question_answer_map_from_path(self, path: str) -> dict:
-        path = path.split("/")
-        question_map = {}
-
-        routing_logic = self.routing_logic
-        question_form = InitialCategoryQuestion()
-        for node in path:
-            if node not in question_form.valid_choices():
-                print(question_map)
-                return question_map
-
-            question_map[question_form.title] = node
-
-            if node not in routing_logic:
-                node = "default"
-
-            question_form = routing_logic[node]
-            if not issubclass(question_form, QuestionForm):
-                return question_map
-
-            # Change the routing logic in the next iteration to be that of the current question
-            routing_logic = question_form.routing_logic
-
-        return question_map
+    category_labels = {
+        "discrimination": "Discrimination",
+        "domestic-abuse": "Domestic abuse",
+        "clinical-negligence": "Clinical negligence in babies",
+    }
 
     @classmethod
-    def map_routing_logic(cls):
-        """Recursively maps the routing logic relationships between the categories of law.
+    def get_label(cls, choice: str) -> str:
+        """Convert a category value to its human-readable label.
+            If there is no alternative then will fallback and return the internal value.
+
+        Args:
+            choice: The internal choice value (e.g. "asylum")
 
         Returns:
-            dict: A nested dictionary representing the complete routing structure
+            The display label (e.g., "Asylum and immigration")
         """
+        return dict(cls.category_labels).get(choice, choice)
 
-        def get_class_name(cls):
-            return cls.__name__ if hasattr(cls, "__name__") else str(cls)
+    @classmethod
+    def valid_choices(cls) -> list[str]:
+        return list(cls.routing_logic.keys())
 
-        def traverse_class(cls, visited=None):
-            if visited is None:
-                visited = set()
 
-            class_name = get_class_name(cls)
+@dataclass
+class NavigationResult:
+    """Represents the result of a navigation through the question tree.
+    The Navigation Result can either be:
+     - A QuestionForm, a WTForms form, which can be rendered with the question-page.html template
+     - An internal redirect, an endpoint string processed with url_for during a request context
+     - An external redirect, a Werkzeug response which can be returned from a request.
+    """
 
-            # Prevent infinite recursion
-            if class_name in visited:
-                return f"Circular reference to {class_name}"
+    # The question form should be uninstantiated during traversal and only instantiated as part of handling the request
+    question_form: type[QuestionForm] | None = None
+    # Internal redirect is an endpoint string, which is evaluated during the request application context
+    internal_redirect: str | None = None
+    external_redirect: Response | None = None
 
-            visited.add(class_name)
+    @property
+    def is_redirect(self) -> bool:
+        """Indicates if navigation reached a final state (redirect or error)."""
+        return bool(self.internal_redirect or self.external_redirect)
 
-            # If class has no routing_logic attribute, return None
-            if not hasattr(cls, "routing_logic"):
-                return None
 
-            result = {}
+class CategoryTraversal:
+    def __init__(self, initial_question: type[QuestionForm]):
+        """Initialize with pre-calculated routes"""
+        self.initial_routing_logic = initial_question.routing_logic
+        # Dictionary to store all possible paths and their outcomes
+        self.route_cache: dict[str, NavigationResult] = {
+            "": NavigationResult(question_form=initial_question)
+        }
+        self._calculate_all_routes()
 
-            for key, value in cls.routing_logic.items():
-                if isinstance(value, Response):
-                    result[key] = f"redirect: {value.headers['location']}"
-                elif isinstance(value, str):
-                    result[key] = value
-                else:
-                    # Recursively map the nested class
-                    nested_map = traverse_class(value, visited.copy())
-                    result[key] = {get_class_name(value): nested_map}
+    def _calculate_all_routes(self) -> None:
+        """Pre-calculate all possible routes during initialization"""
 
-            return result
+        def traverse_routing(node, current_path: list[str]) -> None:
+            path_key = "/".join(current_path)
+            # Stop if we hit a redirect or string endpoint
+            if isinstance(node, Response):
+                self.route_cache[path_key] = NavigationResult(external_redirect=node)
+                return
+            if isinstance(node, str):
+                self.route_cache[path_key] = NavigationResult(internal_redirect=node)
+                return
 
-        return {get_class_name(cls): traverse_class(cls)}
+            self.route_cache[path_key] = NavigationResult(question_form=node)
+            # Continue traversing if this is a question form
+            if hasattr(node, "routing_logic"):
+                for choice, next_step in node.routing_logic.items():
+                    traverse_routing(next_step, current_path + [choice])
 
-    @staticmethod
-    def get_previous_page_from_path(path: str) -> str:
-        path = path.split("/")
+        # Start traversal from each initial category
+        for category, form in self.initial_routing_logic.items():
+            traverse_routing(form, [category])
 
-        if len(path) < 2:
+    def navigate_path(self, path: str) -> NavigationResult:
+        """Navigate using pre-calculated routes.
+
+        Raises:
+            werkzeug.exceptions.NotFound if the path is invalid.
+        """
+        route = self.route_cache.get(path)
+
+        if not route:
+            raise NotFound()
+
+        return route
+
+    def get_question_answer_map(self, path: str) -> dict[str, str]:
+        """Create question-answer mapping using pre-calculated routes"""
+        segments = path.split("/")
+        result: dict[str, str] = {}
+        current_path = ""
+
+        for index, segment in enumerate(segments):
+            route: NavigationResult = self.route_cache.get(current_path)
+
+            if not route or not route.question_form:
+                break
+
+            if not hasattr(route.question_form, "title"):
+                raise ValueError(f"{route.question_form} does not have a title")
+
+            answer_label = route.question_form.get_label(segment)
+            result[route.question_form.title] = answer_label
+            current_path += segment if index == 0 else f"/{segment}"
+
+        return result
+
+    def get_all_valid_paths(self) -> list[str]:
+        """Return a sorted list of all pre-calculated valid paths"""
+        return sorted(list(self.route_cache.keys()))
+
+    def get_previous_page_url(self, path: str) -> str:
+        """Generate a URL for the previous question page.
+            This populates the back button for each question page.
+
+            If the previous page is a QuestionForm then previous_answer will be populated
+
+        Args:
+            path: Current URL path
+
+        Returns:
+            URL for the previous question page
+        """
+        path_segments = path.split("/")
+
+        if len(path_segments) < 2:
             return url_for("categories.index")
 
-        previous_answer = path.pop(-1)
-        new_path = "/".join(path)
+        previous_answer = path_segments.pop()
+        new_path = "/".join(path_segments)
+        previous_page = self.navigate_path(new_path)
+
         return url_for(
-            "categories.question_page", path=new_path, previous_answer=previous_answer
+            "categories.question_page",
+            path=new_path,
+            previous_answer=previous_answer
+            if isinstance(previous_page, QuestionForm)
+            else None,
         )
 
-    @classmethod
-    def get_all_question_page_urls(cls) -> list[str]:
-        """Get a list of all valid category question URL paths"""
-        routing_map = cls.map_routing_logic()[cls.__name__]
 
-        def get_url_permutations(data, prefix="", results=None):
-            """
-            Recursively extract all possible URL endpoints from a nested dictionary structure.
-
-            Args:
-                data: The input dictionary containing nested routes
-                prefix: The current URL prefix (used in recursion)
-                results: Set to store unique URL endpoints
-
-            Returns:
-                list: Sorted list of all possible URL endpoints
-            """
-            if results is None:
-                results = set()
-
-            # If we have a non-empty prefix, add it to results
-            if prefix:
-                results.add(prefix)
-
-            # Base case: if data is a string (redirect URL) or not a dict
-            if not isinstance(data, dict):
-                return results
-
-            # Recursive case: traverse through dictionary
-            for key, value in data.items():
-                # Skip special form keys that shouldn't be part of the URL
-                if key.endswith("Form"):
-                    new_prefix = prefix
-                else:
-                    # Create new prefix by joining current prefix and key
-                    new_prefix = f"{prefix}/{key}".lstrip("/")
-                    results.add(new_prefix)
-
-                # Recursively process nested dictionaries
-                get_url_permutations(value, new_prefix, results)
-
-            return sorted(list(results))
-
-        return get_url_permutations(routing_map)
-
-
-category_traversal = CategoryTraversal()
-
-
-class InitialCategoryQuestion(QuestionForm):
-    title = "Choose the problem you need help with."
-
-    @classmethod
-    def valid_choices(cls):
-        return [route for route in CategoryTraversal.routing_logic]
+# Initialize the traversal system with the initial question
+category_traversal = CategoryTraversal(initial_question=InitialCategoryQuestion)

@@ -1,5 +1,6 @@
 from wtforms import SubmitField, RadioField, Form
 from govuk_frontend_wtf.wtforms_widgets import GovSubmitInput
+
 from app.categories.widgets import CategoryRadioInput
 from wtforms.validators import InputRequired
 
@@ -16,11 +17,15 @@ class QuestionForm(Form):
     # Populates the H2 and page title, subclasses overwrite this with their question title
     title = "Question title"
 
-    # Onward page logic, to route the user to a question map a valid choice to a question
-    # to route the user to an onward page provide an HTTP Response routing the user onwards
-    # Ex: next_question = {
-    #    "Yes": QuestionForm
-    #    "No": view function as a string
+    # Onward page logic, you can route the user to a:
+    # - question page using an uninstantiated QuestionForm
+    # - internal redirect using an endpoint string
+    # - external redirect using a werkzeug.Response
+    #
+    # Ex: routing_logic = {
+    #    "answer_a": QuestionForm
+    #    "answer_b": "blueprint.endpoint",
+    #    "answer_c": redirect("www.hostname.gov.uk/endpoint")
     # }
     routing_logic = {}
 
@@ -33,6 +38,19 @@ class QuestionForm(Form):
             ("no", "No"),
         ],
     )
+
+    @classmethod
+    def get_label(cls, choice: str) -> str:
+        """Convert a choice value to its human-readable label.
+            If there is no alternative then will fallback and return the internal value.
+
+        Args:
+            choice: The internal choice value (e.g. "asylum")
+
+        Returns:
+            The display label (e.g., "Asylum and immigration")
+        """
+        return dict(cls.question.kwargs["choices"]).get(choice, choice)
 
     @classmethod
     def valid_choices(cls):
