@@ -2,6 +2,8 @@ import pytest
 from werkzeug.exceptions import NotFound
 from werkzeug.utils import redirect
 from werkzeug.wrappers.response import Response
+from wtforms.fields.choices import RadioField
+
 from app.categories.forms import QuestionForm
 from app.categories.traversal import CategoryTraversal, InitialCategoryQuestion
 
@@ -9,7 +11,16 @@ from app.categories.traversal import CategoryTraversal, InitialCategoryQuestion
 @pytest.fixture
 def mock_nested_form():
     class MockNestedForm(QuestionForm):
+        title = "Nested Question"
         routing_logic = {"final_a": "final-endpoint-a", "final_b": "final-endpoint-b"}
+
+        question = RadioField(
+            title,
+            choices=[
+                ("final_a", "Final A"),
+                ("final_b", "Final B"),
+            ],
+        )
 
     return MockNestedForm
 
@@ -17,11 +28,21 @@ def mock_nested_form():
 @pytest.fixture
 def mock_subcategory_form_a(mock_nested_form):
     class MockSubCategoryFormA(QuestionForm):
+        title = "Sub Category A Question"
         routing_logic = {
             "to_form": mock_nested_form,  # Leads to another form
             "to_internal": "internal-endpoint",  # Internal redirect
             "to_external": redirect("www.external-redirect-a.gov.uk"),
         }
+
+        question = RadioField(
+            title,
+            choices=[
+                ("to_form", "To Next Form"),
+                ("to_internal", "To Internal"),
+                ("to_external", "To External"),
+            ],
+        )
 
     return MockSubCategoryFormA
 
@@ -29,6 +50,7 @@ def mock_subcategory_form_a(mock_nested_form):
 @pytest.fixture
 def mock_subcategory_form_b(mock_nested_form):
     class MockSubCategoryFormB(QuestionForm):
+        title = "Sub Category B Question"
         routing_logic = {
             "to_form": mock_nested_form,
             "to_internal": "internal-endpoint-b",
@@ -43,6 +65,7 @@ def test_initial_form(mock_subcategory_form_a, mock_subcategory_form_b):
     external_redirect = Response(response="Root External Redirect", status=302)
 
     class TestInitialForm(InitialCategoryQuestion):
+        title = "Initial Question"
         routing_logic = {
             "category_a": mock_subcategory_form_a,
             "category_b": mock_subcategory_form_b,
@@ -133,3 +156,51 @@ def test_initial_category_question_get_label(test_initial_form):
 def test_initial_category_question_valid_choices(test_initial_form):
     choices = test_initial_form.valid_choices()
     assert set(choices) == {"category_a", "category_b", "category_c"}
+
+
+@pytest.mark.parametrize(
+    "path,expected_map",
+    [
+        ("", {}),  # Empty path
+        (
+            "invalid/path",
+            {
+                "Initial Question": "invalid choice",
+            },
+        ),
+        (
+            "category_a/invalid_answer",
+            {
+                "Initial Question": "Category A Label",
+                "Sub Category A Question": "invalid choice",
+            },
+        ),
+        ("category_a", {"Initial Question": "Category A Label"}),
+        (
+            "category_a/to_form",
+            {
+                "Initial Question": "Category A Label",
+                "Sub Category A Question": "To Next Form",
+            },
+        ),
+        (
+            "category_a/to_form/final_a",
+            {
+                "Initial Question": "Category A Label",
+                "Sub Category A Question": "To Next Form",
+                "Nested Question": "Final A",
+            },
+        ),
+        (
+            "category_a/to_internal",
+            {
+                "Initial Question": "Category A Label",
+                "Sub Category A Question": "To Internal",
+            },
+        ),
+    ],
+)
+def test_get_question_answer_map(test_initial_form, path, expected_map):
+    traversal = CategoryTraversal(test_initial_form)
+    result = traversal.get_question_answer_map(path)
+    assert result == expected_map

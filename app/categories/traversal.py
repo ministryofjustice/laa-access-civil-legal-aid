@@ -112,14 +112,22 @@ class CategoryTraversal:
 
     def get_question_answer_map(self, path: str) -> dict[str, str]:
         """Create question-answer mapping using pre-calculated routes"""
-        segments = path.split("/")
         result: dict[str, str] = {}
+
+        if path == "":
+            return result
+        segments = path.split("/")
+
         current_path = ""
 
         for index, segment in enumerate(segments):
             route: NavigationResult = self.route_cache.get(current_path)
 
             if not route or not route.question_form:
+                break
+
+            if segment not in route.question_form.valid_choices():
+                result[route.question_form.title] = "invalid choice"
                 break
 
             if not hasattr(route.question_form, "title"):

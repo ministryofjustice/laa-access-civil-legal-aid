@@ -1,15 +1,20 @@
+from requests import Response
 from wtforms import SubmitField, RadioField, Form
 from govuk_frontend_wtf.wtforms_widgets import GovSubmitInput
 
 from app.categories.widgets import CategoryRadioInput
 from wtforms.validators import InputRequired
 
+RouteDestination: type = type["QuestionForm"] | Response | str
+RoutingLogic: type = dict[str, RouteDestination]
+
 
 class QuestionForm(Form):
-    """Base FlaskForm for populating a single question page,
-    passing a child of this to the question-page.html template will populate a question page.
+    """This base QuestionForm defines the required interfaces for all QuestionForms.
+    This ensures all questions can be rendered by the question-form.html template and work with the
+    Category Traversal system.
 
-    This base class has an example implementation you should overwrite to create new question forms.
+    This base class is just an example implementation you should overwrite to create new question forms.
     """
 
     category = "Question category"  # Populates the H1, subclasses should overwrite this with their category of law
