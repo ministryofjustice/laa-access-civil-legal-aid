@@ -18,3 +18,10 @@ repos:
       - id: ruff
         args: [ --fix ]
       - id: ruff-format
+  - repo: local
+    hooks:
+      - id: trufflehog3
+        name: truffleHog3
+        entry: bash -c 'trufflehog3 filesystem .'
+        language: system
+        stages: ["commit", "push"]
