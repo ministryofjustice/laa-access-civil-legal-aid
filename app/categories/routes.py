@@ -74,4 +74,4 @@ def domestic_abuse():
 @bp.get("/routing-map")
 def debug_routing_map():
     routing_map = category_traversal.get_all_user_journeys()
-    return render_template("categories/traversal-debug.html", routes=routing_map)
+    return render_template("categories/routing-map.html", routes=routing_map)

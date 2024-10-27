@@ -62,14 +62,6 @@ class NavigationResult:
         """Indicates if navigation reached a final state (redirect or error)."""
         return bool(self.internal_redirect or self.check_redirect)
 
-    def get_destination(self) -> str:
-        """Get the final destination for display in the table"""
-        if self.internal_redirect:
-            return self.internal_redirect
-        if self.check_redirect:
-            return self.check_redirect.location
-        return "undefined"
-
 
 class CategoryTraversal:
     def __init__(self, initial_question: type[QuestionForm]):
@@ -180,7 +172,7 @@ class CategoryTraversal:
         )
 
     def get_all_user_journeys(self) -> dict[str, NavigationResult]:
-        """Generate dictionary of path components for the template.
+        """Generate dictionary of path components for the routing map debug page.
         Only includes paths that end in a redirect."""
         all_paths = self.get_all_valid_paths()
 

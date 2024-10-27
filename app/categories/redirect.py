@@ -20,7 +20,7 @@ class CheckRedirect:
     """
 
     check_url = f"{Config.CLA_PUBLIC_URL}/receive-answers"
-    destination: CheckDestination = None
+    destination: CheckDestination
 
     def submit_answers(self, question_answer_map):
         payload = {"answers": question_answer_map, "redirect": self.destination}

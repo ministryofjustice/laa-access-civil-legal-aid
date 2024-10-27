@@ -25,12 +25,12 @@ class QuestionForm(Form):
     # Onward page logic, you can route the user to a:
     # - question page using an uninstantiated QuestionForm
     # - internal redirect using an endpoint string
-    # - external redirect using a werkzeug.Response
+    # - check redirect using a CheckRedirect object
     #
     # Ex: routing_logic = {
     #    "answer_a": QuestionForm
     #    "answer_b": "blueprint.endpoint",
-    #    "answer_c": redirect("www.hostname.gov.uk/endpoint")
+    #    "answer_c": CheckRedirect(destination=CheckDestination.CONTACT)
     # }
     routing_logic = {}
 

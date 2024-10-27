@@ -1,3 +1,4 @@
+# TODO: Implement an override for the GOV.UK WTForms radio field to support divisors
 def get_items_with_divisor(items):
     output = []
     for _ in items:
@@ -6,6 +7,7 @@ def get_items_with_divisor(items):
     return output
 
 
+# TODO: Implement an override for the GOV.UK WTForms radio field supporting passing in a pre-selected answer
 def check_radio_field(question, answer, items):
     if not items:
         items = []
@@ -16,45 +18,3 @@ def check_radio_field(question, answer, items):
         if question.choices[question_num][0] == answer:
             items[question_num]["checked"] = True
     return items
-
-
-def print_routing_map(routing_map, indent=0):
-    """
-    Pretty prints the routing map with proper indentation.
-
-    Args:
-        routing_map (dict): The routing map to print
-        indent (int): Current indentation level
-    """
-    indent_str = "  " * indent
-
-    for key, value in routing_map.items():
-        if isinstance(value, dict):
-            print(f"{indent_str}{key}:")
-            print_routing_map(value, indent + 1)
-        else:
-            print(f"{indent_str}{key}: {value}")
-
-
-def flatten_paths(d):
-    """Convert nested dictionary into list of paths, including the final result"""
-    paths = []
-
-    def collect_path(current_dict, current_path):
-        for key, value in current_dict.items():
-            # Skip Form and Traversal entries
-            if "Form" in key or "Traversal" in key:
-                if isinstance(value, dict):
-                    collect_path(value, current_path)
-                continue
-
-            new_path = current_path + [key]
-
-            if isinstance(value, dict):
-                collect_path(value, new_path)
-            else:
-                # Include the final result/destination
-                paths.append(new_path + [value])
-
-    collect_path(d, [])
-    return paths
