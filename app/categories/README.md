@@ -37,7 +37,7 @@ class MyQuestionForm(QuestionForm):
     
     routing_logic = {
         "yes": NextQuestionForm,  # Question forms should only be initalised when handling the users request.
-        "no": "internal.endpoint"
+        "no": CheckRedirect(destination=CheckDestination.FALA)
     }
     
     question = RadioField(
@@ -73,7 +73,7 @@ class ExistingQuestionForm(QuestionForm):
 You can route to:
 1. Another question form: `"choice": NextQuestionForm`
 2. Internal endpoint: `"choice": "endpoint.name"`
-3. External URL: `"choice": redirect("https://example.com")`
+3. Check Redirect: `"choice": CheckRedirect(destination=CheckDestination.MEANS_TEST)`
 
 ### Requirements for questions
 
@@ -110,7 +110,8 @@ Example question answer map:
 Represents the outcome of navigating to a specific path:
 - `question_form`: Next question to display
 - `internal_redirect`: Flask endpoint to redirect to
-- `external_redirect`: External URL to redirect to
+- `check_redirect`: Sends a post request to the `/recieve-answers` endpoint on Check if you can get legal aid,
+this returns an external redirect url for us to route users to.
 
 The outcome is handled by the `question_page` route in `categories/routes.py`.
 
