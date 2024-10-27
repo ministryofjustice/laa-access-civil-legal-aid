@@ -7,6 +7,9 @@ exclude: # exclude matching issues
       - package-lock.json
       - README.md
       - .ruff_cache
+      - node_modules/**
+      - app/static/**
+      - .pytest_cache/
   - message: Examples and data necessary for running auto-tests
     paths:
       - docs/*.html

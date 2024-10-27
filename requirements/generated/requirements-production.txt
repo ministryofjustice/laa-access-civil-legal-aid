@@ -81,6 +81,8 @@ packaging==24.1
     # via limits
 pygments==2.18.0
     # via rich
+pyjwt==2.9.0
+    # via -r requirements/source/requirements-base.in
 python-dotenv==1.0.1
     # via -r requirements/source/requirements-base.in
 pytz==2024.2
