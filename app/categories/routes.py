@@ -6,7 +6,6 @@ from app.categories.traversal import category_traversal, NavigationResult
 from app.categories.utils import (
     get_items_with_divisor,
     check_radio_field,
-    flatten_paths,
 )
 
 
@@ -31,8 +30,9 @@ def question_page(path):
     if path_result.internal_redirect:
         return redirect(url_for(path_result.internal_redirect))
 
-    if path_result.external_redirect:
-        return path_result.external_redirect
+    if path_result.check_redirect:
+        question_answer_map = category_traversal.get_question_answer_map(path)
+        return path_result.check_redirect.submit_answers(question_answer_map)
 
     form = path_result.question_form(request.args)
     back_link: str = category_traversal.get_previous_page_url(path)
@@ -72,6 +72,6 @@ def domestic_abuse():
 
 
 @bp.get("/routing-map")
-def routing_map():
-    routing_map = flatten_paths(category_traversal.map_routing_logic())
-    return render_template("categories/traversal-debug.html", paths=routing_map)
+def debug_routing_map():
+    routing_map = category_traversal.get_all_user_journeys()
+    return render_template("categories/traversal-debug.html", routes=routing_map)

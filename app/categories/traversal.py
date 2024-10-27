@@ -1,11 +1,11 @@
 from dataclasses import dataclass
-from flask import redirect, url_for
+from flask import url_for
 from werkzeug.exceptions import NotFound
-from werkzeug.wrappers.response import Response
 
 from app.categories.forms import QuestionForm
 from app.categories.questions.discrimination import DiscriminationWhereForm
 from app.categories.questions.domestic_abuse import DomesticAbuseTraversal
+from app.categories.redirect import CheckRedirect, CheckDestination
 
 
 class InitialCategoryQuestion(QuestionForm):
@@ -14,9 +14,7 @@ class InitialCategoryQuestion(QuestionForm):
     routing_logic = {
         "discrimination": DiscriminationWhereForm,
         "domestic-abuse": DomesticAbuseTraversal,
-        "clinical-negligence": redirect(
-            "https://checklegalaid.service.gov.uk/scope/refer/legal-adviser?category=clinneg"
-        ),
+        "clinical-negligence": CheckRedirect(CheckDestination.FALA),
     }
 
     category_labels = {
@@ -56,12 +54,21 @@ class NavigationResult:
     question_form: type[QuestionForm] | None = None
     # Internal redirect is an endpoint string, which is evaluated during the request application context
     internal_redirect: str | None = None
-    external_redirect: Response | None = None
+    # Redirects the user to Check if you can get legal aid
+    check_redirect: CheckRedirect | None = None
 
     @property
     def is_redirect(self) -> bool:
         """Indicates if navigation reached a final state (redirect or error)."""
-        return bool(self.internal_redirect or self.external_redirect)
+        return bool(self.internal_redirect or self.check_redirect)
+
+    def get_destination(self) -> str:
+        """Get the final destination for display in the table"""
+        if self.internal_redirect:
+            return self.internal_redirect
+        if self.check_redirect:
+            return self.check_redirect.location
+        return "undefined"
 
 
 class CategoryTraversal:
@@ -80,8 +87,8 @@ class CategoryTraversal:
         def traverse_routing(node, current_path: list[str]) -> None:
             path_key = "/".join(current_path)
             # Stop if we hit a redirect or string endpoint
-            if isinstance(node, Response):
-                self.route_cache[path_key] = NavigationResult(external_redirect=node)
+            if isinstance(node, CheckRedirect):
+                self.route_cache[path_key] = NavigationResult(check_redirect=node)
                 return
             if isinstance(node, str):
                 self.route_cache[path_key] = NavigationResult(internal_redirect=node)
@@ -171,6 +178,20 @@ class CategoryTraversal:
             if isinstance(previous_page, QuestionForm)
             else None,
         )
+
+    def get_all_user_journeys(self) -> dict[str, NavigationResult]:
+        """Generate dictionary of path components for the template.
+        Only includes paths that end in a redirect."""
+        all_paths = self.get_all_valid_paths()
+
+        full_paths = {}
+
+        for path in all_paths:
+            result = self.route_cache[path]
+            if not result.is_redirect:
+                continue
+            full_paths[path] = result
+        return full_paths
 
 
 # Initialize the traversal system with the initial question

@@ -1,9 +1,9 @@
 from app.categories.forms import QuestionForm
 from wtforms import RadioField
+
+from app.categories.redirect import CheckRedirect, CheckDestination
 from app.categories.widgets import CategoryRadioInput
 from wtforms.validators import InputRequired
-from flask import redirect
-from app.config import Config
 
 
 class AreYouAtRiskOfHarmForm(QuestionForm):
@@ -12,8 +12,8 @@ class AreYouAtRiskOfHarmForm(QuestionForm):
     title = "Are you or your children at immediate risk of harm?"
 
     routing_logic = {
-        "yes": redirect(f"{Config.CLA_PUBLIC_URL}/domestic_abuse_contact"),
-        "no": "categories.index",
+        "yes": CheckRedirect(destination=CheckDestination.CONTACT),
+        "no": CheckRedirect(destination=CheckDestination.MEANS_TEST),
     }
 
     question = RadioField(

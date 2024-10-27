@@ -1,10 +1,9 @@
 import pytest
 from werkzeug.exceptions import NotFound
-from werkzeug.utils import redirect
-from werkzeug.wrappers.response import Response
 from wtforms.fields.choices import RadioField
 
 from app.categories.forms import QuestionForm
+from app.categories.redirect import CheckDestination, CheckRedirect
 from app.categories.traversal import CategoryTraversal, InitialCategoryQuestion
 
 
@@ -32,7 +31,7 @@ def mock_subcategory_form_a(mock_nested_form):
         routing_logic = {
             "to_form": mock_nested_form,  # Leads to another form
             "to_internal": "internal-endpoint",  # Internal redirect
-            "to_external": redirect("www.external-redirect-a.gov.uk"),
+            "to_check": CheckRedirect(destination=CheckDestination.MEANS_TEST),
         }
 
         question = RadioField(
@@ -40,7 +39,7 @@ def mock_subcategory_form_a(mock_nested_form):
             choices=[
                 ("to_form", "To Next Form"),
                 ("to_internal", "To Internal"),
-                ("to_external", "To External"),
+                ("to_contact", CheckRedirect(destination=CheckDestination.CONTACT)),
             ],
         )
 
@@ -54,7 +53,7 @@ def mock_subcategory_form_b(mock_nested_form):
         routing_logic = {
             "to_form": mock_nested_form,
             "to_internal": "internal-endpoint-b",
-            "to_external": redirect("www.external-redirect-b.gov.uk"),
+            "to_external": CheckRedirect(CheckDestination.MEANS_TEST),
         }
 
     return MockSubCategoryFormB
@@ -62,14 +61,12 @@ def mock_subcategory_form_b(mock_nested_form):
 
 @pytest.fixture
 def test_initial_form(mock_subcategory_form_a, mock_subcategory_form_b):
-    external_redirect = Response(response="Root External Redirect", status=302)
-
     class TestInitialForm(InitialCategoryQuestion):
         title = "Initial Question"
         routing_logic = {
             "category_a": mock_subcategory_form_a,
             "category_b": mock_subcategory_form_b,
-            "category_c": external_redirect,
+            "category_c": CheckRedirect(CheckDestination.FALA),
         }
 
         category_labels = {
@@ -122,7 +119,7 @@ def test_category_traversal_empty_path(test_initial_form):
         ("category_a", "question_form"),
         ("category_a/to_form", "question_form"),
         ("category_a/to_internal", "internal_redirect"),
-        ("category_a/to_external", "external_redirect"),
+        ("category_a/to_check", "external_redirect"),
         ("category_a/to_form/final_a", "internal_redirect"),
         ("category_c", "external_redirect"),
     ],
@@ -136,15 +133,15 @@ def test_category_traversal_navigation_result_types(
     if expected_type == "question_form":
         assert result.question_form is not None
         assert result.internal_redirect is None
-        assert result.external_redirect is None
+        assert result.check_redirect is None
     elif expected_type == "internal_redirect":
         assert result.question_form is None
         assert result.internal_redirect is not None
-        assert result.external_redirect is None
+        assert result.check_redirect is None
     else:  # external_redirect
         assert result.question_form is None
         assert result.internal_redirect is None
-        assert result.external_redirect is not None
+        assert result.check_redirect is not None
 
 
 def test_initial_category_question_get_label(test_initial_form):
