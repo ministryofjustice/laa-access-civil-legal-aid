@@ -3,7 +3,7 @@ from werkzeug.exceptions import NotFound
 from wtforms.fields.choices import RadioField
 
 from app.categories.forms import QuestionForm
-from app.categories.redirect import CheckDestination, CheckRedirect
+from app.categories.redirect import CheckDestination, CheckRedirect, CheckCategory
 from app.categories.traversal import CategoryTraversal, InitialCategoryQuestion
 
 
@@ -31,7 +31,10 @@ def mock_subcategory_form_a(mock_nested_form):
         routing_logic = {
             "to_form": mock_nested_form,  # Leads to another form
             "to_internal": "internal-endpoint",  # Internal redirect
-            "to_check": CheckRedirect(destination=CheckDestination.MEANS_TEST),
+            "to_check": CheckRedirect(
+                destination=CheckDestination.MEANS_TEST,
+                category=CheckCategory.DISCRIMINATION,
+            ),
         }
 
         question = RadioField(
@@ -39,7 +42,13 @@ def mock_subcategory_form_a(mock_nested_form):
             choices=[
                 ("to_form", "To Next Form"),
                 ("to_internal", "To Internal"),
-                ("to_contact", CheckRedirect(destination=CheckDestination.CONTACT)),
+                (
+                    "to_contact",
+                    CheckRedirect(
+                        destination=CheckDestination.CONTACT,
+                        category=CheckCategory.DISCRIMINATION,
+                    ),
+                ),
             ],
         )
 
@@ -53,7 +62,9 @@ def mock_subcategory_form_b(mock_nested_form):
         routing_logic = {
             "to_form": mock_nested_form,
             "to_internal": "internal-endpoint-b",
-            "to_external": CheckRedirect(CheckDestination.MEANS_TEST),
+            "to_external": CheckRedirect(
+                CheckDestination.MEANS_TEST, category=CheckCategory.CLINICAL_NEGLIGENCE
+            ),
         }
 
     return MockSubCategoryFormB
@@ -66,7 +77,9 @@ def test_initial_form(mock_subcategory_form_a, mock_subcategory_form_b):
         routing_logic = {
             "category_a": mock_subcategory_form_a,
             "category_b": mock_subcategory_form_b,
-            "category_c": CheckRedirect(CheckDestination.FALA),
+            "category_c": CheckRedirect(
+                CheckDestination.FALA, category=CheckCategory.DISCRIMINATION
+            ),
         }
 
         category_labels = {

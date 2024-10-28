@@ -5,7 +5,7 @@ from werkzeug.exceptions import NotFound
 from app.categories.forms import QuestionForm
 from app.categories.questions.discrimination import DiscriminationWhereForm
 from app.categories.questions.domestic_abuse import DomesticAbuseTraversal
-from app.categories.redirect import CheckRedirect, CheckDestination
+from app.categories.redirect import CheckRedirect, CheckDestination, CheckCategory
 
 
 class InitialCategoryQuestion(QuestionForm):
@@ -14,7 +14,9 @@ class InitialCategoryQuestion(QuestionForm):
     routing_logic = {
         "discrimination": DiscriminationWhereForm,
         "domestic-abuse": DomesticAbuseTraversal,
-        "clinical-negligence": CheckRedirect(CheckDestination.FALA),
+        "clinical-negligence": CheckRedirect(
+            CheckDestination.FALA, CheckCategory.CLINICAL_NEGLIGENCE
+        ),
     }
 
     category_labels = {

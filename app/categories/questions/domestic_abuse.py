@@ -1,7 +1,7 @@
 from app.categories.forms import QuestionForm
 from wtforms import RadioField
 
-from app.categories.redirect import CheckRedirect, CheckDestination
+from app.categories.redirect import CheckRedirect, CheckDestination, CheckCategory
 from app.categories.widgets import CategoryRadioInput
 from wtforms.validators import InputRequired
 
@@ -12,8 +12,13 @@ class AreYouAtRiskOfHarmForm(QuestionForm):
     title = "Are you or your children at immediate risk of harm?"
 
     routing_logic = {
-        "yes": CheckRedirect(destination=CheckDestination.CONTACT),
-        "no": CheckRedirect(destination=CheckDestination.MEANS_TEST),
+        "yes": CheckRedirect(
+            destination=CheckDestination.CONTACT, category=CheckCategory.DOMESTIC_ABUSE
+        ),
+        "no": CheckRedirect(
+            destination=CheckDestination.MEANS_TEST,
+            category=CheckCategory.DOMESTIC_ABUSE,
+        ),
     }
 
     question = RadioField(

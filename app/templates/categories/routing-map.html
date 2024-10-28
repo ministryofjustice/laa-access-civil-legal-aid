@@ -9,11 +9,11 @@
     <span class="govuk-tag govuk-tag--orange">{{ result.internal_redirect }}</span>
   {% elif result.check_redirect %}
     {% if 'fala' in result.check_redirect.destination %}
-      <span class="govuk-tag govuk-tag--turquoise">FALA</span>
+      <span class="govuk-tag govuk-tag--orange">FALA</span>
     {% elif 'means-test' in result.check_redirect.destination %}
       <span class="govuk-tag govuk-tag--blue">Means Assessment</span>
     {% elif 'contact' in result.check_redirect.destination %}
-      <span class="govuk-tag govuk-tag--pink">Contact</span>
+      <span class="govuk-tag govuk-tag--green">Contact</span>
     {% else %}
         <span class="govuk-tag govuk-tag--red">Error</span>
     {% endif %}

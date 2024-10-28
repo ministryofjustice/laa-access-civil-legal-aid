@@ -15,7 +15,7 @@ from app.config import Config
 
 compress = Compress()
 csrf = CSRFProtect()
-limiter = Limiter(get_remote_address, default_limits=["2 per second", "60 per minute"])
+limiter = Limiter(get_remote_address, default_limits=["5 per second", "60 per minute"])
 talisman = Talisman()
 
 if Config.SENTRY_DSN:
