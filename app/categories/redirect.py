@@ -1,6 +1,5 @@
 from dataclasses import dataclass
-import requests
-from flask import redirect, abort
+from flask import redirect
 import jwt
 from enum import StrEnum
 from app.config import Config
@@ -24,7 +23,7 @@ class CheckCategory(StrEnum):
     WELFARE_BENEFITS = "benefits"
     NONE_OF_THE_ABOVE = "none"
     CONSUMER_ISSUES = "consumer"
-    PERSONAL_INJURY = "PI"
+    PERSONAL_INJURY = "pi"
     PUBLIC_LAW = "publiclaw"
     COMMUNITY_CARE = "commcare"
     MENTAL_HEALTH = "mentalhealth"
@@ -58,8 +57,4 @@ class CheckRedirect:
         # Sign the payload
         token = jwt.encode(payload, Config.JWT_SECRET, algorithm="HS256")
 
-        try:
-            return redirect(f"{self.check_url}?token={token}")
-
-        except requests.exceptions.RequestException:
-            abort(500)
+        return redirect(f"{self.check_url}?token={token}")
