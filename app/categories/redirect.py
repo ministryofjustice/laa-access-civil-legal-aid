@@ -1,8 +1,7 @@
 from dataclasses import dataclass
-from flask import redirect
+from flask import redirect, current_app
 import jwt
 from enum import StrEnum
-from app.config import Config
 
 
 class CheckDestination(StrEnum):
@@ -39,7 +38,7 @@ class CheckRedirect:
     and a desired destination determined by the category routing logic.
     """
 
-    check_url = f"{Config.CLA_PUBLIC_URL}/user-receive-answers"
+    check_endpoint = "/landing"
     destination: CheckDestination = None
     category = CheckCategory = None
 
@@ -48,13 +47,17 @@ class CheckRedirect:
         self.category = category
 
     def submit_answers(self, question_answer_map):
+        check_url = f"{current_app.config["CLA_PUBLIC_URL"]}{self.check_endpoint}"
+
         payload = {
             "answers": question_answer_map,
             "destination": self.destination,
             "category": self.category,
         }
 
-        # Sign the payload
-        token = jwt.encode(payload, Config.CLA_PUBLIC_JWT_SECRET, algorithm="HS256")
+        jwt_secret = current_app.config["CLA_PUBLIC_JWT_SECRET"]
 
-        return redirect(f"{self.check_url}?token={token}")
+        # Sign the payload
+        token = jwt.encode(payload, jwt_secret, algorithm="HS256")
+
+        return redirect(f"{check_url}?token={token}")
