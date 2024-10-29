@@ -73,7 +73,7 @@ envVars:
       name: maintenance-mode
       key: enabled
       optional: true
-  JWT_SECRET:
-    configmap:
-      name: jwt-secret
-      key: JWT_SECRET
+  CLA_PUBLIC_JWT_SECRET:
+    secret:
+      name: cla-public-jwt-secret
+      key: key

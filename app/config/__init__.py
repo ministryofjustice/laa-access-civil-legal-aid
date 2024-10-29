@@ -24,4 +24,4 @@ class Config(object):
     CLA_PUBLIC_URL = os.environ.get(
         "CLA_PUBLIC_URL", "https://staging.checklegalaid.service.gov.uk"
     )
-    JWT_SECRET = os.environ.get("JWT_SECRET")
+    CLA_PUBLIC_JWT_SECRET = os.environ.get("CLA_PUBLIC_JWT_SECRET")

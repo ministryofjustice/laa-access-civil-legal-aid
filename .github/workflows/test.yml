@@ -1,6 +1,10 @@
 name: Test
 
-on: workflow_call
+on:
+  workflow_call:
+    secrets:
+      CLA_PUBLIC_JWT_SECRET:
+        required: true
 
 env:
   SECRET_KEY: "TEST_KEY"
@@ -42,6 +46,8 @@ jobs:
   functional_test:
     name: Functional Test
     runs-on: ubuntu-latest
+    env:
+      CLA_PUBLIC_JWT_SECRET: ${{ secrets.CLA_PUBLIC_JWT_SECRET }}
     steps:
     - name: Checkout the repository
       uses: actions/checkout@v4

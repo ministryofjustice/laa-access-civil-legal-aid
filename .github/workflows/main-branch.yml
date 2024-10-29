@@ -11,6 +11,8 @@ jobs:
   test:
     name: Test
     uses: ./.github/workflows/test.yml
+    secrets:
+      CLA_PUBLIC_JWT_SECRET: ${{ secrets.CLA_PUBLIC_JWT_SECRET }}
 
   static-analysis:
     name: Static Analysis

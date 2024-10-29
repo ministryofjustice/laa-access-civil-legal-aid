@@ -55,6 +55,6 @@ class CheckRedirect:
         }
 
         # Sign the payload
-        token = jwt.encode(payload, Config.JWT_SECRET, algorithm="HS256")
+        token = jwt.encode(payload, Config.CLA_PUBLIC_JWT_SECRET, algorithm="HS256")
 
         return redirect(f"{self.check_url}?token={token}")
