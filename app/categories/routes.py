@@ -21,7 +21,6 @@ def more_problems():
 
 @bp.get("/<path:path>")
 def question_page(path):
-    print(category_traversal.get_question_answer_map(path))
     try:
         path_result: NavigationResult = category_traversal.navigate_path(path)
     except NotFound:

@@ -171,42 +171,45 @@ def test_initial_category_question_valid_choices(test_initial_form):
 @pytest.mark.parametrize(
     "path,expected_map",
     [
-        ("", {}),  # Empty path
+        ("", []),  # Empty path
         (
             "invalid/path",
-            {
-                "Initial Question": "invalid choice",
-            },
+            [
+                {"question": "Initial Question", "answer": "invalid choice"},
+            ],
         ),
         (
             "category_a/invalid_answer",
-            {
-                "Initial Question": "Category A Label",
-                "Sub Category A Question": "invalid choice",
-            },
+            [
+                {"question": "Initial Question", "answer": "Category A Label"},
+                {"question": "Sub Category A Question", "answer": "invalid choice"},
+            ],
         ),
-        ("category_a", {"Initial Question": "Category A Label"}),
+        (
+            "category_a",
+            [{"question": "Initial Question", "answer": "Category A Label"}],
+        ),
         (
             "category_a/to_form",
-            {
-                "Initial Question": "Category A Label",
-                "Sub Category A Question": "To Next Form",
-            },
+            [
+                {"question": "Initial Question", "answer": "Category A Label"},
+                {"question": "Sub Category A Question", "answer": "To Next Form"},
+            ],
         ),
         (
             "category_a/to_form/final_a",
-            {
-                "Initial Question": "Category A Label",
-                "Sub Category A Question": "To Next Form",
-                "Nested Question": "Final A",
-            },
+            [
+                {"question": "Initial Question", "answer": "Category A Label"},
+                {"question": "Sub Category A Question", "answer": "To Next Form"},
+                {"question": "Nested Question", "answer": "Final A"},
+            ],
         ),
         (
             "category_a/to_internal",
-            {
-                "Initial Question": "Category A Label",
-                "Sub Category A Question": "To Internal",
-            },
+            [
+                {"question": "Initial Question", "answer": "Category A Label"},
+                {"question": "Sub Category A Question", "answer": "To Internal"},
+            ],
         ),
     ],
 )

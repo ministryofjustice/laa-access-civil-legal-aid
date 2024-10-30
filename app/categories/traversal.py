@@ -111,9 +111,11 @@ class CategoryTraversal:
 
         return route
 
-    def get_question_answer_map(self, path: str) -> dict[str, str]:
-        """Create question-answer mapping using pre-calculated routes"""
-        result: dict[str, str] = {}
+    def get_question_answer_map(self, path: str) -> list[dict[str, str]]:
+        """Create question-answer mapping using pre-calculated routes
+        Returns a list of dictionaries mapping questions and answers.
+        """
+        result: list[dict[str, str]] = []
 
         if path == "":
             return result
@@ -128,14 +130,18 @@ class CategoryTraversal:
                 break
 
             if segment not in route.question_form.valid_choices():
-                result[route.question_form.title] = "invalid choice"
+                result.append(
+                    {"question": route.question_form.title, "answer": "invalid choice"}
+                )
                 break
 
             if not hasattr(route.question_form, "title"):
                 raise ValueError(f"{route.question_form} does not have a title")
 
             answer_label = route.question_form.get_label(segment)
-            result[route.question_form.title] = answer_label
+            result.append(
+                {"question": route.question_form.title, "answer": answer_label}
+            )
             current_path += segment if index == 0 else f"/{segment}"
 
         return result
