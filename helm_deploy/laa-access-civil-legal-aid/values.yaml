@@ -73,6 +73,11 @@ envVars:
       name: maintenance-mode
       key: enabled
       optional: true
+  CLA_PUBLIC_URL:
+    configmap:
+      name: cla-public
+      key: url
+      optional: false
   CLA_PUBLIC_JWT_SECRET:
     secret:
       name: cla-public-jwt-secret
