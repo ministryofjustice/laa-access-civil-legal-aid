@@ -49,7 +49,7 @@ def check_accessibility(page: Page):
 @pytest.mark.usefixtures("live_server")
 def test_question_page_accessibility(app, page: Page):
     """As the question page URLs depend on the question routes we need get all valid category paths and test each page"""
-    all_question_pages_paths = category_traversal.get_all_valid_paths()
+    all_question_pages_paths = category_traversal.get_all_question_pages()
     for path in all_question_pages_paths:
         full_url = url_for("categories.question_page", path=path, _external=True)
         page.goto(full_url)
