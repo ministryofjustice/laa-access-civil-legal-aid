@@ -9,7 +9,7 @@ from app.categories.redirect import CheckRedirect, CheckDestination, CheckCatego
 
 
 class InitialCategoryQuestion(QuestionForm):
-    title = "Choose the problem you need help with"
+    title = "What do you need help with?"
 
     routing_logic = {
         "discrimination": DiscriminationWhereForm,
@@ -183,6 +183,20 @@ class CategoryTraversal:
         for path in all_paths:
             result = self.route_cache[path]
             if not result.is_redirect:
+                continue
+            full_paths[path] = result
+        return full_paths
+
+    def get_all_question_pages(self) -> dict[str, NavigationResult]:
+        """Generate dictionary of path components for all question pages, for the accessibility tests
+        Only includes paths that end on a question page."""
+        all_paths = self.get_all_valid_paths()
+
+        full_paths = {}
+
+        for path in all_paths:
+            result = self.route_cache[path]
+            if result.is_redirect:
                 continue
             full_paths[path] = result
         return full_paths
