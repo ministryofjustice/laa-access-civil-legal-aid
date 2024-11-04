@@ -13,7 +13,9 @@ class AreYouAtRiskOfHarmForm(QuestionForm):
 
     routing_logic = {
         "yes": CheckRedirect(
-            destination=CheckDestination.CONTACT, category=CheckCategory.DOMESTIC_ABUSE
+            destination=CheckDestination.CONTACT,
+            category=CheckCategory.DOMESTIC_ABUSE,
+            harm_flag=True,
         ),
         "no": CheckRedirect(
             destination=CheckDestination.MEANS_TEST,
@@ -37,8 +39,25 @@ class AreYouAtRiskOfHarmForm(QuestionForm):
 class DomesticAbuseTraversal(QuestionForm):
     routing_logic = {"protect-you-and-your-children": AreYouAtRiskOfHarmForm}
 
+    answer_labels = {
+        "protect-you-and-your-children": "Help to protect you and your children",
+    }
+
     title = "Domestic Abuse"
 
     @classmethod
     def valid_choices(cls):
         return ["protect-you-and-your-children"]
+
+    @classmethod
+    def get_label(cls, choice: str) -> str:
+        """Convert a user answer value to its human-readable label.
+            If there is no alternative then will fallback and return the internal value.
+
+        Args:
+            choice: The internal choice value (e.g. "asylum")
+
+        Returns:
+            The display label (e.g., "Asylum and immigration")
+        """
+        return dict(cls.answer_labels).get(choice, choice)

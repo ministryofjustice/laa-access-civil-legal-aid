@@ -40,11 +40,13 @@ class CheckRedirect:
 
     check_endpoint = "/landing"
     destination: CheckDestination = None
-    category = CheckCategory = None
+    category: CheckCategory = None
+    harm_flag: bool = False
 
-    def __init__(self, destination, category):
+    def __init__(self, destination, category, harm_flag=False):
         self.destination = destination
         self.category = category
+        self.harm_flag = harm_flag
 
     def submit_answers(self, question_answer_map):
         check_url = f"{current_app.config["CLA_PUBLIC_URL"]}{self.check_endpoint}"
@@ -53,6 +55,7 @@ class CheckRedirect:
             "answers": question_answer_map,
             "destination": self.destination,
             "category": self.category,
+            "harm_flag": self.harm_flag,
         }
 
         jwt_secret = current_app.config["CLA_PUBLIC_JWT_SECRET"]
