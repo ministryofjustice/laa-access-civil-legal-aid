@@ -8,6 +8,8 @@ exclude: # exclude matching issues
       - README.md
       - app/static/**
       - .ruff_cache
+      - node_modules/**
+      - .pytest_cache/**
   - message: Examples and data necessary for running auto-tests
     paths:
       - docs/*.html
