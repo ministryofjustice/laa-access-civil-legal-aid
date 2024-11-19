@@ -3,3 +3,4 @@ isort
 pytest-flask
 pytest-playwright
 axe-core-python
+trufflehog3==3.0.10
