@@ -16,6 +16,7 @@ on:
 
 jobs:
   trivy-image-scan:
+    name: Trivy Image Scan
     runs-on: ubuntu-latest
     permissions:
       id-token: write # This is required for requesting the JWT
@@ -52,3 +53,6 @@ jobs:
           ignore-unfixed: false
           vuln-type: 'os,library'
           severity: 'UNKNOWN,LOW,MEDIUM,CRITICAL,HIGH'
+        env:
+          TRIVY_SKIP_DB_UPDATE: true
+          TRIVY_SKIP_JAVA_DB_UPDATE: true
