@@ -27,7 +27,7 @@
 
         {{ list_item_small("Clinical negligence in babies",
              "Help if a baby has brain or nerve damage caused during pregnancy, childbirth or up to 8 weeks old.",
-             "https://checklegalaid.service.gov.uk/scope/refer/legal-adviser?category=clinneg&hlpas=no") }}
+             url_for("find-a-legal-advisor.search", category="med")) }}
 
         {{ list_item_small("Compensation for abuse, assault or neglect",
              "Includes child abuse, sexual assault, abuse of a vulnerable adult. Claims can be against a person or an organisation.",
@@ -66,7 +66,7 @@
 
         <div class="govuk-inset-text">
             <p class="govuk-heading-s">If you cannot find the right problem on this page</p>
-            <a class="govuk-link govuk-link--no-visited-state" href="{{ url_for('categories.index') }}">Find other help</a>
+            <a class="govuk-link govuk-link--no-visited-state" href={{ url_for('categories.index') }}>Find other help</a>
         </div>
     </div>
 </div>
