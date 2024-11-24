@@ -193,20 +193,6 @@ class CategoryTraversal:
             full_paths[path] = result
         return full_paths
 
-    def get_all_question_pages(self) -> dict[str, NavigationResult]:
-        """Generate dictionary of path components for all question pages, for the accessibility tests
-        Only includes paths that end on a question page."""
-        all_paths = self.get_all_valid_paths()
-
-        full_paths = {}
-
-        for path in all_paths:
-            result = self.route_cache[path]
-            if result.is_redirect:
-                continue
-            full_paths[path] = result
-        return full_paths
-
 
 # Initialize the traversal system with the initial question
 category_traversal = CategoryTraversal(initial_question=InitialCategoryQuestion)
