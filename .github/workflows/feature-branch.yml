@@ -34,7 +34,7 @@ jobs:
       ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
 
   scan-image:
-    uses: ./.github/workflows/scan-image.yml
+    uses: ./.github/workflows/trivy-image-scan.yml
     needs: build-and-push
     with:
       ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
