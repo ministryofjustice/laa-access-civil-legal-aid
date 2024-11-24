@@ -22,6 +22,6 @@ class Config(object):
     LANGUAGES = {"en": "English", "cy": "Welsh"}
     SERVICE_UNAVAILABLE = os.environ.get("MAINTENANCE_MODE", "False").lower() == "true"
     CLA_PUBLIC_URL = os.environ.get(
-        "CLA_PUBLIC_URL", "https://staging.checklegalaid.service.gov.uk"
+        "CLA_PUBLIC_URL", "https://checklegalaid.service.gov.uk"
     )
     CLA_PUBLIC_JWT_SECRET = os.environ.get("CLA_PUBLIC_JWT_SECRET")
