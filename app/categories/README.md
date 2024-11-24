@@ -32,7 +32,7 @@ To add new question
 
 Example:
 ```python
-class MyQuestionForm(QuestionForm):
+class NewQuestionForm(QuestionForm):
     title = "What type of help do you need?"
     
     routing_logic = {
@@ -63,10 +63,11 @@ class ExistingQuestionForm(QuestionForm):
 ## Testing New Questions
 
 1. Add your new question forms
-2. Initialize the traversal system
-3. Verify all paths using `get_all_valid_paths()`
+2. Update existing question forms to route to your new question
+3. Optional: Verify all paths using `get_all_valid_paths()`
 4. Test navigation through each possible path
-5. Verify back-button functionality works correctly
+5. Write Playwright tests for the new question
+6. Write tests asserting back-button functionality works correctly
 
 ### Routing Options
 
