@@ -61,7 +61,7 @@ class QuestionForm(Form):
     def valid_choices(cls):
         return [choice[0] for choice in cls.question.kwargs["choices"]]
 
-    show_or_divisor = False
+    show_or_divisor = False  # Determines whether there should be an or divisor between the second and last answer choice.
 
     submit = SubmitField(
         "Continue", widget=GovSubmitInput()
