@@ -50,7 +50,7 @@ class DomesticAbuseTraversal(QuestionForm):
         return ["protect-you-and-your-children"]
 
     @classmethod
-    def get_label(cls, choice: str) -> str:
+    def get_choice_label(cls, choice: str) -> str:
         """Convert a user answer value to its human-readable label.
             If there is no alternative then will fallback and return the internal value.
 

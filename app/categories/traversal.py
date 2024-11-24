@@ -26,7 +26,7 @@ class InitialCategoryQuestion(QuestionForm):
     }
 
     @classmethod
-    def get_label(cls, choice: str) -> str:
+    def get_choice_label(cls, choice: str) -> str:
         """Convert a category value to its human-readable label.
             If there is no alternative then will fallback and return the internal value.
 
@@ -138,7 +138,7 @@ class CategoryTraversal:
             if not hasattr(route.question_form, "title"):
                 raise ValueError(f"{route.question_form} does not have a title")
 
-            answer_label = route.question_form.get_label(segment)
+            answer_label = route.question_form.get_choice_label(segment)
             result.append(
                 {"question": route.question_form.title, "answer": answer_label}
             )

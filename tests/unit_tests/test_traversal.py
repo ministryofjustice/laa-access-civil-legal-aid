@@ -158,9 +158,9 @@ def test_category_traversal_navigation_result_types(
 
 
 def test_initial_category_question_get_label(test_initial_form):
-    assert test_initial_form.get_label("category_a") == "Category A Label"
-    assert test_initial_form.get_label("category_b") == "Category B Label"
-    assert test_initial_form.get_label("unknown") == "unknown"
+    assert test_initial_form.get_choice_label("category_a") == "Category A Label"
+    assert test_initial_form.get_choice_label("category_b") == "Category B Label"
+    assert test_initial_form.get_choice_label("unknown") == "unknown"
 
 
 def test_initial_category_question_valid_choices(test_initial_form):
