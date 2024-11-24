@@ -15,7 +15,7 @@ class InitialCategoryQuestion(QuestionForm):
         "discrimination": DiscriminationWhereForm,
         "domestic-abuse": DomesticAbuseTraversal,
         "clinical-negligence": CheckRedirect(
-            CheckDestination.FALA, CheckCategory.CLINICAL_NEGLIGENCE
+            CheckDestination.FALA, category=CheckCategory.CLINICAL_NEGLIGENCE
         ),
     }
 
