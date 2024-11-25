@@ -1,5 +1,6 @@
 from wtforms.validators import ValidationError
 from app.find_a_legal_advisor.postcode_lookup import get_postcode_region
+from requests.exceptions import ConnectionError
 
 
 class ValidRegionPostcode:
@@ -39,5 +40,9 @@ class ValidRegionPostcode:
         except ValidationError:
             # Re-raise validation errors
             raise
+        except ConnectionError:
+            raise ValidationError(
+                "This service is not available at the moment, try again later"
+            )
         except Exception:
             raise ValidationError("Postcode not found")
