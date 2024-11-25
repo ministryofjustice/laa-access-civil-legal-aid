@@ -13,7 +13,7 @@ Create a virtual environment and install the python dependencies:
 ```shell
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.in -r requirements_dev.in
+pip install -r requirements/generated/requirements-development.txt
 ```
 
 ### Assets setup
