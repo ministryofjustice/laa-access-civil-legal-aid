@@ -33,4 +33,4 @@ def get_postcode_region(postcode: str) -> str:
         if "guernsey" in postcode_info["nhs_ha"].lower():
             region = "Guernsey"
 
-    return region
+    return region.strip()
