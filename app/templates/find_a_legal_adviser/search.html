@@ -43,7 +43,10 @@
             } ) }}
 
             {{ form.category }}
-            {{ form.secondary_category }}
+            {% if form.secondary_category.data %}
+                {{ form.secondary_category }}
+            {% else %}
+            {% endif %}
 
             {{ govukButton({
                 "text": "Search",
