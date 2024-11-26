@@ -2,6 +2,7 @@ import pytest
 from playwright.sync_api import Page, expect
 from typing import Dict, Optional
 from flask import url_for
+import re
 
 CATEGORIES = [
     {"code": "MOSL", "name": "Modern slavery", "info_text": None},
@@ -67,3 +68,42 @@ class TestLegalAdvisorCategories:
         expect(page.get_by_text(f"For {category['name'].lower()}")).to_be_visible()
         if category["info_text"]:
             expect(page.get_by_text(category["info_text"], exact=False)).to_be_visible()
+
+
+@pytest.mark.usefixtures("live_server")
+class TestCategoriesURL:
+    def test_multi_category_url(self, page: Page) -> None:
+        # Select the mental health category
+        page.get_by_role("link", name="Mental capacity, mental health").click()
+        expect(page.get_by_text("For mental health")).to_be_visible()
+
+        # Get the url and assert there are 2 categories
+        expect(page).to_have_url(re.compile(".*category=mhe&secondary_category=com*.*"))
+
+        # Fill in postcode and search
+        page.get_by_label("Postcode").fill("SW1A")
+        page.get_by_role("button", name="Search").click()
+
+        # Verify category is displayed in the next page
+        expect(page.get_by_text("For mental health")).to_be_visible()
+        expect(page).to_have_url(re.compile(".*category=mhe&secondary_category=com*.*"))
+
+    def test_single_category_url(self, page: Page) -> None:
+        # Select more problems and clinical negligence
+        page.get_by_role("button", name="More problems covered by legal aid").click()
+        expect(
+            page.get_by_role("link", name="Clinical negligence in babies")
+        ).to_be_visible()
+        page.get_by_role("link", name="Clinical negligence in babies").click()
+        expect(page.get_by_text("For clinical negligence")).to_be_visible()
+
+        # Get the url and assert there is 1 category
+        expect(page).to_have_url(re.compile(".*category=med"))
+
+        # Fill in postcode and search
+        page.get_by_label("Postcode").fill("SW1A")
+        page.get_by_role("button", name="Search").click()
+
+        # Verify category is displayed in the next page
+        expect(page.get_by_text("For clinical negligenc")).to_be_visible()
+        expect(page).to_have_url(re.compile(".*category=med"))
