@@ -1,0 +1,27 @@
+{# This page was built as a prototype #}
+{% extends "base.html" %}
+{%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
+{%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
+{%- from 'categories/components/list-item.html' import list_item, list_item_small -%}
+
+{% block pageTitle %}{% trans %}Housing {% endtrans %} - {% trans %}GOV.UK{% endtrans %}{% endblock %}
+
+{% block beforeContent%}
+{{ super() }}
+{{ govukBackLink({
+    'href': url_for('categories.housing.index'),
+    'text': "Back"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+<h2>Delete me and replace with a session store and redirect to means</h2>
+{{ super() }}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">{% trans %}Problems with council housing{% endtrans %}</h1>
+    </div>
+</div>
+{% endblock %}
