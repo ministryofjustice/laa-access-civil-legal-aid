@@ -1,8 +1,7 @@
 from app.find_a_legal_advisor import bp
 from flask import render_template, request
-
 from app.find_a_legal_advisor.forms import FindLegalAdviserForm
-from app.find_a_legal_advisor.laalaa import laalaa_search
+from app.find_a_legal_advisor.laalaa import laalaa_search, is_valid_category_code
 from app.find_a_legal_advisor.utils import get_pagination_data
 
 
@@ -14,6 +13,8 @@ def search():
     secondary_category: str | None = request.args.get(
         "secondary_category", default=None, type=str
     )
+    if not is_valid_category_code(category):
+        category = None
 
     if "postcode" in request.args and form.validate():
         postcode: str | None = form.postcode.data
@@ -30,8 +31,6 @@ def search():
         secondary_category=secondary_category,
     )
 
-
-def result_page(
     postcode: str,
     category: str = None,
     secondary_category: str = None,

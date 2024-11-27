@@ -14,6 +14,7 @@ class FindLegalAdviserForm(Form):
     category = HiddenField()
     secondary_category = HiddenField()
 
+
     def __init__(self, formdata=None, **kwargs):
         super().__init__(formdata, **kwargs)
         self.postcode_region = (

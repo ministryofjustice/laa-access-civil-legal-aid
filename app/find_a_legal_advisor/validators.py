@@ -1,5 +1,5 @@
 from wtforms.validators import ValidationError
-from app.find_a_legal_advisor.postcode_lookup import get_postcode_region
+from app.find_a_legal_advisor.postcodes import get_postcode_region
 from requests.exceptions import ConnectionError
 
 
@@ -26,19 +26,13 @@ class ValidRegionPostcode:
 
             # Handle case sensitivity
             if isinstance(region, str):
-                region = region.strip()
-
-                # Check against valid regions (case-insensitive)
-                if not any(
-                    region.lower() == valid.lower() for valid in self.valid_regions
-                ):
+                if region not in self.valid_regions:
                     message = self.region_messages.get(region, self.default_message)
                     raise ValidationError(message)
             else:
                 raise ValidationError("Postcode not found")
 
         except ValidationError:
-            # Re-raise validation errors
             raise
         except ConnectionError:
             raise ValidationError(
