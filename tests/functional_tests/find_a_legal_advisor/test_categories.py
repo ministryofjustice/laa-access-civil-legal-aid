@@ -69,7 +69,7 @@ class TestLegalAdvisorCategories:
         if category["info_text"]:
             expect(page.get_by_text(category["info_text"], exact=False)).to_be_visible()
 
-            
+
 @pytest.mark.usefixtures("live_server")
 class TestCategoriesURL:
     def test_multi_category_url(self, page: Page) -> None:
