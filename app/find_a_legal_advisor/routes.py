@@ -13,6 +13,7 @@ def search():
     secondary_category: str | None = request.args.get(
         "secondary_category", default=None, type=str
     )
+
     if not is_valid_category_code(category):
         category = None
 
@@ -25,12 +26,11 @@ def search():
         )
 
     return render_template(
-        "find_a_legal_adviser/search.html",
-        form=form,
-        category=category,
-        secondary_category=secondary_category,
+        "find_a_legal_adviser/search.html", form=form, category=category
     )
 
+
+def result_page(
     postcode: str,
     category: str = None,
     secondary_category: str = None,
