@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton -%}
+{%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
+{%- from 'find_a_legal_adviser/components/adviser-list-item.html' import adviserListItem -%}
+{%- from 'find_a_legal_adviser/components/category-info.html' import categoryInformation -%}
+{%- from 'find_a_legal_adviser/components/category-info.html' import outOfBoundsWarning -%}
+{%- from 'find_a_legal_adviser/components/page-header.html' import resultsPageHeader -%}
+{%- from 'find_a_legal_adviser/components/instructions.html' import resultInstructions -%}
+{%- from 'govuk_frontend_jinja/components/pagination/macro.html' import govukPagination -%}
+{%- from 'categories/components/list-item.html' import list_item, list_item_small, list_item_arrow -%}
+
+{% block pageTitle %}Contact a legal adviser - GOV.UK{% endblock %}
+
+{% block beforeContent%}
+    {{ super() }}
+    {{ govukBackLink({
+        'href': url_for('find-a-legal-advisor.search', category=category),
+        'text': "Back"
+    }) }}
+{% endblock %}
+
+{% block content %}
+
+{{ super() }}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        {{ resultsPageHeader(category) }}
+
+        {{ outOfBoundsWarning(postcode_region) }}
+
+        {{ resultInstructions(category)}}
+
+        {{ categoryInformation(category) }}
+
+        <p class="govuk-body">Results in order of closeness to <b>{{data.origin.postcode}}</b></p>
+
+        {% for item in data.results %}
+            {{ adviserListItem(item, data.origin) }}
+        {% endfor %}
+
+        <br>
+        {{ govukPagination(params=pagination_data) }}
+    </div>
+</div>
+
+
+{% endblock %}

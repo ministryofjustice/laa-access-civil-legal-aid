@@ -35,7 +35,7 @@ if Config.SENTRY_DSN:
 
 
 def create_app(config_class=Config):
-    app = Flask(__name__, static_url_path="/assets", static_folder="static/dist")
+    app: Flask = Flask(__name__, static_url_path="/assets", static_folder="static/dist")
     app.url_map.strict_slashes = False  # This allows www.host.gov.uk/category to be routed to www.host.gov.uk/category/
     app.config.from_object(config_class)
     app.jinja_env.lstrip_blocks = True
@@ -119,8 +119,10 @@ def create_app(config_class=Config):
     # Register blueprints
     from app.main import bp as main_bp
     from app.categories import bp as categories_bp
+    from app.find_a_legal_advisor import bp as fala_bp
 
     app.register_blueprint(main_bp)
     app.register_blueprint(categories_bp)
+    app.register_blueprint(fala_bp)
 
     return app

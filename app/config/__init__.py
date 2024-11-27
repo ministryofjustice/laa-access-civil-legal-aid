@@ -21,3 +21,8 @@ class Config(object):
     SENTRY_DSN = os.environ.get("SENTRY_DSN")
     LANGUAGES = {"en": "English", "cy": "Welsh"}
     SERVICE_UNAVAILABLE = os.environ.get("MAINTENANCE_MODE", "False").lower() == "true"
+    LAALAA_URL = os.environ.get(
+        "LAALAA_URL",
+        "https://laa-legal-adviser-api-production.cloud-platform.service.justice.gov.uk",
+    )
+    POSTCODES_IO_URL = os.environ.get("POSTCODES_IO_URL", "https://api.postcodes.io")
