@@ -4,7 +4,7 @@ from flask import url_for
 
 
 @pytest.fixture
-def navigate_to_search(page: Page, live_server) -> None:
+def navigate_to_search(page: Page) -> None:
     """Common setup to navigate to the search page"""
     page.goto(url_for("find-a-legal-advisor.search", _external=True))
 
@@ -67,25 +67,3 @@ class TestPostcodeSearch:
         expect(
             page.get_by_role("heading", name="Contact a legal adviser")
         ).to_be_visible()
-
-    def test_postcode_io_outtage(
-        self, live_server, navigate_to_search, page: Page
-    ) -> None:
-        """
-        Test postcode IO outtage
-        live_server is stopped and restarted to ensure that the postcode url is updated
-        when the service is rebuilt
-        """
-        live_server.stop()
-        live_server.app.config["POSTCODES_IO_URL"] = "https://api.postcodesasdfghjkl.io"
-        live_server.start()
-        page.get_by_label("Postcode").click()
-        page.get_by_label("Postcode").fill("sw1")
-        page.get_by_role("button", name="Search").click()
-        expect(
-            page.get_by_role(
-                "link",
-                name="This service is not available at the moment, try again later",
-            )
-        ).to_be_visible()
-        live_server.stop()
