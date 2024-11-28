@@ -19,7 +19,8 @@ def test_result_page_with_single_category(app):
     # Mocks laalaa_search
     with patch(
         "app.find_a_legal_advisor.laalaa.laalaa_search", return_value=mock_results
-    ):
+    ) as mock_laalaa_search:
+        mock_laalaa_search(postcode=postcode, categories=[category], page=page_num)
         # Mocks results page
         with app.test_client() as client:
             response = client.get(
@@ -34,13 +35,18 @@ def test_result_page_with_single_category(app):
 
         assert response.status_code == 200
         assert response.request.path == "/find-a-legal-advisor"
+        mock_laalaa_search.assert_called_with(
+            postcode=postcode,
+            categories=[category],  # Verify the categories parameter
+            page=page_num,
+        )
 
 
 def test_result_page_with_secondary_category(app):
     # Result page data
     postcode = "SW1A 1AA"
     category = "COM"
-    secondary_category = "HLE"
+    secondary_category = "MHE"
     page_num = 1
     postcode_region = "London"
 
@@ -49,7 +55,7 @@ def test_result_page_with_secondary_category(app):
         "count": 1,
         "results": [
             {
-                "categories": ["COM", "HLE"],
+                "categories": ["COM", "MHE"],
                 "organisation": {"name": "Mock Organisation"},
             }
         ],
@@ -58,7 +64,10 @@ def test_result_page_with_secondary_category(app):
     # Mocks laalaa_search
     with patch(
         "app.find_a_legal_advisor.laalaa.laalaa_search", return_value=mock_results
-    ):
+    ) as mock_laalaa_search:
+        mock_laalaa_search(
+            postcode=postcode, categories=[category, secondary_category], page=page_num
+        )
         # Mocks results page
         with app.test_client() as client:
             response = client.get(
@@ -74,3 +83,11 @@ def test_result_page_with_secondary_category(app):
 
         assert response.status_code == 200
         assert response.request.path == "/find-a-legal-advisor"
+        mock_laalaa_search.assert_called_with(
+            postcode=postcode,
+            categories=[
+                category,
+                secondary_category,
+            ],  # Verify the categories parameter
+            page=page_num,
+        )

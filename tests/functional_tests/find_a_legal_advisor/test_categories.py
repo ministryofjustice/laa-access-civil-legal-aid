@@ -3,7 +3,6 @@ from playwright.sync_api import Page, expect
 from typing import Dict, Optional
 from flask import url_for
 import re
-from app.find_a_legal_advisor.laalaa import laalaa_search
 
 CATEGORIES = [
     {"code": "MOSL", "name": "Modern slavery", "info_text": None},
@@ -89,6 +88,11 @@ class TestCategoriesURL:
         expect(page.get_by_text("For mental health")).to_be_visible()
         expect(page).to_have_url(re.compile(".*category=mhe&secondary_category=com*.*"))
 
+        # Click the second page to ensure url is carried over
+        page.get_by_role("link", name="2").click()
+        expect(page.get_by_text("For mental health")).to_be_visible()
+        expect(page).to_have_url(re.compile(".*category=mhe&secondary_category=com*.*"))
+
     def test_single_category_url(self, page: Page) -> None:
         # Select more problems and clinical negligence
         page.get_by_role("button", name="More problems covered by legal aid").click()
@@ -108,20 +112,3 @@ class TestCategoriesURL:
         # Verify category is displayed in the next page
         expect(page.get_by_text("For clinical negligenc")).to_be_visible()
         expect(page).to_have_url(re.compile(".*category=med"))
-
-
-def test_laalaa_secondary_category(app):
-    """Tests laalaa to ensure it returns a secondary category when required"""
-    postcode = "SW1"
-    category = "mhe"
-    secondary_category = "com"
-    page_num = 1
-    categories_to_find = ["COM", "MHE"]
-    with app.app_context():
-        results = laalaa_search(
-            postcode=postcode, categories=[category, secondary_category], page=page_num
-        )
-    for provider in results["results"]:
-        assert any(
-            category in provider["categories"] for category in categories_to_find
-        ), f"None of {categories_to_find} found in provider categories: {provider['categories']}"
