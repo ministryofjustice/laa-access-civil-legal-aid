@@ -10,6 +10,7 @@ exclude: # exclude matching issues
       - .ruff_cache
       - node_modules/**
       - .pytest_cache/**
+      - .idea/**
   - message: Examples and data necessary for running auto-tests
     paths:
       - docs/*.html
