@@ -42,7 +42,11 @@ def result_page(
     )
 
     pagination_data = get_pagination_data(
-        results, postcode=postcode, category=category, current_page_num=page_num
+        results,
+        postcode=postcode,
+        category=category,
+        secondary_category=secondary_category,
+        current_page_num=page_num,
     )
 
     return render_template(

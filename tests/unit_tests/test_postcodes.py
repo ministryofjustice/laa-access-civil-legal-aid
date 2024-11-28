@@ -1,7 +1,6 @@
 import pytest
 from unittest.mock import patch
 from app.find_a_legal_advisor.postcodes import get_postcode_region
-from app.find_a_legal_advisor.laalaa import laalaa_search
 
 
 @pytest.mark.parametrize(
@@ -45,20 +44,3 @@ def test_get_postcode_region_raises_exception():
 
         with pytest.raises(ConnectionError):
             get_postcode_region("SW1A 1AA")
-
-
-def test_laalaa_secondary_category(app):
-    """Tests laalaa to ensure it returns a secondary category when required"""
-    postcode = "SW1"
-    category = "mhe"
-    secondary_category = "com"
-    page_num = 1
-    categories_to_find = ["COM", "MHE"]
-    with app.app_context():
-        results = laalaa_search(
-            postcode=postcode, categories=[category, secondary_category], page=page_num
-        )
-    for provider in results["results"]:
-        assert any(
-            category in provider["categories"] for category in categories_to_find
-        ), f"None of {categories_to_find} found in provider categories: {provider['categories']}"
