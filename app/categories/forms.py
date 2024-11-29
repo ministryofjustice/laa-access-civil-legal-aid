@@ -19,6 +19,13 @@ class QuestionForm(Form):
         "no": "categories.out_of_scope",
     }
 
+    # Onward page logic, subclasses should overwrite this with their own mapping
+    # This routes the user to the given endpoint based on their answer
+    next_step_mapping = {
+        "yes": "categories.in_scope",
+        "no": "categories.out_of_scope",
+    }
+
     question = RadioField(
         title,  #  The question title should be the label of the form
         widget=CategoryRadioInput(

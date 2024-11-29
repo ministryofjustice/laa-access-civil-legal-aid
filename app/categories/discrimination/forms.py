@@ -45,6 +45,7 @@ class DiscriminationWhereForm(DiscriminationQuestionForm):
         ],
     )
 
+    show_or_divisor = True
 
 class DiscriminationWhyForm(DiscriminationQuestionForm):
     title = "Why were you treated differently?"
@@ -82,3 +83,5 @@ class DiscriminationWhyForm(DiscriminationQuestionForm):
             ("none", "None of the above"),
         ],
     )
+
+    show_or_divisor = True
