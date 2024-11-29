@@ -42,7 +42,12 @@
                 "classes": "govuk-input--width-10 postcode-search",
             } ) }}
 
-            {{ form.category }}
+            {% if form.category.data %}
+                {{ form.category }}
+            {% endif %}
+            {% if form.secondary_category.data %}
+                {{ form.secondary_category }}
+            {% endif %}
 
             {{ govukButton({
                 "text": "Search",

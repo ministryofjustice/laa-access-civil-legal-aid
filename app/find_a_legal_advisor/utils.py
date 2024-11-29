@@ -10,6 +10,7 @@ def get_pagination_data(
     current_page_num: int = 1,
     postcode: str | None = None,
     category: str | None = None,
+    secondary_category: str | None = None,
 ) -> dict:
     pagination_data = {}
 
@@ -23,6 +24,7 @@ def get_pagination_data(
                 "find-a-legal-advisor.search",
                 postcode=postcode,
                 category=category,
+                secondary_category=secondary_category,
                 page=page_num,
             ),
         }
@@ -36,6 +38,7 @@ def get_pagination_data(
                 "find-a-legal-advisor.search",
                 postcode=postcode,
                 category=category,
+                secondary_category=secondary_category,
                 page=current_page_num - 1,
             )
         }
@@ -46,6 +49,7 @@ def get_pagination_data(
                 "find-a-legal-advisor.search",
                 postcode=postcode,
                 category=category,
+                secondary_category=secondary_category,
                 page=current_page_num + 1,
             )
         }

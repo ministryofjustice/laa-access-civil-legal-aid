@@ -12,6 +12,7 @@ class FindLegalAdviserForm(Form):
         widget=GovTextInput(),
     )
     category = HiddenField()
+    secondary_category = HiddenField()
 
     def __init__(self, formdata=None, **kwargs):
         super().__init__(formdata, **kwargs)

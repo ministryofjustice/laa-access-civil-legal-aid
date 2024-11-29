@@ -13,8 +13,7 @@ class TestConfig(Config):
 
 @pytest.fixture(scope="session")
 def app():
-    app = create_app(TestConfig)
-    yield app
+    return create_app(TestConfig)
 
 
 @pytest.fixture()

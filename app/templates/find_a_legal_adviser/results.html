@@ -15,7 +15,7 @@
 {% block beforeContent%}
     {{ super() }}
     {{ govukBackLink({
-        'href': url_for('find-a-legal-advisor.search', category=category),
+        'href': url_for('find-a-legal-advisor.search', category=category, secondary_category=secondary_category),
         'text': "Back"
     }) }}
 {% endblock %}

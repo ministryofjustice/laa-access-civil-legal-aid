@@ -25,8 +25,7 @@ class TestConfig(Config):
 
 @pytest.fixture(scope="session")
 def app(config=TestConfig):
-    app = create_app(config)
-    yield app
+    return create_app(config)
 
 
 @pytest.fixture()
