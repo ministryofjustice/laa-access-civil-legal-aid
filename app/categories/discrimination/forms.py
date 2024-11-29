@@ -52,15 +52,15 @@ class DiscriminationWhyForm(DiscriminationQuestionForm):
     title = "Why were you treated differently?"
 
     next_step_mapping = {
-        "race": "categories.in_scope",
-        "sex": "categories.in_scope",
-        "disability": "categories.in_scope",
-        "religion": "categories.in_scope",
-        "age": "categories.in_scope",
-        "sexualorientation": "categories.in_scope",
-        "gender": "categories.in_scope",
-        "pregnancy": "categories.in_scope",
-        "none": "categories.alternative_help",
+        "race": "categories.results.in_scope",
+        "sex": "categories.results.in_scope",
+        "disability": "categories.results.in_scope",
+        "religion": "categories.results.in_scope",
+        "age": "categories.results.in_scope",
+        "sexualorientation": "categories.results.in_scope",
+        "gender": "categories.results.in_scope",
+        "pregnancy": "categories.results.in_scope",
+        "none": "categories.results.alternative_help",
     }
 
     question = RadioField(

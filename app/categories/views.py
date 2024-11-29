@@ -8,7 +8,7 @@ from app.session import set_category_question_answer, get_category_question_answ
 class CategoryPage(View):
     template: str = None
 
-    def __init__(self, template):
+    def __init__(self, template, *args, **kwargs):
         self.template = template
 
     def dispatch_request(self):
