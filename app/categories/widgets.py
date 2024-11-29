@@ -29,5 +29,18 @@ class CategoryRadioInput(GovRadioInput):
                 if item.get("value") == field.data:
                     item["checked"] = True
 
+        # Get or initialize the items list
+        items = params.get("items", [])
+
+        # Add divider if enabled and there are enough items
+        if self.show_divider and len(items) >= 2:
+            items[-2]["divider"] = "or"
+
+        # Handle pre-selected answer if present
+        if field.data:
+            for item in items:
+                if item.get("value") == field.data:
+                    item["checked"] = True
+
         params["fieldset"]["legend"]["classes"] = label_class
         return params

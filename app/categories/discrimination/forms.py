@@ -83,5 +83,3 @@ class DiscriminationWhyForm(DiscriminationQuestionForm):
             ("none", "None of the above"),
         ],
     )
-
-    show_or_divisor = True
