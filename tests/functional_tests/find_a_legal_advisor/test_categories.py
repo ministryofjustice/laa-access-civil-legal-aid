@@ -110,5 +110,5 @@ class TestCategoriesURL:
         page.get_by_role("button", name="Search").click()
 
         # Verify category is displayed in the next page
-        expect(page.get_by_text("For clinical negligenc")).to_be_visible()
+        expect(page.get_by_text("For clinical negligence")).to_be_visible()
         expect(page).to_have_url(re.compile(".*category=med"))
