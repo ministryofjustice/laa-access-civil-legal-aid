@@ -22,7 +22,7 @@ class QuestionForm(Form):
     # Onward page logic, subclasses should overwrite this with their own mapping
     # This routes the user to the given endpoint based on their answer
     next_step_mapping = {
-        "yes": "categories.in_scope",
+        "yes": "categories.results.in_scope",
         "no": "categories.out_of_scope",
     }
 
