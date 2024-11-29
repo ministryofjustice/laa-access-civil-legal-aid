@@ -1,13 +1,26 @@
-from app.categories.forms import QuestionForm
 from wtforms import RadioField
 from app.categories.widgets import CategoryRadioInput
+from app.categories.forms import QuestionForm
 from wtforms.validators import InputRequired
 
 
-class DiscriminationWhereForm(QuestionForm):
+class DiscriminationQuestionForm(QuestionForm):
     category = "Discrimination"
 
+
+class DiscriminationWhereForm(DiscriminationQuestionForm):
     title = "Where did the discrimination happen?"
+
+    next_step_mapping = {
+        "work": "categories.discrimination.why",
+        "school": "categories.discrimination.why",
+        "business": "categories.discrimination.why",
+        "healthcare": "categories.discrimination.why",
+        "housing": "categories.discrimination.why",
+        "public": "categories.discrimination.why",
+        "club": "categories.discrimination.why",
+        "notsure": "categories.alternative_help",
+    }
 
     question = RadioField(
         title,
@@ -32,11 +45,23 @@ class DiscriminationWhereForm(QuestionForm):
         ],
     )
 
+    show_or_divisor = True
 
-class DiscriminationWhyForm(QuestionForm):
-    category = "Discrimination"
 
+class DiscriminationWhyForm(DiscriminationQuestionForm):
     title = "Why were you treated differently?"
+
+    next_step_mapping = {
+        "race": "categories.in_scope",
+        "sex": "categories.in_scope",
+        "disability": "categories.in_scope",
+        "religion": "categories.in_scope",
+        "age": "categories.in_scope",
+        "sexualorientation": "categories.in_scope",
+        "gender": "categories.in_scope",
+        "pregnancy": "categories.in_scope",
+        "none": "categories.alternative_help",
+    }
 
     question = RadioField(
         title,
@@ -59,3 +84,5 @@ class DiscriminationWhyForm(QuestionForm):
             ("none", "None of the above"),
         ],
     )
+
+    show_or_divisor = True
