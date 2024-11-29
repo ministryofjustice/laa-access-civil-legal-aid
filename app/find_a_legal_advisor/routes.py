@@ -17,6 +17,9 @@ def search():
     if not is_valid_category_code(category):
         category = None
 
+    if not is_valid_category_code(secondary_category):
+        secondary_category = None
+
     if "postcode" in request.args and form.validate():
         postcode: str | None = form.postcode.data
         page_num: int = request.args.get("page", 1, type=int)
