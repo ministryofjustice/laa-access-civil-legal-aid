@@ -12,7 +12,6 @@ import sentry_sdk
 
 from app.config import Config
 
-
 compress = Compress()
 csrf = CSRFProtect()
 limiter = Limiter(get_remote_address, default_limits=["2 per second", "60 per minute"])

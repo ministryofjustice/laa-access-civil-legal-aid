@@ -9,6 +9,11 @@ class AreYouAtRiskOfHarmForm(QuestionForm):
 
     title = "Are you or your children at immediate risk of harm?"
 
+    next_step_mapping = {
+        "yes": "categories.in_scope",
+        "no": "categories.in_scope",
+    }
+
     question = RadioField(
         title,
         widget=CategoryRadioInput(),
