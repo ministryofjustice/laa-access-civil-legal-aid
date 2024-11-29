@@ -1,11 +1,11 @@
-from app.find_a_legal_advisor import bp
+from app.find_a_legal_adviser import bp
 from flask import render_template, request
-from app.find_a_legal_advisor.forms import FindLegalAdviserForm
-from app.find_a_legal_advisor.laalaa import laalaa_search, is_valid_category_code
-from app.find_a_legal_advisor.utils import get_pagination_data
+from app.find_a_legal_adviser.forms import FindLegalAdviserForm
+from app.find_a_legal_adviser.laalaa import laalaa_search, is_valid_category_code
+from app.find_a_legal_adviser.utils import get_pagination_data
 
 
-@bp.get("/find-a-legal-advisor")
+@bp.get("/find-a-legal-adviser")
 def search():
     form = FindLegalAdviserForm(request.args)
 

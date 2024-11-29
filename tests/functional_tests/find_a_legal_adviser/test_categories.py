@@ -38,7 +38,7 @@ CATEGORIES = [
 
 
 @pytest.mark.usefixtures("live_server")
-class TestLegalAdvisorCategories:
+class TestLegalAdviserCategories:
     @pytest.mark.parametrize("category", CATEGORIES)
     def test_category_search(
         self, page: Page, category: Dict[str, Optional[str]]
@@ -46,7 +46,7 @@ class TestLegalAdvisorCategories:
         """Test that each category shows the correct header text and additional information if applicable"""
         page.goto(
             url_for(
-                "find-a-legal-advisor.search",
+                "find-a-legal-adviser.search",
                 category=category["code"].lower(),
                 _external=True,
             )

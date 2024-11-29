@@ -1,6 +1,6 @@
-# Mini FALA (Find a Legal Advisor)
+# Mini FALA (Find a Legal Adviser)
 
-This surfaces a list of legal aid providers from the Legal Aid Agency Legal Advisor API (LAALAA).
+This surfaces a list of legal aid providers from the Legal Aid Agency Legal Adviser API (LAALAA).
 
 If the user is deemed out of scope for Civil Legal Advice, but in-scope for Civil Legal Aid they will be direted to the
 mini FALA search page with the category pre-populated in the query string.

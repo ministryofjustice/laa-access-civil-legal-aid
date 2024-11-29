@@ -36,7 +36,7 @@ def get_category_name(category_code: str):
     Returns:
         str: The corresponding category name if found, None if not found
     """
-    from app.find_a_legal_advisor import (
+    from app.find_a_legal_adviser import (
         bp,
     )  # We import this here as the blueprint needs to be initialised to contain category information
 
@@ -50,7 +50,7 @@ def get_category_name(category_code: str):
 
 
 def is_valid_category_code(category_code: str | None):
-    from app.find_a_legal_advisor import bp
+    from app.find_a_legal_adviser import bp
 
     if not isinstance(category_code, str):
         return False

@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch
-from app.find_a_legal_advisor.postcodes import get_postcode_region
+from app.find_a_legal_adviser.postcodes import get_postcode_region
 
 
 @pytest.mark.parametrize(

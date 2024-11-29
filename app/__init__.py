@@ -118,7 +118,7 @@ def create_app(config_class=Config):
     # Register blueprints
     from app.main import bp as main_bp
     from app.categories import bp as categories_bp
-    from app.find_a_legal_advisor import bp as fala_bp
+    from app.find_a_legal_adviser import bp as fala_bp
 
     app.register_blueprint(main_bp)
     app.register_blueprint(categories_bp)

@@ -24,7 +24,7 @@ def test_result_page_with_single_category(app):
         # Mocks results page
         with app.test_client() as client:
             response = client.get(
-                "/find-a-legal-advisor",
+                "/find-a-legal-adviser",
                 query_string={
                     "category": category,
                     "postcode": postcode,
@@ -34,7 +34,7 @@ def test_result_page_with_single_category(app):
             )
 
         assert response.status_code == 200
-        assert response.request.path == "/find-a-legal-advisor"
+        assert response.request.path == "/find-a-legal-adviser"
         mock_laalaa_search.assert_called_with(
             postcode=postcode,
             categories=[category],  # Verify the categories parameter
@@ -71,7 +71,7 @@ def test_result_page_with_secondary_category(app):
         # Mocks results page
         with app.test_client() as client:
             response = client.get(
-                "/find-a-legal-advisor",
+                "/find-a-legal-adviser",
                 query_string={
                     "category": category,
                     "secondary_category": secondary_category,
@@ -82,7 +82,7 @@ def test_result_page_with_secondary_category(app):
             )
 
         assert response.status_code == 200
-        assert response.request.path == "/find-a-legal-advisor"
+        assert response.request.path == "/find-a-legal-adviser"
         mock_laalaa_search.assert_called_with(
             postcode=postcode,
             categories=[
