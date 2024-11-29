@@ -29,11 +29,7 @@
 
         <form action="" method="get" novalidate>
 
-            {% if items %}
-                {{ form.question(params={'items': items }) }}
-            {% else %}
-                {{ form.question() }}
-            {% endif %}
+            {{ form.question() }}
 
             {{ form.submit }}
         </form>

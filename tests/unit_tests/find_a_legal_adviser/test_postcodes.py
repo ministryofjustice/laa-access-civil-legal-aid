@@ -26,7 +26,7 @@ from app.find_a_legal_advisor.postcodes import get_postcode_region
     ],
 )
 def test_get_postcode_region(postcode, mock_return, expected_region):
-    with patch("app.find_a_legal_advisor.postcodes.postcode_lookup") as mock_lookup:
+    with patch("app.find_a_legal_adviser.postcodes.postcode_lookup") as mock_lookup:
         mock_lookup.return_value = mock_return
         result = get_postcode_region(postcode)
 
@@ -39,7 +39,7 @@ def test_get_postcode_region(postcode, mock_return, expected_region):
 
 def test_get_postcode_region_raises_exception():
     """Test that exceptions from postcode_lookup are propagated correctly"""
-    with patch("app.find_a_legal_advisor.postcodes.postcode_lookup") as mock_lookup:
+    with patch("app.find_a_legal_adviser.postcodes.postcode_lookup") as mock_lookup:
         mock_lookup.side_effect = ConnectionError("API Error")
 
         with pytest.raises(ConnectionError):

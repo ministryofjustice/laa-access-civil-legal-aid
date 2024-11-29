@@ -1,11 +1,13 @@
 from flask import session
 
 
-def set_category_question_answer(question: str, answer: str, category: str) -> None:
+def set_category_question_answer(
+    question_title: str, answer: str, category: str
+) -> None:
     """Store a question-answer pair with the question category in the session.
 
     Args:
-        question: The question text
+        question_title: The question text
         answer: The answer text
         category: The category name
 
@@ -18,9 +20,9 @@ def set_category_question_answer(question: str, answer: str, category: str) -> N
     answers: list[dict[str, str]] = session["category_answers"]
 
     # Remove existing entry if present
-    answers = [entry for entry in answers if entry["question"] != question]
+    answers = [entry for entry in answers if entry["question"] != question_title]
 
-    answers.append({"question": question, "answer": answer, "category": category})
+    answers.append({"question": question_title, "answer": answer, "category": category})
 
     session["category_answers"] = answers
 

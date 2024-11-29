@@ -24,7 +24,7 @@ class DiscriminationWhereForm(DiscriminationQuestionForm):
 
     question = RadioField(
         title,
-        widget=CategoryRadioInput(),
+        widget=CategoryRadioInput(show_divider=True),
         validators=[InputRequired(message="Select where the discrimination happened")],
         choices=[
             ("work", "Work - including colleagues, employer or employment agency"),
@@ -45,8 +45,6 @@ class DiscriminationWhereForm(DiscriminationQuestionForm):
         ],
     )
 
-    show_or_divisor = True
-
 
 class DiscriminationWhyForm(DiscriminationQuestionForm):
     title = "Why were you treated differently?"
@@ -65,7 +63,7 @@ class DiscriminationWhyForm(DiscriminationQuestionForm):
 
     question = RadioField(
         title,
-        widget=CategoryRadioInput(),
+        widget=CategoryRadioInput(show_divider=True),
         validators=[InputRequired(message="Select why you were treated differently")],
         choices=[
             ("race", "Race, colour of skin, ethnicity"),
@@ -84,5 +82,3 @@ class DiscriminationWhyForm(DiscriminationQuestionForm):
             ("none", "None of the above"),
         ],
     )
-
-    show_or_divisor = True

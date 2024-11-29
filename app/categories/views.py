@@ -1,7 +1,6 @@
 from flask.views import View
 from flask import render_template, redirect, url_for, session, request
 from app.categories.forms import QuestionForm
-from app.categories.utils import get_items_with_divisor, check_radio_field
 from app.session import set_category_question_answer, get_category_question_answer
 
 
@@ -26,42 +25,78 @@ class CategoryLandingPage(CategoryPage):
 
 
 class QuestionPage(View):
-    """Base question page view that all category question pages should inherit from.
-    Responsible for rendering the question page, handling the form submission and saving the users answers to their session.
+    """Base view for handling question pages with form submission and session management.
+
+    This view handles:
+    - Rendering the question page
+    - Processing form submissions
+    - Managing user session data
+    - Routing to the next appropriate page
     """
 
-    form = QuestionForm
+    form_class: type[QuestionForm] | None = None
 
-    methods = ["GET", "POST"]
+    def __init__(self, form_class: type[QuestionForm]):
+        """Initialize the view with a form class.
 
-    def __init__(self, form):
-        self.form = form
+        Args:
+            form_class: The WTForms form class to use for this question page
+        """
+        self.form_class = form_class
 
-    def get_next_page(self, answer):
-        return redirect(url_for(self.form.next_step_mapping[answer]))
+    def get_next_page(self, answer: str) -> redirect:
+        """Determine and redirect to the next page based on the user's answer.
 
-    def update_session(self, answer: str = None):
+        Args:
+            answer: The user's selected answer
+
+        Returns:
+            A Flask redirect response to the next appropriate page
+
+        Raises:
+            ValueError if the answer does not have a mapping to a next page
+        """
+        if answer not in self.form_class.next_step_mapping:
+            raise ValueError(f"No mapping found for answer: {answer}")
+
+        return redirect(url_for(self.form_class.next_step_mapping[answer]))
+
+    def update_session(self, answer: str | None = None) -> None:
+        """
+        Update the session with the current page and answer.
+
+        Args:
+            answer: The user's selected answer
+        """
         session["previous_page"] = request.endpoint
-        set_category_question_answer(self.form.title, answer, self.form.category)
+        set_category_question_answer(
+            question_title=self.form_class.title,
+            answer=answer,
+            category=self.form_class.category,
+        )
 
     def dispatch_request(self):
-        form = self.form(request.args)
+        """Handle requests for the question page, including form submissions.
 
-        items = None
-        if form.show_or_divisor:
-            items = get_items_with_divisor(form.question.choices)
+        This method processes both initial page loads and form submissions,
+        which are differentiated by the presence of a 'submit' parameter
+        in the query string.
 
-        previous_answer = get_category_question_answer(form)
+        Returns:
+            Either a redirect to the next page or the rendered template
+        """
+        form = self.form_class(request.args)
 
-        if previous_answer:
-            items = check_radio_field(form.question, previous_answer, items)
-
-        if "submit" in request.args and form.validate():
+        if form.submit.data and form.validate():
             self.update_session(form.question.data)
             return self.get_next_page(form.question.data)
+
+        # Pre-populate form with previous answer if it exists
+        previous_answer = get_category_question_answer(self.form_class.title)
+        if previous_answer:
+            form.question.data = previous_answer
 
         return render_template(
             "categories/question-page.html",
             form=form,
-            items=items,
         )

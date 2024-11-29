@@ -9,6 +9,6 @@ bp.add_url_rule(
 bp.add_url_rule(
     "/domestic-abuse/are-you-at-risk-of-harm",
     view_func=QuestionPage.as_view(
-        "are_you_at_risk_of_harm", form=AreYouAtRiskOfHarmForm
+        "are_you_at_risk_of_harm", form_class=AreYouAtRiskOfHarmForm
     ),
 )

@@ -18,7 +18,7 @@ def test_result_page_with_single_category(app):
 
     # Mocks laalaa_search
     with patch(
-        "app.find_a_legal_advisor.laalaa.laalaa_search", return_value=mock_results
+        "app.find_a_legal_adviser.laalaa.laalaa_search", return_value=mock_results
     ) as mock_laalaa_search:
         mock_laalaa_search(postcode=postcode, categories=[category], page=page_num)
         # Mocks results page
@@ -63,7 +63,7 @@ def test_result_page_with_secondary_category(app):
 
     # Mocks laalaa_search
     with patch(
-        "app.find_a_legal_advisor.laalaa.laalaa_search", return_value=mock_results
+        "app.find_a_legal_adviser.laalaa.laalaa_search", return_value=mock_results
     ) as mock_laalaa_search:
         mock_laalaa_search(
             postcode=postcode, categories=[category, secondary_category], page=page_num
