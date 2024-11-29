@@ -1,3 +1,4 @@
+from flask.sansio.blueprints import Blueprint
 from flask.views import View
 from flask import render_template, redirect, url_for, session, request
 from app.categories.forms import QuestionForm
@@ -21,7 +22,52 @@ class IndexPage(CategoryPage):
 
 
 class CategoryLandingPage(CategoryPage):
-    pass
+    init_every_request = False
+
+    question_title: str = ""
+
+    category: str = ""
+
+    routing_map: dict[str, str] = {}
+
+    def __init__(self, blueprint: Blueprint):
+        super().__init__(self.template)
+        for answer, next_page in self.routing_map.items():
+            blueprint.add_url_rule(
+                f"/{self.category}/{answer}",
+                view_func=CategoryAnswerPage.as_view(
+                    answer,
+                    question=self.question_title,
+                    answer=answer,
+                    next_page=next_page,
+                    category=self.category,
+                ),
+            )
+
+
+class CategoryAnswerPage(View):
+    def __init__(self, question, answer, next_page, category):
+        self.question = question
+        self.answer = answer
+        self.next_page = next_page
+        self.category = category
+
+    def update_session(self) -> None:
+        """
+        Update the session with the current page and answer.
+
+        """
+        session["previous_page"] = request.endpoint
+        set_category_question_answer(
+            question_title=self.question,
+            answer=self.answer,
+            category=self.category,
+        )
+
+    def dispatch_request(self):
+        self.update_session()
+        print(session)
+        return redirect(url_for(self.next_page))
 
 
 class QuestionPage(View):
