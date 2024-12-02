@@ -3,8 +3,6 @@ from app.categories.views import CategoryLandingPage
 
 
 class HousingLandingPage(CategoryLandingPage):
-    template = "categories/housing/landing.html"
-
     question_title = "Housing, Homelessness, and Eviction"
 
     category = "Housing"
@@ -18,12 +16,15 @@ class HousingLandingPage(CategoryLandingPage):
         "threatened": "categories.results.in_scope",
         "asylum_seeker": "categories.results.in_scope",
         "discrimination": "categories.discrimination.where",
-        "antisocial": "categories.results.in_scope",
+        "anti_social": "categories.results.in_scope",
         "other": "categories.results.refer",
     }
 
 
 bp.add_url_rule(
     "/housing",
-    view_func=HousingLandingPage.as_view("landing", bp),
+    view_func=HousingLandingPage.as_view(
+        "landing", template="categories/housing/landing.html"
+    ),
 )
+HousingLandingPage.register_routes(bp)
