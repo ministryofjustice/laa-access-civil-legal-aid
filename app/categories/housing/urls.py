@@ -8,7 +8,7 @@ class HousingLandingPage(CategoryLandingPage):
     category = "Housing"
 
     routing_map = {
-        "homelessness": "categories.housing.are_you_at_risk_of_losing_your_home",
+        "homelessness": "categories.results.in_scope_hlpas",
         "eviction": "categories.results.in_scope_hlpas",
         "forced_to_sell": "categories.results.in_scope_hlpas",
         "repairs": "categories.results.in_scope",
