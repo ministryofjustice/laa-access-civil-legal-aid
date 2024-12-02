@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
+{%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
+{%- from 'categories/components/list-item.html' import list_item, list_item_small -%}
+{%- from 'categories/components/cannot-find-your-problem.html' import cannot_find_your_problem -%}
+
+{% block pageTitle %}Children, families and relationships - GOV.UK{% endblock %}
+
+{% block beforeContent%}
+{{ super() }}
+{{ govukBackLink({
+    'href': url_for('categories.index'),
+    'text': "Back"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+
+{{ super() }}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">{% trans %}Children, families and relationships{% endtrans %}</h1>
+
+        {{ list_item(_("Children and social services, children in care"),
+                     _("Help for any problem if social services are involved with a child. Includes children in care, or being adopted. Also special guardianship."),
+                     url_for("categories.family.social_services")) }}
+
+        {{ list_item(_("Problems with an ex-partner, divorce, when a relationship ends"),
+             _("If you cannot agree about money, finances and property. Includes contact with children, where children live, and other child arrangements. If an ex-partner is not doing what they agreed. If you’re worried about a child."),
+             url_for("categories.family.divorce")) }}
+
+        {{ list_item(_("If there is domestic abuse in your family"),
+             _("Making arrangements for children and finances. Also, keeping yourself safe, protecting children and legal help to leave the relationship."),
+             url_for("categories.family.domestic_abuse")) }}
+
+            {{ list_item(_("Family mediation"),
+                     _("Help to cover the costs of family mediation (solve problems about money and children before you go to court)."),
+                     url_for("categories.family.family_mediation")) }}
+
+        {{ list_item(_("Child taken without your consent"),
+             _("If a child has been abducted (taken without your permission), including outside the UK."),
+             url_for("categories.family.child_abducted")) }}
+        <br>
+
+        <h2 class="govuk-heading-m">{%  trans%}More problems{% endtrans %}</h2>
+
+        <br>
+
+        {{ list_item_small(_("Children with special educational needs and disabilities (SEND)"),
+                           _("Get help with a child’s SEND."),
+                            url_for("categories.family.send")) }}
+
+        {{ list_item_small(_("Schools, colleges, other education settings"),
+                   _("Advice about legal action against a school. Includes if a child is out of school, exclusions, transport to school, judicial reviews."),
+                    url_for("categories.family.education")) }}
+
+            {{ list_item_small(_("Forced marriage"),
+                   _("Help with forced marriage and Forced Marriage Protection Orders."),
+                    url_for("categories.family.forced_marriage")) }}
+
+            {{ cannot_find_your_problem(_("children, families, relationships"), "categories.family.other")}}
+
+    </div>
+</div>
+{% endblock %}
