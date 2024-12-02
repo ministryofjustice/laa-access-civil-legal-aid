@@ -22,25 +22,23 @@ class IndexPage(CategoryPage):
 
 
 class CategoryLandingPage(CategoryPage):
-    init_every_request = False
-
     question_title: str = ""
 
     category: str = ""
 
     routing_map: dict[str, str] = {}
 
-    def __init__(self, blueprint: Blueprint):
-        super().__init__(self.template)
-        for answer, next_page in self.routing_map.items():
+    @classmethod
+    def register_routes(cls, blueprint: Blueprint):
+        for answer, next_page in cls.routing_map.items():
             blueprint.add_url_rule(
-                f"/{self.category}/{answer}",
+                f"/{cls.category}/{answer}",
                 view_func=CategoryAnswerPage.as_view(
                     answer,
-                    question=self.question_title,
+                    question=cls.question_title,
                     answer=answer,
                     next_page=next_page,
-                    category=self.category,
+                    category=cls.category,
                 ),
             )
 
