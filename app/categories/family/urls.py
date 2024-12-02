@@ -3,8 +3,6 @@ from app.categories.views import CategoryLandingPage
 
 
 class FamilyLandingPage(CategoryLandingPage):
-    template = "categories/family/landing.html"
-
     question_title = "Children, families, and relationships"
 
     category = "Family"
@@ -24,6 +22,8 @@ class FamilyLandingPage(CategoryLandingPage):
 
 bp.add_url_rule(
     "/children-families-relationships/",
-    view_func=FamilyLandingPage.as_view("landing", bp),
+    view_func=FamilyLandingPage.as_view(
+        "landing", template="categories/family/landing.html"
+    ),
 )
 FamilyLandingPage.register_routes(bp)
