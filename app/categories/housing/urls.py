@@ -18,8 +18,8 @@ class HousingLandingPage(CategoryLandingPage):
         "threatened": "categories.results.in_scope",
         "asylum_seeker": "categories.results.in_scope",
         "discrimination": "categories.discrimination.where",
-        "antisocial": "categories.results.in_scope",
-        "other": "categories.results.alternative_help",
+        "anti_social": "categories.results.in_scope",
+        "other": "categories.results.refer",
     }
 
 
