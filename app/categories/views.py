@@ -66,7 +66,6 @@ class CategoryAnswerPage(View):
 
     def dispatch_request(self):
         self.update_session()
-        print(session)
         return redirect(url_for(self.next_page))
 
 
