@@ -1,7 +1,7 @@
 from wtforms import StringField, Form, HiddenField
 from govuk_frontend_wtf.wtforms_widgets import GovTextInput
 from wtforms.validators import InputRequired
-from app.find_a_legal_advisor.validators import ValidRegionPostcode
+from app.find_a_legal_adviser.validators import ValidRegionPostcode
 
 
 class FindLegalAdviserForm(Form):

@@ -21,7 +21,7 @@ def get_pagination_data(
         item = {
             "number": page_num,
             "href": url_for(
-                "find-a-legal-advisor.search",
+                "find-a-legal-adviser.search",
                 postcode=postcode,
                 category=category,
                 secondary_category=secondary_category,
@@ -35,7 +35,7 @@ def get_pagination_data(
     if current_page_num > 1:
         pagination_data["previous"] = {
             "href": url_for(
-                "find-a-legal-advisor.search",
+                "find-a-legal-adviser.search",
                 postcode=postcode,
                 category=category,
                 secondary_category=secondary_category,
@@ -46,7 +46,7 @@ def get_pagination_data(
     if current_page_num < num_pages:
         pagination_data["next"] = {
             "href": url_for(
-                "find-a-legal-advisor.search",
+                "find-a-legal-adviser.search",
                 postcode=postcode,
                 category=category,
                 secondary_category=secondary_category,

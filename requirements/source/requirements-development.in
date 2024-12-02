@@ -2,5 +2,6 @@
 isort
 pytest-flask
 pytest-playwright
+pytest-mock
 axe-core-python
 trufflehog3==3.0.10

@@ -27,14 +27,9 @@
 
         <h1 class="govuk-heading-xl">{{ form.category }}</h1>
 
-        <form action="" method="post" novalidate>
-            {{ form.csrf_token }}
+        <form action="" method="get" novalidate>
 
-            {% if items %}
-                {{ form.question(params={'items': items }) }}
-            {% else %}
-                {{ form.question() }}
-            {% endif %}
+            {{ form.question() }}
 
             {{ form.submit }}
         </form>

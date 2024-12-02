@@ -1,5 +1,5 @@
 from wtforms.validators import ValidationError
-from app.find_a_legal_advisor.postcodes import get_postcode_region
+from app.find_a_legal_adviser.postcodes import get_postcode_region
 from requests.exceptions import ConnectionError
 
 

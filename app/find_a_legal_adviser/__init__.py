@@ -1,13 +1,13 @@
 from flask import Blueprint
 import requests
 
-from app.find_a_legal_advisor.laalaa import laalaa_url, get_category_name
+from app.find_a_legal_adviser.laalaa import laalaa_url, get_category_name
 
-bp = Blueprint("find-a-legal-advisor", __name__)
+bp = Blueprint("find-a-legal-adviser", __name__)
 
 bp.add_app_template_filter(get_category_name, "category_name")
 
-from app.find_a_legal_advisor import routes  # noqa: E402,F401
+from app.find_a_legal_adviser import routes  # noqa: E402,F401
 
 
 def get_categories():

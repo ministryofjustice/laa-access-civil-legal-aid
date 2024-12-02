@@ -6,7 +6,7 @@ from flask import url_for
 @pytest.fixture
 def navigate_to_search(page: Page) -> None:
     """Common setup to navigate to the search page"""
-    page.goto(url_for("find-a-legal-advisor.search", _external=True))
+    page.goto(url_for("find-a-legal-adviser.search", _external=True))
 
 
 @pytest.mark.usefixtures("live_server")
