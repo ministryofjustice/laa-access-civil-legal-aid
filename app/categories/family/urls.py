@@ -26,3 +26,4 @@ bp.add_url_rule(
     "/children-families-relationships/",
     view_func=FamilyLandingPage.as_view("landing", bp),
 )
+FamilyLandingPage.register_routes(bp)
