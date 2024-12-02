@@ -10,12 +10,16 @@ class MentalCapacityLandingPage(CategoryLandingPage):
     routing_map = {
         "mental_capacity": {
             "endpoint": "find-a-legal-adviser.search",
-            "category": "med",
-            "secondary_category": "deb",
+            "category": "mhe",
+            "secondary_category": "com",
         },
-        "court_of_protection": "categories.results.in_scope_hlpas",
-        "detention": "categories.results.in_scope_hlpas",
-        "social_care": "categories.results.in_scope",
+        "court_of_protection": {
+            "endpoint": "find-a-legal-adviser.search",
+            "category": "mhe",
+            "secondary_category": "com",
+        },
+        "detention": {"endpoint": "find-a-legal-adviser.search", "category": "mhe"},
+        "social_care": "categories.results.in_scope",  # This needs to be updated to route to the community care landing page once it has been made
         "other": "categories.results.refer",
     }
 
