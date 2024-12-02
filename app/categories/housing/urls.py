@@ -19,7 +19,7 @@ class HousingLandingPage(CategoryLandingPage):
         "asylum_seeker": "categories.results.in_scope",
         "discrimination": "categories.discrimination.where",
         "antisocial": "categories.results.in_scope",
-        "other": "categories.results.alternative_help",
+        "other": "categories.results.refer",
     }
 
 

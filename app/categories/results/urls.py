@@ -13,8 +13,10 @@ bp.add_url_rule(
     ),
 )
 bp.add_url_rule(
-    "/alternative-help",
-    view_func=CategoryPage.as_view(
-        "alternative_help", template="categories/alternative-help.html"
-    ),
+    "/refer",
+    view_func=CategoryPage.as_view("refer", template="categories/refer.html"),
+)
+bp.add_url_rule(
+    "/contact",
+    view_func=CategoryPage.as_view("contact", template="categories/contact.html"),
 )
