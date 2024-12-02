@@ -12,7 +12,7 @@ class FamilyLandingPage(CategoryLandingPage):
     routing_map = {
         "social_services": "categories.results.contact",
         "divorce": "categories.results.contact",
-        "domestic_abuse": "categories.results.in_scope",
+        "domestic_abuse": "categories.results.contact",  # This needs to be updated to the onward question page when this is made
         "family_mediation": "categories.results.in_scope",
         "child_abducted": "categories.results.contact",
         "send": "categories.results.in_scope",  # This needs to be updated to SEND landing page when this page is made
