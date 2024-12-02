@@ -60,7 +60,14 @@ Here is an extract from the housing landing page template. Each list item links 
              _("Landlord has told you to leave or is trying to force you to leave. Includes if you’ve got a Section 21 or a possession order."),
              url_for("categories.housing.eviction")) }}
 ```
- 
+
+### Category Answer Pages
+A category answer page is created by the `register_routes` method of the `CategoryLandingPage`, this provides the endpoint you can generate a url for in your templates.
+
+This page redirects the user to the onward page based on the `routing_map`.
+
+They do not need to be generated directly.
+
 ## Question Pages
 Question pages are used to display a WTForms form and route the user to the next page based on their response.
 
