@@ -30,7 +30,7 @@ ROUTING = [
 
 
 @pytest.mark.usefixtures("live_server")
-class TestHousingLandingPage:
+class TestMentalCapacityLandingPage:
     @pytest.mark.parametrize("routing", ROUTING)
     def test_onward_routing(self, page: Page, routing: dict):
         page.get_by_role("link", name="Mental capacity, mental health").click()
