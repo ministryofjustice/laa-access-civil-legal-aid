@@ -1,7 +1,7 @@
 from playwright.sync_api import Page, expect
 import pytest
 
-risk_of_harm_page_heading = "Are you or your children at immediate risk of harm?"
+risk_of_harm_page_heading = "Are you worried about someone's safety?"
 in_scope_page_heading = "Legal aid is available for this type of problem"
 contact_us_page_heading = "Contact us page"
 housing_page_heading = "Housing, homelessness, losing your home"
