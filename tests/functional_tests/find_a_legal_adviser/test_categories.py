@@ -75,6 +75,12 @@ class TestCategoriesURL:
     def test_multi_category_url(self, page: Page) -> None:
         # Select the mental health category
         page.get_by_role("link", name="Mental capacity, mental health").click()
+
+        page.get_by_role(
+            "link",
+            name="If someone cannot decide for themselves (lacks mental capacity)",
+        ).click()
+
         expect(page.get_by_text("For mental health")).to_be_visible()
 
         # Get the url and assert there are 2 categories
