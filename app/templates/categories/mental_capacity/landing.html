@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
+{%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
+{%- from 'categories/components/list-item.html' import list_item, list_item_small -%}
+{%- from 'categories/components/cannot-find-your-problem.html' import cannot_find_your_problem -%}
+
+{% block pageTitle %}Housing, homelessness, losing your home - GOV.UK{% endblock %}
+
+{% block beforeContent%}
+{{ super() }}
+{{ govukBackLink({
+    'href': url_for('categories.index'),
+    'text': "Back"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+
+{{ super() }}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">{% trans %}Mental capacity, mental health{% endtrans %}</h1>
+
+        {{ list_item(_("If someone cannot decide for themselves (lacks mental capacity)"),
+                     _("Help to challenge a decision made about someone’s living arrangements, care, health, relationships, family contact or finances. Includes if someone is deprived of their liberty, and ‘deprivation of liberty safeguards’ (DoLS)."),
+                     url_for("categories.mental_capacity.mental_capacity")) }}
+
+        {{ list_item(_("Court of Protection"),
+             _("Advice about issues covered by the Court of Protection."),
+             url_for("categories.mental_capacity.court_of_protection")) }}
+
+        {{ list_item(_("Mental health detention and tribunals"),
+             _("Help if someone has been sectioned (held in a mental health hospital), or is under a community treatment order. Help with mental health tribunals."),
+             url_for("categories.mental_capacity.detention")) }}
+
+            {{ list_item(_("Care needs for disability and old age (social care)"),
+                     _("Problems getting the local authority or council to provide or pay for the right care. For carers, children, young people and adults."),
+                     url_for("categories.mental_capacity.social_care")) }}
+
+        {{ cannot_find_your_problem("", "categories.mental_capacity.other")}}
+
+    </div>
+</div>
+{% endblock %}
