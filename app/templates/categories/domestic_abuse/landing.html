@@ -3,6 +3,7 @@
 {%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
 {%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
 {%- from 'categories/components/list-item.html' import list_item, list_item_small -%}
+{%- from 'categories/components/cannot-find-your-problem.html' import cannot_find_your_problem -%}
 
 {% block pageTitle %}Domestic Abuse - GOV.UK{% endblock %}
 
@@ -33,11 +34,11 @@
 
         {{ list_item("Leaving an abusive relationship",
              "Help with divorce or separation. It includes making plans for the children, money, and housing. It also covers child contact and where the children will live.",
-             url_for("categories.index")) }}
+             url_for("categories.domestic_abuse.leaving_an_abusive_relationship")) }}
 
         {{ list_item("Problems with an ex-partner: children or money",
              "Includes contact with children, where children live; money; when an ex-partner doesn’t follow court orders or agreements. Also if you’re worried about a child; child taken or kept without your permission.",
-             url_for("categories.index")) }}
+             url_for("categories.domestic_abuse.problems_with_ex_partner")) }}
 
         <br>
 
@@ -47,20 +48,21 @@
 
         {{ list_item_small("Problems with neighbours, landlords or other people",
                            "Threats, abuse or harassment by someone who is not a family member.",
-                            url_for("categories.index")) }}
+                            url_for("categories.domestic_abuse.problems_with_neighbours")) }}
 
         {{ list_item_small("Housing, homelessness, losing your home",
                    "Includes being forced to leave your home, problems with council housing, if you’re homeless or might be homeless in the next 2 months.",
-                    url_for("categories.index")) }}
+                    url_for("categories.domestic_abuse.housing_homelessness_losing_home")) }}
 
         {{ list_item_small("Forced marriage",
                    "Help with forced marriage and Forced Marriage Protection Orders.",
-                    url_for("categories.index")) }}
+                    url_for("categories.domestic_abuse.forced_marriage")) }}
 
         {{ list_item_small("Female genital mutilation (FGM)",
            "If you or someone else is at risk of FGM.",
-            url_for("categories.index")) }}
+            url_for("categories.domestic_abuse.fgm")) }}
 
+        {{ cannot_find_your_problem(("domestic abuse"), "categories.domestic_abuse.other")}}
     </div>
 </div>
 {% endblock %}
