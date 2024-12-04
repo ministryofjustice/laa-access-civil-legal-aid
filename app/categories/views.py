@@ -137,7 +137,7 @@ class QuestionPage(View):
             return self.get_next_page(form.question.data)
 
         # Pre-populate form with previous answer if it exists
-        previous_answer = get_category_question_answer(self.form_class.title)
+        previous_answer = get_category_question_answer(form.title)
         if previous_answer:
             form.question.data = previous_answer
 

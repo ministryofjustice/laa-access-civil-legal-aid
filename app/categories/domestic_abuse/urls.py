@@ -1,12 +1,14 @@
 from app.categories.domestic_abuse import bp
-from app.categories.domestic_abuse.forms import AreYouAtRiskOfHarmForm
+from app.categories.domestic_abuse.forms import WorriedAboutSomeonesSafetyForm
 from app.categories.views import QuestionPage, CategoryLandingPage
+
+CATEGORY_NAME = "domestic_abuse"
 
 
 class DomesticAbuseLandingPage(CategoryLandingPage):
-    question_title = "Domestic Abuse"
+    question_title = CATEGORY_NAME
 
-    category = "Domestic Abuse"
+    category = CATEGORY_NAME
 
     routing_map = {
         "protect_you_and_your_children": "categories.domestic_abuse.are_you_at_risk_of_harm",
@@ -29,7 +31,8 @@ bp.add_url_rule(
 bp.add_url_rule(
     "/domestic-abuse/are-you-at-risk-of-harm",
     view_func=QuestionPage.as_view(
-        "are_you_at_risk_of_harm", form_class=AreYouAtRiskOfHarmForm
+        "are_you_at_risk_of_harm", form_class=WorriedAboutSomeonesSafetyForm
     ),
 )
+
 DomesticAbuseLandingPage.register_routes(bp)
