@@ -44,7 +44,7 @@
              url_for("categories.housing.council_housing")) }}
         <br>
 
-        <h2 class="govuk-heading-m">{%  trans%}More problems{% endtrans %}</h2>
+        <h2 class="govuk-heading-m">{%  trans %}More problems{% endtrans %}</h2>
 
         <br>
 
@@ -65,7 +65,7 @@
                     url_for("categories.housing.anti_social")) }}
 
 
-            {{ cannot_find_your_problem("housing", url_for("categories.housing.other"))}}
+            {{ cannot_find_your_problem(_("housing"), url_for("categories.housing.other"))}}
 
     </div>
 </div>

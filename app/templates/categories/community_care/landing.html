@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
+{%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
+{%- from 'categories/components/list-item.html' import list_item, list_item_small -%}
+{%- from 'categories/components/cannot-find-your-problem.html' import cannot_find_your_problem -%}
+
+{% block pageTitle %}{% trans %}Care needs for disability and old age (social care){% endtrans %} - GOV.UK{% endblock %}
+
+{% block beforeContent%}
+{{ super() }}
+{{ govukBackLink({
+    'href': url_for('categories.index'),
+    'text': "Back"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+
+{{ super() }}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">{% trans %}Care needs for disability and old age (social care){% endtrans %}</h1>
+
+        {{ list_item(_("Care from the council (local authority)"),
+                     _("Includes problems with care needs assessments, financial assessments and care support plans. Getting an advocate for assessments. Problems with transport, personal budgets and direct payments."),
+                     url_for("categories.community_care.care_from_council")) }}
+
+        {{ list_item(_("If you’re a carer"),
+             _("Includes problems with carer’s assessments and respite care. Problems to do with making decisions about someone’s care."),
+             url_for("categories.community_care.carer")) }}
+
+        {{ list_item(_("If you receive care in your own home"),
+             _("Problems with care providers, social workers, care agencies. Also getting adaptations and disabled facilities grants."),
+             url_for("categories.community_care.receive_care_in_own_home")) }}
+
+            {{ list_item(_("If care or funding stops"),
+                     _("Problems if care or money for care is stopped or reduced, or if care facilities close."),
+                     url_for("categories.community_care.care_or_funding_stops")) }}
+
+        {{ list_item(_("Placements, care homes and care housing"),
+             _("Problems with placements in care homes, group homes or other supported housing. If a placement isn't working because someone's care needs have changed."),
+             url_for("categories.community_care.placement_care_homes_care_housing")) }}
+
+        {{ list_item(_("Problems with the quality of care, safeguarding"),
+             _("Issues with safeguarding, abuse, neglect, or care that is not good enough. This includes in group homes or other placements, or from a carer or social worker."),
+             url_for("categories.community_care.problems_with_quality_of_care")) }}
+
+        {{ list_item(_("If you’re a care leaver"),
+             _("Problems if the local authority is not providing the right support. Includes problems with housing, financial support, education, personal advisers and Pathway Plans."),
+             url_for("categories.community_care.care_leaver")) }}
+
+        <br>
+
+        <h2 class="govuk-heading-m">{%  trans %}More problems{% endtrans %}</h2>
+
+        <br>
+
+            {{ cannot_find_your_problem(_("community care"), url_for("categories.community_care.other"))}}
+
+    </div>
+</div>
+{% endblock %}
