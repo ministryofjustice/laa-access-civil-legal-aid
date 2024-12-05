@@ -61,3 +61,26 @@ class SafeguardingQuestionForm(QuestionForm):
             ("no", _("No")),
         ],
     )
+
+
+class ChildInCareQuestionForm(QuestionForm):
+    category = "Question category"
+
+    title = _("Is this about a child who is or has been in care?")
+
+    next_step_mapping = {
+        "yes": "categories.results.contact",
+        "no": "categories.results.in_scope",
+    }
+
+    question = RadioField(
+        title,
+        widget=CategoryRadioInput(show_divider=False, is_inline=True),
+        validators=[
+            InputRequired(message=_("Select if the child is or has been in care"))
+        ],
+        choices=[
+            ("yes", _("Yes")),
+            ("no", _("No")),
+        ],
+    )
