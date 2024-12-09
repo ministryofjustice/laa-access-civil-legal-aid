@@ -79,14 +79,15 @@ class QuestionPage(View):
     - Routing to the next appropriate page
     """
 
-    template = "categories/question-page.html"
+    template: str = "categories/question-page.html"
     form_class: type[QuestionForm] | None = None
 
-    def __init__(self, form_class: type[QuestionForm], template: str = None):
+    def __init__(self, form_class: type[QuestionForm], template=None):
         """Initialize the view with a form class.
 
         Args:
             form_class: The WTForms form class to use for this question page
+            template: The template to use for this question page
         """
         self.form_class = form_class
         self.template = template or self.template
@@ -109,7 +110,6 @@ class QuestionPage(View):
         next_page = self.form_class.next_step_mapping[answer]
         if isinstance(next_page, dict):
             return redirect(url_for(**next_page))
-
         return redirect(url_for(next_page))
 
     def update_session(self, answer: str | None = None) -> None:
