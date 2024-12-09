@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
+{%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
+{%- from 'categories/components/list-item.html' import list_item, list_item_small -%}
+{%- from 'categories/components/cannot-find-your-problem.html' import cannot_find_your_problem -%}
+
+{% block pageTitle %}{% trans %}Legal action against public organisations{% endtrans %} - GOV.UK{% endblock %}
+
+{% block beforeContent%}
+{{ super() }}
+{{ govukBackLink({
+    'href': url_for('categories.index'),
+    'text': "Back"
+  }) }}
+
+{% endblock %}
+
+{% block content %}
+
+{{ super() }}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">{% trans %}Legal action against public organisations{% endtrans %}</h1>
+        <p class="govuk-body">
+            <b>{% trans %}Legal help to challenge something done by a public organisation. You might have been told you need to bring a ‘judicial review’.{% endtrans %}</b>
+        </p>
+
+        <p class="govuk-body govuk-!-margin-bottom-0">This includes organisations like:</p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>{% trans %}schools or other education settings{% endtrans %}</li>
+            <li>{% trans %}council, social services, local authority{% endtrans %}</li>
+            <li>{% trans %}NHS, hospitals{% endtrans %}</li>
+            <li>{% trans %}housing providers{% endtrans %}</li>
+            <li>{% trans %}a government department or agency{% endtrans %}</li>
+            <li>{% trans %}foster carers, care homes, care facilities{% endtrans %}</li>
+        </ul>
+        <p class="govuk-body govuk-!-margin-bottom-0">{% trans %}It also includes problems with the police, prisons or detention centres, for example if you’ve been:{% endtrans %}</p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>{% trans %}wrongfully arrested, stopped, held or detained anywhere{% endtrans %}</li>
+            <li>{% trans %}physically, sexually or emotionally abused{% endtrans %}</li>
+        </ul>
+
+        <br>
+        <a href="{{ url_for('categories.public.reason') }}" role="button" draggable="false" class="govuk-button" data-module="govuk-button">
+          {% trans %}Continue{% endtrans %}
+        </a>
+        <br>
+        <br>
+
+        <h2 class="govuk-heading-m">{% trans %}More problems{% endtrans %}</h2>
+
+        <br>
+
+            {{ cannot_find_your_problem("", url_for("categories.results.refer", category="pub"))}}
+
+    </div>
+</div>
+{% endblock %}
