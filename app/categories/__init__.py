@@ -7,7 +7,6 @@ from .mental_capacity import bp as mental_capacity_bp
 from .community_care import bp as community_care_bp
 from .send import bp as send_bp
 from .public import bp as public_bp
-
 from .family import bp as family_bp
 from .benefits import bp as benefits_bp
 from .results import bp as results_bp
