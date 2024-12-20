@@ -104,6 +104,16 @@ class QuestionPage(View):
         Raises:
             ValueError if the answer does not have a mapping to a next page
         """
+
+        if "notsure" in answer and len(answer) == 1:
+            return redirect(url_for(self.form_class.next_step_mapping["notsure"]))
+
+        if isinstance(answer, list):
+            for a in answer:
+                if a in self.form_class.next_step_mapping and a != "notsure":
+                    return redirect(url_for(self.form_class.next_step_mapping[a]))
+            answer = "*"
+
         if answer not in self.form_class.next_step_mapping:
             raise ValueError(f"No mapping found for answer: {answer}")
 
