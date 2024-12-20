@@ -1,5 +1,5 @@
-from wtforms import SelectMultipleField
-from app.categories.widgets import CategoryCheckboxInput
+from wtforms import RadioField, SelectMultipleField
+from app.categories.widgets import CategoryRadioInput, CategoryCheckboxInput
 from app.categories.forms import QuestionForm
 from wtforms.validators import InputRequired
 
