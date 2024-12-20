@@ -1,5 +1,5 @@
-from wtforms import RadioField
-from app.categories.widgets import CategoryRadioInput
+from wtforms import RadioField, SelectMultipleField
+from app.categories.widgets import CategoryRadioInput, CategoryCheckboxInput
 from app.categories.forms import QuestionForm
 from wtforms.validators import InputRequired
 
@@ -12,36 +12,32 @@ class DiscriminationWhereForm(DiscriminationQuestionForm):
     title = "Where did the discrimination happen?"
 
     next_step_mapping = {
-        "work": "categories.discrimination.why",
-        "school": "categories.discrimination.why",
-        "business": "categories.discrimination.why",
-        "healthcare": "categories.discrimination.why",
-        "housing": "categories.discrimination.why",
-        "public": "categories.discrimination.why",
-        "club": "categories.discrimination.why",
-        "notsure": "categories.alternative_help",
+        "*": "categories.discrimination.why",
+        "notsure": "categories.results.refer",
     }
 
-    question = RadioField(
+    question = SelectMultipleField(
         title,
-        widget=CategoryRadioInput(show_divider=True),
+        widget=CategoryCheckboxInput(
+            show_divider=True, hint_text="You can select more than one."
+        ),
         validators=[InputRequired(message="Select where the discrimination happened")],
         choices=[
             ("work", "Work - including colleagues, employer or employment agency"),
-            ("school", "School, college, university or other education settings"),
+            ("school", "School, college, university or other education setting"),
             (
                 "business",
-                "Businesses or service provision - like a shop, restaurant, train, hotel, bank, law firm",
+                "Businesses or services - such as a shop, restaurant, train, hotel, bank, law firm",
             ),
-            ("healthcare", "Health or care - like a hospital or care home"),
-            ("housing", "Housing provision - like a landlord or estate agent"),
+            ("healthcare", "Health or care - such as a hospital or care home"),
+            ("housing", "Housing - such as a landlord or estate agent"),
             (
                 "public",
-                "Public services and authorities - like the police, social services, council or local authority, jobcentre, government",
+                "Public services and authorities - such as the police, social services, council or local authority, jobcentre, government",
             ),
-            ("club", "Clubs and associations - like a sports club"),
+            ("club", "Clubs and associations - such as a sports club"),
             ("", ""),
-            ("notsure", "Not sure"),
+            ("notsure", "I’m not sure"),
         ],
     )
 
