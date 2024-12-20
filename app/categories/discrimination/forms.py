@@ -1,5 +1,5 @@
-from wtforms import RadioField, SelectMultipleField
-from app.categories.widgets import CategoryRadioInput, CategoryCheckboxInput
+from wtforms import SelectMultipleField
+from app.categories.widgets import CategoryCheckboxInput
 from app.categories.forms import QuestionForm
 from wtforms.validators import InputRequired
 
@@ -21,7 +21,11 @@ class DiscriminationWhereForm(DiscriminationQuestionForm):
         widget=CategoryCheckboxInput(
             show_divider=True, hint_text="You can select more than one."
         ),
-        validators=[InputRequired(message="Select where the discrimination happened")],
+        validators=[
+            InputRequired(
+                message="Select where the discrimination happened, or select ‘I’m not sure’"
+            )
+        ],
         choices=[
             ("work", "Work - including colleagues, employer or employment agency"),
             ("school", "School, college, university or other education setting"),
@@ -43,38 +47,39 @@ class DiscriminationWhereForm(DiscriminationQuestionForm):
 
 
 class DiscriminationWhyForm(DiscriminationQuestionForm):
-    title = "Why were you treated differently?"
+    title = "Why were you discriminated against?"
 
     next_step_mapping = {
-        "race": "categories.results.in_scope",
-        "sex": "categories.results.in_scope",
-        "disability": "categories.results.in_scope",
-        "religion": "categories.results.in_scope",
-        "age": "categories.results.in_scope",
-        "sexualorientation": "categories.results.in_scope",
-        "gender": "categories.results.in_scope",
-        "pregnancy": "categories.results.in_scope",
-        "none": "categories.results.alternative_help",
+        "*": "categories.results.in_scope",
+        "none": "categories.results.refer",
     }
 
-    question = RadioField(
+    question = SelectMultipleField(
         title,
-        widget=CategoryRadioInput(show_divider=True),
-        validators=[InputRequired(message="Select why you were treated differently")],
+        widget=CategoryCheckboxInput(
+            show_divider=True, hint_text="You can select more than one."
+        ),
+        validators=[InputRequired(message="Select why you were discriminated against")],
         choices=[
-            ("race", "Race, colour of skin, ethnicity"),
+            ("race", "Race, colour, ethnicity, nationality"),
             ("sex", "Sex (male or female)"),
             ("disability", "Disability, health condition, mental health condition"),
             ("religion", "Religion, belief, lack of religion"),
             ("age", "Age"),
-            ("sexualorientation", "Sexual orientation - gay, bi, other sexuality"),
-            ("gender", "Gender - trans, gender reassignment, other gender issue"),
             ("pregnancy", "Pregnancy or being a mother"),
             (
+                "sexualorientation",
+                "Sexual orientation - gay, bisexual, other sexuality",
+            ),
+            (
+                "gender",
+                "Gender reassignment, being transgender, non-binary or gender-fluid",
+            ),
+            (
                 "marriage",
-                "Married status - being married, in a civil partnership, unmarried",
+                "Married status - being married, in a civil partnership",
             ),
             ("", ""),
-            ("none", "None of the above"),
+            ("none", "None of these"),
         ],
     )
