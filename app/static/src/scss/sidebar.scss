@@ -1,0 +1,24 @@
+body .sidebar {
+  margin-top: 40px;
+  border-top: 10px solid $govuk-brand-colour;
+
+  .exceptional_cases {
+    border-top:none;
+  }
+
+  h2 {
+    margin: 0 0 10px;
+    padding-top: 15px;
+    font-size: 22px;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0 0 0 20px;
+  }
+
+  nav ul {
+    list-style: none;
+    padding: 0;
+  }
+}
