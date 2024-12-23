@@ -7,6 +7,8 @@
 {% set title = _('Legal aid is available for this type of problem') %}
 {% block pageTitle %}{{ title }} - {{ super() }}{% endblock %}
 
+{% block pageTitle %}Legal aid is available for this type of problem - GOV.UK{% endblock %}
+
 {% block beforeContent%}
 {{ super() }}
 {{ govukBackLink({
@@ -19,7 +21,6 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">Legal aid is available for this type of problem</h1>
-        <p>{{ category }}</p>
 
         <p class="govuk-body-lead">However, you may need to also qualify financially.</p>
 
