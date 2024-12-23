@@ -2,6 +2,7 @@
 {%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink-%}
 {%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton %}
 {%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
+{%- import 'categories/components/help-organisations.html' as HelpOrganisations %}
 
 {% block pageTitle %}Legal aid is available for this type of problem - GOV.UK{% endblock %}
 
@@ -17,6 +18,7 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">Legal aid is available for this type of problem</h1>
+        <p>{{ category }}</p>
 
         <p class="govuk-body-lead">However, you may need to also qualify financially.</p>
 
@@ -65,6 +67,19 @@
             If you qualify, in some cases you may need to pay a contribution towards your legal aid.</p>
 
         <p class="govuk-body"><a class="govuk-link" href="/find-a-legal-adviser?category=debt">Find a legal adviser</a></p>
+
+        {% if organisations %}
+            {% call HelpOrganisations.org_list_container(organisations, category_name, truncate=1) %}
+              <h2 class="govuk-heading-m">{{ _('Other sources of help') }}</h2>
+              <p class="govuk-body">
+                {% trans category_name=category_name|lower %}
+                  You can also get advice from alternative help organisations for issues related to {{ category_name }}.
+                {% endtrans %}
+                {{ _('You don’t have to qualify for legal aid.') }}
+              </p>
+            {% endcall %}
+        {% endif %}
+
 
     </div>
     <div class="govuk-grid-column-one-third">
