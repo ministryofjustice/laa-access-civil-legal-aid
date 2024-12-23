@@ -104,13 +104,17 @@ class QuestionPage(View):
         Raises:
             ValueError if the answer does not have a mapping to a next page
         """
+        optional_answers = [
+            "notsure",
+            "none",
+        ]  # We should only route to these pages if they are the only answer
 
-        if "notsure" in answer and len(answer) == 1:
-            return redirect(url_for(self.form_class.next_step_mapping["notsure"]))
+        if len(answer) == 1 and answer[0] in optional_answers:
+            return redirect(url_for(self.form_class.next_step_mapping[answer[0]]))
 
         if isinstance(answer, list):
             for a in answer:
-                if a in self.form_class.next_step_mapping and a != "notsure":
+                if a in self.form_class.next_step_mapping and a not in optional_answers:
                     return redirect(url_for(self.form_class.next_step_mapping[a]))
             answer = "*"
 
