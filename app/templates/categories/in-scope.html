@@ -7,8 +7,6 @@
 {% set title = _('Legal aid is available for this type of problem') %}
 {% block pageTitle %}{{ title }} - {{ super() }}{% endblock %}
 
-{% block pageTitle %}Legal aid is available for this type of problem - GOV.UK{% endblock %}
-
 {% block beforeContent%}
 {{ super() }}
 {{ govukBackLink({
@@ -83,6 +81,21 @@
             {{ helpOrganisationsList(organisations) }}
         {% endif %}
 
+
+        {{ govukButton(params={
+                "text": "Check if you qualify financially",
+                "isStartButton": "true",
+                "classes": "govuk-!-margin-top-2 govuk-!-margin-bottom-8"
+                }) }}
+
+        <h2 class="govuk-heading-m">Before you start</h2>
+
+        <p class="govuk-body">Alternatively, you can ask a legal aid adviser to take on your case.</p>
+
+        <p class="govuk-body">Your adviser will check whether you qualify for legal aid at no cost to you by asking about your problem and your finances.
+            If you qualify, in some cases you may need to pay a contribution towards your legal aid.</p>
+
+        <p class="govuk-body"><a class="govuk-link" href="/find-a-legal-adviser?category=debt">Find a legal adviser</a></p>
 
     </div>
     <div class="govuk-grid-column-one-third">
