@@ -1,0 +1,88 @@
+{#
+  Renders help organisations list with intro text
+  Callable to replace intro.
+
+  Params:
+    - organisations <list>
+        List of help organisations
+    - category_name <string>
+        Name of the category of help organisations
+#}
+{% macro org_list_container(organisations, category_name, truncate=False) %}
+  <div class="help-organisations"
+    {% if truncate and truncate is number %}data-truncate="{{ truncate }}{% endif %}"
+    {% if category_name %}data-name="{{ category_name }}"{% endif %}>
+    {% if organisations %}
+      {% if caller %}
+        {{ caller() }}
+      {% else %}
+        <h2 class="govuk-heading-l">
+          {{ _('Help organisations for problems about %(category_name)s',
+            category_name=category_name|lower) }}
+        </h2>
+        <p class="govuk-body">
+          {{ _('You may still get help and advice from the organisations listed
+            below. You don’t have to qualify for legal aid.') }}
+        </p>
+      {% endif %}
+
+      {{ org_list(organisations, category_name) }}
+    {% else %}
+        <p class="govuk-body">
+          {{ _('There has been a problem with listing help organisations. Please refresh this page or try again later.') }}
+        </p>
+    {% endif %}
+  </div>
+{% endmacro %}
+
+{#
+  Renders help organisations list
+
+  Params:
+    - organisations <list>
+        List of help organisations
+#}
+{% macro org_list(organisations, category_name='') %}
+  <ul class="org-list govuk-list">
+    {% for org in organisations %}
+      <li class="vcard {{ org.classname }}">
+        <h3 class="govuk-heading-m"><a class="govuk-link" href="{{ org.website }}"> {{ org.service_name }}</a></h3>
+        {% if org.public_description %}
+          <div class="org-description">
+            {{ org.public_description }}
+          </div>
+        {% endif %}
+
+        {% set has_contact_details = org.telephone_numbers or org.email %}
+        {% if has_contact_details %}
+          <div class="org-details">
+            {% if org.telephone_numbers %}
+              <dl>
+                <dt class="govuk-!-font-weight-bold">{{ _('Helpline') }}:</dt>
+                <dd>
+                  {% for telephone_number in org.telephone_numbers %}
+                    <span class="tel">{{ telephone_number.number }}</span>
+                    {%- if telephone_number.name %} ({{ telephone_number.name }}){% endif -%}
+                    {%- if not loop.last %}, {% endif %}
+                  {% endfor %}
+                </dd>
+              </dl>
+            {% endif %}
+            {% if org.opening_hours %}
+              <dl>
+                <dt class="govuk-!-font-weight-bold">{{ _('Opening hours') }}:</dt>
+                <dd>{{ _(org.opening_hours) }}</dd>
+              </dl>
+            {% endif %}
+            {% if org.email %}
+              <dl>
+                <dt class="govuk-!-font-weight-bold">{{ _('Email') }}:</dt>
+                <dd class="email" href="mailto:{{ org.email }}">{{ org.email }}</dd>
+              </dl>
+            {% endif %}
+          </div>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% endmacro %}
