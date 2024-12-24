@@ -1,64 +1,31 @@
-{#
-  Renders help organisations list with intro text
-  Callable to replace intro.
-
-  Params:
-    - organisations <list>
-        List of help organisations
-    - category_name <string>
-        Name of the category of help organisations
-#}
-{% macro org_list_container(organisations, category_name, truncate=False) %}
-  <div class="help-organisations"
-    {% if truncate and truncate is number %}data-truncate="{{ truncate }}{% endif %}"
-    {% if category_name %}data-name="{{ category_name }}"{% endif %}>
-    {% if organisations %}
-      {% if caller %}
-        {{ caller() }}
-      {% else %}
-        <h2 class="govuk-heading-l">
-          {{ _('Help organisations for problems about %(category_name)s',
-            category_name=category_name|lower) }}
-        </h2>
-        <p class="govuk-body">
-          {{ _('You may still get help and advice from the organisations listed
-            below. You don’t have to qualify for legal aid.') }}
-        </p>
-      {% endif %}
-
-      {{ org_list(organisations, category_name) }}
-    {% else %}
-        <p class="govuk-body">
-          {{ _('There has been a problem with listing help organisations. Please refresh this page or try again later.') }}
-        </p>
+{% macro helpOrganisationsList(organisations, truncate=1) %}
+    <input type="checkbox" id="show-more">
+    <ul class="org-list govuk-list help-organisations">
+    {% for org in organisations %}
+      <li class="help-org {% if loop.index > truncate %}help-org--hidden{% endif %}">
+        {{ helpOrganisationItem(org) }}
+      </li>
+    {% endfor %}
+    </ul>
+    {% if organisations|length > truncate %}
+      <label for="show-more" id="show-more-button" class="govuk-button govuk-button--secondary" data-module="govuk-button">Show {{ organisations|length - truncate }} more</label>
     {% endif %}
-  </div>
 {% endmacro %}
 
-{#
-  Renders help organisations list
 
-  Params:
-    - organisations <list>
-        List of help organisations
-#}
-{% macro org_list(organisations, category_name='') %}
-  <ul class="org-list govuk-list">
-    {% for org in organisations %}
-      <li class="vcard {{ org.classname }}">
-        <h3 class="govuk-heading-m"><a class="govuk-link" href="{{ org.website }}"> {{ org.service_name }}</a></h3>
-        {% if org.public_description %}
-          <div class="org-description">
-            {{ org.public_description }}
-          </div>
-        {% endif %}
+{% macro helpOrganisationItem(org) %}
+    <h3 class="govuk-heading-m"><a href="{{ org.website }}" class="govuk-link">{{ org.service_name }}</a></h3>
+    {% if org.public_description %}
+      <div class="org-description">
+        {{ org.public_description|markdown }}
+      </div>
 
-        {% set has_contact_details = org.telephone_numbers or org.email %}
-        {% if has_contact_details %}
-          <div class="org-details">
+      {% set has_contact_details = org.telephone_numbers or org.email %}
+      {% if has_contact_details %}
+        <div class="org-details">
             {% if org.telephone_numbers %}
               <dl>
-                <dt class="govuk-!-font-weight-bold">{{ _('Helpline') }}:</dt>
+                <dt>{{ _('Helpline') }}:</dt>
                 <dd>
                   {% for telephone_number in org.telephone_numbers %}
                     <span class="tel">{{ telephone_number.number }}</span>
@@ -70,19 +37,17 @@
             {% endif %}
             {% if org.opening_hours %}
               <dl>
-                <dt class="govuk-!-font-weight-bold">{{ _('Opening hours') }}:</dt>
+                <dt>{{ _('Opening hours') }}:</dt>
                 <dd>{{ _(org.opening_hours) }}</dd>
               </dl>
             {% endif %}
             {% if org.email %}
               <dl>
-                <dt class="govuk-!-font-weight-bold">{{ _('Email') }}:</dt>
+                <dt>{{ _('Email') }}:</dt>
                 <dd class="email" href="mailto:{{ org.email }}">{{ org.email }}</dd>
               </dl>
             {% endif %}
           </div>
         {% endif %}
-      </li>
-    {% endfor %}
-  </ul>
+    {% endif %}
 {% endmacro %}
