@@ -4,7 +4,8 @@
 {%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
 {%- from 'categories/components/help-organisations.html' import helpOrganisationsList %}
 
-{% block pageTitle %}Legal aid is available for this type of problem - GOV.UK{% endblock %}
+{% set title = _('Legal aid is available for this type of problem') %}
+{% block pageTitle %}{{ title }} - {{ super() }}{% endblock %}
 
 {% block beforeContent%}
 {{ super() }}
@@ -40,7 +41,7 @@
 
         <h2 class="govuk-heading-m">When you do not need to complete the financial assessment</h2>
 
-        <p class="govuk-body">You should contact CLA without completing the financial assessment if you are:</p>
+        <p class="govuk-body">You should <a class="govuk-link" href="/contact">contact CLA</a> without completing the financial assessment if you are:</p>
 
         <ul class="govuk-list govuk-list--bullet">
             <li>under 18</li>
@@ -51,7 +52,7 @@
 
         <p class="govuk-body">You can choose not to complete the financial assessment online, and instead ask for a call with a BSL interpreter.</p>
 
-        <p class="govuk-body">Fill in the 'Contact CLA' page. Select 'BSL' under 'Communication needs'.</p>
+        <p class="govuk-body">Fill in the '<a class="govuk-link" href="/contact">Contact CLA</a>' page. Select 'BSL' under 'Communication needs'.</p>
 
         {{ govukButton(params={
                 "text": "Check if you qualify financially",
@@ -66,7 +67,7 @@
         <p class="govuk-body">Your adviser will check whether you qualify for legal aid at no cost to you by asking about your problem and your finances.
             If you qualify, in some cases you may need to pay a contribution towards your legal aid.</p>
 
-        <p class="govuk-body"><a class="govuk-link" href="/find-a-legal-adviser?category=debt">Find a legal adviser</a></p>
+        <p class="govuk-body"><a class="govuk-link" href="/find-a-legal-adviser?category={{ fala_category_code|lower }}">Find a legal adviser</a></p>
 
         {% if organisations %}
             <h2 class="govuk-heading-m">{{ _('Other sources of help') }}</h2>
