@@ -99,15 +99,14 @@
         <p class="govuk-body"><a class="govuk-link" href="/find-a-legal-adviser?category=debt">Find a legal adviser</a></p>
 
         {% if organisations %}
-            {% call HelpOrganisations.org_list_container(organisations, category_name, truncate=1) %}
-              <h2 class="govuk-heading-m">{{ _('Other sources of help') }}</h2>
-              <p class="govuk-body">
+            <h2 class="govuk-heading-m">{{ _('Other sources of help') }}</h2>
+            <p class="govuk-body">
                 {% trans category_name=category_name|lower %}
                   You can also get advice from alternative help organisations for issues related to {{ category_name }}.
                 {% endtrans %}
                 {{ _('You don’t have to qualify for legal aid.') }}
-              </p>
-            {% endcall %}
+            </p>
+            {{ helpOrganisationsList(organisations) }}
         {% endif %}
 
 
