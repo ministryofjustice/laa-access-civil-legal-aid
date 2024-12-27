@@ -67,7 +67,9 @@
         <p class="govuk-body">Your adviser will check whether you qualify for legal aid at no cost to you by asking about your problem and your finances.
             If you qualify, in some cases you may need to pay a contribution towards your legal aid.</p>
 
-        <p class="govuk-body"><a class="govuk-link" href="/find-a-legal-adviser?category={{ fala_category_code|lower }}">Find a legal adviser</a></p>
+        {% set fala_url = url_for("find-a-legal-adviser.search", category=fala_category_code.lower() if fala_category_code else None) %}
+        <p class="govuk-body"><a class="govuk-link" href="{{ fala_url }}">Find a legal adviser</a></p>
+
 
         {% if organisations %}
             <h2 class="govuk-heading-m">{{ _('Other sources of help') }}</h2>
