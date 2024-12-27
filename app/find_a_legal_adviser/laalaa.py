@@ -78,14 +78,15 @@ def get_category_code(category_name: str):
         bp,
     )  # We import this here as the blueprint needs to be initialised to contain category information
 
+    if not isinstance(category_name, str):
+        return None
+
     category_name = category_name.lower()
 
     if (
         category_name == "domestic abuse"
     ):  # Domestic abuse falls under the family category of law in FALA
         category_name = "family"
-
-    print(bp.categories)
 
     for category in bp.categories:
         if category["name"].lower() == category_name:
