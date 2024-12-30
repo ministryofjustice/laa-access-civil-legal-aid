@@ -107,7 +107,7 @@ def create_app(config_class=Config):
         content_security_policy_nonce_in=["script-src"],
         force_https=False,
         session_cookie_secure=False,
-        session_cookie_http_only=True,
+        session_cookie_http_only=Config.SESSION_COOKIE_HTTP_ONLY,
         session_cookie_samesite="Strict",
     )
 
