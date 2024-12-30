@@ -21,3 +21,11 @@
         <p class="govuk-body">{{ description }}</p>
     </div>
 {%- endmacro %}
+
+{% macro more_problems_link(text, destination) %}
+    <hr class="govuk-section-break--l govuk-section-break--visible govuk-!-margin-top-9">
+    <h2 class="govuk-heading-m">
+        <a class="govuk-link govuk-link--no-visited-state" href="{{ url_for('categories.index') }}">{{ _('See all problems covered by legal aid') }}</a>
+    </h2>
+    <hr class="govuk-section-break--l govuk-section-break--visible govuk-!-margin-bottom-9">
+{% endmacro %}
