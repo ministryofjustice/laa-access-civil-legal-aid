@@ -11,10 +11,11 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">Find problems covered by legal aid</h1>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">Find problems covered by legal aid</h1>
 
         <p class="govuk-body-l govuk-!-font-weight-bold">These are the problems covered by legal aid. Choose the problem you need help with.</p>
 
+        <div class="govuk-!-margin-top-8">
         {{ list_item("Children, families and relationships",
                      "Includes children in care, children and social services. Also, help with children and finances if you divorce or split up.",
                      url_for("categories.family.landing")) }}
@@ -63,9 +64,7 @@
         {{ more_problems_link("More problems covered by legal aid", url_for('categories.more_problems')) }}
 
         </div>
-
     </div>
-
 </div>
 
 {% endblock %}
