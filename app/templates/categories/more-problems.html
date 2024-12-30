@@ -2,6 +2,9 @@
 {%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink-%}
 {%- from 'categories/components/list-item.html' import list_item, list_item_small -%}
 
+{% set title = _("More problems covered by legal aid") %}
+{% block pageTitle %}{{ title }} - GOV.UK{% endblock %}
+
 {% block beforeContent%}
 {{ super() }}
 {{ govukBackLink({
@@ -13,8 +16,7 @@
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-m">More problems covered by legal aid</h1>
-        <br>
+        <h1 class="govuk-heading-m govuk-!-margin-bottom-8">{{ title }}</h1>
 
         {{ list_item_small(_("Adopting a child from outside the UK"),
                 _("Adoption processes in the courts."),
