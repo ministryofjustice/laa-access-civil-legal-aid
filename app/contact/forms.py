@@ -4,7 +4,7 @@ from govuk_frontend_wtf.wtforms_widgets import GovSubmitInput
 from wtforms.fields import SubmitField
 from app.categories.widgets import CategoryCheckboxInput
 from wtforms.validators import InputRequired
-from flask_babel import _
+from flask_babel import lazy_gettext as _
 
 
 class ReasonsForContactingForm(FlaskForm):
