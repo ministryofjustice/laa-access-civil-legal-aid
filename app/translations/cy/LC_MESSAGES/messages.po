@@ -50,28 +50,28 @@ msgid "Select if this is about the police, prisons or detention centres"
 msgstr ""
 
 msgid "I don’t know how to answer a question"
-msgstr ""
+msgstr "Dydw i ddim yn gwybod sut i ateb cwestiwn"
 
 msgid "I don’t have the paperwork I need"
-msgstr ""
+msgstr "Does gen i ddim y gwaith papur rwyf ei angen"
 
 msgid "I’d prefer to speak to someone"
-msgstr ""
+msgstr "Byddai’n well gennyf siarad â rhywun"
 
 msgid "I have trouble using online services"
-msgstr ""
+msgstr "Rwy’n cael trafferth defnyddio gwasanaethau ar-lein"
 
 msgid "I don’t understand how this service can help me"
-msgstr ""
+msgstr "Dydw i ddim yn deall sut gall y gwasanaeth hwn fy helpu"
 
 msgid "My problem area isn’t covered"
-msgstr ""
+msgstr "Nid yw’n ymdrin â maes fy mhroblem"
 
 msgid "I’d prefer not to say"
-msgstr ""
+msgstr "Mae’n well gen i beidio â dweud"
 
 msgid "Another reason"
-msgstr ""
+msgstr "Rheswm arall"
 
 msgid "Asylum and immigration"
 msgstr ""
