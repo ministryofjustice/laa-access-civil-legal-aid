@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink-%}
+{%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton %}
+{%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
+
+
+{% block pageTitle %}Legal aid is available for this type of problem - GOV.UK{% endblock %}
+
+{% block beforeContent %}
+  {{ super() }}
+  {{ govukBackLink({
+    'text': "Back",
+    'href': url_for('main.index')
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">Why do you want to contact Civil Legal Advice?</h1>
+
+        <p class="govuk-body-lead">However, you may need to also qualify financially.</p>
+
+
+        {{ govukButton(params={
+                "text": "Continue to contact CLA",
+                "isStartButton": "true",
+                "classes": "govuk-!-margin-top-2 govuk-!-margin-bottom-8"
+                }) }}
+        
+        <div class="govuk-inset-text">
+            Your session will time out after 30 minutes of inactivity. We do this for your security.
+        </div>
+
+    </div>
+</div>
+{% endblock %}

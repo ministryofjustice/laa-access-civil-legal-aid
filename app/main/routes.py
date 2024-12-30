@@ -52,6 +52,11 @@ def status():
     return "OK"
 
 
+@bp.route("/reason-for-contacting", methods=["GET"])
+def rfc():
+    return render_template("contact/rfc.html")
+
+
 @bp.route("/service-unavailable", methods=["GET"])
 def service_unavailable_page():
     if not current_app.config["SERVICE_UNAVAILABLE"]:
