@@ -1,29 +1,41 @@
-from wtforms import Form
+from flask_wtf import FlaskForm
 from wtforms import SelectMultipleField
-from app.contact.widgets import RFCCheckboxInput
+from govuk_frontend_wtf.wtforms_widgets import GovSubmitInput
+from wtforms.fields import SubmitField
+from app.categories.widgets import CategoryCheckboxInput
+from wtforms.validators import InputRequired
+from flask_babel import _
 
 
-class ContactQuestionForm(Form):
+class ReasonsForContactingForm(FlaskForm):
     next_step_mapping = {
-        "notsure": "contact",
+        "*": "categories.results.contact",
     }
 
-    question = SelectMultipleField(
-        widget=RFCCheckboxInput(show_divider=True, hint_text="Select all that apply"),
+    title = "Why do you want to contact Civil Legal Advice?"
+
+    rfc_choices = SelectMultipleField(
+        title,
+        widget=CategoryCheckboxInput(hint_text="Select all that apply"),
+        validators=[
+            InputRequired(message="Select yes if you want to accept functional cookies")
+        ],
         choices=[
-            ("CANT_ANSWER", "I don’t know how to answer a question"),
-            ("MISSING_PAPERWORK", "I don’t have the paperwork I need"),
+            ("CANT_ANSWER", _("I don’t know how to answer a question")),
+            ("MISSING_PAPERWORK", _("I don’t have the paperwork I need")),
             (
                 "PREFER_SPEAKING",
-                "I’d prefer to speak to someone",
+                _("I’d prefer to speak to someone"),
             ),
-            ("DIFFICULTY_ONLINE", "I have trouble using online services"),
-            ("HOW_SERVICE_HELPS", "I don’t understand how this service can help me"),
+            ("DIFFICULTY_ONLINE", _("I have trouble using online services")),
+            ("HOW_SERVICE_HELPS", _("I don’t understand how this service can help me")),
             (
                 "AREA_NOT_COVERED",
-                "My problem area isn’t covered",
+                _("My problem area isn’t covered"),
             ),
-            ("PNS", "I’d prefer not to say"),
-            ("OTHER", "Another reason"),
+            ("PNS", _("I’d prefer not to say")),
+            ("OTHER", _("Another reason")),
         ],
     )
+
+    save = SubmitField("Continue to contact CLA", widget=GovSubmitInput())

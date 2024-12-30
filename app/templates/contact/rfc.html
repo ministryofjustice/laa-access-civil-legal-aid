@@ -17,17 +17,12 @@
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl">Why do you want to contact Civil Legal Advice?</h1>
-
-        <p class="govuk-body-lead">However, you may need to also qualify financially.</p>
-
-
-        {{ govukButton(params={
-                "text": "Continue to contact CLA",
-                "isStartButton": "true",
-                "classes": "govuk-!-margin-top-2 govuk-!-margin-bottom-8"
-                }) }}
-        
+        <form action="" method="post" novalidate>
+            {{ form.csrf_token }}
+            {{ form.rfc_choices() }}
+            {{ form.save }}
+        </form>
+    
         <div class="govuk-inset-text">
             Your session will time out after 30 minutes of inactivity. We do this for your security.
         </div>

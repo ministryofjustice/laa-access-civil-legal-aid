@@ -16,6 +16,7 @@ from werkzeug.exceptions import HTTPException
 
 from app.main import bp
 from app.main.forms import CookiesForm
+from app.contact.forms import ReasonsForContactingForm
 
 
 @bp.get("/main")
@@ -52,9 +53,12 @@ def status():
     return "OK"
 
 
-@bp.route("/reason-for-contacting", methods=["GET"])
-def rfc():
-    return render_template("contact/rfc.html")
+@bp.route("/reason-for-contacting", methods=["GET", "POST"])
+def reasons_for_contacting():
+    form = ReasonsForContactingForm()
+    if form.validate_on_submit():
+        return redirect(url_for("categories.results.contact"))
+    return render_template("contact/rfc.html", form=form)
 
 
 @bp.route("/service-unavailable", methods=["GET"])
