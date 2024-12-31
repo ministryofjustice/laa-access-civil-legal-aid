@@ -18,57 +18,57 @@
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl">Legal aid is available for this type of problem</h1>
+        <h1 class="govuk-heading-xl">{% trans %}Legal aid is available for this type of problem{% endtrans %}</h1>
         <p>{{ category }}</p>
 
-        <p class="govuk-body-lead">However, you may need to also qualify financially.</p>
+        <p class="govuk-body-lead">{% trans %}However, you may need to also qualify financially.{% endtrans %}</p>
 
-        <p class="govuk-body">If you do qualify financially, you can speak to Civil Legal Advice (CLA), a national helpline for certain legal aid problems in England and Wales.</p>
+        <p class="govuk-body">{% trans %}If you do qualify financially, you can speak to Civil Legal Advice (CLA), a national helpline for certain legal aid problems in England and Wales.{% endtrans %}</p>
 
-        <p class="govuk-body">The CLA operator will check all the information you’ve given through this service.</p>
+        <p class="govuk-body">{% trans %}The CLA operator will check all the information you’ve given through this service.{% endtrans %}</p>
 
-        <h3 class="govuk-heading-m">What you need to check if you qualify financially</h3>
+        <h3 class="govuk-heading-m">{% trans %}What you need to check if you qualify financially{% endtrans %}</h3>
 
-        <p class="govuk-body">You and your partner (if you have one) will need:</p>
-
-        <ul class="govuk-list govuk-list--bullet">
-            <li>recent payslips (if you’re working) and bank statements</li>
-            <li>a summary of your income tax and National Insurance contributions</li>
-            <li>details of any savings and investments you have</li>
-            <li>details of any benefits you receive</li>
-            <li>mortgage statements and a current valuation for any property you own</li>
-        </ul>
-
-        <h2 class="govuk-heading-m">When you do not need to complete the financial assessment</h2>
-
-        <p class="govuk-body">You should <a class="govuk-link" href="/contact">contact CLA</a> without completing the financial assessment if you are:</p>
+        <p class="govuk-body">{% trans %}You and your partner (if you have one) will need:{% endtrans %}</p>
 
         <ul class="govuk-list govuk-list--bullet">
-            <li>under 18</li>
-            <li>have capital trapped in a property you own or other money or assets that you cannot access</li>
+            <li>{% trans %}recent payslips (if you’re working) and bank statements{% endtrans %}</li>
+            <li>{% trans %}a summary of your income tax and National Insurance contributions{% endtrans %}</li>
+            <li>{% trans %}details of any savings and investments you have{% endtrans %}</li>
+            <li>{% trans %}details of any benefits you receive{% endtrans %}</li>
+            <li>{% trans %}mortgage statements and a current valuation for any property you own{% endtrans %}</li>
         </ul>
 
-        <h4 class="govuk-heading-s">If you use British Sign Language (BSL)</h4>
+        <h2 class="govuk-heading-m">{% trans %}When you do not need to complete the financial assessment{% endtrans %}</h2>
 
-        <p class="govuk-body">You can choose not to complete the financial assessment online, and instead ask for a call with a BSL interpreter.</p>
+        <p class="govuk-body">{% trans %}You should <a class="govuk-link" href="/contact">contact CLA</a> without completing the financial assessment if you are:{% endtrans %}</p>
 
-        <p class="govuk-body">Fill in the '<a class="govuk-link" href="/contact">Contact CLA</a>' page. Select 'BSL' under 'Communication needs'.</p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>{% trans %}under 18{% endtrans %}</li>
+            <li>{% trans %}have capital trapped in a property you own or other money or assets that you cannot access{% endtrans %}</li>
+        </ul>
+
+        <h4 class="govuk-heading-s">{% trans %}If you use British Sign Language (BSL){% endtrans %}</h4>
+
+        <p class="govuk-body">{% trans %}You can choose not to complete the financial assessment online, and instead ask for a call with a BSL interpreter.{% endtrans %}</p>
+
+        <p class="govuk-body">{% trans %}Fill in the '<a class="govuk-link" href="/contact">Contact CLA</a>' page. Select 'BSL' under 'Communication needs'.{% endtrans %}</p>
 
         {{ govukButton(params={
-                "text": "Check if you qualify financially",
+                "text": _("Check if you qualify financially"),
                 "isStartButton": "true",
                 "classes": "govuk-!-margin-top-2 govuk-!-margin-bottom-8"
                 }) }}
 
-        <h2 class="govuk-heading-m">Before you start</h2>
+        <h2 class="govuk-heading-m">{% trans %}Before you start{% endtrans %}</h2>
 
-        <p class="govuk-body">Alternatively, you can ask a legal aid adviser to take on your case.</p>
+        <p class="govuk-body">{% trans %}Alternatively, you can ask a legal aid adviser to take on your case.{% endtrans %}</p>
 
-        <p class="govuk-body">Your adviser will check whether you qualify for legal aid at no cost to you by asking about your problem and your finances.
-            If you qualify, in some cases you may need to pay a contribution towards your legal aid.</p>
+        <p class="govuk-body">{% trans %}Your adviser will check whether you qualify for legal aid at no cost to you by asking about your problem and your finances.
+            If you qualify, in some cases you may need to pay a contribution towards your legal aid.{% endtrans %}</p>
 
         {% set fala_url = url_for("find-a-legal-adviser.search", category=fala_category_code.lower() if fala_category_code else None) %}
-        <p class="govuk-body"><a class="govuk-link" href="{{ fala_url }}">Find a legal adviser</a></p>
+        <p class="govuk-body"><a class="govuk-link" href="{{ fala_url }}">{% trans %}Find a legal adviser{% endtrans %}</a></p>
 
 
         {% if organisations %}
@@ -113,14 +113,12 @@
     </div>
     <div class="govuk-grid-column-one-third">
         <aside class="sidebar">
-            <h2 class="govuk-heading-m">To qualify for legal aid:</h2>
+            <h2 class="govuk-heading-m">{% trans %}To qualify for legal aid:{% endtrans %}</h2>
             <ul class="govuk-list govuk-list--bullet">
-                <li>your income (or combined income if you have a partner) shouldn’t be more than £2,657 a month before tax</li>
-                <li>your savings (or combined savings if you have a partner) shouldn’t be more than £8,000</li>
+                <li>{% trans %}your income (or combined income if you have a partner) shouldn’t be more than £2,657 a month before tax{% endtrans %}</li>
+                <li>{% trans %}your savings (or combined savings if you have a partner) shouldn’t be more than £8,000{% endtrans %}</li>
             </ul>
-            <p class="govuk-body-s">
-                These limits can vary in certain circumstances – for example, if you need advice about domestic abuse.
-            </p>
+            <p class="govuk-body-s">{% trans %}These limits can vary in certain circumstances – for example, if you need advice about domestic abuse.{% endtrans %}</p>
         </aside>
     </div>
 </div>
