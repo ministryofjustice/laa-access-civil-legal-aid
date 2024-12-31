@@ -8,7 +8,7 @@
     {% endfor %}
     </ul>
     {% if organisations|length > truncate %}
-      <label for="show-more" id="show-more-button" class="govuk-button govuk-button--secondary" data-module="govuk-button">Show {{ organisations|length - truncate }} more</label>
+      <label for="show-more" id="show-more-button" class="govuk-button govuk-button--secondary" data-module="govuk-button">{% trans count=organisations|length - truncate %}Show {{ count }} more{% endtrans %}</label>
     {% endif %}
 {% endmacro %}
 
