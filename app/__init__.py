@@ -9,7 +9,7 @@ from govuk_frontend_wtf.main import WTFormsHelpers
 from jinja2 import ChoiceLoader, PackageLoader, PrefixLoader
 from app.main import get_locale
 import sentry_sdk
-
+from app.extensions import cache
 from app.config import Config
 
 compress = Compress()
@@ -114,6 +114,8 @@ def create_app(config_class=Config):
     WTFormsHelpers(app)
 
     Babel(app, locale_selector=get_locale)
+
+    cache.init_app(app)
 
     # Register blueprints
     from app.main import bp as main_bp
