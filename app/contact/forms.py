@@ -14,7 +14,7 @@ class ReasonsForContactingForm(FlaskForm):
 
     title = "Why do you want to contact Civil Legal Advice?"
 
-    rfc_choices = SelectMultipleField(
+    reasons = SelectMultipleField(
         title,
         widget=CategoryCheckboxInput(hint_text="Select all that apply"),
         validators=[

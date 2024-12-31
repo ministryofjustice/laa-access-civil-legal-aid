@@ -53,7 +53,7 @@ def status():
     return "OK"
 
 
-@bp.route("/reason-for-contacting", methods=["GET", "POST"])
+@bp.route("/reasons-for-contacting", methods=["GET", "POST"])
 def reasons_for_contacting():
     form = ReasonsForContactingForm()
     if form.validate_on_submit():
