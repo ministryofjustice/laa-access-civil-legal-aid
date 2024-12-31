@@ -26,3 +26,4 @@ class Config(object):
         "https://laa-legal-adviser-api-production.cloud-platform.service.justice.gov.uk",
     )
     POSTCODES_IO_URL = os.environ.get("POSTCODES_IO_URL", "https://api.postcodes.io")
+    CLA_BACKEND_URL = os.environ.get("CLA_BACKEND_URL", "http://127.0.0.1:8010")

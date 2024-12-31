@@ -5,6 +5,7 @@ from wtforms.fields import SubmitField
 from app.categories.widgets import CategoryCheckboxInput
 from wtforms.validators import InputRequired
 from flask_babel import lazy_gettext as _
+from flask import request
 
 
 class ReasonsForContactingForm(FlaskForm):
@@ -39,3 +40,11 @@ class ReasonsForContactingForm(FlaskForm):
     )
 
     save = SubmitField("Continue to contact CLA", widget=GovSubmitInput())
+
+    def api_payload(self):
+        return {
+            "reasons": [{"category": category} for category in self.reasons.data],
+            "other_reasons": "",
+            "user_agent": request.headers.get("User-Agent") or "Unknown",
+            "referrer": "Unknown",
+        }

@@ -1,4 +1,5 @@
 import datetime
+import requests
 from urllib.parse import urlparse
 from flask import (
     flash,
@@ -17,6 +18,7 @@ from werkzeug.exceptions import HTTPException
 from app.main import bp
 from app.main.forms import CookiesForm
 from app.contact.forms import ReasonsForContactingForm
+from app.contact.api import post_reasons_for_contacting
 
 
 @bp.get("/main")
@@ -57,6 +59,11 @@ def status():
 def reasons_for_contacting():
     form = ReasonsForContactingForm()
     if form.validate_on_submit():
+        try:
+            result = post_reasons_for_contacting(form=form)
+            print("API Response:", result)
+        except requests.HTTPError as e:
+            print(f"HTTP Error occurred: {e}")
         return redirect(url_for("categories.results.contact"))
     return render_template("contact/rfc.html", form=form)
 
