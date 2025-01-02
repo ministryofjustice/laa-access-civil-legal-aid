@@ -3,10 +3,11 @@ from app.categories.widgets import CategoryCheckboxInput
 from app.categories.forms import QuestionForm
 from wtforms.validators import InputRequired
 from app.categories.x_cat.forms import AreYouUnder18Form
+from app.categories.categories import Category
 
 
 class DiscriminationQuestionForm(QuestionForm):
-    category = "Discrimination"
+    category = Category.DISCRIMINATION
 
 
 class DiscriminationWhereForm(DiscriminationQuestionForm):

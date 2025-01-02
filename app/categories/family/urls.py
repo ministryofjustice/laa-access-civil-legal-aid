@@ -1,11 +1,12 @@
 from app.categories.family import bp
 from app.categories.views import CategoryLandingPage
+from app.categories.categories import Category
 
 
 class FamilyLandingPage(CategoryLandingPage):
     question_title = "Children, families, and relationships"
 
-    category = "Family"
+    category = Category.FAMILY
 
     routing_map = {
         "social_services": "contact.contact_us",

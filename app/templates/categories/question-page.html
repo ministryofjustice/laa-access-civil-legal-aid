@@ -12,7 +12,7 @@
     'text': "Back"
   }) }}
 
-{% if form.category == "Domestic Abuse" %}
+{% if form.category == "Category.DOMESTIC_ABUSE" %}
     {{ govukExitThisPage("Exit this page")}}
 {% endif %}
 
@@ -26,7 +26,7 @@
     <div class="govuk-grid-column-two-thirds">
 
         {% block formHeading %}
-            <h1 class="govuk-heading-xl">{{ form.category }}</h1>
+            <h1 class="govuk-heading-xl">{{ form.category.value }}</h1>
         {% endblock %}
 
         <form action="" method="get" novalidate>
