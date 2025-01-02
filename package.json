@@ -5,7 +5,8 @@
   },
   "scripts": {
     "gov-images": "cp -R node_modules/govuk-frontend/dist/govuk/assets/. app/static/dist",
-    "build": "npm run gov-images && node esbuild.config.js",
+    "copy-images": "cp -R app/static/src/images/. app/static/dist/images && npm run gov-images",
+    "build": "npm run copy-images && node esbuild.config.js",
     "watch": "npm run gov-images && node esbuild.config.js --watch"
   },
   "dependencies": {
