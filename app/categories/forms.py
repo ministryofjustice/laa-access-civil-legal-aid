@@ -69,7 +69,7 @@ class ChildInCareQuestionForm(QuestionForm):
     title = _("Is this about a child who is or has been in care?")
 
     next_step_mapping = {
-        "yes": "contact.contact",
+        "yes": "contact.contact_us",
         "no": "categories.results.in_scope",
     }
 

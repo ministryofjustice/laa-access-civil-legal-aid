@@ -4,7 +4,7 @@ The contact page is currently a placeholder for further development. It can be u
 
 ```python
     next_step_mapping/routing_map = {
-        "selection": "contact.contact",
+        "selection": "contact.contact_us",
     }
 ```
 
@@ -29,4 +29,4 @@ The reason for contacting form is a direct contact method on Access Civil Legal 
         }
 ```
 
-The reason-for-contacting route handles the previous referrer via a get request.
+The reasons-for-contacting route handles the previous referrer via a get request.

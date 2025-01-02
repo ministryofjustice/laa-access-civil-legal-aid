@@ -1,5 +1,4 @@
 import datetime
-import requests
 from urllib.parse import urlparse
 from flask import (
     flash,
@@ -17,8 +16,6 @@ from werkzeug.exceptions import HTTPException
 
 from app.main import bp
 from app.main.forms import CookiesForm
-from app.contact.forms import ReasonsForContactingForm
-from app.contact.api import post_reasons_for_contacting
 
 
 @bp.get("/main")
@@ -53,22 +50,6 @@ def set_locale(locale):
 @bp.route("/status", methods=["GET"])
 def status():
     return "OK"
-
-
-@bp.route("/reasons-for-contacting", methods=["GET", "POST"])
-def reasons_for_contacting():
-    form = ReasonsForContactingForm()
-    if request.method == "GET":
-        form.referrer.data = request.referrer or "Unknown"
-    if form.validate_on_submit():
-        try:
-            result = post_reasons_for_contacting(form=form)
-            next_step = form.next_step_mapping.get("*")
-            print("API Response:", result)
-        except requests.HTTPError as e:
-            print(f"HTTP Error occurred: {e}")
-        return redirect(url_for(next_step))
-    return render_template("contact/rfc.html", form=form)
 
 
 @bp.route("/service-unavailable", methods=["GET"])
