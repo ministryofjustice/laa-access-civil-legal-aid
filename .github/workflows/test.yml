@@ -42,15 +42,70 @@ jobs:
   functional_test:
     name: Functional Test
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: test_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U test_user -d test_db"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
     - name: Checkout the repository
       uses: actions/checkout@v4
 
-    - name: Set up Python
+    - name: Cache CLA Backend Build
+      uses: actions/cache@v4
+      id: cla_backend_cache
+      with:
+        path: cla_backend/.venv
+        key: cla-backend-${{ runner.os }}-${{ hashFiles('cla_backend/requirements*.txt') }}
+        restore-keys: |
+          cla-backend-${{ runner.os }}-
+
+    - name: Checkout CLA Backend
+      uses: actions/checkout@v4
+      with:
+        repository: ministryofjustice/cla_backend
+        path: cla_backend
+
+    - name: Set up Python for CLA Backend
       uses: actions/setup-python@v5
       with:
         python-version: '3.12'
-        cache: 'pip' # caching pip dependencies
+        cache: 'pip'
+
+    - name: Install CLA Backend dependencies
+      if: steps.cla_backend_cache.outputs.cache-hit != 'true'
+      run: |
+        cd cla_backend
+        python -m pip install --upgrade pip
+        python -m pip install -r requirements.txt -r requirements-dev.txt
+        python -m venv .venv
+        . .venv/bin/activate
+        pip install -r requirements.txt -r requirements-dev.txt
+
+    - name: Initialize CLA Backend Database
+      env:
+        DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+      run: |
+        cd cla_backend
+        python manage.py db upgrade
+        python manage.py seed_data  # Replace with actual seeding command
+
+    - name: Set up Python for Functional Tests
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        cache: 'pip'
+
     - uses: actions/setup-node@v4
       with:
         node-version: '20.x'
@@ -61,12 +116,17 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install -r requirements/generated/requirements-development.txt
 
-    - name: Functional test with pytest
+    - name: Install Node.js dependencies
       run: |
-        pip install pytest pytest-cov
         npm install
         npm run build
         playwright install
+
+    - name: Functional test with pytest
+      env:
+        DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+      run: |
+        pip install pytest pytest-cov
         pytest tests/functional_tests --doctest-modules --junitxml=junit/functional-test-results.xml --cov=com --cov-report=xml --cov-report=html
 
     - name: Upload pytest test results
@@ -74,7 +134,6 @@ jobs:
       with:
         name: pytest-functional-results
         path: junit/functional-test-results.xml
-      # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
 
     - name: Upload axe results
