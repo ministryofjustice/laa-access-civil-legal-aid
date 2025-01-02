@@ -63,7 +63,7 @@ jobs:
 
     - name: Check system resources
       run: | 
-        echo "CPU cores: $(nproc)" echo "Memory: $(free -h)"
+        lscpu
 
     - name: Functional test with pytest
       run: |
