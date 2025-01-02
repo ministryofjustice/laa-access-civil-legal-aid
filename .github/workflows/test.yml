@@ -39,103 +39,105 @@ jobs:
         name: coverage-xml-report
         path: coverage.xml
 
-functional_test:
-  name: Functional Test
-  runs-on: ubuntu-latest
-  services:
-    postgres:
-      image: postgres:15
+  functional_test:
+    name: Functional Test
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: test_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U test_user -d test_db"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v4
+
+    - name: Cache CLA Backend Build
+      uses: actions/cache@v4
+      id: cla_backend_cache
+      with:
+        path: cla_backend/.venv
+        key: cla-backend-${{ runner.os }}-${{ hashFiles('cla_backend/requirements*.txt') }}
+        restore-keys: |
+          cla-backend-${{ runner.os }}-
+
+    - name: Checkout CLA Backend
+      uses: actions/checkout@v4
+      with:
+        repository: ministryofjustice/cla_backend
+        path: cla_backend
+
+    - name: Set up Python for CLA Backend
+      uses: actions/setup-python@v5
+      with:
+        python-version: '2.7'
+        cache: 'pip'
+
+    - name: Install CLA Backend dependencies
+      if: steps.cla_backend_cache.outputs.cache-hit != 'true'
+      run: |
+        cd cla_backend
+        python2.7 -m pip install --upgrade pip
+        python2.7 -m pip install -r requirements/generated/requirements-dev.txt
+        python2.7 -m venv .venv
+        . .venv/bin/activate
+        pip install -r requirements/generated/requirements-dev.txt
+
+    - name: Initialize CLA Backend Database
       env:
-        POSTGRES_USER: test_user
-        POSTGRES_PASSWORD: test_password
-        POSTGRES_DB: test_db
-      ports:
-        - 5432:5432
-      options: >-
-        --health-cmd "pg_isready -U test_user -d test_db"
-        --health-interval 10s
-        --health-timeout 5s
-        --health-retries 5
+        DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+      run: |
+        cd cla_backend
+        python2.7 manage.py db upgrade
 
-  steps:
-  - name: Checkout the repository
-    uses: actions/checkout@v4
+    - name: Set up Python for Functional Tests
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        cache: 'pip'
 
-  - name: Cache CLA Backend Build
-    uses: actions/cache@v4
-    id: cla_backend_cache
-    with:
-      path: cla_backend/.venv
-      key: cla-backend-${{ runner.os }}-${{ hashFiles('cla_backend/requirements*.txt') }}
-      restore-keys: |
-        cla-backend-${{ runner.os }}-
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
 
-  - name: Checkout CLA Backend
-    uses: actions/checkout@v4
-    with:
-      repository: ministryofjustice/cla_backend
-      path: cla_backend
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install -r requirements/generated/requirements-development.txt
 
-  - name: Install Python 2.7
-    run: |
-      sudo apt-get update
-      sudo apt-get install -y python2.7 python2.7-dev
-      python2.7 -m ensurepip || true
-      python2.7 -m pip install --upgrade pip
+    - name: Install Node.js dependencies
+      run: |
+        npm install
+        npm run build
+        playwright install
 
-  - name: Install CLA Backend Dependencies for Python 2
-    if: steps.cla_backend_cache.outputs.cache-hit != 'true'
-    run: |
-      cd cla_backend
-      python2.7 -m pip install -r requirements/generated/requirements-production.txt
+    - name: Functional test with pytest
+      env:
+        DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
+      run: |
+        pip install pytest pytest-cov
+        pytest tests/functional_tests --doctest-modules --junitxml=junit/functional-test-results.xml --cov=com --cov-report=xml --cov-report=html
 
-  - name: Initialize CLA Backend Database
-    env:
-      DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
-    run: |
-      cd cla_backend
-      python2.7 manage.py db upgrade
-      python2.7 manage.py seed_data  # Replace with actual seeding command
+    - name: Upload pytest test results
+      uses: actions/upload-artifact@v4
+      with:
+        name: pytest-functional-results
+        path: junit/functional-test-results.xml
+      if: ${{ always() }}
 
-  - name: Set up Python for Functional Tests
-    uses: actions/setup-python@v5
-    with:
-      python-version: '3.12'
-      cache: 'pip'
-
-  - uses: actions/setup-node@v4
-    with:
-      node-version: '20.x'
-      cache: 'npm'
-
-  - name: Install dependencies
-    run: |
-      python -m pip install --upgrade pip
-      python -m pip install -r requirements/generated/requirements-development.txt
-
-  - name: Install Node.js dependencies
-    run: |
-      npm install
-      npm run build
-      playwright install
-
-  - name: Functional test with pytest
-    env:
-      DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
-    run: |
-      pip install pytest pytest-cov
-      pytest tests/functional_tests --doctest-modules --junitxml=junit/functional-test-results.xml --cov=com --cov-report=xml --cov-report=html
-
-  - name: Upload pytest test results
-    uses: actions/upload-artifact@v4
-    with:
-      name: pytest-functional-results
-      path: junit/functional-test-results.xml
-    if: ${{ always() }}
-
-  - name: Upload axe results
-    uses: actions/upload-artifact@v4
-    with:
-      name: axe-results
-      path: tests/functional_tests/accessibility_output/*.json
-    if: ${{ always() }}
+    - name: Upload axe results
+      uses: actions/upload-artifact@v4
+      with:
+        name: axe-results
+        path: tests/functional_tests/accessibility_output/*.json
+      if: ${{ always() }}
