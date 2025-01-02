@@ -58,6 +58,8 @@ def status():
 @bp.route("/reasons-for-contacting", methods=["GET", "POST"])
 def reasons_for_contacting():
     form = ReasonsForContactingForm()
+    if request.method == "GET":
+        form.referrer.data = request.referrer or "Unknown"
     if form.validate_on_submit():
         try:
             result = post_reasons_for_contacting(form=form)

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import SelectMultipleField
+from wtforms import SelectMultipleField, HiddenField
 from govuk_frontend_wtf.wtforms_widgets import GovSubmitInput
 from wtforms.fields import SubmitField
 from app.categories.widgets import CategoryCheckboxInput
@@ -39,6 +39,7 @@ class ReasonsForContactingForm(FlaskForm):
         ],
     )
 
+    referrer = HiddenField()
     save = SubmitField("Continue to contact CLA", widget=GovSubmitInput())
 
     def api_payload(self):
@@ -46,5 +47,5 @@ class ReasonsForContactingForm(FlaskForm):
             "reasons": [{"category": category} for category in self.reasons.data],
             "other_reasons": "",
             "user_agent": request.headers.get("User-Agent") or "Unknown",
-            "referrer": "Unknown",
+            "referrer": self.referrer.data or "Unknown",
         }
