@@ -1,0 +1,53 @@
+{% macro helpOrganisationsList(organisations, truncate=1) %}
+    <input type="checkbox" id="show-more">
+    <ul class="org-list govuk-list help-organisations">
+    {% for org in organisations %}
+      <li class="help-org {% if loop.index > truncate %}help-org--hidden{% endif %}">
+        {{ helpOrganisationItem(org) }}
+      </li>
+    {% endfor %}
+    </ul>
+    {% if organisations|length > truncate %}
+      <label for="show-more" id="show-more-button" class="govuk-button govuk-button--secondary" data-module="govuk-button">{% trans count=organisations|length - truncate %}Show {{ count }} more{% endtrans %}</label>
+    {% endif %}
+{% endmacro %}
+
+
+{% macro helpOrganisationItem(org) %}
+    <h3 class="govuk-heading-m"><a href="{{ org.website }}" class="govuk-link">{{ org.service_name }}</a></h3>
+    {% if org.public_description %}
+      <div class="org-description">
+        {{ org.public_description|markdown }}
+      </div>
+
+      {% set has_contact_details = org.telephone_numbers or org.email %}
+      {% if has_contact_details %}
+        <div class="org-details">
+            {% if org.telephone_numbers %}
+              <dl>
+                <dt>{{ _('Helpline') }}:</dt>
+                <dd>
+                  {% for telephone_number in org.telephone_numbers %}
+                    <span class="tel">{{ telephone_number.number }}</span>
+                    {%- if telephone_number.name %} ({{ telephone_number.name }}){% endif -%}
+                    {%- if not loop.last %}, {% endif %}
+                  {% endfor %}
+                </dd>
+              </dl>
+            {% endif %}
+            {% if org.opening_hours %}
+              <dl>
+                <dt>{{ _('Opening hours') }}:</dt>
+                <dd>{{ _(org.opening_hours) }}</dd>
+              </dl>
+            {% endif %}
+            {% if org.email %}
+              <dl>
+                <dt>{{ _('Email') }}:</dt>
+                <dd class="email" href="mailto:{{ org.email }}">{{ org.email }}</dd>
+              </dl>
+            {% endif %}
+          </div>
+        {% endif %}
+    {% endif %}
+{% endmacro %}

@@ -25,6 +25,9 @@ def set_category_question_answer(
     answers.append({"question": question_title, "answer": answer, "category": category})
 
     session["category_answers"] = answers
+    session["category"] = (
+        category  # Update the category based on the question the user last answered
+    )
 
 
 def get_category_question_answer(question_title: str) -> str | None:
