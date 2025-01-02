@@ -4,7 +4,7 @@ import pytest
 rfc_form_routing = [
     pytest.param(
         ["I don’t know how to answer a question"],
-        "Why do you want to contact Civil Legal Advice?",
+        "Contact us page",
         id="single_answer",
     ),
     pytest.param(
@@ -13,8 +13,13 @@ rfc_form_routing = [
             "My problem area isn’t covered",
             "Another reason",
         ],
-        "Why do you want to contact Civil Legal Advice?",
+        "Contact us page",
         id="multiple_answers",
+    ),
+    pytest.param(
+        [],
+        "Contact us page",
+        id="no_choice",
     ),
 ]
 

@@ -3,7 +3,6 @@ from wtforms import SelectMultipleField, HiddenField
 from govuk_frontend_wtf.wtforms_widgets import GovSubmitInput
 from wtforms.fields import SubmitField
 from app.categories.widgets import CategoryCheckboxInput
-from wtforms.validators import InputRequired
 from flask_babel import lazy_gettext as _
 from flask import request
 
@@ -18,9 +17,6 @@ class ReasonsForContactingForm(FlaskForm):
     reasons = SelectMultipleField(
         title,
         widget=CategoryCheckboxInput(hint_text="Select all that apply"),
-        validators=[
-            InputRequired(message="Select yes if you want to accept functional cookies")
-        ],
         choices=[
             ("CANT_ANSWER", _("I don’t know how to answer a question")),
             ("MISSING_PAPERWORK", _("I don’t have the paperwork I need")),
