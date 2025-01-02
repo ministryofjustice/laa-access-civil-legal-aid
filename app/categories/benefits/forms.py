@@ -3,6 +3,7 @@ from wtforms.validators import InputRequired
 from flask_babel import lazy_gettext as _
 from app.categories.widgets import CategoryRadioInput
 from app.categories.forms import QuestionForm
+from app.categories.categories import Category
 
 
 FALA_REDIRECT = {
@@ -12,7 +13,7 @@ FALA_REDIRECT = {
 
 
 class AppealQuestionForm(QuestionForm):
-    category = "Benefits"
+    category = Category.BENEFITS
     title = _("Legal aid only covers appeals to the")
     next_step_mapping = {
         "supreme_court": FALA_REDIRECT,

@@ -74,10 +74,7 @@
         {% if organisations %}
             <h2 class="govuk-heading-m">{{ _('Other sources of help') }}</h2>
             <p class="govuk-body">
-                {% trans category_name=category_name|lower %}
-                  You can also get advice from alternative help organisations for issues related to {{ category_name }}.
-                {% endtrans %}
-                {{ _('You don’t have to qualify for legal aid.') }}
+                {% trans category_name=_(category_name).lower() %}You can also get advice from alternative help organisations for issues related to {{ category_name }}. You don’t have to qualify for legal aid.{% endtrans %}
             </p>
             {{ helpOrganisationsList(organisations) }}
         {% endif %}

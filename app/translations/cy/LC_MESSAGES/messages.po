@@ -1,3 +1,36 @@
+msgid "Housing"
+msgstr "Tai"
+
+msgid "Debt"
+msgstr "Dyled"
+
+msgid "Employment"
+msgstr "Cyflogaeth"
+
+msgid "Community care"
+msgstr "Gofal cymunedol"
+
+msgid "Family"
+msgstr "Teulu"
+
+msgid "Domestic abuse"
+msgstr "Cam-drin domestig"
+
+msgid "Welfare Benefits"
+msgstr "Budd-daliadau lles"
+
+msgid "Discrimination"
+msgstr "Gwahaniaethu"
+
+msgid "Mental capacity, mental health"
+msgstr ""
+
+msgid "Legal action against public organisations"
+msgstr ""
+
+msgid "SEND"
+msgstr ""
+
 msgid "Validation failed message"
 msgstr ""
 
@@ -158,16 +191,9 @@ msgstr "Ffynonellau cymorth eraill"
 
 #, python-format
 msgid ""
-"\n"
-"                  You can also get advice from alternative help "
-"organisations for issues related to %(category_name)s.\n"
-"                "
-msgstr ""
-"Gallwch hefyd gael cyngor gan sefydliadau cymorth amgen ar gyfer materion"
-" sy’n ymwneud â %(category_name)s."
-
-msgid "You don’t have to qualify for legal aid."
-msgstr "Nid oes rhaid i chi fod yn gymwys i gael cymorth cyfreithiol."
+"You can also get advice from alternative help organisations for issues "
+"related to %(category_name)s. You don’t have to qualify for legal aid."
+msgstr "Gallwch hefyd gael cyngor gan sefydliadau cymorth amgen ar gyfer materion sy’n ymwneud â %(category_name)s. Nid oes rhaid i chi fod yn gymwys i gael cymorth cyfreithiol."
 
 msgid "To qualify for legal aid:"
 msgstr "I fod yn gymwys i gael cymorth cyfreithiol:"
@@ -550,9 +576,6 @@ msgstr ""
 msgid "Applying for housing, losing your housing or homelessness."
 msgstr ""
 
-msgid "Discrimination"
-msgstr ""
-
 msgid "Treated unfairly by a landlord, council or housing association"
 msgstr ""
 
@@ -566,9 +589,6 @@ msgstr ""
 
 msgid "housing"
 msgstr "tai"
-
-msgid "Mental capacity, mental health"
-msgstr ""
 
 msgid "If someone cannot decide for themselves (lacks mental capacity)"
 msgstr ""
@@ -597,9 +617,6 @@ msgstr ""
 msgid ""
 "Problems getting the local authority or council to provide or pay for the"
 " right care. For carers, children, young people and adults."
-msgstr ""
-
-msgid "Legal action against public organisations"
 msgstr ""
 
 msgid ""
@@ -668,9 +685,6 @@ msgid "Other problems with schools"
 msgstr ""
 
 msgid "Care needs for disability (social care)"
-msgstr ""
-
-msgid "SEND"
 msgstr ""
 
 #, python-format
@@ -807,4 +821,47 @@ msgstr "WELSH Start of privacy notice"
 
 #~ msgid "Email"
 #~ msgstr ""
+
+#~ msgid "Children, families, and relationships"
+#~ msgstr ""
+
+#~ msgid "Domestic Abuse"
+#~ msgstr "Cam-drin domestig"
+
+#~ msgid "Benefits"
+#~ msgstr ""
+
+#~ msgid "Mental health"
+#~ msgstr "Iechyd meddwl"
+
+#~ msgid ""
+#~ "\n"
+#~ "                  You can also get "
+#~ "advice from alternative help organisations "
+#~ "for issues related to                "
+#~ msgstr ""
+#~ "Gallwch hefyd gael cyngor gan "
+#~ "sefydliadau cymorth amgen ar gyfer "
+#~ "materion sy’n ymwneud â."
+
+#~ msgid ""
+#~ "You can also get advice from "
+#~ "alternative help organisations for issues "
+#~ "related to."
+#~ msgstr ""
+#~ "Gallwch hefyd gael cyngor gan "
+#~ "sefydliadau cymorth amgen ar gyfer "
+#~ "materion sy’n ymwneud â"
+
+#~ msgid ""
+#~ "You can also get advice from "
+#~ "alternative help organisations for issues "
+#~ "related to %(category_name)s."
+#~ msgstr ""
+#~ "Gallwch hefyd gael cyngor gan "
+#~ "sefydliadau cymorth amgen ar gyfer "
+#~ "materion sy’n ymwneud â %(category_name)s."
+
+#~ msgid "You don’t have to qualify for legal aid."
+#~ msgstr "Nid oes rhaid i chi fod yn gymwys i gael cymorth cyfreithiol."
 

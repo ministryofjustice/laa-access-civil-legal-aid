@@ -1,8 +1,9 @@
 from app.categories.domestic_abuse import bp
 from app.categories.domestic_abuse.forms import WorriedAboutSomeonesSafetyForm
 from app.categories.views import QuestionPage, CategoryLandingPage
+from app.categories.categories import Category
 
-CATEGORY_NAME = "domestic_abuse"
+CATEGORY_NAME = Category.DOMESTIC_ABUSE
 
 
 class DomesticAbuseLandingPage(CategoryLandingPage):
