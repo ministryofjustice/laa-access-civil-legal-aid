@@ -63,10 +63,11 @@ def reasons_for_contacting():
     if form.validate_on_submit():
         try:
             result = post_reasons_for_contacting(form=form)
+            next_step = form.next_step_mapping.get("*")
             print("API Response:", result)
         except requests.HTTPError as e:
             print(f"HTTP Error occurred: {e}")
-        return redirect(url_for("contact.contact"))
+        return redirect(url_for(next_step))
     return render_template("contact/rfc.html", form=form)
 
 
