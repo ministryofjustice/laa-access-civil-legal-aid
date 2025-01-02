@@ -40,57 +40,21 @@ jobs:
         path: coverage.xml
 
   functional_test:
-    name: Functional Test
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_USER: test_user
-          POSTGRES_PASSWORD: test_password
-          POSTGRES_DB: test_db
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U test_user -d test_db"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+    container:
+      image: ghcr.io/your-org/python2.7-custom:latest
 
     steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v4
-
-    - name: Cache CLA Backend Build
-      uses: actions/cache@v4
-      id: cla_backend_cache
-      with:
-        path: cla_backend/.venv
-        key: cla-backend-${{ runner.os }}-${{ hashFiles('cla_backend/requirements*.txt') }}
-        restore-keys: |
-          cla-backend-${{ runner.os }}-
-
     - name: Checkout CLA Backend
       uses: actions/checkout@v4
       with:
         repository: ministryofjustice/cla_backend
         path: cla_backend
 
-    - name: Set up Python for CLA Backend
-      uses: actions/setup-python@v5
-      with:
-        python-version: '2.7'
-        cache: 'pip'
-
     - name: Install CLA Backend dependencies
-      if: steps.cla_backend_cache.outputs.cache-hit != 'true'
       run: |
         cd cla_backend
-        python2.7 -m pip install --upgrade pip
-        python2.7 -m pip install -r requirements/generated/requirements-dev.txt
-        python2.7 -m venv .venv
-        . .venv/bin/activate
-        pip install -r requirements/generated/requirements-dev.txt
+        python2.7 -m pip install -r requirements/generated/requirements-production.txt
 
     - name: Initialize CLA Backend Database
       env:
@@ -98,6 +62,7 @@ jobs:
       run: |
         cd cla_backend
         python2.7 manage.py db upgrade
+        python2.7 manage.py seed_data
 
     - name: Set up Python for Functional Tests
       uses: actions/setup-python@v5
