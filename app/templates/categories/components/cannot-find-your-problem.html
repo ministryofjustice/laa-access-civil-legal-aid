@@ -1,9 +1,8 @@
 {% macro cannot_find_your_problem(category, url) -%}
     <div class="govuk-inset-text cannot-find-your-problem">
-        <p class="govuk-heading-s">
+        <p class="govuk-heading-m">
             {% trans %}If you cannot find your problem{% endtrans %}
-            {% if category %}
-                : {{ category }}
+            {% if category %}: {{ category }}
             {% endif %}
         </p>
         <a class="govuk-link govuk-link--no-visited-state" href="{{ url }}">Next steps to get help</a>
