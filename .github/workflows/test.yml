@@ -65,20 +65,12 @@ jobs:
       run: | 
         lscpu
 
-    - name: Install test dependencies
-      run: |
-        pip install pytest-cov
-        npm install
-        playwright install
-      with:
-        cache: 'functional-test-dependencies'
-
-    - name: Build assets
-      run: |
-        npm run build
-
     - name: Functional test with pytest
       run: |
+        pip install pytest pytest-cov
+        npm install
+        npm run build
+        playwright install
         pytest tests/functional_tests --doctest-modules --junitxml=junit/functional-test-results.xml --cov=com --cov-report=xml --cov-report=html -n 4
 
     - name: Upload pytest test results
