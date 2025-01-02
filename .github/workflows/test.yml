@@ -69,7 +69,7 @@ jobs:
     - name: Install CLA Backend dependencies
       run: |
         cd cla_backend
-        python2.7 -m pip install -r requirements/production.txt
+        python2.7 -m pip install -r requirements/generated/requirements-production.txt
 
     - name: Initialize CLA Backend Database
       env:
