@@ -1,6 +1,6 @@
 from app.categories.family import bp
 from app.categories.views import CategoryLandingPage
-from app.categories.categories import Category
+from app.categories.constants import Category
 
 
 class FamilyLandingPage(CategoryLandingPage):

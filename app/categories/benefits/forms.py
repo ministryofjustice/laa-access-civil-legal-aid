@@ -3,7 +3,7 @@ from wtforms.validators import InputRequired
 from flask_babel import lazy_gettext as _
 from app.categories.widgets import CategoryRadioInput
 from app.categories.forms import QuestionForm
-from app.categories.categories import Category
+from app.categories.constants import Category
 
 
 FALA_REDIRECT = {

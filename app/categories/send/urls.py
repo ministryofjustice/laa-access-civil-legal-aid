@@ -1,12 +1,13 @@
 from app.categories.send import bp
 from app.categories.send.forms import SendChildInCareQuestionForm, SendAreYouUnder18Form
 from app.categories.views import CategoryLandingPage, QuestionPage
+from app.categories.constants import Category
 
 
 class SendLandingPage(CategoryLandingPage):
     question_title = "Special educational needs and disability (SEND)"
 
-    category = "send"
+    category = Category.EDUCATION
 
     routing_map = {
         "child_young_person": "categories.send.child_in_care",

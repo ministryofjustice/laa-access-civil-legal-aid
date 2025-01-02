@@ -1,9 +1,10 @@
 from app.categories.forms import ChildInCareQuestionForm
 from app.categories.x_cat.forms import AreYouUnder18Form
+from app.categories.constants import Category
 
 
 class SendChildInCareQuestionForm(ChildInCareQuestionForm):
-    category = "SEND"
+    category = Category.EDUCATION
 
     next_step_mapping = {
         "yes": "categories.send.age",
@@ -12,4 +13,5 @@ class SendChildInCareQuestionForm(ChildInCareQuestionForm):
 
 
 class SendAreYouUnder18Form(AreYouUnder18Form):
-    category = "SEND"
+    category = Category.EDUCATION
+
