@@ -42,7 +42,22 @@ jobs:
   functional_test:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/your-org/python2.7-custom:latest
+      image: python:2.7
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: test_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U test_user -d test_db"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
     - name: Checkout CLA Backend
@@ -54,7 +69,7 @@ jobs:
     - name: Install CLA Backend dependencies
       run: |
         cd cla_backend
-        python2.7 -m pip install -r requirements/generated/requirements-production.txt
+        python2.7 -m pip install -r requirements/production.txt
 
     - name: Initialize CLA Backend Database
       env:
