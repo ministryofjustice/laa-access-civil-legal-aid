@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-02 12:14+0000\n"
+"POT-Creation-Date: 2025-01-02 13:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,13 +41,16 @@ msgstr ""
 msgid "Discrimination"
 msgstr ""
 
-msgid "Mental capacity, mental health"
+msgid "Mental health"
 msgstr ""
 
-msgid "Legal action against public organisations"
+msgid "Immigration and asylum"
 msgstr ""
 
-msgid "SEND"
+msgid "Public law"
+msgstr ""
+
+msgid "Education"
 msgstr ""
 
 msgid "Validation failed message"
@@ -584,6 +587,9 @@ msgstr ""
 msgid "housing"
 msgstr ""
 
+msgid "Mental capacity, mental health"
+msgstr ""
+
 msgid "If someone cannot decide for themselves (lacks mental capacity)"
 msgstr ""
 
@@ -611,6 +617,9 @@ msgstr ""
 msgid ""
 "Problems getting the local authority or council to provide or pay for the"
 " right care. For carers, children, young people and adults."
+msgstr ""
+
+msgid "Legal action against public organisations"
 msgstr ""
 
 msgid ""
@@ -679,6 +688,9 @@ msgid "Other problems with schools"
 msgstr ""
 
 msgid "Care needs for disability (social care)"
+msgstr ""
+
+msgid "SEND"
 msgstr ""
 
 #, python-format

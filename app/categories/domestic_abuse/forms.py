@@ -1,5 +1,5 @@
 from app.categories.forms import SafeguardingQuestionForm
-from app.categories.categories import Category
+from app.categories.constants import Category
 
 
 class WorriedAboutSomeonesSafetyForm(SafeguardingQuestionForm):

@@ -22,14 +22,17 @@ msgstr "Budd-daliadau lles"
 msgid "Discrimination"
 msgstr "Gwahaniaethu"
 
-msgid "Mental capacity, mental health"
-msgstr ""
+msgid "Mental health"
+msgstr "Iechyd meddwl"
 
-msgid "Legal action against public organisations"
-msgstr ""
+msgid "Immigration and asylum"
+msgstr "Mewnfudo neu loches"
 
-msgid "SEND"
-msgstr ""
+msgid "Public law"
+msgstr "Cyfraith gyhoeddus"
+
+msgid "Education"
+msgstr "Addysg"
 
 msgid "Validation failed message"
 msgstr ""
@@ -193,7 +196,10 @@ msgstr "Ffynonellau cymorth eraill"
 msgid ""
 "You can also get advice from alternative help organisations for issues "
 "related to %(category_name)s. You don’t have to qualify for legal aid."
-msgstr "Gallwch hefyd gael cyngor gan sefydliadau cymorth amgen ar gyfer materion sy’n ymwneud â %(category_name)s. Nid oes rhaid i chi fod yn gymwys i gael cymorth cyfreithiol."
+msgstr ""
+"Gallwch hefyd gael cyngor gan sefydliadau cymorth amgen ar gyfer materion"
+" sy’n ymwneud â %(category_name)s. Nid oes rhaid i chi fod yn gymwys i "
+"gael cymorth cyfreithiol."
 
 msgid "To qualify for legal aid:"
 msgstr "I fod yn gymwys i gael cymorth cyfreithiol:"
@@ -590,6 +596,9 @@ msgstr ""
 msgid "housing"
 msgstr "tai"
 
+msgid "Mental capacity, mental health"
+msgstr ""
+
 msgid "If someone cannot decide for themselves (lacks mental capacity)"
 msgstr ""
 
@@ -617,6 +626,9 @@ msgstr ""
 msgid ""
 "Problems getting the local authority or council to provide or pay for the"
 " right care. For carers, children, young people and adults."
+msgstr ""
+
+msgid "Legal action against public organisations"
 msgstr ""
 
 msgid ""
@@ -685,6 +697,9 @@ msgid "Other problems with schools"
 msgstr ""
 
 msgid "Care needs for disability (social care)"
+msgstr ""
+
+msgid "SEND"
 msgstr ""
 
 #, python-format

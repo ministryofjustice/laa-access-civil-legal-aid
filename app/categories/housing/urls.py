@@ -1,6 +1,6 @@
 from app.categories.housing import bp
 from app.categories.views import CategoryLandingPage
-from app.categories.categories import Category
+from app.categories.constants import Category
 
 
 class HousingLandingPage(CategoryLandingPage):

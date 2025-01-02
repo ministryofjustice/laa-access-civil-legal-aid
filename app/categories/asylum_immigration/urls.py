@@ -1,5 +1,6 @@
 from app.categories.asylum_immigration import bp
 from app.categories.views import CategoryLandingPage
+from app.categories.constants import Category
 
 
 FALA_REDIRECT = {
@@ -10,7 +11,7 @@ FALA_REDIRECT = {
 
 class AsylumAndImmigrationLandingPage(CategoryLandingPage):
     question_title = "Asylum and immigration"
-    category = "asylum_immigration"
+    category = Category.IMMIGRATION_AND_ASYLUM
 
     routing_map = {
         "apply": FALA_REDIRECT,

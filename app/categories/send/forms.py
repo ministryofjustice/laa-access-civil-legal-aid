@@ -1,6 +1,6 @@
 from app.categories.forms import ChildInCareQuestionForm
-from app.categories.categories import Category
+from app.categories.constants import Category
 
 
 class SendChildInCareQuestionForm(ChildInCareQuestionForm):
-    category = Category.SEND
+    category = Category.EDUCATION
