@@ -10,7 +10,7 @@ from flask import request
 
 class ReasonsForContactingForm(FlaskForm):
     next_step_mapping = {
-        "*": "categories.results.contact",
+        "*": "contact.contact",
     }
 
     title = "Why do you want to contact Civil Legal Advice?"

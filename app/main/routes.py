@@ -66,7 +66,7 @@ def reasons_for_contacting():
             print("API Response:", result)
         except requests.HTTPError as e:
             print(f"HTTP Error occurred: {e}")
-        return redirect(url_for("categories.results.contact"))
+        return redirect(url_for("contact.contact"))
     return render_template("contact/rfc.html", form=form)
 
 
