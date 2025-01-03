@@ -52,7 +52,7 @@ jobs:
       - name: Build the Backend container
         run: |
           git clone https://github.com/ministryofjustice/cla_backend ../cla_backend
-          docker compose -f backend-compose.yml up -d
+          docker compose -f backend-compose.yml up --build -d
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -60,17 +60,8 @@ jobs:
           python-version: '3.12'
           cache: 'pip'
   
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          cache: 'npm'
-  
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install -r requirements/generated/requirements-development.txt
-          npm install
-          npm run build
           playwright install
   
       - name: Run functional tests inside the container
