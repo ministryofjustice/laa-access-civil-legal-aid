@@ -44,6 +44,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Clone CLA Backend repository
+        run: git clone https://github.com/ministryofjustice/cla_backend cla_backend
+
+      - name: Set up Python 2.7
+        uses: actions/setup-python@v4
+        with:
+          python-version: '2.7'
+
+      - name: Install CLA Backend dependencies
+        working-directory: ./cla_backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements/generated/requirements-production.txt
+
+      - name: Run create_db.sh
+        working-directory: ./cla_backend
+        run: bin/create_db.sh
+
       - name: Set up Python for Functional Tests
         uses: actions/setup-python@v5
         with:
@@ -65,24 +83,6 @@ jobs:
           npm install
           npm run build
           playwright install
-
-      - name: Clone CLA Backend repository
-        run: git clone https://github.com/ministryofjustice/cla_backend cla_backend
-
-      - name: Set up Python 2.7
-        uses: actions/setup-python@v4
-        with:
-          python-version: '2.7'
-
-      - name: Install CLA Backend dependencies
-        working-directory: ./cla_backend
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements/generated/requirements-production.txt
-
-      - name: Run create_db.sh
-        working-directory: ./cla_backend
-        run: bin/create_db.sh
 
       - name: Functional test with pytest
         env:
