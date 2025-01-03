@@ -64,6 +64,8 @@ jobs:
         run: |
           docker ps
           docker exec -t "govuk-frontend-flask" bash -c "python -m pip install --upgrade pip"
+          docker exec -t "govuk-frontend-flask" bash -c "ls"
+          docker exec -t govuk-frontend-flask ls
           docker exec -t "govuk-frontend-flask" bash -c "python -m pip install -r requirements/generated/requirements-development.txt"
           docker exec -t "govuk-frontend-flask" bash -c "playwright install"
   
