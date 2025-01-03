@@ -62,10 +62,16 @@ Now you can browse: http://127.0.0.1:8020
 
 ## Running in Docker
 
-For local development and deployments, run the below code:
+For local development and deployments, run the below code to create Access and the CLA Backend:
 
 ```shell
 ./run_local.sh
+```
+
+You can also run Access as a standalone via:
+
+```shell
+./run_local_standalone.sh
 ```
 
 ## Testing

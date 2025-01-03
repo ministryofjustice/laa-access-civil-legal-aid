@@ -1,30 +1,5 @@
-services:
-  watcher:
-    container_name: watcher
-    build:
-      dockerfile: node.Dockerfile
-      context: .
-    restart: always
-    volumes:
-      - ./app/static:/home/node/app/static
+version: '3.9'
 
-  web:
-    container_name: govuk-frontend-flask
-    build:
-      context: .
-      args:
-        BASE_IMAGE: python:3.12-bookworm
-        REQUIREMENTS_FILE: "requirements-development.txt"
-      target: development
-    restart: always
-    environment:
-      - CLA_BACKEND_URL=http://host.docker.internal:8010
-      - SECRET_KEY=CHANGE_ME
-      - MAINTENANCE_MODE=FALSE
-      - FLASK_RUN_PORT=8020
-      - SENTRY_DSN=${SENTRY_DSN:-}
-    ports:
-      - "8020:8020"
-    volumes:
-      - ./app:/home/app/access/app
-  
+include:
+   - ./compose-standalone.yml
+   - ../cla_backend/docker-compose.yaml

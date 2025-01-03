@@ -40,35 +40,17 @@ jobs:
         path: coverage.xml
 
   functional_test:
+    name: Functional Test
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
+    - name: Checkout the repository
       uses: actions/checkout@v4
 
-    - name: Set up Docker
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y docker.io
-        sudo service docker start
-
-    - name: Clone CLA Backend
-      run: git clone https://github.com/ministryofjustice/cla_backend ${{ github.workspace }}/cla_backend
-
-    - name: Run create_db.sh in Python 2.7 Docker container
-      run: |
-        docker run --rm -v ${{ github.workspace }}/cla_backend:/workspace -w /workspace python:2.7 bash -c "
-          python --version &&
-          pip install --upgrade pip &&
-          pip install -r requirements.txt &&
-          bin/create_db.sh
-        "
-    - name: Set up Python for Functional Tests
+    - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.12'
-        cache: 'pip'
-
+        cache: 'pip' # caching pip dependencies
     - uses: actions/setup-node@v4
       with:
         node-version: '20.x'
@@ -79,17 +61,12 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install -r requirements/generated/requirements-development.txt
 
-    - name: Install Node.js dependencies
+    - name: Functional test with pytest
       run: |
+        pip install pytest pytest-cov
         npm install
         npm run build
         playwright install
-
-    - name: Functional test with pytest
-      env:
-        DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
-      run: |
-        pip install pytest pytest-cov
         pytest tests/functional_tests --doctest-modules --junitxml=junit/functional-test-results.xml --cov=com --cov-report=xml --cov-report=html
 
     - name: Upload pytest test results
@@ -97,6 +74,7 @@ jobs:
       with:
         name: pytest-functional-results
         path: junit/functional-test-results.xml
+      # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
 
     - name: Upload axe results
