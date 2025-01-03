@@ -60,18 +60,9 @@ jobs:
           python-version: '3.12'
           cache: 'pip'
   
-      - name: Install dependencies
-        run: |
-          docker ps
-          docker exec -t "govuk-frontend-flask" bash -c "python -m pip install --upgrade pip"
-          docker exec -t "govuk-frontend-flask" bash -c "ls"
-          docker exec -t govuk-frontend-flask ls
-          docker exec -t "govuk-frontend-flask" bash -c "python -m pip install -r requirements/generated/requirements-development.txt"
-          docker exec -t "govuk-frontend-flask" bash -c "playwright install"
-  
       - name: Run functional tests inside the container
         run: |
-          docker exec -t "govuk-frontend-flask" pytest tests/functional_tests --doctest-modules --junitxml=junit/functional-test-results.xml --cov=com --cov-report=xml --cov-report=html
+          docker exec -t "govuk-frontend-flask" bash -c "pytest tests/functional_tests --doctest-modules --junitxml=junit/functional-test-results.xml --cov=com --cov-report=xml --cov-report=html"
   
       - name: Upload pytest test results
         uses: actions/upload-artifact@v4
