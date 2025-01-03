@@ -11,8 +11,13 @@ echo "Running environment: $ENVIRONMENT"
 
 docker compose down --remove-orphans
 
-echo "Starting multi-container app"
-docker compose -f compose.yml up --build -d
+if ! docker images -q govuk-frontend-standalone; then
+  echo "The 'govuk-frontend-standalone' image is not found locally. Building it now..."
+  docker compose -f compose.yml -f compose-standalone.yml up --build -d
+else
+  echo "'govuk-frontend-standalone' image already exists. Starting containers without rebuilding."
+  docker compose -f compose.yml -f compose-standalone.yml up -d
+fi
 
 echo "Waiting for backend container to be ready..."
 until docker exec cla_backend bash -c "echo 'Backend is ready'"; do
