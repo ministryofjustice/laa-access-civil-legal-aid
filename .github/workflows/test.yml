@@ -68,9 +68,6 @@ jobs:
   
       - name: Run functional tests inside the container
         run: |
-          docker ps
-          docker run cla_backend
-          docker run govuk-frontend-flask
           docker exec -t "govuk-frontend-flask" pytest tests/functional_tests --doctest-modules --junitxml=junit/functional-test-results.xml --cov=com --cov-report=xml --cov-report=html
   
       - name: Upload pytest test results
