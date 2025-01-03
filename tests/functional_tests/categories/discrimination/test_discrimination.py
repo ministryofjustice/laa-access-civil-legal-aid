@@ -47,7 +47,7 @@ def test_discrimination_where(page: Page, selections: list, expected_heading: st
 why_form_routing = [
     pytest.param(
         ["Race, colour, ethnicity, nationality"],
-        "Legal aid is available",
+        "Are you under 18?",
         id="single_answer",
     ),
     pytest.param(
@@ -55,13 +55,13 @@ why_form_routing = [
             "Disability, health condition, mental health condition",
             "Religion, belief, lack of religion",
         ],
-        "Legal aid is available",
+        "Are you under 18?",
         id="multiple_answers",
     ),
     pytest.param(["None of these"], "Referral page", id="not_sure"),
     pytest.param(
         ["Religion, belief, lack of religion", "None of these"],
-        "Legal aid is available",
+        "Are you under 18?",
         id="not_sure_and_answer",
     ),
 ]
@@ -90,3 +90,33 @@ def test_discrimination_why(page: Page, selections: list, expected_heading: str)
     page.get_by_role("button", name="Continue").click()
 
     expect(page.get_by_text(expected_heading)).to_be_visible()
+
+
+class TestUnder18Form:
+    # Page headings used in tests
+    ARE_YOU_UNDER_18_HEADING = "Are you under 18?"
+    CONTACT_PAGE_HEADING = "Contact us page"
+    LEGALAID_PAGE_HEADING = "Legal aid is available for this type of problem"
+
+    def navigate_to_form(self, page: Page):
+        page.get_by_role("link", name="Discrimination").click()
+        page.get_by_label("Work - including colleagues").check()
+        page.get_by_role("button", name="Continue").click()
+        page.get_by_label("Race, colour, ethnicity, nationality").check()
+        page.get_by_role("button", name="Continue").click()
+
+        expect(page.get_by_text(self.ARE_YOU_UNDER_18_HEADING)).to_be_visible()
+
+    @pytest.mark.usefixtures("live_server")
+    def test_are_you_under_18_form_yes(self, page: Page):
+        self.navigate_to_form(page)
+        page.get_by_label("Yes").check()
+        page.get_by_role("button", name="Continue").click()
+        expect(page.get_by_text(self.CONTACT_PAGE_HEADING)).to_be_visible()
+
+    @pytest.mark.usefixtures("live_server")
+    def test_are_you_over_18_form_no(self, page: Page):
+        self.navigate_to_form(page)
+        page.get_by_label("No").check()
+        page.get_by_role("button", name="Continue").click()
+        expect(page.get_by_text(self.LEGALAID_PAGE_HEADING)).to_be_visible()

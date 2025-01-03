@@ -1,7 +1,7 @@
 from wtforms.fields.choices import RadioField
 from wtforms.validators import InputRequired
-from app.categories.widgets import CategoryRadioInput
 from app.categories.forms import QuestionForm
+from app.categories.widgets import CategoryRadioInput
 from flask_babel import lazy_gettext as _
 
 
