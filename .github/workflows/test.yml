@@ -43,15 +43,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
     - name: Set up Docker
       run: |
         sudo apt-get update
         sudo apt-get install -y docker.io
         sudo service docker start
-    - name: Run create_db.sh with Python 2.7 Docker container
+
+    - name: Clone CLA Backend
+      run: git clone https://github.com/ministryofjustice/cla_backend ${{ github.workspace }}/cla_backend
+
+    - name: Run create_db.sh in Python 2.7 Docker container
       run: |
-        git clone https://github.com/ministryofjustice/cla_backend ${{ github.workspace }}/cla_backend
         docker run --rm -v ${{ github.workspace }}/cla_backend:/workspace -w /workspace python:2.7 bash -c "
+          python --version &&
           pip install --upgrade pip &&
           pip install -r requirements.txt &&
           bin/create_db.sh
