@@ -17,3 +17,5 @@ ingress:
 envVars:
   DEBUG:
     value: "True"
+  CLA_BACKEND_URL:
+    value: "http://cla-backend-app.laa-cla-backend-uat.svc.cluster.local"

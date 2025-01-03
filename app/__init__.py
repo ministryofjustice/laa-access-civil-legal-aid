@@ -107,7 +107,7 @@ def create_app(config_class=Config):
         content_security_policy_nonce_in=["script-src"],
         force_https=False,
         session_cookie_secure=False,
-        session_cookie_http_only=True,
+        session_cookie_http_only=Config.SESSION_COOKIE_HTTP_ONLY,
         session_cookie_samesite="Strict",
     )
 
@@ -119,9 +119,11 @@ def create_app(config_class=Config):
     from app.main import bp as main_bp
     from app.categories import bp as categories_bp
     from app.find_a_legal_adviser import bp as fala_bp
+    from app.contact import bp as contact_bp
 
     app.register_blueprint(main_bp)
     app.register_blueprint(categories_bp)
     app.register_blueprint(fala_bp)
+    app.register_blueprint(contact_bp)
 
     return app
