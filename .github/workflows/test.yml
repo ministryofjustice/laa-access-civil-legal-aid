@@ -48,12 +48,12 @@ jobs:
 
       - name: Build the Access container
         run: |
-          docker compose -f compose-standalone.yml build
+          docker compose -f compose-standalone.yml build -d
 
       - name: Build the Backend container
         run: |
           git clone https://github.com/ministryofjustice/cla_backend ../cla_backend
-          docker compose -f compose.yml build
+          docker compose -f compose.yml build -d
 
       - name: Set up Python
         uses: actions/setup-python@v5
