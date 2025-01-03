@@ -46,7 +46,12 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
 
-      - name: Build the Docker container
+      - name: Build the Backend container
+        run: |
+          chmod +x ./run_local_standalone.sh
+          ./run_local_standalone.sh
+
+      - name: Build the Backend container
         run: |
           chmod +x ./run_local.sh
           ./run_local.sh
