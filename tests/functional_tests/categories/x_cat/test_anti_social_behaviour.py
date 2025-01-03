@@ -14,7 +14,7 @@ ROUTING = [
 class TestAntiSocialBehaviourForm:
     @pytest.mark.parametrize("routing", ROUTING)
     def test_onward_routing(self, page: Page, routing: dict):
-        page.get_by_role("button", name="More problems covered by").click()
+        page.get_by_role("link", name="More problems covered by").click()
         page.get_by_role("link", name="Anti-social behaviour and").click()
         page.get_by_label(routing["answer"]).check()
         page.get_by_role("button", name="Continue").click()
