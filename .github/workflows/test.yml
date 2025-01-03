@@ -62,9 +62,10 @@ jobs:
   
       - name: Install dependencies
         run: |
-          docker exec -t "govuk-frontend-flask" python -m pip install --upgrade pip
-          docker exec -t "govuk-frontend-flask" python -m pip install -r requirements/generated/requirements-development.txt
-          docker exec -t "govuk-frontend-flask" playwright install
+          docker ps
+          docker exec -t "govuk-frontend-flask" bash -c "python -m pip install --upgrade pip"
+          docker exec -t "govuk-frontend-flask" bash -c "python -m pip install -r requirements/generated/requirements-development.txt"
+          docker exec -t "govuk-frontend-flask" bash -c "playwright install"
   
       - name: Run functional tests inside the container
         run: |
