@@ -46,7 +46,10 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
 
-      - name: Build the Backend container
+      - name: Set environment variable for Flask production mode
+        run: echo "FLASK_ENV=production" >> $GITHUB_ENV
+
+      - name: Build the Access container
         run: |
           chmod +x ./run_local_standalone.sh
           ./run_local_standalone.sh
