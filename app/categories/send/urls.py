@@ -27,7 +27,9 @@ bp.add_url_rule(
 bp.add_url_rule(
     "/send/child-in-care",
     view_func=QuestionPage.as_view(
-        "child_in_care", form_class=SendChildInCareQuestionForm
+        "child_in_care",
+        form_class=SendChildInCareQuestionForm,
+        template="categories/question-page-caption.html",
     ),
 )
 bp.add_url_rule(
