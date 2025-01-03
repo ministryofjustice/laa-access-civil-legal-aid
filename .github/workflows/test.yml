@@ -45,13 +45,7 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
-  
-      - name: Set up Docker
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker.io
-          sudo systemctl start docker
-  
+
       - name: Build the Docker container
         run: |
           chmod +x ./run_local.sh
