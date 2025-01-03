@@ -48,16 +48,12 @@ jobs:
 
       - name: Build the Access container
         run: |
-          chmod +x ./run_local_standalone.sh
-          ./run_local_standalone.sh
-        env:
-          DEBUG: False
+          docker build compose -f compose-standalone.yml
 
       - name: Build the Backend container
         run: |
-          chmod +x ./run_local.sh
-          ./run_local.sh
-  
+          docker build compose -f compose.yml
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -79,6 +75,8 @@ jobs:
   
       - name: Run functional tests inside the container
         run: |
+          docker run cla_backend
+          docker run govuk-frontend-flask
           docker exec -t "govuk-frontend-flask" pytest tests/functional_tests --doctest-modules --junitxml=junit/functional-test-results.xml --cov=com --cov-report=xml --cov-report=html
   
       - name: Upload pytest test results
