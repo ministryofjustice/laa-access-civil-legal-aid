@@ -4,7 +4,6 @@ on: workflow_call
 
 env:
   SECRET_KEY: "TEST_KEY"
-  ENVIRONMENT: CI
 
 
 jobs:
