@@ -48,11 +48,11 @@ jobs:
 
       - name: Build the Access container
         run: |
-          docker build compose -f compose-standalone.yml
+          docker compose -f compose-standalone.yml build
 
       - name: Build the Backend container
         run: |
-          docker build compose -f compose.yml
+          docker compose -f compose.yml build
 
       - name: Set up Python
         uses: actions/setup-python@v5
