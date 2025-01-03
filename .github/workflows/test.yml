@@ -51,7 +51,7 @@ jobs:
           chmod +x ./run_local_standalone.sh
           ./run_local_standalone.sh
         env:
-          FLASK_ENV: production
+          DEBUG: False
 
       - name: Build the Backend container
         run: |
