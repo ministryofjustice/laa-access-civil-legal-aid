@@ -47,7 +47,7 @@ jobs:
       - name: Install Python 2.7
         run: |
           sudo apt-get update
-          sudo apt-get install -y python2.7 python2.7-dev
+          sudo apt-get install -y python2.7
           python2.7 -m pip install --upgrade pip
     
       - name: Clone CLA Backend repository
