@@ -25,7 +25,9 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
 
-        <h1 class="govuk-heading-xl">{{ form.category }}</h1>
+        {% block formHeading %}
+            <h1 class="govuk-heading-xl">{{ form.category }}</h1>
+        {% endblock %}
 
         <form action="" method="get" novalidate>
 
