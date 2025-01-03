@@ -71,14 +71,14 @@ jobs:
         cd cla_backend
         python2.7 -m pip install -r requirements/generated/requirements-production.txt
 
-    - name: Initialize CLA Backend Database
+    - name: Create and Initialize Database
       env:
         DATABASE_URL: postgresql://test_user:test_password@localhost:5432/test_db
       run: |
         cd cla_backend
-        python2.7 manage.py db upgrade
-        python2.7 manage.py seed_data
-
+        chmod +x bin/create_db.sh
+        bin/create_db.sh
+        
     - name: Set up Python for Functional Tests
       uses: actions/setup-python@v5
       with:
