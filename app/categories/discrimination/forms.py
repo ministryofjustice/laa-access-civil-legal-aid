@@ -2,6 +2,7 @@ from wtforms import SelectMultipleField
 from app.categories.widgets import CategoryCheckboxInput
 from app.categories.forms import QuestionForm
 from wtforms.validators import InputRequired
+from app.categories.x_cat.forms import AreYouUnder18Form
 
 
 class DiscriminationQuestionForm(QuestionForm):
@@ -50,7 +51,7 @@ class DiscriminationWhyForm(DiscriminationQuestionForm):
     title = "Why were you discriminated against?"
 
     next_step_mapping = {
-        "*": "categories.results.in_scope",
+        "*": "categories.discrimination.age",
         "none": "categories.results.refer",
     }
 
@@ -83,3 +84,12 @@ class DiscriminationWhyForm(DiscriminationQuestionForm):
             ("none", "None of these"),
         ],
     )
+
+
+class DiscriminationAreYouUnder18Form(AreYouUnder18Form):
+    category = "Discrimination"
+
+    next_step_mapping = {
+        "yes": "categories.results.contact",
+        "no": "categories.results.in_scope",
+    }
