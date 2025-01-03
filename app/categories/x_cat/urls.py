@@ -7,6 +7,6 @@ bp.add_url_rule(
     view_func=QuestionPage.as_view(
         "landlord-council",
         form_class=AntiSocialBehaviourForm,
-        template="categories/public/reason.html",  # TODO: Update this to use a caption question template if we decide to standardise on this
+        template="categories/question-form-caption.html",
     ),
 )
