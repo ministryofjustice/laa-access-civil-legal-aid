@@ -27,3 +27,4 @@ services:
       - "8020:8020"
     volumes:
       - ./app:/home/app/access/app
+      - ./tests:/home/app/access/tests
