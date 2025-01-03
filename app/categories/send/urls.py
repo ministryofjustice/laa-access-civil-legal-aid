@@ -1,5 +1,5 @@
 from app.categories.send import bp
-from app.categories.send.forms import SendChildInCareQuestionForm
+from app.categories.send.forms import SendChildInCareQuestionForm, SendAreYouUnder18Form
 from app.categories.views import CategoryLandingPage, QuestionPage
 
 
