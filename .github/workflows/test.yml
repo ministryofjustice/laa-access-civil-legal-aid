@@ -72,6 +72,7 @@ jobs:
         npm install
         npm run build
         playwright install
+        playwright install-deps
         pytest tests/functional_tests --database-url=$DATABASE_URL --doctest-modules --junitxml=junit/functional-test-results.xml --cov=com --cov-report=xml --cov-report=html
 
     - name: Upload pytest test results
