@@ -4,8 +4,6 @@ on: workflow_call
 
 env:
   SECRET_KEY: "TEST_KEY"
-  DATABASE_URL: http://host.docker.internal:8010
-  BACKEND_URL: http://host.docker.internal:8010
 
 
 jobs:
@@ -52,14 +50,6 @@ jobs:
         git clone https://github.com/ministryofjustice/cla_backend ../cla_backend
         docker compose -f backend-compose.yml up --build -d
 
-    - name: Wait for Backend
-      run: |
-        docker ps
-        until curl -s http://cla_backend:8000/health; do
-          echo "Waiting for backend..."
-          sleep 5
-        done
-
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
@@ -82,6 +72,7 @@ jobs:
         npm install
         npm run build
         playwright install
+        export CLA_BACKEND_URL="http://localhost:8010"
         pytest tests/functional_tests --doctest-modules --junitxml=junit/functional-test-results.xml --cov=com --cov-report=xml --cov-report=html
 
     - name: Upload pytest test results
