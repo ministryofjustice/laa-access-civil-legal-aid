@@ -55,7 +55,7 @@ jobs:
     - name: Wait for Backend
       run: |
         docker ps
-        until curl -s http://localhost:8010/health; do
+        until curl -s http://cla_backend:8000/health; do
           echo "Waiting for backend..."
           sleep 5
         done
