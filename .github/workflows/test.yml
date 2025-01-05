@@ -69,7 +69,7 @@ jobs:
     - name: Check IP configuration for database container
       run: |
         docker ps
-        docker exec -it cla_backend_db ip addr show
+        docker exec cla_backend_db ip addr show
 
     - name: Functional test with pytest
       run: |
