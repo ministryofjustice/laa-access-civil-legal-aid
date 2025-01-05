@@ -66,11 +66,14 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install -r requirements/generated/requirements-development.txt
 
-    - name: Functional test with pytest
+    - name: Check IP configuration for database container
       run: |
         docker ps
-        docker logs cla_backend
-        curl -v http://host.docker.internal:8010/health
+        docker exec -it db-container ip addr show
+        
+    - name: Functional test with pytest
+      run: |
+        ip addr show
         pip install pytest pytest-cov
         npm install
         npm run build
