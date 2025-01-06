@@ -9,6 +9,9 @@ on:
       CLA_BACKEND_ECR_REPOSITORY:
         required: true
         type: string
+    secrets:
+      CLA_BACKEND_ECR_ROLE_TO_ASSUME:
+        required: true
 env:
   SECRET_KEY: "TEST_KEY"
 
