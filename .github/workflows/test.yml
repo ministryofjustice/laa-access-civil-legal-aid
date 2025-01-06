@@ -48,6 +48,7 @@ jobs:
       - name: Build backend container
         run: |
           git clone https://github.com/ministryofjustice/cla_backend ../cla_backend
+          pip install 'cryptography<3.0'
           docker compose -f backend-compose.yml up --build -d
 
       - name: Create db
