@@ -1,6 +1,8 @@
 import pytest
-from flask import Flask
+from unittest.mock import patch
+from flask import Flask, request
 from app.contact.api import post_reasons_for_contacting
+from app.contact.forms import ReasonsForContactingForm
 
 
 @pytest.fixture
@@ -8,6 +10,7 @@ def app():
     """Mocked app with mock backend"""
     app = Flask(__name__)
     app.config["CLA_BACKEND_URL"] = "http://mock-backend"
+    app.config["SECRET_KEY"] = "secret-key"
     return app
 
 
@@ -27,3 +30,28 @@ def test_post_reasons_for_contacting_success(mocker, app):
             json={"key": "value"},
         )
         assert response == mock_response
+
+
+@pytest.fixture
+def mock_form(app):
+    """Fixture to mock the form object."""
+    with app.app_context():
+        form = ReasonsForContactingForm()
+        form.reasons.data = ["reason1", "reason2"]
+        form.referrer.data = "http://example.com"
+        return form
+
+
+def test_api_payload(mock_form):
+    """Test the api_payload function."""
+    with patch.object(request, "headers", {"User-Agent": "test-agent"}):
+        payload = mock_form.api_payload()
+
+    expected_payload = {
+        "reasons": [{"category": "reason1"}, {"category": "reason2"}],
+        "other_reasons": "",
+        "user_agent": "test-agent",
+        "referrer": "http://example.com",
+    }
+
+    assert payload == expected_payload
