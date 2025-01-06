@@ -78,7 +78,6 @@ jobs:
           REPOSITORY: ${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
           REGION: ${{ inputs.ACCESS_ECR_REGION }}
   
-      
       - name: Get CLA Backend
         run: |
           docker pull $REGISTRY/$REPOSITORY:latest
