@@ -55,11 +55,6 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
 
-      - name: Debug AWS Variables
-        run: |
-          echo "Role ARN: ${{ secrets.CLA_BACKEND_ECR_ROLE_TO_ASSUME }}"
-          echo "Region: ${{ inputs.ACCESS_ECR_REGION }}"
-
       - name: Assume role in Cloud Platform
         uses: aws-actions/configure-aws-credentials@v4
         with:
