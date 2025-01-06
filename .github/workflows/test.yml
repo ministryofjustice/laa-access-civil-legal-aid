@@ -45,11 +45,6 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
 
-      - name: Set up Python 2.7
-        uses: actions/setup-python@v4
-        with:
-          python-version: '2.7'
-
       - name: Build backend container
         run: |
           git clone https://github.com/ministryofjustice/cla_backend ../cla_backend
@@ -57,7 +52,7 @@ jobs:
 
       - name: Create db
         run: |
-          docker exec cla_backend bin/create_db.sh
+          docker exec cla_backend env PYTHONWARNINGS="ignore:CryptographyDeprecationWarning" bin/create_db.sh
 
       - name: Set up Python
         uses: actions/setup-python@v5
