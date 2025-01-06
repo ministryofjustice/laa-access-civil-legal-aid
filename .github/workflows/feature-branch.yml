@@ -16,7 +16,7 @@ jobs:
     uses: ./.github/workflows/test.yml
     with:
       ACCESS_ECR_REGION: ${{vars.ACCESS_ECR_REGION}}
-      CLA_BACKEND_ACCESS_ECR_REPOSITORY: ${{vars.CLA_BACKEND_ACCESS_ECR_REPOSITORY}}
+      CLA_BACKEND_ECR_REPOSITORY: ${{vars.CLA_BACKEND_ECR_REPOSITORY}}
 
   static-analysis:
     name: Static Analysis
