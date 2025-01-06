@@ -45,16 +45,13 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
 
-      - name: Build backend container
+      - name: Prune Docker System
+        run: docker system prune -af
+
+      - name: Build the Access container
         run: |
           git clone https://github.com/ministryofjustice/cla_backend ../cla_backend
-          docker compose -f backend-compose.yml up --build -d
-
-      - name: Create db
-        run: |
-          docker exec cla_backend mkdir -p /home/app/.cache/pip
-          docker exec cla_backend chmod -R a+w /home/app/.cache/pip
-          docker exec cla_backend python -m pip install --user 'cryptography<3.0'
+          docker compose -f compose.yml up --build -d
           docker exec cla_backend bin/create_db.sh
 
       - name: Set up Python
@@ -62,10 +59,6 @@ jobs:
         with:
           python-version: '3.12'
           cache: 'pip'
-
-      - name: Build the Access container
-        run: |
-          docker compose -f compose-standalone.yml up --build -d
   
       - name: Run functional tests inside the container
         run: |
