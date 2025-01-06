@@ -20,6 +20,8 @@
     <meta name="author" content="{{config['DEPARTMENT_NAME']}}">
 {% endblock %}
 
+{% set bodyClasses = "govuk-frontend-supported" %}
+
 {% block bodyStart %}
 {% if "cookies_policy" not in request.cookies %}
 {% set html %}
@@ -172,6 +174,5 @@
 {% endblock %}
 
 {% block bodyEnd %}
-<script src="{{ url_for('static', filename='govuk-frontend.min.js') }}" nonce="{{ csp_nonce() }}"></script>
 <script src="{{ url_for('static', filename='scripts.js') }}" nonce="{{ csp_nonce() }}"></script>
 {% endblock %}
