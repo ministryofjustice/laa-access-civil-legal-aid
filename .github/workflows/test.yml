@@ -72,7 +72,7 @@ jobs:
       
       - name: Run cla backend
         run: |
-          docker pull $REGISTRY/$REPOSITORY:master:latest
+          docker pull $REGISTRY/$REPOSITORY:latest
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
