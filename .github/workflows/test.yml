@@ -49,6 +49,7 @@ jobs:
         run: |
           git clone https://github.com/ministryofjustice/cla_backend ../cla_backend
           docker compose -f compose.yml up --build -d
+          docker exec cla_backend bin/create_db.sh
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -58,7 +59,6 @@ jobs:
   
       - name: Run functional tests inside the container
         run: |
-          docker ps
           docker exec -t govuk-frontend-flask bash -c "playwright install"
           docker exec -u root -t govuk-frontend-flask bash -c "playwright install-deps"
           docker exec -t govuk-frontend-flask bash -c "python -m pip install pytest-cov"
