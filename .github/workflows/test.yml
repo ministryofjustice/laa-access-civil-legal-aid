@@ -52,7 +52,6 @@ jobs:
 
       - name: Create db
         run: |
-          docker exec cla_backend python -m pip install --upgrade 'pip==20.3.4'
           docker exec cla_backend python -m pip install --user 'cryptography<3.0'
           docker exec cla_backend bin/create_db.sh
 
