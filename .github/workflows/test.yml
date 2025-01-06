@@ -70,6 +70,13 @@ jobs:
         with:
           mask-password: true
       
+      - name: Login to docker
+        run: |
+          aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $REGISTRY
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REGION: ${{ inputs.ACCESS_ECR_REGION }}
+
       - name: Run cla backend
         run: |
           docker pull $REGISTRY/$REPOSITORY:latest
