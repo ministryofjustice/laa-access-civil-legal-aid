@@ -48,7 +48,8 @@ jobs:
       - name: Build the Access container
         run: |
           git clone https://github.com/ministryofjustice/cla_backend ../cla_backend
-          docker compose -f compose.yml up --build -d
+          docker compose -f compose-standalone.yml up --build -d
+          docker compose -f backend-compose.yml up --build -d
           docker exec cla_backend bin/create_db.sh
 
       - name: Set up Python
