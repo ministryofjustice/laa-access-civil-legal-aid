@@ -16,7 +16,7 @@ class TestPublicLandingPage:
         ).click()
         expect(
             page.get_by_role(
-                "heading", name="Legal action against public organisations"
+                "heading", name="Legal action against police and public organisations"
             )
         ).to_be_visible()
         page.get_by_role("button", name="Continue").click()
@@ -34,7 +34,7 @@ class TestPublicLandingPage:
         ).click()
         expect(
             page.get_by_role(
-                "heading", name="Legal action against public organisations"
+                "heading", name="Legal action against police and public organisations"
             )
         ).to_be_visible()
         page.get_by_role("button", name="Continue").click()
