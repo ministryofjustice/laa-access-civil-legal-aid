@@ -2,16 +2,16 @@ name: Scan image for vulnerabilities
 on:
   workflow_call:
     inputs:
-      ECR_REPOSITORY:
+      ACCESS_ECR_REPOSITORY:
         required: true
         type: string
-      ECR_REGION:
+      ACCESS_ECR_REGION:
         required: true
         type: string
     secrets:
       ECR_REGISTRY:
         required: true
-      ECR_ROLE_TO_ASSUME:
+      ACCESS_ECR_ROLE_TO_ASSUME:
         required: true
 
 jobs:
@@ -25,8 +25,8 @@ jobs:
       - name: Assume role in Cloud Platform
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
-          aws-region: ${{ inputs.ECR_REGION }}
+          role-to-assume: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ inputs.ACCESS_ECR_REGION }}
 
       - name: Login to container repository
         uses: aws-actions/amazon-ecr-login@v2
@@ -37,7 +37,7 @@ jobs:
       - name: Scan for breaking vulnerabilities
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ secrets.ECR_REGISTRY }}/${{ inputs.ECR_REPOSITORY }}:${{ github.sha }}
+          image-ref: ${{ secrets.ECR_REGISTRY }}/${{ inputs.ACCESS_ECR_REPOSITORY }}:${{ github.sha }}
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
@@ -47,7 +47,7 @@ jobs:
       - name: Scan for vulnerabilities (informative, non-breaking)
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ secrets.ECR_REGISTRY }}/${{ inputs.ECR_REPOSITORY }}:${{ github.sha }}
+          image-ref: ${{ secrets.ECR_REGISTRY }}/${{ inputs.ACCESS_ECR_REPOSITORY }}:${{ github.sha }}
           format: 'table'
           exit-code: '0'
           ignore-unfixed: false

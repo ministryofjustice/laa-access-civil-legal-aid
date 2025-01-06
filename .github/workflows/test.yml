@@ -3,7 +3,7 @@ name: Test
 on:
   workflow_call:
     inputs:
-      ECR_REGION:
+      ACCESS_ECR_REGION:
         required: true
         type: string
       CLA_BACKEND_ECR_REPOSITORY:
@@ -59,7 +59,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.CLA_BACKEND_ECR_ROLE_TO_ASSUME }}
-          aws-region: ${{ inputs.ECR_REGION }}
+          aws-region: ${{ inputs.ACCESS_ECR_REGION }}
 
       - name: Login to container repository
         uses: aws-actions/amazon-ecr-login@v2
