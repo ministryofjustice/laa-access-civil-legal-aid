@@ -1,7 +1,14 @@
 name: Test
 
-on: workflow_call
-
+on:
+  workflow_call:
+    inputs:
+      ECR_REGION:
+        required: true
+        type: string
+      CLA_BACKEND_ECR_REPOSITORY:
+        required: true
+        type: string
 env:
   SECRET_KEY: "TEST_KEY"
 
@@ -44,6 +51,26 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
+
+      - name: Assume role in Cloud Platform
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ inputs.ECR_REGION }}
+
+      - name: Login to container repository
+        uses: aws-actions/amazon-ecr-login@v2
+        id: login-ecr
+        with:
+          mask-password: true
+      
+      - name: Run cla backend
+        run: |
+          docker pull $REGISTRY/$REPOSITORY:master:latest
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: ${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
+          IMAGE_TAG: ${{ github.sha }}
   
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -68,7 +95,7 @@ jobs:
           npm run build
           playwright install
           pytest tests/functional_tests --doctest-modules --junitxml=junit/functional-test-results.xml --cov=com --cov-report=xml --cov-report=html
-          
+
       - name: Upload pytest test results
         uses: actions/upload-artifact@v4
         with:
