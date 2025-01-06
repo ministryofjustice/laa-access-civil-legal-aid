@@ -44,29 +44,31 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
-
-      - name: Prune Docker System
-        run: docker system prune -af
-
-      - name: Build the Access container
-        run: |
-          git clone https://github.com/ministryofjustice/cla_backend ../cla_backend
-          docker compose -f compose.yml up --build -d
-          docker exec cla_backend bin/create_db.sh
-
+  
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          cache: 'pip'
+          cache: 'pip' # caching pip dependencies
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
   
-      - name: Run functional tests inside the container
+      - name: Install dependencies
         run: |
-          docker exec -t govuk-frontend-flask bash -c "playwright install"
-          docker exec -u root -t govuk-frontend-flask bash -c "playwright install-deps"
-          docker exec -t govuk-frontend-flask bash -c "python -m pip install pytest-cov"
-          docker exec -t "govuk-frontend-flask" bash -c "pytest tests/functional_tests --doctest-modules --junitxml=junit/functional-test-results.xml --cov=com --cov-report=xml --cov-report=html"
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements/generated/requirements-development.txt
   
+      - name: Functional test with pytest
+        run: |
+          pip install pytest pytest-cov
+          npm install
+          npm run build
+          playwright install
+          pytest tests/functional_tests --doctest-modules --junitxml=junit/functional-test-results.xml --cov=com --cov-report=xml --cov-report=html
+          
       - name: Upload pytest test results
         uses: actions/upload-artifact@v4
         with:

@@ -1,8 +1,0 @@
-services:
-  your_service_name:
-    deploy:
-      resources:
-        limits:
-          memory: 2G
-        reservations:
-          memory: 1G
