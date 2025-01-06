@@ -12,7 +12,7 @@ class TestPublicLandingPage:
 
     def test_public_yes(self, page: Page):
         page.get_by_role(
-            "link", name="Legal action against public organisations"
+            "link", name="Legal action against police and public organisations"
         ).click()
         expect(
             page.get_by_role(
@@ -30,7 +30,7 @@ class TestPublicLandingPage:
 
     def test_public_no(self, page: Page):
         page.get_by_role(
-            "link", name="Legal action against public organisations"
+            "link", name="Legal action against police and public organisations"
         ).click()
         expect(
             page.get_by_role(
