@@ -1,5 +1,9 @@
 from . import bp
-from .forms import DiscriminationWhereForm, DiscriminationWhyForm
+from .forms import (
+    DiscriminationWhereForm,
+    DiscriminationWhyForm,
+    DiscriminationAreYouUnder18Form,
+)
 from ..views import QuestionPage
 
 bp.add_url_rule(
@@ -9,4 +13,12 @@ bp.add_url_rule(
 bp.add_url_rule(
     "/discrimination/why",
     view_func=QuestionPage.as_view("why", form_class=DiscriminationWhyForm),
+)
+bp.add_url_rule(
+    "/discrimination/age",
+    view_func=QuestionPage.as_view(
+        "age",
+        form_class=DiscriminationAreYouUnder18Form,
+        template="categories/question-page-caption.html",
+    ),
 )
