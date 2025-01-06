@@ -56,7 +56,7 @@ jobs:
 
       - name: Create db
         run: |
-          docker exec cla_backend bin/create_db.sh
+          docker exec cla_backend env PYTHONWARNINGS="ignore:CryptographyDeprecationWarning" bin/create_db.sh
 
       - name: Set up Python
         uses: actions/setup-python@v5
