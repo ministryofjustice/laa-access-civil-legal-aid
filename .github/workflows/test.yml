@@ -73,7 +73,7 @@ jobs:
       - name: Run cla backend
         run: |
           aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $REGISTRY
-          docker pull $REGISTRY/$REPOSITORY:master.latest
+          docker pull $REGISTRY/$REPOSITORY:latest
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
