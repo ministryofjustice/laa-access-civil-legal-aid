@@ -10,6 +10,7 @@ from .public import bp as public_bp
 from .family import bp as family_bp
 from .benefits import bp as benefits_bp
 from .results import bp as results_bp
+from .x_cat import bp as x_cat_bp
 
 bp = Blueprint("categories", __name__)
 bp.register_blueprint(domestic_abuse_bp)
@@ -23,5 +24,6 @@ bp.register_blueprint(community_care_bp)
 bp.register_blueprint(send_bp)
 bp.register_blueprint(public_bp)
 bp.register_blueprint(benefits_bp)
+bp.register_blueprint(x_cat_bp)
 
 from app.categories import urls  # noqa: E402,F401

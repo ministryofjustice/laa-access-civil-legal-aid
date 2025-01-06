@@ -20,6 +20,6 @@ bp.add_url_rule(
     view_func=QuestionPage.as_view(
         "reason",
         form_class=PolicePrisonOrDetentionCentreForm,
-        template="categories/public/reason.html",
+        template="categories/question-page-caption.html",
     ),
 )

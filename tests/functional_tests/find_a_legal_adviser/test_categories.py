@@ -101,7 +101,7 @@ class TestCategoriesURL:
 
     def test_single_category_url(self, page: Page) -> None:
         # Select more problems and clinical negligence
-        page.get_by_role("button", name="More problems covered by legal aid").click()
+        page.get_by_role("link", name="More problems covered by legal aid").click()
         expect(
             page.get_by_role("link", name="Clinical negligence in babies")
         ).to_be_visible()
