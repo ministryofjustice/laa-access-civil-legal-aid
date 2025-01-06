@@ -119,9 +119,11 @@ def create_app(config_class=Config):
     from app.main import bp as main_bp
     from app.categories import bp as categories_bp
     from app.find_a_legal_adviser import bp as fala_bp
+    from app.means_test import bp as means_test_bp
 
     app.register_blueprint(main_bp)
     app.register_blueprint(categories_bp)
     app.register_blueprint(fala_bp)
+    app.register_blueprint(means_test_bp)
 
     return app

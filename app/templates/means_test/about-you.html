@@ -1,0 +1,25 @@
+{% extends "means_test/form-page.html" %}
+
+{% set areYouInADisputeHtml %}
+    {{ form.are_you_in_a_dispute() }}
+{% endset %}
+
+
+{% block form %}
+    {{ form.csrf_token }}
+
+    {{ form.partner(params={
+        'items': [
+            {
+            'value': 'yes',
+            'conditional': {
+              'html': areYouInADisputeHtml
+            }
+          },
+          {
+            'value': 'no'
+          },
+        ]
+    }) }}
+    {{ form.submit }}
+{% endblock %}
