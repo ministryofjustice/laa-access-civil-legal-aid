@@ -17,7 +17,7 @@ def get_help_organisations(category: str, **kwargs):
     kwargs["article_category__name"] = (
         category.title()
     )  # CLA Backend requires the category name to be title case
-    hostname = current_app.config["BACKEND_URL"]
+    hostname = current_app.config["CLA_BACKEND_URL"]
     response = requests.get(
         url=f"{hostname}/checker/api/v1/organisation", params=kwargs
     ).json()
