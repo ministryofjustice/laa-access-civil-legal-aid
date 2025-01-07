@@ -17,7 +17,7 @@ class Config(object):
     SERVICE_NAME = "Access Civil Legal Aid"
     SERVICE_PHASE = os.environ.get("SERVICE_PHASE", "Beta")
     SERVICE_URL = os.environ.get("SERVICE_URL", "")
-    SESSION_COOKIE_HTTP_ONLY = ENVIRONMENT != "local"
+    SESSION_COOKIE_HTTPONLY = True
     SENTRY_DSN = os.environ.get("SENTRY_DSN")
     LANGUAGES = {"en": "English", "cy": "Welsh"}
     SERVICE_UNAVAILABLE = os.environ.get("MAINTENANCE_MODE", "False").lower() == "true"
@@ -26,4 +26,3 @@ class Config(object):
         "https://laa-legal-adviser-api-production.cloud-platform.service.justice.gov.uk",
     )
     POSTCODES_IO_URL = os.environ.get("POSTCODES_IO_URL", "https://api.postcodes.io")
-    CLA_BACKEND_URL = os.environ.get("CLA_BACKEND_URL", "http://127.0.0.1:8010")

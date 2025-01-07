@@ -16,3 +16,7 @@ bp.add_url_rule(
     "/refer",
     view_func=CategoryPage.as_view("refer", template="categories/refer.html"),
 )
+bp.add_url_rule(
+    "/contact",
+    view_func=CategoryPage.as_view("contact", template="categories/contact.html"),
+)

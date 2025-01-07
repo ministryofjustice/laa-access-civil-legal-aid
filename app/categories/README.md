@@ -26,7 +26,7 @@ class HousingLandingPage(CategoryLandingPage):
 
     routing_map = {
         "homelessness": "categories.results.in_scope_hlpas",
-        "eviction": "contact.contact_us",
+        "eviction": "categories.results.contact",
         "other": "categories.results.refer",
     }
 

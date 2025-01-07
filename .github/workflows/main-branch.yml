@@ -24,20 +24,20 @@ jobs:
     uses: ./.github/workflows/build.yml
     needs: [static-analysis, test]
     with:
-      ACCESS_ECR_REGION: ${{vars.ACCESS_ECR_REGION}}
-      ACCESS_ECR_REPOSITORY: ${{vars.ACCESS_ECR_REPOSITORY}}
+      ECR_REGION: ${{vars.ECR_REGION}}
+      ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
     secrets:
-      ACCESS_ECR_ROLE_TO_ASSUME: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
+      ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
 
   scan-image:
     uses: ./.github/workflows/trivy-image-scan.yml
     needs: build-and-push
     with:
-      ACCESS_ECR_REPOSITORY: ${{vars.ACCESS_ECR_REPOSITORY}}
-      ACCESS_ECR_REGION: ${{vars.ACCESS_ECR_REGION}}
+      ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
+      ECR_REGION: ${{vars.ECR_REGION}}
     secrets:
       ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-      ACCESS_ECR_ROLE_TO_ASSUME: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
+      ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
 
   deploy-staging:
     name: Staging
@@ -45,11 +45,11 @@ jobs:
     needs: build-and-push
     with:
       environment: staging
-      ACCESS_ECR_REGION: ${{vars.ACCESS_ECR_REGION}}
-      ACCESS_ECR_REPOSITORY: ${{vars.ACCESS_ECR_REPOSITORY}}
+      ECR_REGION: ${{vars.ECR_REGION}}
+      ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
     secrets:
       ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-      ACCESS_ECR_ROLE_TO_ASSUME: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
+      ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
       KUBE_CERT: ${{ secrets.KUBE_CERT }}
       KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
       KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
@@ -61,11 +61,11 @@ jobs:
     needs: deploy-staging
     with:
       environment: production
-      ACCESS_ECR_REGION: ${{vars.ACCESS_ECR_REGION}}
-      ACCESS_ECR_REPOSITORY: ${{vars.ACCESS_ECR_REPOSITORY}}
+      ECR_REGION: ${{vars.ECR_REGION}}
+      ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
     secrets:
       ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-      ACCESS_ECR_ROLE_TO_ASSUME: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
+      ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
       KUBE_CERT: ${{ secrets.KUBE_CERT }}
       KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
       KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}

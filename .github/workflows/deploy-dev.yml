@@ -5,16 +5,16 @@ on:
       environment:
         required: true
         type: string
-      ACCESS_ECR_REGION:
+      ECR_REGION:
         required: true
         type: string
-      ACCESS_ECR_REPOSITORY:
+      ECR_REPOSITORY:
         required: true
         type: string
     secrets:
       ECR_REGISTRY:
         required: true
-      ACCESS_ECR_ROLE_TO_ASSUME:
+      ECR_ROLE_TO_ASSUME:
         required: true
       KUBE_CERT:
         required: true
@@ -62,7 +62,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ github.sha }}
           REGISTRY: ${{ secrets.ECR_REGISTRY }}
-          REPOSITORY: ${{ inputs.ACCESS_ECR_REPOSITORY }}
+          REPOSITORY: ${{ inputs.ECR_REPOSITORY }}
           HELM_DIR: "helm_deploy/laa-access-civil-legal-aid"
           SHARED_IP_RANGES_LAA: ${{ env.SHARED_IP_RANGES_LAA }}
           DEV_HOST: "access-cla.cloud-platform.service.justice.gov.uk"
