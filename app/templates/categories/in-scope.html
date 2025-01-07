@@ -2,6 +2,8 @@
 {%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink-%}
 {%- from 'categories/components/list-item.html' import list_item, list_item_small -%}
 
+{% block pageTitle %}Legal aid is available for this type of problem - GOV.UK{% endblock %}
+
 {% block beforeContent%}
 {{ super() }}
 {{ govukBackLink({
@@ -13,7 +15,53 @@
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l">Legal aid is available for this type of problem</h1>
+        <h1 class="govuk-heading-xl">Legal aid is available for this type of problem</h1>
+
+        <p class="govuk-body-lead">However, you may need to also qualify financially.</p>
+
+        <p class="govuk-body">If you do qualify financially, you can speak to Civil Legal Advice (CLA), a national helpline for certain legal aid problems in England and Wales.</p>
+
+        <p class="govuk-body">The CLA operator will check all the information you’ve given through this service.</p>
+
+        <h3 class="govuk-heading-m">What you need to check if you qualify financially</h3>
+
+        <p class="govuk-body">You and your partner (if you have one) will need:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+            <li>recent payslips (if you’re working) and bank statements</li>
+            <li>a summary of your income tax and National Insurance contributions</li>
+            <li>details of any savings and investments you have</li>
+            <li>details of any benefits you receive</li>
+            <li>mortgage statements and a current valuation for any property you own</li>
+        </ul>
+
+        <h3 class="govuk-heading-s">When you do not need to complete the financial assessment</h3>
+
+        <p class="govuk-body">You should contact CLA without completing the financial assessment if you are:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+            <li>under 18</li>
+            <li>have capital trapped in a property you own or other money or assets that you cannot access</li>
+        </ul>
+
+        <h4 class="govuk-heading-s">If you use British Sign Language (BSL)</h4>
+
+        <p class="govuk-body">You can choose not to complete the financial assessment online, and instead ask for a call with a BSL interpreter.</p>
+
+        <p class="govuk-body">Fill in the 'Contact CLA' page. Select 'BSL' under 'Communication needs'.</p>
+
+    </div>
+    <div class="govuk-grid-column-one-third">
+        <aside class="sidebar">
+            <h2 class="govuk-heading-m">To qualify for legal aid:</h2>
+            <ul class="govuk-list govuk-list--bullet">
+                <li>your income (or combined income if you have a partner) shouldn’t be more than £2,657 a month before tax</li>
+                <li>your savings (or combined savings if you have a partner) shouldn’t be more than £8,000</li>
+            </ul>
+            <p class="govuk-body-s">
+                These limits can vary in certain circumstances – for example, if you need advice about domestic abuse.
+            </p>
+        </aside>
     </div>
 </div>
 {% endblock %}
