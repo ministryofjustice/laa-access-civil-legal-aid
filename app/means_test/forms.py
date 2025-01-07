@@ -4,6 +4,8 @@ from wtforms.fields import RadioField
 
 
 class AboutYouForm(FlaskForm):
+    title = "About you"
+
     partner = RadioField(
         "Do you have a partner?",
         choices=[("yes", "Yes"), ("no", "No")],
@@ -15,4 +17,11 @@ class AboutYouForm(FlaskForm):
         "Are you in a dispute with your partner?",
         choices=[("yes", "Yes"), ("no", "No")],
         widget=GovRadioInput(),
+    )
+
+    do_you_receive_benefits = RadioField(
+        "Do you receive any benefits (including Child Benefit)?",
+        choices=[("yes", "Yes"), ("no", "No")],
+        widget=GovRadioInput(),
+        description="Being on some benefits can help you qualify for legal aid",
     )
