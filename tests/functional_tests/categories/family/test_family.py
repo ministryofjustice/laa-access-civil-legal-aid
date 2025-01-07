@@ -42,6 +42,6 @@ ROUTING = [
 class TestFamilyLandingPage:
     @pytest.mark.parametrize("routing", ROUTING)
     def test_onward_routing(self, page: Page, routing: dict):
-        page.get_by_role("link", name="Children, families and relationships").click()
+        page.get_by_role("link", name="Children, families, relationships").click()
         page.get_by_role("link", name=routing["link_text"]).click()
         expect(page.get_by_text(routing["next_page_heading"])).to_be_visible()

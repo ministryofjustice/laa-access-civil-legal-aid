@@ -4,7 +4,7 @@ from app.categories.public.forms import PolicePrisonOrDetentionCentreForm
 
 
 class PublicLandingPage(CategoryLandingPage):
-    question_title = "Legal action against public organisations"
+    question_title = "Legal action against police and public organisations"
     category = "public"
 
 
