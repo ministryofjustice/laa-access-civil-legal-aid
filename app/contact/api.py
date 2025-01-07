@@ -1,11 +1,9 @@
 import requests
-from flask import current_app
+from app.main.api import backend_url
 
 
 def post_reasons_for_contacting(form=None, payload={}):
-    hostname = current_app.config["CLA_BACKEND_URL"]
+    url = backend_url(endpoint="reasons_for_contacting/")
     payload = form.api_payload() if form else payload
-    response = requests.post(
-        url=f"{hostname}/checker/api/v1/reasons_for_contacting/", json=payload
-    )
+    response = requests.post(url=url, json=payload)
     return response
