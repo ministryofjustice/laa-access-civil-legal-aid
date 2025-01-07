@@ -4,24 +4,40 @@
     {{ form.are_you_in_a_dispute() }}
 {% endset %}
 
-
 {% block form %}
     {{ form.csrf_token }}
 
     {{ form.partner(params={
         'items': [
             {
-            'value': 'yes',
-            'conditional': {
-              'html': areYouInADisputeHtml
-            }
-          },
-          {
-            'value': 'no'
-          },
+                'value': 'yes',
+                'conditional': {
+                    'html': areYouInADisputeHtml
+                }
+            },
+            {
+                'value': 'no'
+            },
         ]
     }) }}
 
-    {{ form.do_you_receive_benefits }}
+    {{ form.do_you_receive_benefits() }}
+
+    {{ form.children_under_16() }}
+
+    {{ form.dependants_over_16() }}
+
+    {{ form.own_property() }}
+
+    {{ form.employed() }}
+
+    {{ form.self_employed() }}
+
+    {{ form.over_60() }}
+
+    {{ form.savings_or_investments() }}
+
+    {{ form.valuable_items() }}
+
     {{ form.submit }}
 {% endblock %}
