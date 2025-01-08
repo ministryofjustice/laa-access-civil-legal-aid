@@ -1,7 +1,7 @@
-from app.categories.results.help_organisations import get_help_organisations
 from app.categories.views import CategoryPage
 from flask import session, redirect, url_for, render_template
 from app.find_a_legal_adviser.laalaa import get_category_code as get_fala_category_code
+from app.api import cla_backend
 
 
 class HlpasInScopePage(CategoryPage):
@@ -14,7 +14,7 @@ class ResultPage(CategoryPage):
     @staticmethod
     def get_context():
         category = session.get("category")
-        organisations = get_help_organisations(category)
+        organisations = cla_backend.get_help_organisations(category)
         return {
             "category_name": category,
             "organisations": organisations,
