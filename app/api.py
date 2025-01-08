@@ -50,7 +50,7 @@ class BackendAPIClient:
         params = {
             "article_category__name": category.title()  # CLA Backend requires the category name to be title case
         }
-        response = self.get("checker/api/v1/organisation", **params)
+        response = self.get("checker/api/v1/organisation/", **params)
         return response["results"]
 
 
