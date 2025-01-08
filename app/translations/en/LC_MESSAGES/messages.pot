@@ -1,14 +1,14 @@
 # Translations template for PROJECT.
-# Copyright (C) 2024 ORGANIZATION
+# Copyright (C) 2025 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-12-30 15:18+0000\n"
+"POT-Creation-Date: 2025-01-08 12:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,42 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
+
+msgid "Housing"
+msgstr ""
+
+msgid "Debt"
+msgstr ""
+
+msgid "Employment"
+msgstr ""
+
+msgid "Community care"
+msgstr ""
+
+msgid "Family"
+msgstr ""
+
+msgid "Domestic abuse"
+msgstr ""
+
+msgid "Welfare Benefits"
+msgstr ""
+
+msgid "Discrimination"
+msgstr ""
+
+msgid "Mental health"
+msgstr ""
+
+msgid "Immigration and asylum"
+msgstr ""
+
+msgid "Public law"
+msgstr ""
+
+msgid "Education"
+msgstr ""
 
 msgid "Validation failed message"
 msgstr ""
@@ -68,6 +104,24 @@ msgstr ""
 msgid "Select if this is about the police, prisons or detention centres"
 msgstr ""
 
+msgid "Are you under 18?"
+msgstr ""
+
+msgid "Select if you’re under 18"
+msgstr ""
+
+msgid "Were you accused by a landlord or the council?"
+msgstr ""
+
+msgid "Select ‘Yes’ if you were accused by a landlord or the council"
+msgstr ""
+
+msgid "Why do you want to contact Civil Legal Advice?"
+msgstr ""
+
+msgid "Select all that apply"
+msgstr ""
+
 msgid "I don’t know how to answer a question"
 msgstr ""
 
@@ -90,6 +144,223 @@ msgid "I’d prefer not to say"
 msgstr ""
 
 msgid "Another reason"
+msgstr ""
+
+msgid "Continue to contact CLA"
+msgstr ""
+
+msgid "Legal aid is available for this type of problem"
+msgstr ""
+
+msgid "However, you may need to also qualify financially."
+msgstr ""
+
+msgid ""
+"If you do qualify financially, you can speak to Civil Legal Advice (CLA),"
+" a national helpline for certain legal aid problems in England and Wales."
+msgstr ""
+
+msgid ""
+"The CLA operator will check all the information you’ve given through this"
+" service."
+msgstr ""
+
+msgid "What you need to check if you qualify financially"
+msgstr ""
+
+msgid "You and your partner (if you have one) will need:"
+msgstr ""
+
+msgid "recent payslips (if you’re working) and bank statements"
+msgstr ""
+
+msgid "a summary of your income tax and National Insurance contributions"
+msgstr ""
+
+msgid "details of any savings and investments you have"
+msgstr ""
+
+msgid "details of any benefits you receive"
+msgstr ""
+
+msgid "mortgage statements and a current valuation for any property you own"
+msgstr ""
+
+msgid "When you do not need to complete the financial assessment"
+msgstr ""
+
+msgid ""
+"You should <a class=\"govuk-link\" href=\"/contact\">contact CLA</a> "
+"without completing the financial assessment if you are:"
+msgstr ""
+
+msgid "under 18"
+msgstr ""
+
+msgid ""
+"have capital trapped in a property you own or other money or assets that "
+"you cannot access"
+msgstr ""
+
+msgid "If you use British Sign Language (BSL)"
+msgstr ""
+
+msgid ""
+"You can choose not to complete the financial assessment online, and "
+"instead ask for a call with a BSL interpreter."
+msgstr ""
+
+msgid ""
+"Fill in the '<a class=\"govuk-link\" href=\"/contact\">Contact CLA</a>' "
+"page. Select 'BSL' under 'Communication needs'."
+msgstr ""
+
+msgid "Check if you qualify financially"
+msgstr ""
+
+msgid "Before you start"
+msgstr ""
+
+msgid "Alternatively, you can ask a legal aid adviser to take on your case."
+msgstr ""
+
+msgid ""
+"Your adviser will check whether you qualify for legal aid at no cost to "
+"you by asking about your problem and your finances.\n"
+"            If you qualify, in some cases you may need to pay a "
+"contribution towards your legal aid."
+msgstr ""
+
+msgid "Find a legal adviser"
+msgstr ""
+
+msgid "Other sources of help"
+msgstr ""
+
+#, python-format
+msgid ""
+"You can also get advice from alternative help organisations for issues "
+"related to %(category_name)s. You don’t have to qualify for legal aid."
+msgstr ""
+
+msgid "To qualify for legal aid:"
+msgstr ""
+
+msgid ""
+"your income (or combined income if you have a partner) shouldn’t be more "
+"than £2,657 a month before tax"
+msgstr ""
+
+msgid ""
+"your savings (or combined savings if you have a partner) shouldn’t be "
+"more than £8,000"
+msgstr ""
+
+msgid ""
+"These limits can vary in certain circumstances – for example, if you need"
+" advice about domestic abuse."
+msgstr ""
+
+msgid "Find problems covered by legal aid"
+msgstr ""
+
+msgid "More problems covered by legal aid"
+msgstr ""
+
+msgid "Adopting a child from outside the UK"
+msgstr ""
+
+msgid "Adoption processes in the courts."
+msgstr ""
+
+msgid "Appeal a decision that you cannot work with children or vulnerable adults"
+msgstr ""
+
+msgid "Including if you’re on a ‘barred list’ or disqualified from teaching."
+msgstr ""
+
+msgid "Anti-social behaviour and gangs"
+msgstr ""
+
+msgid ""
+"If you’re accused or taken to court for anti-social behaviour, including "
+"being in a gang."
+msgstr ""
+
+msgid "Clinical negligence in babies"
+msgstr ""
+
+msgid ""
+"Help if a baby has brain or nerve damage caused during pregnancy, "
+"childbirth or up to 8 weeks old."
+msgstr ""
+
+msgid "Compensation for abuse, assault or neglect"
+msgstr ""
+
+msgid ""
+"Includes child abuse, sexual assault, abuse of a vulnerable adult. Claims"
+" can be against a person or an organisation."
+msgstr ""
+
+msgid "Domestic abuse - if you have been accused"
+msgstr ""
+
+msgid ""
+"Legal help if you’ve been accused of domestic abuse or forced marriage. "
+"Includes non-molestation orders and other court orders."
+msgstr ""
+
+msgid "Environmental pollution"
+msgstr ""
+
+msgid ""
+"Issues about air, water or land pollution that is harming you or the "
+"environment."
+msgstr ""
+
+msgid "Female genital mutilation (FGM)"
+msgstr ""
+
+msgid "If you or someone else is at risk of FGM."
+msgstr ""
+
+msgid "Forced marriage"
+msgstr ""
+
+msgid "Help with forced marriage and Forced Marriage Protection Orders."
+msgstr ""
+
+msgid "Inquests for family members"
+msgstr ""
+
+msgid "Advice to prepare for the inquest of a family member."
+msgstr ""
+
+msgid "Mental health detention"
+msgstr ""
+
+msgid ""
+"Help if you’re held in hospital (‘sectioned’), mental health tribunals "
+"and community treatment orders."
+msgstr ""
+
+msgid "Proceeds of Crime Act"
+msgstr ""
+
+msgid "If you’re facing legal action to take your money or other assets."
+msgstr ""
+
+msgid "Terrorism"
+msgstr ""
+
+msgid "If you’re accused of terrorism or financing terrorist groups."
+msgstr ""
+
+msgid "Trafficking, modern slavery"
+msgstr ""
+
+msgid "Help if you’re a victim of human trafficking or modern slavery."
 msgstr ""
 
 msgid "Asylum and immigration"
@@ -126,9 +397,6 @@ msgid ""
 msgstr ""
 
 msgid "More problems"
-msgstr ""
-
-msgid "Trafficking, modern slavery"
 msgstr ""
 
 msgid "Help if you’re a victim of trafficking or modern slavery."
@@ -215,6 +483,19 @@ msgstr ""
 msgid "If you cannot find your problem"
 msgstr ""
 
+#, python-format
+msgid "Show %(count)s more"
+msgstr ""
+
+msgid "Helpline"
+msgstr ""
+
+msgid "Opening hours"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
 msgid "Children, families and relationships"
 msgstr ""
 
@@ -272,12 +553,6 @@ msgstr ""
 msgid ""
 "Advice about legal action against a school. Includes if a child is out of"
 " school, exclusions, transport to school, judicial reviews."
-msgstr ""
-
-msgid "Forced marriage"
-msgstr ""
-
-msgid "Help with forced marriage and Forced Marriage Protection Orders."
 msgstr ""
 
 msgid "children, families, relationships"
@@ -340,9 +615,6 @@ msgstr ""
 msgid "Applying for housing, losing your housing or homelessness."
 msgstr ""
 
-msgid "Discrimination"
-msgstr ""
-
 msgid "Treated unfairly by a landlord, council or housing association"
 msgstr ""
 
@@ -390,6 +662,9 @@ msgid ""
 msgstr ""
 
 msgid "Legal action against public organisations"
+msgstr ""
+
+msgid "Legal action against police and public organisations"
 msgstr ""
 
 msgid ""
