@@ -21,8 +21,9 @@ class BackendAPIClient:
         Returns:
             dict: The JSON response from the backend
         """
-        response = requests.get(url=self.url(endpoint), params=kwargs).json()
-        return response
+        response = requests.get(url=self.url(endpoint), params=kwargs)
+        response.raise_for_status()
+        return response.json()
 
     def post(self, endpoint: str, data: dict):
         """Make a POST request to CLA Backend.
@@ -32,8 +33,9 @@ class BackendAPIClient:
         Returns:
             dict: The JSON response from the backend
         """
-        response = requests.post(url=self.url(endpoint), json=data).json()
-        return response
+        response = requests.post(url=self.url(endpoint), json=data)
+        response.raise_for_status()
+        return response.json()
 
     @cache.memoize(timeout=86400)  # 1 day
     def get_help_organisations(self, category: str):
