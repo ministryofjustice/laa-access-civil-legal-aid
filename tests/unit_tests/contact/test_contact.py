@@ -1,6 +1,7 @@
 import pytest
 from unittest.mock import patch
 from flask import Flask, request
+from flask_babel import Babel
 from app.contact.api import post_reasons_for_contacting
 from app.contact.forms import ReasonsForContactingForm
 
@@ -11,6 +12,7 @@ def app():
     app = Flask(__name__)
     app.config["CLA_BACKEND_URL"] = "http://mock-backend"
     app.config["SECRET_KEY"] = "secret-key"
+    Babel(app)
     return app
 
 
