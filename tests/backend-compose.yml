@@ -1,0 +1,84 @@
+version: "3.9"
+services:
+  start_applications:
+    image: jwilder/dockerize
+    security_opt:
+      - no-new-privileges:true
+    command: >
+      -wait tcp://cla_backend:8000
+      -wait-retry-interval 10s
+      -timeout 180s
+    depends_on:
+      - cla_backend
+      - rabbitmq
+      - cla_backend_worker
+
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - '5672:5672'
+
+  db:
+    image: postgres:11.6-alpine
+    ports:
+      - ${DOCKER_DATABASE_PORT_MAPPING:-5433:5432}
+    security_opt:
+      - no-new-privileges:true
+    container_name:
+      cla_backend_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cla_backend
+
+  cla_backend: &cla_backend
+    build:
+      context: .
+      target: ${ENVIRONMENT:-development}
+    ports:
+      - '8010:8000'
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/home/app
+    depends_on:
+      - db
+    container_name:
+      cla_backend
+    environment: &cla_backend_environment
+      ENV: local
+      DEBUG: "True"
+      SECRET_KEY: CHANGE_ME
+      DB_NAME: cla_backend
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_HOST: db
+      DB_PORT: 5432
+      BACKEND_ENABLED: "True"
+      LOAD_SEED_DATA: "True"
+      LOAD_TEST_DATA: "True"
+      LOAD_END_TO_END_FIXTURES: "True"
+      ADMIN_USER: cla_admin
+      STATIC_FILES_BACKEND: local
+      ADMIN_PASSWORD: cla_admin
+      ALLOWED_HOSTS: "*"
+      DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS:-cla_backend.settings.base}
+      CELERY_BROKER_URL: "amqp://rabbitmq"
+      PREVIOUS_DIVERSITY_PRIVATE_KEY: ${PREVIOUS_DIVERSITY_PRIVATE_KEY:-}
+      EMAIL_ORCHESTRATOR_URL: ${EMAIL_ORCHESTRATOR_URL:-}
+
+  cla_backend_worker:
+    <<: *cla_backend
+    command:
+      - "docker/run_worker.sh"
+    ports: []
+    depends_on:
+      - cla_backend
+    container_name:
+      cla_backend_worker
+    environment:
+      <<: *cla_backend_environment
+      DIVERSITY_PRIVATE_KEY_PATH: ${DIVERSITY_PRIVATE_KEY_PATH:-}
+      DIVERSITY_PUBLIC_KEY_PATH: ${DIVERSITY_PUBLIC_KEY_PATH:-}
+      PREVIOUS_DIVERSITY_PRIVATE_KEY: ${PREVIOUS_DIVERSITY_PRIVATE_KEY:-}
+

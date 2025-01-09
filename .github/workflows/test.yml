@@ -77,19 +77,33 @@ jobs:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
           REGION: ${{ inputs.ACCESS_ECR_REGION }}
-
-      - name: Get CLA Backend
-        run: |
-          docker pull $REGISTRY/$REPOSITORY:latest
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: ${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
-          REGION: ${{ inputs.ACCESS_ECR_REGION }}
   
-      - name: Run CLA Backend
+      - name: Set up Docker Compose
         run: |
-          docker run -e DEBUG=True -e SECRET_KEY=change_me -p 8010:8000 -d $REGISTRY/$REPOSITORY:latest
-          docker ps -a
+          # Ensure docker-compose file exists in expected location
+          test -f tests/backend-compose.yml || exit 1
+          
+          # Create .env file for any default environment variables
+          echo "ENVIRONMENT=development" > .env
+          echo "DOCKER_DATABASE_PORT_MAPPING=5433:5432" >> .env
+
+      - name: Run CLA Backend with Docker Compose
+        run: |
+          # Override the build directive with the pulled image
+          REGISTRY=${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY=${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
+          
+          # Create a modified compose file using yq or sed
+          sed -e "s|build:|image: $REGISTRY/$REPOSITORY:latest|g" \
+              -e "/context:/d" \
+              -e "/target:/d" \
+              tests/backend-compose.yml > docker-compose.override.yml
+          
+          # Start the services
+          docker compose -f docker-compose.override.yml up -d
+          
+          # Wait for services to be ready
+          timeout 30 bash -c 'until curl -s http://localhost:8010/status > /dev/null; do sleep 1; done'
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: ${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
