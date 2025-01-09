@@ -1,7 +1,7 @@
 from app.contact import bp
 from app.categories.views import CategoryPage
 from app.contact.forms import ReasonsForContactingForm
-from app.contact.api import post_reasons_for_contacting
+from app.api import cla_backend
 from flask import request, redirect, url_for, render_template
 import logging
 
@@ -19,7 +19,7 @@ def reasons_for_contacting():
     if request.method == "GET":
         form.referrer.data = request.referrer or "Unknown"
     if form.validate_on_submit():
-        result = post_reasons_for_contacting(form=form)
+        result = cla_backend.post_reasons_for_contacting(form=form)
         next_step = form.next_step_mapping.get("*")
         logger.info("API Response: %s", result)
         return redirect(url_for(next_step))

@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import patch
 from flask import Flask, request
 from flask_babel import Babel
-from app.contact.api import post_reasons_for_contacting
+from app.api import cla_backend
 from app.contact.forms import ReasonsForContactingForm
 
 
@@ -25,7 +25,7 @@ def test_post_reasons_for_contacting_success(mocker, app):
         mock_response.status_code = 200
         mock_post.return_value = mock_response
 
-        response = post_reasons_for_contacting(payload={"key": "value"})
+        response = cla_backend.post_reasons_for_contacting(payload={"key": "value"})
 
         mock_post.assert_called_once_with(
             url="http://mock-backend/checker/api/v1/reasons_for_contacting/",

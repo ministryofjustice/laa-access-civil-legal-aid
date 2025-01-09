@@ -14,4 +14,3 @@ class SendChildInCareQuestionForm(ChildInCareQuestionForm):
 
 class SendAreYouUnder18Form(AreYouUnder18Form):
     category = Category.EDUCATION
-

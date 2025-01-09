@@ -85,15 +85,15 @@ class BackendAPIClient:
         """
         return self._make_request(method="GET", endpoint=endpoint, params=params)
 
-    def post(self, endpoint: str, data: dict):
+    def post(self, endpoint: str, json: dict):
         """Make a POST request to CLA Backend.
         Args:
             endpoint (str): The endpoint to request
-            data (dict): The data to send to the backend
+            json (dict): The data to send to the backend
         Returns:
             dict: The JSON response from the backend
         """
-        return self._make_request(method="POST", endpoint=endpoint, json=data)
+        return self._make_request(method="POST", endpoint=endpoint, json=json)
 
     @cache.memoize(timeout=86400)  # 1 day
     def get_help_organisations(self, category: str):
@@ -106,6 +106,12 @@ class BackendAPIClient:
         params = {"article_category__name": category}
         response = self.get("checker/api/v1/organisation/", params=params)
         return response["results"]
+
+    def post_reasons_for_contacting(self, form=None, payload=None):
+        if payload is None:
+            payload = {}
+        payload = form.api_payload() if form else payload
+        return self.post("checker/api/v1/reasons-for-contacting/", json=payload)
 
 
 cla_backend = BackendAPIClient()
