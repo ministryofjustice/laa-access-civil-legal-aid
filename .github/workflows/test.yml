@@ -82,14 +82,13 @@ jobs:
         run: |
             echo "CLA_BACKEND_IMAGE=$REGISTRY/$REPOSITORY:latest" >> .env
             
-            docker compose -f tests/backend-compose.yml up -d
+            docker compose -f tests/backend-compose.yml up -d --wait --wait-timeout 30
         env:
             REGISTRY: ${{ steps.login-ecr.outputs.registry }}
             REPOSITORY: ${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
 
       - name: Test connection
         run: |
-            sleep 10
             docker ps -a # List all containers
             echo "Database logs:"
             docker logs cla_backend_db
