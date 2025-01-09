@@ -89,6 +89,7 @@ jobs:
 
       - name: Test connection
         run: |
+            bash sleep 10
             docker ps -a # List all containers
             echo "Database logs:"
             docker logs cla_backend_db
