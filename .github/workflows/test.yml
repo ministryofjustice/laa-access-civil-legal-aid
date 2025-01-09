@@ -86,8 +86,6 @@ jobs:
             echo "SOURCE_VOLUME=" >> .env  # Disable volume mount in pipeline
             
             docker compose -f tests/backend-compose.yml up -d
-            
-            timeout 30 bash -c 'until curl -s http://localhost:8010/status > /dev/null; do sleep 1; done'
         env:
             REGISTRY: ${{ steps.login-ecr.outputs.registry }}
             REPOSITORY: ${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}

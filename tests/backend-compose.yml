@@ -10,13 +10,6 @@ services:
       -timeout 180s
     depends_on:
       - cla_backend
-      - rabbitmq
-      - cla_backend_worker
-
-  rabbitmq:
-    image: rabbitmq
-    ports:
-      - '5672:5672'
 
   db:
     image: postgres:11.6-alpine
@@ -68,17 +61,3 @@ services:
       CELERY_BROKER_URL: "amqp://rabbitmq"
       PREVIOUS_DIVERSITY_PRIVATE_KEY: ${PREVIOUS_DIVERSITY_PRIVATE_KEY:-}
       EMAIL_ORCHESTRATOR_URL: ${EMAIL_ORCHESTRATOR_URL:-}
-
-  cla_backend_worker:
-    <<: *cla_backend
-    command: ${WORKER_COMMAND:-docker/run_worker.sh}  # Default to script for local dev
-    ports: []
-    depends_on:
-      - cla_backend
-    container_name:
-      cla_backend_worker
-    environment:
-      <<: *cla_backend_environment
-      DIVERSITY_PRIVATE_KEY_PATH: ${DIVERSITY_PRIVATE_KEY_PATH:-}
-      DIVERSITY_PUBLIC_KEY_PATH: ${DIVERSITY_PUBLIC_KEY_PATH:-}
-      PREVIOUS_DIVERSITY_PRIVATE_KEY: ${PREVIOUS_DIVERSITY_PRIVATE_KEY:-}
