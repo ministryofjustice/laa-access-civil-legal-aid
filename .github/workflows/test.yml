@@ -81,7 +81,6 @@ jobs:
       - name: Run CLA Backend with Docker Compose
         run: |
             echo "CLA_BACKEND_IMAGE=$REGISTRY/$REPOSITORY:latest" >> .env
-            echo "BACKEND_COMMAND=ls -la docker/" >> .env
             
             docker compose -f tests/backend-compose.yml up -d
         env:
