@@ -34,8 +34,6 @@ services:
       - '8010:8000'
     stdin_open: true
     tty: true
-    volumes:
-      - ${SOURCE_VOLUME:-.:/home/app}  # Can be disabled in pipeline
     depends_on:
       - db
     container_name:
