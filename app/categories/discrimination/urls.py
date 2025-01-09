@@ -19,6 +19,5 @@ bp.add_url_rule(
     view_func=QuestionPage.as_view(
         "age",
         form_class=DiscriminationAreYouUnder18Form,
-        template="categories/question-page-caption.html",
     ),
 )

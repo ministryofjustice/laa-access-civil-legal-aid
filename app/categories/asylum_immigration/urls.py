@@ -11,7 +11,7 @@ FALA_REDIRECT = {
 
 class AsylumAndImmigrationLandingPage(CategoryLandingPage):
     question_title = "Asylum and immigration"
-    category = Category.IMMIGRATION_AND_ASYLUM
+    category = Category.ASYLUM_AND_IMMIGRATION
 
     routing_map = {
         "apply": FALA_REDIRECT,

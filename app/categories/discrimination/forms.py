@@ -88,7 +88,7 @@ class DiscriminationWhyForm(DiscriminationQuestionForm):
 
 
 class DiscriminationAreYouUnder18Form(AreYouUnder18Form):
-    category = "Discrimination"
+    category = Category.DISCRIMINATION
 
     next_step_mapping = {
         "yes": "contact.contact_us",

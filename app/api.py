@@ -1,7 +1,11 @@
 from urllib.parse import urljoin
 import requests
+from flask_babel import LazyString
 from flask import current_app
+import logging
 from app.extensions import cache
+
+logger = logging.getLogger(__name__)
 
 
 class BackendAPIClient:
@@ -21,17 +25,65 @@ class BackendAPIClient:
         # Use urljoin to properly handle path joining
         return urljoin(self.hostname.rstrip("/") + "/", endpoint.lstrip("/"))
 
-    def get(self, endpoint: str, **kwargs):
+    @staticmethod
+    def clean_params(params):
+        clean_params = {}
+        for key, value in params.items():
+            if isinstance(value, LazyString):
+                clean_params[key] = str(value)
+            else:
+                clean_params[key] = value
+        return clean_params
+
+    def _make_request(
+        self,
+        method: str,
+        endpoint: str,
+        params: dict | None = None,
+        json: dict | None = None,
+    ) -> dict:
+        """Makes an HTTP request with logging to cla_backend.
+
+        Args:
+            method: HTTP method (GET, POST, PUT, DELETE, etc.)
+            params: Optional query parameters to append to the URL
+            json: Optional JSON data to send in the request body
+
+        Returns:
+            The parsed JSON response from the server
+        """
+        cleaned_params = self.clean_params(
+            params
+        )  # Clean the params, covering LazyStrings to strings
+
+        request = requests.Request(
+            method=method.upper(),
+            url=self.url(endpoint),
+            params=cleaned_params,
+            json=json,
+        ).prepare()
+
+        logging.info(f"Request {request.method}: {request.url}")
+
+        # Send the request and capture response
+        response = requests.Session().send(request)
+
+        logging.info(
+            f"Response from {request.url}: {response.status_code} {response.reason}"
+        )
+
+        response.raise_for_status()
+        return response.json()
+
+    def get(self, endpoint: str, params: dict = None):
         """Make a GET request to the backend API.
         Args:
             endpoint (str): The endpoint to request
-            kwargs: Any additional query parameters to pass to the backend
+            params: Any additional query parameters to pass to the backend
         Returns:
             dict: The JSON response from the backend
         """
-        response = requests.get(url=self.url(endpoint), params=kwargs)
-        response.raise_for_status()
-        return response.json()
+        return self._make_request(method="GET", endpoint=endpoint, params=params)
 
     def post(self, endpoint: str, data: dict):
         """Make a POST request to CLA Backend.
@@ -41,9 +93,7 @@ class BackendAPIClient:
         Returns:
             dict: The JSON response from the backend
         """
-        response = requests.post(url=self.url(endpoint), json=data)
-        response.raise_for_status()
-        return response.json()
+        return self._make_request(method="POST", endpoint=endpoint, json=data)
 
     @cache.memoize(timeout=86400)  # 1 day
     def get_help_organisations(self, category: str):
@@ -53,12 +103,8 @@ class BackendAPIClient:
         Returns:
             List[str]: A list of help organisations
         """
-        if not isinstance(category, str):
-            return []
-        params = {
-            "article_category__name": category.title()  # CLA Backend requires the category name to be title case
-        }
-        response = self.get("checker/api/v1/organisation/", **params)
+        params = {"article_category__name": category}
+        response = self.get("checker/api/v1/organisation/", params=params)
         return response["results"]
 
 
