@@ -88,7 +88,7 @@ jobs:
   
       - name: Run CLA Backend
         run: |
-          docker run -p 8010:8000 -e DEBUG=True SECRET_KEY=change_me -d $REGISTRY/$REPOSITORY:latest
+          docker run e DEBUG=True -e SECRET_KEY=change_me -p 8010:8000 -d $REGISTRY/$REPOSITORY:latest
           docker ps -a
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
