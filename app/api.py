@@ -5,8 +5,6 @@ from app.extensions import cache
 
 
 class BackendAPIClient:
-    checker_api_endpoint = ""
-
     @property
     def hostname(self):
         return current_app.config["CLA_BACKEND_URL"]
