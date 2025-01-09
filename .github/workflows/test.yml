@@ -103,6 +103,7 @@ jobs:
                 local attempt=1
                 until curl --connect-timeout $timeout --max-time $timeout -s -v "$url"; do
                     status=$?
+                    echo "Attempt $attempt to $url failed with status $status"
                     if [ $status -eq 7 ]; then  # Connection refused
                         if [ $attempt -eq $max_attempts ]; then
                             echo "Failed to connect to $url after $max_attempts attempts - connection refused"
