@@ -89,24 +89,20 @@ jobs:
 
       - name: Run CLA Backend with Docker Compose
         run: |
-          # Override the build directive with the pulled image
-          REGISTRY=${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY=${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
-          
-          # Create a modified compose file using yq or sed
-          sed -e "s|build:|image: $REGISTRY/$REPOSITORY:latest|g" \
-              -e "/context:/d" \
-              -e "/target:/d" \
-              tests/backend-compose.yml > docker-compose.override.yml
-          
-          # Start the services
-          docker compose -f docker-compose.override.yml up -d
-          
-          # Wait for services to be ready
-          timeout 30 bash -c 'until curl -s http://localhost:8010/status > /dev/null; do sleep 1; done'
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: ${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
+            # Set environment variables for compose
+            echo "CLA_BACKEND_IMAGE=$REGISTRY/$REPOSITORY:latest" >> .env
+            echo "BACKEND_COMMAND=python manage.py runserver 0.0.0.0:8000" >> .env
+            echo "WORKER_COMMAND=celery -A cla_backend worker --loglevel=info" >> .env
+            echo "SOURCE_VOLUME=" >> .env  # Disable volume mount in pipeline
+            
+            # Start the services
+            docker compose -f tests/backend-compose.yml up -d
+            
+            # Wait for services to be ready
+            timeout 30 bash -c 'until curl -s http://localhost:8010/status > /dev/null; do sleep 1; done'
+          env:
+            REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+            REPOSITORY: ${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
 
       - name: Test connection
         run: |
