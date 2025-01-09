@@ -96,6 +96,10 @@ jobs:
 
       - name: Test connection
         run: |
+          curl -s http://0.0.0.0:8010/status
+          curl -s http://0.0.0.0:8010/checker/api/v1/organisation/
+          curl -s http://127.0.0.1:8010/status
+          curl -s http://127.0.0.1:8010/checker/api/v1/organisation/
           curl -s http://localhost:8010/status
           curl -s http://localhost:8010/checker/api/v1/organisation/
 
