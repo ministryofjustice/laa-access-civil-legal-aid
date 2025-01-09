@@ -93,11 +93,6 @@ jobs:
 
       - name: Test connection
         run: |
-            docker ps -a # List all containers
-            echo "Database logs:"
-            docker logs cla_backend_db
-            echo "Backend logs:"
-            docker logs cla_backend
             curl --retry-connrefused --retry 30 --retry-delay 1 --max-time 30 -v http://127.0.0.1:8010/status
 
       - name: Set up Python
