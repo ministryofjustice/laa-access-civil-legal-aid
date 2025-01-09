@@ -92,6 +92,9 @@ jobs:
 
       - name: Test connection
         run: |
+            docker ps -a # List all containers
+            docker logs cla_backend_db
+            docker logs cla_backend
             test_endpoint() {
                 local url=$1
                 local max_attempts=${2:-3}
