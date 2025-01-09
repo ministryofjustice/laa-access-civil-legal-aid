@@ -80,16 +80,13 @@ jobs:
 
       - name: Run CLA Backend with Docker Compose
         run: |
-            # Set environment variables for compose
             echo "CLA_BACKEND_IMAGE=$REGISTRY/$REPOSITORY:latest" >> .env
             echo "BACKEND_COMMAND=python manage.py runserver 0.0.0.0:8000" >> .env
             echo "WORKER_COMMAND=celery -A cla_backend worker --loglevel=info" >> .env
             echo "SOURCE_VOLUME=" >> .env  # Disable volume mount in pipeline
             
-            # Start the services
             docker compose -f tests/backend-compose.yml up -d
             
-            # Wait for services to be ready
             timeout 30 bash -c 'until curl -s http://localhost:8010/status > /dev/null; do sleep 1; done'
         env:
             REGISTRY: ${{ steps.login-ecr.outputs.registry }}
