@@ -1,3 +1,4 @@
+from urllib.parse import urljoin
 import requests
 from flask import current_app
 from app.extensions import cache
@@ -11,7 +12,16 @@ class BackendAPIClient:
         return current_app.config["CLA_BACKEND_URL"]
 
     def url(self, endpoint: str):
-        return f"{self.hostname}/{endpoint}"
+        """Build the full URL for an endpoint.
+
+        Args:
+            endpoint: The API endpoint path
+
+        Returns:
+            The complete URL
+        """
+        # Use urljoin to properly handle path joining
+        return urljoin(self.hostname.rstrip("/") + "/", endpoint.lstrip("/"))
 
     def get(self, endpoint: str, **kwargs):
         """Make a GET request to the backend API.
