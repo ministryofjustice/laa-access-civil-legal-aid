@@ -122,7 +122,7 @@ jobs:
             # Test both localhost and 127.0.0.1 endpoints
             for host in "localhost" "127.0.0.1"; do
                 for endpoint in "/status" "/checker/api/v1/organisation/"; do
-                    echo "Testing "http://${host}:8010${endpoint}"
+                    echo "Testing http://${host}:8010${endpoint}"
                     test_endpoint "http://${host}:8010${endpoint}" || exit 1
                 done
             done
