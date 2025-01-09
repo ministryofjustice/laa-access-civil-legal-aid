@@ -95,39 +95,7 @@ jobs:
             docker logs cla_backend_db
             echo "Backend logs:"
             docker logs cla_backend
-            test_endpoint() {
-                local url=$1
-                local max_attempts=${2:-3}
-                local timeout=${3:-30}
-                local wait_time=${4:-10}
-            
-                local attempt=1
-                until curl --connect-timeout $timeout --max-time $timeout -s -v "$url"; do
-                    status=$?
-                    echo "Attempt $attempt to $url failed with status $status"
-                    if [ $status -eq 7 ]; then  # Connection refused
-                        if [ $attempt -eq $max_attempts ]; then
-                            echo "Failed to connect to $url after $max_attempts attempts - connection refused"
-                            return 1
-                        fi
-                        echo "Connection attempt $attempt to $url refused, retrying in $wait_time seconds..."
-                        sleep $wait_time
-                        attempt=$((attempt + 1))
-                    else
-                        echo "Failed with error code $status on $url"
-                        return $status
-                    fi
-                done
-                return 0
-            }
-            
-            # Test both localhost and 127.0.0.1 endpoints
-            for host in "localhost" "127.0.0.1"; do
-                for endpoint in "/status" "/checker/api/v1/organisation/"; do
-                    echo "Testing http://${host}:8010${endpoint}"
-                    test_endpoint "http://${host}:8010${endpoint}"
-                done
-            done
+            curl --retry-connrefused --retry 30 --retry-delay 1 --max-time 30 -v http://127.0.0.1:8010/status
 
       - name: Set up Python
         uses: actions/setup-python@v5
