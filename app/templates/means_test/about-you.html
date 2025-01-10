@@ -4,6 +4,28 @@
     {{ form.are_you_in_a_dispute() }}
 {% endset %}
 
+{% set howManyChildrenUnder16Html %}
+    {{ form.how_many_children_under_16(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "classes": "govuk-input--width-4",
+        "inputmode": "numeric",
+        "spellcheck": false
+    }) }}
+{% endset %}
+
+{% set howManyDependentsOver16Html %}
+    {{ form.how_many_dependents_over_16(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "classes": "govuk-input--width-4",
+        "inputmode": "numeric",
+        "spellcheck": false
+    }) }}
+{% endset %}
+
 {% block form %}
     {{ form.csrf_token }}
 
@@ -23,9 +45,33 @@
 
     {{ form.do_you_receive_benefits() }}
 
-    {{ form.children_under_16() }}
+    {{ form.children_under_16(params={
+        'items': [
+            {
+                'value': 'yes',
+                'conditional': {
+                    'html': howManyChildrenUnder16Html
+                }
+            },
+            {
+                'value': 'no'
+            },
+        ]
+    }) }}
 
-    {{ form.dependants_over_16() }}
+    {{ form.dependants_over_16(params={
+        'items': [
+            {
+                'value': 'yes',
+                'conditional': {
+                    'html': howManyDependentsOver16Html
+                }
+            },
+            {
+                'value': 'no'
+            },
+        ]
+    }) }}
 
     {{ form.own_property() }}
 
