@@ -1,24 +1,13 @@
 import pytest
 from unittest.mock import patch
-from flask import Flask, request
-from flask_babel import Babel
+from flask import request
 from app.api import cla_backend
 from app.contact.forms import ReasonsForContactingForm
 
 
-@pytest.fixture
-def app():
-    """Mocked app with mock backend"""
-    app = Flask(__name__)
-    app.config["CLA_BACKEND_URL"] = "http://mock-backend"
-    app.config["SECRET_KEY"] = "secret-key"
-    Babel(app)
-    return app
-
-
 def test_post_reasons_for_contacting_success(mocker, app):
     with app.app_context():
-        mock_post = mocker.patch("requests.post")
+        mock_post = mocker.patch.object(cla_backend, "post")
 
         mock_response = mocker.MagicMock()
         mock_response.json.return_value = {"success": True}
@@ -28,8 +17,7 @@ def test_post_reasons_for_contacting_success(mocker, app):
         response = cla_backend.post_reasons_for_contacting(payload={"key": "value"})
 
         mock_post.assert_called_once_with(
-            url="http://mock-backend/checker/api/v1/reasons_for_contacting/",
-            json={"key": "value"},
+            "checker/api/v1/reasons-for-contacting/", json={"key": "value"}
         )
         assert response == mock_response
 
