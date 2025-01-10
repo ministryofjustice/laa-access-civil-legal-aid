@@ -27,6 +27,9 @@ class BackendAPIClient:
 
     @staticmethod
     def clean_params(params):
+        if not isinstance(params, dict):
+            return None
+
         clean_params = {}
         for key, value in params.items():
             if isinstance(value, LazyString):
@@ -52,14 +55,15 @@ class BackendAPIClient:
         Returns:
             The parsed JSON response from the server
         """
-        cleaned_params = self.clean_params(
-            params
-        )  # Clean the params, covering LazyStrings to strings
+        if params:
+            params = self.clean_params(
+                params
+            )  # Clean the params, covering LazyStrings to strings
 
         request = requests.Request(
             method=method.upper(),
             url=self.url(endpoint),
-            params=cleaned_params,
+            params=params,
             json=json,
         ).prepare()
 
