@@ -13,7 +13,7 @@ class HlpasInScopePage(CategoryPage):
 class ResultPage(CategoryPage):
     @staticmethod
     def get_context():
-        category = session.category_obj
+        category = session.category
         alt_help_category = category.article_category_name
         organisations = cla_backend.get_help_organisations(alt_help_category)
         return {

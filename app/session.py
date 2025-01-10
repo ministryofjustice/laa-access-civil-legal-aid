@@ -4,7 +4,7 @@ from app.categories.constants import Category
 
 class Session(SecureCookieSession):
     @property
-    def category_obj(self) -> Category | None:
+    def category(self) -> Category | None:
         """Get the category from the session.
 
         Returns:
