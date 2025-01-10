@@ -1,8 +1,8 @@
 from app.categories.community_care import bp
 from app.categories.views import CategoryLandingPage
-from app.categories.constants import Category
+from app.categories.constants import COMMUNITY_CARE
 
-CATEGORY_NAME = Category.COMMUNITY_CARE
+CATEGORY_NAME = COMMUNITY_CARE
 
 FALA_REDIRECT = {
     "endpoint": "find-a-legal-adviser.search",

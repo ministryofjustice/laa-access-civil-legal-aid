@@ -1,12 +1,12 @@
 from app.categories.public import bp
 from app.categories.views import CategoryLandingPage, QuestionPage
 from app.categories.public.forms import PolicePrisonOrDetentionCentreForm
-from app.categories.constants import Category
+from app.categories.constants import PUBLIC_LAW
 
 
 class PublicLandingPage(CategoryLandingPage):
     question_title = "Legal action against police and public organisations"
-    category = Category.PUBLIC_LAW
+    category = PUBLIC_LAW
 
 
 bp.add_url_rule(

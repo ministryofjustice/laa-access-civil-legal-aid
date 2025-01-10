@@ -1,12 +1,12 @@
 from app.categories.housing import bp
 from app.categories.views import CategoryLandingPage
-from app.categories.constants import Category
+from app.categories.constants import HOUSING
 
 
 class HousingLandingPage(CategoryLandingPage):
     question_title = "Housing, Homelessness, and Eviction"
 
-    category = Category.HOUSING
+    category = HOUSING
 
     routing_map = {
         "homelessness": "categories.results.in_scope_hlpas",

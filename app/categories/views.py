@@ -2,7 +2,6 @@ from flask.sansio.blueprints import Blueprint
 from flask.views import View
 from flask import render_template, redirect, url_for, session, request
 from app.categories.forms import QuestionForm
-from app.session import set_category_question_answer, get_category_question_answer
 
 
 class CategoryPage(View):
@@ -56,7 +55,7 @@ class CategoryAnswerPage(View):
 
         """
         session["previous_page"] = request.endpoint
-        set_category_question_answer(
+        session.set_category_question_answer(
             question_title=self.question,
             answer=self.answer,
             category=self.category,
@@ -134,7 +133,7 @@ class QuestionPage(View):
             answer: The user's selected answer
         """
         session["previous_page"] = request.endpoint
-        set_category_question_answer(
+        session.set_category_question_answer(
             question_title=self.form_class.title,
             answer=answer,
             category=self.form_class.category,
@@ -157,7 +156,7 @@ class QuestionPage(View):
             return self.get_next_page(form.question.data)
 
         # Pre-populate form with previous answer if it exists
-        previous_answer = get_category_question_answer(form.title)
+        previous_answer = session.get_category_question_answer(form.title)
         if previous_answer:
             form.question.data = previous_answer
 

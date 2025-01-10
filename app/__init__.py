@@ -12,6 +12,7 @@ from app.main import get_locale
 import sentry_sdk
 from app.extensions import cache
 from app.config import Config
+from app.session import SessionInterface
 
 compress = Compress()
 csrf = CSRFProtect()
@@ -36,6 +37,7 @@ if Config.SENTRY_DSN:
 
 def create_app(config_class=Config):
     app: Flask = Flask(__name__, static_url_path="/assets", static_folder="static/dist")
+    app.session_interface = SessionInterface()
     app.url_map.strict_slashes = False  # This allows www.host.gov.uk/category to be routed to www.host.gov.uk/category/
     app.config.from_object(config_class)
     app.jinja_env.lstrip_blocks = True
