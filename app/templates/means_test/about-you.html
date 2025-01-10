@@ -5,7 +5,7 @@
 {% endset %}
 
 {% set howManyChildrenUnder16Html %}
-    {{ form.how_many_children_under_16(params={
+    {{ form.num_children(params={
         "label": {
             "classes": "govuk-label--s"
         },
@@ -16,7 +16,7 @@
 {% endset %}
 
 {% set howManyDependentsOver16Html %}
-    {{ form.how_many_dependents_over_16(params={
+    {{ form.num_dependents(params={
         "label": {
             "classes": "govuk-label--s"
         },
@@ -43,9 +43,9 @@
         ]
     }) }}
 
-    {{ form.do_you_receive_benefits() }}
+    {{ form.on_benefits() }}
 
-    {{ form.children_under_16(params={
+    {{ form.have_children(params={
         'items': [
             {
                 'value': 'yes',
@@ -59,7 +59,7 @@
         ]
     }) }}
 
-    {{ form.dependants_over_16(params={
+    {{ form.have_dependents(params={
         'items': [
             {
                 'value': 'yes',
@@ -75,15 +75,15 @@
 
     {{ form.own_property() }}
 
-    {{ form.employed() }}
+    {{ form.is_employed() }}
 
-    {{ form.self_employed() }}
+    {{ form.is_self_employed() }}
 
-    {{ form.over_60() }}
+    {{ form.aged_60_or_over() }}
 
-    {{ form.savings_or_investments() }}
+    {{ form.have_savings() }}
 
-    {{ form.valuable_items() }}
+    {{ form.have_valuables() }}
 
     {{ form.submit }}
 {% endblock %}
