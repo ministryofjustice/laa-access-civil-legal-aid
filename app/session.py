@@ -10,7 +10,10 @@ class Session(SecureCookieSession):
         Returns:
             The category name if found, None otherwise
         """
-        return Category(**self.get("category"))
+        category_dict = self.get("category")
+        if category_dict is None:
+            return None
+        return Category(**category_dict)
 
     @property
     def has_children(self):
