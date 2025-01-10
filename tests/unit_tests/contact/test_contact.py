@@ -17,7 +17,7 @@ def test_post_reasons_for_contacting_success(mocker, app):
         response = cla_backend.post_reasons_for_contacting(payload={"key": "value"})
 
         mock_post.assert_called_once_with(
-            "checker/api/v1/reasons-for-contacting/", json={"key": "value"}
+            "checker/api/v1/reasons_for_contacting/", json={"key": "value"}
         )
         assert response == mock_response
 

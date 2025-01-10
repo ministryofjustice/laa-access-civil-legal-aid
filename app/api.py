@@ -115,7 +115,7 @@ class BackendAPIClient:
         if payload is None:
             payload = {}
         payload = form.api_payload() if form else payload
-        return self.post("checker/api/v1/reasons-for-contacting/", json=payload)
+        return self.post("checker/api/v1/reasons_for_contacting/", json=payload)
 
 
 cla_backend = BackendAPIClient()
