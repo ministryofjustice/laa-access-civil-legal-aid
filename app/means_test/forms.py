@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import RadioField
-
+from wtforms.fields import RadioField, IntegerField
+from govuk_frontend_wtf.wtforms_widgets import GovTextInput
 from app.means_test.widgets import MeansTestRadioInput
 
 
@@ -34,12 +34,16 @@ class AboutYouForm(FlaskForm):
         description="Don't include any children who don't live with you",
     )
 
+    how_many_children_under_16 = IntegerField("How many?", widget=GovTextInput())
+
     dependants_over_16 = RadioField(
         "Do you have any dependants aged 16 or over?",
         choices=[("yes", "Yes"), ("no", "No")],
         widget=MeansTestRadioInput(),
         description="People who you live with and support financially. This could be a young person for whom you get Child Benefit",
     )
+
+    how_many_dependents_over_16 = IntegerField("How many?", widget=GovTextInput())
 
     own_property = RadioField(
         "Do you own any property?",
