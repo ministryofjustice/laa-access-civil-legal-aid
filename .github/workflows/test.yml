@@ -78,20 +78,22 @@ jobs:
           REPOSITORY: ${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
           REGION: ${{ inputs.ACCESS_ECR_REGION }}
 
-      - name: Get CLA Backend
+      - name: Run CLA Backend with Docker Compose
         run: |
-          docker pull $REGISTRY/$REPOSITORY:latest
+            echo "CLA_BACKEND_IMAGE=$REGISTRY/$REPOSITORY:latest" >> .env
+            
+            docker compose -f tests/backend-compose.yml up -d --wait --wait-timeout 30
+          
+            sleep 5
+          
+            docker compose -f tests/backend-compose.yml exec cla_backend bin/create_db.sh
         env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: ${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
-          REGION: ${{ inputs.ACCESS_ECR_REGION }}
-  
-      - name: Run CLA Backend
+            REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+            REPOSITORY: ${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
+
+      - name: Test connection
         run: |
-          docker run -p 8010:8000 -d $REGISTRY/$REPOSITORY:latest
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: ${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
+            curl --retry-connrefused --retry 30 --retry-delay 1 --max-time 30 -v http://127.0.0.1:8010/status
 
       - name: Set up Python
         uses: actions/setup-python@v5

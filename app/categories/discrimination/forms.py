@@ -3,10 +3,11 @@ from app.categories.widgets import CategoryCheckboxInput
 from app.categories.forms import QuestionForm
 from wtforms.validators import InputRequired
 from app.categories.x_cat.forms import AreYouUnder18Form
+from app.categories.constants import DISCRIMINATION
 
 
 class DiscriminationQuestionForm(QuestionForm):
-    category = "Discrimination"
+    category = DISCRIMINATION
 
 
 class DiscriminationWhereForm(DiscriminationQuestionForm):
@@ -87,7 +88,7 @@ class DiscriminationWhyForm(DiscriminationQuestionForm):
 
 
 class DiscriminationAreYouUnder18Form(AreYouUnder18Form):
-    category = "Discrimination"
+    category = DISCRIMINATION
 
     next_step_mapping = {
         "yes": "contact.contact_us",

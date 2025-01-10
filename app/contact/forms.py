@@ -12,11 +12,11 @@ class ReasonsForContactingForm(FlaskForm):
         "*": "contact.contact_us",
     }
 
-    title = "Why do you want to contact Civil Legal Advice?"
+    title = _("Why do you want to contact Civil Legal Advice?")
 
     reasons = SelectMultipleField(
         title,
-        widget=CategoryCheckboxInput(hint_text="Select all that apply"),
+        widget=CategoryCheckboxInput(hint_text=_("Select all that apply")),
         choices=[
             ("CANT_ANSWER", _("I don’t know how to answer a question")),
             ("MISSING_PAPERWORK", _("I don’t have the paperwork I need")),
@@ -36,7 +36,7 @@ class ReasonsForContactingForm(FlaskForm):
     )
 
     referrer = HiddenField()
-    save = SubmitField("Continue to contact CLA", widget=GovSubmitInput())
+    save = SubmitField(_("Continue to contact CLA"), widget=GovSubmitInput())
 
     def api_payload(self):
         return {

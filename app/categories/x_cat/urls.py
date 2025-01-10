@@ -7,6 +7,5 @@ bp.add_url_rule(
     view_func=QuestionPage.as_view(
         "landlord-council",
         form_class=AntiSocialBehaviourForm,
-        template="categories/question-page-caption.html",
     ),
 )
