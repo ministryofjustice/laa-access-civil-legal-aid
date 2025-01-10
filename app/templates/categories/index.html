@@ -16,7 +16,7 @@
         <p class="govuk-body-l">These are the problems covered by legal aid. Choose the problem you need help with.</p>
 
         <div class="govuk-!-margin-top-8">
-        {{ list_item("Children, families and relationships",
+        {{ list_item("Children, families, relationships",
                      "Includes children in care, children and social services. Also, help with children and finances if you divorce or split up.",
                      url_for("categories.family.landing")) }}
 
@@ -41,10 +41,10 @@
              url_for("categories.community_care.landing")) }}
 
         {{ list_item("Benefits",
-             "Appeal a decision about your benefits",
+             "Appeal a decision about your benefits.",
              url_for("categories.benefits.appeal")) }}
 
-        {{ list_item("Legal action against public organisations",
+        {{ list_item("Legal action against police and public organisations",
              "Includes schools, the police, government, prisons, NHS, the council.",
              url_for("categories.public.landing")) }}
 

@@ -7,10 +7,12 @@ from flask_talisman import Talisman
 from flask_wtf.csrf import CSRFProtect
 from govuk_frontend_wtf.main import WTFormsHelpers
 from jinja2 import ChoiceLoader, PackageLoader, PrefixLoader
+from app.config.logging import configure_logging
 from app.main import get_locale
 import sentry_sdk
-
+from app.extensions import cache
 from app.config import Config
+from app.session import SessionInterface
 
 compress = Compress()
 csrf = CSRFProtect()
@@ -35,6 +37,7 @@ if Config.SENTRY_DSN:
 
 def create_app(config_class=Config):
     app: Flask = Flask(__name__, static_url_path="/assets", static_folder="static/dist")
+    app.session_interface = SessionInterface()
     app.url_map.strict_slashes = False  # This allows www.host.gov.uk/category to be routed to www.host.gov.uk/category/
     app.config.from_object(config_class)
     app.jinja_env.lstrip_blocks = True
@@ -50,6 +53,8 @@ def create_app(config_class=Config):
             ),
         ]
     )
+
+    configure_logging()
 
     # Set content security policy
     csp = {
@@ -107,7 +112,7 @@ def create_app(config_class=Config):
         content_security_policy_nonce_in=["script-src"],
         force_https=False,
         session_cookie_secure=False,
-        session_cookie_http_only=True,
+        session_cookie_http_only=Config.SESSION_COOKIE_HTTP_ONLY,
         session_cookie_samesite="Strict",
     )
 
@@ -115,15 +120,19 @@ def create_app(config_class=Config):
 
     Babel(app, locale_selector=get_locale)
 
+    cache.init_app(app)
+
     # Register blueprints
     from app.main import bp as main_bp
     from app.categories import bp as categories_bp
     from app.find_a_legal_adviser import bp as fala_bp
     from app.means_test import bp as means_test_bp
+    from app.contact import bp as contact_bp
 
     app.register_blueprint(main_bp)
     app.register_blueprint(categories_bp)
     app.register_blueprint(fala_bp)
     app.register_blueprint(means_test_bp)
+    app.register_blueprint(contact_bp)
 
     return app

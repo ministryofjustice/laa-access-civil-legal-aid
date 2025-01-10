@@ -1,5 +1,16 @@
 from app.main import bp
 import json
+from markupsafe import Markup
+from markdown import markdown
+
+
+@bp.app_template_filter("markdown")
+def render_markdown(text):
+    """Renders Markdown text as HTML, this can be invoked in Jinja templates using the markdown filter:
+    {{ "# Hello, World!" | markdown }}
+    We use markupsafe to ensure characters are escaped correctly so they can be safely rendered.
+    """
+    return Markup(markdown(text))
 
 
 @bp.app_template_filter("dict")

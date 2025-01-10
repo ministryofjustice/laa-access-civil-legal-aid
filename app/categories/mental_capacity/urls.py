@@ -1,11 +1,12 @@
 from app.categories.mental_capacity import bp
 from app.categories.views import CategoryLandingPage
+from app.categories.constants import MENTAL_CAPACITY
 
 
 class MentalCapacityLandingPage(CategoryLandingPage):
     question_title = "Mental capacity, mental health"
 
-    category = "Mental Capacity"
+    category = MENTAL_CAPACITY
 
     routing_map = {
         "mental_capacity": {

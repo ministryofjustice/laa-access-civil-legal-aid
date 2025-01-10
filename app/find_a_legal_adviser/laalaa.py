@@ -62,3 +62,33 @@ def is_valid_category_code(category_code: str | None):
         if category["code"] == category_code:
             return True
     return False
+
+
+def get_category_code(category_name: str):
+    """
+    Returns the category code with a given category name.
+
+    Args:
+        category_name (str): The code to look up
+
+    Returns:
+        str: The corresponding category name if found, None if not found
+    """
+    from app.find_a_legal_adviser import (
+        bp,
+    )  # We import this here as the blueprint needs to be initialised to contain category information
+
+    if not isinstance(category_name, str):
+        return None
+
+    category_name = category_name.lower()
+
+    if (
+        category_name == "domestic abuse"
+    ):  # Domestic abuse falls under the family category of law in FALA
+        category_name = "family"
+
+    for category in bp.categories:
+        if category["name"].lower() == category_name:
+            return category["code"]
+    return None

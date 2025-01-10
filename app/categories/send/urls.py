@@ -1,12 +1,13 @@
 from app.categories.send import bp
 from app.categories.send.forms import SendChildInCareQuestionForm, SendAreYouUnder18Form
 from app.categories.views import CategoryLandingPage, QuestionPage
+from app.categories.constants import EDUCATION
 
 
 class SendLandingPage(CategoryLandingPage):
     question_title = "Special educational needs and disability (SEND)"
 
-    category = "send"
+    category = EDUCATION
 
     routing_map = {
         "child_young_person": "categories.send.child_in_care",
@@ -29,7 +30,6 @@ bp.add_url_rule(
     view_func=QuestionPage.as_view(
         "child_in_care",
         form_class=SendChildInCareQuestionForm,
-        template="categories/question-page-caption.html",
     ),
 )
 bp.add_url_rule(
@@ -37,7 +37,6 @@ bp.add_url_rule(
     view_func=QuestionPage.as_view(
         "age",
         form_class=SendAreYouUnder18Form,
-        template="categories/question-page-caption.html",
     ),
 )
 

@@ -7,6 +7,7 @@
 babel==2.16.0
 blinker==1.8.2
 brotli==1.1.0
+cachelib==0.9.0
 certifi==2024.7.4
 charset-normalizer==3.3.2
 click==8.1.7
@@ -14,6 +15,7 @@ deepmerge==1.1.1
 deprecated==1.2.14
 flask==3.0.3
 flask-babel==4.0.0
+flask-caching==2.3.0
 flask-compress==1.15
 flask-limiter==3.8.0
 flask-talisman==1.1.0
@@ -25,6 +27,7 @@ importlib-resources==6.4.0
 itsdangerous==2.2.0
 jinja2==3.1.4
 limits==3.13.0
+markdown==3.7
 markdown-it-py==3.0.0
 markupsafe==2.1.5
 mdurl==0.1.2

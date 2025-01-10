@@ -1,10 +1,10 @@
 from app.categories.results import bp
 from app.categories.views import CategoryPage
-from app.categories.results.views import HlpasInScopePage
+from app.categories.results.views import HlpasInScopePage, ResultPage
 
 bp.add_url_rule(
     "/legal-aid-available",
-    view_func=CategoryPage.as_view("in_scope", template="categories/in-scope.html"),
+    view_func=ResultPage.as_view("in_scope", template="categories/in-scope.html"),
 )
 bp.add_url_rule(
     "/legal-aid-available-hlpas",
@@ -15,8 +15,4 @@ bp.add_url_rule(
 bp.add_url_rule(
     "/refer",
     view_func=CategoryPage.as_view("refer", template="categories/refer.html"),
-)
-bp.add_url_rule(
-    "/contact",
-    view_func=CategoryPage.as_view("contact", template="categories/contact.html"),
 )

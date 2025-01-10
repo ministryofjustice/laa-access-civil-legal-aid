@@ -3,11 +3,12 @@ from wtforms import RadioField
 from wtforms.validators import InputRequired
 from app.categories.widgets import CategoryRadioInput
 from app.categories.forms import QuestionForm
+from app.categories.constants import PUBLIC_LAW
 
 
 class PolicePrisonOrDetentionCentreForm(QuestionForm):
     title = _("Is this to do with police, prisons or detention centres?")
-    category = "Legal action against public organisations"
+    category = PUBLIC_LAW
     next_step_mapping = {
         "yes": {
             "endpoint": "find-a-legal-adviser.search",

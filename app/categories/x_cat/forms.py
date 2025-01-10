@@ -3,13 +3,14 @@ from wtforms.validators import InputRequired
 from app.categories.forms import QuestionForm
 from app.categories.widgets import CategoryRadioInput
 from flask_babel import lazy_gettext as _
+from app.categories.constants import Category
 
 
 class AreYouUnder18Form(QuestionForm):
     title = _("Are you under 18?")
 
     next_step_mapping = {
-        "yes": "categories.results.contact",
+        "yes": "contact.contact_us",
         "no": "categories.results.in_scope",
     }
 
@@ -26,7 +27,9 @@ class AreYouUnder18Form(QuestionForm):
 
 class AntiSocialBehaviourForm(QuestionForm):
     title = _("Were you accused by a landlord or the council?")
-    category = "Anti-social behaviour and gangs"
+    category = Category(
+        _("Anti-social behaviour and gangs"), "ANTI_SOCIAL_BEHAVIOUR", None
+    )
     next_step_mapping = {
         "yes": {
             "endpoint": "categories.results.in_scope",

@@ -1,8 +1,9 @@
 from app.categories.domestic_abuse import bp
 from app.categories.domestic_abuse.forms import WorriedAboutSomeonesSafetyForm
 from app.categories.views import QuestionPage, CategoryLandingPage
+from app.categories.constants import DOMESTIC_ABUSE
 
-CATEGORY_NAME = "domestic_abuse"
+CATEGORY_NAME = DOMESTIC_ABUSE
 
 
 class DomesticAbuseLandingPage(CategoryLandingPage):
@@ -14,7 +15,7 @@ class DomesticAbuseLandingPage(CategoryLandingPage):
         "protect_you_and_your_children": "categories.domestic_abuse.are_you_at_risk_of_harm",
         "leaving_an_abusive_relationship": "categories.domestic_abuse.are_you_at_risk_of_harm",
         "problems_with_ex_partner": "categories.domestic_abuse.are_you_at_risk_of_harm",
-        "problems_with_neighbours": "categories.results.contact",
+        "problems_with_neighbours": "contact.contact_us",
         "housing_homelessness_losing_home": "categories.housing.landing",
         "forced_marriage": "categories.domestic_abuse.are_you_at_risk_of_harm",
         "fgm": "categories.domestic_abuse.are_you_at_risk_of_harm",
