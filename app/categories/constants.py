@@ -35,8 +35,8 @@ def get_category_from_display_text(display_text: str) -> Category | None:
     return reverse_mapping.get(display_text)
 
 
-def article_category(category_display_text: str):
-    """Returns the CLA_Backend article category name for a given category
+def get_article_category_name(category_display_text: str):
+    """Returns the CLA_Backend article category name for a given category display text
     This is used to populate the alternative help organisations
     """
     category = get_category_from_display_text(category_display_text)
