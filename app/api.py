@@ -102,6 +102,16 @@ class BackendAPIClient:
         """
         return self._make_request(method="POST", endpoint=endpoint, json=json)
 
+    def patch(self, endpoint: str, json: dict):
+        """Make a PATCH request to CLA Backend.
+        Args:
+            endpoint (str): The endpoint to request
+            json (dict): The data to send to the backend
+        Returns:
+            dict: The JSON response from the backend
+        """
+        return self._make_request(method="PATCH", endpoint=endpoint, json=json)
+
     @cache.memoize(timeout=86400)  # 1 day
     def get_help_organisations(self, category: str):
         """Get help organisations for a given category, each unique set of arguments return value is cached for 24 hours.

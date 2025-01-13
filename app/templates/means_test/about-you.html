@@ -29,16 +29,17 @@
 {% block form %}
     {{ form.csrf_token }}
 
-    {{ form.partner(params={
+    {{ form.has_partner(params={
+        "idPrefix": "has-partner",
         'items': [
             {
-                'value': 'yes',
+                'value': '1',
                 'conditional': {
                     'html': areYouInADisputeHtml
-                }
+                },
             },
             {
-                'value': 'no'
+                'value': '0'
             },
         ]
     }) }}
@@ -48,13 +49,13 @@
     {{ form.have_children(params={
         'items': [
             {
-                'value': 'yes',
+                'value': '1',
                 'conditional': {
                     'html': howManyChildrenUnder16Html
                 }
             },
             {
-                'value': 'no'
+                'value': '0'
             },
         ]
     }) }}
@@ -62,13 +63,13 @@
     {{ form.have_dependents(params={
         'items': [
             {
-                'value': 'yes',
+                'value': '1',
                 'conditional': {
                     'html': howManyDependentsOver16Html
                 }
             },
             {
-                'value': 'no'
+                'value': '0'
             },
         ]
     }) }}
@@ -77,7 +78,11 @@
 
     {{ form.is_employed() }}
 
+    {{ form.partner_is_employed() }}
+
     {{ form.is_self_employed() }}
+
+    {{ form.partner_is_self_employed() }}
 
     {{ form.aged_60_or_over() }}
 

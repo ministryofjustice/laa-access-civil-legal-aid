@@ -1,6 +1,7 @@
-from flask import render_template, redirect, url_for
+from flask import render_template
 from app.means_test import bp
 from app.means_test.forms import AboutYouForm
+from app.means_test.api import update_means_test
 
 
 @bp.route("/about-you", methods=["GET", "POST"])
@@ -8,6 +9,7 @@ def about_you():
     form = AboutYouForm()
 
     if form.validate_on_submit():
-        return redirect(url_for("means_test.about-your-income"))
+        update_means_test(form.payload_2())
+        return "Done"
 
     return render_template("means_test/about-you.html", form=form)
