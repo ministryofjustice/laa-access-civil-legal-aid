@@ -5,7 +5,9 @@ from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 
 @bp.get("/mean-test-review")
 def review():
-    return "I am a holding page"
+    return render_template(
+        "means_test/review.html",
+    )
 
 
 @bp.route("/benefits", methods=["GET", "POST"])
@@ -23,4 +25,7 @@ def benefits():
 @bp.route("/additional-benefits", methods=["GET", "POST"])
 def additional_benefits():
     form = AdditionalBenefitsForm(data=request.form)
+    if form.is_submitted() and form.validate():
+        return redirect(url_for("means_test.review"))
+
     return render_template("means_test/benefits.html", form=form)

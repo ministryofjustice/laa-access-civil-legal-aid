@@ -22,6 +22,7 @@ class BenefitsForm(BaseMeansTestForm):
                 _("Income-related Employment and Support Allowance"),
             ),
             ("universal_credit", _("Universal Credit")),
+            ("", ""),
             ("other-benefit", _("Any other benefits")),
         ],
     )
