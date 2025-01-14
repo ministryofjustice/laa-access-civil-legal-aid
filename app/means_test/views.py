@@ -2,17 +2,11 @@ from flask.views import View, MethodView
 from flask import render_template, url_for, redirect, session
 
 from app.means_test.api import update_means_test
-from app.means_test.forms.about_you import AboutYouForm
-from app.means_test.forms.benefits import BenefitsForm
-from app.means_test.forms.property import PropertyForm
+from app.means_test.forms import BenefitsForm, AboutYouForm
 
 
 class MeansTest(View):
-    forms = {
-        "about-you": AboutYouForm,
-        "benefits": BenefitsForm,
-        "property": PropertyForm,
-    }
+    forms = {"about-you": AboutYouForm, "benefits": BenefitsForm}
 
     def __init__(self, current_form_class, current_name):
         self.form_class = current_form_class
@@ -30,16 +24,19 @@ class MeansTest(View):
         return render_template(self.form_class.template, form=form)
 
     def get_next_page(self, current_key):
-        keys = list(self.forms.keys())  # Convert to list for easier indexing
-        try:
-            current_index = keys.index(current_key)
-            # Look through remaining pages
-            for next_key in keys[current_index + 1 :]:
-                if self.forms[next_key].should_show():
-                    return next_key
-            return "review"  # No more valid pages found
-        except ValueError:  # current_key not found
-            return "review"
+        keys = iter(self.forms.keys())  # Create an iterator over the keys
+        for key in keys:
+            if key == current_key:
+                next_page = next(
+                    keys, None
+                )  # Return the next key or None if no more keys
+                if not next_page:
+                    return "review"
+                next_page_form = self.forms[next_page]
+                if next_page_form.should_show():
+                    return next_page
+                continue
+        return "review"
 
     @classmethod
     def get_payload(cls, eligibility_data: dict) -> dict:

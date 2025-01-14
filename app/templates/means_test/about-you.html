@@ -33,13 +33,11 @@
         "idPrefix": "has-partner",
         'items': [
             {
-                'value': '1',
                 'conditional': {
                     'html': areYouInADisputeHtml
                 },
             },
             {
-                'value': '0'
             },
         ]
     }) }}
@@ -49,13 +47,11 @@
     {{ form.have_children(params={
         'items': [
             {
-                'value': '1',
                 'conditional': {
                     'html': howManyChildrenUnder16Html
                 }
             },
             {
-                'value': '0'
             },
         ]
     }) }}
@@ -63,13 +59,11 @@
     {{ form.have_dependents(params={
         'items': [
             {
-                'value': '1',
                 'conditional': {
                     'html': howManyDependentsOver16Html
                 }
             },
             {
-                'value': '0'
             },
         ]
     }) }}
