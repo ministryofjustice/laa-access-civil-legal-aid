@@ -1,8 +1,33 @@
 from flask.sessions import SecureCookieSession, SecureCookieSessionInterface
 from app.categories.constants import Category
+from flask import session
+from dataclasses import dataclass
+
+
+@dataclass
+class Eligibility:
+    forms = {}
+
+    def add(self, form_name, data):
+        self.forms[form_name] = data
+
+    @property
+    def category(self):
+        return session.get("category")["chs_code"]
 
 
 class Session(SecureCookieSession):
+    def __init__(self, *args, **kwargs):
+        print(args)
+        super().__init__(*args, **kwargs)
+        self["eligibility"] = Eligibility()
+
+    def update_eligibility(self, form_name, form_data):
+        self["eligibility"].add(form_name, form_data)
+
+    def get_eligibility(self):
+        return self["eligibility"]
+
     @property
     def category(self) -> Category | None:
         """Get the category from the session.

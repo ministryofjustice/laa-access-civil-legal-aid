@@ -58,6 +58,9 @@ class BackendAPIClient:
         Returns:
             The parsed JSON response from the server
         """
+        if not endpoint.endswith("/"):  # CLA Backend requires trailing slashes
+            endpoint = f"{endpoint}/"
+
         if params:
             params = self.clean_params(
                 params

@@ -1,19 +1,33 @@
+from flask import session
 from flask_wtf import FlaskForm
-from wtforms.fields import RadioField, IntegerField
+from wtforms.fields import RadioField, IntegerField, SelectMultipleField
 from govuk_frontend_wtf.wtforms_widgets import GovTextInput, GovSubmitInput
 from wtforms.fields.simple import SubmitField
 from wtforms.validators import InputRequired, NumberRange
 
 from app.means_test.validators import ValidateIf
-from app.means_test.widgets import MeansTestRadioInput
+from app.means_test.widgets import MeansTestRadioInput, MeansTestCheckboxInput
 from flask_babel import gettext as _
-
-YES = "1"
-NO = "0"
+from app.means_test import YES, NO
 
 
-class AboutYouForm(FlaskForm):
+class BaseMeansTestForm(FlaskForm):
+    title = ""
+
+    submit = SubmitField(_("Continue"), widget=GovSubmitInput())
+
+    def payload(self) -> dict:
+        return {}
+
+    @classmethod
+    def should_show(cls) -> bool:
+        return True
+
+
+class AboutYouForm(BaseMeansTestForm):
     title = "About you"
+
+    template = "means_test/about-you.html"
 
     has_partner = RadioField(
         "Do you have a partner?",
@@ -170,97 +184,12 @@ class AboutYouForm(FlaskForm):
         ],
     )
 
-    submit = SubmitField(_("Continue"), widget=GovSubmitInput())
-
-    def payload_2(self):
-        return {
-            "on_passported_benefits": "0",
-            "category": "u" "debt",
-            "is_you_or_your_partner_over_60": "u" "0",
-            "has_partner": "0",
-            "property_set": [],
-            "specific_benefits": {},
-            "dependants_old": 0,
-            "you": {
-                "savings": {
-                    "credit_balance": 0,
-                    "investment_balance": 0,
-                    "asset_balance": 0,
-                    "bank_balance": 0,
-                },
-                "deductions": {
-                    "income_tax": {
-                        "per_interval_value": 0,
-                        "interval_period": "per_month",
-                    },
-                    "mortgage": {
-                        "per_interval_value": 0,
-                        "interval_period": "per_month",
-                    },
-                    "childcare": {
-                        "per_interval_value": 0,
-                        "interval_period": "per_month",
-                    },
-                    "rent": {
-                        "per_interval_value": 0,
-                        "interval_period": "u" "per_week",
-                    },
-                    "maintenance": {
-                        "per_interval_value": 0,
-                        "interval_period": "u" "per_week",
-                    },
-                    "criminal_legalaid_contributions": 0,
-                    "national_insurance": {
-                        "per_interval_value": 0,
-                        "interval_period": "per_month",
-                    },
-                },
-                "income": {
-                    "self_employment_drawings": {
-                        "per_interval_value": 0,
-                        "interval_period": "per_month",
-                    },
-                    "benefits": {
-                        "per_interval_value": 0,
-                        "interval_period": "per_month",
-                    },
-                    "maintenance_received": {
-                        "per_interval_value": 0,
-                        "interval_period": "u" "per_week",
-                    },
-                    "self_employed": "0",
-                    "tax_credits": {
-                        "per_interval_value": 0,
-                        "interval_period": "per_month",
-                    },
-                    "earnings": {
-                        "per_interval_value": 0,
-                        "interval_period": "per_month",
-                    },
-                    "child_benefits": {
-                        "per_interval_value": 0,
-                        "interval_period": "per_month",
-                    },
-                    "other_income": {
-                        "per_interval_value": 0,
-                        "interval_period": "u" "per_week",
-                    },
-                    "pension": {
-                        "per_interval_value": 0,
-                        "interval_period": "u" "per_week",
-                    },
-                },
-            },
-            "dependants_young": 0,
-            "on_nass_benefits": "0",
-        }
-
     def payload(self):
         payload = {
             "has_partner": YES
             if self.has_partner.data == YES and not self.are_you_in_a_dispute.data == NO
             else NO,
-            "is_you_or_your_partner_over_60": "1",
+            "is_you_or_your_partner_over_60": self.aged_60_or_over.data,
             "dependants_young": self.num_children.data
             if self.have_children.data == YES
             else 0,
@@ -268,60 +197,6 @@ class AboutYouForm(FlaskForm):
             if self.have_dependents.data == YES
             else 0,
             "you": {"income": {"self_employed": self.is_self_employed.data}},
-            # TEST DATA
-            "property_set": [],
-            "category": "debt",
-            "on_passported_benefits": "0",
-            "on_nass_benefits": "0",
-            "specific_benefits": {},
-        }
-
-        payload["you"] = {
-            "savings": {
-                "credit_balance": 0,
-                "investment_balance": 0,
-                "asset_balance": 0,
-                "bank_balance": 0,
-            },
-            "deductions": {
-                "income_tax": {"per_interval_value": 0, "interval_period": "per_month"},
-                "mortgage": {"per_interval_value": 0, "interval_period": "per_month"},
-                "childcare": {"per_interval_value": 0, "interval_period": "per_month"},
-                "rent": {"per_interval_value": 0, "interval_period": "per_week"},
-                "maintenance": {"per_interval_value": 0, "interval_period": "per_week"},
-                "criminal_legalaid_contributions": 0,
-                "national_insurance": {
-                    "per_interval_value": 0,
-                    "interval_period": "per_month",
-                },
-            },
-            "income": {
-                "self_employment_drawings": {
-                    "per_interval_value": 0,
-                    "interval_period": "per_month",
-                },
-                "benefits": {"per_interval_value": 0, "interval_period": "per_month"},
-                "maintenance_received": {
-                    "per_interval_value": 0,
-                    "interval_period": "per_week",
-                },
-                "self_employed": "0",
-                "tax_credits": {
-                    "per_interval_value": 0,
-                    "interval_period": "per_month",
-                },
-                "earnings": {"per_interval_value": 0, "interval_period": "per_month"},
-                "child_benefits": {
-                    "per_interval_value": 0,
-                    "interval_period": "per_month",
-                },
-                "other_income": {
-                    "per_interval_value": 0,
-                    "interval_period": "per_month",
-                },
-                "pension": {"per_interval_value": 0, "interval_period": "per_month"},
-                "total": 0,
-            },
         }
 
         if payload["has_partner"] and self.partner_is_self_employed.data == YES:
@@ -345,90 +220,35 @@ class AboutYouForm(FlaskForm):
 
         return payload
 
-    """
-{
-   "on_passported_benefits":"0",
-   "category":"u""debt",
-   "is_you_or_your_partner_over_60":"u""0",
-   "has_partner":"0",
-   "property_set":[
-      
-   ],
-   "specific_benefits":{
-      
-   },
-   "dependants_old":0,
-   "you":{
-      "savings":{
-         "credit_balance":0,
-         "investment_balance":0,
-         "asset_balance":0,
-         "bank_balance":0
-      },
-      "deductions":{
-         "income_tax":{
-            "per_interval_value":0,
-            "interval_period":"per_month"
-         },
-         "mortgage":{
-            "per_interval_value":0,
-            "interval_period":"per_month"
-         },
-         "childcare":{
-            "per_interval_value":0,
-            "interval_period":"per_month"
-         },
-         "rent":{
-            "per_interval_value":0,
-            "interval_period":"u""per_week"
-         },
-         "maintenance":{
-            "per_interval_value":0,
-            "interval_period":"u""per_week"
-         },
-         "criminal_legalaid_contributions":0,
-         "national_insurance":{
-            "per_interval_value":0,
-            "interval_period":"per_month"
-         }
-      },
-      "income":{
-         "self_employment_drawings":{
-            "per_interval_value":0,
-            "interval_period":"per_month"
-         },
-         "benefits":{
-            "per_interval_value":0,
-            "interval_period":"per_month"
-         },
-         "maintenance_received":{
-            "per_interval_value":0,
-            "interval_period":"u""per_week"
-         },
-         "self_employed":"0",
-         "tax_credits":{
-            "per_interval_value":0,
-            "interval_period":"per_month"
-         },
-         "earnings":{
-            "per_interval_value":0,
-            "interval_period":"per_month"
-         },
-         "child_benefits":{
-            "per_interval_value":0,
-            "interval_period":"per_month"
-         },
-         "other_income":{
-            "per_interval_value":0,
-            "interval_period":"u""per_week"
-         },
-         "pension":{
-            "per_interval_value":0,
-            "interval_period":"u""per_week"
-         }
-      }
-   },
-   "dependants_young":0,
-   "on_nass_benefits":"0"
-}
-    """
+
+class BenefitsForm(BaseMeansTestForm):
+    title = _(" Which benefits do you receive?")
+
+    template = "means_test/benefits.html"
+
+    @classmethod
+    def should_show(cls) -> bool:
+        return (
+            session.get_eligibility().forms.get("about-you", {}).get("on_benefits")
+            == YES
+        )
+
+    benefits = SelectMultipleField(
+        label="",
+        widget=MeansTestCheckboxInput(
+            is_inline=False, show_divider=True, hint_text=_("Select all that apply")
+        ),
+        choices=[
+            ("child_benefit", _("Child Benefit")),
+            ("pension_credit", _("Guarantee Credit")),
+            ("income_support", _("Income Support")),
+            ("job_seekers_allowance", _("Income-based Jobseeker's Allowance")),
+            (
+                "employment_support",
+                _("Income-related Employment and Support Allowance"),
+            ),
+            ("universal_credit", _("Universal Credit")),
+            ("", ""),
+            ("other-benefit", _("Any other benefits")),
+        ],
+    )
