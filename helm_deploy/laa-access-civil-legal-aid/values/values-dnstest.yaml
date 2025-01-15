@@ -1,0 +1,21 @@
+# Default values for laa-access-civil-legal-aid in the dev environment.
+# The laa-access-civil-legal-aid-dev namespace installs a new helm release per feature branch
+# this is then uninstalled when the branch is merged.
+environment: "dev"
+
+ingress:
+  enabled: true
+  tls:
+    - hosts:
+        - "access-civil-legal-aid-dnstest.cloud-platform.service.justice.gov.uk"
+  hosts:
+    - host: "access-civil-legal-aid-dnstest.cloud-platform.service.justice.gov.uk"
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+
+envVars:
+  DEBUG:
+    value: "True"
+  CLA_BACKEND_URL:
+    value: "http://cla-backend-app.laa-cla-backend-uat.svc.cluster.local"
