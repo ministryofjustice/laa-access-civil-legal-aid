@@ -1,10 +1,14 @@
 {% extends "means_test/form-page.html" %}
 
 {% block form %}
-
     {{ form.csrf_token }}
 
-    {{ form.property }}
+    {{ form.main_home() }}
+    {{ form.share_property() }}
+    {{ form.property_worth() }}
+    {{ form.mortgage_left() }}
+    {{ form.rent_property() }}
+    {{ form.property_disputed() }}
 
     {{ form.submit }}
 {% endblock %}
