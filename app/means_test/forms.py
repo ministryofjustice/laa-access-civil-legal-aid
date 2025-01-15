@@ -252,3 +252,16 @@ class BenefitsForm(BaseMeansTestForm):
             ("other-benefit", _("Any other benefits")),
         ],
     )
+
+
+class PropertyForm(BaseMeansTestForm):
+    title = _("Your property")
+
+    template = "means_test/property.html"
+
+    @classmethod
+    def should_show(cls) -> bool:
+        return (
+            session.get_eligibility().forms.get("about-you", {}).get("own_property")
+            == YES
+        )
