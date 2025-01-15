@@ -2,11 +2,15 @@ from flask.views import View, MethodView
 from flask import render_template, url_for, redirect, session
 
 from app.means_test.api import update_means_test
-from app.means_test.forms import BenefitsForm, AboutYouForm
+from app.means_test.forms import BenefitsForm, AboutYouForm, PropertyForm
 
 
 class MeansTest(View):
-    forms = {"about-you": AboutYouForm, "benefits": BenefitsForm}
+    forms = {
+        "about-you": AboutYouForm,
+        "benefits": BenefitsForm,
+        "property": PropertyForm,
+    }
 
     def __init__(self, current_form_class, current_name):
         self.form_class = current_form_class
