@@ -3,20 +3,12 @@ from flask_babel import gettext as _
 from wtforms.fields import SelectMultipleField
 from app.means_test.widgets import MeansTestCheckboxInput
 from app.means_test.forms import BaseMeansTestForm
-from app.means_test import YES
 
 
 class BenefitsForm(BaseMeansTestForm):
     title = _(" Which benefits do you receive?")
 
     template = "means_test/benefits.html"
-
-    @classmethod
-    def should_show(cls) -> bool:
-        return (
-            session.get_eligibility().forms.get("about-you", {}).get("on_benefits")
-            == YES
-        )
 
     benefits = SelectMultipleField(
         label="",
@@ -37,3 +29,56 @@ class BenefitsForm(BaseMeansTestForm):
             ("other-benefit", _("Any other benefits")),
         ],
     )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Remove child-benefit option if they don't have any children or dependants
+        eligibility = session.get("eligibility")
+        if not (eligibility.has_children or eligibility.has_dependants):
+            self.benefits.choices = list(
+                filter(
+                    lambda benefit: benefit[0] != "child_benefit", self.benefits.choices
+                )
+            )
+
+    @classmethod
+    def should_show(cls) -> bool:
+        return session.get("eligibility").on_benefits
+
+
+class AdditionalBenefitsForm(BaseMeansTestForm):
+    title = _(" Your additional benefits")
+    description = _(
+        "You’ll need to provide evidence of the financial information you’ve given us through this service."
+    )
+    template = "means_test/benefits.html"
+    benefits = SelectMultipleField(
+        label=_("Do you get any of these benefits?"),
+        widget=MeansTestCheckboxInput(
+            is_inline=False, show_divider=False, hint_text=_("Select all that apply")
+        ),
+        choices=[
+            ("armed-forces-independance", _("Armed Forces Independence payment")),
+            ("attendance", _("Attendance Allowance")),
+            ("back-to-work-bonus", _("Back to Work Bonus")),
+            ("care-community", _("Care in the community Direct Payment")),
+            ("carers", _("Carers’ Allowance")),
+            ("constant-attendance", _("Constant Attendance Allowance")),
+            ("ctax-benefits", _("Council Tax Benefits")),
+            ("disability-living", _("Disability Living Allowance")),
+            ("ex-severe-disablement", _("Exceptionally Severe Disablement Allowance")),
+            ("fostering", _("Fostering Allowance")),
+            ("housing", _("Housing Benefit")),
+            ("indep-living", _("Independent Living Funds payment")),
+            ("personal-indep", _("Personal Independence Payments")),
+            ("severe-disablement", _("Severe Disablement Allowance")),
+            ("social-fund", _("Social Fund Payments")),
+            ("special-ed-needs", _("Special Education Needs (SEN) direct payment")),
+            ("war-pension", _("War Pension")),
+        ],
+    )
+
+    @classmethod
+    def should_show(cls) -> bool:
+        benefits = session.get("eligibility").forms["benefits"]["benefits"]
+        return "other-benefit" in benefits
