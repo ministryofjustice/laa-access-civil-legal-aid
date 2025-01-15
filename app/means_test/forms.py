@@ -13,8 +13,21 @@ from app.means_test import YES, NO
 
 class BaseMeansTestForm(FlaskForm):
     title = ""
-
+    template = "means_test/form-page.html"
     submit = SubmitField(_("Continue"), widget=GovSubmitInput())
+
+    @property
+    def fields_to_render(self):
+        fields = []
+        submit_fields = []
+        for name, field in self._fields.items():
+            if isinstance(field, SubmitField):
+                submit_fields.append(field)
+            else:
+                fields.append(field)
+        if submit_fields:
+            fields.extend(submit_fields)
+        return fields
 
     def payload(self) -> dict:
         return {}
@@ -223,8 +236,6 @@ class AboutYouForm(BaseMeansTestForm):
 
 class BenefitsForm(BaseMeansTestForm):
     title = _(" Which benefits do you receive?")
-
-    template = "means_test/benefits.html"
 
     @classmethod
     def should_show(cls) -> bool:
