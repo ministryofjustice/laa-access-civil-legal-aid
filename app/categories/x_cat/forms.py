@@ -28,7 +28,7 @@ class AreYouUnder18Form(QuestionForm):
 class AntiSocialBehaviourForm(QuestionForm):
     title = _("Were you accused by a landlord or the council?")
     category = Category(
-        _("Anti-social behaviour and gangs"), "ANTI_SOCIAL_BEHAVIOUR", None
+        _("Anti-social behaviour and gangs"), "ANTI_SOCIAL_BEHAVIOUR", None, None
     )
     next_step_mapping = {
         "yes": {

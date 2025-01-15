@@ -58,6 +58,9 @@ class BackendAPIClient:
         Returns:
             The parsed JSON response from the server
         """
+        if not endpoint.endswith("/"):  # CLA Backend requires trailing slashes
+            endpoint = f"{endpoint}/"
+
         if params:
             params = self.clean_params(
                 params
@@ -101,6 +104,16 @@ class BackendAPIClient:
             dict: The JSON response from the backend
         """
         return self._make_request(method="POST", endpoint=endpoint, json=json)
+
+    def patch(self, endpoint: str, json: dict):
+        """Make a PATCH request to CLA Backend.
+        Args:
+            endpoint (str): The endpoint to request
+            json (dict): The data to send to the backend
+        Returns:
+            dict: The JSON response from the backend
+        """
+        return self._make_request(method="PATCH", endpoint=endpoint, json=json)
 
     @cache.memoize(timeout=86400)  # 1 day
     def get_help_organisations(self, category: str):
