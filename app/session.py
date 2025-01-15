@@ -8,12 +8,27 @@ from dataclasses import dataclass
 class Eligibility:
     forms = {}
 
-    def add(self, form_name, data):
-        self.forms[form_name] = data
-
     @property
     def category(self):
         return session.get("category")["chs_code"]
+
+    @property
+    def on_benefits(self) -> bool:
+        return self.is_yes("about-you", "on_benefits")
+
+    @property
+    def has_children(self) -> bool:
+        return self.is_yes("about-you", "have_children")
+
+    @property
+    def has_dependants(self) -> bool:
+        return self.is_yes("about-you", "have_dependents")
+
+    def add(self, form_name, data):
+        self.forms[form_name] = data
+
+    def is_yes(self, form_name, field_name) -> bool:
+        return self.forms[form_name][field_name] == "1"
 
 
 class Session(SecureCookieSession):
@@ -39,16 +54,6 @@ class Session(SecureCookieSession):
         if category_dict is None:
             return None
         return Category(**category_dict)
-
-    @property
-    def has_children(self):
-        # Todo: Needs implementation
-        return True
-
-    @property
-    def has_dependants(self):
-        # Todo: Needs implementation
-        return True
 
     def set_category_question_answer(
         self, question_title: str, answer: str, category: Category
