@@ -1,38 +1,25 @@
 import { initAll } from 'govuk-frontend/dist/govuk/all.bundle.js';
 initAll();
 
-document.addEventListener('DOMContentLoaded', function() {
-    const dependentElements = document.querySelectorAll('[data-depends-on]');
+document.addEventListener('DOMContentLoaded', () => {
+    // Find elements to control and set up their visibility toggling
+    document.querySelectorAll('[data-controlled-by]').forEach(element => {
+        // Get the elements we need
+        const form = element.closest('.govuk-form-group');
+        const radios = document.querySelector('.govuk-radios:not([data-controlled-by])')
+            ?.querySelectorAll('input[type="radio"]');
 
-    function updateVisibility() {
-        dependentElements.forEach(element => {
-            // Check parent condition first
-            const parentField = element.dataset.parentField;
-            const parentValue = element.dataset.parentValue;
-            const parentSelected = document.querySelector(
-                `input[name="${parentField}"]:checked`
-            )?.value === parentValue;
+        if (!form || !radios?.length) return;
 
-            // Only check the dependent field if parent condition is met
-            const controllingField = element.dataset.dependsOn;
-            const requiredValue = element.dataset.dependsOnValue;
-            const dependentSelected = document.querySelector(
-                `input[name="${controllingField}"]:checked`
-            )?.value === requiredValue;
-
-            // Show only if both conditions are met
-            const shouldShow = parentSelected && dependentSelected;
-            element.classList.toggle('govuk-radios__conditional--hidden', !shouldShow);
-        });
-    }
-
-    // Listen for changes on any radio button
-    document.addEventListener('change', function(event) {
-        if (event.target.type === 'radio') {
-            requestAnimationFrame(updateVisibility);
+        // Toggle visibility based on radio selection
+        function toggle() {
+            const value = element.dataset.showValue || '1';
+            form.style.display = Array.from(radios)
+                .some(radio => radio.checked && radio.value === value) ? 'block' : 'none';
         }
-    });
 
-    // Initial state
-    updateVisibility();
+        // Run on load and when radios change
+        toggle();
+        radios.forEach(radio => radio.addEventListener('change', toggle));
+    });
 });

@@ -19,14 +19,14 @@
           </h1>
         </legend>
          <div id="passport-issued-hint" class="govuk-hint">
-            {{ field.hint }}
+          {{ field.hint }}
         </div>
         {{ renderError(field.field_with_error) }}
         <div class="govuk-grid-row" class="govuk-form-group {% if field.errors %}govuk-form-group--error{% endif %}">
             <div class="govuk-grid-column-one-half">
             {{ govukInput(params={
-                "id": field.id + "-value",
-                "name": field.name,
+                "id": "question",
+                "name": "question",
                 "prefix": {
                     "text": "£"
                 },
@@ -42,14 +42,35 @@
             </div>
             <div class="govuk-grid-column-one-half">
             {{ govukSelect(params={
-                "id": field.id + "-interval",
-                "name": field.name,
+                "id": "question",
+                "name": "question",
                 "value": field.interval,
                 "label": {
                     "text": _("Frequency"),
                     "classes": "govuk-label--s",
                 },
-                "items": field.interval_choices,
+                "items": [
+                    {
+                      "value": "",
+                      "text": "-- Please select --"
+                    },
+                    {
+                      "value": "per_week",
+                      "text": "per week",
+                    },
+                    {
+                      "value": "per_4week",
+                      "text": "4 weekly"
+                    },
+                    {
+                      "value": "per_month",
+                      "text": "per month"
+                    },
+                    {
+                      "value": "per_year",
+                      "text": "per year"
+                    }
+                ],
                 "errorMessage": {"class": "govuk-error-message"} if "interval" in field.field_with_error else {},
                 })
             }}

@@ -2,7 +2,10 @@
 {%- from 'govuk_frontend_jinja/components/details/macro.html' import govukDetails %}
 
 {% set areYouInADisputeHtml %}
-    {{ form.are_you_in_a_dispute() }}
+    {{ form.are_you_in_a_dispute(params={
+        "attributes": {
+            "data-controls": "has-partner"
+        },}) }}
 {% endset %}
 
 {% set howManyChildrenUnder16Html %}
@@ -23,7 +26,7 @@
         },
         "classes": "govuk-input--width-4",
         "inputmode": "numeric",
-        "spellcheck": false
+        "spellcheck": false,
     }) }}
 {% endset %}
 
@@ -73,11 +76,21 @@
 
     {{ form.is_employed() }}
 
-    {{ form.partner_is_employed() }}
+    {{ form.partner_is_employed(params={
+        "attributes": {
+            "data-controlled-by": "has-partner",
+            "data-show-value": "0"
+        }
+    }) }}
 
     {{ form.is_self_employed() }}
 
-    {{ form.partner_is_self_employed() }}
+    {{ form.partner_is_self_employed(params={
+        "attributes": {
+            "data-controlled-by": "has-partner",
+            "data-show-value": "0"
+        }
+    }) }}
 
     {{ form.aged_60_or_over() }}
 
