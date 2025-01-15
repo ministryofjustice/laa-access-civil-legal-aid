@@ -1,12 +1,10 @@
-from flask import session
-from flask_wtf import FlaskForm
-from wtforms.fields import RadioField, IntegerField, SelectMultipleField
+from wtforms.fields import RadioField, IntegerField
 from govuk_frontend_wtf.wtforms_widgets import GovTextInput, GovSubmitInput
 from wtforms.fields.simple import SubmitField
 from wtforms.validators import InputRequired, NumberRange
-
+from flask_wtf import FlaskForm
 from app.means_test.validators import ValidateIf
-from app.means_test.widgets import MeansTestRadioInput, MeansTestCheckboxInput
+from app.means_test.widgets import MeansTestRadioInput
 from flask_babel import gettext as _
 from app.means_test import YES, NO
 
@@ -181,149 +179,5 @@ class AboutYouForm(BaseMeansTestForm):
             InputRequired(
                 message=_("Tell us if you have any valuable items worth over £500 each")
             )
-        ],
-    )
-
-    def payload(self):
-        payload = {
-            "has_partner": YES
-            if self.has_partner.data == YES and not self.are_you_in_a_dispute.data == NO
-            else NO,
-            "is_you_or_your_partner_over_60": self.aged_60_or_over.data,
-            "dependants_young": self.num_children.data
-            if self.have_children.data == YES
-            else 0,
-            "dependants_old": self.num_dependents.data
-            if self.have_dependents.data == YES
-            else 0,
-            "you": {"income": {"self_employed": self.is_self_employed.data}},
-        }
-
-        if payload["has_partner"] and self.partner_is_self_employed.data == YES:
-            payload["partner"] = {
-                "income": {"self_employed": self.partner_is_self_employed.data}
-            }
-
-        if self.own_property.data:
-            # TODO: Get property data
-            pass
-
-        if self.have_savings or self.have_valuables:
-            # TODO: Get savings data
-            pass
-
-        if self.on_benefits.data:
-            # TODO: Get benefits data
-            pass
-
-        # TODO: Get income and outgoing data
-
-        return payload
-
-
-class BenefitsForm(BaseMeansTestForm):
-    title = _(" Which benefits do you receive?")
-
-    template = "means_test/benefits.html"
-
-    @classmethod
-    def should_show(cls) -> bool:
-        return (
-            session.get_eligibility().forms.get("about-you", {}).get("on_benefits")
-            == YES
-        )
-
-    benefits = SelectMultipleField(
-        label="",
-        widget=MeansTestCheckboxInput(
-            is_inline=False, show_divider=True, hint_text=_("Select all that apply")
-        ),
-        choices=[
-            ("child_benefit", _("Child Benefit")),
-            ("pension_credit", _("Guarantee Credit")),
-            ("income_support", _("Income Support")),
-            ("job_seekers_allowance", _("Income-based Jobseeker's Allowance")),
-            (
-                "employment_support",
-                _("Income-related Employment and Support Allowance"),
-            ),
-            ("universal_credit", _("Universal Credit")),
-            ("", ""),
-            ("other-benefit", _("Any other benefits")),
-        ],
-    )
-
-
-class PropertyForm(BaseMeansTestForm):
-    title = _("Your property")
-
-    template = "means_test/property.html"
-
-    @classmethod
-    def should_show(cls) -> bool:
-        return (
-            session.get_eligibility().forms.get("about-you", {}).get("own_property")
-            == YES
-        )
-
-    main_home = RadioField(
-        "Is this property your main home?",
-        choices=[("yes", "Yes"), ("no", "No")],
-        widget=MeansTestRadioInput(),
-        description="If you’re temporarily living away from the property, select ‘Yes’",
-        validators=[InputRequired(message=_("Tell us whether this is your main home"))],
-    )
-
-    share_property = RadioField(
-        "Does anyone else own a share of the property?",
-        choices=[("yes", "Yes"), ("no", "No")],
-        widget=MeansTestRadioInput(),
-        description="Select ‘Yes’ if you share ownership with a friend, relative or ex-partner",
-        validators=[
-            InputRequired(
-                message=_("Tell us whether anyone else owns a share of this property")
-            )
-        ],
-    )
-
-    property_worth = IntegerField(
-        "How much is the property worth?",
-        widget=GovTextInput(),
-        description="Use a property website or the Land Registry house prices website.",
-        validators=[
-            InputRequired(message=_("Tell us the approximate value of this property")),
-            NumberRange(min=0, max=999999999, message=_("Enter a value")),
-        ],
-    )
-
-    mortgage_left = IntegerField(
-        "How much is left to pay on the mortgage?",
-        widget=GovTextInput(),
-        description="Include the full amount owed, even if the property has shared ownership, or enter 0 if you have no mortgage",
-        validators=[
-            InputRequired(message=_("Tell us how much is left to pay on the mortgage")),
-            NumberRange(min=0, max=999999999, message=_("Enter a value")),
-        ],
-    )
-
-    rent_property = RadioField(
-        "Do you rent out any part of this property?",
-        choices=[("yes", "Yes"), ("no", "No")],
-        widget=MeansTestRadioInput(),
-        validators=[
-            InputRequired(
-                message=_("Tell us whether you rent out some of this property")
-            )
-        ],
-    )
-    # Add expanded field
-
-    property_disputed = RadioField(
-        "Is your share of the property in dispute?",
-        choices=[("yes", "Yes"), ("no", "No")],
-        widget=MeansTestRadioInput(),
-        description="For example, as part of the financial settlement of a divorce",
-        validators=[
-            InputRequired(message=_("Tell us whether this property is in dispute"))
         ],
     )
