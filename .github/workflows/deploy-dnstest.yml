@@ -1,4 +1,4 @@
-name: Deploy image to the dnstest environment
+name: Deploy to a Cloud Platform environment
 on:
   workflow_call:
     inputs:
@@ -49,12 +49,12 @@ jobs:
           kubectl config set-context ${KUBE_CLUSTER} --cluster=${KUBE_CLUSTER} --user=deploy-user --namespace=${KUBE_NAMESPACE}
           kubectl config use-context ${KUBE_CLUSTER}
 
-      - name: Fetch and set SHARED_IP_RANGES_LAA environment variable
+      - name: Fetch and set whitelist IP environment variables
         run: |
           # Pull ranges from shared LAA IP ranges and then remove spaces,
           # replace linebreaks with commas, remove last comma, and escape commas for helm input
           SHARED_IP_RANGES_LAA=$(curl -s https://raw.githubusercontent.com/ministryofjustice/laa-ip-allowlist/main/cidrs.txt | tr -d ' ' | tr '\n' ',' | sed 's/,/\\,/g' | sed 's/\\,$//')
-          PINGDOM_IPS=$(curl -s  https://my.pingdom.com/probes/ipv4 | tr -d ' ' | tr '\n' ',' | sed 's/,/\\,/g' | sed 's/\\,$//')
+          PINGDOM_IPS=$(curl -s https://my.pingdom.com/probes/ipv4 | tr -d ' ' | tr '\n' ',' | sed 's/,/\\,/g' | sed 's/\\,$//')
           echo "PINGDOM_IPS=$PINGDOM_IPS" >> $GITHUB_ENV
           echo "SHARED_IP_RANGES_LAA=$SHARED_IP_RANGES_LAA" >> $GITHUB_ENV
 
@@ -65,22 +65,13 @@ jobs:
           REPOSITORY: ${{ inputs.ACCESS_ECR_REPOSITORY }}
           HELM_DIR: "helm_deploy/laa-access-civil-legal-aid"
           SHARED_IP_RANGES_LAA: ${{ env.SHARED_IP_RANGES_LAA }}
-          DEV_HOST: "access-cla.cloud-platform.service.justice.gov.uk"
-          # head_ref is set if the workflow was triggered by a PR, ref_name is used if the workflow was trigged by a push.
-          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         run: |
-          export CLEANED_BRANCH_NAME=$(echo ${BRANCH_NAME} | sed 's/^feature[-/]//' | sed 's:^\w*\/::' | tr -s ' _/[]().' '-' | tr '[:upper:]' '[:lower:]' | cut -c1-28 | sed 's/-$//')
-          export HOST_NAME=${CLEANED_BRANCH_NAME}-${DEV_HOST}
-
-          helm upgrade ${CLEANED_BRANCH_NAME} \
+          helm upgrade laa-access-civil-legal-aid \
           ${HELM_DIR} \
           --namespace=${{ secrets.KUBE_NAMESPACE }} \
           --values ${HELM_DIR}/values/values-${{ inputs.environment }}.yaml \
           --set image.repository=${REGISTRY}/${REPOSITORY} \
           --set image.tag=${IMAGE_TAG} \
-          --set fullnameOverride=${CLEANED_BRANCH_NAME} \
-          --set ingress.hosts[0].host=${HOST_NAME} \
-          --set ingress.tls[0].hosts[0]=${HOST_NAME} \
           --set sharedIPRangesLAA=$SHARED_IP_RANGES_LAA \
           --set pingdomIPs=$PINGDOM_IPS \
           --force \
