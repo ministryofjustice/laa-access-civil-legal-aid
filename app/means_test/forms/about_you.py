@@ -1,27 +1,13 @@
-from flask import session
-from flask_wtf import FlaskForm
-from wtforms.fields import RadioField, IntegerField, SelectMultipleField
-from govuk_frontend_wtf.wtforms_widgets import GovTextInput, GovSubmitInput
-from wtforms.fields.simple import SubmitField
+from wtforms.fields import RadioField, IntegerField
+from govuk_frontend_wtf.wtforms_widgets import GovTextInput
 from wtforms.validators import InputRequired, NumberRange
 
 from app.means_test.validators import ValidateIf
-from app.means_test.widgets import MeansTestRadioInput, MeansTestCheckboxInput
+from app.means_test.widgets import MeansTestRadioInput
 from flask_babel import gettext as _
 from app.means_test import YES, NO
 
-
-class BaseMeansTestForm(FlaskForm):
-    title = ""
-
-    submit = SubmitField(_("Continue"), widget=GovSubmitInput())
-
-    def payload(self) -> dict:
-        return {}
-
-    @classmethod
-    def should_show(cls) -> bool:
-        return True
+from app.means_test.forms import BaseMeansTestForm
 
 
 class AboutYouForm(BaseMeansTestForm):
@@ -219,36 +205,3 @@ class AboutYouForm(BaseMeansTestForm):
         # TODO: Get income and outgoing data
 
         return payload
-
-
-class BenefitsForm(BaseMeansTestForm):
-    title = _(" Which benefits do you receive?")
-
-    template = "means_test/benefits.html"
-
-    @classmethod
-    def should_show(cls) -> bool:
-        return (
-            session.get_eligibility().forms.get("about-you", {}).get("on_benefits")
-            == YES
-        )
-
-    benefits = SelectMultipleField(
-        label="",
-        widget=MeansTestCheckboxInput(
-            is_inline=False, show_divider=True, hint_text=_("Select all that apply")
-        ),
-        choices=[
-            ("child_benefit", _("Child Benefit")),
-            ("pension_credit", _("Guarantee Credit")),
-            ("income_support", _("Income Support")),
-            ("job_seekers_allowance", _("Income-based Jobseeker's Allowance")),
-            (
-                "employment_support",
-                _("Income-related Employment and Support Allowance"),
-            ),
-            ("universal_credit", _("Universal Credit")),
-            ("", ""),
-            ("other-benefit", _("Any other benefits")),
-        ],
-    )
