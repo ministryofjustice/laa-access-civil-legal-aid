@@ -1,12 +1,34 @@
 {% extends "means_test/form-page.html" %}
 
+{% set propertyWorthHtml %}
+  {{ form.property_worth(params={
+      "label": {
+          "classes": "govuk-label--m"
+      },
+      "classes": "govuk-input--width-4",
+      "inputmode": "numeric",
+      "spellcheck": false
+  }) }}
+{% endset %}
+
+{% set mortgageLeftHtml %}
+  {{ form.mortgage_left(params={
+      "label": {
+          "classes": "govuk-label--m"
+      },
+      "classes": "govuk-input--width-4",
+      "inputmode": "numeric",
+      "spellcheck": false
+  }) }}
+{% endset %}
+
 {% block form %}
     {{ form.csrf_token }}
 
     {{ form.main_home() }}
     {{ form.share_property() }}
-    {{ form.property_worth() }}
-    {{ form.mortgage_left() }}
+    {{ propertyWorthHtml }}
+    {{ mortgageLeftHtml }}
     {{ form.rent_property() }}
     {{ form.property_disputed() }}
 
