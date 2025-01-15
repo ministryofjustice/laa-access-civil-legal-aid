@@ -6,6 +6,7 @@ on:
   push:
     branches-ignore:
       - main
+      - LGA-3471-dnstest
   pull_request:
     types:
       - reopened
