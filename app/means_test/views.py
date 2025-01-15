@@ -28,19 +28,16 @@ class MeansTest(View):
         return render_template(self.form_class.template, form=form)
 
     def get_next_page(self, current_key):
-        keys = iter(self.forms.keys())  # Create an iterator over the keys
-        for key in keys:
-            if key == current_key:
-                next_page = next(
-                    keys, None
-                )  # Return the next key or None if no more keys
-                if not next_page:
-                    return "review"
-                next_page_form = self.forms[next_page]
-                if next_page_form.should_show():
-                    return next_page
-                continue
-        return "review"
+        keys = list(self.forms.keys())  # Convert to list for easier indexing
+        try:
+            current_index = keys.index(current_key)
+            # Look through remaining pages
+            for next_key in keys[current_index + 1 :]:
+                if self.forms[next_key].should_show():
+                    return next_key
+            return "review"  # No more valid pages found
+        except ValueError:  # current_key not found
+            return "review"
 
     @classmethod
     def get_payload(cls, eligibility_data: dict) -> dict:
