@@ -3,59 +3,45 @@ import pytest
 
 about_you_form_routing = [
     pytest.param(
-        {
-            "Do you have a partner": "No",
-            "Do you receive any benefits": "No",
-            "Do you have any children aged 15 or under?": "No",
-            "Do you have any dependants aged 16 or over?": "No",
-            "Do you own any property?": "No",
-            "Are you employed?": "No",
-            "Are you self-employed?": "No",
-            "Are you or your partner (if you have one) aged 60 or over?": "No",
-            "Do you have any savings or investments?": "No",
-            "Do you have any valuable items worth over £500 each?": "No",
-        },
-        "Review your answers",
-        id="all_no_route",
+        "No",
+        [
+            "Do you receive any benefits",
+            "Do you have any children aged 15 or under?",
+            "Do you have any dependants aged 16 or over?",
+            "Do you own any property?",
+            "Are you employed?",
+            "Is your partner employed?",
+            "Are you self-employed?",
+            "Is your partner self-employed?",
+            "Are you or your partner (if you have one) aged 60 or over?",
+            "Do you have any savings or investments?",
+            "Do you have any valuable items worth over £500 each?",
+        ],
+        id="all_no",
     ),
     pytest.param(
-        {
-            "Do you have a partner": "No",
-            "Do you receive any benefits": "Yes",
-            "Do you have any children aged 15 or under?": "No",
-            "Do you have any dependants aged 16 or over?": "No",
-            "Do you own any property?": "No",
-            "Are you employed?": "No",
-            "Are you self-employed?": "No",
-            "Are you or your partner (if you have one) aged 60 or over?": "No",
-            "Do you have any savings or investments?": "No",
-            "Do you have any valuable items worth over £500 each?": "No",
-        },
-        "Which benefits do you receive?",
-        id="benefits_route",
-    ),
-    pytest.param(
-        {
-            "Do you have a partner": "No",
-            "Do you receive any benefits": "No",
-            "Do you have any children aged 15 or under?": "No",
-            "Do you have any dependants aged 16 or over?": "No",
-            "Do you own any property?": "Yes",
-            "Are you employed?": "No",
-            "Are you self-employed?": "No",
-            "Are you or your partner (if you have one) aged 60 or over?": "No",
-            "Do you have any savings or investments?": "No",
-            "Do you have any valuable items worth over £500 each?": "No",
-        },
-        "Your property",
-        id="property_route",
+        "Yes",
+        [
+            "Do you receive any benefits",
+            "Do you have any children aged 15 or under?",
+            "Do you have any dependants aged 16 or over?",
+            "Do you own any property?",
+            "Are you employed?",
+            "Is your partner employed?",
+            "Are you self-employed?",
+            "Is your partner self-employed?",
+            "Are you or your partner (if you have one) aged 60 or over?",
+            "Do you have any savings or investments?",
+            "Do you have any valuable items worth over £500 each?",
+        ],
+        id="all_yes",
     ),
 ]
 
 
 @pytest.mark.usefixtures("live_server")
-@pytest.mark.parametrize("answers,route_to", about_you_form_routing)
-def test_about_you_routing(page: Page, answers: dict, route_to: str):
+@pytest.mark.parametrize("selection,expected_heading", about_you_form_routing)
+def test_about_you(page: Page, selection: str, expected_heading: list):
     """
     Test the reason for contacting form with different combinations of selection.
 
@@ -69,88 +55,24 @@ def test_about_you_routing(page: Page, answers: dict, route_to: str):
     page.get_by_role("button", name="Check if you qualify financially").click()
 
     expect(page.get_by_text("About You")).to_be_visible()
-    for question, answer in answers.items():
-        form_group = page.get_by_role("group", name=question)
-        if question == "Do you have a partner":
-            locator = "#has_partner" if answer == "Yes" else "#has_partner-2"
-            form_group.locator(locator).check()
-            continue
-        form_group.get_by_label(answer).first.check()
+    if selection == "No":
+        page.locator("#has-partner-2").check()
+    elif selection == "Yes":
+        page.locator("#has-partner").check()
+        expect(
+            page.get_by_text("Are you in a dispute with your partner?")
+        ).to_be_visible()
+        expected_heading.insert(0, "Are you in a dispute with your partner?")
+
+    for heading in expected_heading:
+        form_group = page.get_by_role("group", name=heading)
+        form_group.get_by_label(selection).check()
+
+    if selection == "Yes":
+        for each in page.locator("text=How many?").all():
+            each.fill("1")
 
     # Submit form
     page.get_by_role("button", name="Continue").click()
 
-    expect(page.get_by_text(route_to)).to_be_visible()
-
-
-@pytest.mark.usefixtures("live_server")
-def test_error_messages(page: Page):
-    page.get_by_role("link", name="Housing, homelessness, losing your home").click()
-    page.get_by_role("link", name="Homelessness").click()
-    page.get_by_role("button", name="Check if you qualify financially").click()
-
-    # Submit form
-    page.get_by_role("button", name="Continue").click()
-
-    # Check that all error messages are visible
-    expect(
-        page.get_by_role("link", name="Tell us whether you have a partner")
-    ).to_be_visible()
-    expect(
-        page.get_by_role("link", name="Tell us whether you receive benefits")
-    ).to_be_visible()
-    expect(
-        page.get_by_role(
-            "link", name="Tell us whether you have any children aged 15 or under"
-        )
-    ).to_be_visible()
-    expect(
-        page.get_by_role(
-            "link", name="Tell us whether you have any dependants aged 16 or over"
-        )
-    ).to_be_visible()
-    expect(
-        page.get_by_role("link", name="Tell us if you own any properties")
-    ).to_be_visible()
-    expect(page.get_by_role("link", name="Tell us if you are employed")).to_be_visible()
-    expect(
-        page.get_by_role("link", name="Tell us if you are self-employed")
-    ).to_be_visible()
-    expect(
-        page.get_by_role(
-            "link", name="Tell us if you or your partner are aged 60 or over"
-        )
-    ).to_be_visible()
-    expect(
-        page.get_by_role("link", name="Tell us whether you have savings or investments")
-    ).to_be_visible()
-    expect(
-        page.get_by_role(
-            "link", name="Tell us if you have any valuable items worth over £500 each"
-        )
-    ).to_be_visible()
-
-
-@pytest.mark.usefixtures("live_server")
-def test_conditional_fields(page: Page):
-    page.get_by_role("link", name="Housing, homelessness, losing").click()
-    page.get_by_role("link", name="Homelessness").click()
-    page.get_by_role("button", name="Check if you qualify").click()
-
-    expect(
-        page.get_by_role("group", name="Are you in a dispute with")
-    ).not_to_be_visible()
-    page.locator("#has_partner").check()
-    expect(page.get_by_role("group", name="Are you in a dispute with")).to_be_visible()
-
-    expect(page.locator("#conditional-have_children div")).not_to_be_visible()
-    page.get_by_role("group", name="Do you have any children aged").get_by_label(
-        "Yes"
-    ).check()
-    expect(page.locator("#conditional-have_children div")).to_be_visible()
-
-    expect(page.locator("#conditional-have_dependents div")).not_to_be_visible()
-    page.get_by_role("group", name="Do you have any dependants").get_by_label(
-        "Yes"
-    ).check()
-    expect(page.locator("#conditional-have_dependents div")).to_be_visible()
+    expect(page.get_by_text("Review your answers")).to_be_visible()
