@@ -27,7 +27,8 @@
 
         <form action="" method="post" novalidate>
 
-            {%  block form %} }
+            {% block form %}
+                {{ form.csrf_token }}
                 {{ form.question() }}
                 {{ form.submit }}
             {% endblock %}

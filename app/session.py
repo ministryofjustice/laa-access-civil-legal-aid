@@ -13,7 +13,7 @@ class Eligibility:
 
     @property
     def category(self):
-        return session.get("category")["chs_code"]
+        return session.get("category", {}).get("chs_code")
 
 
 class Session(SecureCookieSession):
