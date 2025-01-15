@@ -1,4 +1,5 @@
 {% extends "means_test/form-page.html" %}
+{%- from 'govuk_frontend_jinja/components/details/macro.html' import govukDetails %}
 
 {% set areYouInADisputeHtml %}
     {{ form.are_you_in_a_dispute() }}
@@ -83,6 +84,8 @@
     {{ form.have_savings() }}
 
     {{ form.have_valuables() }}
+
+    {% include "means_test/components/valuable-info.html" %}
 
     {{ form.submit }}
 {% endblock %}
