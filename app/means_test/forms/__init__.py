@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from govuk_frontend_wtf.wtforms_widgets import GovSubmitInput
 from wtforms.fields.simple import SubmitField
-from flask_babel import gettext as _
+from flask_babel import lazy_gettext as _
 
 
 class BaseMeansTestForm(FlaskForm):
