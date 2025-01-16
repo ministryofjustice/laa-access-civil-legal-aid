@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+from datetime import timedelta
 
 # Allows .env to be used in project for local development.
 load_dotenv()
@@ -27,3 +28,4 @@ class Config(object):
     )
     POSTCODES_IO_URL = os.environ.get("POSTCODES_IO_URL", "https://api.postcodes.io")
     CLA_BACKEND_URL = os.environ.get("CLA_BACKEND_URL", "http://localhost:8000")
+    SESSION_TIMEOUT = timedelta(minutes=30)
