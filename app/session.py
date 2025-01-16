@@ -1,9 +1,8 @@
 from flask.sessions import SecureCookieSession, SecureCookieSessionInterface
 from app.categories.constants import Category
-from flask import session, redirect, url_for
+from flask import session, current_app
 from dataclasses import dataclass
-import time
-from datetime import timedelta
+from datetime import timedelta, datetime, timezone
 
 
 @dataclass
@@ -22,7 +21,6 @@ class Session(SecureCookieSession):
     SESSION_TIMEOUT = timedelta(minutes=30)
 
     def __init__(self, *args, **kwargs):
-        print(args)
         super().__init__(*args, **kwargs)
         self["eligibility"] = Eligibility()
 
@@ -103,17 +101,23 @@ class Session(SecureCookieSession):
                 return answer["answer"]
         return None
 
+    def update_last_active(self):
+        """Update the last_active time in the session."""
+        session["last_active"] = datetime.now(timezone.utc)
+
     def check_session_expiration(self):
-        """Check if the session has expired by comparing the last active timestamp."""
-        current_time = time.time()
-        last_active = session.get("last_active", current_time)
+        """Check if the session has expired based on inactivity."""
+        if "last_active" in session:
+            last_active = session["last_active"]
+            current_time = datetime.now(timezone.utc)
 
-        session["last_active"] = current_time
+            time_diff = current_time - last_active
+            if time_diff > current_app.config["SESSION_TIMEOUT"]:
+                session.clear()  # Expire the session
+                return True  # Indicate the session expired
 
-        if current_time - last_active > self.SESSION_TIMEOUT.total_seconds():
-            return redirect(url_for("main.session_expired"))
-
-        return None
+        self.update_last_active()
+        return False
 
 
 class SessionInterface(SecureCookieSessionInterface):

@@ -16,7 +16,7 @@ from werkzeug.exceptions import HTTPException
 
 from app.main import bp
 from app.main.forms import CookiesForm
-from flask import session
+from app.session import Session
 
 
 @bp.get("/main")
@@ -113,7 +113,15 @@ def session_expired():
 
 @bp.before_app_request
 def session_checker():
-    print("Global before_request hook triggered")
+    """Before each request, check for session expiration."""
+    session_handler = Session()
+
+    # Check if the session expired, if so, redirect to the session expired page
+    if session_handler.check_session_expiration():
+        return redirect(url_for("main.session_expired"))
+
+    # Otherwise, continue with the request (last active will be updated here)
+    session_handler.update_last_active()
 
 
 @bp.app_errorhandler(HTTPException)
