@@ -8,7 +8,7 @@ from functools import wraps
 
 @dataclass
 class Eligibility:
-    forms = {}
+    forms: dict[str, dict]
 
     def add(self, form_name, data):
         self.forms[form_name] = data
@@ -23,7 +23,7 @@ class Session(SecureCookieSession):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self["eligibility"] = Eligibility()
+        self["eligibility"] = Eligibility(forms={})
 
     def update_eligibility(self, form_name, form_data):
         self["eligibility"].add(form_name, form_data)
