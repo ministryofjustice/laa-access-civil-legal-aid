@@ -1,5 +1,6 @@
 /* Example of a custom SCSS file which is combined into one SCSS application file by Flask Assets */
 @import "govuk-frontend/dist/govuk/settings/_index.scss";
+@import "mixins";
 
 /* Example below of using GOVUK frontend SCSS variables in custom SCSS */
 .moj-skeleton {
