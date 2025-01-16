@@ -30,6 +30,7 @@
             {% block form %}
                 {{ form.csrf_token }}
                 {{ form.question() }}
+                {{ form.partner_question() }}
                 {{ form.submit }}
             {% endblock %}
         </form>
