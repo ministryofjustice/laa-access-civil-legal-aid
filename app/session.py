@@ -1,8 +1,9 @@
 from flask.sessions import SecureCookieSession, SecureCookieSessionInterface
 from app.categories.constants import Category
-from flask import session, current_app
+from flask import session, current_app, redirect, url_for
 from dataclasses import dataclass
 from datetime import timedelta, datetime, timezone
+from functools import wraps
 
 
 @dataclass
@@ -118,6 +119,20 @@ class Session(SecureCookieSession):
 
         self.update_last_active()
         return False
+
+    def requires_traversal_protection(func):
+        """
+        Decorator to ensure that session["traversal_protection"] is True.
+        Redirects to an error or session-expired page if the condition is not met.
+        """
+
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            if not session.get("traversal_protection", False):
+                return redirect(url_for("main.session_expired"))
+            return func(*args, **kwargs)
+
+        return wrapper
 
 
 class SessionInterface(SecureCookieSessionInterface):
