@@ -3,6 +3,11 @@ from flask_babel import gettext as _
 from wtforms.fields import SelectMultipleField
 from app.means_test.widgets import MeansTestCheckboxInput
 from app.means_test.forms import BaseMeansTestForm
+from app.means_test.forms.money import (
+    CombinedTextField,
+    CombinedTextWidget,
+    MoneyIntervalAmountRequired,
+)
 
 
 class BenefitsForm(BaseMeansTestForm):
@@ -30,6 +35,19 @@ class BenefitsForm(BaseMeansTestForm):
         ],
     )
 
+    child_benefits = CombinedTextField(
+        _("If yes, enter the total amount you get for all your children"),
+        hint_text=_("For example, £32.18 per week"),
+        widget=CombinedTextWidget(),
+        validators=[
+            MoneyIntervalAmountRequired(
+                message=_("Enter the Child Benefit you receive"),
+                freq_message=_("Tell us how often you receive Child Benefit"),
+                amount_message=_("Tell us how much Child Benefit you receive each"),
+            )
+        ],
+    )
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Remove child-benefit option if they don't have any children or dependants
@@ -44,6 +62,12 @@ class BenefitsForm(BaseMeansTestForm):
     @classmethod
     def should_show(cls) -> bool:
         return session.get("eligibility").on_benefits
+
+    def render_conditional(self, field, sub_field, conditional_value):
+        sub_field_rendered = sub_field()
+        conditional = {"value": conditional_value, "html": sub_field_rendered}
+        field.render_kw = {"conditional": conditional}
+        return field()
 
 
 class AdditionalBenefitsForm(BaseMeansTestForm):
@@ -80,5 +104,5 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
 
     @classmethod
     def should_show(cls) -> bool:
-        benefits = session.get("eligibility").forms["benefits"]["benefits"]
-        return "other-benefit" in benefits
+        data = session.get("eligibility").forms.get("benefits")
+        return data and "other-benefit" in data["benefits"]

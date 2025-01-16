@@ -4,7 +4,7 @@
 
     {{ form.csrf_token }}
 
-    {{ form.benefits }}
+    {{ form.render_conditional(form.benefits, form.child_benefits, "child_benefit") }}
 
     {{ form.submit }}
 {% endblock %}
