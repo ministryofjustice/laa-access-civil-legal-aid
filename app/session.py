@@ -1,7 +1,9 @@
 from flask.sessions import SecureCookieSession, SecureCookieSessionInterface
 from app.categories.constants import Category
-from flask import session
+from flask import session, redirect, url_for
 from dataclasses import dataclass
+import time
+from datetime import timedelta
 
 
 @dataclass
@@ -17,6 +19,8 @@ class Eligibility:
 
 
 class Session(SecureCookieSession):
+    SESSION_TIMEOUT = timedelta(minutes=30)
+
     def __init__(self, *args, **kwargs):
         print(args)
         super().__init__(*args, **kwargs)
@@ -97,6 +101,18 @@ class Session(SecureCookieSession):
         for answer in answers:
             if answer["question"] == question_title:
                 return answer["answer"]
+        return None
+
+    def check_session_expiration(self):
+        """Check if the session has expired by comparing the last active timestamp."""
+        current_time = time.time()
+        last_active = session.get("last_active", current_time)
+
+        session["last_active"] = current_time
+
+        if current_time - last_active > self.SESSION_TIMEOUT.total_seconds():
+            return redirect(url_for("main.session_expired"))
+
         return None
 
 

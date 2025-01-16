@@ -111,6 +111,11 @@ def session_expired():
     return render_template("session_expired.html")
 
 
+@bp.before_app_request
+def session_checker():
+    print("Global before_request hook triggered")
+
+
 @bp.app_errorhandler(HTTPException)
 def http_exception(error):
     return render_template(f"{error.code}.html"), error.code
