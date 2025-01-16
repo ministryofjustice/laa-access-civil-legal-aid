@@ -69,3 +69,4 @@ class MeansTestCheckboxInput(
     MeansTestInputField, RenderConditionalFields, GovCheckboxesInput
 ):
     pass
+
