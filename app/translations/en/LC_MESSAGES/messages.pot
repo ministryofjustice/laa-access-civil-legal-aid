@@ -149,21 +149,6 @@ msgstr ""
 msgid "Continue to contact CLA"
 msgstr ""
 
-msgid "-- Please select --"
-msgstr ""
-
-msgid "each week"
-msgstr ""
-
-msgid "every 4 weeks"
-msgstr ""
-
-msgid "each month"
-msgstr ""
-
-msgid "each year"
-msgstr ""
-
 msgid "About you"
 msgstr ""
 
@@ -318,28 +303,6 @@ msgid "Universal Credit"
 msgstr ""
 
 msgid "Any other benefits"
-msgstr ""
-
-msgid ""
-"Enter the Working Tax Credit you receive, or 0 if this doesn’t apply to "
-"you"
-msgstr ""
-
-msgid "Tell us how often you receive Working Tax Credit"
-msgstr ""
-
-msgid "Tell us how much Working Tax Credit you receive"
-msgstr ""
-
-msgid ""
-"Enter the Working Tax Credit your partner receives, or 0 if it doesn’t "
-"apply"
-msgstr ""
-
-msgid "Tell us how often your partner receives Working Tax Credit"
-msgstr ""
-
-msgid "Tell us how much Working Tax Credit your partner receives"
 msgstr ""
 
 msgid "Your property"
@@ -1060,17 +1023,6 @@ msgid "Privacy notice"
 msgstr ""
 
 msgid "Start of privacy notice"
-msgstr ""
-
-msgid "You’ve reached the end of this service"
-msgstr ""
-
-msgid ""
-"For your security, the information you’ve entered has automatically been "
-"deleted."
-msgstr ""
-
-msgid "You can start again below."
 msgstr ""
 
 msgid "Start again"
