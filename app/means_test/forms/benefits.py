@@ -3,11 +3,8 @@ from flask_babel import gettext as _
 from wtforms.fields import SelectMultipleField
 from app.means_test.widgets import MeansTestCheckboxInput
 from app.means_test.forms import BaseMeansTestForm
-from app.means_test.forms.money import (
-    CombinedTextField,
-    CombinedTextWidget,
-    MoneyIntervalAmountRequired,
-)
+from app.means_test.fields import MoneyField, MoneyFieldWidgetWidget
+from app.means_test.validators import MoneyIntervalAmountRequired
 
 
 class BenefitsForm(BaseMeansTestForm):
@@ -35,10 +32,11 @@ class BenefitsForm(BaseMeansTestForm):
         ],
     )
 
-    child_benefits = CombinedTextField(
+    child_benefits = MoneyField(
         _("If yes, enter the total amount you get for all your children"),
         hint_text=_("For example, £32.18 per week"),
-        widget=CombinedTextWidget(),
+        exclude_intervals=["per_month", "per_year"],
+        widget=MoneyFieldWidgetWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_("Enter the Child Benefit you receive"),

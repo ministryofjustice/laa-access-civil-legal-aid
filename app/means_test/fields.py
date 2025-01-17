@@ -53,8 +53,6 @@ class MoneyField(Field):
         **kwargs,
     ):
         super().__init__(label, validators, **kwargs)
-        print(exclude_intervals)
-        print(kwargs)
         self.title = label
         self.hint = hint_text
         self.value = None  # Amount
@@ -71,6 +69,7 @@ class MoneyField(Field):
             # Handle the data coming from the form fields named field.id[value] and field.id[interval]
             self.value = valuelist[0]
             self.interval = valuelist[1]
+            self.data = {"value": self.value, "interval": self.interval}
 
     def validate(self, form, extra_validators=None):
         if self.interval not in self._intervals:
