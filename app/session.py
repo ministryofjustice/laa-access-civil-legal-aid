@@ -20,15 +20,9 @@ class Eligibility:
             return None
         return form.get(field_name) == "1"
 
-    def is_no(self, form_name, field_name) -> bool | None:
-        form = self.forms.get(form_name)
-        if not form:
-            return None
-        return form.get(field_name) == "0"
-
     @property
     def has_partner(self):
-        return self.is_yes("about-you", "has_partner") and self.is_no(
+        return self.is_yes("about-you", "has_partner") and not self.is_yes(
             "about-you", "are_you_in_a_dispute"
         )
 
@@ -46,9 +40,6 @@ class Eligibility:
 
     def add(self, form_name, data):
         self.forms[form_name] = data
-
-    def is_yes(self, form_name, field_name) -> bool:
-        return self.forms[form_name][field_name] == "1"
 
 
 class Session(SecureCookieSession):
