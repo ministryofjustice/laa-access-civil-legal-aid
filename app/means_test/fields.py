@@ -53,6 +53,8 @@ class MoneyField(Field):
         **kwargs,
     ):
         super().__init__(label, validators, **kwargs)
+        print(exclude_intervals)
+        print(kwargs)
         self.title = label
         self.hint = hint_text
         self.value = None  # Amount
