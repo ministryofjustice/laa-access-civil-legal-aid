@@ -25,8 +25,8 @@
         <div class="govuk-grid-row" class="govuk-form-group {% if field.errors %}govuk-form-group--error{% endif %}">
             <div class="govuk-grid-column-one-half">
             {{ govukInput(params={
-                "id": "question",
-                "name": "question",
+                "id": field.id + "-value",
+                "name": field.name,
                 "prefix": {
                     "text": "£"
                 },
@@ -42,35 +42,14 @@
             </div>
             <div class="govuk-grid-column-one-half">
             {{ govukSelect(params={
-                "id": "question",
-                "name": "question",
+                "id": field.id + "-interval",
+                "name": field.name,
                 "value": field.interval,
                 "label": {
                     "text": _("Frequency"),
                     "classes": "govuk-label--s",
                 },
-                "items": [
-                    {
-                      "value": "",
-                      "text": "-- Please select --"
-                    },
-                    {
-                      "value": "per_week",
-                      "text": "per week",
-                    },
-                    {
-                      "value": "per_4week",
-                      "text": "4 weekly"
-                    },
-                    {
-                      "value": "per_month",
-                      "text": "per month"
-                    },
-                    {
-                      "value": "per_year",
-                      "text": "per year"
-                    }
-                ],
+                "items": field.interval_choices,
                 "errorMessage": {"class": "govuk-error-message"} if "interval" in field.field_with_error else {},
                 })
             }}
