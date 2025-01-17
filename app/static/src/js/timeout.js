@@ -73,8 +73,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // Event listeners
   dialog.querySelector(".js-extend-session").addEventListener("click", extendSession);
 
-  // Listen for scroll events and reset the idle timer when the user scrolls
+  // Listen for scroll, mouse move, mouse down, click, keypress, and keyup events to reset the idle timer
   window.addEventListener("scroll", resetIdleTimer);
+  window.addEventListener("mousemove", resetIdleTimer);    // Resets timer on mouse move
+  window.addEventListener("mousedown", resetIdleTimer);    // Resets timer on mouse down (touchpad click)
+  window.addEventListener("click", resetIdleTimer);        // Resets timer on click
+  window.addEventListener("keydown", resetIdleTimer);      // Resets timer on key press
+  window.addEventListener("keyup", resetIdleTimer);        // Resets timer on key release (useful for Android)
 
   // Start the idle timer
   startIdleTimer();
