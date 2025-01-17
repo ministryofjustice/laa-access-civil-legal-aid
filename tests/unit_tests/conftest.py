@@ -12,6 +12,7 @@ class TestConfig(Config):
     RATELIMIT_ENABLED = False
     SECRET_KEY = "TEST_KEY"
     CLA_BACKEND_URL = "http://backend-test.local"
+    WTF_CSRF_ENABLED = False
 
 
 @pytest.fixture(scope="session", autouse=True)

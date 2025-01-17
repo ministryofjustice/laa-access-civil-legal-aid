@@ -44,14 +44,6 @@ class ValidateIfSession:
 
 
 class MoneyIntervalAmountRequired(object):
-    interval_texts = {
-        "per_week": "each week",
-        "per_4week": "every 4 weeks",
-        "per_month": "each month",
-        "per_year": "each year",
-    }
-    is_partner = None
-
     def __init__(self, message=None, freq_message=None, amount_message=None, **kwargs):
         self.messages = {
             "message": message,
@@ -66,22 +58,24 @@ class MoneyIntervalAmountRequired(object):
 
     def __call__(self, form, field):
         messages = self.messages
+        amount = field.value or None
+        interval = field.interval or None
+        print("VALIDATOR")
+        print(amount)
+        print(interval)
+        print("-----")
 
-        amount = field.value or ""
-        interval = field.interval or ""
-
-        if amount == "" and interval == "":
+        if (not amount) and (not interval):
             message = messages["message"]
             field.errors.append(message)
-            field.field_with_error.append("value")
-            field.field_with_error.append("interval")
+            field.field_with_error.extend(["value", "interval"])
             return False
-        if amount == "":
+        if not amount:
             message = messages["amount_message"]
             field.field_with_error.append("value")
             field.errors.append(message)
             return False
-        if interval == "":
+        if not interval:
             message = messages["freq_message"]
             field.field_with_error.append("interval")
             field.errors.append(message)
