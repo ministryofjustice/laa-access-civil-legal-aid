@@ -15,3 +15,18 @@ class BaseMeansTestForm(FlaskForm):
     @classmethod
     def should_show(cls) -> bool:
         return True
+
+    def render_conditional(self, field, sub_field, conditional_value) -> str:
+        """
+        Make field conditional using govuk-frontend conditional logic
+
+        :param field: The controlling field
+        :param sub_field: The controlled field
+        :param conditional_value: The value the controlling field should have to show the controlled field
+        :return str: The render field and subfield:
+        """
+
+        sub_field_rendered = sub_field()
+        conditional = {"value": conditional_value, "html": sub_field_rendered}
+        field.render_kw = {"conditional": conditional}
+        return field()

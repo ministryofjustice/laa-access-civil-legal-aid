@@ -49,11 +49,7 @@ class MeansTestInputField:
             return super().render_field(field**kwargs)
 
 
-class MeansTestRadioInput(MeansTestInputField, GovRadioInput):
-    pass
-
-
-class MeansTestCheckboxInput(MeansTestInputField, GovCheckboxesInput):
+class RenderConditionalFields:
     def map_gov_params(self, field, **kwargs):
         params = super().map_gov_params(field, **kwargs)
 
@@ -63,3 +59,13 @@ class MeansTestCheckboxInput(MeansTestInputField, GovCheckboxesInput):
                 if item["value"] == conditional["value"]:
                     item["conditional"] = {"html": conditional["html"]}
         return params
+
+
+class MeansTestRadioInput(MeansTestInputField, RenderConditionalFields, GovRadioInput):
+    pass
+
+
+class MeansTestCheckboxInput(
+    MeansTestInputField, RenderConditionalFields, GovCheckboxesInput
+):
+    pass
