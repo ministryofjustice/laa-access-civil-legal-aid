@@ -1,12 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Check if we're on the /session-expired page
   if (window.location.pathname === "/session-expired") {
-      return; // Don't run the timeout logic if we're on the session expired page
+      return; // Don't run the timeout logic if on the session expired page
   }
 
   const dialog = document.getElementById("timeout-dialog");
-  const idleTimeout = parseInt(dialog.dataset.idleTimeout, 10) * 600; // Convert minutes to milliseconds
-  const visibleTime = parseInt(dialog.dataset.visibleTime, 10) * 600; // Convert minutes to milliseconds
+  const idleTimeout = parseInt(dialog.dataset.idleTimeout, 10) * 60 * 1000;
+  const visibleTime = parseInt(dialog.dataset.visibleTime, 10) * 60 * 1000;
   const redirectUrl = dialog.dataset.redirectUrl;
 
   let timeoutId;
@@ -22,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   };
 
-  // Show the session timeout dialog
   const showDialog = () => {
       dialog.showModal();
       updateTimeoutMessage(visibleTime / 1000); // Start updating the timeout message
@@ -39,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 1000);
   };
 
-  // Extend the session when the user clicks on the extend session button
+  // Extend session button
   const extendSession = () => {
       clearTimeout(timeoutId);
       clearInterval(visibleId);
@@ -47,40 +45,36 @@ document.addEventListener("DOMContentLoaded", () => {
       startIdleTimer(); // Restart the timer
   };
 
-  // Start the idle timer
   const startIdleTimer = () => {
       timeoutId = setTimeout(showDialog, idleTimeout - visibleTime);
   };
 
-  // Update the timeout message with remaining time in MM:SS format
-  const updateTimeoutMessage = (remainingSeconds) => {
-      const remainingMinutesSpan = document.getElementById("remaining-minutes");
-      const remainingSecondsSpan = document.getElementById("remaining-seconds");
+    const updateTimeoutMessage = (remainingSeconds) => {
+      const remainingTimeSpan = document.getElementById("remaining-time");
 
       const minutesLeft = Math.floor(remainingSeconds / 60); // Get full minutes
       const secondsLeft = remainingSeconds % 60; // Get remaining seconds
 
-      // Update the display in "MM:SS" format
-      if (remainingMinutesSpan) {
-          remainingMinutesSpan.textContent = minutesLeft;
-      }
-      if (remainingSecondsSpan) {
-          // Format seconds to always show two digits (e.g., 09 instead of 9)
-          remainingSecondsSpan.textContent = secondsLeft < 10 ? `0${secondsLeft}` : secondsLeft;
+      // Update the display message based on the time left
+      if (remainingTimeSpan) {
+          if (minutesLeft > 0) {
+              // Display minutes and seconds
+              remainingTimeSpan.textContent = `${minutesLeft} minute${minutesLeft > 1 ? 's' : ''} and ${secondsLeft} second${secondsLeft !== 1 ? 's' : ''}`;
+          } else {
+              // Only display seconds when minutesLeft is 0
+              remainingTimeSpan.textContent = `${secondsLeft} second${secondsLeft !== 1 ? 's' : ''}`;
+          }
       }
   };
 
   // Event listeners
   dialog.querySelector(".js-extend-session").addEventListener("click", extendSession);
-
-  // Listen for scroll, mouse move, mouse down, click, keypress, and keyup events to reset the idle timer
-  window.addEventListener("scroll", resetIdleTimer);
+  window.addEventListener("scroll", resetIdleTimer);       // Resets timer on scroll
   window.addEventListener("mousemove", resetIdleTimer);    // Resets timer on mouse move
   window.addEventListener("mousedown", resetIdleTimer);    // Resets timer on mouse down (touchpad click)
   window.addEventListener("click", resetIdleTimer);        // Resets timer on click
   window.addEventListener("keydown", resetIdleTimer);      // Resets timer on key press
   window.addEventListener("keyup", resetIdleTimer);        // Resets timer on key release (useful for Android)
 
-  // Start the idle timer
   startIdleTimer();
 });

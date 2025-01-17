@@ -18,7 +18,6 @@
     </script>
     <meta name="description" content="{{config['SERVICE_NAME']}}">
     <meta name="author" content="{{config['DEPARTMENT_NAME']}}">
-    {% include 'main/_modal-dialog.html' %}
 {% endblock %}
 
 {% set bodyClasses = "govuk-frontend-supported" %}
@@ -133,7 +132,7 @@
 
 {% block content %}
 
-
+    {% include "_modal-dialog.html" %}
     {% if form and form.errors %}
         {{ govukErrorSummary(wtforms_errors(form)) }}
     {% endif %}

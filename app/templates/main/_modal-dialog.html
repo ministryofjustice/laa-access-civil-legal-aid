@@ -1,4 +1,4 @@
-<dialog id="timeout-dialog" data-idle-timeout="25" data-visible-time="5"
+<dialog id="timeout-dialog" data-idle-timeout="6" data-visible-time="5"
   data-redirect-url="/session-expired" class="modal-dialog dialog" role="dialog" aria-live="polite" aria-labelledby="dialog-title" aria-describedby="accessible-timer" tabindex="-1">
   <div class="modal-dialog__inner">
     <h2 id="dialog-title" class="govuk-heading-l">
@@ -6,9 +6,8 @@
     </h2>
     <div class="modal-dialog__inner__text">
       <p id="timeout-message" class="govuk-body">
-        Your session will end in <span id="remaining-minutes"></span>:<span id="remaining-seconds"></span> minutes. 
-        For security reasons, any information you have entered will not be saved.
-      </p>
+        Your session will end in <span id="remaining-time"></span>. For security reasons, any information you have entered will not be saved.
+    </p>
       <div class="timer" aria-hidden="true" aria-relevant="additions"></div>
       <div id="accessible-timer" class="govuk-visually-hidden" role="status"></div>
     </div>
