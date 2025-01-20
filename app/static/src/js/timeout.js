@@ -34,18 +34,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const now = Date.now();
 
       if (dialog.open) {
-          // Check if we should redirect
           if (now - dialogShowTime >= visibleTime) {
               clearInterval(checkIntervalId);
               window.location.href = redirectUrl;
           } else {
               updateTimeoutMessage();
           }
-      } else {
-          // Check if we should show dialog
-          if (now - lastActivityTime >= (idleTimeout - visibleTime)) {
-              showDialog();
-          }
+      } else if (now - lastActivityTime >= (idleTimeout - visibleTime)) {
+          showDialog();
       }
   };
 

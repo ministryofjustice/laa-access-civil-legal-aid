@@ -1,5 +1,4 @@
 import pytest
-
 from app.means_test.views import MeansTest
 from .test_cases import TEST_CASES
 
