@@ -1072,7 +1072,7 @@ msgstr ""
 "fewn 24 awr"
 
 msgid "Your application will time out soon"
-msgstr ""
+msgstr "Bydd yr amser a neilltuwyd ar gyfer eich cais yn dod i ben cyn bo hir"
 
 msgid ""
 "Your session will end in <span id=\"remaining-time\"></span>. For "
