@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   if (window.location.pathname === "/session-expired") {
-      return; // Don't run the timeout logic if on the session expired page
+      return;
   }
 
   const dialog = document.getElementById("timeout-dialog");
@@ -8,73 +8,77 @@ document.addEventListener("DOMContentLoaded", () => {
   const visibleTime = parseInt(dialog.dataset.visibleTime, 10) * 60 * 1000;
   const redirectUrl = dialog.dataset.redirectUrl;
 
-  let timeoutId;
-  let visibleId;
+  let checkIntervalId;
+  let lastActivityTime = Date.now();
+  let dialogShowTime = null;
 
-  // Function to reset the idle timer
   const resetIdleTimer = () => {
-      // Only reset if the dialog is not currently showing
       if (!dialog.open) {
-          clearTimeout(timeoutId);
-          clearInterval(visibleId);
-          startIdleTimer(); // Restart the idle timer whenever there's user activity (unless dialog is open)
+          lastActivityTime = Date.now();
       }
   };
 
   const showDialog = () => {
       dialog.showModal();
-      updateTimeoutMessage(visibleTime / 1000); // Start updating the timeout message
-      let remainingSeconds = visibleTime / 1000;
-
-      visibleId = setInterval(() => {
-          remainingSeconds -= 1;
-          updateTimeoutMessage(remainingSeconds); // Update minutes and seconds on each interval
-
-          if (remainingSeconds <= 0) {
-              clearInterval(visibleId);
-              window.location.href = redirectUrl; // Redirect when time is up
-          }
-      }, 1000);
+      dialogShowTime = Date.now();
+      updateTimeoutMessage();
   };
 
-  // Extend session button
   const extendSession = () => {
-      clearTimeout(timeoutId);
-      clearInterval(visibleId);
       dialog.close();
-      startIdleTimer(); // Restart the timer
+      dialogShowTime = null;
+      lastActivityTime = Date.now();
   };
 
-  const startIdleTimer = () => {
-      timeoutId = setTimeout(showDialog, idleTimeout - visibleTime);
-  };
+  const checkTime = () => {
+      const now = Date.now();
 
-    const updateTimeoutMessage = (remainingSeconds) => {
-      const remainingTimeSpan = document.getElementById("remaining-time");
-
-      const minutesLeft = Math.floor(remainingSeconds / 60); // Get full minutes
-      const secondsLeft = remainingSeconds % 60; // Get remaining seconds
-
-      // Update the display message based on the time left
-      if (remainingTimeSpan) {
-          if (minutesLeft > 0) {
-              // Display minutes and seconds
-              remainingTimeSpan.textContent = `${minutesLeft} minute${minutesLeft > 1 ? 's' : ''} and ${secondsLeft} second${secondsLeft !== 1 ? 's' : ''}`;
+      if (dialog.open) {
+          // Check if we should redirect
+          if (now - dialogShowTime >= visibleTime) {
+              clearInterval(checkIntervalId);
+              window.location.href = redirectUrl;
           } else {
-              // Only display seconds when minutesLeft is 0
-              remainingTimeSpan.textContent = `${secondsLeft} second${secondsLeft !== 1 ? 's' : ''}`;
+              updateTimeoutMessage();
           }
+      } else {
+          // Check if we should show dialog
+          if (now - lastActivityTime >= (idleTimeout - visibleTime)) {
+              showDialog();
+          }
+      }
+  };
+
+  const updateTimeoutMessage = () => {
+      const remainingTimeSpan = document.getElementById("remaining-time");
+      if (!remainingTimeSpan) return;
+
+      const now = Date.now();
+      const remainingMilliseconds = visibleTime - (now - dialogShowTime);
+      const remainingSeconds = Math.ceil(remainingMilliseconds / 1000);
+
+      if (remainingSeconds <= 0) return;
+
+      const minutesLeft = Math.floor(remainingSeconds / 60);
+      const secondsLeft = remainingSeconds % 60;
+
+      if (minutesLeft > 0) {
+          remainingTimeSpan.textContent = `${minutesLeft} minute${minutesLeft > 1 ? 's' : ''} and ${secondsLeft} second${secondsLeft !== 1 ? 's' : ''}`;
+      } else {
+          remainingTimeSpan.textContent = `${secondsLeft} second${secondsLeft !== 1 ? 's' : ''}`;
       }
   };
 
   // Event listeners
   dialog.querySelector(".js-extend-session").addEventListener("click", extendSession);
-  window.addEventListener("scroll", resetIdleTimer);       // Resets timer on scroll
-  window.addEventListener("mousemove", resetIdleTimer);    // Resets timer on mouse move
-  window.addEventListener("mousedown", resetIdleTimer);    // Resets timer on mouse down (touchpad click)
-  window.addEventListener("click", resetIdleTimer);        // Resets timer on click
-  window.addEventListener("keydown", resetIdleTimer);      // Resets timer on key press
-  window.addEventListener("keyup", resetIdleTimer);        // Resets timer on key release (useful for Android)
+  window.addEventListener("scroll", resetIdleTimer);
+  window.addEventListener("mousemove", resetIdleTimer);
+  window.addEventListener("mousedown", resetIdleTimer);
+  window.addEventListener("click", resetIdleTimer);
+  window.addEventListener("keydown", resetIdleTimer);
+  window.addEventListener("keyup", resetIdleTimer);
 
-  startIdleTimer();
+  // Start checking time every second
+  checkIntervalId = setInterval(checkTime, 1000);
+  lastActivityTime = Date.now();
 });
