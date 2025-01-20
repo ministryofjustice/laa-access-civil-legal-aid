@@ -133,7 +133,7 @@
 
 {% block content %}
 
-    {{ timeout_dialog(6) }}
+    {{ timeout_dialog() }}
     {% if form and form.errors %}
         {{ govukErrorSummary(wtforms_errors(form)) }}
     {% endif %}
