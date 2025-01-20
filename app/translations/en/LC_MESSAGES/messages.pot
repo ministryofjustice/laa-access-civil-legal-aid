@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-16 10:49+0000\n"
+"POT-Creation-Date: 2025-01-20 11:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -147,6 +147,21 @@ msgid "Another reason"
 msgstr ""
 
 msgid "Continue to contact CLA"
+msgstr ""
+
+msgid "-- Please select --"
+msgstr ""
+
+msgid "each week"
+msgstr ""
+
+msgid "every 4 weeks"
+msgstr ""
+
+msgid "each month"
+msgstr ""
+
+msgid "each year"
 msgstr ""
 
 msgid "About you"
@@ -303,6 +318,28 @@ msgid "Universal Credit"
 msgstr ""
 
 msgid "Any other benefits"
+msgstr ""
+
+msgid ""
+"Enter the Working Tax Credit you receive, or 0 if this doesn’t apply to "
+"you"
+msgstr ""
+
+msgid "Tell us how often you receive Working Tax Credit"
+msgstr ""
+
+msgid "Tell us how much Working Tax Credit you receive"
+msgstr ""
+
+msgid ""
+"Enter the Working Tax Credit your partner receives, or 0 if it doesn’t "
+"apply"
+msgstr ""
+
+msgid "Tell us how often your partner receives Working Tax Credit"
+msgstr ""
+
+msgid "Tell us how much Working Tax Credit your partner receives"
 msgstr ""
 
 msgid "Your property"
@@ -1023,6 +1060,17 @@ msgid "Privacy notice"
 msgstr ""
 
 msgid "Start of privacy notice"
+msgstr ""
+
+msgid "You’ve reached the end of this service"
+msgstr ""
+
+msgid ""
+"For your security, the information you’ve entered has automatically been "
+"deleted."
+msgstr ""
+
+msgid "You can start again below."
 msgstr ""
 
 msgid "Start again"
