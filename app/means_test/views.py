@@ -4,7 +4,6 @@ from flask import render_template, url_for, redirect, session
 from app.means_test.api import update_means_test
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm
-from app.means_test.forms.money import ExampleForm
 from app.means_test.forms.property import PropertyForm
 
 
@@ -13,7 +12,6 @@ class MeansTest(View):
         "about-you": AboutYouForm,
         "benefits": BenefitsForm,
         "property": PropertyForm,
-        "money": ExampleForm,
     }
 
     def __init__(self, current_form_class, current_name):
