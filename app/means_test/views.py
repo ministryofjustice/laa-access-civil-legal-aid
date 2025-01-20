@@ -6,6 +6,7 @@ from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.money import ExampleForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import PropertyForm
+from app.means_test.utils import MoneyInterval
 
 
 class MeansTest(View):
@@ -47,6 +48,12 @@ class MeansTest(View):
     @classmethod
     def get_payload(cls, eligibility_data: dict) -> dict:
         about = eligibility_data.forms.get("about-you", {})
+        benefits_form = eligibility_data.forms.get(
+            "benefits", {"benefits": [], "child_benefits": None}
+        )
+        child_benefits = MoneyInterval(0)
+        if "child_benefit" in benefits_form["benefits"]:
+            child_benefits = MoneyInterval(benefits_form["child_benefits"])
 
         payload = {
             "category": eligibility_data.category,
@@ -71,10 +78,7 @@ class MeansTest(View):
                         "per_interval_value": None,
                         "interval_period": "per_month",
                     },
-                    "child_benefits": {
-                        "per_interval_value": None,
-                        "interval_period": "per_month",
-                    },
+                    "child_benefits": child_benefits,
                     "maintenance_received": {
                         "per_interval_value": None,
                         "interval_period": "per_month",
@@ -199,7 +203,7 @@ class MeansTest(View):
             "is_you_or_your_partner_over_60": about.get("aged_60_or_over", False),
             "has_partner": about.get("has_partner", False)
             and about.get("in_dispute", False),
-            "on_passported_benefits": eligibility_data.is_on_passported_benefits,
+            "on_passported_benefits": eligibility_data.is_passported,
             "on_nass_benefits": False,
             "specific_benefits": eligibility_data.specific_benefits,
             "disregards": [],

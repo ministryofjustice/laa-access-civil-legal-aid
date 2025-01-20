@@ -4,7 +4,12 @@ from wtforms.fields import SelectMultipleField
 from app.means_test.widgets import MeansTestCheckboxInput
 from app.means_test.forms import BaseMeansTestForm
 from app.means_test.fields import MoneyField, MoneyFieldWidgetWidget
-from app.means_test.validators import MoneyIntervalAmountRequired
+from app.means_test.validators import (
+    MoneyIntervalAmountRequired,
+    ValidateIfSession,
+    ValidateIf,
+    ValidateIfType,
+)
 
 
 class BenefitsForm(BaseMeansTestForm):
@@ -38,19 +43,21 @@ class BenefitsForm(BaseMeansTestForm):
         exclude_intervals=["per_month", "per_year"],
         widget=MoneyFieldWidgetWidget(),
         validators=[
+            ValidateIfSession("is_eligible_for_child_benefits", True),
+            ValidateIf("benefits", "child_benefit", ValidateIfType.IN),
             MoneyIntervalAmountRequired(
                 message=_("Enter the Child Benefit you receive"),
                 freq_message=_("Tell us how often you receive Child Benefit"),
                 amount_message=_("Tell us how much Child Benefit you receive each"),
-            )
+            ),
         ],
     )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Remove child-benefit option if they don't have any children or dependants
-        eligibility = session.get("eligibility")
-        if not (eligibility.has_children or eligibility.has_dependants):
+        eligibility = session.get_eligibility()
+        if not eligibility.is_eligible_for_child_benefits:
             self.benefits.choices = list(
                 filter(
                     lambda benefit: benefit[0] != "child_benefit", self.benefits.choices

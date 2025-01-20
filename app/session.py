@@ -17,7 +17,7 @@ class Eligibility:
     def is_yes(self, form_name, field_name) -> bool | None:
         form = self.forms.get(form_name)
         if not form:
-            return None
+            return False
         return form.get(field_name) == "1"
 
     @property
@@ -39,21 +39,28 @@ class Eligibility:
         return self.is_yes("about-you", "have_dependents")
 
     @property
+    def is_eligible_for_child_benefits(self) -> bool:
+        return self.has_children or self.has_dependants
+
+    @property
     def passported_benefits(self) -> []:
         return ["child_benefit", "other-benefit"]
 
     @property
     def specific_benefits(self) -> dict:
-        benefits = self.forms["benefits"]
-        passported_benefits = self.passported_benefits
-        benefits = list(filter(lambda b: b not in passported_benefits, benefits))
-        for name, value in self.forms["benefits"].items():
-            benefits[name] = self.is_yes("benefit", name)
-        return benefits
+        benefits = self.forms.get("benefits", {}).get("benefits", [])
+        return {
+            "pension_credit": "pension_credit" in benefits,
+            "job_seekers_allowance": "job_seekers_allowance" in benefits,
+            "employment_support": "employment_support" in benefits,
+            "universal_credit": "universal_credit" in benefits,
+            "income_support": "income_support" in benefits,
+        }
 
-    def is_on_passported_benefits(self) -> bool:
-        benefits = self.forms["benefits"]
-        return bool(set(benefits).intersection(self.passported_benefits))
+    @property
+    def is_passported(self) -> bool:
+        benefits = self.forms.get("benefits", {"benefits": []})
+        return bool(set(benefits["benefits"]).intersection(self.passported_benefits))
 
     def add(self, form_name, data):
         self.forms[form_name] = data
