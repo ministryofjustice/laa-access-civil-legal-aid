@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-20 13:56+0000\n"
+"POT-Creation-Date: 2025-01-16 10:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1060,6 +1060,17 @@ msgid "Privacy notice"
 msgstr ""
 
 msgid "Start of privacy notice"
+msgstr ""
+
+msgid "You’ve reached the end of this service"
+msgstr ""
+
+msgid ""
+"For your security, the information you’ve entered has automatically been "
+"deleted."
+msgstr ""
+
+msgid "You can start again below."
 msgstr ""
 
 msgid "Start again"

@@ -141,6 +141,7 @@ class Session(SecureCookieSession):
         self.update_last_active()
         return False
 
+    @staticmethod
     def requires_traversal_protection(func):
         """
         Decorator to ensure that session["traversal_protection"] is True.

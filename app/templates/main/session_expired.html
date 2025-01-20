@@ -1,21 +1,21 @@
 {% extends "base.html" %}
+{%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton -%}
 
-{% block pageTitle %}You’ve reached the end of this service{% endblock %}
+{% block pageTitle %}{% trans %}You’ve reached the end of this service{% endtrans %}{% endblock %}
 
 {% set mainClasses = "govuk-main-wrapper--l" %}
 
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l">You’ve reached the end of this service</h1>
-        <p class="govuk-body">For your security, the information you’ve entered has automatically been deleted.</p>
-        <p class="govuk-body">You can start again below.</p>
-        <a href="{{ url_for("main.index") }}" title="{{ _('Start again') }}" role="button" draggable="false" class="govuk-button govuk-!-margin-top-2 govuk-!-margin-bottom-8 govuk-button--start" data-module="govuk-button">
-            {{ _('Start again') }}
-            <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" role="presentation" focusable="false">
-              <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
-            </svg>
-        </a>
+        <h1 class="govuk-heading-l">{% trans %}You’ve reached the end of this service{% endtrans %}</h1>
+        <p class="govuk-body">{% trans %}For your security, the information you’ve entered has automatically been deleted.{% endtrans %}</p>
+        <p class="govuk-body">{% trans %}You can start again below.{% endtrans %}</p>
+        {{ govukButton({
+            "text": _("Start again"),
+            "href": url_for("main.index"),
+            "isStartButton": true
+        }) }}
     </div>
 </div>
 {% endblock %}
