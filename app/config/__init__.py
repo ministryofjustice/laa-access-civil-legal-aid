@@ -29,4 +29,4 @@ class Config(object):
     )
     POSTCODES_IO_URL = os.environ.get("POSTCODES_IO_URL", "https://api.postcodes.io")
     CLA_BACKEND_URL = os.environ.get("CLA_BACKEND_URL", "http://localhost:8010")
-    SESSION_TIMEOUT = timedelta(minutes=6)
+    SESSION_TIMEOUT = timedelta(minutes=30)
