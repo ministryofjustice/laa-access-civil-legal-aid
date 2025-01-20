@@ -104,7 +104,6 @@
 
 // Modal dialog polyfill styles
 $dialog_backdrop_colour: rgba(0,0,0,0.8);
-$dialog_border: 5px solid black;
 dialog {
   left: 0; right: 0;
   width: -moz-fit-content;
@@ -114,12 +113,11 @@ dialog {
   height: -webkit-fit-content;
   height: fit-content;
   margin: auto;
-  border: solid;
+  border: 5px solid black;;
   padding: 1em;
   background: white;
   color: black;
   display: none;
-  border: $dialog_border;
 
   & + .backdrop {
     position: fixed;
