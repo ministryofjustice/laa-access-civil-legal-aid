@@ -1,50 +1,47 @@
-msgid "Housing"
-msgstr "Tai"
+msgid "Children, families and relationships"
+msgstr ""
 
-msgid "Debt"
-msgstr "Dyled"
-
-msgid "Employment"
-msgstr "Cyflogaeth"
+msgid "Housing, homelessness, losing your home"
+msgstr ""
 
 msgid "Community care"
 msgstr "Gofal cymunedol"
 
-msgid "Family"
-msgstr "Teulu"
-
 msgid "Domestic abuse"
 msgstr "Cam-drin domestig"
 
-msgid "Welfare Benefits"
-msgstr "Budd-daliadau lles"
+msgid "Appeal a decision about your benefits"
+msgstr ""
 
 msgid "Discrimination"
 msgstr "Gwahaniaethu"
 
-msgid "Mental health"
+msgid "Mental capacity, mental health"
 msgstr ""
 
-msgid "Immigration and asylum"
+msgid "Asylum and immigration"
 msgstr ""
 
-msgid "Public law"
+msgid "Care needs for disability and old age (social care)"
 msgstr ""
 
-msgid "Education"
+msgid "Legal action against police and public organisations"
+msgstr ""
+
+msgid "Special educational needs and disability (SEND)"
 msgstr ""
 
 msgid "Validation failed message"
 msgstr ""
 
 msgid "Yes"
-msgstr ""
+msgstr "Gallwch"
 
 msgid "No"
-msgstr ""
+msgstr "Na"
 
 msgid "Continue"
-msgstr ""
+msgstr "Ymlaen"
 
 msgid "Are you worried about someone's safety?"
 msgstr ""
@@ -94,6 +91,9 @@ msgstr ""
 msgid "Were you accused by a landlord or the council?"
 msgstr ""
 
+msgid "Anti-social behaviour and gangs"
+msgstr ""
+
 msgid "Select ‘Yes’ if you were accused by a landlord or the council"
 msgstr ""
 
@@ -129,6 +129,174 @@ msgstr "Rheswm arall"
 
 msgid "Continue to contact CLA"
 msgstr "Parhau i gysylltu â CLA"
+
+msgid "About you"
+msgstr "Amdanoch chi"
+
+msgid "Do you have a partner?"
+msgstr "Oes gennych chi bartner?"
+
+msgid "Your husband, wife, civil partner (unless you have permanently separated) or someone you live with as if you're married"
+msgstr "Eich gŵr, gwraig, partner sifil (oni bai eich bod wedi gwahanu yn barhaol) neu rywun sy'n byw gyda chi fel pe baech chi wedi priodi"
+
+msgid "Tell us whether you have a partner"
+msgstr "Oes gennych chi bartner"
+
+msgid "Are you in a dispute with your partner?"
+msgstr "Ydych chi mewn anghydfod â'ch partner?"
+
+msgid "Tell us whether you're in dispute with your partner"
+msgstr "Ydych chi mewn anghydfod â’ch partner"
+
+msgid "Do you receive any benefits (including Child Benefit)?"
+msgstr "Ydych chi’n cael unrhyw fudd-daliadau (gan gynnwys Budd-dal Plant)?"
+
+msgid "Being on some benefits can help you qualify for legal aid"
+msgstr "Os ydych chi’n cael rhai budd-daliadau, gall hynny eich helpu i gymhwyso ar gyfer cymorth cyfreithiol"
+
+msgid "Tell us whether you receive benefits"
+msgstr "Ydych chi'n derbyn budd-daliadau"
+
+msgid "Do you have any children aged 15 or under?"
+msgstr "Oes gennych chi blant sy'n 15 oed neu'n iau?"
+
+msgid "Don't include any children who don't live with you"
+msgstr "Peidiwch â chynnwys plant nad ydyn nhw'n byw gyda chi"
+
+msgid "Tell us whether you have any children aged 15 or under"
+msgstr "Oes gennych chi blant 15 oed neu hŷn"
+
+msgid "How many?"
+msgstr "Faint?"
+
+msgid "Tell us how many children you have aged 15 or under"
+msgstr "Faint o blant 15 oed neu hŷn sydd gennych chi"
+
+msgid "Enter a number between 1 and 50"
+msgstr "Rhowch rif rhwng 1 a 50"
+
+msgid "Do you have any dependants aged 16 or over?"
+msgstr "Oes gennych chi unrhyw ddibynyddion sy'n 16 oed neu'n hŷn"
+
+msgid "People who you live with and support financially. This could be a young person for whom you get Child Benefit"
+msgstr "Pobl sy'n byw gyda chi ac sy'n cael cymorth ariannol gennych chi. Gallai fod yn berson ifanc yr ydych chi'n cael Budd-dal Plant ar ei gyfer"
+
+msgid "Tell us whether you have any dependants aged 16 or over"
+msgstr "Oes gennych chi ddibynyddion 16 oed neu hŷn"
+
+msgid "Tell us how many dependants you have aged 16 or over"
+msgstr "Faint o ddibynyddion 16 oed neu hŷn sydd gennych chi"
+
+msgid "Do you own any property?"
+msgstr "Ydych chi'n berchen ar unrhyw eiddo?"
+
+msgid "For example, a house, static caravan or flat"
+msgstr "Er enghraifft, tŷ, fflat neu garafán sefydlog"
+
+msgid "Tell us if you own any properties"
+msgstr "Ydych chi'n berchen ar unrhyw eiddo"
+
+msgid "Are you employed?"
+msgstr "Ydych chi'n gyflogedig?"
+
+msgid "This means working as an employee - you may be both employed and self-employed"
+msgstr "Mae hyn yn golygu gweithio fel cyflogai - gallech chi fod yn gyflogedig ac yn hunangyflogedig"
+
+msgid "Tell us if you are employed"
+msgstr "Ydych chi mewn gwaith"
+
+msgid "Is your partner employed?"
+msgstr "Ydy'ch partner yn gyflogedig?"
+
+msgid "This means working as an employee - your partner may be both employed and self-employed"
+msgstr "Mae hyn yn golygu gweithio fel cyflogai - gallech chi fod yn gyflogedig ac yn hunangyflogedig"
+
+msgid "Tell us whether your partner is employed"
+msgstr "Dywedwch wrthym a yw eich partner yn gyflogedig"
+
+msgid "Are you self-employed?"
+msgstr "Ydych chi'n hunangyflogedig?"
+
+msgid "This means working for yourself - you may be both employed and self-employed"
+msgstr "Mae hyn yn golygu gweithio i chi'ch hun - gallech chi fod yn gyflogedig ac yn hunangyflogedig"
+
+msgid "Tell us if you are self-employed"
+msgstr "Ydych chi'n hunangyflogedig"
+
+msgid "Is your partner self-employed?"
+msgstr "Ydy'ch partner yn hunangyflogedig?"
+
+msgid "This means working for yourself - your partner may be both employed and self-employed"
+msgstr "Mae hyn yn golygu gweithio i chi'ch hun - gallech chi fod yn gyflogedig ac yn hunangyflogedig"
+
+msgid "Tell us whether your partner is self-employed"
+msgstr "Dywedwch wrthym a yw eich partner yn hunangyflogedig"
+
+msgid "Are you or your partner (if you have one) aged 60 or over?"
+msgstr "Ydych chi neu eich partner (os oes gennych bartner) yn 60 oed neu'n hŷn?"
+
+msgid "Tell us if you or your partner are aged 60 or over"
+msgstr "Ydych chi neu eich partner yn 60 oed neu hŷn"
+
+msgid "Do you have any savings or investments?"
+msgstr "Oes gennych chi unrhyw gynilion neu fuddsoddiadau?"
+
+msgid "Tell us whether you have savings or investments"
+msgstr "Oes gennych chi gynilion neu fuddsoddiadau"
+
+msgid "Do you have any valuable items worth over £500 each?"
+msgstr "Oes gennych chi unrhyw eitemau gwerthfawr sy'n werth mwy na £500 yr un?"
+
+msgid "Tell us if you have any valuable items worth over £500 each"
+msgstr "Oes gennych chi eitemau gwerthfawr sydd werth dros £500 yr un"
+
+msgid " Which benefits do you receive?"
+msgstr ""
+
+msgid "Child Benefit"
+msgstr ""
+
+msgid "Guarantee Credit"
+msgstr ""
+
+msgid "Income Support"
+msgstr ""
+
+msgid "Income-based Jobseeker's Allowance"
+msgstr ""
+
+msgid "Income-related Employment and Support Allowance"
+msgstr ""
+
+msgid "Universal Credit"
+msgstr ""
+
+msgid "Any other benefits"
+msgstr ""
+
+msgid "Your property"
+msgstr ""
+
+msgid "Tell us whether this is your main home"
+msgstr ""
+
+msgid "Tell us whether anyone else owns a share of this property"
+msgstr ""
+
+msgid "Tell us the approximate value of this property"
+msgstr ""
+
+msgid "Enter a value"
+msgstr ""
+
+msgid "Tell us how much is left to pay on the mortgage"
+msgstr ""
+
+msgid "Tell us whether you rent out some of this property"
+msgstr ""
+
+msgid "Tell us whether this property is in dispute"
+msgstr ""
 
 msgid "Legal aid is available for this type of problem"
 msgstr "Mae cymorth cyfreithiol ar gael ar gyfer y math hwn o broblem"
@@ -288,9 +456,6 @@ msgstr ""
 msgid "Including if you’re on a ‘barred list’ or disqualified from teaching."
 msgstr ""
 
-msgid "Anti-social behaviour and gangs"
-msgstr ""
-
 msgid ""
 "If you’re accused or taken to court for anti-social behaviour, including "
 "being in a gang."
@@ -372,9 +537,6 @@ msgstr ""
 msgid "Help if you’re a victim of human trafficking or modern slavery."
 msgstr ""
 
-msgid "Asylum and immigration"
-msgstr ""
-
 msgid "Applying for asylum"
 msgstr ""
 
@@ -411,9 +573,6 @@ msgstr ""
 msgid "Help if you’re a victim of trafficking or modern slavery."
 msgstr ""
 
-msgid "Appeal a decision about your benefits"
-msgstr ""
-
 msgid "Legal aid only covers appeals to the:"
 msgstr ""
 
@@ -421,9 +580,6 @@ msgid ""
 "For all other benefits appeals, go to GOV.UK and read <a "
 "href=\"https://www.gov.uk/appeal-benefit-decision\" "
 "target=\"_blank\">Appeal a benefits decision (opens in new tab)</a>."
-msgstr ""
-
-msgid "Care needs for disability and old age (social care)"
 msgstr ""
 
 msgid "Care from the council (local authority)"
@@ -505,9 +661,6 @@ msgstr "Oriau agor"
 msgid "Email"
 msgstr "E-bost"
 
-msgid "Children, families and relationships"
-msgstr ""
-
 msgid "Children and social services, children in care"
 msgstr ""
 
@@ -565,9 +718,6 @@ msgid ""
 msgstr ""
 
 msgid "children, families, relationships"
-msgstr ""
-
-msgid "Housing, homelessness, losing your home"
 msgstr ""
 
 msgid "Homelessness"
@@ -638,9 +788,6 @@ msgstr ""
 msgid "housing"
 msgstr "tai"
 
-msgid "Mental capacity, mental health"
-msgstr ""
-
 msgid "If someone cannot decide for themselves (lacks mental capacity)"
 msgstr ""
 
@@ -671,9 +818,6 @@ msgid ""
 msgstr ""
 
 msgid "Legal action against public organisations"
-msgstr ""
-
-msgid "Legal action against police and public organisations"
 msgstr ""
 
 msgid ""
@@ -708,9 +852,6 @@ msgid "wrongfully arrested, stopped, held or detained anywhere"
 msgstr ""
 
 msgid "physically, sexually or emotionally abused"
-msgstr ""
-
-msgid "Special educational needs and disability (SEND)"
 msgstr ""
 
 msgid "Help with a child or young person's SEND)"
@@ -873,6 +1014,70 @@ msgstr "Welsh Privacy notice"
 msgid "Start of privacy notice"
 msgstr "WELSH Start of privacy notice"
 
+msgid "Start again"
+msgstr ""
+
+msgid ""
+"Your session will time out after 30 minutes of inactivity. We do this for"
+" your security."
+msgstr "Bydd eich sesiwn yn dod i ben os yw wedi bod yn anweithredol am hanner awr. Rydym yn gwneud hyn er mwyn eich cadw’n ddiogel."
+
+#, python-format
+msgid ""
+"If you're having trouble completing this form, <a "
+"href=\"%(contact_url)s\" class=\"govuk-link\">get in touch</a>."
+msgstr "Os ydych yn cael problemau wrth lenwi’r ffurflen hon, gofynnwch i ni, <a href=\"%(contact_url)s\" class=\"govuk-link\">cysylltwch â ni</a>."
+
+msgid "Amount"
+msgstr ""
+
+msgid "Frequency"
+msgstr ""
+
+msgid "What valuable items should I include?"
+msgstr "Pa eitemau gwerthfawr dylwn i eu cynnwys?"
+
+msgid "Don’t include"
+msgstr "Peidiwch â chynnwys"
+
+msgid "Furniture and appliances"
+msgstr "Dodrefn ac offer tŷ"
+
+msgid "Your TV"
+msgstr "Eich set deledu"
+
+msgid "Mobile phones, laptops and other devices"
+msgstr "Ffonau symudol, gliniaduron a dyfeisiau eraill"
+
+msgid "Clothing"
+msgstr "Dillad"
+
+msgid ""
+"The vehicle you use every day, unless it is a classic car or luxury "
+"vehicle"
+msgstr "Y car yr ydych chi’n ei ddefnyddio bob dydd, oni bai ei fod yn gar clasurol neu’n gerbyd moethus"
+
+msgid "Equipment or tools you use for your work"
+msgstr "Cyfarpar neu offer yr ydych chi’n eu defnyddio ar gyfer eich gwaith"
+
+msgid "Do include"
+msgstr "Rhaid cynnwys"
+
+msgid "Jewellery"
+msgstr "Gemwaith"
+
+msgid "Art"
+msgstr "Gweithiau celfyddydol"
+
+msgid "Antiques"
+msgstr "Pethau hynafol"
+
+msgid "Caravans and other vehicles you don’t use every day"
+msgstr "Carafannau a cherbydau eraill nad ydych chi’n eu defnyddio bob dydd"
+
+msgid "Musical instruments, unless you’re a professional musician"
+msgstr "Offerynnau cerddorol, oni bai’ch bod yn gerddor proffesiynol"
+
 #~ msgid "Helpline"
 #~ msgstr ""
 
@@ -892,7 +1097,7 @@ msgstr "WELSH Start of privacy notice"
 #~ msgstr ""
 
 #~ msgid "Mental health"
-#~ msgstr "Iechyd meddwl"
+#~ msgstr ""
 
 #~ msgid ""
 #~ "\n"
@@ -926,5 +1131,32 @@ msgstr "WELSH Start of privacy notice"
 #~ msgstr "Nid oes rhaid i chi fod yn gymwys i gael cymorth cyfreithiol."
 
 #~ msgid "Next steps to get help"
+#~ msgstr ""
+
+#~ msgid "Housing"
+#~ msgstr "Tai"
+
+#~ msgid "Debt"
+#~ msgstr "Dyled"
+
+#~ msgid "Employment"
+#~ msgstr "Cyflogaeth"
+
+#~ msgid "Family"
+#~ msgstr "Teulu"
+
+#~ msgid "Welfare Benefits"
+#~ msgstr "Budd-daliadau lles"
+
+#~ msgid "Immigration and asylum"
+#~ msgstr ""
+
+#~ msgid "Public law"
+#~ msgstr ""
+
+#~ msgid "Education"
+#~ msgstr ""
+
+#~ msgid "Tell us whether you’re in dispute with your partner"
 #~ msgstr ""
 

@@ -2,10 +2,7 @@
 {%- from 'govuk_frontend_jinja/components/details/macro.html' import govukDetails %}
 
 {% set areYouInADisputeHtml %}
-    {{ form.are_you_in_a_dispute(params={
-        "attributes": {
-            "data-controls": "has-partner"
-        },}) }}
+    {{ form.are_you_in_a_dispute() }}
 {% endset %}
 
 {% set howManyChildrenUnder16Html %}
@@ -34,7 +31,6 @@
     {{ form.csrf_token }}
 
     {{ form.has_partner(params={
-        "idPrefix": "has-partner",
         'items': [
             {
                 'conditional': {
@@ -78,7 +74,7 @@
 
     {{ form.partner_is_employed(params={
         "attributes": {
-            "data-controlled-by": "has-partner",
+            "data-controlled-by": "are_you_in_a_dispute",
             "data-show-value": "0"
         }
     }) }}
@@ -87,7 +83,7 @@
 
     {{ form.partner_is_self_employed(params={
         "attributes": {
-            "data-controlled-by": "has-partner",
+            "data-controlled-by": "are_you_in_a_dispute",
             "data-show-value": "0"
         }
     }) }}
