@@ -1,6 +1,6 @@
 {% macro timeout_dialog(timeout_minutes=30, warning_period_minutes=5) %}
     <dialog id="timeout-dialog" data-idle-timeout={{ timeout_minutes - warning_period_minutes }} data-visible-time={{ warning_period_minutes }}
-      data-redirect-url="/session-expired" class="modal-dialog dialog" role="dialog" aria-live="polite" aria-labelledby="dialog-title" aria-describedby="accessible-timer" tabindex="-1">
+      data-redirect-url="/session-expired" class="modal-dialog dialog" aria-live="polite" aria-labelledby="dialog-title" aria-describedby="accessible-timer" tabindex="-1">
       <div class="modal-dialog__inner">
         <h2 id="dialog-title" class="govuk-heading-l">
           {% trans %}Your application will time out soon{% endtrans %}
@@ -10,7 +10,7 @@
             {% trans %}Your session will end in <span id="remaining-time"></span>. For security reasons, any information you have entered will not be saved.{% endtrans %}
         </p>
           <div class="timer" aria-hidden="true" aria-relevant="additions"></div>
-          <div id="accessible-timer" class="govuk-visually-hidden" role="status"></div>
+          <output id="accessible-timer" class="govuk-visually-hidden" role="status"></output>
         </div>
         <div class="modal-dialog__inner__block">
           <button class="govuk-button dialog-button modal-dialog__inner__button js-extend-session">
