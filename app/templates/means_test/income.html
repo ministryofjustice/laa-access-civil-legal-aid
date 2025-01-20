@@ -1,10 +1,29 @@
 {% extends "means_test/form-page.html" %}
 
+{% block formDescription %}
+    <p class="govuk-body">{% trans %}You’ll need to provide evidence of the financial information you’ve given us through this service.{% endtrans %}</p>
+    <p class="govuk-body govuk-!-font-weight-bold">{% trans %}We only need to know about any money you received last month, even if this varies from month to month.{% endtrans %}</p>
+{% endblock %}
+
 {% block form %}
 
     {{ form.csrf_token }}
 
-    {{ form.earnings() }}
+    {{ form.earnings }}
+
+    {{ form.income_tax }}
+
+    {{ form.national_insurance }}
+
+    {{ form.working_tax_credit }}
+
+    {{ form.child_tax_credit }}
+
+    {{ form.maintenance }}
+
+    {{ form.pension }}
+
+    {{ form.other_income }}
 
     {{ form.submit }}
 {% endblock %}

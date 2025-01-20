@@ -30,6 +30,8 @@ class SelfEmployedMoneyIntervalField(MoneyIntervalField):
 
 
 class IncomeForm(BaseMeansTestForm):
+    title = _("Your money coming in")
+
     template = "means_test/income.html"
 
     earnings = SelfEmployedMoneyIntervalField(
@@ -63,6 +65,7 @@ class IncomeForm(BaseMeansTestForm):
                 "Tax paid directly out of wages and any tax paid on self-employed earnings"
             ),
         },
+        widget=MoneyIntervalFieldWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_("Tell us how much income tax you pay"),
@@ -89,6 +92,7 @@ class IncomeForm(BaseMeansTestForm):
                 "Check the payslip or National Insurance statement if self-employed"
             ),
         },
+        widget=MoneyIntervalFieldWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_("Tell us how much National Insurance you pay"),
@@ -113,6 +117,7 @@ class IncomeForm(BaseMeansTestForm):
         description=_(
             "Extra money for people who work and have a low income, enter 0 if this doesn’t apply to you"
         ),
+        widget=MoneyIntervalFieldWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_(
@@ -139,6 +144,7 @@ class IncomeForm(BaseMeansTestForm):
         description=_(
             "The total amount you get for all your children, enter 0 if this doesn’t apply to you"
         ),
+        widget=MoneyIntervalFieldWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_(
@@ -165,6 +171,7 @@ class IncomeForm(BaseMeansTestForm):
         description=_(
             "Payments you get from an ex-partner, or enter 0 if this doesn’t apply to you"
         ),
+        widget=MoneyIntervalFieldWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_(
@@ -191,6 +198,7 @@ class IncomeForm(BaseMeansTestForm):
         description=_(
             "Payments you receive if you’re retired, enter 0 if this doesn’t apply to you"
         ),
+        widget=MoneyIntervalFieldWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_(
@@ -217,6 +225,7 @@ class IncomeForm(BaseMeansTestForm):
         description=_(
             "For example, student grants, income from trust funds, dividends, or enter 0 if this doesn’t apply to you"
         ),
+        widget=MoneyIntervalFieldWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_(
