@@ -1,0 +1,10 @@
+{% extends "means_test/form-page.html" %}
+
+{% block form %}
+
+    {{ form.csrf_token }}
+
+    {{ form.earnings() }}
+
+    {{ form.submit }}
+{% endblock %}

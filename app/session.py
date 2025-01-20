@@ -35,6 +35,14 @@ class Eligibility:
             "about-you", "are_you_in_a_dispute"
         )
 
+    @property
+    def is_employed(self):
+        return self.is_yes("about_you", "is_employed")
+
+    @property
+    def is_self_employed(self):
+        return self.is_yes("about_you", "is_self_employed")
+
 
 class Session(SecureCookieSession):
     SESSION_TIMEOUT = timedelta(minutes=30)

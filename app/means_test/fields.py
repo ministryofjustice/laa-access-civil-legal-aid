@@ -5,7 +5,7 @@ from wtforms import Field
 from flask_babel import lazy_gettext as _
 
 
-class MoneyFieldWidgetWidget(TextInput):
+class MoneyIntervalFieldWidget(TextInput):
     def __call__(self, field, *args, **kwargs):
         # Pass the current values to the template
         return Markup(
@@ -18,7 +18,7 @@ class MoneyFieldWidgetWidget(TextInput):
         )
 
 
-class MoneyField(Field):
+class MoneyIntervalField(Field):
     """
     A field that handles two separate text inputs.
     The raw data will contain both values separately.

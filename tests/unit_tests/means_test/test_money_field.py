@@ -1,11 +1,11 @@
 from werkzeug.datastructures import MultiDict
 from flask_wtf import FlaskForm
 from app.means_test.validators import MoneyIntervalAmountRequired
-from app.means_test.fields import MoneyField, MoneyFieldWidgetWidget
+from app.means_test.fields import MoneyIntervalField, MoneyFieldWidgetWidget
 
 
 class TestForm(FlaskForm):
-    money_field = MoneyField(
+    money_field = MoneyIntervalField(
         widget=MoneyFieldWidgetWidget(),
         validators=[
             MoneyIntervalAmountRequired(
