@@ -60,10 +60,6 @@ class MoneyIntervalAmountRequired(object):
         messages = self.messages
         amount = field.value or None
         interval = field.interval or None
-        print("VALIDATOR")
-        print(amount)
-        print(interval)
-        print("-----")
 
         if (not amount) and (not interval):
             message = messages["message"]
