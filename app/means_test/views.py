@@ -47,9 +47,6 @@ class MeansTest(View):
     @classmethod
     def get_payload(cls, eligibility_data: dict) -> dict:
         about = eligibility_data.forms.get("about-you", {})
-        benefits_form = eligibility_data.forms.get("benefits", {})
-
-        benefits = benefits_form.get("benefits", [])
 
         payload = {
             "category": eligibility_data.category,
@@ -202,15 +199,9 @@ class MeansTest(View):
             "is_you_or_your_partner_over_60": about.get("aged_60_or_over", False),
             "has_partner": about.get("has_partner", False)
             and about.get("in_dispute", False),
-            "on_passported_benefits": False,
+            "on_passported_benefits": eligibility_data.is_on_passported_benefits,
             "on_nass_benefits": False,
-            "specific_benefits": {
-                "pension_credit": "pension_credit" in benefits,
-                "job_seekers_allowance": "job_seekers_allowance" in benefits,
-                "employment_support": "employment_support" in benefits,
-                "universal_credit": "universal_credit" in benefits,
-                "income_support": "income_support" in benefits,
-            },
+            "specific_benefits": eligibility_data.specific_benefits,
             "disregards": [],
         }
 

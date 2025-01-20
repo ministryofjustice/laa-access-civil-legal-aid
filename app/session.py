@@ -38,6 +38,23 @@ class Eligibility:
     def has_dependants(self) -> bool:
         return self.is_yes("about-you", "have_dependents")
 
+    @property
+    def passported_benefits(self) -> []:
+        return ["child_benefit", "other-benefit"]
+
+    @property
+    def specific_benefits(self) -> dict:
+        benefits = self.forms["benefits"]
+        passported_benefits = self.passported_benefits
+        benefits = list(filter(lambda b: b not in passported_benefits, benefits))
+        for name, value in self.forms["benefits"].items():
+            benefits[name] = self.is_yes("benefit", name)
+        return benefits
+
+    def is_on_passported_benefits(self) -> bool:
+        benefits = self.forms["benefits"]
+        return bool(set(benefits).intersection(self.passported_benefits))
+
     def add(self, form_name, data):
         self.forms[form_name] = data
 
