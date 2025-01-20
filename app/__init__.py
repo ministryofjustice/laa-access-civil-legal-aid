@@ -107,7 +107,7 @@ def create_app(config_class=Config):
     limiter.init_app(app)
     talisman.init_app(
         app,
-        content_security_policy=csp,
+        content_security_policy=csp if not Config.TESTING else None,
         permissions_policy=permissions_policy,
         content_security_policy_nonce_in=["script-src"],
         force_https=False,

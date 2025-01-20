@@ -1071,6 +1071,20 @@ msgstr ""
 "tecstiwch ‘legalaid’ a’ch enw i 80010 a byddan nhw’n eich ffonio’n ôl o "
 "fewn 24 awr"
 
+msgid "Your application will time out soon"
+msgstr "Bydd yr amser a neilltuwyd ar gyfer eich cais yn dod i ben cyn bo hir"
+
+msgid ""
+"Your session will end in <span id=\"remaining-time\"></span>. For "
+"security reasons, any information you have entered will not be saved."
+msgstr ""
+
+msgid "Extend time limit"
+msgstr "Ymestyn y terfyn amser"
+
+msgid "Exit service"
+msgstr "Gadael y gwasanaeth"
+
 msgid "Privacy notice"
 msgstr "Welsh Privacy notice"
 

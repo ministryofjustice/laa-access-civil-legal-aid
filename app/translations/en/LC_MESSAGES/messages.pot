@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-20 11:35+0000\n"
+"POT-Creation-Date: 2025-01-16 10:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1040,6 +1040,20 @@ msgid "ask the helpline to call you back, or"
 msgstr ""
 
 msgid "text ‘legalaid’ and your name to 80010 for a call back within 24 hours"
+msgstr ""
+
+msgid "Your application will time out soon"
+msgstr ""
+
+msgid ""
+"Your session will end in <span id=\"remaining-time\"></span>. For "
+"security reasons, any information you have entered will not be saved."
+msgstr ""
+
+msgid "Extend time limit"
+msgstr ""
+
+msgid "Exit service"
 msgstr ""
 
 msgid "Privacy notice"
