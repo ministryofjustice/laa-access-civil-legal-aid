@@ -5,6 +5,7 @@
 {%- from 'govuk_frontend_jinja/components/error-summary/macro.html' import govukErrorSummary-%}
 {%- from 'govuk_frontend_jinja/components/notification-banner/macro.html' import govukNotificationBanner -%}
 {%- from 'govuk_frontend_jinja/components/phase-banner/macro.html' import govukPhaseBanner -%}
+{%- from 'main/_modal-dialog.html' import timeout_dialog %}
 
 {% set assetPath = url_for('static', filename='').rstrip('/') %}
 
@@ -132,7 +133,7 @@
 
 {% block content %}
 
-
+    {{ timeout_dialog() }}
     {% if form and form.errors %}
         {{ govukErrorSummary(wtforms_errors(form)) }}
     {% endif %}
