@@ -14,6 +14,12 @@ class BaseMeansTestForm(FlaskForm):
 
     @classmethod
     def should_show(cls) -> bool:
+        """
+        Controls whether the form page should be shown or skipped during the Means Test, for example
+        if the user selects they receive no benefits then the benefits page should be skipped as follows:
+
+        return session.get_eligibility().forms.get("about-you", {}).get("on_benefits") == YES
+        """
         return True
 
     def render_conditional(self, field, sub_field, conditional_value) -> str:
