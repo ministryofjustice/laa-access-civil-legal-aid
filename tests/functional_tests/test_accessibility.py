@@ -23,7 +23,14 @@ def check_accessibility(page: Page):
             os.makedirs(directory, exist_ok=True)
 
         axe = Axe()
-        results = axe.run(page)
+
+        """ We disable the aria-allowed-attr as GOV.UK Frontend uses aria-expanded on radio buttons, which is not allowed.
+        The GOV.UK Frontend team say: "No negative effects to having the attribute present have been found. 
+        Allowing `aria-expanded` on radios is an open proposal:"
+        """
+        options = '{"rules": {"aria-allowed-attr": {"enabled": false}}}'  # This is a string as this is passed directly to the javascript axe.run function
+
+        results = axe.run(page, options=options)
 
         wcag_violations = []
 
