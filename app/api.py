@@ -33,9 +33,6 @@ class BackendAPIClient:
         clean_params = {}
         for key, value in params.items():
             if isinstance(value, LazyString):
-                print("HERE")
-                print(type(value))
-                print(dir(value))
                 clean_params[key] = str(value)
             else:
                 clean_params[key] = value
