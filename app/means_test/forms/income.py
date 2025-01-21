@@ -11,6 +11,7 @@ class SelfEmployedMoneyIntervalField(MoneyIntervalField):
     def __init__(self, *args, self_employed_descriptions=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.self_employed_descriptions = self_employed_descriptions
+        self._hint_text = ""
 
     @staticmethod
     def get_employment_status():
@@ -22,11 +23,15 @@ class SelfEmployedMoneyIntervalField(MoneyIntervalField):
             return "self_employed"
         if is_employed:
             return "employed"
-        return None
+        return "neither"
 
     @property
     def hint_text(self):
-        return self.self_employed_descriptions.get(self.get_employment_status, None)
+        return self.self_employed_descriptions.get(self.get_employment_status(), None)
+
+    @hint_text.setter
+    def hint_text(self, value):
+        self._hint_text = value
 
 
 class IncomeForm(BaseMeansTestForm):
@@ -114,7 +119,7 @@ class IncomeForm(BaseMeansTestForm):
     )
     working_tax_credit = MoneyIntervalField(
         _("Working Tax Credit"),
-        description=_(
+        hint_text=_(
             "Extra money for people who work and have a low income, enter 0 if this doesn’t apply to you"
         ),
         widget=MoneyIntervalFieldWidget(),
@@ -141,7 +146,7 @@ class IncomeForm(BaseMeansTestForm):
     )
     child_tax_credit = MoneyIntervalField(
         _("Child Tax Credit"),
-        description=_(
+        hint_text=_(
             "The total amount you get for all your children, enter 0 if this doesn’t apply to you"
         ),
         widget=MoneyIntervalFieldWidget(),

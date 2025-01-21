@@ -54,7 +54,7 @@ class MoneyIntervalField(Field):
     ):
         super().__init__(label, validators, **kwargs)
         self.title = label
-        self.hint = hint_text
+        self.hint_text = hint_text
         self.value = None  # Amount
         self.interval = None  # Frequency
         self.field_with_error = []

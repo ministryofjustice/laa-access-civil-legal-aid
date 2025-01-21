@@ -18,9 +18,9 @@
               {{ field.title }}
           </h1>
         </legend>
-        {% if field.hint %}
-         <div id="passport-issued-hint" class="govuk-hint">
-            {{ field.hint }}
+        {% if field.hint_text %}
+         <div class="govuk-hint">
+            {{ field.hint_text }}
         </div>
         {% endif %}
         {{ renderError(field.field_with_error) }}
