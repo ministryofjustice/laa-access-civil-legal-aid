@@ -21,7 +21,6 @@ from app.session import Session
 
 @bp.get("/main")
 def index():
-    Session["traversal_protection"] = False
     return redirect(url_for("categories.index"))
 
 

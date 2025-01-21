@@ -80,7 +80,7 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
     description = _(
         "You’ll need to provide evidence of the financial information you’ve given us through this service."
     )
-    template = "means_test/benefits.html"
+    template = "means_test/additional-benefits.html"
     benefits = SelectMultipleField(
         label=_("Do you get any of these benefits?"),
         widget=MeansTestCheckboxInput(

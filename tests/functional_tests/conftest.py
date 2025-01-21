@@ -1,4 +1,5 @@
 import pytest
+import os
 from app import Config
 from app import create_app
 from flask import url_for
@@ -21,6 +22,7 @@ class TestConfig(Config):
     SERVER_NAME = "localhost"
     RATELIMIT_ENABLED = False
     SECRET_KEY = "TEST_KEY"
+    CLA_BACKEND_URL = os.environ.get("CLA_BACKEND_URL", "http://localhost:8010")
 
 
 @pytest.fixture(scope="session")
