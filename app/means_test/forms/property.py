@@ -20,7 +20,7 @@ class PropertyForm(BaseMeansTestForm):
             == YES
         )
 
-    main_home = RadioField(
+    is_main_home = RadioField(
         "Is this property your main home?",
         choices=[("yes", "Yes"), ("no", "No")],
         widget=MeansTestRadioInput(),
@@ -28,7 +28,7 @@ class PropertyForm(BaseMeansTestForm):
         validators=[InputRequired(message=_("Tell us whether this is your main home"))],
     )
 
-    share_property = RadioField(
+    other_shareholders = RadioField(
         "Does anyone else own a share of the property?",
         choices=[("yes", "Yes"), ("no", "No")],
         widget=MeansTestRadioInput(),
@@ -40,27 +40,43 @@ class PropertyForm(BaseMeansTestForm):
         ],
     )
 
-    property_worth = IntegerField(
+    property_value = IntegerField(
         "How much is the property worth?",
         widget=GovTextInput(),
         description="Use a property website or the Land Registry house prices website.",
         validators=[
             InputRequired(message=_("Tell us the approximate value of this property")),
-            NumberRange(min=0, max=999999999, message=_("Enter a value")),
+            NumberRange(
+                min=0, max=999999999, message=_("Enter a value of more than £0")
+            ),
         ],
     )
 
-    mortgage_left = IntegerField(
+    mortgage_remaining = IntegerField(
         "How much is left to pay on the mortgage?",
         widget=GovTextInput(),
         description="Include the full amount owed, even if the property has shared ownership, or enter 0 if you have no mortgage",
         validators=[
             InputRequired(message=_("Tell us how much is left to pay on the mortgage")),
-            NumberRange(min=0, max=999999999, message=_("Enter a value")),
+            NumberRange(
+                min=0, max=999999999, message=_("Enter a value of more than £0")
+            ),
         ],
     )
 
-    rent_property = RadioField(
+    mortgage_payments = IntegerField(
+        "How much is left to pay on the mortgage?",
+        widget=GovTextInput(),
+        description="Include the full amount owed, even if the property has shared ownership, or enter 0 if you have no mortgage",
+        validators=[
+            InputRequired(message=_("Tell us how much is left to pay on the mortgage")),
+            NumberRange(
+                min=0, max=999999999, message=_("Enter a value of more than £0")
+            ),
+        ],
+    )
+
+    is_rented = RadioField(
         "Do you rent out any part of this property?",
         choices=[("yes", "Yes"), ("no", "No")],
         widget=MeansTestRadioInput(),
@@ -72,7 +88,7 @@ class PropertyForm(BaseMeansTestForm):
     )
     # Add expanded field
 
-    property_disputed = RadioField(
+    in_dispute = RadioField(
         "Is your share of the property in dispute?",
         choices=[("yes", "Yes"), ("no", "No")],
         widget=MeansTestRadioInput(),
