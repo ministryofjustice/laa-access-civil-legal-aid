@@ -1,8 +1,56 @@
 from flask.sessions import SecureCookieSession, SecureCookieSessionInterface
 from app.categories.constants import Category
+from flask import session
+from dataclasses import dataclass
+from datetime import timedelta
+
+
+@dataclass
+class Eligibility:
+    forms: dict[str, dict]
+
+    def add(self, form_name, data):
+        self.forms[form_name] = data
+
+    @property
+    def category(self):
+        return session.get("category", {}).get("chs_code")
+
+    def is_yes(self, form_name, field_name) -> bool | None:
+        form = self.forms.get(form_name)
+        if not form:
+            return None
+        return form.get(field_name) == "1"
+
+    def is_no(self, form_name, field_name) -> bool | None:
+        form = self.forms.get(form_name)
+        if not form:
+            return None
+        return form.get(field_name) == "0"
+
+    @property
+    def has_partner(self):
+        return self.is_yes("about-you", "has_partner") and self.is_no(
+            "about-you", "are_you_in_a_dispute"
+        )
 
 
 class Session(SecureCookieSession):
+    SESSION_TIMEOUT = timedelta(minutes=30)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        eligibility = {}
+        if args:
+            eligibility = args[0].get("eligibility", {})
+        self["eligibility"] = Eligibility(forms=eligibility.get("forms", {}))
+
+    def update_eligibility(self, form_name, form_data):
+        self["eligibility"].add(form_name, form_data)
+
+    def get_eligibility(self):
+        return self["eligibility"]
+
     @property
     def category(self) -> Category | None:
         """Get the category from the session.
@@ -10,7 +58,10 @@ class Session(SecureCookieSession):
         Returns:
             The category name if found, None otherwise
         """
-        return Category(**self.get("category"))
+        category_dict = self.get("category")
+        if category_dict is None:
+            return None
+        return Category(**category_dict)
 
     @property
     def has_children(self):

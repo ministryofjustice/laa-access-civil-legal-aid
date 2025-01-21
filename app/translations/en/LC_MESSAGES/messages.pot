@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-08 12:01+0000\n"
+"POT-Creation-Date: 2025-01-16 10:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,40 +17,37 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
 
-msgid "Housing"
+msgid "Children, families and relationships"
 msgstr ""
 
-msgid "Debt"
-msgstr ""
-
-msgid "Employment"
+msgid "Housing, homelessness, losing your home"
 msgstr ""
 
 msgid "Community care"
 msgstr ""
 
-msgid "Family"
-msgstr ""
-
 msgid "Domestic abuse"
 msgstr ""
 
-msgid "Welfare Benefits"
+msgid "Appeal a decision about your benefits"
 msgstr ""
 
 msgid "Discrimination"
 msgstr ""
 
-msgid "Mental health"
+msgid "Mental capacity, mental health"
 msgstr ""
 
-msgid "Immigration and asylum"
+msgid "Asylum and immigration"
 msgstr ""
 
-msgid "Public law"
+msgid "Care needs for disability and old age (social care)"
 msgstr ""
 
-msgid "Education"
+msgid "Legal action against police and public organisations"
+msgstr ""
+
+msgid "Special educational needs and disability (SEND)"
 msgstr ""
 
 msgid "Validation failed message"
@@ -113,6 +110,9 @@ msgstr ""
 msgid "Were you accused by a landlord or the council?"
 msgstr ""
 
+msgid "Anti-social behaviour and gangs"
+msgstr ""
+
 msgid "Select ‘Yes’ if you were accused by a landlord or the council"
 msgstr ""
 
@@ -147,6 +147,223 @@ msgid "Another reason"
 msgstr ""
 
 msgid "Continue to contact CLA"
+msgstr ""
+
+msgid "-- Please select --"
+msgstr ""
+
+msgid "each week"
+msgstr ""
+
+msgid "every 4 weeks"
+msgstr ""
+
+msgid "each month"
+msgstr ""
+
+msgid "each year"
+msgstr ""
+
+msgid "About you"
+msgstr ""
+
+msgid "Do you have a partner?"
+msgstr ""
+
+msgid ""
+"Your husband, wife, civil partner (unless you have permanently separated)"
+" or someone you live with as if you're married"
+msgstr ""
+
+msgid "Tell us whether you have a partner"
+msgstr ""
+
+msgid "Are you in a dispute with your partner?"
+msgstr ""
+
+msgid "Tell us whether you're in dispute with your partner"
+msgstr ""
+
+msgid "Do you receive any benefits (including Child Benefit)?"
+msgstr ""
+
+msgid "Being on some benefits can help you qualify for legal aid"
+msgstr ""
+
+msgid "Tell us whether you receive benefits"
+msgstr ""
+
+msgid "Do you have any children aged 15 or under?"
+msgstr ""
+
+msgid "Don't include any children who don't live with you"
+msgstr ""
+
+msgid "Tell us whether you have any children aged 15 or under"
+msgstr ""
+
+msgid "How many?"
+msgstr ""
+
+msgid "Tell us how many children you have aged 15 or under"
+msgstr ""
+
+msgid "Enter a number between 1 and 50"
+msgstr ""
+
+msgid "Do you have any dependants aged 16 or over?"
+msgstr ""
+
+msgid ""
+"People who you live with and support financially. This could be a young "
+"person for whom you get Child Benefit"
+msgstr ""
+
+msgid "Tell us whether you have any dependants aged 16 or over"
+msgstr ""
+
+msgid "Tell us how many dependants you have aged 16 or over"
+msgstr ""
+
+msgid "Do you own any property?"
+msgstr ""
+
+msgid "For example, a house, static caravan or flat"
+msgstr ""
+
+msgid "Tell us if you own any properties"
+msgstr ""
+
+msgid "Are you employed?"
+msgstr ""
+
+msgid ""
+"This means working as an employee - you may be both employed and self-"
+"employed"
+msgstr ""
+
+msgid "Tell us if you are employed"
+msgstr ""
+
+msgid "Is your partner employed?"
+msgstr ""
+
+msgid ""
+"This means working as an employee - your partner may be both employed and"
+" self-employed"
+msgstr ""
+
+msgid "Tell us whether your partner is employed"
+msgstr ""
+
+msgid "Are you self-employed?"
+msgstr ""
+
+msgid ""
+"This means working for yourself - you may be both employed and self-"
+"employed"
+msgstr ""
+
+msgid "Tell us if you are self-employed"
+msgstr ""
+
+msgid "Is your partner self-employed?"
+msgstr ""
+
+msgid ""
+"This means working for yourself - your partner may be both employed and "
+"self-employed"
+msgstr ""
+
+msgid "Tell us whether your partner is self-employed"
+msgstr ""
+
+msgid "Are you or your partner (if you have one) aged 60 or over?"
+msgstr ""
+
+msgid "Tell us if you or your partner are aged 60 or over"
+msgstr ""
+
+msgid "Do you have any savings or investments?"
+msgstr ""
+
+msgid "Tell us whether you have savings or investments"
+msgstr ""
+
+msgid "Do you have any valuable items worth over £500 each?"
+msgstr ""
+
+msgid "Tell us if you have any valuable items worth over £500 each"
+msgstr ""
+
+msgid " Which benefits do you receive?"
+msgstr ""
+
+msgid "Child Benefit"
+msgstr ""
+
+msgid "Guarantee Credit"
+msgstr ""
+
+msgid "Income Support"
+msgstr ""
+
+msgid "Income-based Jobseeker's Allowance"
+msgstr ""
+
+msgid "Income-related Employment and Support Allowance"
+msgstr ""
+
+msgid "Universal Credit"
+msgstr ""
+
+msgid "Any other benefits"
+msgstr ""
+
+msgid ""
+"Enter the Working Tax Credit you receive, or 0 if this doesn’t apply to "
+"you"
+msgstr ""
+
+msgid "Tell us how often you receive Working Tax Credit"
+msgstr ""
+
+msgid "Tell us how much Working Tax Credit you receive"
+msgstr ""
+
+msgid ""
+"Enter the Working Tax Credit your partner receives, or 0 if it doesn’t "
+"apply"
+msgstr ""
+
+msgid "Tell us how often your partner receives Working Tax Credit"
+msgstr ""
+
+msgid "Tell us how much Working Tax Credit your partner receives"
+msgstr ""
+
+msgid "Your property"
+msgstr ""
+
+msgid "Tell us whether this is your main home"
+msgstr ""
+
+msgid "Tell us whether anyone else owns a share of this property"
+msgstr ""
+
+msgid "Tell us the approximate value of this property"
+msgstr ""
+
+msgid "Enter a value"
+msgstr ""
+
+msgid "Tell us how much is left to pay on the mortgage"
+msgstr ""
+
+msgid "Tell us whether you rent out some of this property"
+msgstr ""
+
+msgid "Tell us whether this property is in dispute"
 msgstr ""
 
 msgid "Legal aid is available for this type of problem"
@@ -279,9 +496,6 @@ msgstr ""
 msgid "Including if you’re on a ‘barred list’ or disqualified from teaching."
 msgstr ""
 
-msgid "Anti-social behaviour and gangs"
-msgstr ""
-
 msgid ""
 "If you’re accused or taken to court for anti-social behaviour, including "
 "being in a gang."
@@ -363,9 +577,6 @@ msgstr ""
 msgid "Help if you’re a victim of human trafficking or modern slavery."
 msgstr ""
 
-msgid "Asylum and immigration"
-msgstr ""
-
 msgid "Applying for asylum"
 msgstr ""
 
@@ -402,9 +613,6 @@ msgstr ""
 msgid "Help if you’re a victim of trafficking or modern slavery."
 msgstr ""
 
-msgid "Appeal a decision about your benefits"
-msgstr ""
-
 msgid "Legal aid only covers appeals to the:"
 msgstr ""
 
@@ -412,9 +620,6 @@ msgid ""
 "For all other benefits appeals, go to GOV.UK and read <a "
 "href=\"https://www.gov.uk/appeal-benefit-decision\" "
 "target=\"_blank\">Appeal a benefits decision (opens in new tab)</a>."
-msgstr ""
-
-msgid "Care needs for disability and old age (social care)"
 msgstr ""
 
 msgid "Care from the council (local authority)"
@@ -496,9 +701,6 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-msgid "Children, families and relationships"
-msgstr ""
-
 msgid "Children and social services, children in care"
 msgstr ""
 
@@ -556,9 +758,6 @@ msgid ""
 msgstr ""
 
 msgid "children, families, relationships"
-msgstr ""
-
-msgid "Housing, homelessness, losing your home"
 msgstr ""
 
 msgid "Homelessness"
@@ -629,9 +828,6 @@ msgstr ""
 msgid "housing"
 msgstr ""
 
-msgid "Mental capacity, mental health"
-msgstr ""
-
 msgid "If someone cannot decide for themselves (lacks mental capacity)"
 msgstr ""
 
@@ -662,9 +858,6 @@ msgid ""
 msgstr ""
 
 msgid "Legal action against public organisations"
-msgstr ""
-
-msgid "Legal action against police and public organisations"
 msgstr ""
 
 msgid ""
@@ -699,9 +892,6 @@ msgid "wrongfully arrested, stopped, held or detained anywhere"
 msgstr ""
 
 msgid "physically, sexually or emotionally abused"
-msgstr ""
-
-msgid "Special educational needs and disability (SEND)"
 msgstr ""
 
 msgid "Help with a child or young person's SEND)"
@@ -852,9 +1042,98 @@ msgstr ""
 msgid "text ‘legalaid’ and your name to 80010 for a call back within 24 hours"
 msgstr ""
 
+msgid "Your application will time out soon"
+msgstr ""
+
+msgid ""
+"Your session will end in <span id=\"remaining-time\"></span>. For "
+"security reasons, any information you have entered will not be saved."
+msgstr ""
+
+msgid "Extend time limit"
+msgstr ""
+
+msgid "Exit service"
+msgstr ""
+
 msgid "Privacy notice"
 msgstr ""
 
 msgid "Start of privacy notice"
+msgstr ""
+
+msgid "You’ve reached the end of this service"
+msgstr ""
+
+msgid ""
+"For your security, the information you’ve entered has automatically been "
+"deleted."
+msgstr ""
+
+msgid "You can start again below."
+msgstr ""
+
+msgid "Start again"
+msgstr ""
+
+msgid ""
+"Your session will time out after 30 minutes of inactivity. We do this for"
+" your security."
+msgstr ""
+
+#, python-format
+msgid ""
+"If you're having trouble completing this form, <a "
+"href=\"%(contact_url)s\" class=\"govuk-link\">get in touch</a>."
+msgstr ""
+
+msgid "Amount"
+msgstr ""
+
+msgid "Frequency"
+msgstr ""
+
+msgid "What valuable items should I include?"
+msgstr ""
+
+msgid "Don’t include"
+msgstr ""
+
+msgid "Furniture and appliances"
+msgstr ""
+
+msgid "Your TV"
+msgstr ""
+
+msgid "Mobile phones, laptops and other devices"
+msgstr ""
+
+msgid "Clothing"
+msgstr ""
+
+msgid ""
+"The vehicle you use every day, unless it is a classic car or luxury "
+"vehicle"
+msgstr ""
+
+msgid "Equipment or tools you use for your work"
+msgstr ""
+
+msgid "Do include"
+msgstr ""
+
+msgid "Jewellery"
+msgstr ""
+
+msgid "Art"
+msgstr ""
+
+msgid "Antiques"
+msgstr ""
+
+msgid "Caravans and other vehicles you don’t use every day"
+msgstr ""
+
+msgid "Musical instruments, unless you’re a professional musician"
 msgstr ""
 

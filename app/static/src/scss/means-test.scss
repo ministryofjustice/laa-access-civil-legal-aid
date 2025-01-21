@@ -1,0 +1,19 @@
+/* This is a fix to ensure conditional questions are shown under, rather than next to, the answer that causes them to display. */
+/* This is required to display the legacy means test pages correctly */
+.govuk-radios--inline .govuk-radios__conditional {
+  order: 9999;
+  width: 100%;
+}
+
+/* Details lists within the means test are condensed */
+dl.govuk-list.govuk-list--bullet dt {
+  font-weight: 700;
+  padding: 1em 0 0.5em;
+}
+
+dl.govuk-list.govuk-list--bullet dd {
+  list-style-type: disc;
+  display: list-item;
+  padding-left: 6px;
+  margin-left: 20px;
+}

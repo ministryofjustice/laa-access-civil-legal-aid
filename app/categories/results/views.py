@@ -25,4 +25,5 @@ class ResultPage(CategoryPage):
         }
 
     def dispatch_request(self):
+        session["traversal_protection"] = True
         return render_template(self.template, **self.get_context())

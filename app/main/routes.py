@@ -16,10 +16,12 @@ from werkzeug.exceptions import HTTPException
 
 from app.main import bp
 from app.main.forms import CookiesForm
+from flask import session
 
 
 @bp.get("/main")
 def index():
+    session["traversal_protection"] = False
     return redirect(url_for("categories.index"))
 
 
@@ -102,6 +104,11 @@ def cookies():
 @bp.route("/privacy", methods=["GET"])
 def privacy():
     return render_template("privacy.html")
+
+
+@bp.route("/session-expired", methods=["GET"])
+def session_expired():
+    return render_template("session_expired.html")
 
 
 @bp.app_errorhandler(HTTPException)

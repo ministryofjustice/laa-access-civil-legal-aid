@@ -107,7 +107,7 @@ def create_app(config_class=Config):
     limiter.init_app(app)
     talisman.init_app(
         app,
-        content_security_policy=csp,
+        content_security_policy=csp if not Config.TESTING else None,
         permissions_policy=permissions_policy,
         content_security_policy_nonce_in=["script-src"],
         force_https=False,
@@ -126,11 +126,13 @@ def create_app(config_class=Config):
     from app.main import bp as main_bp
     from app.categories import bp as categories_bp
     from app.find_a_legal_adviser import bp as fala_bp
+    from app.means_test import bp as means_test_bp
     from app.contact import bp as contact_bp
 
     app.register_blueprint(main_bp)
     app.register_blueprint(categories_bp)
     app.register_blueprint(fala_bp)
+    app.register_blueprint(means_test_bp)
     app.register_blueprint(contact_bp)
 
     return app
