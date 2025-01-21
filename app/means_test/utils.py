@@ -107,5 +107,6 @@ class MoneyInterval(dict):
     def to_json(self):
         return {
             "per_interval_value": self.amount,
+            "per_interval_value_pounds": self.amount_to_pounds(),
             "interval_period": self.interval,
         }

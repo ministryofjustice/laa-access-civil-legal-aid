@@ -76,6 +76,7 @@ def test_benefits_data_child_benefits():
         "child_benefits": {
             "per_interval_value": 20000,
             "interval_period": "per_week",
+            "per_interval_value_pounds": 200,
         },
     }
     actual_payload = benefits_data.to_payload()

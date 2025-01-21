@@ -10,6 +10,14 @@ from app.means_test.validators import (
     ValidateIf,
     ValidateIfType,
 )
+from app.means_test.data import BenefitsData
+
+
+def get_benefits_choices():
+    choices = BenefitsData.BENEFITS_CHOICES.copy()
+    # Add the OR text in
+    choices.insert(-1, ("", ""))
+    return choices
 
 
 class BenefitsForm(BaseMeansTestForm):
@@ -22,19 +30,7 @@ class BenefitsForm(BaseMeansTestForm):
         widget=MeansTestCheckboxInput(
             is_inline=False, show_divider=True, hint_text=_("Select all that apply")
         ),
-        choices=[
-            ("child_benefit", _("Child Benefit")),
-            ("pension_credit", _("Guarantee Credit")),
-            ("income_support", _("Income Support")),
-            ("job_seekers_allowance", _("Income-based Jobseeker's Allowance")),
-            (
-                "employment_support",
-                _("Income-related Employment and Support Allowance"),
-            ),
-            ("universal_credit", _("Universal Credit")),
-            ("", ""),
-            ("other-benefit", _("Any other benefits")),
-        ],
+        choices=get_benefits_choices(),
     )
 
     child_benefits = MoneyField(
@@ -63,6 +59,15 @@ class BenefitsForm(BaseMeansTestForm):
                     lambda benefit: benefit[0] != "child_benefit", self.benefits.choices
                 )
             )
+
+    @property
+    def data(self):
+        data = super().data
+        return {
+            key: value
+            for key, value in data.items()
+            if key not in ["csrf_token", "submit"]
+        }
 
     @classmethod
     def should_show(cls) -> bool:
