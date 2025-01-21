@@ -1,7 +1,7 @@
 {% extends "means_test/form-page.html" %}
 
-{% set propertyWorthHtml %}
-  {{ form.property_worth(params={
+{% set propertyValueHtml %}
+  {{ form.property_value(params={
       "label": {
           "classes": "govuk-label--m"
       },
@@ -14,8 +14,8 @@
   }) }}
 {% endset %}
 
-{% set mortgageLeftHtml %}
-  {{ form.mortgage_left(params={
+{% set mortgageRemainingHtml %}
+  {{ form.mortgage_remaining(params={
       "label": {
           "classes": "govuk-label--m"
       },
@@ -27,13 +27,17 @@
 
 {% block form %}
     {{ form.csrf_token }}
-
-    {{ form.main_home() }}
-    {{ form.share_property() }}
-    {{ propertyWorthHtml }}
-    {{ mortgageLeftHtml }}
-    {{ form.rent_property() }}
-    {{ form.property_disputed() }}
+    {% if session.get_eligibility().has_partner %}
+    <p class="govuk-body">Please tell us about any property owned by you, your partner or both of you.</p>
+    {% endif %}
+    <p class="govuk-body">{% trans %}You can add more than one property below.{% endtrans %}</p>
+    <p class="govuk-body">{% trans %}You’ll need to provide evidence of the financial information you’ve given us through this service.{% endtrans %}</p>
+    {{ form.is_main_home() }}
+    {{ form.other_shareholders() }}
+    {{ propertyValueHtml }}
+    {{ mortgageRemainingHtml }}
+    {{ form.is_rented() }}
+    {{ form.in_dispute() }}
 
     {{ form.submit }}
 {% endblock %}
