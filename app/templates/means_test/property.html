@@ -8,7 +8,7 @@
       "prefix": {
         "text": "£"
         },
-      "classes": "govuk-input--width-4",
+      "classes": "govuk-input--width-10",
       "inputmode": "numeric",
       "spellcheck": false
   }) }}
@@ -19,7 +19,24 @@
       "label": {
           "classes": "govuk-label--m"
       },
-      "classes": "govuk-input--width-4",
+      "prefix": {
+        "text": "£"
+        },
+      "classes": "govuk-input--width-10",
+      "inputmode": "numeric",
+      "spellcheck": false
+  }) }}
+{% endset %}
+
+{% set mortgagePaymentsHtml %}
+  {{ form.mortgage_payments(params={
+      "label": {
+          "classes": "govuk-label--m"
+      },
+      "prefix": {
+        "text": "£"
+        },
+      "classes": "govuk-input--width-10",
       "inputmode": "numeric",
       "spellcheck": false
   }) }}
@@ -27,7 +44,7 @@
 
 {% block form %}
     {{ form.csrf_token }}
-    {% if session.get_eligibility().has_partner %}
+    {% if form.has_partner %}
     <p class="govuk-body">Please tell us about any property owned by you, your partner or both of you.</p>
     {% endif %}
     <p class="govuk-body">{% trans %}You can add more than one property below.{% endtrans %}</p>
@@ -36,6 +53,7 @@
     {{ form.other_shareholders() }}
     {{ propertyValueHtml }}
     {{ mortgageRemainingHtml }}
+    {{ mortgagePaymentsHtml }}
     {{ form.is_rented() }}
     {{ form.in_dispute() }}
 
