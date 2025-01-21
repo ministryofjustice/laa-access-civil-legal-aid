@@ -111,17 +111,6 @@ def session_expired():
     return render_template("session_expired.html")
 
 
-@bp.before_app_request
-def session_checker():
-    """Before each request, check for session expiration."""
-    # Check if the session expired, if so, redirect to the session expired page
-    if session.check_session_expiration():
-        return redirect(url_for("main.session_expired"))
-
-    # Otherwise, continue with the request (last active will be updated here)
-    session.update_last_active()
-
-
 @bp.app_errorhandler(HTTPException)
 def http_exception(error):
     return render_template(f"{error.code}.html"), error.code
