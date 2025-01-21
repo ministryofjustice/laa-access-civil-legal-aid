@@ -9,21 +9,29 @@
 
     {{ form.csrf_token }}
 
-    {{ form.earnings }}
+    {% set self_fields = form.shown_fields['self'] %}
+    {% set partner_fields = form.shown_fields['partner'] %}
 
-    {{ form.income_tax }}
+    {% if self_fields %}
+        <h2 class="govuk-heading-l">Your money</h2>
+        <p class="govuk-body">Give details of any money that is paid to you personally, like your wages. Record money coming in for your partner in the next section.</p>
 
-    {{ form.national_insurance }}
+        {%  for field in self_fields %}
+            {{ field }}
+        {% endfor %}
 
-    {{ form.working_tax_credit }}
+    {% endif %}
 
-    {{ form.child_tax_credit }}
+    {% if partner_fields %}
+        <h2 class="govuk-heading-l">Your partner's money</h2>
+        <p class="govuk-body">Give details of any money that is paid to you personally, like your wages. Record money coming in for your partner in the next section.</p>
 
-    {{ form.maintenance }}
+        {%  for field in partner_fields %}
+            {{ field }}
+        {% endfor %}
 
-    {{ form.pension }}
+    {% endif %}
 
-    {{ form.other_income }}
 
     {{ form.submit }}
 {% endblock %}

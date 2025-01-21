@@ -37,11 +37,23 @@ class Eligibility:
 
     @property
     def is_employed(self):
-        return self.is_yes("about_you", "is_employed")
+        return self.is_yes("about-you", "is_employed")
 
     @property
     def is_self_employed(self):
-        return self.is_yes("about_you", "is_self_employed")
+        return self.is_yes("about-you", "is_self_employed")
+
+    @property
+    def is_partner_employed(self):
+        if not self.has_partner:
+            return False
+        return self.is_yes("about-you", "partner_is_employed")
+
+    @property
+    def is_partner_self_employed(self):
+        if not self.has_partner:
+            return False
+        return self.is_yes("about-you", "partner_is_self_employed")
 
 
 class Session(SecureCookieSession):
