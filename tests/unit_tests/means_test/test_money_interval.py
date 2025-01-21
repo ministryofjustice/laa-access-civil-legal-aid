@@ -11,7 +11,14 @@ def test_money_interval():
     assert instance.per_month()["per_interval_value"] == int(expected_monthly_amount)
 
 
+def test_money_interval_with_pence():
+    instance = MoneyInterval(["25.50", "per_week"])
+    assert instance.amount == 2550
+    assert instance.amount_to_pounds() == 25.50
+
+
 def test_money_interval_addition_per_week():
+    """Add  per week and per month intervals"""
     first_amount_pounds = 100
     first_amount_pence = 10000
     second_amount_pounds = 200
@@ -28,6 +35,7 @@ def test_money_interval_addition_per_week():
 
 
 def test_money_interval_addition_per_month():
+    """Add two per month intervals"""
     first_amount_pounds = 100
     first_amount_pence = 10000
     second_amount_pounds = 200

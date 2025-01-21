@@ -83,7 +83,7 @@ class MoneyInterval(dict):
     def amount_to_pounds(self):
         if not self["per_interval_value"]:
             return None
-        return int(self["per_interval_value"] / 100)
+        return self["per_interval_value"] / 100
 
     @property
     def interval(self):
