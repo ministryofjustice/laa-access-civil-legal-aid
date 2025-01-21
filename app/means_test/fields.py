@@ -45,6 +45,14 @@ class MoneyField(Field):
             )
         return choices
 
+    @property
+    def interval(self):
+        return self.data["interval_period"]
+
+    @property
+    def value(self):
+        return self.data["per_interval_value_pounds"]
+
     def __init__(
         self,
         label=None,
@@ -56,8 +64,6 @@ class MoneyField(Field):
         super().__init__(label, validators, **kwargs)
         self.title = label
         self.hint = hint_text
-        self.value = None  # Amount
-        self.interval = None  # Frequency
         self.field_with_error = []
         self._intervals = self._intervals.copy()
         if exclude_intervals:
@@ -67,11 +73,12 @@ class MoneyField(Field):
     @property
     def data(self):
         if self._data is None:
-            return MoneyInterval()
+            instance = MoneyInterval()
         elif isinstance(self._data, MoneyInterval):
-            return self._data
+            instance = self._data
         else:
-            return MoneyInterval(self._data)
+            instance = MoneyInterval(self._data)
+        return instance.to_json()
 
     @data.setter
     def data(self, data):
@@ -81,13 +88,7 @@ class MoneyField(Field):
         """Process the form data from both inputs"""
         if valuelist and len(valuelist) == 2:
             # Handle the data coming from the form fields named field.id[value] and field.id[interval]
-            self.value = valuelist[0]
-            self.interval = valuelist[1]
             self.data = valuelist
-
-    def validate(self, form, extra_validators=None):
-        if self.interval and self.interval not in self._intervals:
-            raise ValueError(
-                f"Invalid {self.interval} interval value given for field {self.name}"
-            )
-        return super().validate(form, extra_validators)
+        elif valuelist and len(valuelist) == 1 and isinstance(valuelist[0], dict):
+            # Data being restored from the session
+            self.data = valuelist[0]

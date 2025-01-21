@@ -1,5 +1,6 @@
 from flask.views import View, MethodView
-from flask import render_template, url_for, redirect, session
+from flask import render_template, url_for, redirect, session, request
+from werkzeug.datastructures import MultiDict
 
 from app.means_test.api import update_means_test
 from app.means_test.forms.about_you import AboutYouForm
@@ -23,11 +24,14 @@ class MeansTest(View):
         self.current_name = current_name
 
     def dispatch_request(self):
-        form = self.form_class()
+        eligibility = session.get_eligibility()
+        form_data = MultiDict(eligibility.forms.get(self.current_name, {}))
+
+        form = self.form_class(request.form or form_data)
         if form.validate_on_submit():
-            session.get_eligibility().add(self.current_name, form.data)
+            eligibility.add(self.current_name, form.data)
             next_page = url_for(f"means_test.{self.get_next_page(self.current_name)}")
-            payload = self.get_payload(session.get_eligibility())
+            payload = self.get_payload(eligibility)
             update_means_test(payload)
 
             return redirect(next_page)

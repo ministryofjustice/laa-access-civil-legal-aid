@@ -76,6 +76,11 @@ class MoneyInterval(dict):
                 "Invalid value for amount {0} ({1})".format(value, type(value))
             )
 
+    def amount_to_pounds(self):
+        if not self["per_interval_value"]:
+            return None
+        return int(self["per_interval_value"] / 100)
+
     @property
     def interval(self):
         return self.get("interval_period")
@@ -102,5 +107,6 @@ class MoneyInterval(dict):
     def to_json(self):
         return {
             "per_interval_value": self.amount,
+            "per_interval_value_pounds": self.amount_to_pounds(),
             "interval_period": self.interval,
         }
