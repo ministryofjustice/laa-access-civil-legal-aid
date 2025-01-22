@@ -49,8 +49,12 @@ class MoneyInterval(dict):
                     if interval:
                         self.interval = interval
             elif isinstance(value, list):
-                self.amount = value[0]
-                self.interval = value[1]
+                if value[0]:
+                    self.amount = value[0]
+                if value[1]:
+                    self.interval = value[1]
+            else:
+                self.amount = value
 
         else:
             self.amount = kwargs.get("per_interval_value")
@@ -79,7 +83,7 @@ class MoneyInterval(dict):
     def amount_to_pounds(self):
         if not self["per_interval_value"]:
             return None
-        return int(self["per_interval_value"] / 100)
+        return self["per_interval_value"] / 100
 
     @property
     def interval(self):
@@ -110,3 +114,28 @@ class MoneyInterval(dict):
             "per_interval_value_pounds": self.amount_to_pounds(),
             "interval_period": self.interval,
         }
+
+    def __add__(self, other):
+        if other == 0:
+            other = MoneyInterval(0)
+
+        if not isinstance(other, MoneyInterval):
+            if self.is_money_interval(other):
+                other = MoneyInterval(other)
+            else:
+                raise ValueError(other)
+
+        first = self.per_month()
+        second = other.per_month()
+
+        return MoneyInterval(first.amount + second.amount)
+
+    def __radd__(self, other):
+        return self.__add__(other)
+
+    @classmethod
+    def is_money_interval(cls, other):
+        if hasattr(other, "keys") and callable(other.keys):
+            keys = set(other.keys())
+            return keys == set(["per_interval_value", "interval_period"])
+        return False
