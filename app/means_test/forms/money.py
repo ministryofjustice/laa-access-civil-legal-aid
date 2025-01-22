@@ -2,7 +2,7 @@ from wtforms.fields.simple import SubmitField
 from app.means_test.forms import BaseMeansTestForm
 from app.means_test.validators import MoneyIntervalAmountRequired, ValidateIfSession
 from flask_babel import lazy_gettext as _
-from app.means_test.fields import MoneyIntervalField, MoneyIntervalFieldWidget
+from app.means_test.fields import MoneyIntervalField, MoneyIntervalWidget
 
 
 class ExampleForm(BaseMeansTestForm):
@@ -11,7 +11,7 @@ class ExampleForm(BaseMeansTestForm):
     question = MoneyIntervalField(
         "Test money field",
         hint_text="Hint text",
-        widget=MoneyIntervalFieldWidget(),
+        widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_(
@@ -29,7 +29,7 @@ class ExampleForm(BaseMeansTestForm):
         "Test money field",
         hint_text="Hint text",
         exclude_intervals=["per_year"],
-        widget=MoneyIntervalFieldWidget(),
+        widget=MoneyIntervalWidget(),
         validators=[
             ValidateIfSession("has_partner", True),
             MoneyIntervalAmountRequired(

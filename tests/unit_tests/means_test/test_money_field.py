@@ -1,12 +1,12 @@
 from werkzeug.datastructures import MultiDict
 from flask_wtf import FlaskForm
 from app.means_test.validators import MoneyIntervalAmountRequired
-from app.means_test.fields import MoneyIntervalField, MoneyIntervalFieldWidget
+from app.means_test.fields import MoneyIntervalField, MoneyIntervalWidget
 
 
 class TestForm(FlaskForm):
     money_field = MoneyIntervalField(
-        widget=MoneyIntervalFieldWidget(),
+        widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message="Please provide both amount and frequency",

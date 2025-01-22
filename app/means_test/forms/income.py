@@ -1,7 +1,8 @@
-from app.means_test.fields import MoneyIntervalField, MoneyIntervalFieldWidget
+from app.means_test.fields import MoneyIntervalField, MoneyIntervalWidget
 from app.means_test.forms import BaseMeansTestForm
 from flask_babel import lazy_gettext as _
 from flask import session
+from app.means_test.money_interval import MoneyInterval
 from app.means_test.validators import MoneyIntervalAmountRequired
 
 
@@ -70,7 +71,7 @@ class IncomeForm(BaseMeansTestForm):
             "self_employed": _("This includes any earnings from self-employment"),
             "both": _("This includes all wages and any earnings from self-employment"),
         },
-        widget=MoneyIntervalFieldWidget(),
+        widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_("Tell us how much you receive in wages"),
@@ -89,7 +90,7 @@ class IncomeForm(BaseMeansTestForm):
                 "Tax paid directly out of wages and any tax paid on self-employed earnings"
             ),
         },
-        widget=MoneyIntervalFieldWidget(),
+        widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_("Tell us how much income tax you pay"),
@@ -108,7 +109,7 @@ class IncomeForm(BaseMeansTestForm):
                 "Check the payslip or National Insurance statement if self-employed"
             ),
         },
-        widget=MoneyIntervalFieldWidget(),
+        widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_("Tell us how much National Insurance you pay"),
@@ -123,7 +124,7 @@ class IncomeForm(BaseMeansTestForm):
         hint_text=_(
             "Extra money for people who work and have a low income, enter 0 if this doesn't apply to you"
         ),
-        widget=MoneyIntervalFieldWidget(),
+        widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_(
@@ -140,7 +141,7 @@ class IncomeForm(BaseMeansTestForm):
         hint_text=_(
             "The total amount you get for all your children, enter 0 if this doesn't apply to you"
         ),
-        widget=MoneyIntervalFieldWidget(),
+        widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_(
@@ -152,12 +153,12 @@ class IncomeForm(BaseMeansTestForm):
         ],
     )
 
-    maintenance = MoneyIntervalField(
+    maintenance_received = MoneyIntervalField(
         _("Maintenance received"),
         description=_(
             "Payments you get from an ex-partner, or enter 0 if this doesn't apply to you"
         ),
-        widget=MoneyIntervalFieldWidget(),
+        widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_(
@@ -174,7 +175,7 @@ class IncomeForm(BaseMeansTestForm):
         description=_(
             "Payments you receive if you're retired, enter 0 if this doesn't apply to you"
         ),
-        widget=MoneyIntervalFieldWidget(),
+        widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_(
@@ -191,7 +192,7 @@ class IncomeForm(BaseMeansTestForm):
         description=_(
             "For example, student grants, income from trust funds, dividends, or enter 0 if this doesn't apply to you"
         ),
-        widget=MoneyIntervalFieldWidget(),
+        widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_(
@@ -210,7 +211,7 @@ class IncomeForm(BaseMeansTestForm):
             "self_employed": _("This includes any earnings from self-employment"),
             "both": _("This includes all wages and any earnings from self-employment"),
         },
-        widget=MoneyIntervalFieldWidget(),
+        widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_("Tell us how much your partner receives in wages"),
@@ -229,7 +230,7 @@ class IncomeForm(BaseMeansTestForm):
                 "Tax paid directly out of wages and any tax paid on self-employed earnings"
             ),
         },
-        widget=MoneyIntervalFieldWidget(),
+        widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_("Tell us how much income tax your partner pays"),
@@ -248,7 +249,7 @@ class IncomeForm(BaseMeansTestForm):
                 "Check the payslip or National Insurance statement if self-employed"
             ),
         },
-        widget=MoneyIntervalFieldWidget(),
+        widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_("Tell us how much National Insurance your partner pays"),
@@ -267,7 +268,7 @@ class IncomeForm(BaseMeansTestForm):
         hint_text=_(
             "Extra money for people who work and have a low income, enter 0 if this doesn't apply to your partner"
         ),
-        widget=MoneyIntervalFieldWidget(),
+        widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_(
@@ -283,33 +284,12 @@ class IncomeForm(BaseMeansTestForm):
         ],
     )
 
-    partner_child_tax_credit = MoneyIntervalField(
-        _("Child Tax Credit"),
-        hint_text=_(
-            "The total amount your partner gets for all children, enter 0 if this doesn't apply to your partner"
-        ),
-        widget=MoneyIntervalFieldWidget(),
-        validators=[
-            MoneyIntervalAmountRequired(
-                message=_(
-                    "Enter the Child Tax Credit your partner receives, or 0 if it doesn't apply"
-                ),
-                freq_message=_(
-                    "Tell us how often your partner receives Child Tax Credit"
-                ),
-                amount_message=_(
-                    "Tell us how much Child Tax Credit your partner receives"
-                ),
-            )
-        ],
-    )
-
-    partner_maintenance = MoneyIntervalField(
+    partner_maintenance_received = MoneyIntervalField(
         _("Maintenance received"),
         description=_(
             "Payments your partner gets from an ex-partner, or enter 0 if this doesn't apply to your partner"
         ),
-        widget=MoneyIntervalFieldWidget(),
+        widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_(
@@ -326,7 +306,7 @@ class IncomeForm(BaseMeansTestForm):
         description=_(
             "Payments your partner receives if they're retired, enter 0 if this doesn't apply to your partner"
         ),
-        widget=MoneyIntervalFieldWidget(),
+        widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_(
@@ -343,7 +323,7 @@ class IncomeForm(BaseMeansTestForm):
         description=_(
             "For example, student grants, income from trust funds, dividends, or enter 0 if this doesn't apply to your partner"
         ),
-        widget=MoneyIntervalFieldWidget(),
+        widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message=_(
@@ -368,7 +348,9 @@ class IncomeForm(BaseMeansTestForm):
                 [self.earnings, self.income_tax, self.working_tax_credit]
             )
 
-        fields["self"].extend([self.maintenance, self.pension, self.other_income])
+        fields["self"].extend(
+            [self.maintenance_received, self.pension, self.other_income]
+        )
 
         if session.get_eligibility().has_partner:
             if (
@@ -384,10 +366,99 @@ class IncomeForm(BaseMeansTestForm):
                 )
             fields["partner"].extend(
                 [
-                    self.partner_maintenance,
+                    self.partner_maintenance_received,
                     self.partner_pension,
                     self.partner_other_income,
                 ]
             )
 
         return fields
+
+    def get_payload(
+        self,
+        employed: bool = False,
+        self_employed: bool = False,
+        partner_employed: bool = False,
+        partner_self_employed: bool = False,
+    ) -> dict:
+        """Returns the income and deductions payload for the user and the partner.
+        If a field can not be found the default of MoneyField(0) will be used.
+        """
+
+        # Child tax credit only applies to the client and not their partner
+        child_tax_credits = MoneyInterval(self.data.get("child_tax_credit", 0))
+        payload = {
+            "you": {
+                "income": {
+                    "earnings": MoneyInterval(self.data.get("earnings", 0))
+                    if not self_employed
+                    else MoneyInterval(
+                        0
+                    ),  # If the person is self_employed their earnings are counted towards their self_employment_drawings instead
+                    "self_employment_drawings": MoneyInterval(
+                        self.data.get("earnings", 0)
+                    )
+                    if self_employed
+                    else MoneyInterval(0),
+                    "tax_credits": MoneyInterval(self.data.get("working_tax_credit", 0))
+                    + child_tax_credits,
+                    "maintenance_received": MoneyInterval(
+                        self.data.get("maintenance_received", 0)
+                    ),
+                    "pension": MoneyInterval(self.data.get("pension", 0)),
+                    "other_income": MoneyInterval(
+                        self.data.get("other_income", 0)
+                    ),  # TODO: Add income from rent here
+                },
+                "deductions": {
+                    "income_tax": MoneyInterval(self.data.get("national_insurance", 0)),
+                    "national_insurance": MoneyInterval(
+                        self.data.get("national_insurance", 0)
+                    ),
+                },
+            },
+            "partner": {
+                "income": {
+                    "earnings": MoneyInterval(self.data.get("partner_earnings", 0))
+                    if not partner_self_employed
+                    else MoneyInterval(0),
+                    # If the person is self_employed their earnings are counted towards their self_employment_drawings instead
+                    "self_employment_drawings": MoneyInterval(
+                        self.data.get("partner_earnings", 0)
+                    )
+                    if partner_self_employed
+                    else MoneyInterval(0),
+                    "tax_credits": MoneyInterval(
+                        self.data.get("partner_working_tax_credit", 0)
+                    ),
+                    "maintenance_received": MoneyInterval(
+                        self.data.get("partner_maintenance_received", 0)
+                    ),
+                    "pension": MoneyInterval(self.data.get("partner_pension", 0)),
+                    "other_income": MoneyInterval(
+                        self.data.get("partner_other_income", 0)
+                    ),  # TODO: Add income from rent here?
+                },
+                "deductions": {
+                    "income_tax": MoneyInterval(self.data.get("partner_income_tax", 0)),
+                    "national_insurance": MoneyInterval(
+                        self.data.get("partner_national_insurance", 0)
+                    ),
+                },
+            },
+        }
+
+        for person in ["you", "partner"]:
+            if (not employed and person == "you") or (
+                not partner_employed and person == "partner"
+            ):
+                # If the person is not employed these fields should be set to 0
+                payload[person]["income"]["earnings"] = MoneyInterval(0)
+                payload[person]["income"]["self_employment_drawings"] = MoneyInterval(0)
+                payload[person]["income"]["tax_credits"] = MoneyInterval(0)
+                payload[person]["deductions"]["income_tax"] = MoneyInterval(0)
+                payload[person]["deductions"]["national_insurance"] = MoneyInterval(0)
+
+        print("HERE")
+        print(payload)
+        return payload

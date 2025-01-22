@@ -1,6 +1,9 @@
 from app.api import cla_backend
 from flask import session
 
+from app.means_test.forms.income import IncomeForm
+from app.means_test.money_interval import MoneyInterval
+
 
 def update_means_test(payload):
     means_test_endpoint = "checker/api/v1/eligibility_check/"
@@ -27,8 +30,22 @@ def is_eligible(reference):
 def get_payload(eligibility_data: dict) -> dict:
     about = eligibility_data.forms.get("about-you", {})
     benefits_form = eligibility_data.forms.get("benefits", {})
+    income_form = eligibility_data.forms.get("income", {})
 
     benefits = benefits_form.get("benefits", [])
+
+    has_partner = eligibility_data.has_partner
+    is_employed = about.get("is_employed", None)
+    is_self_employed = about.get("is_self_employed", None)
+    is_partner_employed = about.get("is_partner_employed", None)
+    is_partner_self_employed = about.get("is_partner_self_employed", None)
+
+    income_data: dict[str, dict] = IncomeForm(**income_form).get_payload(
+        employed=is_employed,
+        self_employed=is_self_employed,
+        partner_employed=is_partner_employed,
+        partner_self_employed=is_partner_self_employed,
+    )
 
     payload = {
         "category": eligibility_data.category,
@@ -36,41 +53,7 @@ def get_payload(eligibility_data: dict) -> dict:
         "notes": "",
         "property_set": [],
         "you": {
-            "income": {
-                "earnings": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
-                "self_employment_drawings": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
-                "benefits": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
-                "tax_credits": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
-                "child_benefits": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
-                "maintenance_received": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
-                "pension": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
-                "other_income": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
-                "self_employed": about.get("is_self_employed", False),
-            },
+            "income": income_data.get("you", {}).get("income", {}),
             "savings": {
                 "bank_balance": None,
                 "investment_balance": None,
@@ -79,14 +62,12 @@ def get_payload(eligibility_data: dict) -> dict:
                 "total": None,
             },
             "deductions": {
-                "income_tax": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
-                "national_insurance": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
+                "income_tax": income_data.get("you", {})
+                .get("deductions", {})
+                .get("income_tax", MoneyInterval(0)),
+                "national_insurance": income_data.get("you", {})
+                .get("deductions", {})
+                .get("national_insurance", MoneyInterval(0)),
                 "maintenance": {
                     "per_interval_value": None,
                     "interval_period": "per_month",
@@ -107,37 +88,7 @@ def get_payload(eligibility_data: dict) -> dict:
             },
         },
         "partner": {
-            "income": {
-                "earnings": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
-                "self_employment_drawings": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
-                "benefits": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
-                "tax_credits": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
-                "maintenance_received": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
-                "pension": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
-                "other_income": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
-                "self_employed": about.get("is_partner_self_employed", False),
-            },
+            "income": income_data.get("partner", {}).get("income", {}),
             "savings": {
                 "bank_balance": None,
                 "investment_balance": None,
@@ -145,14 +96,12 @@ def get_payload(eligibility_data: dict) -> dict:
                 "credit_balance": None,
             },
             "deductions": {
-                "income_tax": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
-                "national_insurance": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
+                "income_tax": income_data.get("partner", {})
+                .get("deductions", {})
+                .get("income_tax", MoneyInterval(0)),
+                "national_insurance": income_data.get("partner", {})
+                .get("deductions", {})
+                .get("national_insurance", MoneyInterval(0)),
                 "maintenance": {
                     "per_interval_value": None,
                     "interval_period": "per_month",
@@ -192,5 +141,10 @@ def get_payload(eligibility_data: dict) -> dict:
         },
         "disregards": [],
     }
+
+    if not has_partner:
+        del payload["partner"]
+
+    print(payload)
 
     return payload
