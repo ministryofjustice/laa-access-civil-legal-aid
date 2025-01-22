@@ -1,10 +1,98 @@
 from flask.views import View, MethodView
 from flask import render_template, url_for, redirect, session, request
 
+from app.means_test import YES, NO
+
 from app.means_test.api import update_means_test
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm
 from app.means_test.forms.property import MultiplePropertiesForm
+from app.means_test.money_interval import MoneyInterval, to_amount
+
+
+def mi(field, val):
+    amount = "%s-per_interval_value" % field
+    period = "%s-interval_period" % field
+    return {"per_interval_value": val(amount), "interval_period": val(period)}
+
+
+class PropertyPayload(dict):
+    def __init__(self, form_data={}):
+        super(PropertyPayload, self).__init__()
+
+        def val(field):
+            return form_data.get(field)
+
+        def yes(field):
+            return form_data.get(field) == YES
+
+        def no(field):
+            return form_data.get(field) == NO
+
+        self.update(
+            {
+                "value": to_amount(val("property_value")),
+                "mortgage_left": to_amount(val("mortgage_remaining")),
+                "share": 100 if no("other_shareholders") else None,
+                "disputed": val("in_dispute"),
+                "rent": MoneyInterval(mi("rent_amount", val))
+                if yes("is_rented")
+                else MoneyInterval(0),
+                "main": val("is_main_home"),
+            }
+        )
+
+
+class PropertiesPayload(dict):
+    def __init__(self, form_data={}):
+        super(PropertiesPayload, self).__init__()
+
+        # Extract the list of properties from the form data
+        property_list = form_data.get("properties", [])
+
+        # Convert each property dictionary to a PropertyPayload
+        properties = [PropertyPayload(property_data) for property_data in property_list]
+
+        # Calculate total mortgage payments and rent amounts
+        total_mortgage = sum(
+            float(property_data.get("mortgage_payments", 0))
+            for property_data in property_list
+        )
+        total_rent = sum(
+            float(property_data.get("rent_amount", {}).get("per_interval_value", 0))
+            for property_data in property_list
+        )
+
+        total_rent = sum(
+            property_data.get("rent_amount", {}).get("per_interval_value_pounds")
+            for property_data in property_list
+        )
+
+        rent_interval_period = [
+            property_data.get("rent_amount", {}).get("interval_period")
+            for property_data in property_list
+        ]
+
+        # Update the payload with the calculated data
+        self.update(
+            {
+                "property_set": properties,
+                "you": {
+                    "income": {
+                        "other_income": {
+                            "per_interval_value": total_rent,
+                            "interval_period": rent_interval_period,
+                        }
+                    },
+                    "deductions": {
+                        "mortgage": {
+                            "per_interval_value": total_mortgage,
+                            "interval_period": "per_month",
+                        }
+                    },
+                },
+            }
+        )
 
 
 class MeansTest(View):
