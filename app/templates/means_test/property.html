@@ -42,10 +42,14 @@
   }) }}
 {% endset %}
 
+{% set rentAmountHtml %}
+    {{ form.rent_amount() }}
+{% endset %}
+
 {% block form %}
     {{ form.csrf_token }}
     {% if form.has_partner %}
-    <p class="govuk-body">Please tell us about any property owned by you, your partner or both of you.</p>
+    <p class="govuk-body">{% trans %}Please tell us about any property owned by you, your partner or both of you.{% endtrans %}</p>
     {% endif %}
     <p class="govuk-body">{% trans %}You can add more than one property below.{% endtrans %}</p>
     <p class="govuk-body">{% trans %}You’ll need to provide evidence of the financial information you’ve given us through this service.{% endtrans %}</p>
@@ -54,7 +58,17 @@
     {{ propertyValueHtml }}
     {{ mortgageRemainingHtml }}
     {{ mortgagePaymentsHtml }}
-    {{ form.is_rented() }}
+    {{ form.is_rented(params={
+      'items': [
+          {
+              'conditional': {
+                  'html': rentAmountHtml
+              },
+          },
+          {
+          },
+      ]
+    }) }}
     {{ form.in_dispute() }}
 
     {{ form.submit }}
