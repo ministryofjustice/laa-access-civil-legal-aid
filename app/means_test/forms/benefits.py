@@ -85,7 +85,7 @@ class BenefitsForm(BaseMeansTestForm):
 
 
 class AdditionalBenefitsForm(BaseMeansTestForm):
-    title = _(" Your additional benefits")
+    title = _("Your additional benefits")
     description = _(
         "You’ll need to provide evidence of the financial information you’ve given us through this service."
     )
