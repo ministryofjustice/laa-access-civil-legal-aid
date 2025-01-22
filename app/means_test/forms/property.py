@@ -7,7 +7,7 @@ from app.means_test.widgets import MeansTestRadioInput
 from flask_babel import gettext as _
 from app.means_test import YES, NO
 from app.means_test.forms import BaseMeansTestForm
-from app.means_test.fields import MoneyIntervalField, MoneyIntervalFieldWidget
+from app.means_test.fields import MoneyField, MoneyFieldWidget
 from app.means_test.validators import MoneyIntervalAmountRequired
 from app.means_test.validators import ValidateIf
 
@@ -113,10 +113,10 @@ class PropertyForm(BaseMeansTestForm):
         ],
     )
 
-    rent_amount = MoneyIntervalField(
+    rent_amount = MoneyField(
         _("If Yes, how much rent did you receive last month?"),
         hint_text=_("For example, £32.18 per week"),
-        widget=MoneyIntervalFieldWidget(),
+        widget=MoneyFieldWidget(),
         validators=[
             ValidateIf("is_rented", YES),
             MoneyIntervalAmountRequired(
