@@ -1,17 +1,17 @@
 from flask.views import View, MethodView
-from flask import render_template, url_for, redirect, session
+from flask import render_template, url_for, redirect, session, request
 
 from app.means_test.api import update_means_test
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm
-from app.means_test.forms.property import PropertyForm
+from app.means_test.forms.property import MultiplePropertiesForm
 
 
 class MeansTest(View):
     forms = {
         "about-you": AboutYouForm,
         "benefits": BenefitsForm,
-        "property": PropertyForm,
+        "property": MultiplePropertiesForm,
     }
 
     def __init__(self, current_form_class, current_name):
@@ -20,6 +20,21 @@ class MeansTest(View):
 
     def dispatch_request(self):
         form = self.form_class()
+
+        if isinstance(form, MultiplePropertiesForm):
+            # Handle adding a property
+            if "add-property" in request.form:
+                form.properties.append_entry()
+                return render_template(self.form_class.template, form=form)
+
+            # Handle removing a property
+            for index in range(len(form.properties.entries)):
+                if request.form.get(
+                    f"remove-property-{index + 1}"
+                ):  # +1 because form indices start from 0
+                    form.properties.pop_entry(index)
+                    return render_template(self.form_class.template, form=form)
+
         if form.validate_on_submit():
             session.get_eligibility().add(self.current_name, form.data)
             next_page = url_for(f"means_test.{self.get_next_page(self.current_name)}")
