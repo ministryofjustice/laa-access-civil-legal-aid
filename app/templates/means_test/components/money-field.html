@@ -13,14 +13,16 @@
 
 <div class="govuk-form-group {%- if field.errors %} govuk-form-group--error{% endif %}">
     <fieldset class="govuk-fieldset" role="group" id="question">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
           <h1 class="govuk-fieldset__heading">
               {{ field.title }}
           </h1>
         </legend>
-         <div id="passport-issued-hint" class="govuk-hint">
-            {{ field.hint }}
+        {% if field.hint_text %}
+         <div class="govuk-hint">
+            {{ field.hint_text }}
         </div>
+        {% endif %}
         {{ renderError(field.field_with_error) }}
         <div class="govuk-grid-row" class="govuk-form-group {% if field.errors %}govuk-form-group--error{% endif %}">
             <div class="govuk-grid-column-one-half">
