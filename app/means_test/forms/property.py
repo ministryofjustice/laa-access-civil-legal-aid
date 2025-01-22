@@ -1,5 +1,5 @@
 from flask import session
-from wtforms.fields import RadioField, IntegerField
+from wtforms.fields import RadioField, IntegerField, FieldList, FormField
 from wtforms.fields.core import Label
 from govuk_frontend_wtf.wtforms_widgets import GovTextInput
 from wtforms.validators import InputRequired, NumberRange
@@ -31,13 +31,6 @@ class PartnerRadioField(RadioField):
 
 
 class PropertyForm(BaseMeansTestForm):
-    @property
-    def title(self):
-        if session.get_eligibility().has_partner:
-            return _("You and your partner’s property")
-        else:
-            return _("Your property")
-
     template = "means_test/property.html"
 
     @property
@@ -143,3 +136,20 @@ class PropertyForm(BaseMeansTestForm):
             InputRequired(message=_("Tell us whether this property is in dispute"))
         ],
     )
+
+
+class MultiplePropertiesForm(BaseMeansTestForm):
+    @property
+    def title(self):
+        if session.get_eligibility().has_partner:
+            return _("You and your partner’s property")
+        else:
+            return _("Your property")
+
+    properties = FieldList(
+        FormField(PropertyForm),  # Each entry is an instance of PropertyForm
+        min_entries=1,  # At least one property form to start
+        max_entries=3,  # Allow a maximum of three properties
+    )
+
+    template = "means_test/property.html"
