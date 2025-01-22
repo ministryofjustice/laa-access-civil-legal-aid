@@ -52,7 +52,18 @@ class IncomeForm(BaseMeansTestForm):
 
     template = "means_test/income.html"
 
-    # Original fields (without partner messages)
+    def validate(self, extra_validators=None):
+        is_valid = True
+
+        for category_fields in self.shown_fields.values():
+            for field in category_fields:
+                if field.validators is None:
+                    print(f"Field {field.name} has no validators")  # or use logging
+                if not field.validate(self, extra_validators=extra_validators):
+                    is_valid = False
+
+        return is_valid
+
     earnings = SelfEmployedMoneyIntervalField(
         _("Wages before tax"),
         self_employed_descriptions={
@@ -372,7 +383,11 @@ class IncomeForm(BaseMeansTestForm):
                     ]
                 )
             fields["partner"].extend(
-                [self.maintenance, self.pension, self.other_income]
+                [
+                    self.partner_maintenance,
+                    self.partner_pension,
+                    self.partner_other_income,
+                ]
             )
 
         return fields

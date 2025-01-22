@@ -52,6 +52,8 @@ class MoneyIntervalField(Field):
         exclude_intervals=None,
         **kwargs,
     ):
+        if validators is None:
+            validators = []  # Initialize empty list instead of None
         super().__init__(label, validators, **kwargs)
         self.title = label
         self.hint_text = hint_text
@@ -71,11 +73,17 @@ class MoneyIntervalField(Field):
             self.interval = valuelist[1]
 
     def validate(self, form, extra_validators=None):
-        if self.interval not in self._intervals:
+        if self.interval is not None and self.interval not in self._intervals:
             raise ValueError(
                 f"Invalid {self.interval} interval value given for field {self.name}"
             )
-        return super().validate(form, extra_validators)
+
+        self.errors = []
+
+        for validator in self.validators:
+            validator(form, self)
+
+        return len(self.errors) == 0
 
     def _value(self):
         if self.raw_data:
