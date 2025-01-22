@@ -58,20 +58,13 @@ class PropertiesPayload(dict):
             float(property_data.get("mortgage_payments", 0))
             for property_data in property_list
         )
-        total_rent = sum(
-            float(property_data.get("rent_amount", {}).get("per_interval_value", 0))
-            for property_data in property_list
-        )
-
-        total_rent = sum(
-            property_data.get("rent_amount", {}).get("per_interval_value_pounds")
-            for property_data in property_list
-        )
-
-        rent_interval_period = [
-            property_data.get("rent_amount", {}).get("interval_period")
-            for property_data in property_list
-        ]
+        for property_data in property_list:
+            total_rent = property_data.get("rent_amount", {}).get(
+                "per_interval_value_pounds"
+            )
+            rent_interval_period = property_data.get("rent_amount", {}).get(
+                "interval_period"
+            )
 
         # Update the payload with the calculated data
         self.update(
@@ -150,8 +143,11 @@ class MeansTest(View):
     def get_payload(cls, eligibility_data: dict) -> dict:
         about = eligibility_data.forms.get("about-you", {})
         benefits_form = eligibility_data.forms.get("benefits", {})
+        property_form = eligibility_data.forms.get("property", {})
 
         benefits = benefits_form.get("benefits", [])
+
+        property_payload = PropertiesPayload(property_form)
 
         payload = {
             "category": eligibility_data.category,
@@ -315,6 +311,20 @@ class MeansTest(View):
             },
             "disregards": [],
         }
+
+        # Add in the property payload
+        payload["you"]["income"]["other_income"]["per_interval_value"] = (
+            property_payload["you"]["income"]["other_income"]["per_interval_value"]
+        )
+        payload["you"]["income"]["other_income"]["interval_period"] = property_payload[
+            "you"
+        ]["income"]["other_income"]["interval_period"]
+        payload["you"]["deductions"]["mortgage"]["per_interval_value"] = (
+            property_payload["you"]["deductions"]["mortgage"]["per_interval_value"]
+        )
+        payload["you"]["deductions"]["mortgage"]["interval_period"] = property_payload[
+            "you"
+        ]["deductions"]["mortgage"]["interval_period"]
 
         return payload
 
