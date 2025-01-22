@@ -5,8 +5,11 @@ from govuk_frontend_wtf.wtforms_widgets import GovTextInput
 from wtforms.validators import InputRequired, NumberRange
 from app.means_test.widgets import MeansTestRadioInput
 from flask_babel import gettext as _
-from app.means_test import YES
+from app.means_test import YES, NO
 from app.means_test.forms import BaseMeansTestForm
+from app.means_test.fields import MoneyIntervalField, MoneyIntervalFieldWidget
+from app.means_test.validators import MoneyIntervalAmountRequired
+from app.means_test.validators import ValidateIf
 
 
 class PartnerRadioField(RadioField):
@@ -107,8 +110,8 @@ class PropertyForm(BaseMeansTestForm):
     )
 
     is_rented = RadioField(
-        "Do you rent out any part of this property?",
-        choices=[("yes", "Yes"), ("no", "No")],
+        _("Do you rent out any part of this property?"),
+        choices=[(YES, _("Yes")), (NO, _("No"))],
         widget=MeansTestRadioInput(),
         validators=[
             InputRequired(
@@ -116,7 +119,20 @@ class PropertyForm(BaseMeansTestForm):
             )
         ],
     )
-    # Add expanded field
+
+    rent_amount = MoneyIntervalField(
+        _("If Yes, how much rent did you receive last month?"),
+        hint_text=_("For example, £32.18 per week"),
+        widget=MoneyIntervalFieldWidget(),
+        validators=[
+            ValidateIf("is_rented", YES),
+            MoneyIntervalAmountRequired(
+                message=_("Tell us how much rent you receive from this property"),
+                freq_message=_("Tell us how often you receive this rent"),
+                amount_message=_("Tell us how much rent you receive each week"),
+            ),
+        ],
+    )
 
     in_dispute = RadioField(
         "Is your share of the property in dispute?",
