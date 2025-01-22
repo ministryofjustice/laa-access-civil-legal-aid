@@ -25,6 +25,7 @@ class MeansTest(View):
             # Handle adding a property
             if "add-property" in request.form:
                 form.properties.append_entry()
+                form._submitted = False
                 return render_template(self.form_class.template, form=form)
 
             # Handle removing a property
@@ -33,6 +34,7 @@ class MeansTest(View):
                 or "remove-property-3" in request.form
             ):
                 form.properties.pop_entry()
+                form._submitted = False
                 return render_template(self.form_class.template, form=form)
 
         if form.validate_on_submit():
