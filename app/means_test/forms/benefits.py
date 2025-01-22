@@ -1,9 +1,10 @@
 from flask import session
 from flask_babel import gettext as _
-from wtforms.fields import SelectMultipleField
-from app.means_test.widgets import MeansTestCheckboxInput
+from wtforms.validators import InputRequired
+from app.means_test.widgets import MeansTestCheckboxInput, MeansTestRadioInput
 from app.means_test.forms import BaseMeansTestForm
 from app.means_test.fields import MoneyField, MoneyFieldWidgetWidget
+from app.means_test.partner_fields import PartnerMultiCheckboxField, PartnerYesNoField
 from app.means_test.validators import (
     MoneyIntervalAmountRequired,
     ValidateIfSession,
@@ -11,6 +12,7 @@ from app.means_test.validators import (
     ValidateIfType,
 )
 from app.means_test.data import BenefitsData
+from app.means_test import YES, NO
 
 
 def get_benefits_choices():
@@ -25,8 +27,9 @@ class BenefitsForm(BaseMeansTestForm):
 
     template = "means_test/benefits.html"
 
-    benefits = SelectMultipleField(
-        label="",
+    benefits = PartnerMultiCheckboxField(
+        label=_("Which benefits do you receive?"),
+        partner_label=_("Which benefits do you and your partner receive?"),
         widget=MeansTestCheckboxInput(
             is_inline=False, show_divider=True, hint_text=_("Select all that apply")
         ),
@@ -62,6 +65,7 @@ class BenefitsForm(BaseMeansTestForm):
 
     @property
     def data(self):
+        # Only return data for our fields and not including the core fields
         data = super().data
         return {
             key: value
@@ -86,10 +90,15 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
         "You’ll need to provide evidence of the financial information you’ve given us through this service."
     )
     template = "means_test/additional-benefits.html"
-    benefits = SelectMultipleField(
+    benefits = PartnerMultiCheckboxField(
         label=_("Do you get any of these benefits?"),
+        partner_label=_("Do you or your partner get any of these benefits?"),
         widget=MeansTestCheckboxInput(
-            is_inline=False, show_divider=False, hint_text=_("Select all that apply")
+            is_inline=False,
+            show_divider=False,
+            hint_text=_(
+                "These benefits don’t count as income. Please tick the ones you receive."
+            ),
         ),
         choices=[
             ("armed-forces-independance", _("Armed Forces Independence payment")),
@@ -111,6 +120,46 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
             ("war-pension", _("War Pension")),
         ],
     )
+
+    other_benefits = PartnerYesNoField(
+        label=_("Do you receive any other benefits not listed above? "),
+        partner_label=_(
+            "Do you or your partner receive any other benefits not listed above? "
+        ),
+        description=_(
+            "For example, National Asylum Support Service Benefit, "
+            "Incapacity Benefit, Contribution-based Jobseeker’s "
+            "Allowance"
+        ),
+        widget=MeansTestRadioInput(),
+        choices=[(YES, _("Yes")), (NO, _("No"))],
+        validators=[
+            InputRequired(message=_("Tell us whether you receive any other benefits"))
+        ],
+    )
+    total_other_benefit = MoneyField(
+        label=_("If Yes, total amount of benefits not listed above"),
+        exclude_intervals=["per_month"],
+        widget=MoneyFieldWidgetWidget(),
+        validators=[
+            ValidateIf("other_benefits", YES),
+            MoneyIntervalAmountRequired(
+                message=_("Tell us how much you receive in other benefits"),
+                freq_message=_("Tell us how often you receive these other benefits"),
+                amount_message=_("Tell us how much you receive in other benefits"),
+            ),
+        ],
+    )
+
+    @property
+    def data(self):
+        # Only return data for our fields and not including the core fields
+        data = super().data
+        return {
+            key: value
+            for key, value in data.items()
+            if key not in ["csrf_token", "submit"]
+        }
 
     @classmethod
     def should_show(cls) -> bool:

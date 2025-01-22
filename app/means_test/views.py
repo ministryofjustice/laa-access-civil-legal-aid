@@ -6,7 +6,7 @@ from app.means_test.api import update_means_test
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import PropertyForm
-from app.means_test.data import BenefitsData
+from app.means_test.data import BenefitsData, AdditionalBenefitData
 
 
 class MeansTest(View):
@@ -54,6 +54,10 @@ class MeansTest(View):
             **eligibility_data.forms.get("benefits", {})
         ).to_payload()
 
+        additional_benefits = AdditionalBenefitData(
+            **eligibility_data.forms.get("additional-benefits", {})
+        ).to_payload()
+
         payload = {
             "category": eligibility_data.category,
             "your_problem_notes": "",
@@ -69,10 +73,7 @@ class MeansTest(View):
                         "per_interval_value": None,
                         "interval_period": "per_month",
                     },
-                    "benefits": {
-                        "per_interval_value": None,
-                        "interval_period": "per_month",
-                    },
+                    "benefits": additional_benefits["benefits"],
                     "tax_credits": {
                         "per_interval_value": None,
                         "interval_period": "per_month",
@@ -203,7 +204,7 @@ class MeansTest(View):
             "has_partner": about.get("has_partner", False)
             and about.get("in_dispute", False),
             "on_passported_benefits": benefits["on_passported_benefits"],
-            "on_nass_benefits": False,
+            "on_nass_benefits": additional_benefits["on_nass_benefits"],
             "specific_benefits": benefits["specific_benefits"],
             "disregards": [],
         }

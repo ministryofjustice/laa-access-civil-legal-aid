@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from flask_babel import lazy_gettext as _
 from app.means_test.utils import MoneyInterval
+from app.means_test import is_yes
 
 
 @dataclass
@@ -46,4 +47,22 @@ class BenefitsData:
             child_benefits = MoneyInterval(self.child_benefits)
 
         payload["child_benefits"] = child_benefits.to_json()
+        return payload
+
+
+@dataclass
+class AdditionalBenefitData:
+    benefits: list = field(default_factory=list)
+    other_benefits: list = field(default_factory=list)
+    total_other_benefit: dict = field(default_factory=dict)
+
+    def to_payload(self):
+        other_benefits_total = MoneyInterval(0)
+        if is_yes(self.other_benefits):
+            other_benefits_total = MoneyInterval(self.total_other_benefit)
+
+        payload = {
+            "on_nass_benefits": False,  # Always False, asylum-support is no longer a benefit selection
+            "benefits": other_benefits_total.to_json(),
+        }
         return payload
