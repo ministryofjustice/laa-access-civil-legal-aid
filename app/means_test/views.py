@@ -28,12 +28,12 @@ class MeansTest(View):
                 return render_template(self.form_class.template, form=form)
 
             # Handle removing a property
-            for index in range(len(form.properties.entries)):
-                if request.form.get(
-                    f"remove-property-{index + 1}"
-                ):  # +1 because form indices start from 0
-                    form.properties.pop_entry(index)
-                    return render_template(self.form_class.template, form=form)
+            elif (
+                "remove-property-2" in request.form
+                or "remove-property-3" in request.form
+            ):
+                form.properties.pop_entry()
+                return render_template(self.form_class.template, form=form)
 
         if form.validate_on_submit():
             session.get_eligibility().add(self.current_name, form.data)
