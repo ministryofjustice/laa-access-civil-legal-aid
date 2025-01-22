@@ -1,11 +1,13 @@
 from flask.views import View, MethodView
 from flask import render_template, url_for, redirect, session, request
 
+from werkzeug.datastructures import MultiDict
+
 from app.means_test.api import update_means_test
 from app.means_test.forms.about_you import AboutYouForm
-from app.means_test.forms.benefits import BenefitsForm
-from app.means_test.forms.property import MultiplePropertiesForm, PropertiesPayload
-
+from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
+from app.means_test.forms.property import PropertyForm, MultiplePropertiesForm, PropertiesPayload
+from app.means_test.data import BenefitsData, AdditionalBenefitData
 
 def deep_update(original, updates):
     """
@@ -28,30 +30,38 @@ class MeansTest(View):
         "about-you": AboutYouForm,
         "benefits": BenefitsForm,
         "property": MultiplePropertiesForm,
+        "additional-benefits": AdditionalBenefitsForm,
     }
 
     def __init__(self, current_form_class, current_name):
         self.form_class = current_form_class
         self.current_name = current_name
 
-    def dispatch_request(self):
-        form = self.form_class()
+    def handle_multiple_properties_ajax_request(self, form):
+        if "add-property" in request.form:
+            form.properties.append_entry()
+            form._submitted = False
+            return render_template(self.form_class.template, form=form)
 
-        if isinstance(form, MultiplePropertiesForm):
-            # Handle adding a property
-            if "add-property" in request.form:
-                form.properties.append_entry()
-                form._submitted = False
-                return render_template(self.form_class.template, form=form)
-
-            # Handle removing a property
-            elif (
+        # Handle removing a property
+        elif (
                 "remove-property-2" in request.form
                 or "remove-property-3" in request.form
-            ):
-                form.properties.pop_entry()
-                form._submitted = False
-                return render_template(self.form_class.template, form=form)
+        ):
+            form.properties.pop_entry()
+            form._submitted = False
+            return render_template(self.form_class.template, form=form)
+
+        return None
+
+    def dispatch_request(self):
+        eligibility = session.get_eligibility()
+        form_data = MultiDict(eligibility.forms.get(self.current_name, {}))
+        form = self.form_class(request.form or form_data)
+        if isinstance(form, MultiplePropertiesForm):
+            response = self.handle_multiple_properties_ajax_request(form)
+            if response is not None:
+                return response
 
         if form.validate_on_submit():
             session.get_eligibility().add(self.current_name, form.data)
@@ -77,10 +87,15 @@ class MeansTest(View):
     @classmethod
     def get_payload(cls, eligibility_data: dict) -> dict:
         about = eligibility_data.forms.get("about-you", {})
-        benefits_form = eligibility_data.forms.get("benefits", {})
         property_form = eligibility_data.forms.get("property", {})
 
-        benefits = benefits_form.get("benefits", [])
+        benefits = BenefitsData(
+            **eligibility_data.forms.get("benefits", {})
+        ).to_payload()
+
+        additional_benefits = AdditionalBenefitData(
+            **eligibility_data.forms.get("additional-benefits", {})
+        ).to_payload()
 
         # Remove rent field from property set and setup payload
         if eligibility_data.forms.get("about-you", {}).get("own_property"):
@@ -103,18 +118,12 @@ class MeansTest(View):
                         "per_interval_value": None,
                         "interval_period": "per_month",
                     },
-                    "benefits": {
-                        "per_interval_value": None,
-                        "interval_period": "per_month",
-                    },
+                    "benefits": additional_benefits["benefits"],
                     "tax_credits": {
                         "per_interval_value": None,
                         "interval_period": "per_month",
                     },
-                    "child_benefits": {
-                        "per_interval_value": None,
-                        "interval_period": "per_month",
-                    },
+                    "child_benefits": benefits["child_benefits"],
                     "maintenance_received": {
                         "per_interval_value": None,
                         "interval_period": "per_month",
@@ -239,15 +248,9 @@ class MeansTest(View):
             "is_you_or_your_partner_over_60": about.get("aged_60_or_over", False),
             "has_partner": about.get("has_partner", False)
             and about.get("in_dispute", False),
-            "on_passported_benefits": False,
-            "on_nass_benefits": False,
-            "specific_benefits": {
-                "pension_credit": "pension_credit" in benefits,
-                "job_seekers_allowance": "job_seekers_allowance" in benefits,
-                "employment_support": "employment_support" in benefits,
-                "universal_credit": "universal_credit" in benefits,
-                "income_support": "income_support" in benefits,
-            },
+            "on_passported_benefits": benefits["on_passported_benefits"],
+            "on_nass_benefits": additional_benefits["on_nass_benefits"],
+            "specific_benefits": benefits["specific_benefits"],
             "disregards": [],
         }
 
