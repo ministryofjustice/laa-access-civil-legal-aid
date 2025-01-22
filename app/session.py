@@ -1,9 +1,8 @@
 from flask.sessions import SecureCookieSession, SecureCookieSessionInterface
 from app.categories.constants import Category
-from flask import session, current_app, redirect, url_for
+from flask import session
 from dataclasses import dataclass
-from datetime import timedelta, datetime, timezone
-from functools import wraps
+from datetime import timedelta
 
 
 @dataclass
@@ -142,39 +141,6 @@ class Session(SecureCookieSession):
             if answer["question"] == question_title:
                 return answer["answer"]
         return None
-
-    def update_last_active(self):
-        """Update the last_active time in the session."""
-        session["last_active"] = datetime.now(timezone.utc)
-
-    def check_session_expiration(self):
-        """Check if the session has expired based on inactivity."""
-        if "last_active" in session:
-            last_active = session["last_active"]
-            current_time = datetime.now(timezone.utc)
-
-            time_diff = current_time - last_active
-            if time_diff > current_app.config["SESSION_TIMEOUT"]:
-                session.clear()  # Expire the session
-                return True  # Indicate the session expired
-
-        self.update_last_active()
-        return False
-
-    @staticmethod
-    def requires_traversal_protection(func):
-        """
-        Decorator to ensure that session["traversal_protection"] is True.
-        Redirects to an error or session-expired page if the condition is not met.
-        """
-
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            if not session.get("traversal_protection", False):
-                return redirect(url_for("main.session_expired"))
-            return func(*args, **kwargs)
-
-        return wrapper
 
 
 class SessionInterface(SecureCookieSessionInterface):

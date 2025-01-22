@@ -16,12 +16,10 @@ from werkzeug.exceptions import HTTPException
 
 from app.main import bp
 from app.main.forms import CookiesForm
-from flask import session
 
 
 @bp.get("/main")
 def index():
-    session["traversal_protection"] = False
     return redirect(url_for("categories.index"))
 
 
@@ -109,17 +107,6 @@ def privacy():
 @bp.route("/session-expired", methods=["GET"])
 def session_expired():
     return render_template("session_expired.html")
-
-
-@bp.before_app_request
-def session_checker():
-    """Before each request, check for session expiration."""
-    # Check if the session expired, if so, redirect to the session expired page
-    if session.check_session_expiration():
-        return redirect(url_for("main.session_expired"))
-
-    # Otherwise, continue with the request (last active will be updated here)
-    session.update_last_active()
 
 
 @bp.app_errorhandler(HTTPException)
