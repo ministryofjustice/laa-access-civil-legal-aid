@@ -34,11 +34,11 @@ class PropertyPayload(dict):
                 "value": to_amount(val("property_value")),
                 "mortgage_left": to_amount(val("mortgage_remaining")),
                 "share": 100 if no("other_shareholders") else None,
-                "disputed": val("in_dispute"),
+                "disputed": bool("in_dispute"),
                 "rent": MoneyInterval(mi("rent_amount", val))
                 if yes("is_rented")
                 else MoneyInterval(0),
-                "main": val("is_main_home"),
+                "main": bool("is_main_home"),
             }
         )
 
@@ -151,8 +151,10 @@ class MeansTest(View):
 
         benefits = benefits_form.get("benefits", [])
 
-        if len(property_form) > 0:
+        if eligibility_data.forms.get("about-you", {}).get("own_property"):
             property_payload = PropertiesPayload(property_form)
+            for property_item in property_payload.get("property_set", []):
+                property_item.pop("rent", None)
 
         payload = {
             "category": eligibility_data.category,
@@ -318,7 +320,8 @@ class MeansTest(View):
         }
 
         # Add in the property payload
-        if len(property_form) > 0:
+        if eligibility_data.forms.get("about-you", {}).get("own_property"):
+            payload["property_set"] = property_payload["property_set"]
             payload["you"]["income"]["other_income"]["per_interval_value"] = (
                 property_payload["you"]["income"]["other_income"]["per_interval_value"]
             )
