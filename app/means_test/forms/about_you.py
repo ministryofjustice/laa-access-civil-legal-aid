@@ -25,6 +25,9 @@ class AboutYouForm(BaseMeansTestForm):
 
     are_you_in_a_dispute = RadioField(
         _("Are you in a dispute with your partner?"),
+        description=_(
+            "This means your partner is the opponent in the dispute you need help with, for example a dispute over money or property"
+        ),
         choices=[(YES, _("Yes")), (NO, _("No"))],
         widget=MeansTestRadioInput(),
         validators=[
