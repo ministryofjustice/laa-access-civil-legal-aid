@@ -12,7 +12,7 @@
 {% endmacro %}
 
 <div class="govuk-form-group {%- if field.errors %} govuk-form-group--error{% endif %}">
-    <fieldset class="govuk-fieldset" role="group" id="question">
+    <fieldset class="govuk-fieldset" role="group" id={{ field.name }}>
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
           <h1 class="govuk-fieldset__heading">
               {{ field.title }}
