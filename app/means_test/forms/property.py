@@ -39,7 +39,7 @@ class PropertyForm(BaseMeansTestForm):
 
     is_main_home = RadioField(
         "Is this property your main home?",
-        choices=[("yes", "Yes"), ("no", "No")],
+        choices=[(True, "Yes"), (False, "No")],
         widget=MeansTestRadioInput(),
         description="If you’re temporarily living away from the property, select ‘Yes’",
         validators=[InputRequired(message=_("Tell us whether this is your main home"))],
@@ -50,7 +50,7 @@ class PropertyForm(BaseMeansTestForm):
             "Does anyone else (other than you or your partner) own a share of the property?"
         ),
         label=_("Does anyone else own a share of the property?"),
-        choices=[("yes", "Yes"), ("no", "No")],
+        choices=[(YES, "Yes"), (NO, "No")],
         widget=MeansTestRadioInput(),
         description="Select ‘Yes’ if you share ownership with a friend, relative or ex-partner",
         validators=[
@@ -123,7 +123,7 @@ class PropertyForm(BaseMeansTestForm):
 
     in_dispute = RadioField(
         "Is your share of the property in dispute?",
-        choices=[("yes", "Yes"), ("no", "No")],
+        choices=[(True, "Yes"), (False, "No")],
         widget=MeansTestRadioInput(),
         description="For example, as part of the financial settlement of a divorce",
         validators=[
