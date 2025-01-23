@@ -2,7 +2,6 @@ from flask.views import View, MethodView
 from flask import render_template, url_for, redirect, session, request
 
 from app.means_test import YES, NO
-
 from app.means_test.api import update_means_test
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm
@@ -69,7 +68,7 @@ class PropertiesPayload(dict):
             )
             / 100
         )
-        print(properties)
+
         # Update the payload with the calculated data
         self.update(
             {
