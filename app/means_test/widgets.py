@@ -8,7 +8,7 @@ class MeansTestInputField:
 
     def __init__(
         self,
-        heading_class: str = "govuk-fieldset__legend--m",
+        heading_class: str = "govuk-fieldset__legend--s",
         show_divider: bool = False,
         is_inline: bool = True,
         hint_text: str = None,
