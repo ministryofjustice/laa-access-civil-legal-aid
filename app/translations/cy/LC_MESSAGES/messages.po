@@ -146,16 +146,19 @@ msgid "each year"
 msgstr ""
 
 msgid "per week"
-msgstr ""
+msgstr "yr wythnos"
 
 msgid "2 weekly"
-msgstr ""
+msgstr "pob 2 wythnos"
 
 msgid "4 weekly"
-msgstr ""
+msgstr "pob 4 wythnos"
 
 msgid "per month"
-msgstr ""
+msgstr "pob mis"
+
+msgid "per year"
+msgstr "y flwyddyn"
 
 msgid "About you"
 msgstr "Amdanoch chi"
