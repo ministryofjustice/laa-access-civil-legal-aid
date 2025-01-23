@@ -2,10 +2,19 @@ from flask_wtf import FlaskForm
 from govuk_frontend_wtf.wtforms_widgets import GovSubmitInput
 from wtforms.fields.simple import SubmitField
 from flask_babel import lazy_gettext as _
+from flask import session
 
 
 class BaseMeansTestForm(FlaskForm):
+    @property
+    def page_title(self):
+        if self.partner_title != "" and session.get_eligibility().has_partner:
+            return self.partner_title
+        return self.title
+
     title = ""
+
+    partner_title = ""
 
     template = "means_test/form-page.html"
 

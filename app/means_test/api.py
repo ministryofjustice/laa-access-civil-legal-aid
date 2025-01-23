@@ -145,6 +145,4 @@ def get_payload(eligibility_data: dict) -> dict:
     if not has_partner:
         del payload["partner"]
 
-    print(payload)
-
     return payload

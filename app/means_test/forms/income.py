@@ -37,7 +37,7 @@ class SelfEmployedMoneyIntervalField(MoneyIntervalField):
 
 class IncomeForm(BaseMeansTestForm):
     @property
-    def title(self):
+    def page_title(self):
         has_partner = session.get_eligibility().has_partner
         employed = (
             session.get_eligibility().is_employed
@@ -459,6 +459,4 @@ class IncomeForm(BaseMeansTestForm):
                 payload[person]["deductions"]["income_tax"] = MoneyInterval(0)
                 payload[person]["deductions"]["national_insurance"] = MoneyInterval(0)
 
-        print("HERE")
-        print(payload)
         return payload
