@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-16 10:49+0000\n"
+"POT-Creation-Date: 2025-01-23 16:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -162,6 +162,21 @@ msgid "each month"
 msgstr ""
 
 msgid "each year"
+msgstr ""
+
+msgid "per week"
+msgstr ""
+
+msgid "2 weekly"
+msgstr ""
+
+msgid "4 weekly"
+msgstr ""
+
+msgid "per month"
+msgstr ""
+
+msgid "per year"
 msgstr ""
 
 msgid "About you"
@@ -342,28 +357,95 @@ msgstr ""
 msgid "Tell us how much Working Tax Credit your partner receives"
 msgstr ""
 
-msgid "Your property"
+msgid "You can only have 1 main property"
+msgstr ""
+
+msgid "Is this property your main home?"
+msgstr ""
+
+msgid "If you’re temporarily living away from the property, select ‘Yes’"
 msgstr ""
 
 msgid "Tell us whether this is your main home"
 msgstr ""
 
+msgid ""
+"Does anyone else (other than you or your partner) own a share of the "
+"property?"
+msgstr ""
+
+msgid "Does anyone else own a share of the property?"
+msgstr ""
+
+msgid "Select ‘Yes’ if you share ownership with a friend, relative or ex-partner"
+msgstr ""
+
 msgid "Tell us whether anyone else owns a share of this property"
+msgstr ""
+
+msgid "How much is the property worth?"
+msgstr ""
+
+msgid "Use a property website or the Land Registry house prices website."
 msgstr ""
 
 msgid "Tell us the approximate value of this property"
 msgstr ""
 
-msgid "Enter a value"
+msgid "Enter a value of more than £0"
+msgstr ""
+
+msgid "How much is left to pay on the mortgage?"
+msgstr ""
+
+msgid ""
+"Include the full amount owed, even if the property has shared ownership, "
+"or enter 0 if you have no mortgage"
 msgstr ""
 
 msgid "Tell us how much is left to pay on the mortgage"
 msgstr ""
 
+msgid "How much was your monthly mortgage repayment last month?"
+msgstr ""
+
+msgid "Enter your mortgage repayment for last month"
+msgstr ""
+
+msgid "Do you rent out any part of this property?"
+msgstr ""
+
 msgid "Tell us whether you rent out some of this property"
 msgstr ""
 
+msgid "If Yes, how much rent did you receive last month?"
+msgstr ""
+
+msgid "For example, £32.18 per week"
+msgstr ""
+
+msgid "Tell us how much rent you receive from this property"
+msgstr ""
+
+msgid "Tell us how often you receive this rent"
+msgstr ""
+
+msgid "Tell us how much rent you receive each week"
+msgstr ""
+
+msgid "Is your share of the property in dispute?"
+msgstr ""
+
+msgid "For example, as part of the financial settlement of a divorce"
+msgstr ""
+
 msgid "Tell us whether this property is in dispute"
+msgstr ""
+
+msgid "You and your partner’s property"
+msgstr ""
+
+msgid "Your property"
 msgstr ""
 
 msgid "Legal aid is available for this type of problem"
@@ -1085,6 +1167,25 @@ msgstr ""
 msgid ""
 "If you're having trouble completing this form, <a "
 "href=\"%(contact_url)s\" class=\"govuk-link\">get in touch</a>."
+msgstr ""
+
+msgid ""
+"Please tell us about any property owned by you, your partner or both of "
+"you."
+msgstr ""
+
+msgid "You can add more than one property below."
+msgstr ""
+
+msgid ""
+"You’ll need to provide evidence of the financial information you’ve given"
+" us through this service."
+msgstr ""
+
+msgid "Remove Property"
+msgstr ""
+
+msgid "Add another property"
 msgstr ""
 
 msgid "Amount"

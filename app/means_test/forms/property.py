@@ -50,10 +50,12 @@ class PropertyForm(BaseMeansTestForm):
         return session.get_eligibility().has_partner
 
     is_main_home = RadioField(
-        "Is this property your main home?",
-        choices=[(True, "Yes"), (False, "No")],
+        _("Is this property your main home?"),
+        choices=[(True, _("Yes")), (False, _("No"))],
         widget=MeansTestRadioInput(),
-        description="If you’re temporarily living away from the property, select ‘Yes’",
+        description=_(
+            "If you’re temporarily living away from the property, select ‘Yes’"
+        ),
         validators=[InputRequired(message=_("Tell us whether this is your main home"))],
     )
 
@@ -62,9 +64,11 @@ class PropertyForm(BaseMeansTestForm):
             "Does anyone else (other than you or your partner) own a share of the property?"
         ),
         label=_("Does anyone else own a share of the property?"),
-        choices=[(YES, "Yes"), (NO, "No")],
+        choices=[(YES, _("Yes")), (NO, _("No"))],
         widget=MeansTestRadioInput(),
-        description="Select ‘Yes’ if you share ownership with a friend, relative or ex-partner",
+        description=_(
+            "Select ‘Yes’ if you share ownership with a friend, relative or ex-partner"
+        ),
         validators=[
             InputRequired(
                 message=_("Tell us whether anyone else owns a share of this property")
@@ -73,9 +77,11 @@ class PropertyForm(BaseMeansTestForm):
     )
 
     property_value = IntegerField(
-        "How much is the property worth?",
+        _("How much is the property worth?"),
         widget=GovTextInput(),
-        description="Use a property website or the Land Registry house prices website.",
+        description=_(
+            "Use a property website or the Land Registry house prices website."
+        ),
         validators=[
             InputRequired(message=_("Tell us the approximate value of this property")),
             NumberRange(
@@ -85,9 +91,11 @@ class PropertyForm(BaseMeansTestForm):
     )
 
     mortgage_remaining = IntegerField(
-        "How much is left to pay on the mortgage?",
+        _("How much is left to pay on the mortgage?"),
         widget=GovTextInput(),
-        description="Include the full amount owed, even if the property has shared ownership, or enter 0 if you have no mortgage",
+        description=_(
+            "Include the full amount owed, even if the property has shared ownership, or enter 0 if you have no mortgage"
+        ),
         validators=[
             InputRequired(message=_("Tell us how much is left to pay on the mortgage")),
             NumberRange(
@@ -97,7 +105,7 @@ class PropertyForm(BaseMeansTestForm):
     )
 
     mortgage_payments = IntegerField(
-        "How much was your monthly mortgage repayment last month?",
+        _("How much was your monthly mortgage repayment last month?"),
         widget=GovTextInput(),
         validators=[
             InputRequired(message=_("Enter your mortgage repayment for last month")),
@@ -128,16 +136,16 @@ class PropertyForm(BaseMeansTestForm):
             MoneyIntervalAmountRequired(
                 message=_("Tell us how much rent you receive from this property"),
                 freq_message=_("Tell us how often you receive this rent"),
-                amount_message=_("Tell us how much rent you receive each week"),
+                amount_message=_("Tell us how much rent you receive"),
             ),
         ],
     )
 
     in_dispute = RadioField(
-        "Is your share of the property in dispute?",
-        choices=[(True, "Yes"), (False, "No")],
+        _("Is your share of the property in dispute?"),
+        choices=[(True, _("Yes")), (False, _("No"))],
         widget=MeansTestRadioInput(),
-        description="For example, as part of the financial settlement of a divorce",
+        description=_("For example, as part of the financial settlement of a divorce"),
         validators=[
             InputRequired(message=_("Tell us whether this property is in dispute"))
         ],

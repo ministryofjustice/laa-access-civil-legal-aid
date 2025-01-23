@@ -63,7 +63,7 @@ class MoneyField(Field):
     ):
         super().__init__(label, validators, **kwargs)
         self.title = label
-        self.hint = hint_text
+        self.hint_text = hint_text
         self.field_with_error = []
         self._intervals = self._intervals.copy()
         if exclude_intervals:
