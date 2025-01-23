@@ -3,7 +3,7 @@
 {%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
 {%- from 'govuk_frontend_jinja/components/inset-text/macro.html' import govukInsetText %}
 
-{% block pageTitle %}{%- if form.errors %}Error: {% endif -%}{{ form.title }} - GOV.UK{% endblock %}
+{% block pageTitle %}{%- if form.errors %}Error: {% endif -%}{{ form.page_title }} - GOV.UK{% endblock %}
 
 {% block beforeContent%}
 {{ super() }}
@@ -22,7 +22,7 @@
     <div class="govuk-grid-column-two-thirds">
 
         {% block formHeading %}
-            <h1 class="govuk-heading-xl">{{ form.title }}</h1>
+            <h1 class="govuk-heading-xl">{{ form.page_title }}</h1>
         {% endblock %}
 
         <form action="" method="post" novalidate>

@@ -55,6 +55,7 @@ def test_means_test_additional_benefits_page(
 
 @pytest.mark.usefixtures("live_server")
 def test_additional_benefits_page_other_benefits_required(page):
+    """Test that Tell us whether you receive any other benefits question is required"""
     page.goto(url=url_for("means_test.additional-benefits", _external=True))
     page.get_by_role("button", name="Continue").scroll_into_view_if_needed()
     page.get_by_role("button", name="Continue").click()
@@ -66,6 +67,7 @@ def test_additional_benefits_page_other_benefits_required(page):
 
 @pytest.mark.usefixtures("live_server")
 def test_additional_benefits_page_total_other_benefits_required(page):
+    """Test that Tell us whether you receive any other benefits question is required when they select other benefits."""
     page.goto(url=url_for("means_test.additional-benefits", _external=True))
     # Say yes to Do you receive any other benefits not listed above?
     page.get_by_label("Yes").check()

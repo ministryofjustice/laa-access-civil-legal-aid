@@ -24,14 +24,18 @@ def get_benefits_choices():
 
 class BenefitsForm(BaseMeansTestForm):
     title = _(" Which benefits do you receive?")
+    partner_title = "Which benefits do you and your partner receive?"
 
     template = "means_test/benefits.html"
 
     benefits = PartnerMultiCheckboxField(
-        label=_("Which benefits do you receive?"),
-        partner_label=_("Which benefits do you and your partner receive?"),
+        label=title,
+        partner_label=partner_title,
         widget=MeansTestCheckboxInput(
-            is_inline=False, show_divider=True, hint_text=_("Select all that apply")
+            is_inline=False,
+            show_divider=True,
+            hint_text=_("Select all that apply"),
+            heading_class="govuk-fieldset__legend--xl",
         ),
         choices=get_benefits_choices(),
     )
@@ -80,6 +84,7 @@ class BenefitsForm(BaseMeansTestForm):
 
 class AdditionalBenefitsForm(BaseMeansTestForm):
     title = _("Your additional benefits")
+    partner_title = "You and your partner’s additional benefits"
     description = _(
         "You’ll need to provide evidence of the financial information you’ve given us through this service."
     )
