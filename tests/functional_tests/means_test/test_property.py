@@ -138,6 +138,56 @@ def test_multi_property_routing(
     page.get_by_role("button", name="Add another property").click()
     expect(page.get_by_text("Property 1")).to_be_visible()
     expect(page.get_by_text("Property 2")).to_be_visible()
+    for question, answer in property_answers.items():
+        property_form_group = page.get_by_role("group", name="Property 2")
+        form_group = property_form_group.get_by_role("group", name=question)
+        if answer[1] == "radio":
+            form_group.get_by_label(answer[0]).check()
+        elif answer[1] == "input":
+            property_form_group.get_by_label(question).fill(answer[0])
+        elif answer[1] == "select":
+            property_form_group.get_by_label(question).select_option(answer[0])
+    page.get_by_role("button", name="Continue").click()
+    expect(page.get_by_text("Review your answers")).to_be_visible()
+
+
+@pytest.mark.usefixtures("live_server")
+@pytest.mark.parametrize("answers", about_you_form_routing)
+@pytest.mark.parametrize("property_answers", multi_property_form_routing)
+def test_multi_main_property(page: Page, property_answers: dict, navigate_to_property):
+    """
+    Test the property form routing.
+
+    Args:
+        page: Playwright page fixture
+        property_answers: List of labels to update on the page
+        navigate_to_property: Fixture to reach the property means test page
+    """
+    expect(page.get_by_text("Your Property")).to_be_visible()
+    for question, answer in property_answers.items():
+        form_group = page.get_by_role("group", name=question)
+        if answer[1] == "radio":
+            form_group.get_by_label(answer[0]).check()
+        elif answer[1] == "input":
+            page.get_by_label(question).fill(answer[0])
+        elif answer[1] == "select":
+            page.get_by_label(question).select_option(answer[0])
+    page.get_by_role("button", name="Add another property").click()
+    expect(page.get_by_text("Property 1")).to_be_visible()
+    expect(page.get_by_text("Property 2")).to_be_visible()
+    for question, answer in property_answers.items():
+        property_form_group = page.get_by_role("group", name="Property 2")
+        form_group = property_form_group.get_by_role("group", name=question)
+        if answer[1] == "radio":
+            form_group.get_by_label(answer[0]).check()
+        elif answer[1] == "input":
+            property_form_group.get_by_label(question).fill(answer[0])
+        elif answer[1] == "select":
+            property_form_group.get_by_label(question).select_option(answer[0])
+    page.get_by_role("button", name="Continue").click()
+    expect(
+        page.get_by_role("link", name="You can only have 1 main property")
+    ).to_be_visible()
 
 
 @pytest.mark.usefixtures("live_server")
