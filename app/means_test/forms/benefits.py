@@ -43,7 +43,7 @@ class BenefitsForm(BaseMeansTestForm):
     child_benefits = MoneyField(
         _("If yes, enter the total amount you get for all your children"),
         hint_text=_("For example, £32.18 per week"),
-        exclude_intervals=["per_month", "per_year"],
+        exclude_intervals=["per_month"],
         widget=MoneyFieldWidgetWidget(),
         validators=[
             ValidateIfSession("is_eligible_for_child_benefits", True),

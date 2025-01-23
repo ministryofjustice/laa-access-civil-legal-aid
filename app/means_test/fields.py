@@ -1,8 +1,8 @@
 from flask import render_template
+from flask_babel import lazy_gettext as _
 from wtforms.widgets import TextInput
 from markupsafe import Markup
 from wtforms import Field
-from flask_babel import lazy_gettext as _
 from app.means_test.money_interval import MoneyInterval
 
 
@@ -25,22 +25,15 @@ class MoneyField(Field):
     The raw data will contain both values separately.
     """
 
-    _intervals = {
-        "": _("-- Please select --"),
-        "per_week": _("each week"),
-        "per_4week": _("every 4 weeks"),
-        "per_month": _("each month"),
-        "per_year": _("each year"),
-    }
-
     @property
     def interval_choices(self):
-        choices = []
-        for value, text in self._intervals.items():
+        choices = [{"value": "", "text": _("-- Please select --")}]
+
+        for value, item in self._intervals.items():
             choices.append(
                 {
                     "value": value,
-                    "text": text,
+                    "text": item["label"],
                 }
             )
         return choices
@@ -65,7 +58,7 @@ class MoneyField(Field):
         self.title = label
         self.hint_text = hint_text
         self.field_with_error = []
-        self._intervals = self._intervals.copy()
+        self._intervals = MoneyInterval._intervals.copy()
         if exclude_intervals:
             for interval in exclude_intervals:
                 del self._intervals[interval]
