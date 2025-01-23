@@ -34,11 +34,11 @@ class PropertyPayload(dict):
                 "value": to_amount(val("property_value")),
                 "mortgage_left": to_amount(val("mortgage_remaining")),
                 "share": 100 if no("other_shareholders") else None,
-                "disputed": bool("in_dispute"),
+                "disputed": val("in_dispute"),
                 "rent": MoneyInterval(mi("rent_amount", val))
                 if yes("is_rented")
                 else MoneyInterval(0),
-                "main": bool("is_main_home"),
+                "main": val("is_main_home"),
             }
         )
 
@@ -69,7 +69,7 @@ class PropertiesPayload(dict):
             )
             / 100
         )
-
+        print(properties)
         # Update the payload with the calculated data
         self.update(
             {
@@ -88,7 +88,7 @@ class PropertiesPayload(dict):
                         }
                     },
                 },
-            }
+            },
         )
 
 
@@ -151,6 +151,7 @@ class MeansTest(View):
 
         benefits = benefits_form.get("benefits", [])
 
+        # Remove rent field from property set and setup payload
         if eligibility_data.forms.get("about-you", {}).get("own_property"):
             property_payload = PropertiesPayload(property_form)
             for property_item in property_payload.get("property_set", []):
@@ -334,7 +335,6 @@ class MeansTest(View):
             payload["you"]["deductions"]["mortgage"]["interval_period"] = (
                 property_payload["you"]["deductions"]["mortgage"]["interval_period"]
             )
-
         return payload
 
 
