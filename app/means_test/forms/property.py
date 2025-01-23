@@ -37,13 +37,6 @@ class PropertyForm(BaseMeansTestForm):
     def has_partner(self):
         return session.get_eligibility().has_partner
 
-    @classmethod
-    def should_show(cls) -> bool:
-        return (
-            session.get_eligibility().forms.get("about-you", {}).get("own_property")
-            == YES
-        )
-
     is_main_home = RadioField(
         "Is this property your main home?",
         choices=[("yes", "Yes"), ("no", "No")],
@@ -116,6 +109,7 @@ class PropertyForm(BaseMeansTestForm):
     rent_amount = MoneyField(
         _("If Yes, how much rent did you receive last month?"),
         hint_text=_("For example, £32.18 per week"),
+        exclude_intervals=["per_4week"],
         widget=MoneyFieldWidget(),
         validators=[
             ValidateIf("is_rented", YES),
@@ -145,6 +139,13 @@ class MultiplePropertiesForm(BaseMeansTestForm):
             return _("You and your partner’s property")
         else:
             return _("Your property")
+
+    @classmethod
+    def should_show(cls) -> bool:
+        return (
+            session.get_eligibility().forms.get("about-you", {}).get("own_property")
+            == YES
+        )
 
     properties = FieldList(
         FormField(PropertyForm),  # Each entry is an instance of PropertyForm
