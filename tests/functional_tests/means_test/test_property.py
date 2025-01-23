@@ -67,6 +67,25 @@ property_form_routing = [
     ),
 ]
 
+multi_property_form_routing = [
+    pytest.param(
+        {
+            "Is this property your main home?": ["Yes", "radio"],
+            "Does anyone else own a share of the property?": ["No", "radio"],
+            "How much is the property worth?": ["300000", "input"],
+            "How much is left to pay on the mortgage?": ["200000", "input"],
+            "How much was your monthly mortgage repayment last month?": [
+                "1000",
+                "input",
+            ],
+            "Do you rent out any part of this property?": ["Yes", "radio"],
+            "Amount": ["500", "input"],
+            "Frequency": ["each month", "select"],
+            "Is your share of the property in dispute?": ["No", "radio"],
+        },
+    ),
+]
+
 
 @pytest.mark.usefixtures("live_server")
 @pytest.mark.parametrize("answers", about_you_form_routing)
@@ -77,8 +96,8 @@ def test_property_routing(page: Page, property_answers: dict, navigate_to_proper
 
     Args:
         page: Playwright page fixture
-        selection: List of labels to check
-        expected_heading: Text expected to be visible after submission
+        property_answers: List of labels to update on the page
+        navigate_to_property: Fixture to reach the property means test page
     """
     expect(page.get_by_text("Your Property")).to_be_visible()
     for question, answer in property_answers.items():
@@ -91,3 +110,72 @@ def test_property_routing(page: Page, property_answers: dict, navigate_to_proper
             page.get_by_label(question).select_option(answer[0])
     page.get_by_role("button", name="Continue").click()
     expect(page.get_by_text("Review your answers")).to_be_visible()
+
+
+@pytest.mark.usefixtures("live_server")
+@pytest.mark.parametrize("answers", about_you_form_routing)
+@pytest.mark.parametrize("property_answers", multi_property_form_routing)
+def test_multi_property_routing(
+    page: Page, property_answers: dict, navigate_to_property
+):
+    """
+    Test the property form routing.
+
+    Args:
+        page: Playwright page fixture
+        property_answers: List of labels to update on the page
+        navigate_to_property: Fixture to reach the property means test page
+    """
+    expect(page.get_by_text("Your Property")).to_be_visible()
+    for question, answer in property_answers.items():
+        form_group = page.get_by_role("group", name=question)
+        if answer[1] == "radio":
+            form_group.get_by_label(answer[0]).check()
+        elif answer[1] == "input":
+            page.get_by_label(question).fill(answer[0])
+        elif answer[1] == "select":
+            page.get_by_label(question).select_option(answer[0])
+    page.get_by_role("button", name="Add another property").click()
+    expect(page.get_by_text("Property 1")).to_be_visible()
+    expect(page.get_by_text("Property 2")).to_be_visible()
+
+
+@pytest.mark.usefixtures("live_server")
+@pytest.mark.parametrize("answers", about_you_form_routing)
+def test_property_page_errors(page: Page, navigate_to_property):
+    """
+    Test the property form routing.
+
+    Args:
+        page: Playwright page fixture
+        navigate_to_property: Fixture to reach the property means test pa
+    """
+    expect(page.get_by_text("Your Property")).to_be_visible()
+    page.get_by_role("button", name="Continue").click()
+
+    # Check that all error messages are visible
+    expect(
+        page.get_by_role("link", name="Tell us whether this is your main home")
+    ).to_be_visible()
+    expect(
+        page.get_by_role(
+            "link", name="Tell us whether anyone else owns a share of this property"
+        )
+    ).to_be_visible()
+    expect(
+        page.get_by_role("link", name="Tell us the approximate value of this property")
+    ).to_be_visible()
+    expect(
+        page.get_by_role("link", name="Tell us how much is left to pay on the mortgage")
+    ).to_be_visible()
+    expect(
+        page.get_by_role("link", name="Enter your mortgage repayment for last month")
+    ).to_be_visible()
+    expect(
+        page.get_by_role(
+            "link", name="Tell us whether you rent out some of this property"
+        )
+    ).to_be_visible()
+    expect(
+        page.get_by_role("link", name="Tell us whether this property is in dispute")
+    ).to_be_visible()
