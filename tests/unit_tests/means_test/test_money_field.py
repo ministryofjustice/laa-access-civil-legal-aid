@@ -1,12 +1,12 @@
 from werkzeug.datastructures import MultiDict
 from flask_wtf import FlaskForm
 from app.means_test.validators import MoneyIntervalAmountRequired
-from app.means_test.fields import MoneyField, MoneyFieldWidgetWidget
+from app.means_test.fields import MoneyField, MoneyFieldWidget
 
 
 class TestForm(FlaskForm):
     money_field = MoneyField(
-        widget=MoneyFieldWidgetWidget(),
+        widget=MoneyFieldWidget(),
         validators=[
             MoneyIntervalAmountRequired(
                 message="Please provide both amount and frequency",
@@ -50,7 +50,7 @@ def test_money_field_only_amount_interval(app, client):
 
 
 def test_money_field_excluded_interval(app, client):
-    data = MultiDict([("money_field", "1000"), ("money_field", "per_year")])
+    data = MultiDict([("money_field", "1000"), ("money_field", "per_10_year")])
     form = TestForm(formdata=data)
     try:
         form.validate()
