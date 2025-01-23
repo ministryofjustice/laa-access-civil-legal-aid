@@ -1,4 +1,5 @@
 from flask import session
+from wtforms import ValidationError
 from wtforms.fields import RadioField, IntegerField, FieldList, FormField
 from wtforms.fields.core import Label
 from govuk_frontend_wtf.wtforms_widgets import GovTextInput
@@ -10,6 +11,17 @@ from app.means_test.forms import BaseMeansTestForm
 from app.means_test.fields import MoneyField, MoneyFieldWidget
 from app.means_test.validators import MoneyIntervalAmountRequired
 from app.means_test.validators import ValidateIf
+
+
+def validate_single_main_home(form, field):
+    properties = form.properties.data
+    main_home_count = 0
+    for property_data in properties:
+        if property_data.get("is_main_home") == "True":
+            main_home_count += 1
+
+    if main_home_count > 1:
+        raise ValidationError(_("You can only have 1 main property"))
 
 
 class PartnerRadioField(RadioField):
@@ -151,6 +163,7 @@ class MultiplePropertiesForm(BaseMeansTestForm):
         FormField(PropertyForm),  # Each entry is an instance of PropertyForm
         min_entries=1,  # At least one property form to start
         max_entries=3,  # Allow a maximum of three properties
+        validators=[validate_single_main_home],
     )
 
     template = "means_test/property.html"
