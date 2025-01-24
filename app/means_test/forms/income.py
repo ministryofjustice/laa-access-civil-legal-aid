@@ -3,7 +3,7 @@ from app.means_test.forms import BaseMeansTestForm
 from flask_babel import lazy_gettext as _
 from flask import session
 from app.means_test.money_interval import MoneyInterval
-from app.means_test.validators import MoneyIntervalAmountRequired
+from app.means_test.validators import MoneyIntervalAmountRequired, ValidateIfSession
 
 
 class SelfEmployedMoneyIntervalField(MoneyIntervalField):
@@ -53,18 +53,6 @@ class IncomeForm(BaseMeansTestForm):
 
     template = "means_test/income.html"
 
-    def validate(self, extra_validators=None):
-        is_valid = True
-
-        for category_fields in self.shown_fields.values():
-            for field in category_fields:
-                if field.validators is None:
-                    print(f"Field {field.name} has no validators")  # or use logging
-                if not field.validate(self, extra_validators=extra_validators):
-                    is_valid = False
-
-        return is_valid
-
     earnings = SelfEmployedMoneyIntervalField(
         _("Wages before tax"),
         self_employed_descriptions={
@@ -73,11 +61,12 @@ class IncomeForm(BaseMeansTestForm):
         },
         widget=MoneyIntervalWidget(),
         validators=[
+            ValidateIfSession("is_employed_or_self_employed", True),
             MoneyIntervalAmountRequired(
                 message=_("Tell us how much you receive in wages"),
                 freq_message=_("Tell us how often you receive wages"),
                 amount_message=_("Tell us how much you receive in wages"),
-            )
+            ),
         ],
     )
 
@@ -92,11 +81,12 @@ class IncomeForm(BaseMeansTestForm):
         },
         widget=MoneyIntervalWidget(),
         validators=[
+            ValidateIfSession("is_employed_or_self_employed", True),
             MoneyIntervalAmountRequired(
                 message=_("Tell us how much income tax you pay"),
                 freq_message=_("Tell us how often you pay income tax"),
                 amount_message=_("Tell us how much income tax you pay"),
-            )
+            ),
         ],
     )
 
@@ -111,11 +101,12 @@ class IncomeForm(BaseMeansTestForm):
         },
         widget=MoneyIntervalWidget(),
         validators=[
+            ValidateIfSession("is_employed_or_self_employed", True),
             MoneyIntervalAmountRequired(
                 message=_("Tell us how much National Insurance you pay"),
                 freq_message=_("Tell us how often you pay National Insurance"),
                 amount_message=_("Tell us how much National Insurance you pay"),
-            )
+            ),
         ],
     )
 
@@ -126,13 +117,14 @@ class IncomeForm(BaseMeansTestForm):
         ),
         widget=MoneyIntervalWidget(),
         validators=[
+            ValidateIfSession("is_employed_or_self_employed", True),
             MoneyIntervalAmountRequired(
                 message=_(
                     "Enter the Working Tax Credit you receive, or 0 if this doesn't apply to you"
                 ),
                 freq_message=_("Tell us how often you receive Working Tax Credit"),
                 amount_message=_("Tell us how much Working Tax Credit you receive"),
-            )
+            ),
         ],
     )
 
@@ -143,13 +135,14 @@ class IncomeForm(BaseMeansTestForm):
         ),
         widget=MoneyIntervalWidget(),
         validators=[
+            ValidateIfSession("is_employed_or_self_employed", True),
             MoneyIntervalAmountRequired(
                 message=_(
                     "Enter the Child Tax Credit you receive, or 0 if this doesn't apply to you"
                 ),
                 freq_message=_("Tell us how often you receive Child Tax Credit"),
                 amount_message=_("Tell us how much Child Tax Credit you receive"),
-            )
+            ),
         ],
     )
 
@@ -213,11 +206,13 @@ class IncomeForm(BaseMeansTestForm):
         },
         widget=MoneyIntervalWidget(),
         validators=[
+            ValidateIfSession("has_partner", True),
+            ValidateIfSession("is_partner_employed", True),
             MoneyIntervalAmountRequired(
                 message=_("Tell us how much your partner receives in wages"),
                 freq_message=_("Tell us how often your partner receives wages"),
                 amount_message=_("Tell us how much your partner receives in wages"),
-            )
+            ),
         ],
     )
 
@@ -232,11 +227,13 @@ class IncomeForm(BaseMeansTestForm):
         },
         widget=MoneyIntervalWidget(),
         validators=[
+            ValidateIfSession("has_partner", True),
+            ValidateIfSession("is_partner_employed", True),
             MoneyIntervalAmountRequired(
                 message=_("Tell us how much income tax your partner pays"),
                 freq_message=_("Tell us how often your partner pays income tax"),
                 amount_message=_("Tell us how much income tax your partner pays"),
-            )
+            ),
         ],
     )
 
@@ -251,6 +248,8 @@ class IncomeForm(BaseMeansTestForm):
         },
         widget=MoneyIntervalWidget(),
         validators=[
+            ValidateIfSession("has_partner", True),
+            ValidateIfSession("is_partner_employed", True),
             MoneyIntervalAmountRequired(
                 message=_("Tell us how much National Insurance your partner pays"),
                 freq_message=_(
@@ -259,7 +258,7 @@ class IncomeForm(BaseMeansTestForm):
                 amount_message=_(
                     "Tell us how much National Insurance your partner pays"
                 ),
-            )
+            ),
         ],
     )
 
@@ -270,6 +269,8 @@ class IncomeForm(BaseMeansTestForm):
         ),
         widget=MoneyIntervalWidget(),
         validators=[
+            ValidateIfSession("has_partner", True),
+            ValidateIfSession("is_partner_employed", True),
             MoneyIntervalAmountRequired(
                 message=_(
                     "Enter the Working Tax Credit your partner receives, or 0 if it doesn't apply"
@@ -280,7 +281,7 @@ class IncomeForm(BaseMeansTestForm):
                 amount_message=_(
                     "Tell us how much Working Tax Credit your partner receives"
                 ),
-            )
+            ),
         ],
     )
 
@@ -291,13 +292,14 @@ class IncomeForm(BaseMeansTestForm):
         ),
         widget=MoneyIntervalWidget(),
         validators=[
+            ValidateIfSession("has_partner", True),
             MoneyIntervalAmountRequired(
                 message=_(
                     "Enter the total amount of maintenance your partner receives, or 0 if this doesn't apply"
                 ),
                 freq_message=_("Tell us how often your partner receives maintenance"),
                 amount_message=_("Tell us how much maintenance your partner receives"),
-            )
+            ),
         ],
     )
 
@@ -308,13 +310,14 @@ class IncomeForm(BaseMeansTestForm):
         ),
         widget=MoneyIntervalWidget(),
         validators=[
+            ValidateIfSession("has_partner", True),
             MoneyIntervalAmountRequired(
                 message=_(
                     "Enter the pension your partner receives, or 0 if this doesn't apply"
                 ),
                 freq_message=_("Tell us how often your partner receives their pension"),
                 amount_message=_("Tell us how much pension your partner receives"),
-            )
+            ),
         ],
     )
 
@@ -325,6 +328,7 @@ class IncomeForm(BaseMeansTestForm):
         ),
         widget=MoneyIntervalWidget(),
         validators=[
+            ValidateIfSession("has_partner", True),
             MoneyIntervalAmountRequired(
                 message=_(
                     "Enter the other income your partner receives, or 0 if this doesn't apply"
@@ -333,7 +337,7 @@ class IncomeForm(BaseMeansTestForm):
                     "Tell us how often your partner receives this other income"
                 ),
                 amount_message=_("Tell us how much other income your partner receives"),
-            )
+            ),
         ],
     )
 

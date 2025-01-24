@@ -208,11 +208,11 @@ INCOME_TEST_CASES = [
                     },
                     "pension": {
                         "per_interval_value": None,
-                        "interval_period": "per_month",
+                        "interval_period": None,
                     },
                     "other_income": {
                         "per_interval_value": None,
-                        "interval_period": "per_month",
+                        "interval_period": None,
                     },
                 },
                 "deductions": {
@@ -262,6 +262,21 @@ INCOME_TEST_CASES = [
                         "per_interval_value_pounds": 1200.00,
                         "interval_period": "per_year",
                     },
+                    "maintenance_received": {
+                        "per_interval_value": 5000,
+                        "per_interval_value_pounds": 50.00,
+                        "interval_period": "per_year",
+                    },
+                    "pension": {
+                        "per_interval_value": 10000,
+                        "per_interval_value_pounds": 1000.00,
+                        "interval_period": "per_month",
+                    },
+                    "other_income": {
+                        "per_interval_value": 25000,
+                        "per_interval_value_pounds": 250.00,
+                        "interval_period": "per_month",
+                    },
                 },
             },
         ),
@@ -281,15 +296,15 @@ INCOME_TEST_CASES = [
                         "interval_period": "per_month",
                     },
                     "maintenance_received": {
-                        "per_interval_value": None,
-                        "interval_period": "per_month",
+                        "per_interval_value": 5000,
+                        "interval_period": "per_year",
                     },
                     "pension": {
-                        "per_interval_value": None,
+                        "per_interval_value": 10000,
                         "interval_period": "per_month",
                     },
                     "other_income": {
-                        "per_interval_value": None,
+                        "per_interval_value": 25000,
                         "interval_period": "per_month",
                     },
                     "self_employed": True,
@@ -343,6 +358,53 @@ INCOME_TEST_CASES = [
                         "per_interval_value_pounds": 2000.00,
                         "interval_period": "per_month",
                     },
+                    "maintenance_received": {
+                        "per_interval_value": 0,
+                        "per_interval_value_pounds": 0,
+                        "interval_period": "per_month",
+                    },
+                    "pension": {
+                        "per_interval_value": 0,
+                        "per_interval_value_pounds": 0,
+                        "interval_period": "per_month",
+                    },
+                    "other_income": {
+                        "per_interval_value": 1000,
+                        "per_interval_value_pounds": 0,
+                        "interval_period": "per_month",
+                    },
+                    "income_tax": {
+                        "per_interval_value": 2000,
+                        "interval_period": "per_month",
+                    },
+                    "national_insurance": {
+                        "per_interval_value": 3000,
+                        "interval_period": "per_month",
+                    },
+                    "partner_working_tax_credit": {
+                        "per_interval_value": 50,
+                        "interval_period": "per_month",
+                    },
+                    "partner_maintenance_received": {
+                        "per_interval_value": 50,
+                        "interval_period": "per_month",
+                    },
+                    "partner_pension": {
+                        "per_interval_value": 0,
+                        "interval_period": "per_month",
+                    },
+                    "partner_other_income": {
+                        "per_interval_value": 1000,
+                        "interval_period": "per_month",
+                    },
+                    "partner_income_tax": {
+                        "per_interval_value": 2500,
+                        "interval_period": "per_month",
+                    },
+                    "partner_national_insurance": {
+                        "per_interval_value": 3500,
+                        "interval_period": "per_month",
+                    },
                 },
             },
         ),
@@ -362,25 +424,25 @@ INCOME_TEST_CASES = [
                         "interval_period": "per_month",
                     },  # Combined child + working tax
                     "maintenance_received": {
-                        "per_interval_value": None,
+                        "per_interval_value": 0,
                         "interval_period": "per_month",
                     },
                     "pension": {
-                        "per_interval_value": None,
+                        "per_interval_value": 0,
                         "interval_period": "per_month",
                     },
                     "other_income": {
-                        "per_interval_value": None,
+                        "per_interval_value": 1000,
                         "interval_period": "per_month",
                     },
                 },
                 "deductions": {
                     "income_tax": {
-                        "per_interval_value": None,
+                        "per_interval_value": 2000,
                         "interval_period": "per_month",
                     },
                     "national_insurance": {
-                        "per_interval_value": None,
+                        "per_interval_value": 3000,
                         "interval_period": "per_month",
                     },
                 },
@@ -396,29 +458,29 @@ INCOME_TEST_CASES = [
                         "interval_period": "per_month",
                     },
                     "tax_credits": {
-                        "per_interval_value": None,
+                        "per_interval_value": 50,
                         "interval_period": "per_month",
                     },
                     "maintenance_received": {
-                        "per_interval_value": None,
+                        "per_interval_value": 50,
                         "interval_period": "per_month",
                     },
                     "pension": {
-                        "per_interval_value": None,
+                        "per_interval_value": 0,
                         "interval_period": "per_month",
                     },
                     "other_income": {
-                        "per_interval_value": None,
+                        "per_interval_value": 1000,
                         "interval_period": "per_month",
                     },
                 },
                 "deductions": {
                     "income_tax": {
-                        "per_interval_value": None,
+                        "per_interval_value": 2500,
                         "interval_period": "per_month",
                     },
                     "national_insurance": {
-                        "per_interval_value": None,
+                        "per_interval_value": 3500,
                         "interval_period": "per_month",
                     },
                 },
