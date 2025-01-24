@@ -59,7 +59,7 @@ class MoneyInterval(dict):
 
         else:
             self.amount = kwargs.get("per_interval_value")
-            self.interval = kwargs.get("interval_period")
+            self.interval = kwargs.get("interval_period", "per_month")
 
     @property
     def amount(self):
