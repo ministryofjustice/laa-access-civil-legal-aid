@@ -1,5 +1,5 @@
 import pytest
-from app.means_test.views import MeansTest
+from app.means_test.views import MeansTest, deep_update
 from .test_cases import TEST_CASES
 
 
@@ -39,3 +39,42 @@ def test_get_payload(test_case: dict) -> None:
     """
     result = MeansTest.get_payload(test_case["input"])
     assert_partial_dict_match(test_case["expected"], result)
+
+
+def test_deep_update():
+    original = {
+        "a": 1,
+        "b": {
+            "c": 2,
+            "d": {"e": 3},
+        },
+        "f": 4,
+    }
+
+    updates = {
+        "b": {
+            "c": 20,
+            "d": {
+                "e": 30,
+                "f": 40,
+            },
+        },
+        "g": 5,
+    }
+
+    expected = {
+        "a": 1,
+        "b": {
+            "c": 20,
+            "d": {
+                "e": 30,
+                "f": 40,
+            },
+        },
+        "f": 4,
+        "g": 5,
+    }
+
+    deep_update(original, updates)
+
+    assert original == expected

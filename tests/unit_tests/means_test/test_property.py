@@ -1,4 +1,7 @@
-from app.means_test.views import PropertyPayload
+import pytest
+from wtforms.validators import ValidationError
+from flask_babel import gettext as _
+from app.means_test.forms.property import PropertyPayload, validate_single_main_home
 
 
 def test_property_payload_with_valid_data():
@@ -68,3 +71,28 @@ def test_property_payload_with_missing_rent():
 
     rent = payload["rent"]
     assert rent == expected_rent
+
+
+class MockForm:
+    def __init__(self, properties_data):
+        self.properties = MockField(properties_data)
+
+
+class MockField:
+    def __init__(self, data):
+        self.data = data
+
+
+def test_validate_single_main_home_multiple_main_homes():
+    """Test with multiple main homes."""
+    form_data = [
+        {"is_main_home": "True"},
+        {"is_main_home": "True"},
+    ]
+    form = MockForm(form_data)
+
+    # Expecting a ValidationError
+    with pytest.raises(ValidationError) as excinfo:
+        validate_single_main_home(form, None)
+
+    assert str(excinfo.value) == _("You can only have 1 main property")
