@@ -92,7 +92,7 @@ def test_validate_single_main_home_multiple_main_homes():
     form = MockForm(form_data)
 
     # Expecting a ValidationError
-    with pytest.raises(ValidationError) as excinfo:
+    with pytest.raises(ValidationError) as errorinfo:
         validate_single_main_home(form, None)
 
-    assert str(excinfo.value) == _("You can only have 1 main property")
+    assert str(errorinfo.value) == _("You can only have 1 main property")
