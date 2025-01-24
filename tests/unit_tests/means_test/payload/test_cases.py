@@ -8,7 +8,7 @@ class EligibilityData:
     forms: Dict
 
 
-TEST_CASES = [
+ABOUT_YOU_TEST_CASES = [
     {
         "id": "basic_no_benefits_no_partner",
         "name": "basic_no_benefits_no_partner",
@@ -55,7 +55,7 @@ TEST_CASES = [
                 "about-you": {
                     "is_self_employed": True,
                     "has_partner": True,
-                    "in_dispute": True,
+                    "in_dispute": False,
                     "has_children": False,
                     "aged_60_or_over": False,
                     "is_partner_self_employed": True,
@@ -140,7 +140,289 @@ TEST_CASES = [
                 "universal_credit": False,
                 "income_support": False,
             },
-            "you": {"income": {"self_employed": False}},
+        },
+    },
+]
+
+INCOME_TEST_CASES = [
+    {
+        "id": "basic_employed_no_partner",
+        "name": "basic_employed_no_partner",
+        "description": "Basic case with employed person, no partner",
+        "input": EligibilityData(
+            category="debt",
+            forms={
+                "about-you": {
+                    "is_employed": True,
+                    "is_self_employed": False,
+                    "has_partner": False,
+                    "in_dispute": False,
+                },
+                "income": {
+                    "earnings": {
+                        "per_interval_value": 200000,
+                        "per_interval_value_pounds": 2000.00,
+                        "interval_period": "per_month",
+                    },
+                    "income_tax": {
+                        "per_interval_value": 40000,
+                        "per_interval_value_pounds": 400.00,
+                        "interval_period": "per_month",
+                    },
+                    "national_insurance": {
+                        "per_interval_value": 20000,
+                        "per_interval_value_pounds": 200.00,
+                        "interval_period": "per_month",
+                    },
+                    "working_tax_credit": {
+                        "per_interval_value": 10000,
+                        "per_interval_value_pounds": 100.00,
+                        "interval_period": "per_month",
+                    },
+                    "maintenance_received": {
+                        "per_interval_value": 0,
+                        "per_interval_value_pounds": 0.00,
+                        "interval_period": "per_month",
+                    },
+                },
+            },
+        ),
+        "expected": {
+            "you": {
+                "income": {
+                    "earnings": {
+                        "per_interval_value": 200000,
+                        "interval_period": "per_month",
+                    },
+                    "self_employment_drawings": {
+                        "per_interval_value": 0,
+                        "interval_period": "per_month",
+                    },
+                    "tax_credits": {
+                        "per_interval_value": 10000,
+                        "interval_period": "per_month",
+                    },
+                    "maintenance_received": {
+                        "per_interval_value": 0,
+                        "interval_period": "per_month",
+                    },
+                    "pension": {
+                        "per_interval_value": None,
+                        "interval_period": "per_month",
+                    },
+                    "other_income": {
+                        "per_interval_value": None,
+                        "interval_period": "per_month",
+                    },
+                },
+                "deductions": {
+                    "income_tax": {
+                        "per_interval_value": 40000,
+                        "interval_period": "per_month",
+                    },
+                    "national_insurance": {
+                        "per_interval_value": 20000,
+                        "interval_period": "per_month",
+                    },
+                },
+            }
+        },
+    },
+    {
+        "id": "self_employed_with_mixed_intervals",
+        "name": "self_employed_with_mixed_intervals",
+        "description": "Self-employed person with income in different intervals",
+        "input": EligibilityData(
+            category="debt",
+            forms={
+                "about-you": {
+                    "is_employed": False,
+                    "is_self_employed": True,
+                    "has_partner": False,
+                    "in_dispute": False,
+                },
+                "income": {
+                    "earnings": {
+                        "per_interval_value": 300000,
+                        "per_interval_value_pounds": 3000.00,
+                        "interval_period": "per_month",
+                    },
+                    "income_tax": {
+                        "per_interval_value": 15000,
+                        "per_interval_value_pounds": 150.00,
+                        "interval_period": "per_week",
+                    },
+                    "national_insurance": {
+                        "per_interval_value": 50000,
+                        "per_interval_value_pounds": 500.00,
+                        "interval_period": "per_4week",
+                    },
+                    "working_tax_credit": {
+                        "per_interval_value": 120000,
+                        "per_interval_value_pounds": 1200.00,
+                        "interval_period": "per_year",
+                    },
+                },
+            },
+        ),
+        "expected": {
+            "you": {
+                "income": {
+                    "earnings": {
+                        "per_interval_value": 0,
+                        "interval_period": "per_month",
+                    },
+                    "self_employment_drawings": {
+                        "per_interval_value": 300000,
+                        "interval_period": "per_month",
+                    },
+                    "tax_credits": {
+                        "per_interval_value": 10000,
+                        "interval_period": "per_month",
+                    },
+                    "maintenance_received": {
+                        "per_interval_value": None,
+                        "interval_period": "per_month",
+                    },
+                    "pension": {
+                        "per_interval_value": None,
+                        "interval_period": "per_month",
+                    },
+                    "other_income": {
+                        "per_interval_value": None,
+                        "interval_period": "per_month",
+                    },
+                    "self_employed": True,
+                },
+                "deductions": {
+                    "income_tax": {
+                        "per_interval_value": 15000,
+                        "interval_period": "per_week",
+                    },
+                    "national_insurance": {
+                        "per_interval_value": 50000,
+                        "interval_period": "per_4week",
+                    },
+                },
+            }
+        },
+    },
+    {
+        "id": "partner_case_with_child_tax",
+        "name": "partner_case_with_child_tax",
+        "description": "Case with partner and child tax credits",
+        "input": EligibilityData(
+            category="debt",
+            forms={
+                "about-you": {
+                    "is_employed": True,
+                    "is_self_employed": False,
+                    "has_partner": True,
+                    "in_dispute": False,
+                    "is_partner_employed": False,
+                    "is_partner_self_employed": True,
+                },
+                "income": {
+                    "earnings": {
+                        "per_interval_value": 250000,
+                        "per_interval_value_pounds": 2500.00,
+                        "interval_period": "per_month",
+                    },
+                    "child_tax_credit": {
+                        "per_interval_value": 30000,
+                        "per_interval_value_pounds": 300.00,
+                        "interval_period": "per_month",
+                    },
+                    "working_tax_credit": {
+                        "per_interval_value": 10000,
+                        "per_interval_value_pounds": 100.00,
+                        "interval_period": "per_month",
+                    },
+                    "partner_earnings": {
+                        "per_interval_value": 200000,
+                        "per_interval_value_pounds": 2000.00,
+                        "interval_period": "per_month",
+                    },
+                },
+            },
+        ),
+        "expected": {
+            "you": {
+                "income": {
+                    "earnings": {
+                        "per_interval_value": 250000,
+                        "interval_period": "per_month",
+                    },
+                    "self_employment_drawings": {
+                        "per_interval_value": 0,
+                        "interval_period": "per_month",
+                    },
+                    "tax_credits": {
+                        "per_interval_value": 40000,
+                        "interval_period": "per_month",
+                    },  # Combined child + working tax
+                    "maintenance_received": {
+                        "per_interval_value": None,
+                        "interval_period": "per_month",
+                    },
+                    "pension": {
+                        "per_interval_value": None,
+                        "interval_period": "per_month",
+                    },
+                    "other_income": {
+                        "per_interval_value": None,
+                        "interval_period": "per_month",
+                    },
+                },
+                "deductions": {
+                    "income_tax": {
+                        "per_interval_value": None,
+                        "interval_period": "per_month",
+                    },
+                    "national_insurance": {
+                        "per_interval_value": None,
+                        "interval_period": "per_month",
+                    },
+                },
+            },
+            "partner": {
+                "income": {
+                    "earnings": {
+                        "per_interval_value": 0,
+                        "interval_period": "per_month",
+                    },
+                    "self_employment_drawings": {
+                        "per_interval_value": 200000,
+                        "interval_period": "per_month",
+                    },
+                    "tax_credits": {
+                        "per_interval_value": None,
+                        "interval_period": "per_month",
+                    },
+                    "maintenance_received": {
+                        "per_interval_value": None,
+                        "interval_period": "per_month",
+                    },
+                    "pension": {
+                        "per_interval_value": None,
+                        "interval_period": "per_month",
+                    },
+                    "other_income": {
+                        "per_interval_value": None,
+                        "interval_period": "per_month",
+                    },
+                },
+                "deductions": {
+                    "income_tax": {
+                        "per_interval_value": None,
+                        "interval_period": "per_month",
+                    },
+                    "national_insurance": {
+                        "per_interval_value": None,
+                        "interval_period": "per_month",
+                    },
+                },
+            },
         },
     },
 ]

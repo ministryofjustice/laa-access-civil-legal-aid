@@ -1,8 +1,8 @@
 from app.api import cla_backend
 from flask import session
-
 from app.means_test.forms.income import IncomeForm
 from app.means_test.money_interval import MoneyInterval
+from tests.unit_tests.means_test.payload.test_cases import EligibilityData
 
 
 def update_means_test(payload):
@@ -27,14 +27,16 @@ def is_eligible(reference):
     return response["is_eligible"]
 
 
-def get_payload(eligibility_data: dict) -> dict:
+def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
     about = eligibility_data.forms.get("about-you", {})
     benefits_form = eligibility_data.forms.get("benefits", {})
     income_form = eligibility_data.forms.get("income", {})
 
     benefits = benefits_form.get("benefits", [])
 
-    has_partner = eligibility_data.has_partner
+    has_partner = eligibility_data.forms.get("about-you", {}).get(
+        "has_partner", False
+    ) and not eligibility_data.forms.get("about-you", {}).get("in_dispute", False)
     is_employed = about.get("is_employed", None)
     is_self_employed = about.get("is_self_employed", None)
     is_partner_employed = about.get("is_partner_employed", None)
@@ -128,8 +130,7 @@ def get_payload(eligibility_data: dict) -> dict:
         if about.get("has_dependants", False)
         else 0,
         "is_you_or_your_partner_over_60": about.get("aged_60_or_over", False),
-        "has_partner": about.get("has_partner", False)
-        and about.get("in_dispute", False),
+        "has_partner": has_partner,
         "on_passported_benefits": False,
         "on_nass_benefits": False,
         "specific_benefits": {
