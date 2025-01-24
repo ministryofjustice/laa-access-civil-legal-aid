@@ -86,6 +86,25 @@ multi_property_form_routing = [
     ),
 ]
 
+main_property_form_routing = [
+    pytest.param(
+        {
+            "Is this property your main home?": ["No", "radio"],
+            "Does anyone else own a share of the property?": ["No", "radio"],
+            "How much is the property worth?": ["300000", "input"],
+            "How much is left to pay on the mortgage?": ["200000", "input"],
+            "How much was your monthly mortgage repayment last month?": [
+                "1000",
+                "input",
+            ],
+            "Do you rent out any part of this property?": ["Yes", "radio"],
+            "Amount": ["500", "input"],
+            "Frequency": ["each month", "select"],
+            "Is your share of the property in dispute?": ["No", "radio"],
+        },
+    ),
+]
+
 
 @pytest.mark.usefixtures("live_server")
 @pytest.mark.parametrize("answers", about_you_form_routing)
@@ -153,7 +172,7 @@ def test_multi_property_routing(
 
 @pytest.mark.usefixtures("live_server")
 @pytest.mark.parametrize("answers", about_you_form_routing)
-@pytest.mark.parametrize("property_answers", multi_property_form_routing)
+@pytest.mark.parametrize("property_answers", main_property_form_routing)
 def test_multi_main_property(page: Page, property_answers: dict, navigate_to_property):
     """
     Test the property form routing.
