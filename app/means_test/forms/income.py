@@ -68,6 +68,7 @@ class IncomeForm(BaseMeansTestForm):
                 amount_message=_("Tell us how much you receive in wages"),
             ),
         ],
+        exclude_intervals=["per_2week"],
     )
 
     income_tax = SelfEmployedMoneyIntervalField(
@@ -88,6 +89,7 @@ class IncomeForm(BaseMeansTestForm):
                 amount_message=_("Tell us how much income tax you pay"),
             ),
         ],
+        exclude_intervals=["per_2week"],
     )
 
     national_insurance = SelfEmployedMoneyIntervalField(
@@ -108,6 +110,7 @@ class IncomeForm(BaseMeansTestForm):
                 amount_message=_("Tell us how much National Insurance you pay"),
             ),
         ],
+        exclude_intervals=["per_2week"],
     )
 
     working_tax_credit = MoneyIntervalField(
@@ -126,6 +129,7 @@ class IncomeForm(BaseMeansTestForm):
                 amount_message=_("Tell us how much Working Tax Credit you receive"),
             ),
         ],
+        exclude_intervals=["per_2week"],
     )
 
     child_tax_credit = MoneyIntervalField(
@@ -144,6 +148,7 @@ class IncomeForm(BaseMeansTestForm):
                 amount_message=_("Tell us how much Child Tax Credit you receive"),
             ),
         ],
+        exclude_intervals=["per_2week"],
     )
 
     maintenance_received = MoneyIntervalField(
@@ -161,6 +166,7 @@ class IncomeForm(BaseMeansTestForm):
                 amount_message=_("Tell us how much maintenance you receive"),
             )
         ],
+        exclude_intervals=["per_2week"],
     )
 
     pension = MoneyIntervalField(
@@ -178,6 +184,7 @@ class IncomeForm(BaseMeansTestForm):
                 amount_message=_("Tell us how much pension you receive"),
             )
         ],
+        exclude_intervals=["per_2week"],
     )
 
     other_income = MoneyIntervalField(
@@ -195,6 +202,7 @@ class IncomeForm(BaseMeansTestForm):
                 amount_message=_("Tell us how much other income you receive"),
             )
         ],
+        exclude_intervals=["per_2week"],
     )
 
     # Partner-specific fields
@@ -214,6 +222,7 @@ class IncomeForm(BaseMeansTestForm):
                 amount_message=_("Tell us how much your partner receives in wages"),
             ),
         ],
+        exclude_intervals=["per_2week"],
     )
 
     partner_income_tax = SelfEmployedMoneyIntervalField(
@@ -235,6 +244,7 @@ class IncomeForm(BaseMeansTestForm):
                 amount_message=_("Tell us how much income tax your partner pays"),
             ),
         ],
+        exclude_intervals=["per_2week"],
     )
 
     partner_national_insurance = SelfEmployedMoneyIntervalField(
@@ -260,6 +270,7 @@ class IncomeForm(BaseMeansTestForm):
                 ),
             ),
         ],
+        exclude_intervals=["per_2week"],
     )
 
     partner_working_tax_credit = MoneyIntervalField(
@@ -301,6 +312,7 @@ class IncomeForm(BaseMeansTestForm):
                 amount_message=_("Tell us how much maintenance your partner receives"),
             ),
         ],
+        exclude_intervals=["per_2week"],
     )
 
     partner_pension = MoneyIntervalField(
@@ -319,6 +331,7 @@ class IncomeForm(BaseMeansTestForm):
                 amount_message=_("Tell us how much pension your partner receives"),
             ),
         ],
+        exclude_intervals=["per_2week"],
     )
 
     partner_other_income = MoneyIntervalField(
@@ -339,6 +352,7 @@ class IncomeForm(BaseMeansTestForm):
                 amount_message=_("Tell us how much other income your partner receives"),
             ),
         ],
+        exclude_intervals=["per_2week"],
     )
 
     @property
