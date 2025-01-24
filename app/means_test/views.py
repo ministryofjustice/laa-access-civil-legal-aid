@@ -9,12 +9,6 @@ from app.means_test.forms.property import MultiplePropertiesForm
 from app.means_test.money_interval import MoneyInterval, to_amount
 
 
-def mi(field, val):
-    amount = "%s-per_interval_value" % field
-    period = "%s-interval_period" % field
-    return {"per_interval_value": val(amount), "interval_period": val(period)}
-
-
 def deep_update(original, updates):
     """
     Recursively updates a nested dictionary with values from another dictionary.
@@ -46,11 +40,11 @@ class PropertyPayload(dict):
 
         self.update(
             {
-                "value": to_amount(val("property_value")),
-                "mortgage_left": to_amount(val("mortgage_remaining")),
+                "value": to_amount(val("property_value") * 100),
+                "mortgage_left": to_amount(val("mortgage_remaining") * 100),
                 "share": 100 if no("other_shareholders") else None,
                 "disputed": val("in_dispute"),
-                "rent": MoneyInterval(mi("rent_amount", val))
+                "rent": MoneyInterval(val("rent_amount"))
                 if yes("is_rented")
                 else MoneyInterval(0),
                 "main": val("is_main_home"),
@@ -67,6 +61,8 @@ class PropertiesPayload(dict):
 
         # Convert each property dictionary to a PropertyPayload
         properties = [PropertyPayload(property_data) for property_data in property_list]
+        for property_data in property_list:
+            print(property_data)
 
         # Calculate total mortgage payments and rent amounts
         total_mortgage = sum(
@@ -90,19 +86,9 @@ class PropertiesPayload(dict):
             {
                 "property_set": properties,
                 "you": {
-                    "income": {
-                        "other_income": {
-                            "per_interval_value": total_rent,
-                            "interval_period": "per_month",
-                        }
-                    },
-                    "deductions": {
-                        "mortgage": {
-                            "per_interval_value": total_mortgage,
-                            "interval_period": "per_month",
-                        }
-                    },
+                    "income": {"other_income": MoneyInterval(total_rent, "per_month")}
                 },
+                "deductions": {"mortgage": MoneyInterval(total_mortgage, "per_month")},
             },
         )
 
@@ -163,6 +149,7 @@ class MeansTest(View):
         about = eligibility_data.forms.get("about-you", {})
         benefits_form = eligibility_data.forms.get("benefits", {})
         property_form = eligibility_data.forms.get("property", {})
+        print(property_form)
 
         benefits = benefits_form.get("benefits", [])
 
