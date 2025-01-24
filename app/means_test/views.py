@@ -1,12 +1,10 @@
 from flask.views import View, MethodView
 from flask import render_template, url_for, redirect, session, request
 
-from app.means_test import YES, NO
 from app.means_test.api import update_means_test
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm
-from app.means_test.forms.property import MultiplePropertiesForm
-from app.means_test.money_interval import MoneyInterval, to_amount
+from app.means_test.forms.property import MultiplePropertiesForm, PropertiesPayload
 
 
 def deep_update(original, updates):
@@ -23,74 +21,6 @@ def deep_update(original, updates):
             deep_update(original[key], value)  # Recursive call for nested dict
         else:
             original[key] = value
-
-
-class PropertyPayload(dict):
-    def __init__(self, form_data={}):
-        super(PropertyPayload, self).__init__()
-
-        def val(field):
-            return form_data.get(field)
-
-        def yes(field):
-            return form_data.get(field) == YES
-
-        def no(field):
-            return form_data.get(field) == NO
-
-        self.update(
-            {
-                "value": to_amount(val("property_value") * 100),
-                "mortgage_left": to_amount(val("mortgage_remaining") * 100),
-                "share": 100 if no("other_shareholders") else None,
-                "disputed": val("in_dispute"),
-                "rent": MoneyInterval(val("rent_amount"))
-                if yes("is_rented")
-                else MoneyInterval(0),
-                "main": val("is_main_home"),
-            }
-        )
-
-
-class PropertiesPayload(dict):
-    def __init__(self, form_data={}):
-        super(PropertiesPayload, self).__init__()
-
-        # Extract the list of properties from the form data
-        property_list = form_data.get("properties", [])
-
-        # Convert each property dictionary to a PropertyPayload
-        properties = [PropertyPayload(property_data) for property_data in property_list]
-        for property_data in property_list:
-            print(property_data)
-
-        # Calculate total mortgage payments and rent amounts
-        total_mortgage = sum(
-            float(property_data.get("mortgage_payments", 0))
-            for property_data in property_list
-        )
-        total_rent = (
-            sum(
-                float(
-                    MoneyInterval(property_data.get("rent_amount", {}))
-                    .per_month()
-                    .get("per_interval_value", 0)
-                )
-                for property_data in property_list
-            )
-            / 100
-        )
-
-        # Update the payload with the calculated data
-        self.update(
-            {
-                "property_set": properties,
-                "you": {
-                    "income": {"other_income": MoneyInterval(total_rent, "per_month")}
-                },
-                "deductions": {"mortgage": MoneyInterval(total_mortgage, "per_month")},
-            },
-        )
 
 
 class MeansTest(View):
@@ -149,7 +79,6 @@ class MeansTest(View):
         about = eligibility_data.forms.get("about-you", {})
         benefits_form = eligibility_data.forms.get("benefits", {})
         property_form = eligibility_data.forms.get("property", {})
-        print(property_form)
 
         benefits = benefits_form.get("benefits", [])
 

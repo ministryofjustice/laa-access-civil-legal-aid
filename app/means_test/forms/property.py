@@ -11,6 +11,73 @@ from app.means_test.forms import BaseMeansTestForm
 from app.means_test.fields import MoneyField, MoneyFieldWidget
 from app.means_test.validators import MoneyIntervalAmountRequired
 from app.means_test.validators import ValidateIf
+from app.means_test.money_interval import MoneyInterval, to_amount
+
+
+class PropertyPayload(dict):
+    def __init__(self, form_data={}):
+        super(PropertyPayload, self).__init__()
+
+        def val(field):
+            return form_data.get(field)
+
+        def yes(field):
+            return form_data.get(field) == YES
+
+        def no(field):
+            return form_data.get(field) == NO
+
+        self.update(
+            {
+                "value": to_amount(val("property_value") * 100),
+                "mortgage_left": to_amount(val("mortgage_remaining") * 100),
+                "share": 100 if no("other_shareholders") else None,
+                "disputed": val("in_dispute"),
+                "rent": MoneyInterval(val("rent_amount"))
+                if yes("is_rented")
+                else MoneyInterval(0),
+                "main": val("is_main_home"),
+            }
+        )
+
+
+class PropertiesPayload(dict):
+    def __init__(self, form_data={}):
+        super(PropertiesPayload, self).__init__()
+
+        # Extract the list of properties from the form data
+        property_list = form_data.get("properties", [])
+
+        # Convert each property dictionary to a PropertyPayload
+        properties = [PropertyPayload(property_data) for property_data in property_list]
+
+        # Calculate total mortgage payments and rent amounts
+        total_mortgage = sum(
+            float(property_data.get("mortgage_payments", 0))
+            for property_data in property_list
+        )
+        total_rent = (
+            sum(
+                float(
+                    MoneyInterval(property_data.get("rent_amount", {}))
+                    .per_month()
+                    .get("per_interval_value", 0)
+                )
+                for property_data in property_list
+            )
+            / 100
+        )
+
+        # Update the payload with the calculated data
+        self.update(
+            {
+                "property_set": properties,
+                "you": {
+                    "income": {"other_income": MoneyInterval(total_rent, "per_month")}
+                },
+                "deductions": {"mortgage": MoneyInterval(total_mortgage, "per_month")},
+            },
+        )
 
 
 def validate_single_main_home(form, field):
