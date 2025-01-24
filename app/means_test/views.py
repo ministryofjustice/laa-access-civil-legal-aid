@@ -15,6 +15,22 @@ def mi(field, val):
     return {"per_interval_value": val(amount), "interval_period": val(period)}
 
 
+def deep_update(original, updates):
+    """
+    Recursively updates a nested dictionary with values from another dictionary.
+    Only updates keys present in the `updates` dictionary.
+    """
+    for key, value in updates.items():
+        if (
+            isinstance(value, dict)
+            and key in original
+            and isinstance(original[key], dict)
+        ):
+            deep_update(original[key], value)  # Recursive call for nested dict
+        else:
+            original[key] = value
+
+
 class PropertyPayload(dict):
     def __init__(self, form_data={}):
         super(PropertyPayload, self).__init__()
@@ -321,19 +337,8 @@ class MeansTest(View):
 
         # Add in the property payload
         if eligibility_data.forms.get("about-you", {}).get("own_property"):
-            payload["property_set"] = property_payload["property_set"]
-            payload["you"]["income"]["other_income"]["per_interval_value"] = (
-                property_payload["you"]["income"]["other_income"]["per_interval_value"]
-            )
-            payload["you"]["income"]["other_income"]["interval_period"] = (
-                property_payload["you"]["income"]["other_income"]["interval_period"]
-            )
-            payload["you"]["deductions"]["mortgage"]["per_interval_value"] = (
-                property_payload["you"]["deductions"]["mortgage"]["per_interval_value"]
-            )
-            payload["you"]["deductions"]["mortgage"]["interval_period"] = (
-                property_payload["you"]["deductions"]["mortgage"]["interval_period"]
-            )
+            deep_update(payload, property_payload)
+
         return payload
 
 
