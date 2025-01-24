@@ -70,7 +70,7 @@ property_form_routing = [
 multi_property_form_routing = [
     pytest.param(
         {
-            "Is this property your main home?": ["Yes", "radio"],
+            "Is this property your main home?": ["No", "radio"],
             "Does anyone else own a share of the property?": ["No", "radio"],
             "How much is the property worth?": ["300000", "input"],
             "How much is left to pay on the mortgage?": ["200000", "input"],
