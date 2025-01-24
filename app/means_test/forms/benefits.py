@@ -1,5 +1,5 @@
 from flask import session
-from flask_babel import gettext as _
+from flask_babel import lazy_gettext as _
 from wtforms.validators import InputRequired
 from app.means_test.widgets import MeansTestCheckboxInput, MeansTestRadioInput
 from app.means_test.forms import BaseMeansTestForm
@@ -23,8 +23,8 @@ def get_benefits_choices():
 
 
 class BenefitsForm(BaseMeansTestForm):
-    title = _(" Which benefits do you receive?")
-    partner_title = "Which benefits do you and your partner receive?"
+    title = _("Which benefits do you receive?")
+    partner_title = _("Which benefits do you and your partner receive?")
 
     template = "means_test/benefits.html"
 
@@ -84,7 +84,7 @@ class BenefitsForm(BaseMeansTestForm):
 
 class AdditionalBenefitsForm(BaseMeansTestForm):
     title = _("Your additional benefits")
-    partner_title = "You and your partner’s additional benefits"
+    partner_title = _("You and your partner’s additional benefits")
     description = _(
         "You’ll need to provide evidence of the financial information you’ve given us through this service."
     )

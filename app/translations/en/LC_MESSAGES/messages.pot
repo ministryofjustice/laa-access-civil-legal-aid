@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-23 16:01+0000\n"
+"POT-Creation-Date: 2025-01-27 10:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -149,19 +149,28 @@ msgstr ""
 msgid "Continue to contact CLA"
 msgstr ""
 
+msgid "Child Benefit"
+msgstr ""
+
+msgid "Guarantee Credit"
+msgstr ""
+
+msgid "Income Support"
+msgstr ""
+
+msgid "Income-based Jobseeker's Allowance"
+msgstr ""
+
+msgid "Income-related Employment and Support Allowance"
+msgstr ""
+
+msgid "Universal Credit"
+msgstr ""
+
+msgid "Any other benefits"
+msgstr ""
+
 msgid "-- Please select --"
-msgstr ""
-
-msgid "each week"
-msgstr ""
-
-msgid "every 4 weeks"
-msgstr ""
-
-msgid "each month"
-msgstr ""
-
-msgid "each year"
 msgstr ""
 
 msgid "per week"
@@ -316,28 +325,119 @@ msgstr ""
 msgid "Tell us if you have any valuable items worth over £500 each"
 msgstr ""
 
-msgid " Which benefits do you receive?"
+msgid "Which benefits do you receive?"
 msgstr ""
 
-msgid "Child Benefit"
+msgid "Which benefits do you and your partner receive?"
 msgstr ""
 
-msgid "Guarantee Credit"
+msgid "If yes, enter the total amount you get for all your children"
 msgstr ""
 
-msgid "Income Support"
+msgid "For example, £32.18 per week"
 msgstr ""
 
-msgid "Income-based Jobseeker's Allowance"
+msgid "Enter the Child Benefit you receive"
 msgstr ""
 
-msgid "Income-related Employment and Support Allowance"
+msgid "Tell us how often you receive Child Benefit"
 msgstr ""
 
-msgid "Universal Credit"
+msgid "Tell us how much Child Benefit you receive each"
 msgstr ""
 
-msgid "Any other benefits"
+msgid "Your additional benefits"
+msgstr ""
+
+msgid "You and your partner’s additional benefits"
+msgstr ""
+
+msgid ""
+"You’ll need to provide evidence of the financial information you’ve given"
+" us through this service."
+msgstr ""
+
+msgid "Do you get any of these benefits?"
+msgstr ""
+
+msgid "Do you or your partner get any of these benefits?"
+msgstr ""
+
+msgid "These benefits don’t count as income. Please tick the ones you receive."
+msgstr ""
+
+msgid "Armed Forces Independence payment"
+msgstr ""
+
+msgid "Attendance Allowance"
+msgstr ""
+
+msgid "Back to Work Bonus"
+msgstr ""
+
+msgid "Care in the community Direct Payment"
+msgstr ""
+
+msgid "Carers’ Allowance"
+msgstr ""
+
+msgid "Constant Attendance Allowance"
+msgstr ""
+
+msgid "Council Tax Benefits"
+msgstr ""
+
+msgid "Disability Living Allowance"
+msgstr ""
+
+msgid "Exceptionally Severe Disablement Allowance"
+msgstr ""
+
+msgid "Fostering Allowance"
+msgstr ""
+
+msgid "Housing Benefit"
+msgstr ""
+
+msgid "Independent Living Funds payment"
+msgstr ""
+
+msgid "Personal Independence Payments"
+msgstr ""
+
+msgid "Severe Disablement Allowance"
+msgstr ""
+
+msgid "Social Fund Payments"
+msgstr ""
+
+msgid "Special Education Needs (SEN) direct payment"
+msgstr ""
+
+msgid "War Pension"
+msgstr ""
+
+msgid "Do you receive any other benefits not listed above? "
+msgstr ""
+
+msgid "Do you or your partner receive any other benefits not listed above? "
+msgstr ""
+
+msgid ""
+"For example, National Asylum Support Service Benefit, Incapacity Benefit,"
+" Contribution-based Jobseeker’s Allowance"
+msgstr ""
+
+msgid "Tell us whether you receive any other benefits"
+msgstr ""
+
+msgid "If Yes, total amount of benefits not listed above"
+msgstr ""
+
+msgid "Tell us how much you receive in other benefits"
+msgstr ""
+
+msgid "Tell us how often you receive these other benefits"
 msgstr ""
 
 msgid ""
@@ -426,16 +526,13 @@ msgstr ""
 msgid "If Yes, how much rent did you receive last month?"
 msgstr ""
 
-msgid "For example, £32.18 per week"
-msgstr ""
-
 msgid "Tell us how much rent you receive from this property"
 msgstr ""
 
 msgid "Tell us how often you receive this rent"
 msgstr ""
 
-msgid "Tell us how much rent you receive each week"
+msgid "Tell us how much rent you receive"
 msgstr ""
 
 msgid "Is your share of the property in dispute?"
@@ -1180,11 +1277,6 @@ msgid ""
 msgstr ""
 
 msgid "You can add more than one property below."
-msgstr ""
-
-msgid ""
-"You’ll need to provide evidence of the financial information you’ve given"
-" us through this service."
 msgstr ""
 
 msgid "Remove Property"
