@@ -160,6 +160,18 @@ msgstr "pob mis"
 msgid "per year"
 msgstr "y flwyddyn"
 
+msgid "per week"
+msgstr ""
+
+msgid "2 weekly"
+msgstr ""
+
+msgid "4 weekly"
+msgstr ""
+
+msgid "per month"
+msgstr ""
+
 msgid "About you"
 msgstr "Amdanoch chi"
 
@@ -178,6 +190,11 @@ msgstr "Oes gennych chi bartner"
 
 msgid "Are you in a dispute with your partner?"
 msgstr "Ydych chi mewn anghydfod â'ch partner?"
+
+msgid ""
+"This means your partner is the opponent in the dispute you need help "
+"with, for example a dispute over money or property"
+msgstr "Mae hyn yn golygu mai eich partner yw’r gwrthwynebydd yn yr anghydfod y mae arnoch angen cymorth ar ei gyfer, er enghraifft anghydfod am arian neu eiddo"
 
 msgid "Tell us whether you're in dispute with your partner"
 msgstr "Ydych chi mewn anghydfod â’ch partner"
