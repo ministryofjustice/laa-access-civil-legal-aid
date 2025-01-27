@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-16 10:49+0000\n"
+"POT-Creation-Date: 2025-01-27 06:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -150,18 +150,6 @@ msgid "Continue to contact CLA"
 msgstr ""
 
 msgid "-- Please select --"
-msgstr ""
-
-msgid "each week"
-msgstr ""
-
-msgid "every 4 weeks"
-msgstr ""
-
-msgid "each month"
-msgstr ""
-
-msgid "each year"
 msgstr ""
 
 msgid "per week"
@@ -353,6 +341,9 @@ msgid "Your money coming in"
 msgstr ""
 
 msgid "Wages before tax"
+msgstr ""
+
+msgid "For example, £32.18 per week"
 msgstr ""
 
 msgid "This includes any earnings from self-employment"
@@ -1335,6 +1326,57 @@ msgstr ""
 msgid ""
 "We only need to know about any money you received last month, even if "
 "this varies from month to month."
+msgstr ""
+
+msgid "What payments do not count as income?"
+msgstr ""
+
+msgid "Do not include any money you received from:"
+msgstr ""
+
+msgid "The Energy Support Scheme payments (2022 and 2023)"
+msgstr ""
+
+msgid "Cost of living payments"
+msgstr ""
+
+msgid "Criminal Injuries Compensation Scheme (CICA)"
+msgstr ""
+
+msgid "Grenfell Tower compensation"
+msgstr ""
+
+msgid "Modern Slavery Victim Care Contract or National Referral Mechanism (NRM)"
+msgstr ""
+
+msgid "National Emergencies Trust"
+msgstr ""
+
+msgid "London Emergencies Trust"
+msgstr ""
+
+msgid "Variant Creutzfeldt-Jakob Disease (“vCJD”) Trust"
+msgstr ""
+
+msgid "Vaccine Damage Payment"
+msgstr ""
+
+msgid "Victims of Overseas Terrorism Compensation Scheme (VOTCS)"
+msgstr ""
+
+msgid "Scotland and Northern Ireland redress schemes for historical child abuse"
+msgstr ""
+
+msgid "Miscarriage of justice compensation"
+msgstr ""
+
+msgid "We Love Manchester Emergency Fund"
+msgstr ""
+
+msgid "Backdated benefit payments"
+msgstr ""
+
+msgid "Backdated child maintenance payments"
 msgstr ""
 
 msgid "Amount"
