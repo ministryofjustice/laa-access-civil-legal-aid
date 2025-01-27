@@ -60,6 +60,10 @@ class Eligibility:
             return False
         return self.is_yes("about-you", "partner_is_self_employed")
 
+    @property
+    def has_valuables(self):
+        return self.is_yes("about-you", "have_valuables")
+
 
 class Session(SecureCookieSession):
     SESSION_TIMEOUT = timedelta(minutes=30)
