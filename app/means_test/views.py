@@ -6,6 +6,7 @@ from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm
 from app.means_test.forms.property import PropertyForm
 from app.means_test.forms.income import IncomeForm
+from app.means_test.forms.savings import SavingsForm
 
 
 class MeansTest(View):
@@ -13,6 +14,7 @@ class MeansTest(View):
         "about-you": AboutYouForm,
         "benefits": BenefitsForm,
         "property": PropertyForm,
+        "savings": SavingsForm,
         "income": IncomeForm,
     }
 

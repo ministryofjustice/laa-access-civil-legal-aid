@@ -1,0 +1,33 @@
+{% extends "means_test/form-page.html" %}
+
+{% block formDescription %}
+    <p>{% trans %}Any cash, savings or investments held in your name, your partner’s name or both your names.{% endtrans %}</p>
+    <p>{% trans %}You’ll need to provide evidence of the financial information you’ve given us through this service.{% endtrans %}</p>
+{% endblock %}
+
+{% block form %}
+
+    {{ form.csrf_token }}
+
+    {% set fields = form.shown_fields %}
+
+    {%  for field in fields %}
+        {{ field }}
+        {% if field.additional_details %}
+            <details class="govuk-details" data-module="govuk-details">
+                <summary class="govuk-details__summary">
+                  <span class="govuk-details__summary-text">
+                    {% trans %}What payments do not count as income?{% endtrans %}
+                  </span>
+                </summary>
+                {% if field.additional_details == "disregards" %}
+                    {% include 'means_test/components/_disregards-info-income.html' %}
+                {% elif field.additional_details == "valuables" %}
+                    {% include 'means_test/components/_disregards-info-income.html' %}
+                {% endif %}
+            </details>
+        {% endif %}
+    {% endfor %}
+
+    {{ form.submit }}
+{% endblock %}

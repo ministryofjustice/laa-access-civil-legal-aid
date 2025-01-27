@@ -1,5 +1,8 @@
-from govuk_frontend_wtf.wtforms_widgets import GovRadioInput, GovCheckboxesInput
-from wtforms.fields.numeric import IntegerField
+from govuk_frontend_wtf.wtforms_widgets import (
+    GovRadioInput,
+    GovCheckboxesInput,
+    GovTextInput,
+)
 
 
 class MeansTestInputField:
@@ -68,9 +71,16 @@ class MeansTestCheckboxInput(
     pass
 
 
-class MoneyInput(IntegerField):
-    def map_gov_params(self, field, **kwargs):
-        params = super().map_gov_params(field, **kwargs)
+class MoneyInput(GovTextInput):
+    def __init__(self, label_class: str = "govuk-fieldset__legend--s"):
+        self.label_class = label_class
 
-        params["prefix"] = "£"
+    def map_gov_params(self, field, **kwargs):
+        kwargs["params"] = {
+            "prefix": {"text": " £"},
+            "label": {"classes": self.label_class},
+            "inputmode": "numeric",
+            "classes": "govuk-input--width-10",
+        }
+        params = super().map_gov_params(field, **kwargs)
         return params
