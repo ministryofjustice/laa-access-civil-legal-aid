@@ -21,14 +21,7 @@
             {{ field }}
         {% endfor %}
 
-        <details class="govuk-details" data-module="govuk-details">
-            <summary class="govuk-details__summary">
-              <span class="govuk-details__summary-text">
-                {% trans %}What payments do not count as income?{% endtrans %}
-              </span>
-            </summary>
-            {% include 'means_test/components/_disregards-info-income.html' %}
-        </details>
+        {% include 'means_test/components/_disregards-info-income.html' %}
 
     {% endif %}
 
