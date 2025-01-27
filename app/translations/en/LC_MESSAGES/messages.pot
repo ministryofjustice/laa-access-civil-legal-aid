@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-27 07:29+0000\n"
+"POT-Creation-Date: 2025-01-27 07:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -641,6 +641,9 @@ msgid "See below for examples of what valuable items to include"
 msgstr ""
 
 msgid "Enter the total of all valuable items over £500"
+msgstr ""
+
+msgid "Enter 0 if you have no valuable items worth over £500 each"
 msgstr ""
 
 msgid "Legal aid is available for this type of problem"

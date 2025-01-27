@@ -46,7 +46,7 @@ class SavingsForm(BaseMeansTestForm):
             InputRequired(message=_("Enter the total of all valuable items over £500")),
             NumberRange(
                 min=500000,
-                message="Enter 0 if you have no valuable items worth over £500 each",
+                message=_("Enter 0 if you have no valuable items worth over £500 each"),
             ),  # This value is in pence
         ],
     )
