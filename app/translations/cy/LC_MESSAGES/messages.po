@@ -146,16 +146,19 @@ msgid "each year"
 msgstr ""
 
 msgid "per week"
-msgstr ""
+msgstr "yr wythnos"
 
 msgid "2 weekly"
-msgstr ""
+msgstr "pob 2 wythnos"
 
 msgid "4 weekly"
-msgstr ""
+msgstr "pob 4 wythnos"
 
 msgid "per month"
-msgstr ""
+msgstr "pob mis"
+
+msgid "per year"
+msgstr "y flwyddyn"
 
 msgid "About you"
 msgstr "Amdanoch chi"
@@ -354,29 +357,92 @@ msgstr ""
 msgid "Tell us how much Working Tax Credit your partner receives"
 msgstr ""
 
-msgid "Your property"
-msgstr ""
+msgid "You can only have 1 main property"
+msgstr "Dim ond un prif Eiddo allwch chi ei gael"
+
+msgid "Is this property your main home?"
+msgstr "Ai’r eiddo hwn yw’ch prif gartref?"
+
+msgid "If you’re temporarily living away from the property, select ‘Yes’"
+msgstr "Os nad ydych chi'n byw yn yr eiddo dros dro, dewiswch 'oes'"
 
 msgid "Tell us whether this is your main home"
-msgstr ""
+msgstr "Ai hwn yw eich prif gartref"
+
+msgid "Does anyone else (other than you or your partner) own a share of the property?"
+msgstr "A oes unrhyw un arall (heblaw chi neu’ch partner) sy’n berchen ar gyfran o’r eiddo?"
+
+msgid "Does anyone else own a share of the property?"
+msgstr "A oes unrhyw un arall sy’n berchen ar gyfran o’r eiddo?"
+
+msgid "Select ‘Yes’ if you share ownership with a friend, relative or ex-partner"
+msgstr "Rhowch ‘oes’ yn ateb os ydych chi’n rhannu perchenogaeth â ffrind, perthynas neu gynbartner"
 
 msgid "Tell us whether anyone else owns a share of this property"
-msgstr ""
+msgstr "Oes rhywun arall yn berchen ar gyfran o’r eiddo hwn"
+
+msgid "How much is the property worth?"
+msgstr "Beth yw gwerth yr eiddo?"
+
+msgid "Use a property website or the Land Registry house prices website."
+msgstr "Defnyddiwch wefan eiddo neu wefan prisiau tai’r Gofrestrfa Tir"
 
 msgid "Tell us the approximate value of this property"
+msgstr "Faint yw gwerth yr eiddo hwn, yn fras"
+
+msgid "Enter a value of more than £0"
 msgstr ""
 
-msgid "Enter a value"
-msgstr ""
+msgid "How much is left to pay on the mortgage?"
+msgstr "Pa swm sy’n weddill i’w dalu ar y morgais?"
+
+msgid "Include the full amount owed, even if the property has shared ownership, or enter 0 if you have no mortgage"
+msgstr "Rhowch y cyfanswm sy’n ddyledus, hyd yn oed os yw perchenogaeth yr eiddo wedi’i rhannu, neu rhowch 0 os nad oes gennych forgais"
 
 msgid "Tell us how much is left to pay on the mortgage"
-msgstr ""
+msgstr "Faint sy’n weddill i’w dalu ar y morgais"
+
+msgid "How much was your monthly mortgage repayment last month?"
+msgstr "Beth oedd swm eich ad-daliad misol ar y morgais ar gyfer y mis diwethaf?"
+
+msgid "Enter your mortgage repayment for last month"
+msgstr "Rhowch eich taliad morgais ar gyfer y mis diwethaf"
+
+msgid "Do you rent out any part of this property?"
+msgstr "Ydych chi’n gosod unrhyw ran o’r eiddo ar rent?"
 
 msgid "Tell us whether you rent out some of this property"
-msgstr ""
+msgstr "Ydych chi’n gosod rhan o’r eiddo hwn ar rent"
+
+msgid "If Yes, how much rent did you receive last month?"
+msgstr "Os ydych, beth oedd swm y rhent y cawsoch fis diwethaf?"
+
+msgid "For example, £32.18 per week"
+msgstr "Er enghraifft, £32.18 yr wythnos"
+
+msgid "Tell us how much rent you receive from this property"
+msgstr "Faint o rent rydych chi’n ei dderbyn ar gyfer yr eiddo hwn"
+
+msgid "Tell us how often you receive this rent"
+msgstr "Pa mor aml rydych chi’n derbyn y rhent hwn"
+
+msgid "Tell us how much rent you receive"
+msgstr "Faint o rent rydych chi’n ei dderbyn"
+
+msgid "Is your share of the property in dispute?"
+msgstr "A oes anghydfod ynghylch eich cyfran chi o’r eiddo?"
+
+msgid "For example, as part of the financial settlement of a divorce"
+msgstr "Er enghraifft, fel rhan o’r setliad ariannol mewn ysgariad"
 
 msgid "Tell us whether this property is in dispute"
-msgstr ""
+msgstr "Ydy’r eiddo hwn yn rhan o anghydfod"
+
+msgid "You and your partner’s property"
+msgstr "Eich eiddo chi ac eiddo’ch partner"
+
+msgid "Your property"
+msgstr "Eich eiddo"
 
 msgid "Legal aid is available for this type of problem"
 msgstr "Mae cymorth cyfreithiol ar gael ar gyfer y math hwn o broblem"
@@ -1139,6 +1205,21 @@ msgstr ""
 "Os ydych yn cael problemau wrth lenwi’r ffurflen hon, gofynnwch i ni, <a "
 "href=\"%(contact_url)s\" class=\"govuk-link\">cysylltwch â ni</a>."
 
+msgid "Please tell us about any property owned by you, your partner or both of you."
+msgstr "Rhowch wybod i ni am unrhyw eiddo yr ydych chi, eich partner neu’r ddau ohonoch yn berchen arno"
+
+msgid "You can add more than one property below."
+msgstr "Gallwch ychwanegu mwy nag un eiddo isod."
+
+msgid "You’ll need to provide evidence of the financial information you’ve given us through this service."
+msgstr "Bydd angen i chi ddarparu tystiolaeth o’r wybodaeth ariannol yr ydych wedi ei rhoi i ni drwy’r gwasanaeth hwn."
+
+msgid "Remove Property"
+msgstr "Dileu eiddo"
+
+msgid "Add another property"
+msgstr "Ychwanegu eiddo arall"
+
 msgid "Amount"
 msgstr ""
 
@@ -1274,5 +1355,8 @@ msgstr "Offerynnau cerddorol, oni bai’ch bod yn gerddor proffesiynol"
 #~ msgstr ""
 
 #~ msgid "Start again"
+#~ msgstr ""
+
+#~ msgid "Enter a value"
 #~ msgstr ""
 

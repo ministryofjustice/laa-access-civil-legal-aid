@@ -1,17 +1,33 @@
 from flask.views import View, MethodView
-from flask import render_template, url_for, redirect, session
+from flask import render_template, url_for, redirect, session, request
 
 from app.means_test.api import update_means_test
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm
-from app.means_test.forms.property import PropertyForm
+from app.means_test.forms.property import MultiplePropertiesForm, PropertiesPayload
+
+
+def deep_update(original, updates):
+    """
+    Recursively updates a nested dictionary with values from another dictionary.
+    Only updates keys present in the `updates` dictionary.
+    """
+    for key, value in updates.items():
+        if (
+            isinstance(value, dict)
+            and key in original
+            and isinstance(original[key], dict)
+        ):
+            deep_update(original[key], value)  # Recursive call for nested dict
+        else:
+            original[key] = value
 
 
 class MeansTest(View):
     forms = {
         "about-you": AboutYouForm,
         "benefits": BenefitsForm,
-        "property": PropertyForm,
+        "property": MultiplePropertiesForm,
     }
 
     def __init__(self, current_form_class, current_name):
@@ -20,6 +36,23 @@ class MeansTest(View):
 
     def dispatch_request(self):
         form = self.form_class()
+
+        if isinstance(form, MultiplePropertiesForm):
+            # Handle adding a property
+            if "add-property" in request.form:
+                form.properties.append_entry()
+                form._submitted = False
+                return render_template(self.form_class.template, form=form)
+
+            # Handle removing a property
+            elif (
+                "remove-property-2" in request.form
+                or "remove-property-3" in request.form
+            ):
+                form.properties.pop_entry()
+                form._submitted = False
+                return render_template(self.form_class.template, form=form)
+
         if form.validate_on_submit():
             session.get_eligibility().add(self.current_name, form.data)
             next_page = url_for(f"means_test.{self.get_next_page(self.current_name)}")
@@ -45,8 +78,15 @@ class MeansTest(View):
     def get_payload(cls, eligibility_data: dict) -> dict:
         about = eligibility_data.forms.get("about-you", {})
         benefits_form = eligibility_data.forms.get("benefits", {})
+        property_form = eligibility_data.forms.get("property", {})
 
         benefits = benefits_form.get("benefits", [])
+
+        # Remove rent field from property set and setup payload
+        if eligibility_data.forms.get("about-you", {}).get("own_property"):
+            property_payload = PropertiesPayload(property_form)
+            for property_item in property_payload.get("property_set", []):
+                property_item.pop("rent", None)
 
         payload = {
             "category": eligibility_data.category,
@@ -210,6 +250,10 @@ class MeansTest(View):
             },
             "disregards": [],
         }
+
+        # Add in the property payload
+        if eligibility_data.forms.get("about-you", {}).get("own_property"):
+            deep_update(payload, property_payload)
 
         return payload
 

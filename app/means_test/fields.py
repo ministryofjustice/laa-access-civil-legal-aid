@@ -6,7 +6,7 @@ from flask_babel import lazy_gettext as _
 from app.means_test.money_interval import MoneyInterval
 
 
-class MoneyFieldWidgetWidget(TextInput):
+class MoneyFieldWidget(TextInput):
     def __call__(self, field, *args, **kwargs):
         # Pass the current values to the template
         return Markup(
