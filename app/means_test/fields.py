@@ -100,11 +100,6 @@ class MoneyField(IntegerField):
 
     def extract_pounds_and_pence(self, valuelist):
         pounds, _, pence = valuelist[0].strip().partition(".")
-        try:
-            pounds = pounds.decode("utf-8")
-        except UnicodeEncodeError:
-            # Input is already in UTF-8 format
-            pass
 
         # xa3 is the ASCII character reference for the pound sign
         pounds = re.sub(r"^\xa3|[\s,]+", "", pounds)

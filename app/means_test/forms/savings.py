@@ -1,5 +1,5 @@
 from flask import session
-from wtforms.validators import InputRequired
+from wtforms.validators import InputRequired, NumberRange
 from app.means_test.fields import MoneyField
 from app.means_test.forms import BaseMeansTestForm
 from app.means_test.widgets import MoneyInput
@@ -44,6 +44,10 @@ class SavingsForm(BaseMeansTestForm):
         validators=[
             ValidateIfSession("has_valuables", True),
             InputRequired(message=_("Enter the total of all valuable items over £500")),
+            NumberRange(
+                min=500000,
+                message="Enter 0 if you have no valuable items worth over £500 each",
+            ),  # This value is in pence
         ],
     )
 
