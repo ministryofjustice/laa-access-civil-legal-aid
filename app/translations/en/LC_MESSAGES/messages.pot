@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-27 06:43+0000\n"
+"POT-Creation-Date: 2025-01-27 07:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -150,6 +150,15 @@ msgid "Continue to contact CLA"
 msgstr ""
 
 msgid "-- Please select --"
+msgstr ""
+
+msgid "Enter a number"
+msgstr ""
+
+msgid "Enter a value of more than £{:,.0f}"
+msgstr ""
+
+msgid "Enter a value of less than £{:,.0f}"
 msgstr ""
 
 msgid "per week"
@@ -595,6 +604,43 @@ msgid "Tell us whether you rent out some of this property"
 msgstr ""
 
 msgid "Tell us whether this property is in dispute"
+msgstr ""
+
+msgid "Your savings"
+msgstr ""
+
+msgid "You and your partner’s savings"
+msgstr ""
+
+msgid "Savings"
+msgstr ""
+
+msgid ""
+"The total amount of savings in cash, bank or building society; or enter 0"
+" if you have none"
+msgstr ""
+
+msgid "Enter your total savings, or 0 if you have none"
+msgstr ""
+
+msgid "Investments"
+msgstr ""
+
+msgid ""
+"This includes stocks, shares, bonds (but not property); enter 0 if you "
+"have none"
+msgstr ""
+
+msgid "Enter your total investments, or 0 if you have none"
+msgstr ""
+
+msgid "Total value of items worth over £500 each"
+msgstr ""
+
+msgid "See below for examples of what valuable items to include"
+msgstr ""
+
+msgid "Enter the total of all valuable items over £500"
 msgstr ""
 
 msgid "Legal aid is available for this type of problem"
@@ -1326,6 +1372,11 @@ msgstr ""
 msgid ""
 "We only need to know about any money you received last month, even if "
 "this varies from month to month."
+msgstr ""
+
+msgid ""
+"Any cash, savings or investments held in your name, your partner’s name "
+"or both your names."
 msgstr ""
 
 msgid "What payments do not count as income?"

@@ -133,6 +133,15 @@ msgstr "Parhau i gysylltu â CLA"
 msgid "-- Please select --"
 msgstr "-- Dewiswch --"
 
+msgid "Enter a number"
+msgstr "Rhowch rif"
+
+msgid "Enter a value of more than £{:,.0f}"
+msgstr ""
+
+msgid "Enter a value of less than £{:,.0f}"
+msgstr ""
+
 msgid "per week"
 msgstr "yr wythnos"
 
@@ -640,6 +649,43 @@ msgstr ""
 
 msgid "Tell us whether this property is in dispute"
 msgstr ""
+
+msgid "Your savings"
+msgstr "Eich cynilion"
+
+msgid "You and your partner’s savings"
+msgstr "Eich cynilion chi a’ch partner"
+
+msgid "Savings"
+msgstr "Cynilion"
+
+msgid ""
+"The total amount of savings in cash, bank or building society; or enter 0"
+" if you have none"
+msgstr "Cyfanswm y cynilion mewn arian parod, yn y banc neu mewn cymdeithas adeiladu; neu rhowch 0 os nad oes gennych rai"
+
+msgid "Enter your total savings, or 0 if you have none"
+msgstr "Rhowch gyfanswm eich cynilion, neu 0 os nad oes gennych rai"
+
+msgid "Investments"
+msgstr "Buddsoddiadau"
+
+msgid ""
+"This includes stocks, shares, bonds (but not property); enter 0 if you "
+"have none"
+msgstr "Mae hyn yn cynnwys stociau, cyfrannau, bondiau (ond nid eiddo); rhowch 0 os nad oes gennych rai"
+
+msgid "Enter your total investments, or 0 if you have none"
+msgstr "Rhowch gyfanswm eich buddsoddiadau, neu 0 os nad oes gennych rai"
+
+msgid "Total value of items worth over £500 each"
+msgstr "Cyfanswm gwerth eitemau sy’n werth mwy na £500 yr un"
+
+msgid "See below for examples of what valuable items to include"
+msgstr "Gweler isod am enghreifftiau o’r eitemau gwerthfawr i’w cynnwys"
+
+msgid "Enter the total of all valuable items over £500"
+msgstr "Rhowch gyfanswm yr holl eitemau gwerthfawr dros £500"
 
 msgid "Legal aid is available for this type of problem"
 msgstr "Mae cymorth cyfreithiol ar gael ar gyfer y math hwn o broblem"
@@ -1412,6 +1458,11 @@ msgid ""
 "this varies from month to month."
 msgstr ""
 
+msgid ""
+"Any cash, savings or investments held in your name, your partner’s name "
+"or both your names."
+msgstr "Unrhyw arian parod, cynilion neu fuddsoddiadau sy’n cael eu dal yn eich enw chi, enw’ch partner neu yn enwau’r ddau ohonoch."
+
 msgid "What payments do not count as income?"
 msgstr "Pa daliadau nad ydynt yn cyfrif fel incwm?"
 
@@ -1431,7 +1482,9 @@ msgid "Grenfell Tower compensation"
 msgstr "Iawndal Tŵr Grenfell"
 
 msgid "Modern Slavery Victim Care Contract or National Referral Mechanism (NRM)"
-msgstr "Contract Gofalu am Ddioddefwyr Caethwasiaeth Fodern neu’r Mecanwaith Atgyfeirio Cenedlaethol (NRM)"
+msgstr ""
+"Contract Gofalu am Ddioddefwyr Caethwasiaeth Fodern neu’r Mecanwaith "
+"Atgyfeirio Cenedlaethol (NRM)"
 
 msgid "National Emergencies Trust"
 msgstr "Ymddiriedolaeth Argyfyngau Cenedlaethol"
@@ -1449,7 +1502,9 @@ msgid "Victims of Overseas Terrorism Compensation Scheme (VOTCS)"
 msgstr "Cynllun Iawndal Dioddefwyr Terfysgaeth Dramor (VOTCS)"
 
 msgid "Scotland and Northern Ireland redress schemes for historical child abuse"
-msgstr "Cynlluniau gwneud iawn yr Alban a Gogledd Iwerddon ar achosion hanesyddol o gam-drin"
+msgstr ""
+"Cynlluniau gwneud iawn yr Alban a Gogledd Iwerddon ar achosion hanesyddol"
+" o gam-drin"
 
 msgid "Miscarriage of justice compensation"
 msgstr "Iawndal Camweinyddu Cyfiawnder"
