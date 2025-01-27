@@ -1,4 +1,10 @@
-<div class="govuk-details__text">
+<details class="govuk-details" data-module="govuk-details">
+    <summary class="govuk-details__summary">
+      <span class="govuk-details__summary-text">
+        {% trans %}What payments do not count as income?{% endtrans %}
+      </span>
+    </summary>
+    <div class="govuk-details__text">
     <p class="govuk-body">{% trans %}Do not include any money you received from:{% endtrans %}</p>
     <ul class="govuk-list govuk-list--bullet">
       <li>{% trans %}The Energy Support Scheme payments (2022 and 2023){% endtrans %}</li>
@@ -15,4 +21,5 @@
       <li>{% trans %}Miscarriage of justice compensation{% endtrans %}</li>
       <li>{% trans %}We Love Manchester Emergency Fund{% endtrans %}</li>
     </ul>
-</div>
+    </div>
+</details>
