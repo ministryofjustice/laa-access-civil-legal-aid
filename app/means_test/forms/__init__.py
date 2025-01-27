@@ -16,6 +16,8 @@ class BaseMeansTestForm(FlaskForm):
 
     partner_title = ""
 
+    template = "means_test/form-page.html"
+
     submit = SubmitField(_("Continue"), widget=GovSubmitInput())
 
     def payload(self) -> dict:

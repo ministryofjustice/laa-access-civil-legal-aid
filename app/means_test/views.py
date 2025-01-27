@@ -3,11 +3,11 @@ from flask import render_template, url_for, redirect, session, request
 
 from werkzeug.datastructures import MultiDict
 
-from app.means_test.api import update_means_test
+from app.means_test.api import update_means_test, get_means_test_payload
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
-from app.means_test.forms.property import MultiplePropertiesForm, PropertiesPayload
-from app.means_test.data import BenefitsData, AdditionalBenefitData
+from app.means_test.forms.property import MultiplePropertiesForm
+from app.means_test.forms.income import IncomeForm
 
 
 def deep_update(original, updates):
@@ -32,6 +32,7 @@ class MeansTest(View):
         "benefits": BenefitsForm,
         "property": MultiplePropertiesForm,
         "additional-benefits": AdditionalBenefitsForm,
+        "income": IncomeForm,
     }
 
     def __init__(self, current_form_class, current_name):
@@ -64,7 +65,7 @@ class MeansTest(View):
         if form.validate_on_submit():
             session.get_eligibility().add(self.current_name, form.data)
             next_page = url_for(f"means_test.{self.get_next_page(self.current_name)}")
-            payload = self.get_payload(session.get_eligibility())
+            payload = get_means_test_payload(session.get_eligibility())
             update_means_test(payload)
 
             return redirect(next_page)
@@ -82,6 +83,8 @@ class MeansTest(View):
         except ValueError:  # current_key not found
             return "review"
 
+
+"""
     @classmethod
     def get_payload(cls, eligibility_data: dict) -> dict:
         about = eligibility_data.forms.get("about-you", {})
@@ -100,6 +103,8 @@ class MeansTest(View):
             property_payload = PropertiesPayload(property_form)
             for property_item in property_payload.get("property_set", []):
                 property_item.pop("rent", None)
+
+
 
         payload = {
             "category": eligibility_data.category,
@@ -257,6 +262,7 @@ class MeansTest(View):
             deep_update(payload, property_payload)
 
         return payload
+"""
 
 
 class CheckYourAnswers(MethodView):

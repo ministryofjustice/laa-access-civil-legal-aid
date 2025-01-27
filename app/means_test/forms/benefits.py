@@ -3,7 +3,7 @@ from flask_babel import lazy_gettext as _
 from wtforms.validators import InputRequired
 from app.means_test.widgets import MeansTestCheckboxInput, MeansTestRadioInput
 from app.means_test.forms import BaseMeansTestForm
-from app.means_test.fields import MoneyField, MoneyFieldWidget
+from app.means_test.fields import MoneyIntervalField, MoneyIntervalWidget
 from app.means_test.partner_fields import PartnerMultiCheckboxField, PartnerYesNoField
 from app.means_test.validators import (
     MoneyIntervalAmountRequired,
@@ -40,11 +40,11 @@ class BenefitsForm(BaseMeansTestForm):
         choices=get_benefits_choices(),
     )
 
-    child_benefits = MoneyField(
+    child_benefits = MoneyIntervalField(
         _("If yes, enter the total amount you get for all your children"),
         hint_text=_("For example, £32.18 per week"),
         exclude_intervals=["per_month"],
-        widget=MoneyFieldWidget(),
+        widget=MoneyIntervalWidget(),
         validators=[
             ValidateIfSession("is_eligible_for_child_benefits", True),
             ValidateIf("benefits", "child_benefit", ValidateIfType.IN),
@@ -136,10 +136,10 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
             InputRequired(message=_("Tell us whether you receive any other benefits"))
         ],
     )
-    total_other_benefit = MoneyField(
+    total_other_benefit = MoneyIntervalField(
         label=_("If Yes, total amount of benefits not listed above"),
         exclude_intervals=["per_month"],
-        widget=MoneyFieldWidget(),
+        widget=MoneyIntervalWidget(),
         validators=[
             ValidateIf("other_benefits", YES),
             MoneyIntervalAmountRequired(
