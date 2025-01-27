@@ -220,12 +220,8 @@ class PropertyForm(BaseMeansTestForm):
 
 
 class MultiplePropertiesForm(BaseMeansTestForm):
-    @property
-    def title(self):
-        if session.get_eligibility().has_partner:
-            return _("You and your partner’s property")
-        else:
-            return _("Your property")
+    title = _("Your property")
+    partner_title = _("You and your partner’s property")
 
     @classmethod
     def should_show(cls) -> bool:

@@ -60,6 +60,8 @@ class AboutYouForm(BaseMeansTestForm):
 
     num_children = IntegerField(
         _("How many?"),
+        # Needs a default value otherwise the IntegerField.process_formdata will throw an exception when it has a None value
+        default=0,
         widget=GovTextInput(),
         validators=[
             ValidateIf("have_children", YES),
@@ -86,6 +88,8 @@ class AboutYouForm(BaseMeansTestForm):
 
     num_dependents = IntegerField(
         _("How many?"),
+        # Needs a default value otherwise the IntegerField.process_formdata will throw an exception when it has a None value
+        default=0,
         widget=GovTextInput(),
         validators=[
             ValidateIf("have_dependents", YES),

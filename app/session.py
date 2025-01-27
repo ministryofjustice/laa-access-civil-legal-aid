@@ -19,20 +19,30 @@ class Eligibility:
     def is_yes(self, form_name, field_name) -> bool | None:
         form = self.forms.get(form_name)
         if not form:
-            return None
+            return False
         return form.get(field_name) == "1"
-
-    def is_no(self, form_name, field_name) -> bool | None:
-        form = self.forms.get(form_name)
-        if not form:
-            return None
-        return form.get(field_name) == "0"
 
     @property
     def has_partner(self):
-        return self.is_yes("about-you", "has_partner") and self.is_no(
+        return self.is_yes("about-you", "has_partner") and not self.is_yes(
             "about-you", "are_you_in_a_dispute"
         )
+
+    @property
+    def has_children(self) -> bool:
+        return self.is_yes("about-you", "have_children")
+
+    @property
+    def has_dependants(self) -> bool:
+        return self.is_yes("about-you", "have_dependents")
+
+    @property
+    def on_benefits(self) -> bool:
+        return self.is_yes("about-you", "on_benefits")
+
+    @property
+    def is_eligible_for_child_benefits(self) -> bool:
+        return self.has_children or self.has_dependants
 
 
 class Session(SecureCookieSession):

@@ -14,7 +14,7 @@ class TestForm(FlaskForm):
                 freq_message="Please provide frequency",
             )
         ],
-        exclude_intervals=["per_year", "per_month"],
+        exclude_intervals=["per_4week", "per_month"],
     )
 
 
@@ -50,10 +50,8 @@ def test_money_field_only_amount_interval(app, client):
 
 
 def test_money_field_excluded_interval(app, client):
-    data = MultiDict([("money_field", "1000"), ("money_field", "per_10_year")])
+    data = MultiDict([("money_field", "1000"), ("money_field", "per_month")])
     form = TestForm(formdata=data)
-    try:
-        form.validate()
-        assert False, "Validation should have raised an exception for invalid interval"
-    except ValueError:
-        pass
+    assert (
+        not form.validate()
+    ), "Validation should have raised an exception for invalid interval"

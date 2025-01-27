@@ -69,7 +69,7 @@ TEST_CASES = [
             "dependants_young": 0,
             "dependants_old": 0,
             "is_you_or_your_partner_over_60": False,
-            "on_passported_benefits": False,
+            "on_passported_benefits": True,
             "on_nass_benefits": False,
             "specific_benefits": {
                 "pension_credit": True,
@@ -108,7 +108,7 @@ TEST_CASES = [
             "dependants_young": 2,
             "dependants_old": 1,
             "is_you_or_your_partner_over_60": False,
-            "on_passported_benefits": False,
+            "on_passported_benefits": True,
             "on_nass_benefits": False,
             "specific_benefits": {
                 "pension_credit": False,

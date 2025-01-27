@@ -39,7 +39,7 @@ def test_property_payload_with_valid_data():
 
 
 def test_property_payload_with_missing_rent():
-    form_data = form_data = {
+    form_data = {
         "submit": False,
         "is_main_home": "True",
         "other_shareholders": "0",

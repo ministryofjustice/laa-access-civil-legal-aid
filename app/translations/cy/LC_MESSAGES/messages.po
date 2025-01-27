@@ -130,20 +130,29 @@ msgstr "Rheswm arall"
 msgid "Continue to contact CLA"
 msgstr "Parhau i gysylltu â CLA"
 
+msgid "Child Benefit"
+msgstr "Budd-dal Plant"
+
+msgid "Guarantee Credit"
+msgstr "Credyd Gwarant"
+
+msgid "Income Support"
+msgstr "Cymhorthdal Incwm"
+
+msgid "Income-based Jobseeker's Allowance"
+msgstr "Lwfans Ceisio Gwaith yn seiliedig ar Incwm"
+
+msgid "Income-related Employment and Support Allowance"
+msgstr "Lwfans Cyflogaeth a Chymorth yn Seiliedig ar Incwm"
+
+msgid "Universal Credit"
+msgstr "Credyd Cynhwysol"
+
+msgid "Any other benefits"
+msgstr "Unrhyw fudd-daliadau eraill"
+
 msgid "-- Please select --"
-msgstr ""
-
-msgid "each week"
-msgstr ""
-
-msgid "every 4 weeks"
-msgstr ""
-
-msgid "each month"
-msgstr ""
-
-msgid "each year"
-msgstr ""
+msgstr "-- Dewiswch --"
 
 msgid "per week"
 msgstr "yr wythnos"
@@ -182,7 +191,10 @@ msgstr "Ydych chi mewn anghydfod â'ch partner?"
 msgid ""
 "This means your partner is the opponent in the dispute you need help "
 "with, for example a dispute over money or property"
-msgstr "Mae hyn yn golygu mai eich partner yw’r gwrthwynebydd yn yr anghydfod y mae arnoch angen cymorth ar ei gyfer, er enghraifft anghydfod am arian neu eiddo"
+msgstr ""
+"Mae hyn yn golygu mai eich partner yw’r gwrthwynebydd yn yr anghydfod y "
+"mae arnoch angen cymorth ar ei gyfer, er enghraifft anghydfod am arian "
+"neu eiddo"
 
 msgid "Tell us whether you're in dispute with your partner"
 msgstr "Ydych chi mewn anghydfod â’ch partner"
@@ -311,29 +323,129 @@ msgstr "Oes gennych chi unrhyw eitemau gwerthfawr sy'n werth mwy na £500 yr un?
 msgid "Tell us if you have any valuable items worth over £500 each"
 msgstr "Oes gennych chi eitemau gwerthfawr sydd werth dros £500 yr un"
 
-msgid " Which benefits do you receive?"
+msgid "Which benefits do you receive?"
+msgstr "Pa fudd-daliadau ydych chi’n eu cael?"
+
+msgid "Which benefits do you and your partner receive?"
+msgstr "Pa fudd-daliadau ydych chi a’ch partner yn eu cael?"
+
+msgid "If yes, enter the total amount you get for all your children"
+msgstr "Os ydych, rhowch y cyfanswm rydych chi’n ei gael ar gyfer eich holl blant"
+
+msgid "For example, £32.18 per week"
 msgstr ""
 
-msgid "Child Benefit"
-msgstr ""
+msgid "Enter the Child Benefit you receive"
+msgstr "Nodwch y Budd-dal Plant rydych chi’n ei dderbyn"
 
-msgid "Guarantee Credit"
-msgstr ""
+msgid "Tell us how often you receive Child Benefit"
+msgstr "Dywedwch wrthym pa mor aml rydych chi’n derbyn Budd-dal Plant"
 
-msgid "Income Support"
-msgstr ""
+msgid "Tell us how much Child Benefit you receive each"
+msgstr "Dywedwch wrthym faint o Fudd-dal Plant rydych chi’n ei dderbyn "
 
-msgid "Income-based Jobseeker's Allowance"
-msgstr ""
+msgid "Your additional benefits"
+msgstr "Eich budd-daliadau ychwanegol"
 
-msgid "Income-related Employment and Support Allowance"
-msgstr ""
+msgid "You and your partner’s additional benefits"
+msgstr "Eich budd-daliadau ychwanegol chi a’ch partner"
 
-msgid "Universal Credit"
+msgid ""
+"You’ll need to provide evidence of the financial information you’ve given"
+" us through this service."
 msgstr ""
+"Bydd angen i chi ddarparu tystiolaeth o’r wybodaeth ariannol yr ydych "
+"wedi ei rhoi i ni drwy’r gwasanaeth hwn."
 
-msgid "Any other benefits"
+msgid "Do you get any of these benefits?"
+msgstr "Ydych chi yn cael unrhyw un o’r budd-daliadau hyn?"
+
+msgid "Do you or your partner get any of these benefits?"
+msgstr "Ydych chi neu’ch partner yn cael unrhyw un o’r budd-daliadau hyn?"
+
+msgid "These benefits don’t count as income. Please tick the ones you receive."
 msgstr ""
+"Nid yw’r budd-daliadau hyn yn cael eu cyfrif yn incwm. Ticiwch y rhai yr "
+"ydych chi’n eu cael."
+
+msgid "Armed Forces Independence payment"
+msgstr "Taliad Annibyniaeth y Lluoedd Arfog"
+
+msgid "Attendance Allowance"
+msgstr "Lwfans Gweini"
+
+msgid "Back to Work Bonus"
+msgstr "Bonws Dychwelyd i’r Gwaith"
+
+msgid "Care in the community Direct Payment"
+msgstr "Taliad Uniongyrchol am Ofal Cymunedol"
+
+msgid "Carers’ Allowance"
+msgstr "Lwfans Gofalwyr"
+
+msgid "Constant Attendance Allowance"
+msgstr "Lwfans Gweini Cyson"
+
+msgid "Council Tax Benefits"
+msgstr "Budd-daliadau’r Dreth Gyngor"
+
+msgid "Disability Living Allowance"
+msgstr "Lwfans Byw i’r Anabl"
+
+msgid "Exceptionally Severe Disablement Allowance"
+msgstr "Lwfans Anabledd Difrifol Eithriadol"
+
+msgid "Fostering Allowance"
+msgstr "Lwfans Maethu"
+
+msgid "Housing Benefit"
+msgstr "Budd-dal Tai"
+
+msgid "Independent Living Funds payment"
+msgstr "Taliad Cronfa Byw’n Annibynnol"
+
+msgid "Personal Independence Payments"
+msgstr "Taliadau Annibyniaeth Bersonol"
+
+msgid "Severe Disablement Allowance"
+msgstr "Lwfans Anabledd Difrifol"
+
+msgid "Social Fund Payments"
+msgstr "Taliadau’r Gronfa Gymdeithasol"
+
+msgid "Special Education Needs (SEN) direct payment"
+msgstr "Taliad uniongyrchol Anghenion Addysgol Arbennig (SEN)"
+
+msgid "War Pension"
+msgstr "Pensiwn Rhyfel"
+
+msgid "Do you receive any other benefits not listed above? "
+msgstr "Ydych chi yn cael unrhyw fudd-daliadau eraill sydd heb eu rhestru uchod? "
+
+msgid "Do you or your partner receive any other benefits not listed above? "
+msgstr ""
+"Ydych chi neu’ch partner yn cael unrhyw fudd-daliadau eraill sydd heb eu "
+"rhestru uchod? "
+
+msgid ""
+"For example, National Asylum Support Service Benefit, Incapacity Benefit,"
+" Contribution-based Jobseeker’s Allowance"
+msgstr ""
+"Er enghraifft, Budd-dal y Gwasanaeth Cynnal Cenedlaethol i Geiswyr "
+"Lloches, Budd-dal Analluogrwydd, Lwfans Ceisio Gwaith yn Seiliedig ar "
+"Gyfraniadau"
+
+msgid "Tell us whether you receive any other benefits"
+msgstr "Ydych chi’n derbyn unrhyw fudd-daliadau eraill"
+
+msgid "If Yes, total amount of benefits not listed above"
+msgstr "Os ydych chi, cyfanswm y budd-daliadau sydd heb eu rhestru uchod"
+
+msgid "Tell us how much you receive in other benefits"
+msgstr "Os ydych chi, cyfanswm y budd-daliadau sydd heb eu rhestru uchod"
+
+msgid "Tell us how often you receive these other benefits"
+msgstr "Pa mor aml rydych chi’n derbyn y budd-daliadau eraill hyn"
 
 msgid ""
 "Enter the Working Tax Credit you receive, or 0 if this doesn’t apply to "
@@ -369,14 +481,20 @@ msgstr "Os nad ydych chi'n byw yn yr eiddo dros dro, dewiswch 'oes'"
 msgid "Tell us whether this is your main home"
 msgstr "Ai hwn yw eich prif gartref"
 
-msgid "Does anyone else (other than you or your partner) own a share of the property?"
-msgstr "A oes unrhyw un arall (heblaw chi neu’ch partner) sy’n berchen ar gyfran o’r eiddo?"
+msgid ""
+"Does anyone else (other than you or your partner) own a share of the "
+"property?"
+msgstr ""
+"A oes unrhyw un arall (heblaw chi neu’ch partner) sy’n berchen ar gyfran "
+"o’r eiddo?"
 
 msgid "Does anyone else own a share of the property?"
 msgstr "A oes unrhyw un arall sy’n berchen ar gyfran o’r eiddo?"
 
 msgid "Select ‘Yes’ if you share ownership with a friend, relative or ex-partner"
-msgstr "Rhowch ‘oes’ yn ateb os ydych chi’n rhannu perchenogaeth â ffrind, perthynas neu gynbartner"
+msgstr ""
+"Rhowch ‘oes’ yn ateb os ydych chi’n rhannu perchenogaeth â ffrind, "
+"perthynas neu gynbartner"
 
 msgid "Tell us whether anyone else owns a share of this property"
 msgstr "Oes rhywun arall yn berchen ar gyfran o’r eiddo hwn"
@@ -396,8 +514,12 @@ msgstr ""
 msgid "How much is left to pay on the mortgage?"
 msgstr "Pa swm sy’n weddill i’w dalu ar y morgais?"
 
-msgid "Include the full amount owed, even if the property has shared ownership, or enter 0 if you have no mortgage"
-msgstr "Rhowch y cyfanswm sy’n ddyledus, hyd yn oed os yw perchenogaeth yr eiddo wedi’i rhannu, neu rhowch 0 os nad oes gennych forgais"
+msgid ""
+"Include the full amount owed, even if the property has shared ownership, "
+"or enter 0 if you have no mortgage"
+msgstr ""
+"Rhowch y cyfanswm sy’n ddyledus, hyd yn oed os yw perchenogaeth yr eiddo "
+"wedi’i rhannu, neu rhowch 0 os nad oes gennych forgais"
 
 msgid "Tell us how much is left to pay on the mortgage"
 msgstr "Faint sy’n weddill i’w dalu ar y morgais"
@@ -416,9 +538,6 @@ msgstr "Ydych chi’n gosod rhan o’r eiddo hwn ar rent"
 
 msgid "If Yes, how much rent did you receive last month?"
 msgstr "Os ydych, beth oedd swm y rhent y cawsoch fis diwethaf?"
-
-msgid "For example, £32.18 per week"
-msgstr "Er enghraifft, £32.18 yr wythnos"
 
 msgid "Tell us how much rent you receive from this property"
 msgstr "Faint o rent rydych chi’n ei dderbyn ar gyfer yr eiddo hwn"
@@ -1205,14 +1324,15 @@ msgstr ""
 "Os ydych yn cael problemau wrth lenwi’r ffurflen hon, gofynnwch i ni, <a "
 "href=\"%(contact_url)s\" class=\"govuk-link\">cysylltwch â ni</a>."
 
-msgid "Please tell us about any property owned by you, your partner or both of you."
-msgstr "Rhowch wybod i ni am unrhyw eiddo yr ydych chi, eich partner neu’r ddau ohonoch yn berchen arno"
+msgid ""
+"Please tell us about any property owned by you, your partner or both of "
+"you."
+msgstr ""
+"Rhowch wybod i ni am unrhyw eiddo yr ydych chi, eich partner neu’r ddau "
+"ohonoch yn berchen arno"
 
 msgid "You can add more than one property below."
 msgstr "Gallwch ychwanegu mwy nag un eiddo isod."
-
-msgid "You’ll need to provide evidence of the financial information you’ve given us through this service."
-msgstr "Bydd angen i chi ddarparu tystiolaeth o’r wybodaeth ariannol yr ydych wedi ei rhoi i ni drwy’r gwasanaeth hwn."
 
 msgid "Remove Property"
 msgstr "Dileu eiddo"
@@ -1271,92 +1391,4 @@ msgstr "Carafannau a cherbydau eraill nad ydych chi’n eu defnyddio bob dydd"
 
 msgid "Musical instruments, unless you’re a professional musician"
 msgstr "Offerynnau cerddorol, oni bai’ch bod yn gerddor proffesiynol"
-
-#~ msgid "Helpline"
-#~ msgstr ""
-
-#~ msgid "Opening hours"
-#~ msgstr ""
-
-#~ msgid "Email"
-#~ msgstr ""
-
-#~ msgid "Children, families, and relationships"
-#~ msgstr ""
-
-#~ msgid "Domestic Abuse"
-#~ msgstr "Cam-drin domestig"
-
-#~ msgid "Benefits"
-#~ msgstr ""
-
-#~ msgid "Mental health"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "\n"
-#~ "                  You can also get "
-#~ "advice from alternative help organisations "
-#~ "for issues related to                "
-#~ msgstr ""
-#~ "Gallwch hefyd gael cyngor gan "
-#~ "sefydliadau cymorth amgen ar gyfer "
-#~ "materion sy’n ymwneud â."
-
-#~ msgid ""
-#~ "You can also get advice from "
-#~ "alternative help organisations for issues "
-#~ "related to."
-#~ msgstr ""
-#~ "Gallwch hefyd gael cyngor gan "
-#~ "sefydliadau cymorth amgen ar gyfer "
-#~ "materion sy’n ymwneud â"
-
-#~ msgid ""
-#~ "You can also get advice from "
-#~ "alternative help organisations for issues "
-#~ "related to %(category_name)s."
-#~ msgstr ""
-#~ "Gallwch hefyd gael cyngor gan "
-#~ "sefydliadau cymorth amgen ar gyfer "
-#~ "materion sy’n ymwneud â %(category_name)s."
-
-#~ msgid "You don’t have to qualify for legal aid."
-#~ msgstr "Nid oes rhaid i chi fod yn gymwys i gael cymorth cyfreithiol."
-
-#~ msgid "Next steps to get help"
-#~ msgstr ""
-
-#~ msgid "Housing"
-#~ msgstr "Tai"
-
-#~ msgid "Debt"
-#~ msgstr "Dyled"
-
-#~ msgid "Employment"
-#~ msgstr "Cyflogaeth"
-
-#~ msgid "Family"
-#~ msgstr "Teulu"
-
-#~ msgid "Welfare Benefits"
-#~ msgstr "Budd-daliadau lles"
-
-#~ msgid "Immigration and asylum"
-#~ msgstr ""
-
-#~ msgid "Public law"
-#~ msgstr ""
-
-#~ msgid "Education"
-#~ msgstr ""
-
-#~ msgid "Tell us whether you’re in dispute with your partner"
-#~ msgstr ""
-
-#~ msgid "Start again"
-#~ msgstr ""
-
-#~ msgid "Enter a value"
-#~ msgstr ""
 
