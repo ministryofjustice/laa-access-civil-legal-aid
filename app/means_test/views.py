@@ -6,8 +6,9 @@ from werkzeug.datastructures import MultiDict
 from app.means_test.api import update_means_test
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
-from app.means_test.forms.property import PropertyForm, MultiplePropertiesForm, PropertiesPayload
+from app.means_test.forms.property import MultiplePropertiesForm, PropertiesPayload
 from app.means_test.data import BenefitsData, AdditionalBenefitData
+
 
 def deep_update(original, updates):
     """
@@ -44,10 +45,7 @@ class MeansTest(View):
             return render_template(self.form_class.template, form=form)
 
         # Handle removing a property
-        elif (
-                "remove-property-2" in request.form
-                or "remove-property-3" in request.form
-        ):
+        elif "remove-property-2" in request.form or "remove-property-3" in request.form:
             form.properties.pop_entry()
             form._submitted = False
             return render_template(self.form_class.template, form=form)
