@@ -61,6 +61,10 @@ class Eligibility:
         return self.is_yes("about-you", "partner_is_self_employed")
 
     @property
+    def has_savings(self):
+        return self.is_yes("about-you", "have_savings")
+
+    @property
     def has_valuables(self):
         return self.is_yes("about-you", "have_valuables")
 

@@ -1,3 +1,4 @@
+from flask import session
 from wtforms.validators import InputRequired
 from app.means_test.fields import MoneyField
 from app.means_test.forms import BaseMeansTestForm
@@ -46,6 +47,18 @@ class SavingsForm(BaseMeansTestForm):
         ],
     )
 
+    @classmethod
+    def should_show(cls) -> bool:
+        return (
+            session.get_eligibility().has_savings
+            or session.get_eligibility().has_valuables
+        )
+
     @property
     def shown_fields(self):
-        return [self.savings, self.investments, self.valuables]
+        fields = []
+        if session.get_eligibility().has_savings:
+            fields.extend([self.savings, self.investments])
+        if session.get_eligibility().has_valuables:
+            fields.append(self.valuables)
+        return fields
