@@ -35,7 +35,7 @@ class MoneyInterval(dict):
 
     def __init__(self, *args, **kwargs):
         super(MoneyInterval, self).__init__(
-            {"per_interval_value": None, "interval_period": "per_month"}
+            {"per_interval_value": None, "interval_period": None}
         )
 
         if len(args) > 0:
@@ -56,6 +56,7 @@ class MoneyInterval(dict):
                     self.interval = value[1]
             else:
                 self.amount = value
+                self.interval = "per_month"
 
         else:
             self.amount = kwargs.get("per_interval_value")
@@ -99,7 +100,7 @@ class MoneyInterval(dict):
                 raise ValueError(value)
 
     def per_month(self):
-        if self.amount is None or self.interval == "":
+        if self.amount is None or self.interval is None:
             return MoneyInterval(0)
 
         if self.interval == "per_month":
