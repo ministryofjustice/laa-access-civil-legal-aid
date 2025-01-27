@@ -58,7 +58,7 @@ def test_property_payload_with_missing_rent():
 
     expected_property_value = 23000000
     expected_mortgage_remaining = 10000000
-    expected_rent = {"per_interval_value": None, "interval_period": None}
+    expected_rent = {"per_interval_value": None, "interval_period": "per_month"}
     expected_share = 100
 
     payload = PropertyPayload(form_data)
