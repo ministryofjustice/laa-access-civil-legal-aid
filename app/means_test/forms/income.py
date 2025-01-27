@@ -9,9 +9,9 @@ from app.means_test.validators import MoneyIntervalAmountRequired, ValidateIfSes
 class SelfEmployedMoneyIntervalField(MoneyIntervalField):
     """Subclass of the MoneyIntervalField which supports alternate hint_text depending on if the user is self-employed"""
 
-    def __init__(self, *args, self_employed_descriptions=None, **kwargs):
+    def __init__(self, *args, self_employed_hint_text=None, **kwargs):
         super().__init__(*args, **kwargs)
-        self.self_employed_descriptions = self_employed_descriptions
+        self.self_employed_hint_text = self_employed_hint_text
         self._hint_text = ""
 
     @staticmethod
@@ -28,7 +28,7 @@ class SelfEmployedMoneyIntervalField(MoneyIntervalField):
 
     @property
     def hint_text(self):
-        return self.self_employed_descriptions.get(self.get_employment_status(), None)
+        return self.self_employed_hint_text.get(self.get_employment_status(), None)
 
     @hint_text.setter
     def hint_text(self, value):
@@ -55,7 +55,8 @@ class IncomeForm(BaseMeansTestForm):
 
     earnings = SelfEmployedMoneyIntervalField(
         _("Wages before tax"),
-        self_employed_descriptions={
+        self_employed_hint_text={
+            "employed": _("For example, £32.18 per week"),
             "self_employed": _("This includes any earnings from self-employment"),
             "both": _("This includes all wages and any earnings from self-employment"),
         },
@@ -73,7 +74,7 @@ class IncomeForm(BaseMeansTestForm):
 
     income_tax = SelfEmployedMoneyIntervalField(
         label=_("Income tax"),
-        self_employed_descriptions={
+        self_employed_hint_text={
             "employed": _("Tax paid directly out of wages"),
             "self_employed": _("Any tax paid on self-employed earnings"),
             "both": _(
@@ -94,7 +95,7 @@ class IncomeForm(BaseMeansTestForm):
 
     national_insurance = SelfEmployedMoneyIntervalField(
         _("National Insurance contributions"),
-        self_employed_descriptions={
+        self_employed_hint_text={
             "employed": _("Check the payslip"),
             "self_employed": _("Check the National Insurance statement"),
             "both": _(
@@ -153,7 +154,7 @@ class IncomeForm(BaseMeansTestForm):
 
     maintenance_received = MoneyIntervalField(
         _("Maintenance received"),
-        description=_(
+        hint_text=_(
             "Payments you get from an ex-partner, or enter 0 if this doesn't apply to you"
         ),
         widget=MoneyIntervalWidget(),
@@ -171,7 +172,7 @@ class IncomeForm(BaseMeansTestForm):
 
     pension = MoneyIntervalField(
         _("Pension received"),
-        description=_(
+        hint_text=_(
             "Payments you receive if you're retired, enter 0 if this doesn't apply to you"
         ),
         widget=MoneyIntervalWidget(),
@@ -189,7 +190,7 @@ class IncomeForm(BaseMeansTestForm):
 
     other_income = MoneyIntervalField(
         _("Any other income"),
-        description=_(
+        hint_text=_(
             "For example, student grants, income from trust funds, dividends, or enter 0 if this doesn't apply to you"
         ),
         widget=MoneyIntervalWidget(),
@@ -208,7 +209,8 @@ class IncomeForm(BaseMeansTestForm):
     # Partner-specific fields
     partner_earnings = SelfEmployedMoneyIntervalField(
         _("Wages before tax"),
-        self_employed_descriptions={
+        self_employed_hint_text={
+            "employed": _("For example, £32.18 per week"),
             "self_employed": _("This includes any earnings from self-employment"),
             "both": _("This includes all wages and any earnings from self-employment"),
         },
@@ -227,7 +229,7 @@ class IncomeForm(BaseMeansTestForm):
 
     partner_income_tax = SelfEmployedMoneyIntervalField(
         label=_("Income tax"),
-        self_employed_descriptions={
+        self_employed_hint_text={
             "employed": _("Tax paid directly out of wages"),
             "self_employed": _("Any tax paid on self-employed earnings"),
             "both": _(
@@ -249,7 +251,7 @@ class IncomeForm(BaseMeansTestForm):
 
     partner_national_insurance = SelfEmployedMoneyIntervalField(
         _("National Insurance contributions"),
-        self_employed_descriptions={
+        self_employed_hint_text={
             "employed": _("Check the payslip"),
             "self_employed": _("Check the National Insurance statement"),
             "both": _(
@@ -298,7 +300,7 @@ class IncomeForm(BaseMeansTestForm):
 
     partner_maintenance_received = MoneyIntervalField(
         _("Maintenance received"),
-        description=_(
+        hint_text=_(
             "Payments your partner gets from an ex-partner, or enter 0 if this doesn't apply to your partner"
         ),
         widget=MoneyIntervalWidget(),
@@ -317,7 +319,7 @@ class IncomeForm(BaseMeansTestForm):
 
     partner_pension = MoneyIntervalField(
         _("Pension received"),
-        description=_(
+        hint_text=_(
             "Payments your partner receives if they're retired, enter 0 if this doesn't apply to your partner"
         ),
         widget=MoneyIntervalWidget(),
@@ -336,7 +338,7 @@ class IncomeForm(BaseMeansTestForm):
 
     partner_other_income = MoneyIntervalField(
         _("Any other income"),
-        description=_(
+        hint_text=_(
             "For example, student grants, income from trust funds, dividends, or enter 0 if this doesn't apply to your partner"
         ),
         widget=MoneyIntervalWidget(),
