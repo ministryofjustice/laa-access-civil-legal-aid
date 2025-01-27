@@ -1,4 +1,4 @@
-from wtforms.fields import RadioField, IntegerField
+from wtforms.fields import RadioField
 from govuk_frontend_wtf.wtforms_widgets import GovTextInput
 from wtforms.validators import InputRequired, NumberRange
 from app.means_test.validators import ValidateIf
@@ -6,6 +6,7 @@ from app.means_test.widgets import MeansTestRadioInput
 from flask_babel import lazy_gettext as _
 from app.means_test import YES, NO
 from app.means_test.forms import BaseMeansTestForm
+from app.means_test.fields import IntegerField
 
 
 class AboutYouForm(BaseMeansTestForm):
@@ -60,8 +61,6 @@ class AboutYouForm(BaseMeansTestForm):
 
     num_children = IntegerField(
         _("How many?"),
-        # Needs a default value otherwise the IntegerField.process_formdata will throw an exception when it has a None value
-        default=0,
         widget=GovTextInput(),
         validators=[
             ValidateIf("have_children", YES),
@@ -88,8 +87,6 @@ class AboutYouForm(BaseMeansTestForm):
 
     num_dependents = IntegerField(
         _("How many?"),
-        # Needs a default value otherwise the IntegerField.process_formdata will throw an exception when it has a None value
-        default=0,
         widget=GovTextInput(),
         validators=[
             ValidateIf("have_dependents", YES),

@@ -52,6 +52,6 @@ def test_money_field_only_amount_interval(app, client):
 def test_money_field_excluded_interval(app, client):
     data = MultiDict([("money_field", "1000"), ("money_field", "per_month")])
     form = TestForm(formdata=data)
-    assert (
-        not form.validate()
-    ), "Validation should have raised an exception for invalid interval"
+    assert not form.validate(), (
+        "Validation should have raised an exception for invalid interval"
+    )
