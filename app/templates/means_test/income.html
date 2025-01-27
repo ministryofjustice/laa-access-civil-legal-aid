@@ -1,0 +1,40 @@
+{% extends "means_test/form-page.html" %}
+{%- from 'govuk_frontend_jinja/components/details/macro.html' import govukDetails %}
+
+{% block formDescription %}
+    <p class="govuk-body">{% trans %}You’ll need to provide evidence of the financial information you’ve given us through this service.{% endtrans %}</p>
+    <p class="govuk-body govuk-!-font-weight-bold">{% trans %}We only need to know about any money you received last month, even if this varies from month to month.{% endtrans %}</p>
+{% endblock %}
+
+{% block form %}
+
+    {{ form.csrf_token }}
+
+    {% set self_fields = form.shown_fields['self'] %}
+    {% set partner_fields = form.shown_fields['partner'] %}
+
+    {% if self_fields %}
+        <h2 class="govuk-heading-l">Your money</h2>
+        <p class="govuk-body">Give details of any money that is paid to you personally, like your wages. Record money coming in for your partner in the next section.</p>
+
+        {%  for field in self_fields %}
+            {{ field }}
+        {% endfor %}
+
+        {% include 'means_test/components/_disregards-info-income.html' %}
+
+    {% endif %}
+
+    {% if partner_fields %}
+        <h2 class="govuk-heading-l">Your partner's money</h2>
+        <p class="govuk-body">Give details of any money that is paid to you personally, like your wages. Record money coming in for your partner in the next section.</p>
+
+        {%  for field in partner_fields %}
+            {{ field }}
+        {% endfor %}
+
+    {% endif %}
+
+
+    {{ form.submit }}
+{% endblock %}

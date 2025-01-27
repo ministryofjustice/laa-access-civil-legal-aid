@@ -30,6 +30,7 @@ class MoneyInterval(dict):
         "per_2week": {"label": _("2 weekly"), "multiply_factor": 26.0 / 12.0},
         "per_4week": {"label": _("4 weekly"), "multiply_factor": 13.0 / 12.0},
         "per_month": {"label": _("per month"), "multiply_factor": 1.0},
+        "per_year": {"label": _("per year"), "multiply_factor": 1.0 / 12.0},
     }
 
     def __init__(self, *args, **kwargs):
@@ -55,7 +56,7 @@ class MoneyInterval(dict):
                     self.interval = value[1]
             else:
                 self.amount = value
-
+                self.interval = "per_month"
         else:
             self.amount = kwargs.get("per_interval_value")
             self.interval = kwargs.get("interval_period")
@@ -98,7 +99,7 @@ class MoneyInterval(dict):
                 raise ValueError(value)
 
     def per_month(self):
-        if self.amount is None or self.interval == "":
+        if self.amount is None or self.interval is None:
             return MoneyInterval(0)
 
         if self.interval == "per_month":

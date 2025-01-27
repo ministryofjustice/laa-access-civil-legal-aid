@@ -1,6 +1,6 @@
 import pytest
-from app.means_test.views import MeansTest
-from .test_cases import TEST_CASES
+from app.means_test.api import get_means_test_payload
+from .test_cases import ABOUT_YOU_TEST_CASES, INCOME_TEST_CASES
 
 
 def assert_partial_dict_match(expected: dict, actual: dict, path: str = "") -> None:
@@ -29,13 +29,16 @@ def assert_partial_dict_match(expected: dict, actual: dict, path: str = "") -> N
             )
 
 
-@pytest.mark.parametrize("test_case", TEST_CASES, ids=lambda t: t["id"])
-def test_get_payload(test_case: dict) -> None:
+@pytest.mark.parametrize(
+    "test_case", ABOUT_YOU_TEST_CASES + INCOME_TEST_CASES, ids=lambda t: t["id"]
+)
+def test_get_means_test_payload(test_case: dict, app) -> None:
     """
     Test the get_payload method with various input scenarios.
 
     Args:
         test_case: Dictionary containing test input and expected output
     """
-    result = MeansTest.get_payload(test_case["input"])
-    assert_partial_dict_match(test_case["expected"], result)
+    with app.app_context():
+        result = get_means_test_payload(test_case["input"])
+        assert_partial_dict_match(test_case["expected"], result)
