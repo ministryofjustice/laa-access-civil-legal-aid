@@ -1,6 +1,5 @@
 import pytest
-from app.means_test.api import get_means_test_payload
-from app.means_test.views import deep_update
+from app.means_test.api import get_means_test_payload, deep_update
 from .test_cases import ABOUT_YOU_TEST_CASES, INCOME_TEST_CASES
 
 
