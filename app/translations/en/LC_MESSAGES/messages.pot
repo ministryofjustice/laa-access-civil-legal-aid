@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-27 10:47+0000\n"
+"POT-Creation-Date: 2025-01-28 08:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -440,8 +440,79 @@ msgstr ""
 msgid "Tell us how often you receive these other benefits"
 msgstr ""
 
+msgid "You and your partner’s income and tax"
+msgstr ""
+
+msgid "You and your partner’s money coming in"
+msgstr ""
+
+msgid "Your income and tax"
+msgstr ""
+
+msgid "Your money coming in"
+msgstr ""
+
+msgid "Wages before tax"
+msgstr ""
+
+msgid "This includes any earnings from self-employment"
+msgstr ""
+
+msgid "This includes all wages and any earnings from self-employment"
+msgstr ""
+
+msgid "Tell us how much you receive in wages"
+msgstr ""
+
+msgid "Tell us how often you receive wages"
+msgstr ""
+
+msgid "Income tax"
+msgstr ""
+
+msgid "Tax paid directly out of wages"
+msgstr ""
+
+msgid "Any tax paid on self-employed earnings"
+msgstr ""
+
+msgid "Tax paid directly out of wages and any tax paid on self-employed earnings"
+msgstr ""
+
+msgid "Tell us how much income tax you pay"
+msgstr ""
+
+msgid "Tell us how often you pay income tax"
+msgstr ""
+
+msgid "National Insurance contributions"
+msgstr ""
+
+msgid "Check the payslip"
+msgstr ""
+
+msgid "Check the National Insurance statement"
+msgstr ""
+
+msgid "Check the payslip or National Insurance statement if self-employed"
+msgstr ""
+
+msgid "Tell us how much National Insurance you pay"
+msgstr ""
+
+msgid "Tell us how often you pay National Insurance"
+msgstr ""
+
+msgid "Working Tax Credit"
+msgstr ""
+
 msgid ""
-"Enter the Working Tax Credit you receive, or 0 if this doesn’t apply to "
+"Extra money for people who work and have a low income, enter 0 if this "
+"doesn't apply to you"
+msgstr ""
+
+msgid ""
+"Enter the Working Tax Credit you receive, or 0 if this doesn't apply to "
 "you"
 msgstr ""
 
@@ -451,8 +522,103 @@ msgstr ""
 msgid "Tell us how much Working Tax Credit you receive"
 msgstr ""
 
+msgid "Child Tax Credit"
+msgstr ""
+
 msgid ""
-"Enter the Working Tax Credit your partner receives, or 0 if it doesn’t "
+"The total amount you get for all your children, enter 0 if this doesn't "
+"apply to you"
+msgstr ""
+
+msgid "Enter the Child Tax Credit you receive, or 0 if this doesn't apply to you"
+msgstr ""
+
+msgid "Tell us how often you receive Child Tax Credit"
+msgstr ""
+
+msgid "Tell us how much Child Tax Credit you receive"
+msgstr ""
+
+msgid "Maintenance received"
+msgstr ""
+
+msgid ""
+"Payments you get from an ex-partner, or enter 0 if this doesn't apply to "
+"you"
+msgstr ""
+
+msgid ""
+"Enter the total amount of maintenance you receive, or 0 if this doesn't "
+"apply to you"
+msgstr ""
+
+msgid "Tell us how often you receive maintenance"
+msgstr ""
+
+msgid "Tell us how much maintenance you receive"
+msgstr ""
+
+msgid "Pension received"
+msgstr ""
+
+msgid ""
+"Payments you receive if you're retired, enter 0 if this doesn't apply to "
+"you"
+msgstr ""
+
+msgid "Enter the pension you receive, or 0 if this doesn't apply to you"
+msgstr ""
+
+msgid "Tell us how often you receive your pension"
+msgstr ""
+
+msgid "Tell us how much pension you receive"
+msgstr ""
+
+msgid "Any other income"
+msgstr ""
+
+msgid ""
+"For example, student grants, income from trust funds, dividends, or enter"
+" 0 if this doesn't apply to you"
+msgstr ""
+
+msgid ""
+"Enter the total amount of other income you receive, or 0 if this doesn't "
+"apply to you"
+msgstr ""
+
+msgid "Tell us how often you receive this other income"
+msgstr ""
+
+msgid "Tell us how much other income you receive"
+msgstr ""
+
+msgid "Tell us how much your partner receives in wages"
+msgstr ""
+
+msgid "Tell us how often your partner receives wages"
+msgstr ""
+
+msgid "Tell us how much income tax your partner pays"
+msgstr ""
+
+msgid "Tell us how often your partner pays income tax"
+msgstr ""
+
+msgid "Tell us how much National Insurance your partner pays"
+msgstr ""
+
+msgid "Tell us how often your partner pays National Insurance"
+msgstr ""
+
+msgid ""
+"Extra money for people who work and have a low income, enter 0 if this "
+"doesn't apply to your partner"
+msgstr ""
+
+msgid ""
+"Enter the Working Tax Credit your partner receives, or 0 if it doesn't "
 "apply"
 msgstr ""
 
@@ -460,6 +626,60 @@ msgid "Tell us how often your partner receives Working Tax Credit"
 msgstr ""
 
 msgid "Tell us how much Working Tax Credit your partner receives"
+msgstr ""
+
+msgid ""
+"Payments your partner gets from an ex-partner, or enter 0 if this doesn't"
+" apply to your partner"
+msgstr ""
+
+msgid ""
+"Enter the total amount of maintenance your partner receives, or 0 if this"
+" doesn't apply"
+msgstr ""
+
+msgid "Tell us how often your partner receives maintenance"
+msgstr ""
+
+msgid "Tell us how much maintenance your partner receives"
+msgstr ""
+
+msgid ""
+"Payments your partner receives if they're retired, enter 0 if this "
+"doesn't apply to your partner"
+msgstr ""
+
+msgid "Enter the pension your partner receives, or 0 if this doesn't apply"
+msgstr ""
+
+msgid "Tell us how often your partner receives their pension"
+msgstr ""
+
+msgid "Tell us how much pension your partner receives"
+msgstr ""
+
+msgid ""
+"For example, student grants, income from trust funds, dividends, or enter"
+" 0 if this doesn't apply to your partner"
+msgstr ""
+
+msgid "Enter the other income your partner receives, or 0 if this doesn't apply"
+msgstr ""
+
+msgid "Tell us how often your partner receives this other income"
+msgstr ""
+
+msgid "Tell us how much other income your partner receives"
+msgstr ""
+
+msgid ""
+"Enter the Working Tax Credit you receive, or 0 if this doesn’t apply to "
+"you"
+msgstr ""
+
+msgid ""
+"Enter the Working Tax Credit your partner receives, or 0 if it doesn’t "
+"apply"
 msgstr ""
 
 msgid "You can only have 1 main property"
@@ -544,10 +764,10 @@ msgstr ""
 msgid "Tell us whether this property is in dispute"
 msgstr ""
 
-msgid "You and your partner’s property"
+msgid "Your property"
 msgstr ""
 
-msgid "Your property"
+msgid "You and your partner’s property"
 msgstr ""
 
 msgid "Legal aid is available for this type of problem"
@@ -1272,6 +1492,11 @@ msgid ""
 msgstr ""
 
 msgid ""
+"We only need to know about any money you received last month, even if "
+"this varies from month to month."
+msgstr ""
+
+msgid ""
 "Please tell us about any property owned by you, your partner or both of "
 "you."
 msgstr ""
@@ -1283,6 +1508,57 @@ msgid "Remove Property"
 msgstr ""
 
 msgid "Add another property"
+msgstr ""
+
+msgid "What payments do not count as income?"
+msgstr ""
+
+msgid "Do not include any money you received from:"
+msgstr ""
+
+msgid "The Energy Support Scheme payments (2022 and 2023)"
+msgstr ""
+
+msgid "Cost of living payments"
+msgstr ""
+
+msgid "Criminal Injuries Compensation Scheme (CICA)"
+msgstr ""
+
+msgid "Grenfell Tower compensation"
+msgstr ""
+
+msgid "Modern Slavery Victim Care Contract or National Referral Mechanism (NRM)"
+msgstr ""
+
+msgid "National Emergencies Trust"
+msgstr ""
+
+msgid "London Emergencies Trust"
+msgstr ""
+
+msgid "Variant Creutzfeldt-Jakob Disease (“vCJD”) Trust"
+msgstr ""
+
+msgid "Vaccine Damage Payment"
+msgstr ""
+
+msgid "Victims of Overseas Terrorism Compensation Scheme (VOTCS)"
+msgstr ""
+
+msgid "Scotland and Northern Ireland redress schemes for historical child abuse"
+msgstr ""
+
+msgid "Miscarriage of justice compensation"
+msgstr ""
+
+msgid "We Love Manchester Emergency Fund"
+msgstr ""
+
+msgid "Backdated benefit payments"
+msgstr ""
+
+msgid "Backdated child maintenance payments"
 msgstr ""
 
 msgid "Amount"

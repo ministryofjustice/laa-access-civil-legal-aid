@@ -333,7 +333,7 @@ msgid "If yes, enter the total amount you get for all your children"
 msgstr "Os ydych, rhowch y cyfanswm rydych chi’n ei gael ar gyfer eich holl blant"
 
 msgid "For example, £32.18 per week"
-msgstr ""
+msgstr "Mae hyn yn cynnwys eich cyflog"
 
 msgid "Enter the Child Benefit you receive"
 msgstr "Nodwch y Budd-dal Plant rydych chi’n ei dderbyn"
@@ -447,27 +447,293 @@ msgstr "Os ydych chi, cyfanswm y budd-daliadau sydd heb eu rhestru uchod"
 msgid "Tell us how often you receive these other benefits"
 msgstr "Pa mor aml rydych chi’n derbyn y budd-daliadau eraill hyn"
 
+msgid "You and your partner’s income and tax"
+msgstr "Eich incwm a’ch treth chi a’ch partner"
+
+msgid "You and your partner’s money coming in"
+msgstr "Arian sy’n dod i mewn gennych chi a’ch partner"
+
+msgid "Your income and tax"
+msgstr "Eich incwm a’ch treth"
+
+msgid "Your money coming in"
+msgstr "Eich enillion rydych yn ei ennill"
+
+msgid "Wages before tax"
+msgstr "Cyflog cyn treth"
+
+msgid "This includes any earnings from self-employment"
+msgstr "Mae hyn yn cynnwys unrhyw enillion o waith hunangyflogedig"
+
+msgid "This includes all wages and any earnings from self-employment"
+msgstr ""
+"Mae hyn yn cynnwys eich cyflog i gyd ac unrhyw enillion o waith "
+"hunangyflogedig"
+
+msgid "Tell us how much you receive in wages"
+msgstr "Dywedwch wrthym faint o gyflog rydych chi’n ei dderbyn"
+
+msgid "Tell us how often you receive wages"
+msgstr "Dywedwch wrthym pa mor aml rydych chi’n derbyn cyflog"
+
+msgid "Income tax"
+msgstr "Treth incwm"
+
+msgid "Tax paid directly out of wages"
+msgstr "Treth sy’n cael ei thalu’n uniongyrchol o’ch cyflog"
+
+msgid "Any tax paid on self-employed earnings"
+msgstr "Unrhyw dreth sy’n cael ei thalu o enillion gwaith hunangyflogedig"
+
+msgid "Tax paid directly out of wages and any tax paid on self-employed earnings"
+msgstr ""
+"Treth sy’n cael ei thalu’n uniongyrchol o’ch cyflog ac unrhyw dreth yr "
+"ydych yn ei thalu ar enillion gwaith hunangyflogedig"
+
+msgid "Tell us how much income tax you pay"
+msgstr "Dywedwch wrthym faint o dreth incwm rydych chi’n ei thalu"
+
+msgid "Tell us how often you pay income tax"
+msgstr "Dywedwch wrthym pa mor aml rydych chi’n talu treth incwm"
+
+msgid "National Insurance contributions"
+msgstr "Cyfraniadau Yswiriant Gwladol"
+
+msgid "Check the payslip"
+msgstr "Edrychwch ar y slip cyflog"
+
+msgid "Check the National Insurance statement"
+msgstr "Edrychwch ar y datganiad Yswiriant Gwladol"
+
+msgid "Check the payslip or National Insurance statement if self-employed"
+msgstr ""
+"Edrychwch ar y slip cyflog neu’r datganiad Yswiriant Gwladol os ydych yn "
+"hunangyflogedig"
+
+msgid "Tell us how much National Insurance you pay"
+msgstr "Dywedwch wrthym faint o Yswiriant Gwladol rydych chi’n ei dalu"
+
+msgid "Tell us how often you pay National Insurance"
+msgstr "Dywedwch wrthym pa mor aml rydych chi’n talu Yswiriant Gwladol"
+
+msgid "Working Tax Credit"
+msgstr "Credyd Treth Gwaith"
+
+msgid ""
+"Extra money for people who work and have a low income, enter 0 if this "
+"doesn't apply to you"
+msgstr ""
+"Arian ychwanegol i bobl sy’n gweithio ac sydd ar incwm isel, rhowch 0 os "
+"nad yw hyn yn berthnasol i chi"
+
+msgid ""
+"Enter the Working Tax Credit you receive, or 0 if this doesn't apply to "
+"you"
+msgstr ""
+"Rhowch y Credyd Treth Gwaith rydych chi’n ei dderbyn, neu 0 os nad yw’n "
+"berthnasol i chi"
+
+msgid "Tell us how often you receive Working Tax Credit"
+msgstr "Dywedwch wrthym pa mor aml rydych chi’n derbyn Credyd Treth Gwaith"
+
+msgid "Tell us how much Working Tax Credit you receive"
+msgstr "Dywedwch wrthym faint o Gredyd Treth Gweithio rydych chi’n ei dderbyn"
+
+msgid "Child Tax Credit"
+msgstr "Credyd Treth Plant"
+
+msgid ""
+"The total amount you get for all your children, enter 0 if this doesn't "
+"apply to you"
+msgstr ""
+"Y cyfanswm yr ydych chi’n ei gael ar gyfer eich holl blant, rhowch 0 os "
+"nad yw hyn yn berthnasol i chi"
+
+msgid "Enter the Child Tax Credit you receive, or 0 if this doesn't apply to you"
+msgstr ""
+"Rhowch y Credyd Treth Plant rydych chi’n ei dderbyn, neu 0 os nad yw’n "
+"berthnasol i chi"
+
+msgid "Tell us how often you receive Child Tax Credit"
+msgstr "Dywedwch wrthym pa mor aml rydych chi’n derbyn Credyd Treth Plant"
+
+msgid "Tell us how much Child Tax Credit you receive"
+msgstr ""
+
+msgid "Maintenance received"
+msgstr "Taliadau Cynhaliaeth yr ydych chi’n eu cael"
+
+msgid ""
+"Payments you get from an ex-partner, or enter 0 if this doesn't apply to "
+"you"
+msgstr ""
+"Taliadau yr ydych chi’n eu cael gan gynbartner, neu rhowch 0 os nad yw "
+"hyn yn berthnasol i chi"
+
+msgid ""
+"Enter the total amount of maintenance you receive, or 0 if this doesn't "
+"apply to you"
+msgstr ""
+"Rhowch gyfanswm yr arian cynhaliaeth rydych chi’n ei dderbyn, neu rhowch "
+"0 os nad yw hyn yn berthnasol i chi"
+
+msgid "Tell us how often you receive maintenance"
+msgstr "Pa mor aml rydych chi’n derbyn arian cynhaliaeth"
+
+msgid "Tell us how much maintenance you receive"
+msgstr "Faint o arian cynhaliaeth rydych chi’n ei dderbyn"
+
+msgid "Pension received"
+msgstr "Pensiwn yr ydych chi’n ei gael"
+
+msgid ""
+"Payments you receive if you're retired, enter 0 if this doesn't apply to "
+"you"
+msgstr ""
+"Taliadau yr ydych chi’n eu cael os ydych chi wedi ymddeol, rhowch 0 os "
+"nad yw hyn yn berthnasol i chi"
+
+msgid "Enter the pension you receive, or 0 if this doesn't apply to you"
+msgstr ""
+"Rhowch gyfanswm y pensiwn rydych chi’n ei dderbyn, neu rhowch 0 os nad yw"
+" hyn yn berthnasol i chi"
+
+msgid "Tell us how often you receive your pension"
+msgstr "Pa mor aml rydych chi’n derbyn eich pensiwn"
+
+msgid "Tell us how much pension you receive"
+msgstr "Faint o bensiwn rydych chi’n ei dderbyn"
+
+msgid "Any other income"
+msgstr "Unrhyw incwm arall"
+
+msgid ""
+"For example, student grants, income from trust funds, dividends, or enter"
+" 0 if this doesn't apply to you"
+msgstr ""
+"Er enghraifft, grantiau myfyriwr, incwm o gronfeydd ymddiriedolaeth, "
+"difidendau, neu rhowch 0 os nad yw hyn yn berthnasol i chi"
+
+msgid ""
+"Enter the total amount of other income you receive, or 0 if this doesn't "
+"apply to you"
+msgstr ""
+"Rhowch gyfanswm yr incwm arall rydych chi’n ei dderbyn, neu rhowch 0 os "
+"nad yw hyn yn berthnasol i chi"
+
+msgid "Tell us how often you receive this other income"
+msgstr "Pa mor aml rydych chi’n derbyn yr incwm arall hwn"
+
+msgid "Tell us how much other income you receive"
+msgstr "Faint o incwm arall rydych chi’n ei dderbyn"
+
+msgid "Tell us how much your partner receives in wages"
+msgstr "Dywedwch wrthym faint mae eich partner yn ei dderbyn mewn cyflogau"
+
+msgid "Tell us how often your partner receives wages"
+msgstr "Dywedwch wrthym pa mor aml mae eich partner yn derbyn cyflog"
+
+msgid "Tell us how much income tax your partner pays"
+msgstr "Dywedwch wrthym faint o dreth incwm mae eich partner yn ei thalu
+
+msgid "Tell us how often your partner pays income tax"
+msgstr "Dywedwch wrthym pa mor aml mae eich partner yn talu treth incwm"
+
+msgid "Tell us how much National Insurance your partner pays"
+msgstr "Dywedwch wrthym faint o Yswiriant Gwladol mae eich partner yn ei dalu"
+
+msgid "Tell us how often your partner pays National Insurance"
+msgstr "Dywedwch wrthym pa mor aml mae eich partner yn talu Yswiriant Gwladol"
+
+msgid ""
+"Extra money for people who work and have a low income, enter 0 if this "
+"doesn't apply to your partner"
+msgstr ""
+"Arian ychwanegol i bobl sy’n gweithio ac sydd ar incwm isel, rhowch 0 os "
+"nad yw hyn yn berthnasol i chi"
+
+msgid ""
+"Enter the Working Tax Credit your partner receives, or 0 if it doesn't "
+"apply"
+msgstr ""
+"Rhowch y Credyd Treth Gwaith rydych chi’n ei dderbyn, neu 0 os nad yw’n "
+"berthnasol i chi"
+
+msgid "Tell us how often your partner receives Working Tax Credit"
+msgstr "Dywedwch wrthym pa mor aml rydych chi’n derbyn Credyd Treth Gwaith"
+
+msgid "Tell us how much Working Tax Credit your partner receives"
+msgstr "Dywedwch wrthym faint o Gredyd Treth Gweithio rydych chi’n ei dderbyn"
+
+msgid ""
+"Payments your partner gets from an ex-partner, or enter 0 if this doesn't"
+" apply to your partner"
+msgstr ""
+"Taliadau yr ydych chi’n eu cael gan gynbartner, neu rhowch 0 os nad yw "
+"hyn yn berthnasol i chi"
+
+msgid ""
+"Enter the total amount of maintenance your partner receives, or 0 if this"
+" doesn't apply"
+msgstr ""
+"Rhowch gyfanswm yr arian cynhaliaeth rydych chi’n ei dderbyn, neu rhowch "
+"0 os nad yw hyn yn berthnasol i chi"
+
+msgid "Tell us how often your partner receives maintenance"
+msgstr "Pa mor aml rydych chi’n derbyn arian cynhaliaeth"
+
+msgid "Tell us how much maintenance your partner receives"
+msgstr "Faint o arian cynhaliaeth rydych chi’n ei dderbyn"
+
+msgid ""
+"Payments your partner receives if they're retired, enter 0 if this "
+"doesn't apply to your partner"
+msgstr ""
+"Taliadau yr ydych chi’n eu cael os ydych chi wedi ymddeol, rhowch 0 os "
+"nad yw hyn yn berthnasol i chi"
+
+msgid "Enter the pension your partner receives, or 0 if this doesn't apply"
+msgstr ""
+"Rhowch gyfanswm y pensiwn rydych chi’n ei dderbyn, neu rhowch 0 os nad yw"
+" hyn yn berthnasol i chi"
+
+msgid "Tell us how often your partner receives their pension"
+msgstr "Pa mor aml rydych chi’n derbyn eich pensiwn"
+
+msgid "Tell us how much pension your partner receives"
+msgstr "Faint o bensiwn rydych chi’n ei dderbyn"
+
+msgid ""
+"For example, student grants, income from trust funds, dividends, or enter"
+" 0 if this doesn't apply to your partner"
+msgstr ""
+"Er enghraifft, grantiau myfyriwr, incwm o gronfeydd ymddiriedolaeth, "
+"difidendau, neu rhowch 0 os nad yw hyn yn berthnasol i chi"
+
+msgid "Enter the other income your partner receives, or 0 if this doesn't apply"
+msgstr ""
+"Rhowch yr incwm arall mae eich partner yn ei dderbyn, neu 0 os nad yw hyn"
+" yn berthnasol"
+
+msgid "Tell us how often your partner receives this other income"
+msgstr "Dywedwch wrthym pa mor aml mae eich partner yn derbyn yr incwm arall hwn"
+
+msgid "Tell us how much other income your partner receives"
+msgstr "Dywedwch wrthym faint o incwm arall mae eich partner yn ei dderbyn"
+
 msgid ""
 "Enter the Working Tax Credit you receive, or 0 if this doesn’t apply to "
 "you"
 msgstr ""
-
-msgid "Tell us how often you receive Working Tax Credit"
-msgstr ""
-
-msgid "Tell us how much Working Tax Credit you receive"
-msgstr ""
+"Rhowch y Credyd Treth Gwaith rydych chi’n ei dderbyn, neu 0 os nad yw’n "
+"berthnasol i chi"
 
 msgid ""
 "Enter the Working Tax Credit your partner receives, or 0 if it doesn’t "
 "apply"
 msgstr ""
-
-msgid "Tell us how often your partner receives Working Tax Credit"
-msgstr ""
-
-msgid "Tell us how much Working Tax Credit your partner receives"
-msgstr ""
+"Rhowch y Credyd Treth Gwaith mae eich partner yn ei dderbyn, neu 0 os nad"
+" yw’n berthnasol"
 
 msgid "You can only have 1 main property"
 msgstr "Dim ond un prif Eiddo allwch chi ei gael"
@@ -557,11 +823,11 @@ msgstr "Er enghraifft, fel rhan o’r setliad ariannol mewn ysgariad"
 msgid "Tell us whether this property is in dispute"
 msgstr "Ydy’r eiddo hwn yn rhan o anghydfod"
 
-msgid "You and your partner’s property"
-msgstr "Eich eiddo chi ac eiddo’ch partner"
-
 msgid "Your property"
 msgstr "Eich eiddo"
+
+msgid "You and your partner’s property"
+msgstr "Eich eiddo chi ac eiddo’ch partner"
 
 msgid "Legal aid is available for this type of problem"
 msgstr "Mae cymorth cyfreithiol ar gael ar gyfer y math hwn o broblem"
@@ -1325,6 +1591,11 @@ msgstr ""
 "href=\"%(contact_url)s\" class=\"govuk-link\">cysylltwch â ni</a>."
 
 msgid ""
+"We only need to know about any money you received last month, even if "
+"this varies from month to month."
+msgstr ""
+
+msgid ""
 "Please tell us about any property owned by you, your partner or both of "
 "you."
 msgstr ""
@@ -1339,6 +1610,57 @@ msgstr "Dileu eiddo"
 
 msgid "Add another property"
 msgstr "Ychwanegu eiddo arall"
+
+msgid "What payments do not count as income?"
+msgstr "Pa daliadau nad ydynt yn cyfrif fel incwm?"
+
+msgid "Do not include any money you received from:"
+msgstr "Peidiwch â chynnwys unrhyw arian a gawsoch gan:"
+
+msgid "The Energy Support Scheme payments (2022 and 2023)"
+msgstr "Taliadau’r Cynllun Cymorth Biliau Ynni (2022 a 2023)"
+
+msgid "Cost of living payments"
+msgstr "Taliadau costau byw"
+
+msgid "Criminal Injuries Compensation Scheme (CICA)"
+msgstr "Cynllun Digolledu am Anafiadau Troseddol (CICA)"
+
+msgid "Grenfell Tower compensation"
+msgstr "Iawndal Tŵr Grenfell"
+
+msgid "Modern Slavery Victim Care Contract or National Referral Mechanism (NRM)"
+msgstr "Contract Gofalu am Ddioddefwyr Caethwasiaeth Fodern neu’r Mecanwaith Atgyfeirio Cenedlaethol (NRM)"
+
+msgid "National Emergencies Trust"
+msgstr "Ymddiriedolaeth Argyfyngau Cenedlaethol"
+
+msgid "London Emergencies Trust"
+msgstr "Ymddiriedolaeth Argyfyngau Llundain"
+
+msgid "Variant Creutzfeldt-Jakob Disease (“vCJD”) Trust"
+msgstr "Ymddiriedolaeth Clefyd Amrywiolyn Creutzfeldt-Jakob (“vCJD”)"
+
+msgid "Vaccine Damage Payment"
+msgstr "Taliad Niwed Trwy Frechiad"
+
+msgid "Victims of Overseas Terrorism Compensation Scheme (VOTCS)"
+msgstr "Cynllun Iawndal Dioddefwyr Terfysgaeth Dramor (VOTCS)"
+
+msgid "Scotland and Northern Ireland redress schemes for historical child abuse"
+msgstr "Cynlluniau gwneud iawn yr Alban a Gogledd Iwerddon ar achosion hanesyddol o gam-drin"
+
+msgid "Miscarriage of justice compensation"
+msgstr "Iawndal Camweinyddu Cyfiawnder"
+
+msgid "We Love Manchester Emergency Fund"
+msgstr "Cronfa Argyfwng We Love Manchester"
+
+msgid "Backdated benefit payments"
+msgstr "Budd-daliadau wedi’u hôl-ddyddio"
+
+msgid "Backdated child maintenance payments"
+msgstr "Taliadau cynhaliaeth plant wedi'u hôl-ddyddio"
 
 msgid "Amount"
 msgstr ""
