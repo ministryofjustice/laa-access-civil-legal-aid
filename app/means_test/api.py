@@ -133,7 +133,7 @@ def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
             },
         },
         "partner": {
-            "income": income_data.get("partner", {}).get("income", {}),
+            "income": partner_income,
             "savings": {
                 "bank_balance": None,
                 "investment_balance": None,
