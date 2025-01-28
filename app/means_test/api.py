@@ -78,6 +78,13 @@ def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
             "child_benefits": benefits["child_benefits"],
         }
     )
+    partner_income = income_data.get("partner", {}).get("income", {})
+    partner_income.update(
+        {
+            "benefits": additional_benefits["benefits"],
+            "child_benefits": benefits["child_benefits"],
+        }
+    )
 
     # Remove rent field from property set and setup payload
     if eligibility_data.forms.get("about-you", {}).get("own_property"):
@@ -166,8 +173,7 @@ def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
         if about.get("has_dependants", False)
         else 0,
         "is_you_or_your_partner_over_60": about.get("aged_60_or_over", False),
-        "has_partner": about.get("has_partner", False)
-        and about.get("in_dispute", False),
+        "has_partner": has_partner,
         "on_passported_benefits": benefits["on_passported_benefits"],
         "on_nass_benefits": additional_benefits["on_nass_benefits"],
         "specific_benefits": benefits["specific_benefits"],
@@ -180,5 +186,5 @@ def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
 
     if not has_partner:
         del payload["partner"]
-
+    print(payload)
     return payload
