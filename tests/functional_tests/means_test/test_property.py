@@ -128,7 +128,7 @@ def test_property_routing(page: Page, property_answers: dict, navigate_to_proper
         elif answer[1] == "select":
             page.get_by_label(question).select_option(answer[0])
     page.get_by_role("button", name="Continue").click()
-    expect(page.get_by_text("Review your answers")).to_be_visible()
+    expect(page.get_by_text("Your money coming in")).to_be_visible()
 
 
 @pytest.mark.usefixtures("live_server")
@@ -167,7 +167,7 @@ def test_multi_property_routing(
         elif answer[1] == "select":
             property_form_group.get_by_label(question).select_option(answer[0])
     page.get_by_role("button", name="Continue").click()
-    expect(page.get_by_text("Review your answers")).to_be_visible()
+    expect(page.get_by_text("Your money coming in")).to_be_visible()
 
 
 @pytest.mark.usefixtures("live_server")
