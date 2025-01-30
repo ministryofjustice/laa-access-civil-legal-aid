@@ -30,7 +30,7 @@ class Eligibility:
 
     @property
     def has_partner(self):
-        return self.is_yes("about-you", "has_partner") and self.is_no(
+        return self.is_yes("about-you", "has_partner") and not self.is_yes(
             "about-you", "are_you_in_a_dispute"
         )
 
@@ -67,6 +67,38 @@ class Eligibility:
     @property
     def has_valuables(self):
         return self.is_yes("about-you", "have_valuables")
+
+    @property
+    def has_children(self) -> bool:
+        return self.is_yes("about-you", "have_children")
+
+    @property
+    def has_dependants(self) -> bool:
+        return self.is_yes("about-you", "have_dependents")
+
+    @property
+    def on_benefits(self) -> bool:
+        return self.is_yes("about-you", "on_benefits")
+
+    @property
+    def is_eligible_for_child_benefits(self) -> bool:
+        return self.has_children or self.has_dependants
+
+    @property
+    def has_passported_benefits(self) -> bool:
+        passported_benefits = [
+            "pension_credit",
+            "income_support",
+            "job_seekers_allowance",
+            "employment_support",
+            "universal_credit",
+        ]
+        return self.on_benefits and any(
+            benefit in passported_benefits
+            for benefit in session.get_eligibility()
+            .forms.get("benefits", {})
+            .get("benefits", [])
+        )
 
 
 class Session(SecureCookieSession):

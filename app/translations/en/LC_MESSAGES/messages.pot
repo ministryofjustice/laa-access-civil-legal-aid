@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-27 07:35+0000\n"
+"POT-Creation-Date: 2025-01-28 08:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -149,16 +149,28 @@ msgstr ""
 msgid "Continue to contact CLA"
 msgstr ""
 
+msgid "Child Benefit"
+msgstr ""
+
+msgid "Guarantee Credit"
+msgstr ""
+
+msgid "Income Support"
+msgstr ""
+
+msgid "Income-based Jobseeker's Allowance"
+msgstr ""
+
+msgid "Income-related Employment and Support Allowance"
+msgstr ""
+
+msgid "Universal Credit"
+msgstr ""
+
+msgid "Any other benefits"
+msgstr ""
+
 msgid "-- Please select --"
-msgstr ""
-
-msgid "Enter a number"
-msgstr ""
-
-msgid "Enter a value of more than £{:,.0f}"
-msgstr ""
-
-msgid "Enter a value of less than £{:,.0f}"
 msgstr ""
 
 msgid "per week"
@@ -313,28 +325,119 @@ msgstr ""
 msgid "Tell us if you have any valuable items worth over £500 each"
 msgstr ""
 
-msgid " Which benefits do you receive?"
+msgid "Which benefits do you receive?"
 msgstr ""
 
-msgid "Child Benefit"
+msgid "Which benefits do you and your partner receive?"
 msgstr ""
 
-msgid "Guarantee Credit"
+msgid "If yes, enter the total amount you get for all your children"
 msgstr ""
 
-msgid "Income Support"
+msgid "For example, £32.18 per week"
 msgstr ""
 
-msgid "Income-based Jobseeker's Allowance"
+msgid "Enter the Child Benefit you receive"
 msgstr ""
 
-msgid "Income-related Employment and Support Allowance"
+msgid "Tell us how often you receive Child Benefit"
 msgstr ""
 
-msgid "Universal Credit"
+msgid "Tell us how much Child Benefit you receive each"
 msgstr ""
 
-msgid "Any other benefits"
+msgid "Your additional benefits"
+msgstr ""
+
+msgid "You and your partner’s additional benefits"
+msgstr ""
+
+msgid ""
+"You’ll need to provide evidence of the financial information you’ve given"
+" us through this service."
+msgstr ""
+
+msgid "Do you get any of these benefits?"
+msgstr ""
+
+msgid "Do you or your partner get any of these benefits?"
+msgstr ""
+
+msgid "These benefits don’t count as income. Please tick the ones you receive."
+msgstr ""
+
+msgid "Armed Forces Independence payment"
+msgstr ""
+
+msgid "Attendance Allowance"
+msgstr ""
+
+msgid "Back to Work Bonus"
+msgstr ""
+
+msgid "Care in the community Direct Payment"
+msgstr ""
+
+msgid "Carers’ Allowance"
+msgstr ""
+
+msgid "Constant Attendance Allowance"
+msgstr ""
+
+msgid "Council Tax Benefits"
+msgstr ""
+
+msgid "Disability Living Allowance"
+msgstr ""
+
+msgid "Exceptionally Severe Disablement Allowance"
+msgstr ""
+
+msgid "Fostering Allowance"
+msgstr ""
+
+msgid "Housing Benefit"
+msgstr ""
+
+msgid "Independent Living Funds payment"
+msgstr ""
+
+msgid "Personal Independence Payments"
+msgstr ""
+
+msgid "Severe Disablement Allowance"
+msgstr ""
+
+msgid "Social Fund Payments"
+msgstr ""
+
+msgid "Special Education Needs (SEN) direct payment"
+msgstr ""
+
+msgid "War Pension"
+msgstr ""
+
+msgid "Do you receive any other benefits not listed above? "
+msgstr ""
+
+msgid "Do you or your partner receive any other benefits not listed above? "
+msgstr ""
+
+msgid ""
+"For example, National Asylum Support Service Benefit, Incapacity Benefit,"
+" Contribution-based Jobseeker’s Allowance"
+msgstr ""
+
+msgid "Tell us whether you receive any other benefits"
+msgstr ""
+
+msgid "If Yes, total amount of benefits not listed above"
+msgstr ""
+
+msgid "Tell us how much you receive in other benefits"
+msgstr ""
+
+msgid "Tell us how often you receive these other benefits"
 msgstr ""
 
 msgid "You and your partner’s income and tax"
@@ -350,9 +453,6 @@ msgid "Your money coming in"
 msgstr ""
 
 msgid "Wages before tax"
-msgstr ""
-
-msgid "For example, £32.18 per week"
 msgstr ""
 
 msgid "This includes any earnings from self-employment"
@@ -582,68 +682,92 @@ msgid ""
 "apply"
 msgstr ""
 
-msgid "Your property"
+msgid "You can only have 1 main property"
+msgstr ""
+
+msgid "Is this property your main home?"
+msgstr ""
+
+msgid "If you’re temporarily living away from the property, select ‘Yes’"
 msgstr ""
 
 msgid "Tell us whether this is your main home"
 msgstr ""
 
+msgid ""
+"Does anyone else (other than you or your partner) own a share of the "
+"property?"
+msgstr ""
+
+msgid "Does anyone else own a share of the property?"
+msgstr ""
+
+msgid "Select ‘Yes’ if you share ownership with a friend, relative or ex-partner"
+msgstr ""
+
 msgid "Tell us whether anyone else owns a share of this property"
+msgstr ""
+
+msgid "How much is the property worth?"
+msgstr ""
+
+msgid "Use a property website or the Land Registry house prices website."
 msgstr ""
 
 msgid "Tell us the approximate value of this property"
 msgstr ""
 
-msgid "Enter a value"
+msgid "Enter a value of more than £0"
+msgstr ""
+
+msgid "How much is left to pay on the mortgage?"
+msgstr ""
+
+msgid ""
+"Include the full amount owed, even if the property has shared ownership, "
+"or enter 0 if you have no mortgage"
 msgstr ""
 
 msgid "Tell us how much is left to pay on the mortgage"
 msgstr ""
 
+msgid "How much was your monthly mortgage repayment last month?"
+msgstr ""
+
+msgid "Enter your mortgage repayment for last month"
+msgstr ""
+
+msgid "Do you rent out any part of this property?"
+msgstr ""
+
 msgid "Tell us whether you rent out some of this property"
+msgstr ""
+
+msgid "If Yes, how much rent did you receive last month?"
+msgstr ""
+
+msgid "Tell us how much rent you receive from this property"
+msgstr ""
+
+msgid "Tell us how often you receive this rent"
+msgstr ""
+
+msgid "Tell us how much rent you receive"
+msgstr ""
+
+msgid "Is your share of the property in dispute?"
+msgstr ""
+
+msgid "For example, as part of the financial settlement of a divorce"
 msgstr ""
 
 msgid "Tell us whether this property is in dispute"
 msgstr ""
 
-msgid "Your savings"
+msgid "Your property"
 msgstr ""
 
-msgid "You and your partner’s savings"
-msgstr ""
-
-msgid "Savings"
-msgstr ""
-
-msgid ""
-"The total amount of savings in cash, bank or building society; or enter 0"
-" if you have none"
-msgstr ""
-
-msgid "Enter your total savings, or 0 if you have none"
-msgstr ""
-
-msgid "Investments"
-msgstr ""
-
-msgid ""
-"This includes stocks, shares, bonds (but not property); enter 0 if you "
-"have none"
-msgstr ""
-
-msgid "Enter your total investments, or 0 if you have none"
-msgstr ""
-
-msgid "Total value of items worth over £500 each"
-msgstr ""
-
-msgid "See below for examples of what valuable items to include"
-msgstr ""
-
-msgid "Enter the total of all valuable items over £500"
-msgstr ""
-
-msgid "Enter 0 if you have no valuable items worth over £500 each"
+msgid "You and your partner’s property"
 msgstr ""
 
 msgid "Legal aid is available for this type of problem"
@@ -1368,18 +1492,22 @@ msgid ""
 msgstr ""
 
 msgid ""
-"You’ll need to provide evidence of the financial information you’ve given"
-" us through this service."
-msgstr ""
-
-msgid ""
 "We only need to know about any money you received last month, even if "
 "this varies from month to month."
 msgstr ""
 
 msgid ""
-"Any cash, savings or investments held in your name, your partner’s name "
-"or both your names."
+"Please tell us about any property owned by you, your partner or both of "
+"you."
+msgstr ""
+
+msgid "You can add more than one property below."
+msgstr ""
+
+msgid "Remove Property"
+msgstr ""
+
+msgid "Add another property"
 msgstr ""
 
 msgid "What payments do not count as income?"

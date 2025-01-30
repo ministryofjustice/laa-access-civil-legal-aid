@@ -1,10 +1,12 @@
 from flask.views import View, MethodView
-from flask import render_template, url_for, redirect, session
+from flask import render_template, url_for, redirect, session, request
+
+from werkzeug.datastructures import MultiDict
 
 from app.means_test.api import update_means_test, get_means_test_payload
 from app.means_test.forms.about_you import AboutYouForm
-from app.means_test.forms.benefits import BenefitsForm
-from app.means_test.forms.property import PropertyForm
+from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
+from app.means_test.forms.property import MultiplePropertiesForm
 from app.means_test.forms.income import IncomeForm
 from app.means_test.forms.savings import SavingsForm
 
@@ -13,7 +15,8 @@ class MeansTest(View):
     forms = {
         "about-you": AboutYouForm,
         "benefits": BenefitsForm,
-        "property": PropertyForm,
+        "property": MultiplePropertiesForm,
+        "additional-benefits": AdditionalBenefitsForm,
         "savings": SavingsForm,
         "income": IncomeForm,
     }
@@ -22,8 +25,29 @@ class MeansTest(View):
         self.form_class = current_form_class
         self.current_name = current_name
 
+    def handle_multiple_properties_ajax_request(self, form):
+        if "add-property" in request.form:
+            form.properties.append_entry()
+            form._submitted = False
+            return render_template(self.form_class.template, form=form)
+
+        # Handle removing a property
+        elif "remove-property-2" in request.form or "remove-property-3" in request.form:
+            form.properties.pop_entry()
+            form._submitted = False
+            return render_template(self.form_class.template, form=form)
+
+        return None
+
     def dispatch_request(self):
-        form = self.form_class()
+        eligibility = session.get_eligibility()
+        form_data = MultiDict(eligibility.forms.get(self.current_name, {}))
+        form = self.form_class(request.form or form_data)
+        if isinstance(form, MultiplePropertiesForm):
+            response = self.handle_multiple_properties_ajax_request(form)
+            if response is not None:
+                return response
+
         if form.validate_on_submit():
             session.get_eligibility().add(self.current_name, form.data)
             next_page = url_for(f"means_test.{self.get_next_page(self.current_name)}")

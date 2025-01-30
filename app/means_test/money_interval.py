@@ -57,6 +57,7 @@ class MoneyInterval(dict):
             else:
                 self.amount = value
                 self.interval = "per_month"
+
         else:
             self.amount = kwargs.get("per_interval_value")
             self.interval = kwargs.get("interval_period")

@@ -2,7 +2,8 @@ from flask import render_template
 from flask_babel import lazy_gettext as _
 from wtforms.widgets import TextInput
 from markupsafe import Markup
-from wtforms import Field, IntegerField
+from wtforms import Field
+from wtforms import IntegerField
 from app.means_test.money_interval import MoneyInterval
 import re
 

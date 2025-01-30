@@ -28,7 +28,6 @@ class ExampleForm(BaseMeansTestForm):
     partner_question = MoneyIntervalField(
         "Test money field",
         hint_text="Hint text",
-        exclude_intervals=["per_year"],
         widget=MoneyIntervalWidget(),
         validators=[
             ValidateIfSession("has_partner", True),
