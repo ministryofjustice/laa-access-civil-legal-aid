@@ -85,7 +85,7 @@ class Eligibility:
             "employment_support",
             "universal_credit",
         ]
-        return self.on_benefits and not any(
+        return self.on_benefits and any(
             benefit in passported_benefits
             for benefit in session.get_eligibility()
             .forms.get("benefits", {})

@@ -4,7 +4,7 @@ from playwright.sync_api import Page, expect
 from app.means_test import YES, NO
 
 
-next_page_heading = "Your money coming in"
+next_page_heading = "Review your answers"
 rfc_form_routing = [
     pytest.param(
         ["Universal Credit"],
@@ -29,7 +29,7 @@ rfc_form_routing = [
     ),
     pytest.param(
         [],
-        next_page_heading,
+        "Your money coming in",
         id="no_selection",
     ),
 ]
