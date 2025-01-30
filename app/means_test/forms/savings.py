@@ -45,7 +45,7 @@ class SavingsForm(BaseMeansTestForm):
             ValidateIfSession("has_valuables", True),
             InputRequired(message=_("Enter the total of all valuable items over £500")),
             NumberRange(
-                min=500000,
+                min=500,
                 message=_("Enter 0 if you have no valuable items worth over £500 each"),
             ),  # This value is in pence
         ],

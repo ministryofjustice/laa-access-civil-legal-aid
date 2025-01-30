@@ -1,3 +1,6 @@
+import decimal
+from decimal import Decimal, InvalidOperation
+
 from flask import render_template
 from flask_babel import lazy_gettext as _
 from wtforms.widgets import TextInput
@@ -90,64 +93,66 @@ class MoneyIntervalField(Field):
 
 
 class MoneyField(IntegerField):
-    widget = TextInput()
-
     def __init__(
         self, label=None, validators=None, min_val=0, max_val=9999999999, **kwargs
     ):
-        super(MoneyField, self).__init__(label, validators, **kwargs)
+        self._user_input = None
+        self.data = None
         self.min_val = min_val
         self.max_val = max_val
+        super(MoneyField, self).__init__(label, validators, **kwargs)
 
-    def extract_pounds_and_pence(self, valuelist):
-        pounds, _, pence = valuelist[0].strip().partition(".")
-
-        # xa3 is the ASCII character reference for the pound sign
-        pounds = re.sub(r"^\xa3|[\s,]+", "", pounds)
-        return pounds, pence
-
-    def set_zero(self):
-        self.data = 0
+    @staticmethod
+    def clean_input(value):
+        # Remove pound sign (£), spaces, and commas from user input
+        value = str(value)
+        return re.sub(r"^£|\s|,", "", value.strip())
 
     def process_formdata(self, valuelist):
         if valuelist:
-            pounds, pence = self.extract_pounds_and_pence(valuelist)
+            self._user_input = valuelist[0]
 
-            if pence:
-                if len(pence) > 2:
-                    self.data = None
-                    raise ValueError(self.gettext("Enter a number"))
-
-                if len(pence) == 1:
-                    pence = "{0}0".format(pence)
+            # Clean the input
+            clean_input = self.clean_input(valuelist[0])
 
             try:
-                self.data = int(pounds) * 100
-                if pence:
-                    self.data += int(pence)
-            except ValueError:
-                self.data = None
-                raise ValueError(self.gettext("Enter a number"))
+                decimal_value = Decimal(clean_input)
+            except (ValueError, InvalidOperation):
+                raise ValueError("Enter a valid number")
 
+            # Check if value has more than 2 decimal places
+            if decimal_value != decimal_value.quantize(
+                Decimal(".01"), rounding=decimal.ROUND_DOWN
+            ):
+                raise ValueError("Enter a valid amount (maximum 2 decimal places)")
+
+            self.data = int(decimal_value * 100)
+
+            # Validate min/max
             if self.min_val is not None and self.data < self.min_val:
-                self.data = None
                 raise ValueError(
-                    self.gettext("Enter a value of more than £{:,.0f}").format(
-                        self.min_val / 100.0
-                    )
+                    f"Enter a value of more than £{self.min_val / 100:,.2f}"
                 )
 
             if self.max_val is not None and self.data > self.max_val:
-                self.data = None
                 raise ValueError(
-                    self.gettext("Enter a value of less than £{:,.0f}").format(
-                        self.max_val / 100.0
-                    )
+                    f"Enter a value of less than £{self.max_val / 100:,.2f}"
                 )
 
     def process_data(self, value):
-        self.data = value
-        if value:
+        """Handle data coming from the database/code (in pence)"""
+        if value is not None:
+            self.data = value
+            pounds = value // 100
             pence = value % 100
-            pounds = value / 100
-            self.data = "{0:,}.{1:02}".format(pounds, pence)
+            self._user_input = f"{pounds:,}.{pence:02d}"
+
+    def _value(self):
+        """Format value for display"""
+        if self._user_input is not None:
+            return self._user_input
+        if self.data is not None:
+            pounds = self.data // 100
+            pence = self.data % 100
+            return f"{pounds:,}.{pence:02d}"
+        return ""

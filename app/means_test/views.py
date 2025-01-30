@@ -42,7 +42,9 @@ class MeansTest(View):
     def dispatch_request(self):
         eligibility = session.get_eligibility()
         form_data = MultiDict(eligibility.forms.get(self.current_name, {}))
-        form = self.form_class(request.form or form_data)
+        form = self.form_class(
+            formdata=request.form or None, data=form_data if not request.form else None
+        )
         if isinstance(form, MultiplePropertiesForm):
             response = self.handle_multiple_properties_ajax_request(form)
             if response is not None:
