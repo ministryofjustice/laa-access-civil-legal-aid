@@ -55,10 +55,7 @@ class IncomeForm(BaseMeansTestForm):
 
     @classmethod
     def should_show(cls) -> bool:
-        return (
-            len(session.get_eligibility().forms.get("benefits", {}).get("benefits"))
-            == 0
-        )
+        return session.get("eligibility").has_passported_benefits
 
     earnings = SelfEmployedMoneyIntervalField(
         _("Wages before tax"),

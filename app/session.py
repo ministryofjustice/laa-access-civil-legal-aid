@@ -76,6 +76,22 @@ class Eligibility:
     def is_eligible_for_child_benefits(self) -> bool:
         return self.has_children or self.has_dependants
 
+    @property
+    def has_passported_benefits(self) -> bool:
+        passported_benefits = [
+            "pension_credit",
+            "income_support",
+            "job_seekers_allowance",
+            "employment_support",
+            "universal_credit",
+        ]
+        return self.on_benefits and not any(
+            benefit in passported_benefits
+            for benefit in session.get_eligibility()
+            .forms.get("benefits", {})
+            .get("benefits", [])
+        )
+
 
 class Session(SecureCookieSession):
     SESSION_TIMEOUT = timedelta(minutes=30)
