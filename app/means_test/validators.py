@@ -67,8 +67,8 @@ class MoneyIntervalAmountRequired(object):
 
     def __call__(self, form, field):
         messages = self.messages
-        amount = field.raw_data[0] or None
-        interval = field.raw_data[1] or None
+        amount = field.raw_data[0] if len(field.raw_data) > 0 else None
+        interval = field.raw_data[1] if len(field.raw_data) > 1 else None
 
         if (not amount) and (not interval):
             message = messages["message"]

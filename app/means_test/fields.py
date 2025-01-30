@@ -6,7 +6,7 @@ from wtforms import Field
 from app.means_test.money_interval import MoneyInterval
 
 
-class MoneyFieldWidget(TextInput):
+class MoneyIntervalWidget(TextInput):
     def __call__(self, field, *args, **kwargs):
         # Pass the current values to the template
         return Markup(
@@ -19,7 +19,7 @@ class MoneyFieldWidget(TextInput):
         )
 
 
-class MoneyField(Field):
+class MoneyIntervalField(Field):
     """
     A field that handles two separate text inputs.
     The raw data will contain both values separately.

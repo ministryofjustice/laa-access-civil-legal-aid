@@ -22,11 +22,43 @@ class Eligibility:
             return False
         return form.get(field_name) == "1"
 
+    def is_no(self, form_name, field_name) -> bool | None:
+        form = self.forms.get(form_name)
+        if not form:
+            return False
+        return form.get(field_name) == "0"
+
     @property
     def has_partner(self):
         return self.is_yes("about-you", "has_partner") and not self.is_yes(
             "about-you", "are_you_in_a_dispute"
         )
+
+    @property
+    def is_employed(self):
+        return self.is_yes("about-you", "is_employed")
+
+    @property
+    def is_self_employed(self):
+        return self.is_yes("about-you", "is_self_employed")
+
+    @property
+    def is_employed_or_self_employed(self):
+        return self.is_yes("about-you", "is_employed") or self.is_yes(
+            "about-you", "is_self_employed"
+        )
+
+    @property
+    def is_partner_employed(self):
+        if not self.has_partner:
+            return False
+        return self.is_yes("about-you", "partner_is_employed")
+
+    @property
+    def is_partner_self_employed(self):
+        if not self.has_partner:
+            return False
+        return self.is_yes("about-you", "partner_is_self_employed")
 
     @property
     def has_children(self) -> bool:
@@ -43,6 +75,22 @@ class Eligibility:
     @property
     def is_eligible_for_child_benefits(self) -> bool:
         return self.has_children or self.has_dependants
+
+    @property
+    def has_passported_benefits(self) -> bool:
+        passported_benefits = [
+            "pension_credit",
+            "income_support",
+            "job_seekers_allowance",
+            "employment_support",
+            "universal_credit",
+        ]
+        return self.on_benefits and any(
+            benefit in passported_benefits
+            for benefit in session.get_eligibility()
+            .forms.get("benefits", {})
+            .get("benefits", [])
+        )
 
 
 class Session(SecureCookieSession):
