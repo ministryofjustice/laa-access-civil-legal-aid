@@ -1,26 +1,10 @@
 from app.api import cla_backend
 from flask import session
 from app.means_test.forms.income import IncomeForm
-from app.means_test.forms.property import PropertiesPayload
+from app.means_test.forms.property import MultiplePropertiesForm
 from app.means_test.money_interval import MoneyInterval
 from tests.unit_tests.means_test.payload.test_cases import EligibilityData
 from app.means_test.data import BenefitsData, AdditionalBenefitData
-
-
-def deep_update(original, updates):
-    """
-    Recursively updates a nested dictionary with values from another dictionary.
-    Only updates keys present in the `updates` dictionary.
-    """
-    for key, value in updates.items():
-        if (
-            isinstance(value, dict)
-            and key in original
-            and isinstance(original[key], dict)
-        ):
-            deep_update(original[key], value)  # Recursive call for nested dict
-        else:
-            original[key] = value
 
 
 def update_means_test(payload):
@@ -49,7 +33,9 @@ def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
     about = eligibility_data.forms.get("about-you", {})
 
     income_form = eligibility_data.forms.get("income", {})
-    property_form = eligibility_data.forms.get("property", {})
+    property_data = MultiplePropertiesForm.get_payload(
+        eligibility_data.forms.get("property", {})
+    )
     benefits = BenefitsData(**eligibility_data.forms.get("benefits", {})).to_payload()
 
     additional_benefits = AdditionalBenefitData(
@@ -86,19 +72,38 @@ def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
         }
     )
 
-    # Remove rent field from property set and setup payload
-    if eligibility_data.forms.get("about-you", {}).get("own_property"):
-        property_payload = PropertiesPayload(property_form)
-        for property_item in property_payload.get("property_set", []):
-            property_item.pop("rent", None)
-
     payload = {
         "category": eligibility_data.category,
         "your_problem_notes": "",
         "notes": "",
-        "property_set": [],
+        "property_set": property_data.get("property_set"),
         "you": {
-            "income": you_income,
+            "income": {
+                "earnings": {
+                    "per_interval_value": 0,
+                    "interval_period": "per_month",
+                },
+                "self_employment_drawings": {
+                    "per_interval_value": None,
+                    "interval_period": None,
+                },
+                "tax_credits": {
+                    "per_interval_value": 0,
+                    "interval_period": "per_month",
+                },
+                "maintenance_received": {
+                    "per_interval_value": None,
+                    "interval_period": None,
+                },
+                "pension": {
+                    "per_interval_value": None,
+                    "interval_period": None,
+                },
+                "other_income": property_data.get("you")
+                .get("income", {})
+                .get("other_income", {}),
+                "self_employed": "0",
+            },
             "savings": {
                 "bank_balance": None,
                 "investment_balance": None,
@@ -121,10 +126,7 @@ def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
                     "per_interval_value": None,
                     "interval_period": "per_month",
                 },
-                "mortgage": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
+                "mortgage": property_data.get("deductions", {}).get("mortgage", {}),
                 "rent": {
                     "per_interval_value": None,
                     "interval_period": "per_month",
@@ -179,10 +181,6 @@ def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
         "specific_benefits": benefits["specific_benefits"],
         "disregards": [],
     }
-
-    # Add in the property payload
-    if eligibility_data.forms.get("about-you", {}).get("own_property"):
-        deep_update(payload, property_payload)
 
     if not has_partner:
         del payload["partner"]

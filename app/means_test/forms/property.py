@@ -238,3 +238,14 @@ class MultiplePropertiesForm(BaseMeansTestForm):
     )
 
     template = "means_test/property.html"
+
+    def get_payload(
+        self,
+        has_property: bool | None = False,
+    ) -> dict:
+        """Returns the property payload for the user and the partner.
+        If a field can not be found the default of MoneyField(0) will be used.
+        """
+        payload = PropertiesPayload(self)
+
+        return payload
