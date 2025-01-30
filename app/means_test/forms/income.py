@@ -53,6 +53,13 @@ class IncomeForm(BaseMeansTestForm):
 
     template = "means_test/income.html"
 
+    @classmethod
+    def should_show(cls) -> bool:
+        return (
+            len(session.get_eligibility().forms.get("benefits", {}).get("benefits"))
+            == 0
+        )
+
     earnings = SelfEmployedMoneyIntervalField(
         _("Wages before tax"),
         self_employed_hint_text={
