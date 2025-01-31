@@ -14,8 +14,8 @@ class MeansTest(View):
     forms = {
         "about-you": AboutYouForm,
         "benefits": BenefitsForm,
-        "property": MultiplePropertiesForm,
         "additional-benefits": AdditionalBenefitsForm,
+        "property": MultiplePropertiesForm,
         "income": IncomeForm,
     }
 
