@@ -159,3 +159,4 @@ def test_value(app, client, input_data, expected_value):
     field = form.money_field
     field.process_data(input_data)
     assert field._value() == expected_value
+
