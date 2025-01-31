@@ -57,6 +57,8 @@ class MoneyIntervalField(Field):
         hint_text=None,
         validators=None,
         exclude_intervals=None,
+        min_val=0,
+        max_val=9999999999,
         **kwargs,
     ):
         super().__init__(label, validators, **kwargs)
@@ -64,6 +66,8 @@ class MoneyIntervalField(Field):
         self.hint_text = hint_text
         self.field_with_error = []
         self._intervals = MoneyInterval._intervals.copy()
+        self.min_val = min_val
+        self.max_val = max_val
         if exclude_intervals:
             for interval in exclude_intervals:
                 del self._intervals[interval]
@@ -90,6 +94,18 @@ class MoneyIntervalField(Field):
         elif valuelist and len(valuelist) == 1 and isinstance(valuelist[0], dict):
             # Data being restored from the session
             self.data = valuelist[0]
+
+        if (
+            "per_interval_value" not in self.data
+            or self.data["per_interval_value"] is None
+        ):
+            return
+
+        # Validate min/max
+        if self.min_val is not None and self.data["per_interval_value"] < self.min_val:
+            raise ValueError(f"Enter a value of more than £{self.min_val / 100:,.2f}")
+        if self.max_val is not None and self.data["per_interval_value"] > self.max_val:
+            raise ValueError(f"Enter a value of less than £{self.max_val / 100:,.2f}")
 
 
 class MoneyField(IntegerField):
