@@ -122,7 +122,7 @@ class MoneyField(IntegerField):
     def clean_input(value):
         # Remove pound sign (£), spaces, and commas from user input
         value = str(value)
-        return re.sub(r"^£|\s|,", "", value.strip())
+        return re.sub(r"[£\s,]", "", value.strip())
 
     def process_formdata(self, valuelist):
         if valuelist:
