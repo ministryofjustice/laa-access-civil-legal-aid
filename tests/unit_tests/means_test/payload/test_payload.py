@@ -1,6 +1,6 @@
 import pytest
 from app.means_test.api import get_means_test_payload, deep_update
-from .test_cases import ABOUT_YOU_TEST_CASES, INCOME_TEST_CASES
+from .test_cases import ABOUT_YOU_TEST_CASES, INCOME_TEST_CASES, SAVINGS_TEST_CASES
 
 
 def assert_partial_dict_match(expected: dict, actual: dict, path: str = "") -> None:
@@ -30,7 +30,9 @@ def assert_partial_dict_match(expected: dict, actual: dict, path: str = "") -> N
 
 
 @pytest.mark.parametrize(
-    "test_case", ABOUT_YOU_TEST_CASES + INCOME_TEST_CASES, ids=lambda t: t["id"]
+    "test_case",
+    ABOUT_YOU_TEST_CASES + INCOME_TEST_CASES + SAVINGS_TEST_CASES,
+    ids=lambda t: t["id"],
 )
 def test_get_means_test_payload(test_case: dict, app) -> None:
     """
