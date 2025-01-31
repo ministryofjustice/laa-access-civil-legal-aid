@@ -13,7 +13,7 @@ repos:
         files: requirements-(base|production).in
         args: [requirements/source/requirements-production.in, "--output-file", requirements/generated/requirements-production.txt, "--no-annotate"]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.6.2
+    rev: v0.9.3
     hooks:
       - id: ruff
         args: [ --fix ]

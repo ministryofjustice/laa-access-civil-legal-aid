@@ -2,7 +2,7 @@ from flask import render_template
 from flask_babel import lazy_gettext as _
 from wtforms.widgets import TextInput
 from markupsafe import Markup
-from wtforms import Field
+from wtforms import Field, IntegerField as BaseIntegerField
 from app.means_test.money_interval import MoneyInterval
 
 
@@ -85,3 +85,12 @@ class MoneyIntervalField(Field):
         elif valuelist and len(valuelist) == 1 and isinstance(valuelist[0], dict):
             # Data being restored from the session
             self.data = valuelist[0]
+
+
+class IntegerField(BaseIntegerField):
+    def process_formdata(self, valuelist):
+        """The parent method will fail when it tries to convert a None to an Integer"""
+        if not valuelist or valuelist[0] is None:
+            return
+
+        super().process_formdata(valuelist)
