@@ -44,7 +44,7 @@ def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
     additional_benefits_data = AdditionalBenefitsForm.get_payload(
         eligibility_data.forms.get("additional-benefits", {})
     )
-    income_data = IncomeForm(eligibility_data.forms.get("income", {})).get_payload(
+    income_data = IncomeForm(**eligibility_data.forms.get("income", {})).get_payload(
         employed=is_employed,
         self_employed=is_self_employed,
         partner_employed=is_partner_employed,
@@ -54,31 +54,38 @@ def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
         eligibility_data.forms.get("property", {})
     )
 
+    # Sums rent to the other income field for you
+    other_income = MoneyInterval(
+        property_data.get("you").get("income", {}).get("other_income", 0)
+    ) + income_data.get("you").get("income", {}).get("other_income", 0)
+
     payload = {
         "category": eligibility_data.category,
         "your_problem_notes": "",
         "notes": "",
         "property_set": property_data.get("property_set"),
         "you": {
-            "earnings": income_data.get("you", {})
-            .get("income", {})
-            .get("earnings", {}),
-            "self_employment_drawings": income_data.get("you", {})
-            .get("income", {})
-            .get("self_employment_drawings", {}),
-            "tax_credits": income_data.get("you", {})
-            .get("income", {})
-            .get("tax_credits", {}),
-            "maintenance_received": income_data.get("you", {})
-            .get("income", {})
-            .get("maintenance_received", {}),
-            "pension": income_data.get("you", {}).get("income", {}).get("pension", {}),
-            "other_income": property_data.get("you")
-            .get("income", {})
-            .get("other_income", {}),
-            "self_employed": is_self_employed,
-            "benefits": additional_benefits_data.get("benefits", {}),
-            "child_benefits": benefits_data.get("child_benefits", {}),
+            "income": {
+                "earnings": income_data.get("you", {})
+                .get("income", {})
+                .get("earnings", {}),
+                "self_employment_drawings": income_data.get("you", {})
+                .get("income", {})
+                .get("self_employment_drawings", {}),
+                "tax_credits": income_data.get("you", {})
+                .get("income", {})
+                .get("tax_credits", {}),
+                "maintenance_received": income_data.get("you", {})
+                .get("income", {})
+                .get("maintenance_received", {}),
+                "pension": income_data.get("you", {})
+                .get("income", {})
+                .get("pension", {}),
+                "other_income": other_income,
+                "self_employed": is_self_employed,
+                "benefits": additional_benefits_data.get("benefits", {}),
+                "child_benefits": benefits_data.get("child_benefits", {}),
+            },
             "savings": {
                 "bank_balance": None,
                 "investment_balance": None,
@@ -110,34 +117,36 @@ def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
             },
         },
         "partner": {
-            "earnings": income_data.get("partner", {})
-            .get("income", {})
-            .get("earnings", {}),
-            "self_employment_drawings": income_data.get("partner", {})
-            .get("income", {})
-            .get("self_employment_drawings", {}),
-            "tax_credits": income_data.get("partner", {})
-            .get("income", {})
-            .get("tax_credits", {}),
-            "maintenance_received": income_data.get("partner", {})
-            .get("income", {})
-            .get("maintenance_received", {}),
-            "pension": income_data.get("partner", {})
-            .get("income", {})
-            .get("pension", {}),
-            "other_income": property_data.get("you")
-            .get("income", {})
-            .get("other_income", {}),
-            "self_employed": "0",
-            "benefits": {
-                "per_interval_value": 0,
-                "per_interval_value_pounds": None,
-                "interval_period": "per_month",
-            },
-            "child_benefits": {
-                "per_interval_value": 0,
-                "per_interval_value_pounds": None,
-                "interval_period": "per_month",
+            "income": {
+                "earnings": income_data.get("partner", {})
+                .get("income", {})
+                .get("earnings", {}),
+                "self_employment_drawings": income_data.get("partner", {})
+                .get("income", {})
+                .get("self_employment_drawings", {}),
+                "tax_credits": income_data.get("partner", {})
+                .get("income", {})
+                .get("tax_credits", {}),
+                "maintenance_received": income_data.get("partner", {})
+                .get("income", {})
+                .get("maintenance_received", {}),
+                "pension": income_data.get("partner", {})
+                .get("income", {})
+                .get("pension", {}),
+                "other_income": income_data.get("partner", {})
+                .get("income", {})
+                .get("other_income", {}),
+                "self_employed": "0",
+                "benefits": {
+                    "per_interval_value": 0,
+                    "per_interval_value_pounds": None,
+                    "interval_period": "per_month",
+                },
+                "child_benefits": {
+                    "per_interval_value": 0,
+                    "per_interval_value_pounds": None,
+                    "interval_period": "per_month",
+                },
             },
             "savings": {
                 "bank_balance": None,
