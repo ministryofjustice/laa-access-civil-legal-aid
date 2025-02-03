@@ -1,0 +1,11 @@
+{% extends "means_test/form-page.html" %}
+
+
+{% block form %}
+
+    <p class="govuk-body">{% trans %}You’ll need to provide evidence of the financial information you’ve given us through this service.{% endtrans %}</p>
+    {{ form.rent }}
+    {{ form.maintenance }}
+    
+    {{ form.submit }}
+{% endblock %}
