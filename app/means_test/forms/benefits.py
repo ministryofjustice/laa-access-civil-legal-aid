@@ -11,8 +11,50 @@ from app.means_test.validators import (
     ValidateIf,
     ValidateIfType,
 )
-from app.means_test.data import BenefitsData
 from app.means_test import YES, NO
+
+from dataclasses import dataclass, field
+
+
+@dataclass
+class BenefitsData:
+    BENEFITS_CHOICES = [
+        ("child_benefit", _("Child Benefit")),
+        ("pension_credit", _("Guarantee Credit")),
+        ("income_support", _("Income Support")),
+        ("job_seekers_allowance", _("Income-based Jobseeker's Allowance")),
+        ("employment_support", _("Income-related Employment and Support Allowance")),
+        ("universal_credit", _("Universal Credit")),
+        ("other-benefit", _("Any other benefits")),
+    ]
+    benefits: list = field(default_factory=list)
+    child_benefits: dict = field(default_factory=dict)
+
+    @property
+    def passported_benefits(self):
+        others = ["child_benefit", "other-benefit"]
+        return [name for name, label in self.BENEFITS_CHOICES if name not in others]
+
+    @property
+    def specific_benefits(self):
+        return {
+            "pension_credit": "pension_credit" in self.benefits,
+            "job_seekers_allowance": "job_seekers_allowance" in self.benefits,
+            "employment_support": "employment_support" in self.benefits,
+            "universal_credit": "universal_credit" in self.benefits,
+            "income_support": "income_support" in self.benefits,
+        }
+
+    @property
+    def is_passported(self) -> bool:
+        return bool(set(self.benefits).intersection(self.passported_benefits))
+
+
+@dataclass
+class AdditionalBenefitData:
+    benefits: list = field(default_factory=list)
+    other_benefits: list = field(default_factory=list)
+    total_other_benefit: dict = field(default_factory=dict)
 
 
 def get_benefits_choices():
@@ -80,6 +122,27 @@ class BenefitsForm(BaseMeansTestForm):
     @classmethod
     def should_show(cls) -> bool:
         return session.get("eligibility").on_benefits
+
+    def get_payload(self) -> dict:
+        """Returns the benefits payload for the user and the partner.
+        If a field can not be found the default of MoneyField(0) will be used.
+        """
+        payload = {
+            "specific_benefits": {
+                "pension_credit": "pension_credit" in self.get("benefits", []),
+                "job_seekers_allowance": "job_seekers_allowance"
+                in self.get("benefits", []),
+                "employment_support": "employment_support" in self.get("benefits", []),
+                "universal_credit": "universal_credit" in self.get("benefits", []),
+                "income_support": "income_support" in self.get("benefits", []),
+            },
+            "on_passported_benefits": session.get(
+                "eligibility"
+            ).has_passported_benefits,
+            "child_benefits": self.get("child_benefits", {}),
+        }
+
+        return payload
 
 
 class AdditionalBenefitsForm(BaseMeansTestForm):
@@ -164,3 +227,16 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
     def should_show(cls) -> bool:
         data = session.get("eligibility").forms.get("benefits")
         return data and "other-benefit" in data["benefits"]
+
+    def get_payload(
+        self,
+    ) -> dict:
+        """Returns the additional benefits payload for the user and the partner.
+        If a field can not be found the default of MoneyField(0) will be used.
+        """
+        payload = {
+            "on_nass_benefits": False,
+            "benefits": self.get("total_other_benefit"),
+        }
+
+        return payload

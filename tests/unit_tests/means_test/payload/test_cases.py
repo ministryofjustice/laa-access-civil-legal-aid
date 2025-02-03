@@ -42,7 +42,6 @@ ABOUT_YOU_TEST_CASES = [
                 "universal_credit": False,
                 "income_support": False,
             },
-            "you": {"income": {"self_employed": False}},
         },
     },
     {
@@ -69,7 +68,6 @@ ABOUT_YOU_TEST_CASES = [
             "dependants_young": 0,
             "dependants_old": 0,
             "is_you_or_your_partner_over_60": False,
-            "on_passported_benefits": True,
             "on_nass_benefits": False,
             "specific_benefits": {
                 "pension_credit": True,
@@ -78,8 +76,6 @@ ABOUT_YOU_TEST_CASES = [
                 "universal_credit": True,
                 "income_support": False,
             },
-            "you": {"income": {"self_employed": True}},
-            "partner": {"income": {"self_employed": True}},
         },
     },
     {
@@ -108,7 +104,6 @@ ABOUT_YOU_TEST_CASES = [
             "dependants_young": 2,
             "dependants_old": 1,
             "is_you_or_your_partner_over_60": False,
-            "on_passported_benefits": True,
             "on_nass_benefits": False,
             "specific_benefits": {
                 "pension_credit": False,
@@ -117,7 +112,6 @@ ABOUT_YOU_TEST_CASES = [
                 "universal_credit": False,
                 "income_support": True,
             },
-            "you": {"income": {"self_employed": False}},
         },
     },
     {
@@ -211,8 +205,8 @@ INCOME_TEST_CASES = [
                         "interval_period": None,
                     },
                     "other_income": {
-                        "per_interval_value": None,
-                        "interval_period": None,
+                        "per_interval_value": 0,
+                        "interval_period": "per_month",
                     },
                 },
                 "deductions": {

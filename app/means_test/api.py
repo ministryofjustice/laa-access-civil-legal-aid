@@ -1,26 +1,10 @@
 from app.api import cla_backend
 from flask import session
 from app.means_test.forms.income import IncomeForm
-from app.means_test.forms.property import PropertiesPayload
+from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
+from app.means_test.forms.property import MultiplePropertiesForm
 from app.means_test.money_interval import MoneyInterval
 from tests.unit_tests.means_test.payload.test_cases import EligibilityData
-from app.means_test.data import BenefitsData, AdditionalBenefitData
-
-
-def deep_update(original, updates):
-    """
-    Recursively updates a nested dictionary with values from another dictionary.
-    Only updates keys present in the `updates` dictionary.
-    """
-    for key, value in updates.items():
-        if (
-            isinstance(value, dict)
-            and key in original
-            and isinstance(original[key], dict)
-        ):
-            deep_update(original[key], value)  # Recursive call for nested dict
-        else:
-            original[key] = value
 
 
 def update_means_test(payload):
@@ -47,15 +31,7 @@ def is_eligible(reference):
 
 def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
     about = eligibility_data.forms.get("about-you", {})
-
-    income_form = eligibility_data.forms.get("income", {})
     savings_form = eligibility_data.forms.get("savings", {})
-    property_form = eligibility_data.forms.get("property", {})
-    benefits = BenefitsData(**eligibility_data.forms.get("benefits", {})).to_payload()
-
-    additional_benefits = AdditionalBenefitData(
-        **eligibility_data.forms.get("additional-benefits", {})
-    ).to_payload()
 
     has_partner = eligibility_data.forms.get("about-you", {}).get(
         "has_partner", False
@@ -65,41 +41,51 @@ def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
     is_partner_employed = about.get("is_partner_employed", None)
     is_partner_self_employed = about.get("is_partner_self_employed", None)
 
-    income_data: dict[str, dict] = IncomeForm(**income_form).get_payload(
+    # The below data code needs refactoring to only take in eligibility_data
+    benefits_data = BenefitsForm.get_payload(eligibility_data.forms.get("benefits", {}))
+    additional_benefits_data = AdditionalBenefitsForm.get_payload(
+        eligibility_data.forms.get("additional-benefits", {})
+    )
+    income_data = IncomeForm(**eligibility_data.forms.get("income", {})).get_payload(
         employed=is_employed,
         self_employed=is_self_employed,
         partner_employed=is_partner_employed,
         partner_self_employed=is_partner_self_employed,
     )
-
-    you_income = income_data.get("you", {}).get("income", {})
-    you_income.update(
-        {
-            "benefits": additional_benefits["benefits"],
-            "child_benefits": benefits["child_benefits"],
-        }
-    )
-    partner_income = income_data.get("partner", {}).get("income", {})
-    partner_income.update(
-        {
-            "benefits": additional_benefits["benefits"],
-            "child_benefits": benefits["child_benefits"],
-        }
+    property_data = MultiplePropertiesForm.get_payload(
+        eligibility_data.forms.get("property", {})
     )
 
-    # Remove rent field from property set and setup payload
-    if eligibility_data.forms.get("about-you", {}).get("own_property"):
-        property_payload = PropertiesPayload(property_form)
-        for property_item in property_payload.get("property_set", []):
-            property_item.pop("rent", None)
+    # Sums rent to the other income field for you
+    other_income = MoneyInterval(
+        property_data.get("you").get("income", {}).get("other_income", 0)
+    ) + income_data.get("you").get("income", {}).get("other_income", 0)
 
     payload = {
         "category": eligibility_data.category,
         "your_problem_notes": "",
         "notes": "",
-        "property_set": [],
+        "property_set": property_data.get("property_set"),
         "you": {
-            "income": you_income,
+            "income": {
+                "earnings": income_data.get("you", {})
+                .get("income", {})
+                .get("earnings"),
+                "self_employment_drawings": income_data.get("you", {})
+                .get("income", {})
+                .get("self_employment_drawings"),
+                "tax_credits": income_data.get("you", {})
+                .get("income", {})
+                .get("tax_credits"),
+                "maintenance_received": income_data.get("you", {})
+                .get("income", {})
+                .get("maintenance_received"),
+                "pension": income_data.get("you", {}).get("income", {}).get("pension"),
+                "other_income": other_income,
+                "self_employed": is_self_employed,
+                "benefits": additional_benefits_data.get("benefits"),
+                "child_benefits": benefits_data.get("child_benefits"),
+            },
             "savings": {
                 "bank_balance": savings_form.get("savings", 0),
                 "investment_balance": savings_form.get("investments", 0),
@@ -121,10 +107,7 @@ def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
                     "per_interval_value": None,
                     "interval_period": "per_month",
                 },
-                "mortgage": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
+                "mortgage": property_data.get("deductions", {}).get("mortgage", {}),
                 "rent": {
                     "per_interval_value": None,
                     "interval_period": "per_month",
@@ -133,8 +116,43 @@ def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
             },
         },
         "partner": {
-            "income": partner_income,
-            # Question: Should partner savings be included in the payload, assuming they are always 0.
+            "income": {
+                "earnings": income_data.get("partner", {})
+                .get("income", {})
+                .get("earnings"),
+                "self_employment_drawings": income_data.get("partner", {})
+                .get("income", {})
+                .get("self_employment_drawings"),
+                "tax_credits": income_data.get("partner", {})
+                .get("income", {})
+                .get("tax_credits"),
+                "maintenance_received": income_data.get("partner", {})
+                .get("income", {})
+                .get("maintenance_received"),
+                "pension": income_data.get("partner", {})
+                .get("income", {})
+                .get("pension"),
+                "other_income": income_data.get("partner", {})
+                .get("income", {})
+                .get("other_income"),
+                "self_employed": "0",
+                "benefits": {
+                    "per_interval_value": 0,
+                    "per_interval_value_pounds": None,
+                    "interval_period": "per_month",
+                },
+                "child_benefits": {
+                    "per_interval_value": 0,
+                    "per_interval_value_pounds": None,
+                    "interval_period": "per_month",
+                },
+            },
+            "savings": {
+                "bank_balance": None,
+                "investment_balance": None,
+                "asset_balance": None,
+                "credit_balance": None,
+            },
             "deductions": {
                 "income_tax": income_data.get("partner", {})
                 .get("deductions", {})
@@ -169,15 +187,11 @@ def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
         else 0,
         "is_you_or_your_partner_over_60": about.get("aged_60_or_over", False),
         "has_partner": has_partner,
-        "on_passported_benefits": benefits["on_passported_benefits"],
-        "on_nass_benefits": additional_benefits["on_nass_benefits"],
-        "specific_benefits": benefits["specific_benefits"],
+        "on_passported_benefits": benefits_data["on_passported_benefits"],
+        "on_nass_benefits": additional_benefits_data["on_nass_benefits"],
+        "specific_benefits": benefits_data["specific_benefits"],
         "disregards": [],
     }
-
-    # Add in the property payload
-    if eligibility_data.forms.get("about-you", {}).get("own_property"):
-        deep_update(payload, property_payload)
 
     if not has_partner:
         del payload["partner"]
