@@ -41,6 +41,7 @@ def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
     is_partner_employed = about.get("is_partner_employed", None)
     is_partner_self_employed = about.get("is_partner_self_employed", None)
 
+    # The below data code needs refactoring to only take in eligibility_data
     benefits_data = BenefitsForm.get_payload(eligibility_data.forms.get("benefits", {}))
     additional_benefits_data = AdditionalBenefitsForm.get_payload(
         eligibility_data.forms.get("additional-benefits", {})
