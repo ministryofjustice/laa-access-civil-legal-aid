@@ -12,7 +12,6 @@ from app.means_test.forms.savings import SavingsForm
 from app.means_test.forms.outgoings import OutgoingsForm
 
 
-
 class MeansTest(View):
     forms = {
         "about-you": AboutYouForm,
