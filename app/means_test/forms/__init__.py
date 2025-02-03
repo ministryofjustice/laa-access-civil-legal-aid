@@ -9,6 +9,7 @@ from app.means_test.fields import MoneyIntervalField, MoneyInterval
 import decimal
 
 
+
 class BaseMeansTestForm(FlaskForm):
     @property
     def page_title(self):
@@ -106,3 +107,4 @@ class BaseMeansTestForm(FlaskForm):
             "label"
         ]
         return f"£{amount} {_('every')} {interval}"
+
