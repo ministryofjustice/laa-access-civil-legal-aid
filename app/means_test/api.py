@@ -31,6 +31,7 @@ def is_eligible(reference):
 
 def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
     about = eligibility_data.forms.get("about-you", {})
+    savings_form = eligibility_data.forms.get("savings", {})
 
     has_partner = eligibility_data.forms.get("about-you", {}).get(
         "has_partner", False
@@ -85,11 +86,10 @@ def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
                 "child_benefits": benefits_data.get("child_benefits"),
             },
             "savings": {
-                "bank_balance": None,
-                "investment_balance": None,
-                "asset_balance": None,
+                "bank_balance": savings_form.get("savings", 0),
+                "investment_balance": savings_form.get("investments", 0),
+                "asset_balance": savings_form.get("valuables", 0),
                 "credit_balance": None,
-                "total": None,
             },
             "deductions": {
                 "income_tax": income_data.get("you", {})

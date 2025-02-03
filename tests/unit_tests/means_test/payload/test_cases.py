@@ -482,3 +482,55 @@ INCOME_TEST_CASES = [
         },
     },
 ]
+
+SAVINGS_TEST_CASES = [
+    {
+        "id": "no_savings",
+        "name": "no_savings",
+        "description": "Case with no savings",
+        "input": EligibilityData(
+            category="debt",
+            forms={
+                "about-you": {
+                    "is_employed": False,
+                    "is_self_employed": False,
+                    "has_partner": False,
+                    "in_dispute": False,
+                },
+            },
+        ),
+        "expected": {"you": {}},
+    },
+    {
+        "id": "savings",
+        "name": "savings",
+        "description": "Case with savings",
+        "input": EligibilityData(
+            category="debt",
+            forms={
+                "about-you": {
+                    "is_employed": False,
+                    "is_self_employed": False,
+                    "has_partner": False,
+                    "in_dispute": False,
+                },
+                "savings": {
+                    "savings": 5001,
+                    "investments": 6001,
+                    "valuables": 7001,
+                    "credit_balance": None,
+                },
+            },
+        ),
+        "expected": {
+            "you": {
+                "savings": {
+                    "bank_balance": 5001,
+                    "investment_balance": 6001,
+                    "asset_balance": 7001,
+                    "credit_balance": None,
+                }
+            }
+        },
+    },
+]

@@ -1,3 +1,6 @@
+import decimal
+import re
+from decimal import Decimal, InvalidOperation
 from enum import Enum
 from flask import session
 from wtforms.validators import StopValidation
@@ -70,18 +73,53 @@ class MoneyIntervalAmountRequired(object):
         amount = field.raw_data[0] if len(field.raw_data) > 0 else None
         interval = field.raw_data[1] if len(field.raw_data) > 1 else None
 
+        try:
+            CurrencyValidator.validate_currency(amount)
+        except ValueError as e:
+            field.errors.append(str(e))
+            field.field_with_error.add("value")
+
         if (not amount) and (not interval):
             message = messages["message"]
             field.errors.append(message)
-            field.field_with_error.extend(["value", "interval"])
+            field.field_with_error.update({"value", "interval"})
             return False
+
         if not amount:
             message = messages["amount_message"]
-            field.field_with_error.append("value")
+            field.field_with_error.add("value")
             field.errors.append(message)
             return False
+
         if not interval or interval not in field._intervals:
             message = messages["freq_message"]
-            field.field_with_error.append("interval")
+            field.field_with_error.add("interval")
             field.errors.append(message)
             return False
+
+
+class CurrencyValidator:
+    @staticmethod
+    def clean_input(value):
+        value = str(value)
+        return re.sub(r"[£\s,]", "", value.strip())
+
+    @staticmethod
+    def validate_currency(value: str | None) -> Decimal | None:
+        if not value:
+            return None
+
+        clean_input = CurrencyValidator.clean_input(value)
+
+        try:
+            decimal_value = Decimal(clean_input)
+        except (ValueError, InvalidOperation):
+            raise ValueError("Enter a number")
+
+        # Check that the value has no more than 2 decimal places
+        if decimal_value != decimal_value.quantize(
+            Decimal(".01"), rounding=decimal.ROUND_DOWN
+        ):
+            raise ValueError("Enter a valid amount (maximum 2 decimal places)")
+
+        return decimal_value
