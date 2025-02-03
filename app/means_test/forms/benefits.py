@@ -12,7 +12,7 @@ from app.means_test.validators import (
     ValidateIfType,
 )
 from app.means_test.data import BenefitsData
-from app.means_test import YES, NO
+from app.means_test import YES, NO, YES_LABEL
 
 
 def get_benefits_choices():
@@ -80,6 +80,11 @@ class BenefitsForm(BaseMeansTestForm):
     @classmethod
     def should_show(cls) -> bool:
         return session.get("eligibility").on_benefits
+
+    def filter_summary(self, summary: dict) -> dict:
+        if "child_benefit" not in self.data["benefits"]:
+            del summary["child_benefits"]
+        return summary
 
 
 class AdditionalBenefitsForm(BaseMeansTestForm):
@@ -164,3 +169,8 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
     def should_show(cls) -> bool:
         data = session.get("eligibility").forms.get("benefits")
         return data and "other-benefit" in data["benefits"]
+
+    def filter_summary(self, summary: dict) -> dict:
+        if summary["other_benefits"]["answer"] != YES_LABEL:
+            del summary["total_other_benefit"]
+        return summary
