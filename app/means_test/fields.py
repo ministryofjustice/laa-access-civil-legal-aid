@@ -95,6 +95,7 @@ class MoneyIntervalField(Field):
         """Process the form data from both inputs"""
         if valuelist and len(valuelist) == 2:
             # Handle the data coming from the form fields named field.id[value] and field.id[interval]
+            self.data = valuelist
 
             if (
                 "per_interval_value" not in self.data
