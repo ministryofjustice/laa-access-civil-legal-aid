@@ -1,7 +1,7 @@
 from typing import List
 from flask.views import View, MethodView
 from flask import render_template, url_for, redirect, session, request
-from flask_babel import lazy_gettext as _, gettext
+from flask_babel import lazy_gettext as _
 from werkzeug.datastructures import MultiDict
 from app.means_test.api import update_means_test, get_means_test_payload
 from app.means_test.forms.about_you import AboutYouForm
@@ -11,7 +11,6 @@ from app.means_test.forms.income import IncomeForm
 from app.means_test.forms.savings import SavingsForm
 from app.means_test.forms.outgoings import OutgoingsForm
 from app.means_test.forms.review import ReviewForm, BaseMeansTestForm
-from app.categories.models import CategoryAnswer
 
 
 class FormsMixin:
@@ -58,6 +57,8 @@ class MeansTest(FormsMixin, View):
             if response is not None:
                 return response
 
+        # Todo: Handle invalidation of previous answers when current answer invalidates it
+        #   i.e when user changes their answers and no longer in dispute or no longer on benefits
         if form.validate_on_submit():
             session.get_eligibility().add(self.current_name, form.data)
             next_page = url_for(f"means_test.{self.get_next_page(self.current_name)}")
@@ -124,8 +125,6 @@ class MeansTest(FormsMixin, View):
 
 
 class CheckYourAnswers(FormsMixin, MethodView):
-    template = "check-your-answers.html"
-
     def get(self):
         eligibility = session.get_eligibility()
         means_test_summary = {}
@@ -134,108 +133,19 @@ class CheckYourAnswers(FormsMixin, MethodView):
                 continue
             form_data = MultiDict(eligibility.forms.get(key, {}))
             form = form_class(form_data)
-            if form.should_show():
-                means_test_summary[str(form.page_title)] = self.get_form_summary(
-                    form, key
-                )
-
-        params = {
-            "means_test_summary": means_test_summary,
-            "form": ReviewForm(),
-            "category": session.category,
-            "category_answers": self.get_category_answers_summary(),
-        }
+            means_test_summary[str(form.title)] = self.get_form_summary(form, key)
+        params = {"means_test_summary": means_test_summary, "form": ReviewForm()}
         return render_template("means_test/review.html", **params)
-
-    @staticmethod
-    def get_category_answers_summary():
-        def get_your_problem__no_description():
-            return [
-                {
-                    "key": {"text": _("The problem you need help with")},
-                    "value": {"text": session.category.title},
-                    "actions": {
-                        "items": [
-                            {"text": _("Change"), "href": url_for("categories.index")}
-                        ],
-                    },
-                },
-            ]
-
-        def get_your_problem__with_description(first_answer):
-            value = "\n".join(
-                [
-                    f"**{str(first_answer.category.title)}**",
-                    str(first_answer.category.description),
-                ]
-            )
-            return [
-                {
-                    "key": {"text": _("The problem you need help with")},
-                    "value": {"markdown": value},
-                    "actions": {
-                        "items": [{"text": _("Change"), "href": first_answer.edit_url}],
-                    },
-                },
-            ]
-
-        answers: List[CategoryAnswer] = session.category_answers
-        if not answers:
-            return []
-
-        category = session.category
-        category_has_children = bool(getattr(category, "children"))
-        if category_has_children:
-            if answers[0].question_type_is_sub_category:
-                results = get_your_problem__with_description(answers.pop(0))
-            else:
-                # Sometimes there is only one answer and it was an onward question.
-                # However we still need to show 2 items: 'The problem you need help with' and the onward question
-                # Example journey:
-                #   -> Children, families, relationships
-                #   -> If there is domestic abuse in your family
-                #   -> Are you worried about someone's safety?
-                #
-                # Then the two items need be shown in `About the problem` section:
-                #   The `The problem you need help with` should be Domestic abuse with its description
-                #   And the `Are you worried about someone's safety` onward question
-                first_answer = CategoryAnswer(**answers[0].__dict__)
-                first_answer.question_page = "categories.index"
-                results = get_your_problem__with_description(first_answer)
-        else:
-            # if a category doesn't have children then it does not have subpages so we don't show the category description
-            results = get_your_problem__no_description()
-
-        for answer in answers:
-            answer_key = "text"
-            answer_label = answer.answer_label
-            if isinstance(answer_label, list):
-                # Multiple items need to be separated by a new line
-                answer_key = "markdown"
-                answer_label = "\n".join([gettext(label) for label in answer_label])
-            else:
-                answer_label = gettext(answer_label)
-
-            results.append(
-                {
-                    "key": {"text": gettext(answer.question)},
-                    "value": {answer_key: answer_label},
-                    "actions": {
-                        "items": [{"text": _("Change"), "href": answer.edit_url}]
-                    },
-                }
-            )
-        return results
 
     @staticmethod
     def get_form_summary(form: BaseMeansTestForm, form_name: str) -> list:
         summary = []
         for item in form.summary().values():
             answer_key = "text"
-            if isinstance(item["answer"], list):
+            if item["is_multiple"]:
                 # Multiple items need to be separated by a new line
-                answer_key = "markdown"
-                item["answer"] = "\n".join(item["answer"])
+                answer_key = "html"
+                item["answer"] = item["answer"].replace("\n", "<br >")
 
             change_link = url_for(f"means_test.{form_name}", _anchor=item["id"])
             summary.append(

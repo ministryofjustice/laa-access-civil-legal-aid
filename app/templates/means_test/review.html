@@ -2,8 +2,8 @@
 {%- from 'components/back_link.html' import govukBackLink -%}
 {%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
 {%- from 'govuk_frontend_jinja/components/summary-list/macro.html' import govukSummaryList -%}
-{% set title = _("Check your answers and confirm") %}
-{% block pageTitle %}{{ title }} - GOV.UK{% endblock %}
+
+{% block pageTitle %}Review your answers - GOV.UK{% endblock %}
 
 {% block beforeContent%}
 {{ super() }}
@@ -16,33 +16,27 @@
     <div class="govuk-grid-column-two-thirds">
 
         {% block formHeading %}
-            <h1 class="govuk-heading-xl">{{ title }}</h1>
+            <h1 class="govuk-heading-xl">Review your answers</h1>
             <form action="" method="post" novalidate>
                 {{ form.csrf_token }}
 
-                {% if category_answers %}
-                    <h1 class="govuk-heading-l">{% trans %}About the problem{% endtrans %}</h1>
-                    {# Parse the markdown before passing it to govukSummaryList #}
-                    {% set ns = namespace(rows=[]) %}
-                    {% for answer in category_answers %}
-                        {%  if answer.value.markdown %}
-                            {# The markdown extension nl2br converts \n to <br>. #}
-                            {% set _ = answer.value.update({"text": answer.value.markdown | markdown(extensions=['nl2br'])}) %}
-                        {% endif %}
-                        {% set _ = ns.rows.append(answer) %}
-                    {% endfor %}
-                    {{ govukSummaryList(
-                      {
-                        "title": {
-                            "classes": "govuk-heading-xl"
-                        },
-                        "rows": ns.rows,
-                       "attributes": {
-                            "data-question": "The problem you need help with"
-                        }
-                      }
-                    )}}
-                {% endif %}
+                <h1>{% trans %}About the problem{% endtrans %}</h1>
+                {# Parse the markdown before passing it to govukSummaryList #}
+                {% set ns = namespace(rows=[]) %}
+                {% for answer in scope_answers %}
+                    {%  if answer.value.markdown %}
+                        {% set _ = answer.__setitem__("value", {"text": answer.value.markdown | markdown(extensions=['nl2br'])}) %}
+                    {% endif %}
+                    {% set _ = ns.rows.append(answer) %}
+                {% endfor %}
+                {{ govukSummaryList(
+                  {
+                    "title": {
+                        "classes": "govuk-heading-xl"
+                    },
+                    "rows": ns.rows,
+                  }
+                )}}
 
                 {% for title, questions in means_test_summary.items() %}
                     <h2 class="govuk-heading-l">{{ title }}</h2>
@@ -51,8 +45,7 @@
                     {% set ns = namespace(rows=[]) %}
                     {% for question in questions %}
                         {%  if question.value.markdown %}
-                            {# The markdown extension nl2br converts \n to <br>. #}
-                            {% set _ = question.value.update({"text": question.value.markdown | markdown(extensions=['nl2br'])}) %}
+                            {% set _ = question.__setitem__("value", {"text": question.value.markdown | markdown(extensions=['nl2br'])}) %}
                         {% endif %}
                         {% set _ = ns.rows.append(question) %}
                     {% endfor %}
@@ -64,7 +57,7 @@
                         },
                         "rows": ns.rows,
                         "attributes": {
-                            "data-question": title,
+                            "data-form": title,
                         }
                       }
                     )}}

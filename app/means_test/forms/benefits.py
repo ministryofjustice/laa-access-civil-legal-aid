@@ -11,7 +11,7 @@ from app.means_test.validators import (
     ValidateIf,
     ValidateIfType,
 )
-from app.means_test import YES, NO
+from app.means_test import YES, NO, YES_LABEL
 from dataclasses import dataclass, field
 
 
@@ -142,6 +142,10 @@ class BenefitsForm(BaseMeansTestForm):
         }
 
         return payload
+    def filter_summary(self, summary: dict) -> dict:
+        if "child_benefit" not in self.data["benefits"]:
+            del summary["child_benefits"]
+        return summary
 
 
 class AdditionalBenefitsForm(BaseMeansTestForm):
@@ -240,3 +244,8 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
         }
 
         return payload
+
+    def filter_summary(self, summary: dict) -> dict:
+        if summary["other_benefits"]["answer"] != YES_LABEL:
+            del summary["total_other_benefit"]
+        return summary
