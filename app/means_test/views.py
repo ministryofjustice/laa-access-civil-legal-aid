@@ -1,17 +1,18 @@
 from flask.views import View, MethodView
 from flask import render_template, url_for, redirect, session, request
+from flask_babel import lazy_gettext as _
 from werkzeug.datastructures import MultiDict
 from app.means_test.api import update_means_test, get_means_test_payload
-from app.means_test.forms import BaseMeansTestForm
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import MultiplePropertiesForm
 from app.means_test.forms.income import IncomeForm
 from app.means_test.forms.savings import SavingsForm
 from app.means_test.forms.outgoings import OutgoingsForm
+from app.means_test.forms.review import ReviewForm, BaseMeansTestForm
 
 
-class MeansTest(View):
+class FormsMixin:
     forms = {
         "about-you": AboutYouForm,
         "benefits": BenefitsForm,
@@ -22,6 +23,8 @@ class MeansTest(View):
         "outgoings": OutgoingsForm,
     }
 
+
+class MeansTest(FormsMixin, View):
     def __init__(self, current_form_class, current_name):
         self.form_class = current_form_class
         self.current_name = current_name
@@ -55,6 +58,8 @@ class MeansTest(View):
             if response is not None:
                 return response
 
+        # Todo: Handle invalidation of previous answers when current answer invalidates it
+        #   i.e when user changes their answers and no longer in dispute or no longer on benefits
         if form.validate_on_submit():
             session.get_eligibility().add(self.current_name, form.data)
             next_page = url_for(f"means_test.{self.get_next_page(self.current_name)}")
@@ -120,6 +125,38 @@ class MeansTest(View):
         }
 
 
-class CheckYourAnswers(MethodView):
+class CheckYourAnswers(FormsMixin, MethodView):
     def get(self):
-        return render_template("means_test/review.html", data=session.get_eligibility())
+        eligibility = session.get_eligibility()
+        means_test_summary = {}
+        for key, form_class in self.forms.items():
+            if key not in eligibility.forms:
+                continue
+            form_data = MultiDict(eligibility.forms.get(key, {}))
+            form = form_class(form_data)
+            means_test_summary[str(form.title)] = self.get_form_summary(form, key)
+        params = {"means_test_summary": means_test_summary, "form": ReviewForm()}
+        return render_template("means_test/review.html", **params)
+
+    @staticmethod
+    def get_form_summary(form: BaseMeansTestForm, form_name: str) -> list:
+        summary = []
+        for item in form.summary().values():
+            answer_key = "text"
+            if item["is_multiple"]:
+                # Multiple items need to be separated by a new line
+                answer_key = "html"
+                item["answer"] = item["answer"].replace("\n", "<br >")
+
+            change_link = url_for(f"means_test.{form_name}", _anchor=item["id"])
+            summary.append(
+                {
+                    "key": {"text": item["question"]},
+                    "value": {answer_key: item["answer"]},
+                    "actions": {"items": [{"href": change_link, "text": _("Change")}]},
+                }
+            )
+        return summary
+
+    def post(self):
+        return self.get()
