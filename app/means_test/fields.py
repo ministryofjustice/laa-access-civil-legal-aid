@@ -48,7 +48,13 @@ class MoneyIntervalField(Field):
 
     @property
     def value(self):
-        return self.data["per_interval_value_pounds"]
+        value = self.data["per_interval_value_pounds"]
+        if value is None:
+            raw_value = (
+                self.raw_data[0] if self.raw_data and len(self.raw_data) > 0 else None
+            )
+            value = raw_value
+        return value
 
     def __init__(
         self,
@@ -63,7 +69,7 @@ class MoneyIntervalField(Field):
         super().__init__(label, validators, **kwargs)
         self.title = label
         self.hint_text = hint_text
-        self.field_with_error = []
+        self.field_with_error = set()  # Contains a set of fields with errors so each field can be highlighted when required
         self._intervals = MoneyInterval._intervals.copy()
         self.min_val = min_val
         self.max_val = max_val
@@ -89,25 +95,35 @@ class MoneyIntervalField(Field):
         """Process the form data from both inputs"""
         if valuelist and len(valuelist) == 2:
             # Handle the data coming from the form fields named field.id[value] and field.id[interval]
-            self.data = valuelist
+
+            if (
+                "per_interval_value" not in self.data
+                or self.data["per_interval_value"] is None
+            ):
+                return
+
+            # Validate min/max
+            if (
+                self.min_val is not None
+                and self.data["per_interval_value"] < self.min_val
+            ):
+                raise ValueError(
+                    f"Enter a value of more than £{self.min_val / 100:,.2f}"
+                )
+            if (
+                self.max_val is not None
+                and self.data["per_interval_value"] > self.max_val
+            ):
+                raise ValueError(
+                    f"Enter a value of less than £{self.max_val / 100:,.2f}"
+                )
+
         elif valuelist and len(valuelist) == 1 and isinstance(valuelist[0], dict):
             # Data being restored from the session
             self.data = valuelist[0]
 
-        if (
-            "per_interval_value" not in self.data
-            or self.data["per_interval_value"] is None
-        ):
-            return
 
-        # Validate min/max
-        if self.min_val is not None and self.data["per_interval_value"] < self.min_val:
-            raise ValueError(f"Enter a value of more than £{self.min_val / 100:,.2f}")
-        if self.max_val is not None and self.data["per_interval_value"] > self.max_val:
-            raise ValueError(f"Enter a value of less than £{self.max_val / 100:,.2f}")
-
-
-class MoneyField(IntegerField):
+class MoneyField(BaseIntegerField):
     def __init__(
         self, label=None, validators=None, min_val=0, max_val=9999999999, **kwargs
     ):
@@ -133,7 +149,7 @@ class MoneyField(IntegerField):
             try:
                 decimal_value = Decimal(clean_input)
             except (ValueError, InvalidOperation):
-                raise ValueError("Enter a valid number")
+                raise ValueError("Enter a valid amount")
 
             # Check if value has more than 2 decimal places
             if decimal_value != decimal_value.quantize(
@@ -171,6 +187,7 @@ class MoneyField(IntegerField):
             pence = self.data % 100
             return f"{pounds:,}.{pence:02d}"
         return ""
+
 
 class IntegerField(BaseIntegerField):
     def process_formdata(self, valuelist):
