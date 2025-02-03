@@ -30,7 +30,7 @@ def test_money_field_both_missing(app, client):
     data = MultiDict([("money_field", ""), ("money_field", "")])
     form = TestIntervalForm(formdata=data)
     assert not form.validate()
-    assert form.money_field.field_with_error == ["value", "interval"]
+    assert form.money_field.field_with_error == {"value", "interval"}
     assert form.errors["money_field"] == ["Please provide both amount and frequency"]
 
 
@@ -38,7 +38,7 @@ def test_money_field_only_amount_missing(app, client):
     data = MultiDict([("money_field", ""), ("money_field", "per_week")])
     form = TestIntervalForm(formdata=data)
     assert not form.validate()
-    assert form.money_field.field_with_error == ["value"]
+    assert form.money_field.field_with_error == {"value"}
     assert form.errors["money_field"] == ["Please provide amount"]
 
 
@@ -46,16 +46,16 @@ def test_money_field_only_amount_interval(app, client):
     data = MultiDict([("money_field", "1000"), ("money_field", "")])
     form = TestIntervalForm(formdata=data)
     assert not form.validate()
-    assert form.money_field.field_with_error == ["interval"]
+    assert form.money_field.field_with_error == {"interval"}
     assert form.errors["money_field"] == ["Please provide frequency"]
 
 
 def test_money_field_excluded_interval(app, client):
     data = MultiDict([("money_field", "1000"), ("money_field", "per_month")])
     form = TestIntervalForm(formdata=data)
-    assert (
-        not form.validate()
-    ), "Validation should have raised an exception for invalid interval"
+    assert not form.validate(), (
+        "Validation should have raised an exception for invalid interval"
+    )
 
 
 class TestMoneyFieldForm(FlaskForm):
@@ -98,7 +98,7 @@ def test_process_formdata_valid(app, client, input_value, expected_data):
 def test_process_formdata_invalid_number(app, client, input_value):
     form = TestMoneyFieldForm()
     field = form.money_field
-    with pytest.raises(ValueError, match="Enter a valid number"):
+    with pytest.raises(ValueError, match="Enter a valid amount"):
         field.process_formdata(input_value)
 
 
@@ -159,4 +159,3 @@ def test_value(app, client, input_data, expected_value):
     field = form.money_field
     field.process_data(input_data)
     assert field._value() == expected_value
-
