@@ -1,9 +1,13 @@
+import decimal
+from decimal import Decimal, InvalidOperation
+
 from flask import render_template
 from flask_babel import lazy_gettext as _
 from wtforms.widgets import TextInput
 from markupsafe import Markup
 from wtforms import Field, IntegerField as BaseIntegerField
 from app.means_test.money_interval import MoneyInterval
+import re
 
 
 class MoneyIntervalWidget(TextInput):
@@ -44,7 +48,13 @@ class MoneyIntervalField(Field):
 
     @property
     def value(self):
-        return self.data["per_interval_value_pounds"]
+        value = self.data["per_interval_value_pounds"]
+        if value is None:
+            raw_value = (
+                self.raw_data[0] if self.raw_data and len(self.raw_data) > 0 else None
+            )
+            value = raw_value
+        return value
 
     def __init__(
         self,
@@ -52,13 +62,17 @@ class MoneyIntervalField(Field):
         hint_text=None,
         validators=None,
         exclude_intervals=None,
+        min_val=0,
+        max_val=9999999999,
         **kwargs,
     ):
         super().__init__(label, validators, **kwargs)
         self.title = label
         self.hint_text = hint_text
-        self.field_with_error = []
+        self.field_with_error = set()  # Contains a set of fields with errors so each field can be highlighted when required
         self._intervals = MoneyInterval._intervals.copy()
+        self.min_val = min_val
+        self.max_val = max_val
         if exclude_intervals:
             for interval in exclude_intervals:
                 del self._intervals[interval]
@@ -82,9 +96,98 @@ class MoneyIntervalField(Field):
         if valuelist and len(valuelist) == 2:
             # Handle the data coming from the form fields named field.id[value] and field.id[interval]
             self.data = valuelist
+
+            if (
+                "per_interval_value" not in self.data
+                or self.data["per_interval_value"] is None
+            ):
+                return
+
+            # Validate min/max
+            if (
+                self.min_val is not None
+                and self.data["per_interval_value"] < self.min_val
+            ):
+                raise ValueError(
+                    f"Enter a value of more than £{self.min_val / 100:,.2f}"
+                )
+            if (
+                self.max_val is not None
+                and self.data["per_interval_value"] > self.max_val
+            ):
+                raise ValueError(
+                    f"Enter a value of less than £{self.max_val / 100:,.2f}"
+                )
+
         elif valuelist and len(valuelist) == 1 and isinstance(valuelist[0], dict):
             # Data being restored from the session
             self.data = valuelist[0]
+
+
+class MoneyField(BaseIntegerField):
+    def __init__(
+        self, label=None, validators=None, min_val=0, max_val=9999999999, **kwargs
+    ):
+        self._user_input = None
+        self.data = None
+        self.min_val = min_val
+        self.max_val = max_val
+        super(MoneyField, self).__init__(label, validators, **kwargs)
+
+    @staticmethod
+    def clean_input(value):
+        # Remove pound sign (£), spaces, and commas from user input
+        value = str(value)
+        return re.sub(r"[£\s,]", "", value.strip())
+
+    def process_formdata(self, valuelist):
+        if valuelist:
+            self._user_input = valuelist[0]
+
+            # Clean the input
+            clean_input = self.clean_input(valuelist[0])
+
+            try:
+                decimal_value = Decimal(clean_input)
+            except (ValueError, InvalidOperation):
+                raise ValueError("Enter a valid amount")
+
+            # Check if value has more than 2 decimal places
+            if decimal_value != decimal_value.quantize(
+                Decimal(".01"), rounding=decimal.ROUND_DOWN
+            ):
+                raise ValueError("Enter a valid amount (maximum 2 decimal places)")
+
+            self.data = int(decimal_value * 100)
+
+            # Validate min/max
+            if self.min_val is not None and self.data < self.min_val:
+                raise ValueError(
+                    f"Enter a value of more than £{self.min_val / 100:,.2f}"
+                )
+
+            if self.max_val is not None and self.data > self.max_val:
+                raise ValueError(
+                    f"Enter a value of less than £{self.max_val / 100:,.2f}"
+                )
+
+    def process_data(self, value):
+        """Handle data coming from the database/code (in pence)"""
+        if value is not None:
+            self.data = value
+            pounds = value // 100
+            pence = value % 100
+            self._user_input = f"{pounds:,}.{pence:02d}"
+
+    def _value(self):
+        """Format value for display"""
+        if self._user_input is not None:
+            return self._user_input
+        if self.data is not None:
+            pounds = self.data // 100
+            pence = self.data % 100
+            return f"{pounds:,}.{pence:02d}"
+        return ""
 
 
 class IntegerField(BaseIntegerField):

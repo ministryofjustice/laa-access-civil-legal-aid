@@ -8,6 +8,7 @@ from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import MultiplePropertiesForm
 from app.means_test.forms.income import IncomeForm
+from app.means_test.forms.savings import SavingsForm
 
 
 class MeansTest(View):
@@ -16,6 +17,7 @@ class MeansTest(View):
         "benefits": BenefitsForm,
         "property": MultiplePropertiesForm,
         "additional-benefits": AdditionalBenefitsForm,
+        "savings": SavingsForm,
         "income": IncomeForm,
     }
 
@@ -40,7 +42,9 @@ class MeansTest(View):
     def dispatch_request(self):
         eligibility = session.get_eligibility()
         form_data = MultiDict(eligibility.forms.get(self.current_name, {}))
-        form = self.form_class(request.form or form_data)
+        form = self.form_class(
+            formdata=request.form or None, data=form_data if not request.form else None
+        )
         if isinstance(form, MultiplePropertiesForm):
             response = self.handle_multiple_properties_ajax_request(form)
             if response is not None:

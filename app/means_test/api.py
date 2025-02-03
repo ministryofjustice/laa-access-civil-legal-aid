@@ -49,6 +49,7 @@ def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
     about = eligibility_data.forms.get("about-you", {})
 
     income_form = eligibility_data.forms.get("income", {})
+    savings_form = eligibility_data.forms.get("savings", {})
     property_form = eligibility_data.forms.get("property", {})
     benefits = BenefitsData(**eligibility_data.forms.get("benefits", {})).to_payload()
 
@@ -100,11 +101,10 @@ def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
         "you": {
             "income": you_income,
             "savings": {
-                "bank_balance": None,
-                "investment_balance": None,
-                "asset_balance": None,
+                "bank_balance": savings_form.get("savings", 0),
+                "investment_balance": savings_form.get("investments", 0),
+                "asset_balance": savings_form.get("valuables", 0),
                 "credit_balance": None,
-                "total": None,
             },
             "deductions": {
                 "income_tax": income_data.get("you", {})
@@ -134,12 +134,7 @@ def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
         },
         "partner": {
             "income": partner_income,
-            "savings": {
-                "bank_balance": None,
-                "investment_balance": None,
-                "asset_balance": None,
-                "credit_balance": None,
-            },
+            # Question: Should partner savings be included in the payload, assuming they are always 0.
             "deductions": {
                 "income_tax": income_data.get("partner", {})
                 .get("deductions", {})
