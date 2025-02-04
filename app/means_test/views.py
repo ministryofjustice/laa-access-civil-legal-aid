@@ -4,6 +4,7 @@ from flask import render_template, url_for, redirect, session, request
 from werkzeug.datastructures import MultiDict
 
 from app.means_test.api import update_means_test, get_means_test_payload
+from app.means_test.forms import BaseMeansTestForm
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import MultiplePropertiesForm
@@ -80,7 +81,7 @@ class MeansTest(View):
         """Checks if the form has been completed by the user."""
         return form_key in session.get_eligibility().forms
 
-    def get_form_progress(self, current_form):
+    def get_form_progress(self, current_form: BaseMeansTestForm) -> dict:
         """Gets the users progress through the means test. This is used to populate the progress bar."""
 
         forms = []
@@ -102,11 +103,16 @@ class MeansTest(View):
                     }
                 )
 
-        is_about_you_completed = self.is_form_completed("about-you")
+        count_completed_forms = (
+            len([form for form in forms if form["is_completed"]]) + 1
+        )  # Add 1 for the current form
+        total_forms = len(forms) + 2  # Add 2 for the review & contact pages
+        completion_percentage = count_completed_forms / total_forms * 100
+
         return {
             "steps": forms,
             "current_step": current_form_key,
-            "is_about_you_completed": is_about_you_completed,
+            "completion_percentage": completion_percentage,
         }
 
 
