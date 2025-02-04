@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-01-30 23:55+0000\n"
+"POT-Creation-Date: 2025-02-04 17:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -147,27 +147,6 @@ msgid "Another reason"
 msgstr ""
 
 msgid "Continue to contact CLA"
-msgstr ""
-
-msgid "Child Benefit"
-msgstr ""
-
-msgid "Guarantee Credit"
-msgstr ""
-
-msgid "Income Support"
-msgstr ""
-
-msgid "Income-based Jobseeker's Allowance"
-msgstr ""
-
-msgid "Income-related Employment and Support Allowance"
-msgstr ""
-
-msgid "Universal Credit"
-msgstr ""
-
-msgid "Any other benefits"
 msgstr ""
 
 msgid "-- Please select --"
@@ -323,6 +302,27 @@ msgid "Do you have any valuable items worth over £500 each?"
 msgstr ""
 
 msgid "Tell us if you have any valuable items worth over £500 each"
+msgstr ""
+
+msgid "Child Benefit"
+msgstr ""
+
+msgid "Guarantee Credit"
+msgstr ""
+
+msgid "Income Support"
+msgstr ""
+
+msgid "Income-based Jobseeker's Allowance"
+msgstr ""
+
+msgid "Income-related Employment and Support Allowance"
+msgstr ""
+
+msgid "Universal Credit"
+msgstr ""
+
+msgid "Any other benefits"
 msgstr ""
 
 msgid "Which benefits do you receive?"
@@ -1610,6 +1610,24 @@ msgid "Amount"
 msgstr ""
 
 msgid "Frequency"
+msgstr ""
+
+msgid "Current page"
+msgstr ""
+
+msgid "Completed page"
+msgstr ""
+
+msgid "Future page"
+msgstr ""
+
+msgid "Your progress"
+msgstr ""
+
+msgid "Review your answers"
+msgstr ""
+
+msgid "Contact information"
 msgstr ""
 
 msgid "What valuable items should I include?"

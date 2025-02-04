@@ -54,7 +54,7 @@ about_you_form_routing = [
 
 @pytest.fixture
 def navigate_to_benefits(page: Page, answers: dict, navigate_to_means_test):
-    expect(page.get_by_text("About You")).to_be_visible()
+    expect(page.get_by_role("heading", name="About You")).to_be_visible()
     for question, answer in answers.items():
         form_group = page.get_by_role("group", name=question)
         if question == "Do you have a partner":
@@ -64,7 +64,9 @@ def navigate_to_benefits(page: Page, answers: dict, navigate_to_means_test):
         form_group.get_by_label(answer).first.check()
     # Submit form
     page.get_by_role("button", name="Continue").click()
-    expect(page.get_by_text("Which benefits do you receive?")).to_be_visible()
+    expect(page.get_by_text("Which benefits do you receive?")).to_have_count(
+        2
+    )  # This checks for a count of two as the text also exists in the progress bar
     return page
 
 
@@ -88,7 +90,7 @@ def test_means_test_benefits_page(
 
     # Submit form
     page.get_by_role("button", name="Continue").click()
-    expect(page.get_by_text(expected_heading)).to_be_visible()
+    expect(page.get_by_role("heading", name=expected_heading)).to_be_visible()
 
 
 @pytest.mark.usefixtures("live_server")
