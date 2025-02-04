@@ -1,8 +1,6 @@
 from flask.views import View, MethodView
 from flask import render_template, url_for, redirect, session, request
-
 from werkzeug.datastructures import MultiDict
-
 from app.means_test.api import update_means_test, get_means_test_payload
 from app.means_test.forms import BaseMeansTestForm
 from app.means_test.forms.about_you import AboutYouForm
@@ -103,11 +101,11 @@ class MeansTest(View):
                     }
                 )
 
-        count_completed_forms = (
+        num_completed_forms = (
             len([form for form in forms if form["is_completed"]]) + 1
-        )  # Add 1 for the current form
-        total_forms = len(forms) + 2  # Add 2 for the review & contact pages
-        completion_percentage = count_completed_forms / total_forms * 100
+        )  # Add 1 to account for the current form
+        total_forms = len(forms) + 2  # Add 2 to count for the review & contact pages
+        completion_percentage = num_completed_forms / total_forms * 100
 
         return {
             "steps": forms,
