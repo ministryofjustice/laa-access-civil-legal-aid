@@ -33,7 +33,7 @@
     <aside class="sidebar">
         <div class="progress">
             {{ progress_bar(completion_percentage) }}
-            <h2 class="govuk-heading-m govuk-!-padding-top-3 govuk-!-margin-bottom-2">Your progress</h2>
+            <h2 class="govuk-heading-m govuk-!-padding-top-3 govuk-!-margin-bottom-2">{% trans %}Your progress{% endtrans %}</h2>
             <ul class="govuk-list progress-steps">
                 {# Steps to do #}
                 {% for step in steps %}
