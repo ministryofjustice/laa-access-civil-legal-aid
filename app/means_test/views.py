@@ -28,7 +28,11 @@ class MeansTest(View):
         if "add-property" in request.form:
             form.properties.append_entry()
             form._submitted = False
-            return render_template(self.form_class.template, form=form)
+            return render_template(
+                self.form_class.template,
+                form=form,
+                form_progress=self.get_form_progress(current_form=form),
+            )
 
         # Handle removing a property
         elif "remove-property-2" in request.form or "remove-property-3" in request.form:
