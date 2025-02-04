@@ -48,7 +48,9 @@
             {% endblock %}
     </div>
     <div class="govuk-grid-column-one-third">
-        {{ means_test_progress(form_progress["steps"], form_progress["current_step"], form_progress["completion_percentage"]) }}
+        <aside class="sidebar">
+            {{ means_test_progress(form_progress["steps"], form_progress["current_step"], form_progress["completion_percentage"]) }}
+        </aside>
     </div>
 </div>
 {% endblock %}

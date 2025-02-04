@@ -30,61 +30,59 @@
     {% set has_remaining_forms = steps|rejectattr('is_completed')|list|length > 0 %}
     {% set is_contact_page = request.path.startswith('/result/') %}
 
-    <aside class="sidebar">
-        <div class="progress">
-            {{ progress_bar(completion_percentage) }}
-            <h2 class="govuk-heading-m govuk-!-padding-top-3 govuk-!-margin-bottom-2">{% trans %}Your progress{% endtrans %}</h2>
-            <ul class="govuk-list progress-steps">
-                {# Steps to do #}
-                {% for step in steps %}
-                    <li class="progress-step
-                        {% if step.is_completed %}completed-step {% endif %}
-                        {% if step.is_current %}current-step{% endif %}">
-                    {% if (step.is_completed and not step.is_current) %}
-                        <a class="step-name" href="{{ step.url }}">
-                            {{ step_status(step.is_completed, step.is_current) }}
-                            {{ step.title }}
-                        </a>
-                    {% else %}
-                        <span class="step-name">
-                            {{ step_status(step.is_completed, step.is_current) }}
-                            {{ step.title }}
-                        </span>
-                    {% endif %}
-                    </li>
-                {% endfor %}
-              {# Optional collapsed steps #}
-                {% if not is_about_you_complete %}
-                  <li class="progress-step m-collapsed">
-                    {% for n in range(3) %}
-                      <div class="step-name"></div>
-                    {% endfor %}
-                  </li>
-                {% endif %}
-              {# Review/ final steps #}
+    <div class="progress">
+        {{ progress_bar(completion_percentage) }}
+        <h2 class="govuk-heading-m govuk-!-padding-top-3 govuk-!-margin-bottom-2">{% trans %}Your progress{% endtrans %}</h2>
+        <ul class="govuk-list progress-steps">
+            {# Steps to do #}
+            {% for step in steps %}
                 <li class="progress-step
-                  {% if current_step.name == 'review' %}current-step{% endif %}
-                  {% if not has_remaining_forms and current_step.name != 'review' %}completed-step{% endif %}">
-                  {% if has_remaining_forms or is_contact_page or current_step.name == 'review'%}
-                    <span class="step-name">
-                  {% else %}
-                    <a class="step-name" href="{{ url_for('means_test.review') }}">
-                  {% endif %}
-                    {{ step_status(not has_remaining_forms, current_step.name == 'review') }}
-                    {% trans %}Review your answers{% endtrans %}
-                  {% if has_remaining_forms or is_contact_page %}
-                    </span>
-                  {% else %}
+                    {% if step.is_completed %}completed-step {% endif %}
+                    {% if step.is_current %}current-step{% endif %}">
+                {% if (step.is_completed and not step.is_current) %}
+                    <a class="step-name" href="{{ step.url }}">
+                        {{ step_status(step.is_completed, step.is_current) }}
+                        {{ step.title }}
                     </a>
-                  {% endif %}
+                {% else %}
+                    <span class="step-name">
+                        {{ step_status(step.is_completed, step.is_current) }}
+                        {{ step.title }}
+                    </span>
+                {% endif %}
                 </li>
-                <li class="progress-step {% if is_contact_page %}current-step{% endif %}">
-                  <span class="step-name">
-                    {{ step_status(false, is_contact_page) }}
-                    {% trans %}Contact information{% endtrans %}
-                  </span>
-                </li>
-            </ul>
-        </div>
-    </aside>
+            {% endfor %}
+          {# Optional collapsed steps #}
+            {% if not is_about_you_complete %}
+              <li class="progress-step m-collapsed">
+                {% for n in range(3) %}
+                  <div class="step-name"></div>
+                {% endfor %}
+              </li>
+            {% endif %}
+          {# Review/ final steps #}
+            <li class="progress-step
+              {% if current_step.name == 'review' %}current-step{% endif %}
+              {% if not has_remaining_forms and current_step.name != 'review' %}completed-step{% endif %}">
+              {% if has_remaining_forms or is_contact_page or current_step.name == 'review'%}
+                <span class="step-name">
+              {% else %}
+                <a class="step-name" href="{{ url_for('means_test.review') }}">
+              {% endif %}
+                {{ step_status(not has_remaining_forms, current_step.name == 'review') }}
+                {% trans %}Review your answers{% endtrans %}
+              {% if has_remaining_forms or is_contact_page %}
+                </span>
+              {% else %}
+                </a>
+              {% endif %}
+            </li>
+            <li class="progress-step {% if is_contact_page %}current-step{% endif %}">
+              <span class="step-name">
+                {{ step_status(false, is_contact_page) }}
+                {% trans %}Contact information{% endtrans %}
+              </span>
+            </li>
+        </ul>
+    </div>
 {% endmacro %}
