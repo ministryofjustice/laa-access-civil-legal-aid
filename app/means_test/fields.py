@@ -8,6 +8,7 @@ from markupsafe import Markup
 from wtforms import Field, IntegerField as BaseIntegerField
 from app.means_test.money_interval import MoneyInterval
 import re
+from app.means_test.validators import CurrencyValidator
 
 
 class MoneyIntervalWidget(TextInput):
@@ -95,6 +96,7 @@ class MoneyIntervalField(Field):
         """Process the form data from both inputs"""
         if valuelist and len(valuelist) == 2:
             # Handle the data coming from the form fields named field.id[value] and field.id[interval]
+            valuelist[0] = CurrencyValidator.clean_input(valuelist[0])
             self.data = valuelist
 
             if (
@@ -108,6 +110,7 @@ class MoneyIntervalField(Field):
                 self.min_val is not None
                 and self.data["per_interval_value"] < self.min_val
             ):
+                self.field_with_error.add("value")
                 raise ValueError(
                     f"Enter a value of more than £{self.min_val / 100:,.2f}"
                 )
@@ -115,6 +118,7 @@ class MoneyIntervalField(Field):
                 self.max_val is not None
                 and self.data["per_interval_value"] > self.max_val
             ):
+                self.field_with_error.add("value")
                 raise ValueError(
                     f"Enter a value of less than £{self.max_val / 100:,.2f}"
                 )
