@@ -145,8 +145,7 @@ class CheckYourAnswers(FormsMixin, MethodView):
             answer_key = "text"
             if item["is_multiple"]:
                 # Multiple items need to be separated by a new line
-                answer_key = "html"
-                item["answer"] = item["answer"].replace("\n", "<br >")
+                answer_key = "markdown"
 
             change_link = url_for(f"means_test.{form_name}", _anchor=item["id"])
             summary.append(
