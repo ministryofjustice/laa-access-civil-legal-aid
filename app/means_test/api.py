@@ -3,7 +3,6 @@ from flask import session
 from app.means_test.forms.income import IncomeForm
 from app.means_test.forms.property import PropertiesPayload
 from app.means_test.money_interval import MoneyInterval
-from tests.unit_tests.means_test.payload.test_cases import EligibilityData
 from app.means_test.data import BenefitsData, AdditionalBenefitData
 
 
@@ -45,7 +44,7 @@ def is_eligible(reference):
     return response["is_eligible"]
 
 
-def get_means_test_payload(eligibility_data: EligibilityData) -> dict:
+def get_means_test_payload(eligibility_data) -> dict:
     about = eligibility_data.forms.get("about-you", {})
 
     income_form = eligibility_data.forms.get("income", {})
