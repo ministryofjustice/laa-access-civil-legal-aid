@@ -146,3 +146,16 @@ class OutgoingsForm(BaseMeansTestForm):
     )
 
     submit = SubmitField(_("Review your answers"), widget=GovSubmitInput())
+
+    def get_payload(self) -> dict:
+        """Returns the outgoings payload for the user and the partner.
+        If a field can not be found the default of MoneyField(0) will be used.
+        """
+        payload = {
+            "rent": self.get("rent", {}),
+            "maintenance": self.get("maintenance", {}),
+            "income_contribution": self.get("income_contribution"),
+            "childcare": self.get("childcare", {}),
+        }
+
+        return payload
