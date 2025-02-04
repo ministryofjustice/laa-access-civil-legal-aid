@@ -57,7 +57,11 @@ class MeansTest(View):
             update_means_test(payload)
 
             return redirect(next_page)
-        return render_template(self.form_class.template, form=form)
+        return render_template(
+            self.form_class.template,
+            form=form,
+            form_progress=self.get_form_progress(current_form=form),
+        )
 
     def get_next_page(self, current_key):
         keys = list(self.forms.keys())  # Convert to list for easier indexing
@@ -70,6 +74,40 @@ class MeansTest(View):
             return "review"  # No more valid pages found
         except ValueError:  # current_key not found
             return "review"
+
+    @staticmethod
+    def is_form_completed(form_key: str):
+        """Checks if the form has been completed by the user."""
+        return form_key in session.get_eligibility().forms
+
+    def get_form_progress(self, current_form):
+        """Gets the users progress through the means test. This is used to populate the progress bar."""
+
+        forms = []
+        current_form_key = ""
+
+        for key, form in self.forms.items():
+            form = form()
+            if form.should_show():
+                is_current = form.page_title == current_form.page_title
+                if is_current:
+                    current_form_key = key
+                forms.append(
+                    {
+                        "key": key,
+                        "title": form.page_title,
+                        "url": url_for(f"means_test.{key}"),
+                        "is_current": is_current,
+                        "is_completed": self.is_form_completed(key),
+                    }
+                )
+
+        is_about_you_completed = self.is_form_completed("about-you")
+        return {
+            "steps": forms,
+            "current_step": current_form_key,
+            "is_about_you_completed": is_about_you_completed,
+        }
 
 
 class CheckYourAnswers(MethodView):

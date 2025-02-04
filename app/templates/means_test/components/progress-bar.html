@@ -1,0 +1,72 @@
+{% macro progress_bar(completed) %}
+  {% if completed is number %}
+    <div class="progress-bar">
+      {% if completed %}
+        <div class="progress-value completed-step {{ 'progress-unfinished' if not completed >= 100 }}" style="width: {{ completed }}%"></div>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endmacro %}
+
+{% macro step_status(is_completed=False, is_current=False) %}
+  <span class="step-status">
+    {% if is_current %}
+      {{ _('Current page') }}:
+    {% elif is_completed %}
+      {{ _('Completed page') }}:
+    {% else %}
+      {{ _('Future page') }}:
+    {% endif %}
+  </span>
+{% endmacro %}
+
+{% macro progress(steps, current_step, is_about_you_form_completed) %}
+    <aside>
+        <div class="progress">
+            {{ progress_bar(20) }}
+            <h3 class="govuk-heading-m">Your progress</h3>
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+            <ul class="govuk-list">
+                {# Steps to do #}
+                {% for step in steps %}
+                    <li class="progress-step
+                        {% if step.is_completed %}completed-step {% endif %}
+                        {% if step.is_current %}current-step{% endif %}">
+                    {% if (step.is_completed and not step.is_current) %}
+                        <a class="step-name" href="{{ step.url }}">
+                            {{ step_status(step.is_completed, step.is_current) }}
+                            {{ step.title }}
+                        </a>
+                    {% else %}
+                        <span class="step-name">
+                            {{ step_status(step.is_completed, step.is_current) }}
+                            {{ step.title }}
+                        </span>
+                    {% endif %}
+                    </li>
+                {% endfor %}
+              {# Optional collapsed steps #}
+                {% if not is_about_you_form_completed %}
+                  <li class="progress-step m-collapsed">
+                    {% for n in range(3) %}
+                      <div class="step-name"></div>
+                    {% endfor %}
+                  </li>
+                {% endif %}
+              {# Review/ final steps #}
+                <li class="progress-step">
+                    <span class="step-name">
+                        {{ step_status(False, False) }}
+                        Review your answers
+                    </span>
+                </li>
+                <li class="progress-step">
+                    <span class="step-name">
+                        {{ step_status(False, False) }}
+                        Contact information
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </aside>
+{% endmacro %}
