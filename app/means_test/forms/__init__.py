@@ -65,16 +65,17 @@ class BaseMeansTestForm(FlaskForm):
             answer = field_instance.data
             is_multiple = False
             if isinstance(field_instance, SelectField):
-                answer = "\n".join(self.get_selected_answers(field_instance))
+                answer = self.get_selected_answers(field_instance)
                 is_multiple = isinstance(field_instance, SelectMultipleField)
             if isinstance(field_instance, MoneyIntervalField):
                 answer = self.get_money_field_answers(field_instance)
-            summary[field_instance.name] = {
-                "question": question,
-                "answer": answer,
-                "is_multiple": is_multiple,
-                "id": field_instance.id,
-            }
+            if field_instance.data not in [None, "None"]:
+                summary[field_instance.name] = {
+                    "question": question,
+                    "answer": answer,
+                    "is_multiple": is_multiple,
+                    "id": field_instance.id,
+                }
 
         summary = self.filter_summary(summary)
         return summary
@@ -85,8 +86,8 @@ class BaseMeansTestForm(FlaskForm):
             return field_instance.data and choice[0] in field_instance.data
 
         answers = list(filter(choices_filter, field_instance.choices))
-        answers = [str(answer[1]) for answer in answers]
-        return answers
+        answers = [f"{str(answer[1])}" for answer in answers]
+        return "\n".join(answers)
 
     @staticmethod
     def get_money_field_answers(field_instance):

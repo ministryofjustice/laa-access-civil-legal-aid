@@ -6,12 +6,22 @@
     {{ form.csrf_token }}
     {% for title, questions in means_test_summary.items() %}
         <h2 class="govuk-heading-l">{{ title }}</h2>
+
+        {# Parse the markdown before passing it govukSummaryList #}
+        {% set ns = namespace(rows=[]) %}
+        {% for question in questions %}
+            {%  if question.value.markdown %}
+                {% set _ = question.__setitem__("value", {"text": question.value.markdown | markdown(extensions=['nl2br'])}) %}
+            {% endif %}
+            {% set _ = ns.rows.append(question) %}
+        {% endfor %}
+
         {{ govukSummaryList(
           {
             "title": {
                 "classes": "govuk-heading-xl"
             },
-            "rows": questions
+            "rows": ns.rows
           }
         )}}
     {% endfor %}
