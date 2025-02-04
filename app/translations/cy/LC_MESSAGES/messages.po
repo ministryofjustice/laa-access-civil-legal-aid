@@ -747,7 +747,7 @@ msgstr "Rhent"
 msgid ""
 "Money you pay your landlord for rent. Do not include rent that is paid by"
 " Housing Benefit."
-msgstr ""
+msgstr "Arian rydych chi'n ei dalu i'ch landlord am rent. Peidiwch â chynnwys rhent a dalwyd gan Fudd-dal Tai"
 
 msgid ""
 "Money you and your partner pay your landlord for rent, or enter 0 if you "
