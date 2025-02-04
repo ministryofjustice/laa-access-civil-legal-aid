@@ -79,6 +79,9 @@ class MoneyIntervalAmountRequired(object):
             field.errors.append(str(e))
             field.field_with_error.add("value")
 
+        if (amount == "0") and not interval:
+            return
+
         if (not amount) and (not interval):
             message = messages["message"]
             field.errors.append(message)

@@ -74,6 +74,11 @@ class MoneyInterval(dict):
         Decimal first.
         """
 
+        # If you have an amount of 0 the interval is irrelevant, therefore default to per_month
+        # This allows the user to leave frequency as "--Please select--" and enter 0 for the amount
+        if self.interval is None and value == "0":
+            self.interval = "per_month"
+
         try:
             self["per_interval_value"] = to_amount(value)
 
