@@ -1,4 +1,5 @@
 import pytest
+from flask import url_for
 from playwright.sync_api import Page, expect
 
 
@@ -64,3 +65,14 @@ def test_fala_journey(page: Page):
     expect(page.get_by_role("heading", name="Asylum and immigration")).to_be_visible()
     page.get_by_role("button", name="Back").click()
     expect(page.get_by_role("heading", name="Find problems covered by")).to_be_visible()
+
+
+@pytest.mark.usefixtures("live_server")
+def test_fallback(page: Page):
+    """Test that we go to session expired page if we press back when referred from an external page"""
+    page.goto("https://www.gov.uk")
+    page.goto(url_for("means_test.about-you", _external=True))
+    page.get_by_role("button", name="Back").click()
+    expect(
+        page.get_by_role("heading", name="You’ve reached the end of this service")
+    ).to_be_visible()
