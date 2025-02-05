@@ -11,8 +11,7 @@ from app.means_test.validators import (
     ValidateIf,
     ValidateIfType,
 )
-from app.means_test import YES, NO
-
+from app.means_test import YES, NO, YES_LABEL
 from dataclasses import dataclass, field
 
 
@@ -123,6 +122,14 @@ class BenefitsForm(BaseMeansTestForm):
     def should_show(cls) -> bool:
         return session.get("eligibility").on_benefits
 
+    def filter_summary(self, summary: dict) -> dict:
+        if "child_benefits" not in summary:
+            return summary
+
+        if "child_benefit" not in self.data["benefits"]:
+            del summary["child_benefits"]
+        return summary
+
     def get_payload(self) -> dict:
         """Returns the benefits payload for the user and the partner.
         If a field can not be found the default of MoneyField(0) will be used.
@@ -227,6 +234,11 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
     def should_show(cls) -> bool:
         data = session.get("eligibility").forms.get("benefits")
         return data and "other-benefit" in data["benefits"]
+
+    def filter_summary(self, summary: dict) -> dict:
+        if summary["other_benefits"]["answer"] != YES_LABEL:
+            del summary["total_other_benefit"]
+        return summary
 
     def get_payload(
         self,
