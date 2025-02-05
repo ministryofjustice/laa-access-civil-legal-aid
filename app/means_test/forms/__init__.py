@@ -6,6 +6,7 @@ from wtforms.csrf.core import CSRFTokenField
 from flask_babel import lazy_gettext as _
 from flask import session
 from app.means_test.fields import MoneyIntervalField, MoneyInterval
+import decimal
 
 
 class BaseMeansTestForm(FlaskForm):
@@ -61,21 +62,24 @@ class BaseMeansTestForm(FlaskForm):
             if isinstance(field_instance, (SubmitField, CSRFTokenField)):
                 continue
 
+            if field_instance.data in [None, "None"]:
+                continue
+
             question = str(field_instance.label.text)
             answer = field_instance.data
-            is_multiple = False
+
             if isinstance(field_instance, SelectField):
                 answer = self.get_selected_answers(field_instance)
-                is_multiple = isinstance(field_instance, SelectMultipleField)
             if isinstance(field_instance, MoneyIntervalField):
                 answer = self.get_money_field_answers(field_instance)
-            if field_instance.data not in [None, "None"]:
-                summary[field_instance.name] = {
-                    "question": question,
-                    "answer": answer,
-                    "is_multiple": is_multiple,
-                    "id": field_instance.id,
-                }
+                if answer is None:
+                    continue
+
+            summary[field_instance.name] = {
+                "question": question,
+                "answer": answer,
+                "id": field_instance.id,
+            }
 
         summary = self.filter_summary(summary)
         return summary
@@ -86,16 +90,19 @@ class BaseMeansTestForm(FlaskForm):
             return field_instance.data and choice[0] in field_instance.data
 
         answers = list(filter(choices_filter, field_instance.choices))
-        answers = [f"{str(answer[1])}" for answer in answers]
-        return "\n".join(answers)
+        answers = [str(answer[1]) for answer in answers]
+        if not isinstance(field_instance, SelectMultipleField):
+            answers = answers[0]
+        return answers
 
     @staticmethod
     def get_money_field_answers(field_instance):
         if field_instance.data["per_interval_value"] is None:
-            return ""
+            return None
 
-        amount = int(field_instance.data["per_interval_value"]) / 100
+        amount = decimal.Decimal(int(field_instance.data["per_interval_value"]) / 100)
+        amount = amount.quantize(decimal.Decimal("0.01"))
         interval = MoneyInterval._intervals[field_instance.data["interval_period"]][
             "label"
         ]
-        return f"{amount} {_('every')} {interval}"
+        return f"£{amount} {_('every')} {interval}"

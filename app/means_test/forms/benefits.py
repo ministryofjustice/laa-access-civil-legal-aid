@@ -143,6 +143,9 @@ class BenefitsForm(BaseMeansTestForm):
 
         return payload
     def filter_summary(self, summary: dict) -> dict:
+        if "child_benefits" not in summary:
+            return summary
+
         if "child_benefit" not in self.data["benefits"]:
             del summary["child_benefits"]
         return summary
