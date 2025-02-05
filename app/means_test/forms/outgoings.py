@@ -60,7 +60,7 @@ class OutgoingsForm(BaseMeansTestForm):
 
     @classmethod
     def should_show(cls) -> bool:
-        return not session.get("eligibility").has_passported_benefits
+        return not session.get_eligibility().has_passported_benefits
 
     @property
     def has_children_dependants(self):
