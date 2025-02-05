@@ -10,8 +10,8 @@ msgstr "Gofal cymunedol"
 msgid "Domestic abuse"
 msgstr "Cam-drin domestig"
 
-msgid "Appeal a decision about your benefits"
-msgstr ""
+msgid "Welfare benefits"
+msgstr "Budd-daliadau lles"
 
 msgid "Discrimination"
 msgstr "Gwahaniaethu"
@@ -1179,9 +1179,7 @@ msgstr "gyflwyno cais yn uniongyrchol"
 
 #, python-format
 msgid "You can also %(ecf_link)s to the Legal Aid Agency."
-msgstr ""
-"Gallwch hefyd %(ecf_link)s i’r Asiantaeth Cymorth "
-"Cyfreithiol."
+msgstr "Gallwch hefyd %(ecf_link)s i’r Asiantaeth Cymorth Cyfreithiol."
 
 msgid "Applying for asylum"
 msgstr ""
@@ -1217,6 +1215,9 @@ msgid "More problems"
 msgstr ""
 
 msgid "Help if you’re a victim of trafficking or modern slavery."
+msgstr ""
+
+msgid "Appeal a decision about your benefits"
 msgstr ""
 
 msgid "Legal aid only covers appeals to the:"
@@ -1839,4 +1840,7 @@ msgstr "Carafannau a cherbydau eraill nad ydych chi’n eu defnyddio bob dydd"
 
 msgid "Musical instruments, unless you’re a professional musician"
 msgstr "Offerynnau cerddorol, oni bai’ch bod yn gerddor proffesiynol"
+
+#~ msgid "Benefits"
+#~ msgstr ""
 

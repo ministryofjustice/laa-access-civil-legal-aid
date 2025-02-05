@@ -23,7 +23,9 @@ class ResultPage(CategoryPage):
         )
         organisations = cla_backend.get_help_organisations(article_category_name)
         return {
-            "category_name": article_category_name,
+            "category_name": category.display_text
+            if isinstance(category, Category)
+            else None,
             "organisations": organisations,
             "fala_category_code": get_fala_category_code(article_category_name),
         }

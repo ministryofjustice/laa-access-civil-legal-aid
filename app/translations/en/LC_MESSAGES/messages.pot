@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-02-05 16:51+0000\n"
+"POT-Creation-Date: 2025-02-05 17:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Domestic abuse"
 msgstr ""
 
-msgid "Appeal a decision about your benefits"
+msgid "Welfare benefits"
 msgstr ""
 
 msgid "Discrimination"
@@ -1113,6 +1113,9 @@ msgid "More problems"
 msgstr ""
 
 msgid "Help if you’re a victim of trafficking or modern slavery."
+msgstr ""
+
+msgid "Appeal a decision about your benefits"
 msgstr ""
 
 msgid "Legal aid only covers appeals to the:"
