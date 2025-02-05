@@ -130,27 +130,6 @@ msgstr "Rheswm arall"
 msgid "Continue to contact CLA"
 msgstr "Parhau i gysylltu â CLA"
 
-msgid "Child Benefit"
-msgstr "Budd-dal Plant"
-
-msgid "Guarantee Credit"
-msgstr "Credyd Gwarant"
-
-msgid "Income Support"
-msgstr "Cymhorthdal Incwm"
-
-msgid "Income-based Jobseeker's Allowance"
-msgstr "Lwfans Ceisio Gwaith yn seiliedig ar Incwm"
-
-msgid "Income-related Employment and Support Allowance"
-msgstr "Lwfans Cyflogaeth a Chymorth yn Seiliedig ar Incwm"
-
-msgid "Universal Credit"
-msgstr "Credyd Cynhwysol"
-
-msgid "Any other benefits"
-msgstr "Unrhyw fudd-daliadau eraill"
-
 msgid "-- Please select --"
 msgstr "-- Dewiswch --"
 
@@ -322,6 +301,27 @@ msgstr "Oes gennych chi unrhyw eitemau gwerthfawr sy'n werth mwy na £500 yr un?
 
 msgid "Tell us if you have any valuable items worth over £500 each"
 msgstr "Oes gennych chi eitemau gwerthfawr sydd werth dros £500 yr un"
+
+msgid "Child Benefit"
+msgstr "Budd-dal Plant"
+
+msgid "Guarantee Credit"
+msgstr "Credyd Gwarant"
+
+msgid "Income Support"
+msgstr "Cymhorthdal Incwm"
+
+msgid "Income-based Jobseeker's Allowance"
+msgstr "Lwfans Ceisio Gwaith yn seiliedig ar Incwm"
+
+msgid "Income-related Employment and Support Allowance"
+msgstr "Lwfans Cyflogaeth a Chymorth yn Seiliedig ar Incwm"
+
+msgid "Universal Credit"
+msgstr "Credyd Cynhwysol"
+
+msgid "Any other benefits"
+msgstr "Unrhyw fudd-daliadau eraill"
 
 msgid "Which benefits do you receive?"
 msgstr "Pa fudd-daliadau ydych chi’n eu cael?"
@@ -841,7 +841,9 @@ msgstr "Cynilion"
 msgid ""
 "The total amount of savings in cash, bank or building society; or enter 0"
 " if you have none"
-msgstr "Cyfanswm y cynilion mewn arian parod, yn y banc neu mewn cymdeithas adeiladu; neu rhowch 0 os nad oes gennych rai"
+msgstr ""
+"Cyfanswm y cynilion mewn arian parod, yn y banc neu mewn cymdeithas "
+"adeiladu; neu rhowch 0 os nad oes gennych rai"
 
 msgid "Enter your total savings, or 0 if you have none"
 msgstr "Rhowch gyfanswm eich cynilion, neu 0 os nad oes gennych rai"
@@ -852,7 +854,9 @@ msgstr "Buddsoddiadau"
 msgid ""
 "This includes stocks, shares, bonds (but not property); enter 0 if you "
 "have none"
-msgstr "Mae hyn yn cynnwys stociau, cyfrannau, bondiau (ond nid eiddo); rhowch 0 os nad oes gennych rai"
+msgstr ""
+"Mae hyn yn cynnwys stociau, cyfrannau, bondiau (ond nid eiddo); rhowch 0 "
+"os nad oes gennych rai"
 
 msgid "Enter your total investments, or 0 if you have none"
 msgstr "Rhowch gyfanswm eich buddsoddiadau, neu 0 os nad oes gennych rai"
@@ -1107,6 +1111,77 @@ msgstr ""
 
 msgid "Help if you’re a victim of human trafficking or modern slavery."
 msgstr ""
+
+msgid "Legal aid doesn’t cover all types of problem"
+msgstr "Nid yw cymorth cyfreithiol yn gallu delio â phob math o broblem"
+
+msgid ""
+"You can still ask a solicitor for help – you will have to pay for their "
+"advice."
+msgstr ""
+"Gallwch dal ofyn i gyfreithiwr eich helpu - bydd rhaid ichi dalu am eu "
+"cyngor."
+
+msgid ""
+"You can still ask a solicitor for help - you will have to pay for their "
+"advice."
+msgstr ""
+"Gallwch dal ofyn i gyfreithiwr eich helpu - bydd rhaid ichi dalu am eu "
+"cyngor."
+
+msgid "Find a solicitor"
+msgstr "Dod o hyd i gyfreithiwr"
+
+msgid "What did you think of this service?"
+msgstr "Beth oeddech chi’n feddwl o’r gwasanaeth hwn?"
+
+msgid "(takes 30 seconds)"
+msgstr "(mae’n cymryd 30 eiliad)"
+
+msgid ""
+"You may still get help and advice from the organisations listed below. "
+"You don’t have to qualify for legal aid."
+msgstr ""
+"Efallai y byddwch chi’n dal yn gallu cael help a chyngor gan y "
+"sefydliadau sydd wedi’u rhestru isod. Nid oes rhaid i chi fod yn gymwys i"
+" gael cymorth cyfreithiol."
+
+#, python-format
+msgid "Help organisations for problems about %(category_name)s"
+msgstr "Sefydliadau cymorth ar gyfer problemau ynghylch %(category_name)s"
+
+msgid "Exceptional cases"
+msgstr "Achosion eithriadol"
+
+msgid ""
+"In exceptional cases or if your case is going to a judicial review, legal"
+" aid may still be available."
+msgstr ""
+"Mewn achosion arbennig, nes os bydd eich achos yn destun adolygiad "
+"barnwrol, gall cyngor cyfreithiol dal fod ar gael."
+
+msgid "In exceptional cases, legal aid may still be available."
+msgstr "Gall cymorth cyfreithiol dal fod ar gael mewn achosion eithriadol."
+
+msgid "ask a legal adviser"
+msgstr "ofyn am gyngor gan gynghorydd"
+
+#, python-format
+msgid ""
+"You can %(fala_link)s if an application might succeed in your case and "
+"how to apply."
+msgstr ""
+"Gallwch %(fala_link)s cyfreithiol ynghylch a fydd cais am gymorth "
+"cyfreithiol yn debygol o lwyddo yn eich achos chi a sut i wneud cais."
+
+msgid "apply directly"
+msgstr "gyflwyno cais yn uniongyrchol"
+
+#, python-format
+msgid "You can also %(ecf_link)s to the Legal Aid Agency."
+msgstr ""
+"Gallwch hefyd %(ecf_link)s i’r Asiantaeth Cymorth "
+"Cyfreithiol."
 
 msgid "Applying for asylum"
 msgstr ""
@@ -1654,7 +1729,9 @@ msgstr "Ychwanegu eiddo arall"
 msgid ""
 "Any cash, savings or investments held in your name, your partner’s name "
 "or both your names."
-msgstr "Unrhyw arian parod, cynilion neu fuddsoddiadau sy’n cael eu dal yn eich enw chi, enw’ch partner neu yn enwau’r ddau ohonoch."
+msgstr ""
+"Unrhyw arian parod, cynilion neu fuddsoddiadau sy’n cael eu dal yn eich "
+"enw chi, enw’ch partner neu yn enwau’r ddau ohonoch."
 
 msgid "What payments do not count as income?"
 msgstr "Pa daliadau nad ydynt yn cyfrif fel incwm?"
