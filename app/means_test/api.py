@@ -3,6 +3,7 @@ from flask import session
 from app.means_test.forms.income import IncomeForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import MultiplePropertiesForm
+from app.means_test.forms.outgoings import OutgoingsForm
 from app.means_test.money_interval import MoneyInterval
 
 
@@ -55,6 +56,10 @@ def get_means_test_payload(eligibility_data) -> dict:
         eligibility_data.forms.get("property", {})
     )
 
+    outgoings_data = OutgoingsForm.get_payload(
+        eligibility_data.forms.get("outgoings", {})
+    )
+
     # Sums rent to the other income field for you
     other_income = MoneyInterval(
         property_data.get("you").get("income", {}).get("other_income", 0)
@@ -98,20 +103,13 @@ def get_means_test_payload(eligibility_data) -> dict:
                 "national_insurance": income_data.get("you", {})
                 .get("deductions", {})
                 .get("national_insurance", MoneyInterval(0)),
-                "maintenance": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
-                "childcare": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
+                "maintenance": outgoings_data.get("maintenance", MoneyInterval(0)),
+                "childcare": outgoings_data.get("childcare", MoneyInterval(0)),
                 "mortgage": property_data.get("deductions", {}).get("mortgage", {}),
-                "rent": {
-                    "per_interval_value": None,
-                    "interval_period": "per_month",
-                },
-                "criminal_legalaid_contributions": None,
+                "rent": outgoings_data.get("rent", MoneyInterval(0)),
+                "criminal_legalaid_contributions": outgoings_data.get(
+                    "income_contribution"
+                ),
             },
         },
         "partner": {

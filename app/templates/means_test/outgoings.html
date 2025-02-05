@@ -1,0 +1,15 @@
+{% extends "means_test/form-page.html" %}
+
+
+{% block form %}
+    {{ form.csrf_token }}
+    <p class="govuk-body">{% trans %}You’ll need to provide evidence of the financial information you’ve given us through this service.{% endtrans %}</p>
+    {{ form.rent }}
+    {{ form.maintenance }}
+    {{ form.income_contribution }}
+    {% if form.has_children_dependants %}
+        {{ form.childcare }}
+    {% endif %}
+
+    {{ form.submit }}
+{% endblock %}

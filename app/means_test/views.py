@@ -9,6 +9,7 @@ from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import MultiplePropertiesForm
 from app.means_test.forms.income import IncomeForm
 from app.means_test.forms.savings import SavingsForm
+from app.means_test.forms.outgoings import OutgoingsForm
 
 
 class MeansTest(View):
@@ -19,6 +20,7 @@ class MeansTest(View):
         "property": MultiplePropertiesForm,
         "savings": SavingsForm,
         "income": IncomeForm,
+        "outgoings": OutgoingsForm,
     }
 
     def __init__(self, current_form_class, current_name):

@@ -534,3 +534,77 @@ SAVINGS_TEST_CASES = [
         },
     },
 ]
+
+
+OUTGOINGS_TEST_CASES = [
+    {
+        "id": "no_outgoings",
+        "name": "no_outgoings",
+        "description": "Case with no outgoings",
+        "input": EligibilityData(
+            category="debt",
+            forms={
+                "about-you": {
+                    "is_employed": False,
+                    "is_self_employed": False,
+                    "has_partner": False,
+                    "in_dispute": False,
+                },
+            },
+        ),
+        "expected": {"you": {}},
+    },
+    {
+        "id": "outgoings",
+        "name": "outgoings",
+        "description": "Case with outgoings",
+        "input": EligibilityData(
+            category="debt",
+            forms={
+                "about-you": {
+                    "is_employed": False,
+                    "is_self_employed": False,
+                    "has_partner": False,
+                    "in_dispute": False,
+                },
+                "outgoings": {
+                    "maintenance": {
+                        "per_interval_value": 250000,
+                        "per_interval_value_pounds": 2500.00,
+                        "interval_period": "per_month",
+                    },
+                    "childcare": {
+                        "per_interval_value": 250000,
+                        "per_interval_value_pounds": 2500.00,
+                        "interval_period": "per_month",
+                    },
+                    "rent": {
+                        "per_interval_value": 250000,
+                        "per_interval_value_pounds": 2500.00,
+                        "interval_period": "per_month",
+                    },
+                    "income_contribution": 7005,
+                },
+            },
+        ),
+        "expected": {
+            "you": {
+                "deductions": {
+                    "maintenance": {
+                        "per_interval_value": 250000,
+                        "interval_period": "per_month",
+                    },
+                    "childcare": {
+                        "per_interval_value": 250000,
+                        "interval_period": "per_month",
+                    },
+                    "rent": {
+                        "per_interval_value": 250000,
+                        "interval_period": "per_month",
+                    },
+                    "criminal_legalaid_contributions": 7005,
+                }
+            }
+        },
+    },
+]
