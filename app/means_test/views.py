@@ -142,9 +142,10 @@ class CheckYourAnswers(FormsMixin, MethodView):
         summary = []
         for item in form.summary().values():
             answer_key = "text"
-            if item["is_multiple"]:
+            if isinstance(item["answer"], list):
                 # Multiple items need to be separated by a new line
                 answer_key = "markdown"
+                item["answer"] = "\n".join(item["answer"])
 
             change_link = url_for(f"means_test.{form_name}", _anchor=item["id"])
             summary.append(
