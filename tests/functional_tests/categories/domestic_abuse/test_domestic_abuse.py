@@ -35,7 +35,10 @@ ROUTING = [
         "link_text": "Female genital mutilation (FGM)",
         "next_page_heading": risk_of_harm_page_heading,
     },
-    {"link_text": "Next steps to get help", "next_page_heading": "Referral page"},
+    {
+        "link_text": "Next steps to get help",
+        "next_page_heading": "Legal aid doesn’t cover all types of problem",
+    },
 ]
 
 

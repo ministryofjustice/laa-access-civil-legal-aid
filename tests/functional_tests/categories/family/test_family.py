@@ -34,7 +34,10 @@ ROUTING = [
         "link_text": "Forced marriage",
         "next_page_heading": in_scope_page_heading,
     },
-    {"link_text": "Next steps to get help", "next_page_heading": "Referral page"},
+    {
+        "link_text": "Next steps to get help",
+        "next_page_heading": "Legal aid doesn’t cover all types of problem",
+    },
 ]
 
 

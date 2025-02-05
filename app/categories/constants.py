@@ -24,10 +24,10 @@ COMMUNITY_CARE = Category(
     _("Community care"), "COMMUNITY_CARE", "Community care", "commcare"
 )
 DOMESTIC_ABUSE = Category(
-    _("Domestic abuse"), "DOMESTIC_ABUSE", "Domestic abuse", "family"
+    _("Domestic abuse"), "DOMESTIC_ABUSE", "Domestic Abuse", "family"
 )
 BENEFITS = Category(
-    _("Appeal a decision about your benefits"),
+    _("Welfare benefits"),
     "BENEFITS",
     "Welfare benefits",
     "benefits",
