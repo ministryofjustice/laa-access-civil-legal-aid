@@ -7,7 +7,7 @@
     {% for title, questions in means_test_summary.items() %}
         <h2 class="govuk-heading-l">{{ title }}</h2>
 
-        {# Parse the markdown before passing it govukSummaryList #}
+        {# Parse the markdown before passing it to govukSummaryList #}
         {% set ns = namespace(rows=[]) %}
         {% for question in questions %}
             {%  if question.value.markdown %}
