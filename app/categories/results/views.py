@@ -14,6 +14,7 @@ class HlpasInScopePage(CategoryPage):
 class ResultPage(CategoryPage):
     @staticmethod
     def get_context():
+        print(session.category)
         category = session.category
         article_category_name = (
             category.article_category_name
