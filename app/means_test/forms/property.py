@@ -1,6 +1,6 @@
 from flask import session
 from wtforms import ValidationError
-from wtforms.fields import RadioField, IntegerField, FieldList, FormField
+from wtforms.fields import RadioField, FieldList, FormField
 from wtforms.fields.core import Label
 from govuk_frontend_wtf.wtforms_widgets import GovTextInput
 from wtforms.validators import InputRequired, NumberRange
@@ -8,7 +8,7 @@ from app.means_test.widgets import MeansTestRadioInput
 from flask_babel import lazy_gettext as _
 from app.means_test import YES, NO
 from app.means_test.forms import BaseMeansTestForm
-from app.means_test.fields import MoneyIntervalField, MoneyIntervalWidget
+from app.means_test.fields import MoneyIntervalField, MoneyIntervalWidget, MoneyField
 from app.means_test.validators import MoneyIntervalAmountRequired
 from app.means_test.validators import ValidateIf
 from app.means_test.money_interval import MoneyInterval, to_amount
@@ -143,7 +143,7 @@ class PropertyForm(BaseMeansTestForm):
         ],
     )
 
-    property_value = IntegerField(
+    property_value = MoneyField(
         _("How much is the property worth?"),
         widget=GovTextInput(),
         description=_(
@@ -157,7 +157,7 @@ class PropertyForm(BaseMeansTestForm):
         ],
     )
 
-    mortgage_remaining = IntegerField(
+    mortgage_remaining = MoneyField(
         _("How much is left to pay on the mortgage?"),
         widget=GovTextInput(),
         description=_(
@@ -171,7 +171,7 @@ class PropertyForm(BaseMeansTestForm):
         ],
     )
 
-    mortgage_payments = IntegerField(
+    mortgage_payments = MoneyField(
         _("How much was your monthly mortgage repayment last month?"),
         widget=GovTextInput(),
         validators=[
@@ -238,3 +238,14 @@ class MultiplePropertiesForm(BaseMeansTestForm):
     )
 
     template = "means_test/property.html"
+
+    def get_payload(
+        self,
+        has_property: bool | None = False,
+    ) -> dict:
+        """Returns the property payload for the user and the partner.
+        If a field can not be found the default of MoneyField(0) will be used.
+        """
+        payload = PropertiesPayload(self)
+
+        return payload

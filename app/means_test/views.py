@@ -9,14 +9,16 @@ from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import MultiplePropertiesForm
 from app.means_test.forms.income import IncomeForm
 from app.means_test.forms.review import ReviewForm, BaseMeansTestForm
+from app.means_test.forms.savings import SavingsForm
 
 
 class FormsMixin:
     forms = {
         "about-you": AboutYouForm,
         "benefits": BenefitsForm,
-        "property": MultiplePropertiesForm,
         "additional-benefits": AdditionalBenefitsForm,
+        "property": MultiplePropertiesForm,
+        "savings": SavingsForm,
         "income": IncomeForm,
     }
 
@@ -43,7 +45,9 @@ class MeansTest(FormsMixin, View):
     def dispatch_request(self):
         eligibility = session.get_eligibility()
         form_data = MultiDict(eligibility.forms.get(self.current_name, {}))
-        form = self.form_class(request.form or form_data)
+        form = self.form_class(
+            formdata=request.form or None, data=form_data if not request.form else None
+        )
         if isinstance(form, MultiplePropertiesForm):
             response = self.handle_multiple_properties_ajax_request(form)
             if response is not None:

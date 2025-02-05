@@ -1,0 +1,25 @@
+{% extends "means_test/form-page.html" %}
+
+{% block formDescription %}
+    <p class="govuk-body">{% trans %}Any cash, savings or investments held in your name, your partner’s name or both your names.{% endtrans %}</p>
+    <p class="govuk-body">{% trans %}You’ll need to provide evidence of the financial information you’ve given us through this service.{% endtrans %}</p>
+{% endblock %}
+
+{% block form %}
+
+    {{ form.csrf_token }}
+
+    {% set fields = form.shown_fields %}
+
+    {%  for field in fields %}
+        {{ field }}
+        {% if field == form.savings %}
+            {% include "means_test/components/_disregards-info-savings.html" %}
+        {% endif %}
+        {% if field == form.valuables %}
+            {% include "means_test/components/valuable-info.html" %}
+        {% endif %}
+    {% endfor %}
+
+    {{ form.submit }}
+{% endblock %}

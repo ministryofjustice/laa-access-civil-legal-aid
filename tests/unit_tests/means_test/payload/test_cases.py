@@ -42,7 +42,6 @@ ABOUT_YOU_TEST_CASES = [
                 "universal_credit": False,
                 "income_support": False,
             },
-            "you": {"income": {"self_employed": False}},
         },
     },
     {
@@ -69,7 +68,6 @@ ABOUT_YOU_TEST_CASES = [
             "dependants_young": 0,
             "dependants_old": 0,
             "is_you_or_your_partner_over_60": False,
-            "on_passported_benefits": True,
             "on_nass_benefits": False,
             "specific_benefits": {
                 "pension_credit": True,
@@ -78,8 +76,6 @@ ABOUT_YOU_TEST_CASES = [
                 "universal_credit": True,
                 "income_support": False,
             },
-            "you": {"income": {"self_employed": True}},
-            "partner": {"income": {"self_employed": True}},
         },
     },
     {
@@ -108,7 +104,6 @@ ABOUT_YOU_TEST_CASES = [
             "dependants_young": 2,
             "dependants_old": 1,
             "is_you_or_your_partner_over_60": False,
-            "on_passported_benefits": True,
             "on_nass_benefits": False,
             "specific_benefits": {
                 "pension_credit": False,
@@ -117,7 +112,6 @@ ABOUT_YOU_TEST_CASES = [
                 "universal_credit": False,
                 "income_support": True,
             },
-            "you": {"income": {"self_employed": False}},
         },
     },
     {
@@ -211,8 +205,8 @@ INCOME_TEST_CASES = [
                         "interval_period": None,
                     },
                     "other_income": {
-                        "per_interval_value": None,
-                        "interval_period": None,
+                        "per_interval_value": 0,
+                        "interval_period": "per_month",
                     },
                 },
                 "deductions": {
@@ -485,6 +479,58 @@ INCOME_TEST_CASES = [
                     },
                 },
             },
+        },
+    },
+]
+
+SAVINGS_TEST_CASES = [
+    {
+        "id": "no_savings",
+        "name": "no_savings",
+        "description": "Case with no savings",
+        "input": EligibilityData(
+            category="debt",
+            forms={
+                "about-you": {
+                    "is_employed": False,
+                    "is_self_employed": False,
+                    "has_partner": False,
+                    "in_dispute": False,
+                },
+            },
+        ),
+        "expected": {"you": {}},
+    },
+    {
+        "id": "savings",
+        "name": "savings",
+        "description": "Case with savings",
+        "input": EligibilityData(
+            category="debt",
+            forms={
+                "about-you": {
+                    "is_employed": False,
+                    "is_self_employed": False,
+                    "has_partner": False,
+                    "in_dispute": False,
+                },
+                "savings": {
+                    "savings": 5001,
+                    "investments": 6001,
+                    "valuables": 7001,
+                    "credit_balance": None,
+                },
+            },
+        ),
+        "expected": {
+            "you": {
+                "savings": {
+                    "bank_balance": 5001,
+                    "investment_balance": 6001,
+                    "asset_balance": 7001,
+                    "credit_balance": None,
+                }
+            }
         },
     },
 ]

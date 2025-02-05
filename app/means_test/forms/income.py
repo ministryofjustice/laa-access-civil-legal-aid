@@ -430,9 +430,7 @@ class IncomeForm(BaseMeansTestForm):
                         self.data.get("maintenance_received", 0)
                     ),
                     "pension": MoneyInterval(self.data.get("pension", 0)),
-                    "other_income": MoneyInterval(
-                        self.data.get("other_income", 0)
-                    ),  # TODO: Add income from rent here
+                    "other_income": MoneyInterval(self.data.get("other_income", 0)),
                     "self_employed": self_employed,
                 },
                 "deductions": {
