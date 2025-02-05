@@ -26,4 +26,6 @@ class TestAsylumAndImmigrationLandingPage:
         page.get_by_role("link", name="Benefits").click()
         page.get_by_label("None of the above").check()
         page.get_by_role("button", name="Continue").click()
-        expect(page.get_by_text("Referral page")).to_be_visible()
+        expect(
+            page.get_by_text("Legal aid doesn’t cover all types of problem")
+        ).to_be_visible()
