@@ -28,3 +28,20 @@ def test_domestic_abuse_referral(page: Page):
     page.get_by_role("button", name="Find a solicitor").click()
     expect(page.get_by_role("heading", name="Find a legal adviser")).to_be_visible()
     expect(page.get_by_text("For family")).to_be_visible()
+
+
+@pytest.mark.usefixtures("live_server")
+def test_send_referral(page: Page):
+    page.get_by_role("link", name="Special educational needs and disability").click()
+    page.get_by_role("link", name="Next steps to get help").check()
+    expect(
+        page.get_by_role("heading", name="Legal aid doesn’t cover all problems")
+    ).to_be_visible()
+    expect(
+        page.get_by_role(
+            "heading", name="Help organisations for problems about education"
+        )
+    ).to_be_visible()
+    page.get_by_role("button", name="Find a solicitor").click()
+    expect(page.get_by_role("heading", name="Find a legal adviser")).to_be_visible()
+    expect(page.get_by_text("For education")).to_be_visible()
