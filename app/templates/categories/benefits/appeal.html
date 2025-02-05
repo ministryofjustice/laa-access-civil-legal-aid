@@ -6,9 +6,7 @@
 
 {% block beforeContent%}
 {{ super() }}
-{{ govukBackLink({
-    'text': "Back"
-  }) }}
+{{ govukBackLink() }}
 
 {% if form.category == "Domestic Abuse" %}
     {{ govukExitThisPage("Exit this page")}}
