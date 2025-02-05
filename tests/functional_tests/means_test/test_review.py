@@ -50,16 +50,13 @@ routing = {
 @pytest.mark.usefixtures("live_server")
 @pytest.mark.parametrize("about_you_answers", about_you_form_routing)
 @pytest.mark.parametrize("benefits_answers", benefits_form_routing)
-def test_reviews_page(page: Page, complete_benefits_form, about_you_answers):
+def test_reviews_page(page: Page, complete_benefits_form):
     expect(page).to_have_title("Review your answers - GOV.UK")
     # These forms were not completed and should not be on the reviews form
     expect(page.get_by_role("heading", name="Your income and tax")).not_to_be_visible()
     expect(page.get_by_role("heading", name="Your property")).not_to_be_visible()
 
     # This was a conditional field which was not triggered and should not be on the review form
-    expect(
-        page.get_by_text("Are you in a dispute with your partner?")
-    ).not_to_be_visible()
     expect(
         page.get_by_text("Are you in a dispute with your partner?")
     ).not_to_be_visible()
