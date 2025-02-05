@@ -1,4 +1,4 @@
-fallback_page = "/session-expired"
+const FALLBACK_PAGE = "/session-expired"
 
 document.addEventListener('DOMContentLoaded', () => {
     const backButton = document.getElementById('backLink');
@@ -10,24 +10,24 @@ document.addEventListener('DOMContentLoaded', () => {
     backButton.addEventListener('click', (e) => {
         e.preventDefault();
 
-        if (document.referrer === '') {
-            window.location.href = fallback_page;
+        try {
+            const referrerUrl = new URL(document.referrer);
+
+            // Only go back if the previous page is from the same origin
+            if (referrerUrl.origin !== window.location.origin) {
+                window.location.href = FALLBACK_PAGE;
+                return;
+            }
+
+        } catch (error) {
+            window.location.href = FALLBACK_PAGE;
             return;
         }
 
-        const referrerUrl = new URL(document.referrer);
-
-        // Only go back if the previous page is from the same origin
-        if (referrerUrl.origin !== window.location.origin) {
-            window.location.href = fallback_page;
+        if (window.history.length <= 1) {
+            window.location.href = FALLBACK_PAGE;
             return;
         }
-        
-        // Check if we can go back
-        if (window.history.length > 1) {
-            window.history.back();
-        } else {
-            window.location.href = fallback_page;
-        }
+        window.history.back();
     });
 });
