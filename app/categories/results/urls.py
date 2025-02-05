@@ -1,5 +1,4 @@
 from app.categories.results import bp
-from app.categories.views import CategoryPage
 from app.categories.results.views import HlpasInScopePage, ResultPage
 
 bp.add_url_rule(
@@ -14,5 +13,5 @@ bp.add_url_rule(
 )
 bp.add_url_rule(
     "/refer",
-    view_func=CategoryPage.as_view("refer", template="categories/refer.html"),
+    view_func=ResultPage.as_view("refer", template="categories/refer.html"),
 )

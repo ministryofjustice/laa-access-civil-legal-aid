@@ -1,6 +1,12 @@
 {% extends "base.html" %}
-{%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink-%}
-{%- from 'categories/components/list-item.html' import list_item, list_item_small -%}
+{%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
+{%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton -%}
+{%- from 'categories/components/help-organisations.html' import helpOrganisationsList %}
+
+{% set fala_url = url_for("find-a-legal-adviser.search", category=fala_category_code.lower() if fala_category_code else None) %}
+
+{% set title = _('Legal aid doesn’t cover all types of problem') %}
+{% block pageTitle %}{{ title }} - {{ super() }}{% endblock %}
 
 {% block beforeContent%}
 {{ super() }}
@@ -13,7 +19,49 @@
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l">Referral page</h1>
+        <h1 class="govuk-heading-xl">{{ title }}</h1>
+        {% if category != 'other' %}
+            <p class="govuk-body">{% trans %}You can still ask a solicitor for help – you will have to pay for their advice.{% endtrans %}</p>
+        {% else %}
+            <p class="govuk-body">You can <a class="govuk-link">ask a legal adviser</a> if an application might succeed in your case and how to apply.</p>
+            <p class="govuk-body">{{ _('You can still ask a solicitor for help - you will have to pay for their advice.') }}</p>
+        {% endif %}
+
+        {{ govukButton({
+          "text": _("Find a solicitor"),
+          "href": fala_url
+        }) }}
+
+        <p class="govuk-body">
+            <a class="govuk-link" href="https://www.gov.uk/done/check-if-civil-legal-advice-can-help-you" aria-labelledby="aria-satisfaction-survey">
+            {% trans %}What did you think of this service?{% endtrans %}</a> {% trans %}(takes 30 seconds){% endtrans %}
+        </p>
+
+        {% if category != 'other' and organisations %}
+            <p class="govuk-body">
+              {% trans %}You may still get help and advice from the organisations listed below. You don’t have to qualify for legal aid.{% endtrans %}
+            </p>
+
+            <h2 class="govuk-heading-l">{% trans category_name=_(category_name).lower()%}Help organisations for problems about {{ category_name }}{% endtrans %}</h2>
+            {{ helpOrganisationsList(organisations, truncate=5) }}
+        {% endif %}
+    </div>
+    <div class="govuk-grid-column-one-third">
+        <aside class="sidebar">
+            <h2 class="govuk-heading-m">{% trans %}Exceptional cases{% endtrans %}</h2>
+            {% if category == 'education' %}
+                <p class="govuk-body">{% trans %}In exceptional cases or if your case is going to a judicial review, legal aid may still be available.{% endtrans %}</p>
+            {% else %}
+                <p class="govuk-body">{% trans %}In exceptional cases, legal aid may still be available.{% endtrans %}</p>
+            {% endif %}
+
+            {% set fala_link %}<a class='govuk-link' href={{ fala_url }}>{% trans %}ask a legal adviser{% endtrans %}</a> {% endset %}
+
+            <p class="govuk-body">{% trans fala_link=fala_link %}You can {{fala_link}} if an application might succeed in your case and how to apply.{% endtrans %}</p>
+
+            {% set ecf_link %}<a href='https://www.gov.uk/legal-aid-apply-for-exceptional-case-funding' rel='external' class='govuk-link'>apply directly</a>{% endset %}
+            <p class="govuk-body">{% trans ecf_link=ecf_link %}You can also {{ ecf_link }} to the Legal Aid Agency.{% endtrans %}</p>
+        </aside>
     </div>
 </div>
 {% endblock %}
