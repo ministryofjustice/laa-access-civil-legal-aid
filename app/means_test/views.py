@@ -127,11 +127,8 @@ class MeansTest(FormsMixin, View):
 class CheckYourAnswers(FormsMixin, MethodView):
     template = "check-your-answers.html"
 
-    def get_eligibility(self):
-        return session.get_eligibility()
-
     def get(self):
-        eligibility = self.get_eligibility()
+        eligibility = session.get_eligibility()
         means_test_summary = {}
         for key, form_class in self.forms.items():
             if key not in eligibility.forms:
