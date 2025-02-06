@@ -1,10 +1,26 @@
 from flask_wtf import FlaskForm
-from wtforms import SelectMultipleField, HiddenField
-from govuk_frontend_wtf.wtforms_widgets import GovSubmitInput
+from wtforms import SelectMultipleField, HiddenField, StringField, RadioField
+from govuk_frontend_wtf.wtforms_widgets import (
+    GovSubmitInput,
+    GovTextInput,
+    GovRadioInput,
+)
 from wtforms.fields import SubmitField
 from app.categories.widgets import CategoryCheckboxInput
 from flask_babel import lazy_gettext as _
 from flask import request
+from wtforms.validators import InputRequired, Length
+from enum import Enum
+
+
+class ContactPreference(Enum):
+    CALL = ("call", "I will call you")
+    CALLBACK = ("callback", "Call me back")
+    THIRDPARTY = ("thirdparty", "Call someone else instead of me")
+
+    @classmethod
+    def choices(cls):
+        return [(choice.value[0], choice.value[1]) for choice in cls]
 
 
 class ReasonsForContactingForm(FlaskForm):
@@ -45,3 +61,25 @@ class ReasonsForContactingForm(FlaskForm):
             "user_agent": request.headers.get("User-Agent") or "Unknown",
             "referrer": self.referrer.data or "Unknown",
         }
+
+
+class ContactUsForm(FlaskForm):
+    page_title = _("Contact Civil Legal Advice")
+
+    full_name = StringField(
+        _("Your full name"),
+        widget=GovTextInput(),
+        validators=[
+            Length(max=400, message=_("Your full name must be 400 characters or less")),
+            InputRequired(message=_("Tell us your name")),
+        ],
+    )
+
+    contact_type = RadioField(
+        _("Select a contact option"),
+        widget=GovRadioInput,
+        choices=ContactPreference.choices(),
+        validators=[InputRequired(message=_("Tell us how we should get in contact"))],
+    )
+
+    submit = SubmitField(_("Submit details"), widget=GovSubmitInput())
