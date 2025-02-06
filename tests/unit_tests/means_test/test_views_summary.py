@@ -5,31 +5,31 @@ from app.means_test import YES, NO
 from app.session import Eligibility
 
 
-class TestCheckYourAnswersView(CheckYourAnswers):
-    def get_eligibility(self):
-        return Eligibility(
-            **{
-                "forms": {
-                    "about-you": {
-                        "has_partner": NO,
-                        "on_benefits": YES,
-                        "have_children": NO,
-                        "have_dependents": NO,
-                        "own_property": NO,
-                    },
-                    "benefits": {
-                        "benefits": ["employment_support", "universal_credit"]
-                    },
-                }
-            }
-        )
-
-
 def mock_render_template(template_name, **kwargs):
     return kwargs
 
 
+def mock_session_get_eligibility():
+    return Eligibility(
+        **{
+            "forms": {
+                "about-you": {
+                    "has_partner": NO,
+                    "on_benefits": YES,
+                    "have_children": NO,
+                    "have_dependents": NO,
+                    "own_property": NO,
+                },
+                "benefits": {"benefits": ["employment_support", "universal_credit"]},
+            }
+        }
+    )
+
+
 @mock.patch("app.means_test.views.render_template", mock_render_template)
+@mock.patch(
+    "app.means_test.views.session.get_eligibility", mock_session_get_eligibility
+)
 def test_views_summary(app):
     expected_summary = {
         "About you": [
@@ -87,6 +87,6 @@ def test_views_summary(app):
     }
 
     with app.app_context():
-        summary = TestCheckYourAnswersView().get()
+        summary = CheckYourAnswers().get()
         assert summary["means_test_summary"] == expected_summary
         assert isinstance(summary["form"], ReviewForm)
