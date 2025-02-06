@@ -61,13 +61,13 @@ def create_app(config_class=Config):
         "default-src": "'self'",
         "script-src": [
             "'self'",
-            "*.googletagmanager.com",
+            "www.googletagmanager.com",
         ],
         "connect-src": [
             "'self'",
-            "*.google-analytics.com",
+            "www.google-analytics.com",
         ],
-        "img-src": ["'self'", "*.googletagmanager.com", "www.gov.uk"],
+        "img-src": ["'self'", "www.googletagmanager.com", "www.gov.uk"],
     }
 
     # Set permissions policy
@@ -111,7 +111,7 @@ def create_app(config_class=Config):
         permissions_policy=permissions_policy,
         content_security_policy_nonce_in=["script-src"],
         force_https=False,
-        session_cookie_secure=False,
+        session_cookie_secure=True,
         session_cookie_http_only=Config.SESSION_COOKIE_HTTP_ONLY,
         session_cookie_samesite="Strict",
     )
