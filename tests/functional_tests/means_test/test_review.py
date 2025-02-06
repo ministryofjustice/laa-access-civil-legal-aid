@@ -37,7 +37,7 @@ benefits_form_routing = [
                 "Frequency": "4 weekly",
             },
         },
-        id="about_you",
+        id="benefits",
     )
 ]
 
