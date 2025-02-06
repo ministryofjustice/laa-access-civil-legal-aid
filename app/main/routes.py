@@ -41,7 +41,9 @@ def set_locale(locale):
 
     response = redirect("".join(redirect_url))
     expires = datetime.datetime.now() + datetime.timedelta(days=30)
-    response.set_cookie("locale", locale, expires=expires, secure=True, httponly=True)
+    response.set_cookie(
+        "locale", locale, expires=expires, secure=True, httponly=True, samesite="Strict"
+    )
     return response
 
 
@@ -86,6 +88,7 @@ def cookies():
             max_age=31557600,
             secure=True,
             httponly=True,
+            samesite="Strict",
         )
         return response
     elif request.method == "GET":
