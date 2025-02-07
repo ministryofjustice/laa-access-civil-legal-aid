@@ -15,50 +15,68 @@ class Category:
 
 
 FAMILY = Category(
-    _("Children, families and relationships"), "FAMILY", "Family", "family"
+    display_text=_("Children, families and relationships"),
+    code="FAMILY",
+    article_category_name="Family",
+    chs_code="family",
 )
 HOUSING = Category(
-    _("Housing, homelessness, losing your home"), "HOUSING", "Housing", "housing"
+    display_text=_("Housing, homelessness, losing your home"),
+    code="HOUSING",
+    article_category_name="Housing",
+    chs_code="housing",
 )
 COMMUNITY_CARE = Category(
-    _("Community care"), "COMMUNITY_CARE", "Community care", "commcare"
+    display_text=_("Community care"),
+    code="COMMUNITY_CARE",
+    article_category_name="Community care",
+    chs_code="commcare",
 )
 DOMESTIC_ABUSE = Category(
-    _("Domestic abuse"), "DOMESTIC_ABUSE", "Domestic Abuse", "family"
+    display_text=_("Domestic abuse"),
+    code="DOMESTIC_ABUSE",
+    article_category_name="Domestic Abuse",
+    chs_code="family",
 )
 BENEFITS = Category(
-    _("Welfare benefits"),
-    "BENEFITS",
-    "Welfare benefits",
-    "benefits",
+    display_text=_("Welfare benefits"),
+    code="BENEFITS",
+    article_category_name="Welfare benefits",
+    chs_code="benefits",
 )
 DISCRIMINATION = Category(
-    _("Discrimination"), "DISCRIMINATION", "Discrimination", "discrimination"
+    display_text=_("Discrimination"),
+    code="DISCRIMINATION",
+    article_category_name="Discrimination",
+    chs_code="discrimination",
 )
 MENTAL_CAPACITY = Category(
-    _("Mental capacity, mental health"),
-    "MENTAL_CAPACITY",
-    "Mental health",
-    "mentalhealth",
+    display_text=_("Mental capacity, mental health"),
+    code="MENTAL_CAPACITY",
+    article_category_name="Mental health",
+    chs_code="mentalhealth",
 )
 ASYLUM_AND_IMMIGRATION = Category(
-    _("Asylum and immigration"), "ASYLUM_AND_IMMIGRATION", None, "immigration"
+    display_text=_("Asylum and immigration"),
+    code="ASYLUM_AND_IMMIGRATION",
+    article_category_name=None,
+    chs_code="immigration",
 )
 SOCIAL_CARE = Category(
-    _("Care needs for disability and old age (social care)"),
-    "SOCIAL_CARE",
-    None,
-    "commcare",
+    display_text=_("Care needs for disability and old age (social care)"),
+    code="SOCIAL_CARE",
+    article_category_name=None,
+    chs_code="commcare",
 )
 PUBLIC_LAW = Category(
-    _("Legal action against police and public organisations"),
-    "PUBLIC_LAW",
-    "Public",
-    "publiclaw",
+    display_text=_("Legal action against police and public organisations"),
+    code="PUBLIC_LAW",
+    article_category_name="Public",
+    chs_code="publiclaw",
 )
 EDUCATION = Category(
-    _("Special educational needs and disability (SEND)"),
-    "EDUCATION",
-    "Education",
-    "education",
+    display_text=_("Special educational needs and disability (SEND)"),
+    code="EDUCATION",
+    article_category_name="Education",
+    chs_code="education",
 )
