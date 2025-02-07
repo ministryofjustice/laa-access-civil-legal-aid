@@ -35,6 +35,42 @@
                     "spellcheck": false
                 }) }}
                 {{ form.contact_type }}
+                {{ form.email(params={
+                    "label": {
+                        "classes": "govuk-label--m"
+                    },
+                    "spellcheck": false
+                }) }}
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Address</legend>
+                {{ form.extra_notes(params={
+                    "label": {
+                        "classes": "govuk-label--m"
+                    },
+                    "spellcheck": false
+                }) }}
+                {{ form.adaptations(params={
+                    'items': [
+                    {
+                        'conditional': {
+                        'html': bslEmailHtml
+                        }
+                    },
+                    {
+                    },
+                    {
+                    },
+                    {
+                        'conditional': {
+                        'html': otherLangHtml
+                        }
+                    },
+                    {
+                        'conditional': {
+                        'html': otherAdapHtml
+                        }
+                    }
+                    ]
+                }) }}
                 {{ form.submit }}
             {% endblock %}
         </form>
