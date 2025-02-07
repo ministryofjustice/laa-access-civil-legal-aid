@@ -1,16 +1,26 @@
 from flask_wtf import FlaskForm
-from wtforms import SelectMultipleField, HiddenField, StringField, RadioField
+from flask import request
+from wtforms import (
+    SelectMultipleField,
+    HiddenField,
+    StringField,
+    RadioField,
+    TextAreaField,
+)
 from govuk_frontend_wtf.wtforms_widgets import (
     GovSubmitInput,
     GovTextInput,
-    GovRadioInput,
+    GovTextArea,
+    GovSelect,
 )
+from app.contact.widgets import ContactRadioInput, ContactCheckboxInput
 from wtforms.fields import SubmitField
 from app.categories.widgets import CategoryCheckboxInput
+from app.contact.constants import LANG_CHOICES
 from flask_babel import lazy_gettext as _
-from flask import request
-from wtforms.validators import InputRequired, Length
+from wtforms.validators import InputRequired, Length, Optional
 from enum import Enum
+from app.contact.validators import EmailValidator, ValidateIf
 
 
 class ContactPreference(Enum):
@@ -77,9 +87,71 @@ class ContactUsForm(FlaskForm):
 
     contact_type = RadioField(
         _("Select a contact option"),
-        widget=GovRadioInput,
+        widget=ContactRadioInput(),
         choices=ContactPreference.choices(),
         validators=[InputRequired(message=_("Tell us how we should get in contact"))],
+    )
+
+    email = StringField(
+        _("Email (optional)"),
+        widget=GovTextInput(),
+        description=_("We will use this to send your reference number."),
+        validators=[
+            Length(max=255, message=_("Your address must be 255 characters or less")),
+            EmailValidator(message=_("Invalid email address")),
+            Optional(),
+        ],
+    )
+
+    extra_notes = TextAreaField(
+        _("Tell us more about your problem (optional)"),
+        widget=GovTextArea(),
+        validators=[
+            Length(max=4000, message=_("Your notes must be 4000 characters or less")),
+            Optional(),
+        ],
+    )
+
+    adaptations = SelectMultipleField(
+        _("Do you have any special communication needs? (optional)"),
+        widget=ContactCheckboxInput(),
+        validators=[InputRequired(message="Please select an option")],
+        choices=[
+            ("bsl_webcam", _("British Sign Language (BSL)")),
+            ("text_relay", _("Text relay")),
+            ("welsh", _("Welsh")),
+            ("is_other_language", _("Other language - need an interpreter")),
+            ("other_adaptation", _("Any other communication need")),
+        ],
+    )
+    bsl_email = StringField(
+        _("Enter your email address so we can arrange a BSL call"),
+        widget=GovTextInput(),
+        validators=[
+            ValidateIf("bsl_webcam", True),
+            Length(max=255, message=_("Your address must be 255 characters or less")),
+            EmailValidator(message=_("Enter your email address")),
+        ],
+    )
+    other_language = SelectMultipleField(
+        _("Choose a language"), choices=(LANG_CHOICES), widget=GovSelect()
+    )
+    other_adaptation = TextAreaField(
+        _(""),
+        description=_(
+            "Please tell us what you need"
+        ),  # Dywedwch wrthym beth sydd ei angen arnoch
+        widget=GovTextArea(),
+        validators=[
+            ValidateIf("is_other_adaptation", True),
+            Length(
+                max=4000,
+                message=_(
+                    "Your other communication needs must be 4000 characters or fewer"
+                ),
+            ),
+            Optional(),
+        ],
     )
 
     submit = SubmitField(_("Submit details"), widget=GovSubmitInput())
