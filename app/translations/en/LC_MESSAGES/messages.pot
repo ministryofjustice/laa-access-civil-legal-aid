@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-02-05 17:24+0000\n"
+"POT-Creation-Date: 2025-02-08 00:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,6 +48,9 @@ msgid "Legal action against police and public organisations"
 msgstr ""
 
 msgid "Special educational needs and disability (SEND)"
+msgstr ""
+
+msgid "special educational needs and disability (SEND)"
 msgstr ""
 
 msgid "Validation failed message"

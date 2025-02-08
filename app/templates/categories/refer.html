@@ -42,7 +42,7 @@
               {% trans %}You may still get help and advice from the organisations listed below. You don’t have to qualify for legal aid.{% endtrans %}
             </p>
 
-            <h2 class="govuk-heading-l">{% trans category_name=_(category_name).lower()%}Help organisations for problems about {{ category_name }}{% endtrans %}</h2>
+            <h2 class="govuk-heading-l">{% trans category_name=_(category_name) | lowercase_category_name %}Help organisations for problems about {{ category_name }}{% endtrans %}</h2>
             {{ helpOrganisationsList(organisations, truncate=5) }}
         {% endif %}
     </div>
