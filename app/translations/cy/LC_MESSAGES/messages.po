@@ -738,6 +738,91 @@ msgstr ""
 "Rhowch y Credyd Treth Gwaith mae eich partner yn ei dderbyn, neu 0 os nad"
 " yw’n berthnasol"
 
+msgid "Your outgoings"
+msgstr "Eich taliadau allan"
+
+msgid "You and your partner’s outgoings"
+msgstr "Eich alldaliadau chi a’ch partner"
+
+msgid "Rent"
+msgstr "Rhent"
+
+msgid ""
+"Money you pay your landlord for rent. Do not include rent that is paid by"
+" Housing Benefit."
+msgstr "Arian rydych chi'n ei dalu i'ch landlord am rent. Peidiwch â chynnwys rhent a dalwyd gan Fudd-dal Tai"
+
+msgid ""
+"Money you and your partner pay your landlord for rent, or enter 0 if you "
+"don’t pay rent. Do not include rent that is paid by Housing Benefit."
+msgstr "Arian yr ydych chi a’ch partner yn ei dalu i’ch landlord fel rhent, neu rhowch 0 os nad ydych yn talu rhent. Peidiwch â chynnwys rhent sy’n cael ei dalu gan fudd-dal tai."
+
+msgid "Tell us how much rent you pay"
+msgstr "Faint rydych chi’n ei dalu mewn rhent"
+
+msgid "Tell us how often you pay this rent"
+msgstr "Pa mor aml rydych chi’n talu’r rhent hwn"
+
+msgid "Maintenance"
+msgstr "Cynhaliaeth"
+
+msgid ""
+"Money you pay to an ex-partner for their living costs, or enter 0 if this"
+" doesn’t apply to you"
+msgstr "Arian yr ydych chi yn ei dalu i gynbartner at gostau byw, neu rhowch 0 os nad yw hyn yn berthnasol i chi"
+
+msgid ""
+"Money you and/or your partner pay to an ex-partner for their living "
+"costs, or enter 0 if this doesn’t apply"
+msgstr "Arian yr ydych chi a/neu’ch partner yn ei dalu i gynbartner at gostau byw, neu rhowch 0 os nad yw hyn yn berthnasol i chi"
+
+msgid "Tell us how much maintenance you pay"
+msgstr "Faint o arian cynhaliaeth rydych chi’n ei dalu"
+
+msgid "Tell us how often you pay this maintenance"
+msgstr "Pa mor aml rydych chi’n talu’r arian cynhaliaeth hwn"
+
+msgid "Monthly Income Contribution Order"
+msgstr "Gorchymyn Cyfrannu Incwm Misol"
+
+msgid ""
+"Money you pay per month towards your Criminal Legal Aid, or enter 0 if "
+"this doesn’t apply to you"
+msgstr "Arian yr ydych chi yn ei dalu at eich cymorth cyfreithiol troseddol, neu rhowch 0 os nad yw hyn yn berthnasol i chi"
+
+msgid ""
+"Money you and/or your partner pay per month towards your Criminal Legal "
+"Aid, or enter 0 if this doesn’t apply"
+msgstr "Arian yr ydych chi a/neu’ch partner yn ei dalu at eich cymorth cyfreithiol troseddol, neu rhowch 0 os nad yw hyn yn berthnasol i chi"
+
+msgid "Tell us the approximate value of this property"
+msgstr "Faint yw gwerth yr eiddo hwn, yn fras"
+
+msgid "Enter a value of more than £0"
+msgstr ""
+
+msgid "Childcare"
+msgstr "Gofal plant"
+
+msgid ""
+"Money you pay for your child to be looked after while you work or study "
+"outside of your home"
+msgstr "Arian yr ydych chi yn ei dalu i rywun warchod eich plentyn tra’r ydych chi’n gweithio neu astudio y tu allan i’ch cartref"
+
+msgid ""
+"Money you and your partner pay for your child to be looked after while "
+"you work or study outside of your home"
+msgstr "Arian yr ydych chi a’ch partner yn ei dalu i rywun warchod eich plentyn tra’r ydych chi’n gweithio neu astudio y tu allan i’ch cartref"
+
+msgid "Tell us how much you pay towards childcare"
+msgstr "Dywedwch wrthym faint rydych chi’n ei dalu tuag at ofal plant"
+
+msgid "Tell us how often you pay childcare costs"
+msgstr "Dywedwch wrthym pa mor aml rydych chi’n talu costau gofal plant"
+
+msgid "Review your answers"
+msgstr "Adolygu eich atebion""
+
 msgid "You can only have 1 main property"
 msgstr "Dim ond un prif Eiddo allwch chi ei gael"
 
@@ -773,12 +858,6 @@ msgstr "Beth yw gwerth yr eiddo?"
 
 msgid "Use a property website or the Land Registry house prices website."
 msgstr "Defnyddiwch wefan eiddo neu wefan prisiau tai’r Gofrestrfa Tir"
-
-msgid "Tell us the approximate value of this property"
-msgstr "Faint yw gwerth yr eiddo hwn, yn fras"
-
-msgid "Enter a value of more than £0"
-msgstr ""
 
 msgid "How much is left to pay on the mortgage?"
 msgstr "Pa swm sy’n weddill i’w dalu ar y morgais?"
