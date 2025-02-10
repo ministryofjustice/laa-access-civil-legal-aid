@@ -21,7 +21,7 @@ from app.contact.constants import LANG_CHOICES
 from flask_babel import lazy_gettext as _
 from wtforms.validators import InputRequired, Length, Optional
 from enum import Enum
-from app.contact.validators import EmailValidator, ValidateIf
+from app.contact.validators import EmailValidator, ValidateIf, ValidateIfType
 from app.find_a_legal_adviser.validators import ValidRegionPostcode
 
 
@@ -114,7 +114,9 @@ class ContactUsForm(FlaskForm):
             Optional(),
         ],
     )
-    address_finder = SelectField(_("Select an address"), choices=[], widget=GovSelect())
+    address_finder = SelectField(
+        _("Select an address"), choices=[""], widget=GovSelect()
+    )
     street_address = TextAreaField(
         _("Street address (optional)"),
         widget=GovTextArea(),
@@ -136,7 +138,6 @@ class ContactUsForm(FlaskForm):
     adaptations = SelectMultipleField(
         _("Do you have any special communication needs? (optional)"),
         widget=ContactCheckboxInput(),
-        validators=[InputRequired(message="Please select an option")],
         choices=[
             ("bsl_webcam", _("British Sign Language (BSL)")),
             ("text_relay", _("Text relay")),
@@ -149,13 +150,21 @@ class ContactUsForm(FlaskForm):
         _("Enter your email address so we can arrange a BSL call"),
         widget=GovTextInput(),
         validators=[
-            ValidateIf("bsl_webcam", True),
+            ValidateIf("adaptations", "bsl_webcam", condition_type=ValidateIfType.IN),
             Length(max=255, message=_("Your address must be 255 characters or less")),
             EmailValidator(message=_("Enter your email address")),
         ],
     )
-    other_language = SelectField(
-        _("Choose a language"), choices=(LANG_CHOICES), widget=GovSelect()
+    other_language = SelectMultipleField(
+        _("Choose a language"),
+        choices=(LANG_CHOICES),
+        widget=GovSelect(),
+        validators=[
+            ValidateIf(
+                "adaptations", "is_other_language", condition_type=ValidateIfType.IN
+            ),
+            InputRequired(message=_("Choose a language")),
+        ],
     )
     other_adaptation = TextAreaField(
         _(""),
@@ -164,14 +173,12 @@ class ContactUsForm(FlaskForm):
         ),  # Dywedwch wrthym beth sydd ei angen arnoch
         widget=GovTextArea(),
         validators=[
-            ValidateIf("is_other_adaptation", True),
             Length(
                 max=4000,
                 message=_(
                     "Your other communication needs must be 4000 characters or fewer"
                 ),
             ),
-            Optional(),
         ],
     )
 

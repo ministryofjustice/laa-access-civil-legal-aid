@@ -16,7 +16,7 @@
 {% set otherLangHtml %}
     {{ form.other_language(params={
         "label": {
-            "text": ""
+            "classes": "govuk-label--s"
         },
     }) }}
 {% endset -%}
@@ -82,7 +82,7 @@
                     <div class="govuk-grid-column-one-third">
                         {{ form.post_code(params={
                             "label": false,
-                            "classes": "govuk-input govuk-input--width-10 govuk-!-margin-bottom-0",
+                            "classes": "govuk-input govuk-input--width-10 govuk-!-margin-bottom-0 postcode-search",
                             "spellcheck": false
                         }) }}
                     </div>
