@@ -59,6 +59,48 @@
                             {{ _('Find UK Address') }}
                         </button>
                     </div>
+                    <div id="address-information-container" class="govuk-radios__conditional custom-margin-left">
+                        {{ form.address_finder(params={
+                            "label": {
+                                "classes": "govuk-label--s"
+                            },
+                            "spellcheck": false
+                        }) }}
+                    </div>
+                    <script nonce="{{ csp_nonce() }}">
+                        document.getElementById("show-postcode").addEventListener("click", function() {
+                            var postcode = document.getElementById("post_code").value.trim();
+                            if (postcode) {
+                                fetch(`/addresses/${postcode}`)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        var addressSelect = document.getElementById("address_finder");
+                                        addressSelect.innerHTML = '';
+
+                                        var addressCount = data.length;
+                                        var labelText = addressCount + " address" + (addressCount !== 1 ? 'es' : '') + " found";
+
+                                        var initialOption = document.createElement('option');
+                                        initialOption.value = '';
+                                        initialOption.textContent = labelText;
+                                        addressSelect.appendChild(initialOption);
+                    
+                                        data.forEach(function(item) {
+                                            var option = document.createElement('option');
+                                            option.value = item.formatted_address;
+                                            option.textContent = item.formatted_address;
+                                            addressSelect.appendChild(option);
+                                        });
+                    
+                                        document.getElementById("address_finder").classList.remove("govuk-!-display-none");
+                                        document.getElementById("address_finder").classList.add("govuk-!-display-block");
+                                    })
+                                    .catch(error => {
+                                        console.error("Error fetching addresses:", error);
+                                    });
+                            }
+                        });
+                    </script>
                 </div>
 
 

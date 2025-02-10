@@ -35,3 +35,4 @@ class Config(object):
     CLA_BACKEND_URL = os.environ.get("CLA_BACKEND_URL", "http://localhost:8010")
     SESSION_TIMEOUT = timedelta(minutes=30)
     SESSION_COOKIE_SECURE = True
+    OS_PLACES_API_KEY = os.environ.get("OS_PLACES_API_KEY")
