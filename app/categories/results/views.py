@@ -13,14 +13,17 @@ class HlpasInScopePage(CategoryPage):
 
 class ResultPage(CategoryPage):
     @staticmethod
-    def get_context():
-        category = session.category
+    def get_context(category: Category = None):
         article_category_name = (
             category.article_category_name
             if isinstance(category, Category)
             else "other"
         )
-        organisations = cla_backend.get_help_organisations(article_category_name)
+        organisations = (
+            cla_backend.get_help_organisations(article_category_name)
+            if article_category_name
+            else []
+        )
         return {
             "category_name": category.display_text
             if isinstance(category, Category)
@@ -30,5 +33,4 @@ class ResultPage(CategoryPage):
         }
 
     def dispatch_request(self):
-        session["traversal_protection"] = True
-        return render_template(self.template, **self.get_context())
+        return render_template(self.template, **self.get_context(session.category))
