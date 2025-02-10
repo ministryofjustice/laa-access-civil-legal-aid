@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-02-05 15:31+0000\n"
+"POT-Creation-Date: 2025-02-04 14:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -682,6 +682,91 @@ msgid ""
 "apply"
 msgstr ""
 
+msgid "Your outgoings"
+msgstr ""
+
+msgid "You and your partner’s outgoings"
+msgstr ""
+
+msgid "Rent"
+msgstr ""
+
+msgid ""
+"Money you pay your landlord for rent. Do not include rent that is paid by"
+" Housing Benefit."
+msgstr ""
+
+msgid ""
+"Money you and your partner pay your landlord for rent, or enter 0 if you "
+"don’t pay rent. Do not include rent that is paid by Housing Benefit."
+msgstr ""
+
+msgid "Tell us how much rent you pay"
+msgstr ""
+
+msgid "Tell us how often you pay this rent"
+msgstr ""
+
+msgid "Maintenance"
+msgstr ""
+
+msgid ""
+"Money you pay to an ex-partner for their living costs, or enter 0 if this"
+" doesn’t apply to you"
+msgstr ""
+
+msgid ""
+"Money you and/or your partner pay to an ex-partner for their living "
+"costs, or enter 0 if this doesn’t apply"
+msgstr ""
+
+msgid "Tell us how much maintenance you pay"
+msgstr ""
+
+msgid "Tell us how often you pay this maintenance"
+msgstr ""
+
+msgid "Monthly Income Contribution Order"
+msgstr ""
+
+msgid ""
+"Money you pay per month towards your Criminal Legal Aid, or enter 0 if "
+"this doesn’t apply to you"
+msgstr ""
+
+msgid ""
+"Money you and/or your partner pay per month towards your Criminal Legal "
+"Aid, or enter 0 if this doesn’t apply"
+msgstr ""
+
+msgid "Tell us the approximate value of this property"
+msgstr ""
+
+msgid "Enter a value of more than £0"
+msgstr ""
+
+msgid "Childcare"
+msgstr ""
+
+msgid ""
+"Money you pay for your child to be looked after while you work or study "
+"outside of your home"
+msgstr ""
+
+msgid ""
+"Money you and your partner pay for your child to be looked after while "
+"you work or study outside of your home"
+msgstr ""
+
+msgid "Tell us how much you pay towards childcare"
+msgstr ""
+
+msgid "Tell us how often you pay childcare costs"
+msgstr ""
+
+msgid "Review your answers"
+msgstr ""
+
 msgid "You can only have 1 main property"
 msgstr ""
 
@@ -712,12 +797,6 @@ msgid "How much is the property worth?"
 msgstr ""
 
 msgid "Use a property website or the Land Registry house prices website."
-msgstr ""
-
-msgid "Tell us the approximate value of this property"
-msgstr ""
-
-msgid "Enter a value of more than £0"
 msgstr ""
 
 msgid "How much is left to pay on the mortgage?"
@@ -1613,6 +1692,24 @@ msgid "Amount"
 msgstr ""
 
 msgid "Frequency"
+msgstr ""
+
+msgid "Current page"
+msgstr ""
+
+msgid "Completed page"
+msgstr ""
+
+msgid "Future page"
+msgstr ""
+
+msgid "Your progress"
+msgstr ""
+
+msgid "Review your answers"
+msgstr ""
+
+msgid "Contact information"
 msgstr ""
 
 msgid "What valuable items should I include?"
