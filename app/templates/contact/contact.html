@@ -59,7 +59,7 @@
                             {{ _('Find UK Address') }}
                         </button>
                     </div>
-                    <div id="address-information-container" class="govuk-radios__conditional custom-margin-left">
+                    <div id="address-information-container" class="govuk-!-display-none govuk-radios__conditional custom-margin-left">
                         {{ form.address_finder(params={
                             "label": {
                                 "classes": "govuk-label--s"
@@ -68,41 +68,57 @@
                         }) }}
                     </div>
                     <script nonce="{{ csp_nonce() }}">
-                        document.getElementById("show-postcode").addEventListener("click", function() {
-                            var postcode = document.getElementById("post_code").value.trim();
-                            if (postcode) {
-                                fetch(`/addresses/${postcode}`)
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        var addressSelect = document.getElementById("address_finder");
-                                        addressSelect.innerHTML = '';
-
-                                        var addressCount = data.length;
-                                        var labelText = addressCount + " address" + (addressCount !== 1 ? 'es' : '') + " found";
-
-                                        var initialOption = document.createElement('option');
-                                        initialOption.value = '';
-                                        initialOption.textContent = labelText;
-                                        addressSelect.appendChild(initialOption);
+                        document.getElementById("show-postcode").addEventListener("click", async function() {
+                            let postcode = document.getElementById("post_code").value.trim();
+                            let addressInfo = document.getElementById("address-information-container");
+                            let addressSelect = document.getElementById("address_finder");
                     
-                                        data.forEach(function(item) {
-                                            var option = document.createElement('option');
-                                            option.value = item.formatted_address;
-                                            option.textContent = item.formatted_address;
-                                            addressSelect.appendChild(option);
-                                        });
+                            if (!postcode) {
+                                addressInfo.classList.add("govuk-!-display-none");
+                                return;
+                            }
                     
-                                        document.getElementById("address_finder").classList.remove("govuk-!-display-none");
-                                        document.getElementById("address_finder").classList.add("govuk-!-display-block");
-                                    })
-                                    .catch(error => {
-                                        console.error("Error fetching addresses:", error);
-                                    });
+                            try {
+                                let response = await fetch(`/addresses/${postcode}`);
+                                let data = await response.json();
+                    
+                                addressInfo.classList.remove("govuk-!-display-none");
+                                addressSelect.innerHTML = '';
+                    
+                                let addressCount = data.length;
+                                let labelText = `${addressCount} address${addressCount !== 1 ? 'es' : ''} found`;
+                    
+                                let initialOption = document.createElement('option');
+                                initialOption.value = '';
+                                initialOption.textContent = labelText;
+                                addressSelect.appendChild(initialOption);
+                    
+                                data.forEach(item => {
+                                    let option = document.createElement('option');
+                                    option.value = item.formatted_address;
+                                    option.textContent = item.formatted_address;
+                                    addressSelect.appendChild(option);
+                                });
+                    
+                            } catch (error) {
+                                console.error("Error fetching addresses:", error);
                             }
                         });
                     </script>
                 </div>
+                <script nonce="{{ csp_nonce() }}">
+                    document.getElementById("address_finder").addEventListener("change", function() {
+                        let selectedAddress = this.value;
+                        let streetAddressField = document.getElementById("street_address");
+                        let addressInfo = document.getElementById("address-information-container");
 
+                        addressInfo.classList.add("govuk-!-display-none")
+                
+                        if (selectedAddress) {
+                            streetAddressField.value = selectedAddress;
+                        }
+                    });
+                </script>
 
 
                 {{ form.street_address(params={
