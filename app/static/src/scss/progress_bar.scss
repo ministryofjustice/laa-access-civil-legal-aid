@@ -1,0 +1,247 @@
+div.progress {
+  .progress-value {
+    background: $govuk-brand-colour;
+    box-shadow: 1px 0 0 1px $govuk-brand-colour;
+  }
+
+  .progress-bar {
+    position: relative;
+    margin-top: -10px;
+    background: #fff;
+    height: 10px;
+    border: solid $govuk-border-colour;
+    border-width: 1px 0;
+
+    .completed-step {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+    }
+
+    .progress-unfinished {
+      border-radius: 0 5px 5px 0;
+    }
+  }
+
+  .progress-steps {
+    overflow: hidden;
+    list-style: none;
+    padding: 0;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  .progress-step {
+    margin: 0;
+
+    &.completed-step {
+      .step-status {
+        border-color: #00703C;
+        transform: rotate(-45deg);
+        border-style: solid;
+        width: 13px;
+        border-width: 0 0 4px 4px;
+        height: 5px;
+        border-radius: 0;
+        margin-top: 1px;
+        box-shadow: none;
+        background-color: inherit;
+      }
+
+      &.current-step .step-status {
+        background-color: inherit;
+      }
+    }
+
+    &.current-step {
+      .step-status {
+        background-color: govuk-colour("blue");
+        border-color: govuk-colour("blue");
+      }
+      &:not(.completed-step) .step-name:focus:not(:active):not(:hover) .step-status {
+        background-color: $govuk-text-colour;
+      }
+
+      > a.step-name {
+        &:hover .step-status {
+          box-shadow: inset 0 0 0 2px #dbdad9;
+        }
+
+        &:focus:not(:active):not(:hover) .step-status {
+          box-shadow: inset 0 0 0 2px $govuk-focus-colour;
+        }
+      }
+    }
+
+    &:first-child {
+      border-top: 1px solid $govuk-border-colour;
+    }
+
+    &:last-child {
+      > .step-name {
+        border-bottom: none;
+      }
+
+      > .step-name:before {
+        content: none;
+      }
+    }
+
+    > {
+
+      .step-name {
+        border-bottom: 1px solid $govuk-border-colour;
+        color: $govuk-text-colour;
+        position: relative;
+        overflow: visible;
+        margin: 0;
+        line-height: 1;
+        text-align: left;
+        background-color: #f3f2f1;
+        padding: 15px 15px 13px 35px;
+        display: block;
+        text-decoration: none;
+        outline-offset: 0;
+
+        &:before {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          margin: auto;
+          border-color: transparent transparent $govuk-border-colour $govuk-border-colour;
+          z-index: 20;
+          transform: rotate(-45deg);
+          border-style: solid;
+          width: 5px;
+          height: 5px;
+          border-width: 1px;
+          bottom: -4px;
+          background-color: #f3f2f1;
+
+        }
+
+        &:focus:not(:active):not(:hover) .step-status {
+          border-color: $govuk-text-colour;
+        }
+      }
+
+      div.step-name, span.step-name {
+        background: #fff;
+
+        &:before {
+          background: #fff;
+        }
+      }
+      a.step-name {
+        &:active, &:focus {
+          position: relative;
+          background: #fff;
+        }
+
+        &:hover .step-status {
+          box-shadow: inset 0 0 0 2px #dbdad9;
+        }
+      }
+    }
+    &:not(.current-step):not(.completed-step)>a.step-name .step-status {
+      background-color: $govuk-border-colour;
+      box-shadow: inset 0 0 0 2px #f3f2f1;
+    }
+    &:not(.current-step):not(.completed-step)>a.step-name:focus:not(:hover):not(:active) .step-status {
+      background-color: $govuk-text-colour;
+      box-shadow: inset 0 0 0 2px $govuk-focus-colour;
+    }
+
+
+    > a.step-name {
+      &:focus {
+        border-bottom: $govuk-focus-colour 1px solid;
+        outline: $govuk-focus-colour 3px solid;
+        z-index: 30;
+
+        &:not(:active):not(:hover) {
+          border-bottom: $govuk-text-colour 1px solid;
+          outline: none;
+          box-shadow: 0 4px 0 0 $govuk-text-colour;
+          background-color: $govuk-focus-colour;
+          z-index: 10;
+
+          &:before {
+            border-color: transparent transparent $govuk-text-colour $govuk-text-colour;
+            border-width: 4px;
+            bottom: -7px;
+            background-color: $govuk-focus-colour;
+            background-color: initial;
+          }
+        }
+      }
+
+      &:hover {
+        background-color: #dbdad9;
+
+        &:before {
+          background-color: #dbdad9;
+        }
+      }
+
+      &:focus:before {
+        background-color: initial;
+        border-color: transparent transparent $govuk-focus-colour $govuk-focus-colour;
+        border-width: 3px;
+        bottom: -5.5px;
+      }
+    }
+
+    &.current-step {
+      font-weight: 700;
+    }
+
+    &.m-collapsed {
+      z-index: 1;
+
+      &:before {
+        content: none;
+      }
+
+      .step-name {
+        padding: 2px 0 3px;
+
+        &:nth-child(1) {
+          z-index: 3;
+        }
+
+        &:before,
+        &:nth-child(2) {
+          z-index: 2;
+        }
+
+        &:nth-child(3) {
+          z-index: 1;
+        }
+      }
+    }
+  }
+
+  .step-status {
+    float: left;
+    margin: -1px 0 0 -25px;
+    content: '';
+    border: 2px solid $govuk-border-colour;
+    box-shadow: inset 0 0 0 2px #fff;
+    height: 13px;
+    width: 13px;
+    border-radius: 100%;
+    text-indent: -999em;
+    position: relative;
+    top: 1px;
+  }
+
+  .step-name-subtitle {
+    margin-top: 5px;
+    color: #6f777b;
+  }
+
+}

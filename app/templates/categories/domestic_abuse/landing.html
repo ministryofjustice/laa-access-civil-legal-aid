@@ -1,6 +1,5 @@
-{# This page was built as a prototype #}
 {% extends "base.html" %}
-{%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
+{%- from 'components/back_link.html' import govukBackLink -%}
 {%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
 {%- from 'categories/components/list-item.html' import list_item, list_item_small -%}
 {%- from 'categories/components/cannot-find-your-problem.html' import cannot_find_your_problem -%}
@@ -9,10 +8,7 @@
 
 {% block beforeContent%}
 {{ super() }}
-{{ govukBackLink({
-    'href': url_for('categories.index'),
-    'text': "Back"
-  }) }}
+{{ govukBackLink() }}
 
 {{ govukExitThisPage("Exit this page")}}
 

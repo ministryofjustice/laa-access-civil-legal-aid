@@ -45,7 +45,7 @@ about_you_form_routing = [
 
 @pytest.fixture
 def navigate_to_additional_benefits(page: Page, answers: dict, navigate_to_means_test):
-    expect(page.get_by_text("About You")).to_be_visible()
+    expect(page.get_by_role("heading", name="About You")).to_be_visible()
     for question, answer in answers.items():
         form_group = page.get_by_role("group", name=question)
         if question == "Do you have a partner":
@@ -55,10 +55,12 @@ def navigate_to_additional_benefits(page: Page, answers: dict, navigate_to_means
         form_group.get_by_label(answer).first.check()
     # Submit form
     page.get_by_role("button", name="Continue").click()
-    expect(page.get_by_text("Which benefits do you receive?")).to_be_visible()
+    expect(
+        page.locator('legend:text("Which benefits do you receive?")')
+    ).to_be_visible()
     page.get_by_label("Any other benefits").check()
     page.get_by_role("button", name="Continue").click()
-    expect(page.get_by_text("Your additional benefits")).to_be_visible()
+    expect(page.get_by_role("heading", name="Your additional benefits")).to_be_visible()
     return page
 
 
@@ -84,7 +86,9 @@ def test_means_test_additional_benefits_page(
     page.get_by_role("button", name="Continue").scroll_into_view_if_needed()
     page.get_by_role("button", name="Continue").click()
 
-    expect(page.get_by_text(expected_heading)).to_be_visible()
+    expect(page.get_by_text(expected_heading)).to_have_count(
+        2
+    )  # This checks for a count of two as the text also exists in the progress bar
 
 
 @pytest.mark.usefixtures("live_server")
@@ -131,4 +135,4 @@ def test_additional_benefits_page_total_other_benefits(
     page.get_by_role("button", name="Continue").scroll_into_view_if_needed()
     page.get_by_role("button", name="Continue").click()
 
-    expect(page.get_by_text(next_page_heading)).to_be_visible()
+    expect(page.get_by_role("heading", name=next_page_heading)).to_be_visible()

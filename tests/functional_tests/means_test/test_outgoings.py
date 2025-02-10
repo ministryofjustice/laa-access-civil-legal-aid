@@ -38,7 +38,7 @@ about_you_form_routing_childcare = [
 
 @pytest.fixture
 def navigate_to_income(page: Page, answers: dict, navigate_to_means_test):
-    expect(page.get_by_text("About You")).to_be_visible()
+    expect(page.get_by_role("heading", name="About You")).to_be_visible()
     for question, answer in answers.items():
         form_group = page.get_by_role("group", name=question)
         if question == "Do you have a partner":
@@ -56,7 +56,7 @@ def navigate_to_income(page: Page, answers: dict, navigate_to_means_test):
 
 @pytest.fixture
 def navigate_to_outgoings(page: Page, navigate_to_income):
-    expect(page.get_by_text("Your money coming in")).to_be_visible()
+    expect(page.get_by_role("heading", name="Your money coming in")).to_be_visible()
     amount_inputs = page.get_by_label("Amount")
     frequency_inputs = page.get_by_label("Frequency")
 
@@ -80,7 +80,7 @@ def test_outgoings_routing(page: Page, navigate_to_outgoings):
         page: Playwright page fixture
         navigate_to_outgoings: Fixture to reach the outgoings means test page
     """
-    expect(page.get_by_text("Your outgoings")).to_be_visible()
+    expect(page.get_by_role("heading", name="Your outgoings")).to_be_visible()
 
     page.get_by_role("group", name="Rent").get_by_label("Amount").fill("500")
     page.get_by_role("group", name="Rent").get_by_label("Frequency").select_option(
@@ -93,7 +93,7 @@ def test_outgoings_routing(page: Page, navigate_to_outgoings):
     page.get_by_role("textbox", name="Monthly Income Contribution").fill("500")
 
     page.get_by_role("button", name="Review your answers").click()
-    expect(page.get_by_text("Review your answers")).to_be_visible()
+    expect(page.get_by_role("heading", name="Review your answers")).to_be_visible()
 
 
 @pytest.mark.usefixtures("live_server")
@@ -106,7 +106,7 @@ def test_outgoings_childcare(page: Page, navigate_to_outgoings):
         page: Playwright page fixture
         navigate_to_outgoings: Fixture to reach the outgoings means test page
     """
-    expect(page.get_by_text("Your outgoings")).to_be_visible()
+    expect(page.get_by_role("heading", name="Your outgoings")).to_be_visible()
 
     page.get_by_role("group", name="Rent").get_by_label("Amount").fill("500")
     page.get_by_role("group", name="Rent").get_by_label("Frequency").select_option(
@@ -123,4 +123,4 @@ def test_outgoings_childcare(page: Page, navigate_to_outgoings):
     )
 
     page.get_by_role("button", name="Review your answers").click()
-    expect(page.get_by_text("Review your answers")).to_be_visible()
+    expect(page.get_by_role("heading", name="Review your answers")).to_be_visible()
