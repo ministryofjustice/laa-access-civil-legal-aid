@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink -%}
+{%- from 'components/back_link.html' import govukBackLink -%}
 {%- from 'govuk_frontend_jinja/components/inset-text/macro.html' import govukInsetText -%}
 
 {% block pageTitle %}Accessibility statement – {{config['SERVICE_NAME']}} – GOV.UK{% endblock %}
@@ -9,7 +9,6 @@
   {{ super() }}
   {{ govukBackLink({
     'text': "Back",
-    'href': url_for('main.index')
   }) }}
 {% endblock %}
 

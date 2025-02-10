@@ -1515,6 +1515,9 @@ msgstr ""
 msgid "SEND"
 msgstr ""
 
+msgid "Back"
+msgstr ""
+
 #, python-format
 msgid "%(miles)s miles away"
 msgstr ""
@@ -1753,6 +1756,24 @@ msgid "Amount"
 msgstr ""
 
 msgid "Frequency"
+msgstr ""
+
+msgid "Current page"
+msgstr ""
+
+msgid "Completed page"
+msgstr ""
+
+msgid "Future page"
+msgstr ""
+
+msgid "Your progress"
+msgstr ""
+
+msgid "Review your answers"
+msgstr ""
+
+msgid "Contact information"
 msgstr ""
 
 msgid "What valuable items should I include?"

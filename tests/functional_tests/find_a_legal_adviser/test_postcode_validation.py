@@ -22,7 +22,7 @@ class TestPostcodeSearch:
             expect(
                 page.get_by_role("heading", name="Contact a legal adviser")
             ).to_be_visible()
-            page.get_by_role("link", name="Back").click()
+            page.get_by_role("button", name="Back").click()
 
     def test_channel_islands_postcodes(self, page: Page, navigate_to_search) -> None:
         """Test Channel Islands postcodes show no results"""

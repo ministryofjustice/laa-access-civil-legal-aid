@@ -21,7 +21,7 @@ about_you_form_routing = [
 
 @pytest.fixture
 def navigate_to_property(page: Page, answers: dict, navigate_to_means_test):
-    expect(page.get_by_text("About You")).to_be_visible()
+    expect(page.get_by_role("heading", name="About You")).to_be_visible()
     for question, answer in answers.items():
         form_group = page.get_by_role("group", name=question)
         if question == "Do you have a partner":
@@ -118,7 +118,7 @@ def test_property_routing(page: Page, property_answers: dict, navigate_to_proper
         property_answers: List of labels to update on the page
         navigate_to_property: Fixture to reach the property means test page
     """
-    expect(page.get_by_text("Your Property")).to_be_visible()
+    expect(page.get_by_role("heading", name="Your Property")).to_be_visible()
     for question, answer in property_answers.items():
         form_group = page.get_by_role("group", name=question)
         if answer[1] == "radio":
@@ -128,7 +128,7 @@ def test_property_routing(page: Page, property_answers: dict, navigate_to_proper
         elif answer[1] == "select":
             page.get_by_label(question).select_option(answer[0])
     page.get_by_role("button", name="Continue").click()
-    expect(page.get_by_text("Your money coming in")).to_be_visible()
+    expect(page.get_by_role("heading", name="Your money coming in")).to_be_visible()
 
 
 @pytest.mark.usefixtures("live_server")
@@ -145,7 +145,7 @@ def test_multi_property_routing(
         property_answers: List of labels to update on the page
         navigate_to_property: Fixture to reach the property means test page
     """
-    expect(page.get_by_text("Your Property")).to_be_visible()
+    expect(page.get_by_role("heading", name="Your Property")).to_be_visible()
     for question, answer in property_answers.items():
         form_group = page.get_by_role("group", name=question)
         if answer[1] == "radio":
@@ -167,7 +167,7 @@ def test_multi_property_routing(
         elif answer[1] == "select":
             property_form_group.get_by_label(question).select_option(answer[0])
     page.get_by_role("button", name="Continue").click()
-    expect(page.get_by_text("Your money coming in")).to_be_visible()
+    expect(page.get_by_role("heading", name="Your money coming in")).to_be_visible()
 
 
 @pytest.mark.usefixtures("live_server")
@@ -182,7 +182,7 @@ def test_multi_main_property(page: Page, property_answers: dict, navigate_to_pro
         property_answers: List of labels to update on the page
         navigate_to_property: Fixture to reach the property means test page
     """
-    expect(page.get_by_text("Your Property")).to_be_visible()
+    expect(page.get_by_role("heading", name="Your Property")).to_be_visible()
     for question, answer in property_answers.items():
         form_group = page.get_by_role("group", name=question)
         if answer[1] == "radio":
@@ -219,7 +219,7 @@ def test_property_page_errors(page: Page, navigate_to_property):
         page: Playwright page fixture
         navigate_to_property: Fixture to reach the property means test pa
     """
-    expect(page.get_by_text("Your Property")).to_be_visible()
+    expect(page.get_by_role("heading", name="Your Property")).to_be_visible()
     page.get_by_role("button", name="Continue").click()
 
     # Check that all error messages are visible

@@ -1,0 +1,7 @@
+/* The back button is a button rather than a link, as we use the browsers back button logic.
+   However, it should not be styled as a button */
+.back-link {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
