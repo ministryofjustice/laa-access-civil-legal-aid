@@ -1,7 +1,9 @@
 from app.contact import bp
 from app.contact.forms import ReasonsForContactingForm, ContactUsForm
+from app.contact.address_finder.widgets import FormattedAddressLookup
 from app.api import cla_backend
-from flask import request, redirect, url_for, render_template
+from flask import request, redirect, url_for, render_template, Response, current_app
+import json
 import logging
 
 logger = logging.getLogger(__name__)
@@ -24,3 +26,14 @@ def reasons_for_contacting():
 def contact_us():
     form = ContactUsForm()
     return render_template("contact/contact.html", form=form)
+
+
+@bp.route("/addresses/<postcode>", methods=["GET"])
+def geocode(postcode):
+    """Lookup addresses with the specified postcode"""
+    key = current_app.config["OS_PLACES_API_KEY"]
+    formatted_addresses = FormattedAddressLookup(key=key).by_postcode(postcode)
+    response = [
+        {"formatted_address": address} for address in formatted_addresses if address
+    ]
+    return Response(json.dumps(response), mimetype="application/json")

@@ -114,9 +114,7 @@ class ContactUsForm(FlaskForm):
             Optional(),
         ],
     )
-    address_finder = SelectField(
-        _("Select an address"), choices=["yes", "no"], widget=GovSelect()
-    )
+    address_finder = SelectField(_("Select an address"), choices=[], widget=GovSelect())
     street_address = TextAreaField(
         _("Street address (optional)"),
         widget=GovTextArea(),
