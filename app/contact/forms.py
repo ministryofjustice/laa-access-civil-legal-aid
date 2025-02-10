@@ -6,6 +6,7 @@ from wtforms import (
     StringField,
     RadioField,
     TextAreaField,
+    SelectField,
 )
 from govuk_frontend_wtf.wtforms_widgets import (
     GovSubmitInput,
@@ -21,6 +22,7 @@ from flask_babel import lazy_gettext as _
 from wtforms.validators import InputRequired, Length, Optional
 from enum import Enum
 from app.contact.validators import EmailValidator, ValidateIf
+from app.find_a_legal_adviser.validators import ValidRegionPostcode
 
 
 class ContactPreference(Enum):
@@ -103,6 +105,27 @@ class ContactUsForm(FlaskForm):
         ],
     )
 
+    post_code = StringField(
+        _("Postcode (optional)"),
+        widget=GovTextInput(),
+        validators=[
+            Length(max=12, message=_("Your postcode must be 12 characters or less")),
+            ValidRegionPostcode(),
+            Optional(),
+        ],
+    )
+    address_finder = SelectField(
+        _("Select an address"), choices=["yes", "no"], widget=GovSelect()
+    )
+    street_address = TextAreaField(
+        _("Street address (optional)"),
+        widget=GovTextArea(),
+        validators=[
+            Length(max=255, message=_("Your address must be 255 characters or less")),
+            Optional(),
+        ],
+    )
+
     extra_notes = TextAreaField(
         _("Tell us more about your problem (optional)"),
         widget=GovTextArea(),
@@ -133,7 +156,7 @@ class ContactUsForm(FlaskForm):
             EmailValidator(message=_("Enter your email address")),
         ],
     )
-    other_language = SelectMultipleField(
+    other_language = SelectField(
         _("Choose a language"), choices=(LANG_CHOICES), widget=GovSelect()
     )
     other_adaptation = TextAreaField(
