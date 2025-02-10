@@ -63,6 +63,7 @@ def create_app(config_class=Config):
             "'self'",
             "www.googletagmanager.com",
         ],
+        "style-src": ["'self'"],
         "connect-src": [
             "'self'",
             "www.google-analytics.com",
@@ -109,7 +110,7 @@ def create_app(config_class=Config):
         app,
         content_security_policy=csp if not Config.TESTING else None,
         permissions_policy=permissions_policy,
-        content_security_policy_nonce_in=["script-src"],
+        content_security_policy_nonce_in=["script-src", "style-src"],
         force_https=False,
         session_cookie_secure=True,
         session_cookie_http_only=Config.SESSION_COOKIE_HTTP_ONLY,
