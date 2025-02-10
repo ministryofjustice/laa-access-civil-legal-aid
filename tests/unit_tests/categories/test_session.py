@@ -1,3 +1,6 @@
+from app.categories.constants import Category
+
+
 def test_set_category_question_answer_new_session(app, client):
     with client.session_transaction() as session:
         session.set_category_question_answer("Q1", "A1", "C1")
@@ -41,3 +44,30 @@ def test_get_category_question_answer_not_found(app, client):
         ]
         result = session.get_category_question_answer("test_question")
         assert result is None
+
+
+def test_set_category_dataclass(app, client):
+    from app.categories.constants import EDUCATION
+
+    assert isinstance(EDUCATION, Category)
+
+    with client.session_transaction() as session:
+        session["category"] = EDUCATION
+        assert session.category == EDUCATION
+        assert isinstance(session.category, Category)
+
+
+def test_set_category_dict(app, client):
+    new_category = {
+        "code": "EDUCATION",
+        "display_text": "Education",
+        "chs_code": "EDUCATION",
+        "article_category_name": "education",
+    }
+
+    assert isinstance(new_category, dict)
+
+    with client.session_transaction() as session:
+        session["category"] = new_category
+        assert session.category == Category(**new_category)
+        assert isinstance(session.category, Category)
