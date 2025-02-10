@@ -1451,6 +1451,9 @@ msgstr ""
 msgid "SEND"
 msgstr ""
 
+msgid "Back"
+msgstr ""
+
 #, python-format
 msgid "%(miles)s miles away"
 msgstr ""
