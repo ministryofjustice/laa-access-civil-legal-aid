@@ -122,7 +122,7 @@ def test_about_form(page: Page, scenario: str, form_inputs: dict, expected: dict
     fill_about_form(page, form_inputs)
     page.get_by_role("button", name="Continue").click()
 
-    expect(page.get_by_text(expected["heading"])).to_be_visible()
+    expect(page.get_by_role("heading", name=expected["heading"])).to_be_visible()
 
     for field in expected["fields"]:
         locator = page.get_by_role("group", name=field["name"])

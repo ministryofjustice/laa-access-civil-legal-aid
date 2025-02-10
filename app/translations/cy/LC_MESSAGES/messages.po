@@ -1802,6 +1802,24 @@ msgstr ""
 msgid "Frequency"
 msgstr ""
 
+msgid "Current page"
+msgstr "Tudalen gyfredol"
+
+msgid "Completed page"
+msgstr "Tudalen wedi’i chwblhau"
+
+msgid "Future page"
+msgstr "Tudalen i’r dyfodol"
+
+msgid "Your progress"
+msgstr "Eich cynnydd"
+
+msgid "Review your answers"
+msgstr "Adolygu eich atebion"
+
+msgid "Contact information"
+msgstr "Gwybodaeth gyswllt"
+
 msgid "What valuable items should I include?"
 msgstr "Pa eitemau gwerthfawr dylwn i eu cynnwys?"
 

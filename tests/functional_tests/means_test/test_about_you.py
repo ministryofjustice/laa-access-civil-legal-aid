@@ -68,7 +68,7 @@ def test_about_you_routing(page: Page, answers: dict, route_to: str):
     page.get_by_role("link", name="Homelessness").click()
     page.get_by_role("button", name="Check if you qualify financially").click()
 
-    expect(page.get_by_text("About You")).to_be_visible()
+    expect(page.get_by_role("heading", name="About You")).to_be_visible()
     for question, answer in answers.items():
         form_group = page.get_by_role("group", name=question)
         if question == "Do you have a partner":
@@ -80,7 +80,9 @@ def test_about_you_routing(page: Page, answers: dict, route_to: str):
     # Submit form
     page.get_by_role("button", name="Continue").click()
 
-    expect(page.get_by_text(route_to)).to_be_visible()
+    expect(page.get_by_text(route_to)).to_have_count(
+        2
+    )  # This checks for a count of two as the text also exists in the progress bar
 
 
 @pytest.mark.usefixtures("live_server")
