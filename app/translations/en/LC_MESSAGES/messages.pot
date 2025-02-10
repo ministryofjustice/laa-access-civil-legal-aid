@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-02-04 14:47+0000\n"
+"POT-Creation-Date: 2025-02-09 22:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,6 +48,9 @@ msgid "Legal action against police and public organisations"
 msgstr ""
 
 msgid "Special educational needs and disability (SEND)"
+msgstr ""
+
+msgid "special educational needs and disability (SEND)"
 msgstr ""
 
 msgid "Validation failed message"
@@ -1100,6 +1103,64 @@ msgstr ""
 msgid "Help if you’re a victim of human trafficking or modern slavery."
 msgstr ""
 
+msgid "Legal aid doesn’t cover all types of problem"
+msgstr ""
+
+msgid ""
+"You can still ask a solicitor for help – you will have to pay for their "
+"advice."
+msgstr ""
+
+msgid ""
+"You can still ask a solicitor for help - you will have to pay for their "
+"advice."
+msgstr ""
+
+msgid "Find a solicitor"
+msgstr ""
+
+msgid "What did you think of this service?"
+msgstr ""
+
+msgid "(takes 30 seconds)"
+msgstr ""
+
+msgid ""
+"You may still get help and advice from the organisations listed below. "
+"You don’t have to qualify for legal aid."
+msgstr ""
+
+#, python-format
+msgid "Help organisations for problems about %(category_name)s"
+msgstr ""
+
+msgid "Exceptional cases"
+msgstr ""
+
+msgid ""
+"In exceptional cases or if your case is going to a judicial review, legal"
+" aid may still be available."
+msgstr ""
+
+msgid "In exceptional cases, legal aid may still be available."
+msgstr ""
+
+msgid "ask a legal adviser"
+msgstr ""
+
+#, python-format
+msgid ""
+"You can %(fala_link)s if an application might succeed in your case and "
+"how to apply."
+msgstr ""
+
+msgid "apply directly"
+msgstr ""
+
+#, python-format
+msgid "You can also %(ecf_link)s to the Legal Aid Agency."
+msgstr ""
+
 msgid "Applying for asylum"
 msgstr ""
 
@@ -1134,6 +1195,9 @@ msgid "More problems"
 msgstr ""
 
 msgid "Help if you’re a victim of trafficking or modern slavery."
+msgstr ""
+
+msgid "Appeal a decision about your benefits"
 msgstr ""
 
 msgid "Legal aid only covers appeals to the:"

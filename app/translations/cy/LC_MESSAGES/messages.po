@@ -10,8 +10,8 @@ msgstr "Gofal cymunedol"
 msgid "Domestic abuse"
 msgstr "Cam-drin domestig"
 
-msgid "Appeal a decision about your benefits"
-msgstr ""
+msgid "Welfare benefits"
+msgstr "Budd-daliadau lles"
 
 msgid "Discrimination"
 msgstr "Gwahaniaethu"
@@ -29,6 +29,9 @@ msgid "Legal action against police and public organisations"
 msgstr ""
 
 msgid "Special educational needs and disability (SEND)"
+msgstr ""
+
+msgid "special educational needs and disability (SEND)"
 msgstr ""
 
 msgid "Validation failed message"
@@ -1191,6 +1194,75 @@ msgstr ""
 msgid "Help if you’re a victim of human trafficking or modern slavery."
 msgstr ""
 
+msgid "Legal aid doesn’t cover all types of problem"
+msgstr "Nid yw cymorth cyfreithiol yn gallu delio â phob math o broblem"
+
+msgid ""
+"You can still ask a solicitor for help – you will have to pay for their "
+"advice."
+msgstr ""
+"Gallwch dal ofyn i gyfreithiwr eich helpu - bydd rhaid ichi dalu am eu "
+"cyngor."
+
+msgid ""
+"You can still ask a solicitor for help - you will have to pay for their "
+"advice."
+msgstr ""
+"Gallwch dal ofyn i gyfreithiwr eich helpu - bydd rhaid ichi dalu am eu "
+"cyngor."
+
+msgid "Find a solicitor"
+msgstr "Dod o hyd i gyfreithiwr"
+
+msgid "What did you think of this service?"
+msgstr "Beth oeddech chi’n feddwl o’r gwasanaeth hwn?"
+
+msgid "(takes 30 seconds)"
+msgstr "(mae’n cymryd 30 eiliad)"
+
+msgid ""
+"You may still get help and advice from the organisations listed below. "
+"You don’t have to qualify for legal aid."
+msgstr ""
+"Efallai y byddwch chi’n dal yn gallu cael help a chyngor gan y "
+"sefydliadau sydd wedi’u rhestru isod. Nid oes rhaid i chi fod yn gymwys i"
+" gael cymorth cyfreithiol."
+
+#, python-format
+msgid "Help organisations for problems about %(category_name)s"
+msgstr "Sefydliadau cymorth ar gyfer problemau ynghylch %(category_name)s"
+
+msgid "Exceptional cases"
+msgstr "Achosion eithriadol"
+
+msgid ""
+"In exceptional cases or if your case is going to a judicial review, legal"
+" aid may still be available."
+msgstr ""
+"Mewn achosion arbennig, nes os bydd eich achos yn destun adolygiad "
+"barnwrol, gall cyngor cyfreithiol dal fod ar gael."
+
+msgid "In exceptional cases, legal aid may still be available."
+msgstr "Gall cymorth cyfreithiol dal fod ar gael mewn achosion eithriadol."
+
+msgid "ask a legal adviser"
+msgstr "ofyn am gyngor gan gynghorydd"
+
+#, python-format
+msgid ""
+"You can %(fala_link)s if an application might succeed in your case and "
+"how to apply."
+msgstr ""
+"Gallwch %(fala_link)s cyfreithiol ynghylch a fydd cais am gymorth "
+"cyfreithiol yn debygol o lwyddo yn eich achos chi a sut i wneud cais."
+
+msgid "apply directly"
+msgstr "gyflwyno cais yn uniongyrchol"
+
+#, python-format
+msgid "You can also %(ecf_link)s to the Legal Aid Agency."
+msgstr "Gallwch hefyd %(ecf_link)s i’r Asiantaeth Cymorth Cyfreithiol."
+
 msgid "Applying for asylum"
 msgstr ""
 
@@ -1225,6 +1297,9 @@ msgid "More problems"
 msgstr ""
 
 msgid "Help if you’re a victim of trafficking or modern slavery."
+msgstr ""
+
+msgid "Appeal a decision about your benefits"
 msgstr ""
 
 msgid "Legal aid only covers appeals to the:"
@@ -1868,4 +1943,7 @@ msgstr "Carafannau a cherbydau eraill nad ydych chi’n eu defnyddio bob dydd"
 
 msgid "Musical instruments, unless you’re a professional musician"
 msgstr "Offerynnau cerddorol, oni bai’ch bod yn gerddor proffesiynol"
+
+#~ msgid "Benefits"
+#~ msgstr ""
 

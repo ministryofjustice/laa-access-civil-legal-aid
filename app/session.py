@@ -127,6 +127,8 @@ class Session(SecureCookieSession):
         category_dict = self.get("category")
         if category_dict is None:
             return None
+        if isinstance(category_dict, Category):
+            return category_dict
         return Category(**category_dict)
 
     @property
