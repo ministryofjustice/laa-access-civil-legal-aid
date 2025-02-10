@@ -42,7 +42,7 @@ def set_locale(locale):
     response = redirect("".join(redirect_url))
     expires = datetime.datetime.now() + datetime.timedelta(days=30)
     response.set_cookie(
-        "locale", locale, expires=expires, secure=(not current_app.debug), httponly=True
+        "locale", locale, expires=expires, secure=True, httponly=True, samesite="Strict"
     )
     return response
 
@@ -83,7 +83,12 @@ def cookies():
 
         # Set cookies policy for one year
         response.set_cookie(
-            "cookies_policy", json.dumps(cookies_policy), max_age=31557600
+            "cookies_policy",
+            json.dumps(cookies_policy),
+            max_age=31557600,
+            secure=True,
+            httponly=True,
+            samesite="Strict",
         )
         return response
     elif request.method == "GET":
