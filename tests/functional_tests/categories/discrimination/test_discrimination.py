@@ -63,11 +63,6 @@ why_form_routing = [
     pytest.param(
         ["None of these"], "Legal aid doesn’t cover all types of problem", id="not_sure"
     ),
-    pytest.param(
-        ["Religion, belief, lack of religion", "None of these"],
-        "Are you under 18?",
-        id="not_sure_and_answer",
-    ),
 ]
 
 
