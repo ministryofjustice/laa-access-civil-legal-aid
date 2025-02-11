@@ -20,7 +20,7 @@ class MentalCapacityLandingPage(CategoryLandingPage):
             "secondary_category": "com",
         },
         "detention": {"endpoint": "find-a-legal-adviser.search", "category": "mhe"},
-        "social_care": "categories.results.in_scope",  # This needs to be updated to route to the community care landing page once it has been made
+        "social_care": "categories.community_care.landing",
         "other": "categories.results.refer",
     }
 
