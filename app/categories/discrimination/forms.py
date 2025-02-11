@@ -15,7 +15,7 @@ class DiscriminationWhereForm(DiscriminationQuestionForm):
 
     next_step_mapping = {
         "*": "categories.discrimination.why",
-        "notsure": "categories.results.refer",
+        "notsure": "categories.discrimination.why",
     }
 
     question = SelectMultipleField(
@@ -23,11 +23,7 @@ class DiscriminationWhereForm(DiscriminationQuestionForm):
         widget=CategoryCheckboxInput(
             show_divider=True, hint_text="You can select more than one."
         ),
-        validators=[
-            InputRequired(
-                message="Select where the discrimination happened, or select ‘I’m not sure’"
-            )
-        ],
+        validators=[InputRequired(message="Select where the discrimination happened")],
         choices=[
             ("work", "Work - including colleagues, employer or employment agency"),
             ("school", "School, college, university or other education setting"),
