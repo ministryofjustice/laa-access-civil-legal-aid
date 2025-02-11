@@ -124,3 +124,33 @@ class TestUnder18Form:
         page.get_by_label("No").check()
         page.get_by_role("button", name="Continue").click()
         expect(page.get_by_text(self.LEGALAID_PAGE_HEADING)).to_be_visible()
+
+
+class TestWhereMultipleSelections:
+    @staticmethod
+    def navigate_to_form(page: Page):
+        page.get_by_role("link", name="Discrimination").click()
+        page.get_by_label("Work - including colleagues").check()
+        page.get_by_role("button", name="Continue").click()
+
+    @pytest.mark.usefixtures("live_server")
+    def test_select_exclusive_value(self, page: Page):
+        self.navigate_to_form(page)
+        page.get_by_role("checkbox", name="Disability, health condition").check()
+        expect(
+            page.get_by_role("checkbox", name="Disability, health condition")
+        ).to_be_checked()
+        page.get_by_role("checkbox", name="None of these").check()
+        expect(
+            page.get_by_role("checkbox", name="Disability, health condition")
+        ).not_to_be_checked()
+
+    @pytest.mark.usefixtures("live_server")
+    def test_select_non_exclusive_values(self, page: Page):
+        self.navigate_to_form(page)
+        page.get_by_role("checkbox", name="Disability, health condition").check()
+        page.get_by_role("checkbox", name="Age").check()
+        expect(
+            page.get_by_role("checkbox", name="Disability, health condition")
+        ).to_be_checked()
+        expect(page.get_by_role("checkbox", name="Age")).to_be_checked()
