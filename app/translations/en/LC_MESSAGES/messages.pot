@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-02-09 22:22+0000\n"
+"POT-Creation-Date: 2025-02-11 16:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Domestic abuse"
 msgstr ""
 
-msgid "Appeal a decision about your benefits"
+msgid "Welfare benefits"
 msgstr ""
 
 msgid "Discrimination"
@@ -1401,7 +1401,7 @@ msgstr ""
 msgid "Applying for housing, losing your housing or homelessness."
 msgstr ""
 
-msgid "Treated unfairly by a landlord, council or housing association"
+msgid "Treated unfairly by a landlord, council or housing association."
 msgstr ""
 
 msgid "If you’ve been accused of anti-social behaviour"
@@ -1768,9 +1768,6 @@ msgid "Future page"
 msgstr ""
 
 msgid "Your progress"
-msgstr ""
-
-msgid "Review your answers"
 msgstr ""
 
 msgid "Contact information"
