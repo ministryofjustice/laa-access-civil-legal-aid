@@ -12,9 +12,7 @@ where_form_routing = [
         "Why were you discriminated against",
         id="multiple_answers",
     ),
-    pytest.param(
-        ["not sure"], "Legal aid doesn’t cover all types of problem", id="not_sure"
-    ),
+    pytest.param(["not sure"], "Why were you discriminated against", id="not_sure"),
     pytest.param(
         ["Health or care", "not sure"],
         "Why were you discriminated against",
