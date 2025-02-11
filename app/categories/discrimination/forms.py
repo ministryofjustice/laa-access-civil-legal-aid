@@ -1,4 +1,5 @@
 from wtforms import SelectMultipleField
+from app.categories.validators import ExclusiveValue
 from app.categories.widgets import CategoryCheckboxInput
 from app.categories.forms import QuestionForm
 from wtforms.validators import InputRequired
@@ -63,7 +64,13 @@ class DiscriminationWhyForm(DiscriminationQuestionForm):
             hint_text="You can select more than one.",
             behaviour="exclusive",
         ),
-        validators=[InputRequired(message="Select why you were discriminated against")],
+        validators=[
+            InputRequired(message="Select why you were discriminated against"),
+            ExclusiveValue(
+                exclusive_value="none",
+                message="Select why you were discriminated against, or select ‘None of these’",
+            ),
+        ],
         choices=[
             ("race", "Race, colour, ethnicity, nationality"),
             ("sex", "Sex (male or female)"),
