@@ -3,7 +3,6 @@ import pytest
 
 
 child_in_care_heading = "Is this about a child who is or has been in care?"
-are_you_under_18_page_heading = "Are you under 18?"
 legalaid_available_page = "Legal aid is available for this type of problem"
 contact_page_heading = "Contact us page"
 ROUTING = [
@@ -59,37 +58,13 @@ class TestSendLandingPage:
         page.get_by_role("link", name="SEND tribunals").click()
         page.get_by_label("Yes").check()
         page.get_by_role("button", name="Continue").click()
-        expect(page.get_by_text(are_you_under_18_page_heading)).to_be_visible()
+        expect(page.get_by_text(contact_page_heading)).to_be_visible()
 
     def test_child_in_care_form_no(self, page: Page):
         page.get_by_role(
             "link", name="Special educational needs and disability (SEND)"
         ).click()
         page.get_by_role("link", name="SEND tribunals").click()
-        page.get_by_label("No").check()
-        page.get_by_role("button", name="Continue").click()
-        expect(page.get_by_text(are_you_under_18_page_heading)).to_be_visible()
-
-    def test_are_you_under_18_form_yes(self, page: Page):
-        page.get_by_role(
-            "link", name="Special educational needs and disability (SEND)"
-        ).click()
-        page.get_by_role("link", name="SEND tribunals").click()
-        page.get_by_label("Yes").check()
-        page.get_by_role("button", name="Continue").click()
-        expect(page.get_by_text(are_you_under_18_page_heading)).to_be_visible()
-        page.get_by_label("Yes").check()
-        page.get_by_role("button", name="Continue").click()
-        expect(page.get_by_text(contact_page_heading)).to_be_visible()
-
-    def test_are_you_under_18_form_no(self, page: Page):
-        page.get_by_role(
-            "link", name="Special educational needs and disability (SEND)"
-        ).click()
-        page.get_by_role("link", name="SEND tribunals").click()
-        page.get_by_label("No").check()
-        page.get_by_role("button", name="Continue").click()
-        expect(page.get_by_text(are_you_under_18_page_heading)).to_be_visible()
         page.get_by_label("No").check()
         page.get_by_role("button", name="Continue").click()
         expect(page.get_by_text(legalaid_available_page)).to_be_visible()
