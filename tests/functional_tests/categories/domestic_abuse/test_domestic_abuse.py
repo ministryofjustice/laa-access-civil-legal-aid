@@ -8,7 +8,7 @@ housing_page_heading = "Housing, homelessness, losing your home"
 
 ROUTING = [
     {
-        "link_text": "Help to protect you and your children",
+        "link_text": "Help to keep yourself safe and protect children",
         "next_page_heading": risk_of_harm_page_heading,
     },
     {
