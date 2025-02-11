@@ -34,7 +34,25 @@
                     },
                     "spellcheck": false
                 }) }}
-                {{ form.contact_type }}
+                {{ form.contact_type(params={
+                    'items': [
+                    {
+                        'conditional': {
+                        'html': willCallHtml
+                        }
+                    },
+                    {
+                        'conditional': {
+                        'html': callMeHtml
+                        }
+                    },
+                    {
+                        'conditional': {
+                        'html': otherAdapHtml
+                        }
+                    }
+                    ]
+                }) }}
                 {{ form.email(params={
                     "label": {
                         "classes": "govuk-label--m"
