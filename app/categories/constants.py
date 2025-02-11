@@ -39,7 +39,6 @@ class Category:
             for name, child in children.items():
                 category.children[name] = Category(**child)
         return category
-
     @property
     def referrer_text(self):
         return self._referrer_text or self.title
