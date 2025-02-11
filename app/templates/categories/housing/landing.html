@@ -53,16 +53,16 @@
                    _("Applying for housing, losing your housing or homelessness."),
                     url_for("categories.housing.asylum_seeker")) }}
 
-            {{ list_item_small(_("Discrimination"),
-                   _("Treated unfairly by a landlord, council or housing association"),
-                    url_for("categories.housing.discrimination")) }}
+        {{ list_item_small(_("Discrimination"),
+               _("Treated unfairly by a landlord, council or housing association."),
+                url_for("categories.housing.discrimination")) }}
 
-                {{ list_item_small(_("If you’ve been accused of anti-social behaviour"),
-                   _("Accused of anti-social behaviour by the landlord, council or housing association."),
-                    url_for("categories.housing.anti_social")) }}
+        {{ list_item_small(_("If you’ve been accused of anti-social behaviour"),
+           _("Accused of anti-social behaviour by the landlord, council or housing association."),
+            url_for("categories.housing.anti_social")) }}
 
 
-            {{ cannot_find_your_problem(_("housing"), url_for("categories.housing.other"))}}
+        {{ cannot_find_your_problem(_("housing"), url_for("categories.housing.other"))}}
 
     </div>
 </div>
