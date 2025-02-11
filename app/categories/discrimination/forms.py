@@ -59,7 +59,9 @@ class DiscriminationWhyForm(DiscriminationQuestionForm):
     question = SelectMultipleField(
         title,
         widget=CategoryCheckboxInput(
-            show_divider=True, hint_text="You can select more than one."
+            show_divider=True,
+            hint_text="You can select more than one.",
+            behaviour="exclusive",
         ),
         validators=[InputRequired(message="Select why you were discriminated against")],
         choices=[
