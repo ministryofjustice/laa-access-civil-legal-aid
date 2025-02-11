@@ -76,6 +76,10 @@ class ReasonsForContactingForm(FlaskForm):
 
 
 class ContactUsForm(FlaskForm):
+    def __init__(self, *args, **kwargs):
+        super(ContactUsForm, self).__init__(*args, **kwargs)
+        self.other_language.choices = LANG_CHOICES
+
     page_title = _("Contact Civil Legal Advice")
 
     full_name = StringField(
@@ -92,6 +96,21 @@ class ContactUsForm(FlaskForm):
         widget=ContactRadioInput(),
         choices=ContactPreference.choices(),
         validators=[InputRequired(message=_("Tell us how we should get in contact"))],
+    )
+
+    contact_number = StringField(
+        _("Phone number"),
+        widget=GovTextInput(),
+        description=_(
+            "Enter the full number, including the area code. For example, 01632 960 1111."
+        ),
+        validators=[
+            ValidateIf("contact_type", "callback", condition_type=ValidateIfType.EQ),
+            InputRequired(message=_("Tell us what number to ring")),
+            Length(
+                max=20, message=_("Your telephone number must be 20 characters or less")
+            ),
+        ],
     )
 
     email = StringField(
@@ -157,7 +176,7 @@ class ContactUsForm(FlaskForm):
     )
     other_language = SelectMultipleField(
         _("Choose a language"),
-        choices=(LANG_CHOICES),
+        choices=[],
         widget=GovSelect(),
         validators=[
             ValidateIf(

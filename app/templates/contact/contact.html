@@ -5,6 +5,30 @@
 {%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
 {%- from 'govuk_frontend_jinja/components/inset-text/macro.html' import govukInsetText %}
 
+{% set willCallHtml %}
+    <p class="govuk-body">We’ll give you the Civil Legal Advice phone number when you submit your details.</p>
+{% endset -%}
+
+{% set callMeHtml %}
+    <ul class="govuk-list govuk-list--bullet">
+    <li>We’ll call during the time you choose.</li>
+    <li>The call will come from an unknown or withheld number.</li>
+    <li>If you miss the call, we will call 2 more times in the next few days.</li>
+    <li>We will not leave a message.</li>
+    <li>If you miss all 3 calls, or if you need urgent advice, call us on:
+      <br>
+      <a href="tel:0345 345 4345">0345 345 4345</a>.
+    </li>
+    </ul>
+    {{ form.contact_number(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "spellcheck": false
+    }) }}
+
+{% endset -%}
+
 {% set addressFinderHtml %}
     {{ form.address_finder }}
 {% endset -%}
@@ -66,7 +90,25 @@
                     },
                     "spellcheck": false
                 }) }}
-                {{ form.contact_type }}
+                {{ form.contact_type(params={
+                    'items': [
+                    {
+                        'conditional': {
+                        'html': willCallHtml
+                        }
+                    },
+                    {
+                        'conditional': {
+                        'html': callMeHtml
+                        }
+                    },
+                    {
+                        'conditional': {
+                        'html': otherAdapHtml
+                        }
+                    }
+                    ]
+                }) }}
                 {{ form.email(params={
                     "label": {
                         "classes": "govuk-label--m"

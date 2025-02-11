@@ -170,6 +170,10 @@ ADAPTATION_LANGUAGES = [
     ("ZULU", "Zulu"),
 ]
 
-LANG_CHOICES = filter(
-    lambda x: x[0] not in ("ENGLISH", "WELSH"), [("", "")] + ADAPTATION_LANGUAGES
+LANG_CHOICES = list(
+    filter(
+        lambda x: x[0] not in ("ENGLISH", "WELSH"), [("", "")] + ADAPTATION_LANGUAGES
+    )
 )
+
+LANG_CHOICES = [(lang_code.lower(), lang_name) for lang_code, lang_name in LANG_CHOICES]
