@@ -3,13 +3,11 @@ from app.categories.domestic_abuse.forms import WorriedAboutSomeonesSafetyForm
 from app.categories.views import QuestionPage, CategoryLandingPage
 from app.categories.constants import DOMESTIC_ABUSE
 
-CATEGORY_NAME = DOMESTIC_ABUSE
-
 
 class DomesticAbuseLandingPage(CategoryLandingPage):
-    question_title = CATEGORY_NAME
+    question_title = DOMESTIC_ABUSE.title
 
-    category = CATEGORY_NAME
+    category = DOMESTIC_ABUSE
 
     routing_map = {
         "protect_you_and_your_children": "categories.domestic_abuse.are_you_at_risk_of_harm",

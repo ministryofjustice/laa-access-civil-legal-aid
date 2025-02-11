@@ -24,20 +24,20 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl">Domestic Abuse</h1>
+        <h1 class="govuk-heading-xl">{{ category.title}}</h1>
 
         <br>
 
-        {{ list_item("Help to protect you and your children",
-                     "This includes advice about keeping you and your family safe, getting court orders and help if someone is ignoring a court order. Also, if you’re being stalked or harassed. ",
+        {{ list_item(category.children["protect_you_and_your_children"].title,
+                     category.children["protect_you_and_your_children"].description,
                      url_for("categories.domestic_abuse.protect_you_and_your_children")) }}
 
-        {{ list_item("Leaving an abusive relationship",
-             "Help with divorce or separation. It includes making plans for the children, money, and housing. It also covers child contact and where the children will live.",
+        {{ list_item(category.children["leaving_an_abusive_relationship"].title,
+             category.children["leaving_an_abusive_relationship"].description,
              url_for("categories.domestic_abuse.leaving_an_abusive_relationship")) }}
 
-        {{ list_item("Problems with an ex-partner: children or money",
-             "Includes contact with children, where children live; money; when an ex-partner doesn’t follow court orders or agreements. Also if you’re worried about a child; child taken or kept without your permission.",
+        {{ list_item(category.children["problems_with_ex_partner"].title,
+             category.children["problems_with_ex_partner"].description,
              url_for("categories.domestic_abuse.problems_with_ex_partner")) }}
 
         <br>
@@ -45,14 +45,17 @@
         <h2 class="govuk-heading-m">{% trans %}More problems{% endtrans %}</h2>
 
         <br>
+        {{ list_item_small(category.children["problems_with_neighbours"].title,
+             category.children["problems_with_neighbours"].description,
+             url_for("categories.domestic_abuse.problems_with_neighbours")) }}
 
-        {{ list_item_small("Problems with neighbours, landlords or other people",
-                           "Threats, abuse or harassment by someone who is not a family member.",
-                            url_for("categories.domestic_abuse.problems_with_neighbours")) }}
+        {{ list_item_small(category.children["housing_homelessness_losing_home"].title,
+             category.children["housing_homelessness_losing_home"].description,
+             url_for("categories.domestic_abuse.problems_with_neighbours")) }}
 
-        {{ list_item_small("Housing, homelessness, losing your home",
-                   "Includes being forced to leave your home, problems with council housing, if you’re homeless or might be homeless in the next 2 months.",
-                    url_for("categories.domestic_abuse.housing_homelessness_losing_home")) }}
+        {{ list_item_small(category.children["forced_marriage"].title,
+             category.children["forced_marriage"].description,
+             url_for("categories.domestic_abuse.forced_marriage")) }}
 
         {{ list_item_small("Forced marriage",
                    "Help with forced marriage and Forced Marriage Protection Orders.",
