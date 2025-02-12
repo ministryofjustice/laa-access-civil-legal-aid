@@ -12,11 +12,14 @@ class CategoryInputField:
         is_inline: bool = False,
         hint_text: str = None,
         label_class: str = None,
+        is_page_heading: bool = True,
     ):
         super().__init__()
         self.show_divider = show_divider
         self.is_inline = is_inline
         self.hint_text = hint_text
+        self.is_page_heading = (
+            is_page_heading  # This should be True for all single page questions
         self.label_class = (
             label_class if label_class is not None else "govuk-fieldset__legend--l"
         )
@@ -43,6 +46,9 @@ class CategoryInputField:
                     item["checked"] = True
 
         params["fieldset"]["legend"]["classes"] = self.label_class
+        params["fieldset"]["legend"]["isPageHeading"] = (
+            self.is_page_heading
+        )  # Sets the question text as the page H1
         return params
 
 

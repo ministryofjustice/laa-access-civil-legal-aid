@@ -23,7 +23,7 @@ class AppealQuestionForm(QuestionForm):
     }
     question = RadioField(
         title,
-        widget=CategoryRadioInput(show_divider=True, label_class="govuk-body"),
+        widget=CategoryRadioInput(show_divider=True, label_class="govuk-body", is_page_heading=False),
         validators=[InputRequired(message=_("Select where the appeal will be held"))],
         choices=[
             ("upper_tribunal", _("Upper Tribunal (Administrative Appeals Chamber)")),
