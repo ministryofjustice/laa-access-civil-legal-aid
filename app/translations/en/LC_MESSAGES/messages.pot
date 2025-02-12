@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-02-09 22:22+0000\n"
+"POT-Creation-Date: 2025-02-11 17:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Domestic abuse"
 msgstr ""
 
-msgid "Appeal a decision about your benefits"
+msgid "Welfare benefits"
 msgstr ""
 
 msgid "Discrimination"
@@ -80,7 +80,7 @@ msgstr ""
 msgid "Select if the child is or has been in care"
 msgstr ""
 
-msgid "Legal aid only covers appeals to the"
+msgid "Where will the appeal be held?"
 msgstr ""
 
 msgid "Select where the appeal will be held"
@@ -1768,9 +1768,6 @@ msgid "Future page"
 msgstr ""
 
 msgid "Your progress"
-msgstr ""
-
-msgid "Review your answers"
 msgstr ""
 
 msgid "Contact information"

@@ -7,12 +7,19 @@ class CategoryInputField:
     """
 
     def __init__(
-        self, show_divider: bool = False, is_inline: bool = False, hint_text: str = None
+        self,
+        show_divider: bool = False,
+        is_inline: bool = False,
+        hint_text: str = None,
+        label_class: str = None,
     ):
         super().__init__()
         self.show_divider = show_divider
         self.is_inline = is_inline
         self.hint_text = hint_text
+        self.label_class = (
+            label_class if label_class is not None else "govuk-fieldset__legend--l"
+        )
 
     def map_gov_params(self, field, **kwargs):
         if self.hint_text:
@@ -35,8 +42,7 @@ class CategoryInputField:
                 if item.get("value") == field.data:
                     item["checked"] = True
 
-        label_class = "govuk-fieldset__legend--l"
-        params["fieldset"]["legend"]["classes"] = label_class
+        params["fieldset"]["legend"]["classes"] = self.label_class
         return params
 
 
