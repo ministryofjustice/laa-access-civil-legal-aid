@@ -127,7 +127,8 @@ class Session(SecureCookieSession):
         category_dict = self.get("category")
         if category_dict is None:
             return None
-        return Category(**category_dict)
+        category = Category.from_dict(category_dict)
+        return category
 
     @property
     def has_children(self):

@@ -18,6 +18,15 @@ class Category:
     def display_text(self):
         return self.title
 
+    @classmethod
+    def from_dict(cls, data: dict) -> "Category":
+        children: dict = data.pop("children", {})
+        category = cls(**data)
+        if children:
+            for name, child in children.items():
+                category.children[name] = Category(**child)
+        return category
+
     def __str__(self):
         # Returns the translated display text
         return str(self.display_text)
