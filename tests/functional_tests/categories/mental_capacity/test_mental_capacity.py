@@ -4,6 +4,7 @@ import re
 
 in_scope_page_heading = "Legal aid is available for this type of problem"
 find_a_legal_adviser_heading = "Find a legal adviser"
+social_care_heading = "Care needs for disability and old age (social care)"
 
 ROUTING = [
     {
@@ -23,7 +24,7 @@ ROUTING = [
     },
     {
         "link_text": "Care needs for disability and old age (social care)",
-        "next_page_heading": in_scope_page_heading,
+        "next_page_heading": social_care_heading,
     },
     {
         "link_text": "Next steps to get help",

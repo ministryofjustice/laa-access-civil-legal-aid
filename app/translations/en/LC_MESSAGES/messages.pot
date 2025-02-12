@@ -80,7 +80,7 @@ msgstr ""
 msgid "Select if the child is or has been in care"
 msgstr ""
 
-msgid "Legal aid only covers appeals to the"
+msgid "Where will the appeal be held?"
 msgstr ""
 
 msgid "Select where the appeal will be held"
@@ -1401,7 +1401,7 @@ msgstr ""
 msgid "Applying for housing, losing your housing or homelessness."
 msgstr ""
 
-msgid "Treated unfairly by a landlord, council or housing association"
+msgid "Treated unfairly by a landlord, council or housing association."
 msgstr ""
 
 msgid "If you’ve been accused of anti-social behaviour"

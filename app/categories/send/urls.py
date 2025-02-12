@@ -1,5 +1,5 @@
 from app.categories.send import bp
-from app.categories.send.forms import SendChildInCareQuestionForm, SendAreYouUnder18Form
+from app.categories.send.forms import SendChildInCareQuestionForm
 from app.categories.views import CategoryLandingPage, QuestionPage
 from app.categories.constants import EDUCATION
 
@@ -30,13 +30,6 @@ bp.add_url_rule(
     view_func=QuestionPage.as_view(
         "child_in_care",
         form_class=SendChildInCareQuestionForm,
-    ),
-)
-bp.add_url_rule(
-    "/send/age",
-    view_func=QuestionPage.as_view(
-        "age",
-        form_class=SendAreYouUnder18Form,
     ),
 )
 
