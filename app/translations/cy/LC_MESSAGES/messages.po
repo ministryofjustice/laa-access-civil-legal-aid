@@ -1520,7 +1520,7 @@ msgstr ""
 msgid "Applying for housing, losing your housing or homelessness."
 msgstr ""
 
-msgid "Treated unfairly by a landlord, council or housing association"
+msgid "Treated unfairly by a landlord, council or housing association."
 msgstr ""
 
 msgid "If you’ve been accused of anti-social behaviour"
@@ -1959,5 +1959,8 @@ msgid "Musical instruments, unless you’re a professional musician"
 msgstr "Offerynnau cerddorol, oni bai’ch bod yn gerddor proffesiynol"
 
 #~ msgid "Benefits"
+#~ msgstr ""
+
+#~ msgid "Treated unfairly by a landlord, council or housing association"
 #~ msgstr ""
 
