@@ -1,16 +1,361 @@
 {% extends "base.html" %}
+
 {%- from 'components/back_link.html' import govukBackLink -%}
 {%- from 'categories/components/list-item.html' import list_item, list_item_small -%}
+{%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
+{%- from 'govuk_frontend_jinja/components/inset-text/macro.html' import govukInsetText %}
+
+{% set willCallHtml %}
+    <p class="govuk-body">We’ll give you the Civil Legal Advice phone number when you submit your details.</p>
+{% endset -%}
+
+{% set callTodayHtml %}
+    {{ form.call_today_time(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "spellcheck": false
+    }) }}
+{% endset -%}
+
+{% set thirdpartycallTodayHtml %}
+    {{ form.thirdparty_call_today_time(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "spellcheck": false
+    }) }}
+{% endset -%}
+
+{% set timeslotsData %}{{ form.time_slots|tojson|safe }}{% endset -%}
+
+{% set callAnotherHtml %}
+    {{ form.call_another_day(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "attributes": {
+            "data-time-slots": {
+                "value": form.time_slots_json
+            }
+        },
+        "spellcheck": false
+    }) }}
+    {{ form.call_another_time(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "spellcheck": false
+    }) }}
+{% endset -%}
+
+{% set thirdpartycallAnotherHtml %}
+    {{ form.thirdparty_call_another_day(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "spellcheck": false
+    }) }}
+    {{ form.thirdparty_call_another_time(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "spellcheck": false
+    }) }}
+{% endset -%}
+
+{% set callMeHtml %}
+    <ul class="govuk-list govuk-list--bullet">
+    <li>We’ll call during the time you choose.</li>
+    <li>The call will come from an unknown or withheld number.</li>
+    <li>If you miss the call, we will call 2 more times in the next few days.</li>
+    <li>We will not leave a message.</li>
+    <li>If you miss all 3 calls, or if you need urgent advice, call us on:
+      <br>
+      <a href="tel:0345 345 4345">0345 345 4345</a>.
+    </li>
+    </ul>
+    {{ form.contact_number(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "spellcheck": false
+    }) }}
+    {{ form.time_to_call(params={
+        'items': [
+        {
+            'conditional': {
+            'html': callTodayHtml
+            }
+        },
+        {
+            'conditional': {
+            'html': callAnotherHtml
+            }
+        }
+        ]
+    }) }}
+    {{ form.announce_call_from_cla }}
+{% endset -%}
+
+{% set callthirdPartyHtml %}
+<ul class="govuk-list govuk-list--bullet">
+    <li>You must be with the person when we call.</li>
+    <li>We’ll call during the time you choose.</li>
+    <li>The call will come from an unknown or withheld number.</li>
+    <li>If you miss the call, we will call 2 more times in the next few days.</li>
+    <li>We will not leave a message.</li>
+    <li>If you miss all 3 calls, or if you need urgent advice, call us on:
+      <br>
+      <a href="tel:0345 345 4345">0345 345 4345</a>.
+    </li>
+    </ul>
+    {{ form.thirdparty_full_name(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "spellcheck": false
+    }) }}
+    {{ form.thirdparty_relationship(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "spellcheck": false
+    }) }}
+    {{ form.thirdparty_contact_number(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "spellcheck": false
+    }) }}
+    {{ form.thirdparty_time_to_call(params={
+        'items': [
+        {
+            'conditional': {
+            'html': thirdpartycallTodayHtml
+            }
+        },
+        {
+            'conditional': {
+            'html': thirdpartycallAnotherHtml
+            }
+        }
+        ]
+    }) }}
+{% endset -%}
+
+{% set addressFinderHtml %}
+    {{ form.address_finder }}
+{% endset -%}
+
+{% set bslEmailHtml %}
+    {{ form.bsl_email }}
+{% endset -%}
+
+{% set otherLangHtml %}
+    {{ form.other_language(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+    }) }}
+{% endset -%}
+
+{% set otherAdapHtml %}
+    {{ form.other_adaptation(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "spellcheck": false
+    }) }}
+{% endset -%}
+
+{% block pageTitle %}{%- if form.errors %}Error: {% endif -%}{{ form.page_title }} - GOV.UK{% endblock %}
 
 {% block beforeContent%}
 {{ super() }}
 {{ govukBackLink() }}
+
+                                       
 {% endblock %}
 
 {% block content %}
+
+{{ super() }}
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l">Contact us page</h1>
+
+        {% block formHeading %}
+            <h1 class="govuk-heading-xl">{{ form.page_title }}</h1>
+        {% endblock %}
+
+        {% block formDescription %}
+            <p class="govuk-body">Civil Legal Advice will check if you can get legal aid and help you contact the right legal adviser. If you cannot get legal aid, we’ll tell you about other help you can get.</p>
+            <p class="govuk-body">You can call Civil Legal Advice yourself - this is an 0345 number, so <a href="https://www.gov.uk/call-charges">call charges</a> apply. Or you can ask us to call you back, which is free.</p>
+            <p class="govuk-body">We’ll ask questions about your legal problem and your financial situation. You might need to provide evidence of any financial information you give us.</p>
+        {% endblock %}
+
+        <form action="" method="post" novalidate>
+
+            {% block form %}
+                {{ form.csrf_token }}
+                {{ form.full_name(params={
+                    "label": {
+                        "classes": "govuk-label--m"
+                    },
+                    "spellcheck": false
+                }) }}
+                {{ form.contact_type(params={
+                    'items': [
+                    {
+                        'conditional': {
+                        'html': willCallHtml
+                        }
+                    },
+                    {
+                        'conditional': {
+                        'html': callMeHtml
+                        }
+                    },
+                    {
+                        'conditional': {
+                        'html': callthirdPartyHtml
+                        }
+                    }
+                    ]
+                }) }}
+                {{ form.email(params={
+                    "label": {
+                        "classes": "govuk-label--m"
+                    },
+                    "spellcheck": false
+                }) }}
+
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Address</legend>
+                <label class="govuk-label govuk-label--s" for="address-post_code" id="field-label-address-post_code">
+                    Postcode (optional)
+                </label>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-one-third">
+                        {{ form.post_code(params={
+                            "label": false,
+                            "classes": "govuk-input govuk-input--width-10 govuk-!-margin-bottom-0 postcode-search",
+                            "spellcheck": false
+                        }) }}
+                    </div>
+                    <div class="govuk-grid-column-two-third">
+                        <button id="show-postcode" class="govuk-button govuk-button--secondary" type="button">
+                            {{ _('Find UK Address') }}
+                        </button>
+                    </div>
+                    <div id="address-information-container" class="govuk-!-display-none govuk-radios__conditional custom-margin-left">
+                        {{ form.address_finder(params={
+                            "label": {
+                                "classes": "govuk-label--s"
+                            },
+                            "spellcheck": false
+                        }) }}
+                    </div>
+                    <script nonce="{{ csp_nonce() }}">
+                        document.getElementById("show-postcode").addEventListener("click", async function() {
+                            let postcode = document.getElementById("post_code").value.trim();
+                            let addressInfo = document.getElementById("address-information-container");
+                            let addressSelect = document.getElementById("address_finder");
+                    
+                            if (!postcode) {
+                                addressInfo.classList.add("govuk-!-display-none");
+                                return;
+                            }
+                    
+                            try {
+                                let response = await fetch(`/addresses/${postcode}`);
+                                let data = await response.json();
+                    
+                                addressInfo.classList.remove("govuk-!-display-none");
+                                addressSelect.innerHTML = '';
+                    
+                                let addressCount = data.length;
+                                let labelText = `${addressCount} address${addressCount !== 1 ? 'es' : ''} found`;
+                    
+                                let initialOption = document.createElement('option');
+                                initialOption.value = '';
+                                initialOption.textContent = labelText;
+                                addressSelect.appendChild(initialOption);
+                    
+                                data.forEach(item => {
+                                    let option = document.createElement('option');
+                                    option.value = item.formatted_address;
+                                    option.textContent = item.formatted_address;
+                                    addressSelect.appendChild(option);
+                                });
+                    
+                            } catch (error) {
+                                console.error("Error fetching addresses:", error);
+                            }
+                        });
+                    </script>
+                </div>
+                <script nonce="{{ csp_nonce() }}">
+                    document.getElementById("address_finder").addEventListener("change", function() {
+                        let selectedAddress = this.value;
+                        let streetAddressField = document.getElementById("street_address");
+                        let addressInfo = document.getElementById("address-information-container");
+
+                        addressInfo.classList.add("govuk-!-display-none")
+                
+                        if (selectedAddress) {
+                            streetAddressField.value = selectedAddress;
+                        }
+                    });
+                </script>
+
+
+                {{ form.street_address(params={
+                    "label": {
+                        "classes": "govuk-label--s",
+                    },
+                    "spellcheck": false
+                }) }}
+                {{ form.extra_notes(params={
+                    "label": {
+                        "classes": "govuk-label--m"
+                    },
+                    "spellcheck": false
+                }) }}
+                {{ form.adaptations(params={
+                    'items': [
+                    {
+                        'conditional': {
+                        'html': bslEmailHtml
+                        }
+                    },
+                    {
+                    },
+                    {
+                    },
+                    {
+                        'conditional': {
+                        'html': otherLangHtml
+                        }
+                    },
+                    {
+                        'conditional': {
+                        'html': otherAdapHtml
+                        }
+                    }
+                    ]
+                }) }}
+                {{ form.submit }}
+            {% endblock %}
+        </form>
+            {% block belowForm %}
+                {{ govukInsetText({
+                  "text": _("Your session will time out after 30 minutes of inactivity. We do this for your security.")
+                }) }}
+                <hr class="govuk-section-break--l">
+                {% set contact_url = url_for('contact.reasons_for_contacting') %}
+                <p class="govuk-body">{% trans contact_url=contact_url %}If you're having trouble completing this form, <a href="{{ contact_url }}" class="govuk-link">get in touch</a>.{% endtrans %}</p>
+            {% endblock %}
     </div>
 </div>
 {% endblock %}
