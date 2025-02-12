@@ -1,3 +1,4 @@
+import json
 from flask_wtf import FlaskForm
 from flask import request
 from wtforms import (
@@ -23,6 +24,8 @@ from wtforms.validators import InputRequired, Length, Optional
 from enum import Enum
 from app.contact.validators import EmailValidator, ValidateIf, ValidateIfType
 from app.find_a_legal_adviser.validators import ValidRegionPostcode
+from app.api import cla_backend
+from datetime import datetime
 
 
 class ContactPreference(Enum):
@@ -80,6 +83,28 @@ class ContactUsForm(FlaskForm):
         super(ContactUsForm, self).__init__(*args, **kwargs)
         self.other_language.choices = LANG_CHOICES
         self.thirdparty_relationship.choices = THIRDPARTY_RELATIONSHIP_CHOICES
+
+        self.time_slots = cla_backend.get_time_slots(num_days=8)
+        self.thirdparty_time_slots = cla_backend.get_time_slots(
+            num_days=8, is_third_party_callback=True
+        )
+        today = list(self.time_slots)[0]
+        self.call_today_time.choices = [("", "Select a day:")] + self.time_slots.get(
+            today
+        )
+        self.thirdparty_call_today_time.choices = [
+            ("", "Select a day:")
+        ] + self.thirdparty_time_slots.get(today)
+        slot_days = list(self.time_slots)[1:8]
+
+        self.call_another_day.choices = [("", "Select a day:")] + [
+            (key, datetime.strptime(key, "%Y-%m-%d").strftime("%a %d %b"))
+            for key in slot_days
+        ]
+
+    @property
+    def time_slots_json(self):
+        return json.dumps(self.time_slots)
 
     page_title = _("Contact Civil Legal Advice")
 

@@ -180,20 +180,12 @@ LANG_CHOICES = list(
 
 LANG_CHOICES = [(lang_code.lower(), lang_name) for lang_code, lang_name in LANG_CHOICES]
 
-
-DAY_TODAY = "today"
-DAY_SPECIFIC = "specific_day"
-DAY_CHOICES = ((DAY_TODAY, _("Call today")), (DAY_SPECIFIC, _("Call on another day")))
-
 SELECT_OPTION_DEFAULT = [("", _("-- Please select --"))]
 THIRDPARTY_RELATIONSHIP = [
-    ("PARENT_GUARDIAN", "Parent or guardian"),
-    ("FAMILY_FRIEND", "Family member or friend"),
-    ("PROFESSIONAL", "Professional"),
-    ("LEGAL_ADVISOR", "Legal adviser"),
-    ("OTHER", "Other"),
-]
-THIRDPARTY_RELATIONSHIP = [
-    (key.lower(), _(value)) for key, value in THIRDPARTY_RELATIONSHIP
+    ("parent_guardian", "Parent or guardian"),
+    ("family_friend", "Family member or friend"),
+    ("professional", "Professional"),
+    ("legal_advisor", "Legal adviser"),
+    ("other", "Other"),
 ]
 THIRDPARTY_RELATIONSHIP_CHOICES = SELECT_OPTION_DEFAULT + THIRDPARTY_RELATIONSHIP

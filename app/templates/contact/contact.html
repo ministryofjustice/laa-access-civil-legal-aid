@@ -27,10 +27,17 @@
     }) }}
 {% endset -%}
 
+{% set timeslotsData %}{{ form.time_slots|tojson|safe }}{% endset -%}
+
 {% set callAnotherHtml %}
     {{ form.call_another_day(params={
         "label": {
             "classes": "govuk-label--s"
+        },
+        "attributes": {
+            "data-time-slots": {
+                "value": form.time_slots_json
+            }
         },
         "spellcheck": false
     }) }}
