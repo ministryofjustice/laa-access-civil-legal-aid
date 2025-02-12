@@ -5,16 +5,16 @@ from app.categories.constants import EDUCATION
 
 
 class SendLandingPage(CategoryLandingPage):
-    question_title = "Special educational needs and disability (SEND)"
+    question_title = EDUCATION.title
 
     category = EDUCATION
 
     routing_map = {
-        "child_young_person": "categories.send.child_in_care",
-        "tribunals": "categories.send.child_in_care",
-        "discrimination": "categories.results.in_scope",
-        "schools": "categories.results.in_scope",
-        "care": "categories.community_care.landing",
+        EDUCATION.sub.child_young_person.code: "categories.send.child_in_care",
+        EDUCATION.sub.tribunals.code: "categories.send.child_in_care",
+        EDUCATION.sub.discrimination.code: "categories.results.in_scope",
+        EDUCATION.sub.schools.code: "categories.results.in_scope",
+        EDUCATION.sub.care.code: "categories.community_care.landing",
         "other": "categories.results.refer",
     }
 

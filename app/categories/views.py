@@ -38,7 +38,7 @@ class CategoryLandingPage(CategoryPage):
             if category.children and answer in category.children:
                 category = category.children[answer]
             blueprint.add_url_rule(
-                f"/{cls.category.code.replace('_', '-')}/{answer}",
+                f"/{cls.category.code.replace('_', '-')}/{answer.replace('_', '-')}",
                 view_func=CategoryAnswerPage.as_view(
                     answer,
                     question=cls.question_title,
