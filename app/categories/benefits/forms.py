@@ -14,7 +14,7 @@ FALA_REDIRECT = {
 
 class AppealQuestionForm(QuestionForm):
     category = BENEFITS
-    title = _("Legal aid only covers appeals to the")
+    title = _("Where will the appeal be held?")
     next_step_mapping = {
         "supreme_court": FALA_REDIRECT,
         "upper_tribunal": FALA_REDIRECT,
@@ -23,7 +23,7 @@ class AppealQuestionForm(QuestionForm):
     }
     question = RadioField(
         title,
-        widget=CategoryRadioInput(show_divider=True, is_page_heading=False),
+        widget=CategoryRadioInput(show_divider=True, label_class="govuk-body", is_page_heading=False),
         validators=[InputRequired(message=_("Select where the appeal will be held"))],
         choices=[
             ("upper_tribunal", _("Upper Tribunal (Administrative Appeals Chamber)")),
