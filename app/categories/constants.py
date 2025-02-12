@@ -101,14 +101,14 @@ FAMILY = Category(
     chs_code="family",
     code="family",
     children={
-        "children": Category(
+        "social_services": Category(
             title=_("Children and social services, children in care"),
             description=_(
                 "Help for any problem if social services are involved with a child. Includes children in care, or being adopted. Also special guardianship."
             ),
-            code="children",
+            code="social_services",
         ),
-        "relationship": Category(
+        "divorce": Category(
             title=_("Problems with an ex-partner, divorce, when a relationship ends"),
             description=_(
                 "If you cannot agree about money, finances and property. Includes contact with children, where children live, and other child arrangements. If an ex-partner is not doing what they agreed. If you’re worried about a child."
@@ -122,19 +122,19 @@ FAMILY = Category(
             ),
             code="domestic_abuse",
         ),
-        "mediation": Category(
+        "family_mediation": Category(
             title=_("Family mediation"),
             description=_(
                 "Help to cover the costs of family mediation (solve problems about money and children before you go to court)."
             ),
-            code="mediation",
+            code="family_mediation",
         ),
-        "child_taken": Category(
+        "child_abducted": Category(
             title=_("Child taken without your consent"),
             description=_(
                 "If a child has been abducted (taken without your permission), including outside the UK."
             ),
-            code="child_taken",
+            code="child_abducted",
         ),
         "send": Category(
             title=_("Children with special educational needs and disabilities (SEND)"),
@@ -181,12 +181,12 @@ HOUSING = Category(
             ),
             code="eviction",
         ),
-        "home": Category(
+        "forced_to_sell": Category(
             title=_("Forced to sell or losing the home you own"),
             description=_(
                 "Repossession by your mortgage company; bankruptcy or other debt that means you will lose the home you own."
             ),
-            code="home",
+            code="forced_to_sell",
         ),
         "repairs": Category(
             title=_("Repairs, health and safety"),
@@ -202,10 +202,10 @@ HOUSING = Category(
             ),
             code="council_housing",
         ),
-        "threatened_harassed": Category(
+        "threatened": Category(
             title=_("Being threatened or harassed where you live"),
             description=_("By a landlord, neighbour or someone else."),
-            code="threatened_harassed",
+            code="threatened",
         ),
         "asylum_seeker": Category(
             title=_("If you’re an asylum-seeker"),
@@ -246,40 +246,40 @@ EDUCATION = Category(
     chs_code="education",
     code="education",
     children={
-        "young_send": Category(
+        "child_young_person": Category(
             title=_("Help with a child or young person's SEND"),
             description=_(
                 "Help with schools, other education settings and local authorities. Includes help with education, health and care plans (EHCP) or if a child’s needs are not being met."
             ),
-            code="young_send",
+            code="child_young_person",
         ),
-        "send_tribunals": Category(
+        "tribunals": Category(
             title=_("SEND tribunals"),
             description=_(
                 "Applying for or going to a SEND tribunal, appealing a decision by a tribunal."
             ),
-            code="send_tribunals",
+            code="tribunals",
         ),
-        "treated_unfairly": Category(
+        "discrimination": Category(
             title=_("Child treated unfairly at school, discrimination"),
             description=_(
                 "If a child is treated unfairly at school because of their disability. Or if you were treated badly for complaining about this."
             ),
-            code="treated_unfairly",
+            code="discrimination",
         ),
-        "other_school_problems": Category(
+        "schools": Category(
             title=_("Other problems with schools"),
             description=_(
                 "Advice about legal action against a school. Includes if a child is out of school, exclusions, transport to school, judicial reviews."
             ),
-            code="other_school_problems",
+            code="schools",
         ),
-        "community_care": Category(
+        "care": Category(
             title=_("Care needs for disability (social care)"),
             description=_(
                 "Problems getting the local authority or council to provide or pay for the right care. For carers, children, young people and adults."
             ),
-            code="community_care",
+            code="care",
         ),
     },
 )
@@ -293,12 +293,12 @@ COMMUNITY_CARE = Category(
     chs_code="commcare",
     code="community_care",
     children={
-        "local_authority": Category(
+        "care_from_council": Category(
             title=_("Care from the council (local authority)"),
             description=_(
                 "Includes problems with care needs assessments, financial assessments and care support plans. Getting an advocate for assessments. Problems with transport, personal budgets and direct payments."
             ),
-            code="local_authority",
+            code="care_from_council",
         ),
         "carer": Category(
             title=_("If you’re a carer"),
@@ -307,33 +307,33 @@ COMMUNITY_CARE = Category(
             ),
             code="carer",
         ),
-        "home_care": Category(
+        "receive_care_in_own_home": Category(
             title=_("If you receive care in your own home"),
             description=_(
                 "Problems with care providers, social workers, care agencies. Also getting adaptations and disabled facilities grants."
             ),
-            code="home_care",
+            code="receive_care_in_own_home",
         ),
-        "care_stops": Category(
+        "care_or_funding_stops": Category(
             title=_("If care or funding stops"),
             description=_(
                 "Problems if care or money for care is stopped or reduced, or if care facilities close."
             ),
-            code="care_stops",
+            code="care_or_funding_stops",
         ),
-        "placements": Category(
+        "placement_care_homes_care_housing": Category(
             title=_("Placements, care homes and care housing"),
             description=_(
                 "Problems with placements in care homes, group homes or other supported housing. If a placement isn't working because someone's care needs have changed."
             ),
-            code="placements",
+            code="placement_care_homes_care_housing",
         ),
-        "quality_safeguarding": Category(
+        "problems_with_quality_of_care": Category(
             title=_("Problems with the quality of care, safeguarding"),
             description=_(
                 "Issues with safeguarding, abuse, neglect, or care that is not good enough. This includes in group homes or other placements, or from a carer or social worker."
             ),
-            code="quality_safeguarding",
+            code="problems_with_quality_of_care",
         ),
         "care_leaver": Category(
             title=_("If you’re a care leaver"),
@@ -371,12 +371,12 @@ ASYLUM_AND_IMMIGRATION = Category(
     chs_code="immigration",
     code="asylum_and_immigration",
     children={
-        "applying": Category(
+        "apply": Category(
             title=_("Applying for asylum"),
             description=_(
                 "Help to apply for asylum, go to asylum interviews, or appeal an asylum decision."
             ),
-            code="applying",
+            code="apply",
         ),
         "housing": Category(
             title=_("Housing and homelessness"),
@@ -416,24 +416,24 @@ MENTAL_CAPACITY = Category(
     chs_code="mentalhealth",
     code="mental_health",
     children={
-        "lacks_mental_capacity": Category(
+        "mental_capacity": Category(
             title=_("If someone cannot decide for themselves (lacks mental capacity)"),
             description=_(
                 "Help to challenge a decision made about someone’s living arrangements, care, health, relationships, family contact or finances. Includes if someone is deprived of their liberty, and ‘deprivation of liberty safeguards’ (DoLS)."
             ),
-            code="lacks_mental_capacity",
+            code="mental_capacity",
         ),
         "court_of_protection": Category(
             title=_("Court of Protection"),
             description=_("Advice about issues covered by the Court of Protection."),
             code="court_of_protection",
         ),
-        "detention_and_tribunals": Category(
+        "detention": Category(
             title=_("Mental health detention and tribunals"),
             description=_(
                 "Help if someone has been sectioned (held in a mental health hospital), or is under a community treatment order. Help with mental health tribunals."
             ),
-            code="detention_and_tribunals",
+            code="detention",
         ),
         "social_care": Category(
             title=_("Care needs for disability and old age (social care)"),
