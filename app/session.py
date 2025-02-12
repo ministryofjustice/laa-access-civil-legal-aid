@@ -129,7 +129,7 @@ class Session(SecureCookieSession):
             return None
         if isinstance(category_dict, Category):
             return category_dict
-        return Category(**category_dict)
+        return Category.from_dict(category_dict)
 
     @property
     def has_children(self):
