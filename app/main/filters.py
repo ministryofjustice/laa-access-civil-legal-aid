@@ -2,6 +2,8 @@ from app.main import bp
 import json
 from markupsafe import Markup
 from markdown import markdown
+from govuk_frontend_wtf.main import flatten_errors, merger
+from flask_babel import lazy_gettext as _
 
 
 @bp.app_template_filter("markdown")
@@ -38,3 +40,19 @@ def get_item_from_dict(d, s):
     if s not in d:
         return None
     return d[s]
+
+
+@bp.app_template_global()
+def wtforms_errors(form, params={}):
+    """An adapted version of the wtforms_errors function from the govuk_frontend_wtf package that marks the "There is a problem" text as translatable."""
+    wtforms_params = {"titleText": _("There is a problem"), "errorList": []}
+
+    id_map = {}
+    for field_name in form._fields.keys():
+        field = getattr(form, field_name, None)
+        if field and hasattr(field, "id"):
+            id_map[field_name] = field.id
+
+    wtforms_params["errorList"] = flatten_errors(form.errors, id_map=id_map)
+
+    return merger.merge(wtforms_params, params)
