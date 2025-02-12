@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-02-11 22:22+0000\n"
+"POT-Creation-Date: 2025-02-12 22:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -150,6 +150,9 @@ msgid "Another reason"
 msgstr ""
 
 msgid "Continue to contact CLA"
+msgstr ""
+
+msgid "There is a problem"
 msgstr ""
 
 msgid "-- Please select --"
@@ -1269,9 +1272,6 @@ msgid ""
 "advisers and Pathway Plans."
 msgstr ""
 
-msgid "community care"
-msgstr ""
-
 msgid "If you cannot find your problem"
 msgstr ""
 
@@ -1481,7 +1481,7 @@ msgstr ""
 msgid "physically, sexually or emotionally abused"
 msgstr ""
 
-msgid "Help with a child or young person's SEND)"
+msgid "Help with a child or young person's SEND"
 msgstr ""
 
 msgid ""

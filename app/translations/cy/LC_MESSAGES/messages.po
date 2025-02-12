@@ -38,22 +38,22 @@ msgid "Validation failed message"
 msgstr ""
 
 msgid "Yes"
-msgstr "Gallwch"
+msgstr "Ydw"
 
 msgid "No"
-msgstr "Na"
+msgstr "Nac ydw"
 
 msgid "Continue"
-msgstr "Ymlaen"
+msgstr "Parhau"
 
 msgid "Are you worried about someone's safety?"
-msgstr ""
+msgstr "Ydych chi’n poeni am ddiogelwch rhywun?"
 
 msgid "This could be you, a child or someone else."
-msgstr ""
+msgstr "Gallai hyn fod yn chi, yn blentyn neu'n rhywun arall."
 
 msgid "Select if you’re worried about someone’s safety"
-msgstr ""
+msgstr "Dewiswch os ydych chi’n poeni am ddiogelwch rhywun"
 
 msgid "Is this about a child who is or has been in care?"
 msgstr ""
@@ -132,6 +132,9 @@ msgstr "Rheswm arall"
 
 msgid "Continue to contact CLA"
 msgstr "Parhau i gysylltu â CLA"
+
+msgid "There is a problem"
+msgstr "Mae problem"
 
 msgid "-- Please select --"
 msgstr "-- Dewiswch --"
@@ -1388,9 +1391,6 @@ msgid ""
 "advisers and Pathway Plans."
 msgstr ""
 
-msgid "community care"
-msgstr ""
-
 msgid "If you cannot find your problem"
 msgstr ""
 
@@ -1600,7 +1600,7 @@ msgstr ""
 msgid "physically, sexually or emotionally abused"
 msgstr ""
 
-msgid "Help with a child or young person's SEND)"
+msgid "Help with a child or young person's SEND"
 msgstr ""
 
 msgid ""
@@ -1957,3 +1957,10 @@ msgstr "Carafannau a cherbydau eraill nad ydych chi’n eu defnyddio bob dydd"
 
 msgid "Musical instruments, unless you’re a professional musician"
 msgstr "Offerynnau cerddorol, oni bai’ch bod yn gerddor proffesiynol"
+
+#~ msgid "community care"
+#~ msgstr ""
+
+#~ msgid "Help with a child or young person's SEND)"
+#~ msgstr ""
+
