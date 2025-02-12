@@ -7,12 +7,19 @@ class CategoryInputField:
     """
 
     def __init__(
-        self, show_divider: bool = False, is_inline: bool = False, hint_text: str = None
+        self,
+        show_divider: bool = False,
+        is_inline: bool = False,
+        hint_text: str = None,
+        is_page_heading: bool = True,
     ):
         super().__init__()
         self.show_divider = show_divider
         self.is_inline = is_inline
         self.hint_text = hint_text
+        self.is_page_heading = (
+            is_page_heading  # This should be True for all single page questions
+        )
 
     def map_gov_params(self, field, **kwargs):
         if self.hint_text:
@@ -37,6 +44,9 @@ class CategoryInputField:
 
         label_class = "govuk-fieldset__legend--l"
         params["fieldset"]["legend"]["classes"] = label_class
+        params["fieldset"]["legend"]["isPageHeading"] = (
+            self.is_page_heading
+        )  # This sets the question text as the page H1
         return params
 
 
