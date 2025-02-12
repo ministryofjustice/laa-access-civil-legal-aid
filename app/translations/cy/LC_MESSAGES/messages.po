@@ -61,7 +61,7 @@ msgstr ""
 msgid "Select if the child is or has been in care"
 msgstr ""
 
-msgid "Legal aid only covers appeals to the"
+msgid "Where will the appeal be held?"
 msgstr ""
 
 msgid "Select where the appeal will be held"
@@ -838,7 +838,7 @@ msgid "Tell us how often you pay childcare costs"
 msgstr "Dywedwch wrthym pa mor aml rydych chi’n talu costau gofal plant"
 
 msgid "Review your answers"
-msgstr "Adolygu eich atebion\""
+msgstr "Adolygu eich atebion"
 
 msgid "You can only have 1 main property"
 msgstr "Dim ond un prif Eiddo allwch chi ei gael"
@@ -1957,10 +1957,3 @@ msgstr "Carafannau a cherbydau eraill nad ydych chi’n eu defnyddio bob dydd"
 
 msgid "Musical instruments, unless you’re a professional musician"
 msgstr "Offerynnau cerddorol, oni bai’ch bod yn gerddor proffesiynol"
-
-#~ msgid "Benefits"
-#~ msgstr ""
-
-#~ msgid "Treated unfairly by a landlord, council or housing association"
-#~ msgstr ""
-
