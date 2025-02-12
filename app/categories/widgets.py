@@ -20,6 +20,7 @@ class CategoryInputField:
         self.hint_text = hint_text
         self.is_page_heading = (
             is_page_heading  # This should be True for all single page questions
+        )
         self.label_class = (
             label_class if label_class is not None else "govuk-fieldset__legend--l"
         )
