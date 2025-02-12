@@ -23,7 +23,8 @@ class MentalCapacityLandingPage(CategoryLandingPage):
             "endpoint": "find-a-legal-adviser.search",
             "category": "mhe",
         },
-        MENTAL_CAPACITY.sub.social_care.code: "categories.community_care.landing",  # This needs to be updated to route to the community care landing page once it has been made
+        # Todo: This needs to be updated to route to the community care landing page once it has been made
+        MENTAL_CAPACITY.sub.social_care.code: "categories.community_care.landing",
         "other": "categories.results.refer",
     }
 
