@@ -18,6 +18,18 @@ class Category:
     def display_text(self):
         return self.title
 
+    @property
+    def sub(self):
+        # Allows you to do category_object.sub.sub_category
+        class Subcategory:
+            def __init__(self, category):
+                self.children: dict[str, Category] = category.children
+
+            def __getattr__(self, item):
+                return self.children.get(item)
+
+        return Subcategory(self)
+
     @classmethod
     def from_dict(cls, data: dict) -> "Category":
         children: dict = data.pop("children", {})

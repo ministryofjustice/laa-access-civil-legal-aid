@@ -10,15 +10,15 @@ FALA_REDIRECT = {
 
 
 class AsylumAndImmigrationLandingPage(CategoryLandingPage):
-    question_title = "Asylum and immigration"
+    question_title = ASYLUM_AND_IMMIGRATION.title
     category = ASYLUM_AND_IMMIGRATION
 
     routing_map = {
-        "apply": FALA_REDIRECT,
-        "housing": "categories.housing.homelessness",
-        "domestic_abuse": FALA_REDIRECT,
-        "detained": FALA_REDIRECT,
-        "modern_slavery": FALA_REDIRECT,
+        ASYLUM_AND_IMMIGRATION.sub.apply.code: FALA_REDIRECT,
+        ASYLUM_AND_IMMIGRATION.sub.housing.code: "categories.housing.homelessness",
+        ASYLUM_AND_IMMIGRATION.sub.domestic_abuse.code: FALA_REDIRECT,
+        ASYLUM_AND_IMMIGRATION.sub.detained.code: FALA_REDIRECT,
+        ASYLUM_AND_IMMIGRATION.sub.modern_slavery.code: FALA_REDIRECT,
     }
 
 

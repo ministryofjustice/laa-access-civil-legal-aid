@@ -28,16 +28,16 @@
 
         <br>
 
-        {{ list_item(category.children["protect_you_and_your_children"].title,
-                     category.children["protect_you_and_your_children"].description,
+        {{ list_item(category.sub.protect_you_and_your_children.title,
+                     category.sub.protect_you_and_your_children.description,
                      url_for("categories.domestic_abuse.protect_you_and_your_children")) }}
 
-        {{ list_item(category.children["leaving_an_abusive_relationship"].title,
-             category.children["leaving_an_abusive_relationship"].description,
+        {{ list_item(category.sub.leaving_an_abusive_relationship.title,
+             category.sub.leaving_an_abusive_relationship.description,
              url_for("categories.domestic_abuse.leaving_an_abusive_relationship")) }}
 
-        {{ list_item(category.children["problems_with_ex_partner"].title,
-             category.children["problems_with_ex_partner"].description,
+        {{ list_item(category.sub.problems_with_ex_partner.title,
+             category.sub.problems_with_ex_partner.description,
              url_for("categories.domestic_abuse.problems_with_ex_partner")) }}
 
         <br>
@@ -45,25 +45,21 @@
         <h2 class="govuk-heading-m">{% trans %}More problems{% endtrans %}</h2>
 
         <br>
-        {{ list_item_small(category.children["problems_with_neighbours"].title,
-             category.children["problems_with_neighbours"].description,
+        {{ list_item_small(category.sub.problems_with_neighbours.title,
+             category.sub.problems_with_neighbours.description,
              url_for("categories.domestic_abuse.problems_with_neighbours")) }}
 
-        {{ list_item_small(category.children["housing_homelessness_losing_home"].title,
-             category.children["housing_homelessness_losing_home"].description,
-             url_for("categories.domestic_abuse.problems_with_neighbours")) }}
+        {{ list_item_small(category.sub.housing_homelessness_losing_home.title,
+             category.sub.housing_homelessness_losing_home.description,
+             url_for("categories.domestic_abuse.housing_homelessness_losing_home")) }}
 
-        {{ list_item_small(category.children["forced_marriage"].title,
-             category.children["forced_marriage"].description,
+        {{ list_item_small(category.sub.forced_marriage.title,
+             category.sub.forced_marriage.description,
              url_for("categories.domestic_abuse.forced_marriage")) }}
 
-        {{ list_item_small("Forced marriage",
-                   "Help with forced marriage and Forced Marriage Protection Orders.",
-                    url_for("categories.domestic_abuse.forced_marriage")) }}
-
-        {{ list_item_small("Female genital mutilation (FGM)",
-           "If you or someone else is at risk of FGM.",
-            url_for("categories.domestic_abuse.fgm")) }}
+        {{ list_item_small(category.sub.fgm.title,
+             category.sub.fgm.description,
+             url_for("categories.domestic_abuse.fgm")) }}
 
         {{ cannot_find_your_problem(("domestic abuse"), url_for("categories.domestic_abuse.other"))}}
                                               

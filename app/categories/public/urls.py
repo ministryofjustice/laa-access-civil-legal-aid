@@ -5,7 +5,7 @@ from app.categories.constants import PUBLIC_LAW
 
 
 class PublicLandingPage(CategoryLandingPage):
-    question_title = "Legal action against police and public organisations"
+    question_title = PUBLIC_LAW.title
     category = PUBLIC_LAW
 
 
