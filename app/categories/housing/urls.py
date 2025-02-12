@@ -4,20 +4,20 @@ from app.categories.constants import HOUSING
 
 
 class HousingLandingPage(CategoryLandingPage):
-    question_title = "Housing, Homelessness, and Eviction"
+    question_title = HOUSING.title
 
     category = HOUSING
 
     routing_map = {
-        "homelessness": "categories.results.in_scope_hlpas",
-        "eviction": "categories.results.in_scope_hlpas",
-        "forced_to_sell": "categories.results.in_scope_hlpas",
-        "repairs": "categories.results.in_scope",
-        "council_housing": "categories.results.in_scope",
-        "threatened": "categories.results.in_scope",
-        "asylum_seeker": "categories.results.in_scope",
-        "discrimination": "categories.discrimination.where",
-        "antisocial_behaviour": "categories.results.in_scope",
+        HOUSING.sub.homelessness.code: "categories.results.in_scope_hlpas",
+        HOUSING.sub.eviction.code: "categories.results.in_scope_hlpas",
+        HOUSING.sub.forced_to_sell.code: "categories.results.in_scope_hlpas",
+        HOUSING.sub.repairs.code: "categories.results.in_scope",
+        HOUSING.sub.council_housing.code: "categories.results.in_scope",
+        HOUSING.sub.threatened.code: "categories.results.in_scope",
+        HOUSING.sub.asylum_seeker.code: "categories.results.in_scope",
+        HOUSING.sub.discrimination.code: "categories.discrimination.where",
+        HOUSING.sub.antisocial_behaviour.code: "categories.results.in_scope",
         "other": "categories.results.refer",
     }
 

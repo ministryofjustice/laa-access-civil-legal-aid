@@ -4,19 +4,19 @@ from app.categories.constants import FAMILY
 
 
 class FamilyLandingPage(CategoryLandingPage):
-    question_title = "Children, families, and relationships"
+    question_title = FAMILY.title
 
     category = FAMILY
 
     routing_map = {
-        "social_services": "contact.contact_us",
-        "divorce": "contact.contact_us",
-        "domestic_abuse": "contact.contact_us",  # This needs to be updated to the onward question page when this is made
-        "family_mediation": "categories.results.in_scope",
-        "child_abducted": "contact.contact_us",
-        "send": "categories.results.in_scope",  # This needs to be updated to SEND landing page when this page is made
-        "education": "categories.results.in_scope",
-        "forced_marriage": "categories.results.in_scope",  # This needs to be updated to safeguarding questions when this page is made
+        FAMILY.sub.social_services.code: "contact.contact_us",
+        FAMILY.sub.divorce.code: "contact.contact_us",
+        FAMILY.sub.domestic_abuse.code: "contact.contact_us",  # This needs to be updated to the onward question page when this is made
+        FAMILY.sub.family_mediation.code: "categories.results.in_scope",
+        FAMILY.sub.child_abducted.code: "contact.contact_us",
+        FAMILY.sub.send.code: "categories.results.in_scope",  # This needs to be updated to SEND landing page when this page is made
+        FAMILY.sub.education.code: "categories.results.in_scope",
+        FAMILY.sub.forced_marriage.code: "categories.results.in_scope",  # This needs to be updated to safeguarding questions when this page is made
         "other": "categories.results.refer",
     }
 

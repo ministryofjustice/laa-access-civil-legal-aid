@@ -4,23 +4,23 @@ from app.categories.constants import MENTAL_CAPACITY
 
 
 class MentalCapacityLandingPage(CategoryLandingPage):
-    question_title = "Mental capacity, mental health"
+    question_title = MENTAL_CAPACITY.title
 
     category = MENTAL_CAPACITY
 
     routing_map = {
-        "mental_capacity": {
+        MENTAL_CAPACITY.sub.mental_capacity.code: {
             "endpoint": "find-a-legal-adviser.search",
             "category": "mhe",
             "secondary_category": "com",
         },
-        "court_of_protection": {
+        MENTAL_CAPACITY.sub.court_of_protection.code: {
             "endpoint": "find-a-legal-adviser.search",
             "category": "mhe",
             "secondary_category": "com",
         },
-        "detention": {"endpoint": "find-a-legal-adviser.search", "category": "mhe"},
-        "social_care": "categories.community_care.landing",
+        MENTAL_CAPACITY.sub.detention.code:{"endpoint": "find-a-legal-adviser.search", "category": "mhe"},
+        MENTAL_CAPACITY.sub.social_care.code: "categories.results.in_scope",  # This needs to be updated to route to the community care landing page once it has been made
         "other": "categories.results.refer",
     }
 
