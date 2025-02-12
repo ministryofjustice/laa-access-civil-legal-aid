@@ -3,9 +3,12 @@ import requests
 from flask_babel import LazyString
 from flask import current_app
 import logging
+from datetime import datetime, timedelta
 from app.extensions import cache
 
 logger = logging.getLogger(__name__)
+
+CALLBACK_API_DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
 
 
 class BackendAPIClient:
@@ -130,10 +133,36 @@ class BackendAPIClient:
         payload = form.api_payload() if form else payload
         return self.post("checker/api/v1/reasons_for_contacting/", json=payload)
 
-    def get_time_slots_thirdparty(self):
-        return self.get(
-            "checker/api/v1/callback_time_slots/?third_party_callback=Frue&num_days=7"
-        )
+    def get_time_slots(self, num_days=8, is_third_party_callback=False):
+        slots = self.get(
+            "checker/api/v1/callback_time_slots/",
+            f"?third_party_callback={is_third_party_callback}&num_days={num_days}",
+        )["slots"]
+        slots = [
+            datetime.strptime(slot, CALLBACK_API_DATETIME_FORMAT) for slot in slots
+        ]
+        today = datetime.today().date()
+
+        next_7_days = [today + timedelta(days=i) for i in range(8)]
+
+        slots_by_day = {}
+
+        for slot in slots:
+            if slot.date() in next_7_days:
+                date_str = slot.date().strftime("%Y-%m-%d")
+
+                if date_str not in slots_by_day:
+                    slots_by_day[date_str] = []
+
+                slots_by_day[date_str].append(
+                    [
+                        slot.strftime("%H%M"),
+                        f"{slot.strftime('%I:%M%p').lstrip('0').lower()} to "
+                        f"{(slot + timedelta(minutes=30)).strftime('%I:%M%p').lstrip('0').lower()}",
+                    ]
+                )
+
+        return slots_by_day
 
 
 cla_backend = BackendAPIClient()
