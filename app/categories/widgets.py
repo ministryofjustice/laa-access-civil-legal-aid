@@ -51,4 +51,12 @@ class CategoryRadioInput(CategoryInputField, GovRadioInput):
 
 
 class CategoryCheckboxInput(CategoryInputField, GovCheckboxesInput):
-    pass
+    def __init__(self, *args, behaviour=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.behaviour = behaviour
+
+    def map_gov_params(self, field, **kwargs):
+        params = super().map_gov_params(field, **kwargs)
+        if self.behaviour:
+            params["items"][-1]["behaviour"] = self.behaviour
+        return params
