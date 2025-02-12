@@ -35,7 +35,7 @@ class CategoryLandingPage(CategoryPage):
     def register_routes(cls, blueprint: Blueprint):
         for answer, next_page in cls.routing_map.items():
             blueprint.add_url_rule(
-                f"/{cls.category.code}/{answer}",
+                f"/{cls.category.code.replace('_', '-')}/{answer}",
                 view_func=CategoryAnswerPage.as_view(
                     answer,
                     question=cls.question_title,
