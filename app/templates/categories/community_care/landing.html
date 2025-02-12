@@ -48,13 +48,7 @@
              _("Problems if the local authority is not providing the right support. Includes problems with housing, financial support, education, personal advisers and Pathway Plans."),
              url_for("categories.community_care.care_leaver")) }}
 
-        <br>
-
-        <h2 class="govuk-heading-m">{%  trans %}More problems{% endtrans %}</h2>
-
-        <br>
-
-            {{ cannot_find_your_problem(_("community care"), url_for("categories.community_care.other"))}}
+        {{ cannot_find_your_problem("", url_for("categories.community_care.other"))}}
 
     </div>
 </div>
