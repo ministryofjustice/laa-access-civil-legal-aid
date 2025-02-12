@@ -9,6 +9,54 @@
     <p class="govuk-body">We’ll give you the Civil Legal Advice phone number when you submit your details.</p>
 {% endset -%}
 
+{% set callTodayHtml %}
+    {{ form.call_today_time(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "spellcheck": false
+    }) }}
+{% endset -%}
+
+{% set thirdpartycallTodayHtml %}
+    {{ form.thirdparty_call_today_time(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "spellcheck": false
+    }) }}
+{% endset -%}
+
+{% set callAnotherHtml %}
+    {{ form.call_another_day(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "spellcheck": false
+    }) }}
+    {{ form.call_another_time(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "spellcheck": false
+    }) }}
+{% endset -%}
+
+{% set thirdpartycallAnotherHtml %}
+    {{ form.thirdparty_call_another_day(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "spellcheck": false
+    }) }}
+    {{ form.thirdparty_call_another_time(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "spellcheck": false
+    }) }}
+{% endset -%}
+
 {% set callMeHtml %}
     <ul class="govuk-list govuk-list--bullet">
     <li>We’ll call during the time you choose.</li>
@@ -26,7 +74,67 @@
         },
         "spellcheck": false
     }) }}
+    {{ form.time_to_call(params={
+        'items': [
+        {
+            'conditional': {
+            'html': callTodayHtml
+            }
+        },
+        {
+            'conditional': {
+            'html': callAnotherHtml
+            }
+        }
+        ]
+    }) }}
+    {{ form.announce_call_from_cla }}
+{% endset -%}
 
+{% set callthirdPartyHtml %}
+<ul class="govuk-list govuk-list--bullet">
+    <li>You must be with the person when we call.</li>
+    <li>We’ll call during the time you choose.</li>
+    <li>The call will come from an unknown or withheld number.</li>
+    <li>If you miss the call, we will call 2 more times in the next few days.</li>
+    <li>We will not leave a message.</li>
+    <li>If you miss all 3 calls, or if you need urgent advice, call us on:
+      <br>
+      <a href="tel:0345 345 4345">0345 345 4345</a>.
+    </li>
+    </ul>
+    {{ form.thirdparty_full_name(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "spellcheck": false
+    }) }}
+    {{ form.thirdparty_relationship(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "spellcheck": false
+    }) }}
+    {{ form.thirdparty_contact_number(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "spellcheck": false
+    }) }}
+    {{ form.thirdparty_time_to_call(params={
+        'items': [
+        {
+            'conditional': {
+            'html': thirdpartycallTodayHtml
+            }
+        },
+        {
+            'conditional': {
+            'html': thirdpartycallAnotherHtml
+            }
+        }
+        ]
+    }) }}
 {% endset -%}
 
 {% set addressFinderHtml %}
@@ -104,7 +212,7 @@
                     },
                     {
                         'conditional': {
-                        'html': otherAdapHtml
+                        'html': callthirdPartyHtml
                         }
                     }
                     ]

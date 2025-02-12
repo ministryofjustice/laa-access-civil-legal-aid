@@ -130,5 +130,10 @@ class BackendAPIClient:
         payload = form.api_payload() if form else payload
         return self.post("checker/api/v1/reasons_for_contacting/", json=payload)
 
+    def get_time_slots_thirdparty(self):
+        return self.get(
+            "checker/api/v1/callback_time_slots/?third_party_callback=Frue&num_days=7"
+        )
+
 
 cla_backend = BackendAPIClient()

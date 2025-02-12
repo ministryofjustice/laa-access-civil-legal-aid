@@ -17,7 +17,7 @@ from govuk_frontend_wtf.wtforms_widgets import (
 from app.contact.widgets import ContactRadioInput, ContactCheckboxInput
 from wtforms.fields import SubmitField
 from app.categories.widgets import CategoryCheckboxInput
-from app.contact.constants import LANG_CHOICES
+from app.contact.constants import LANG_CHOICES, THIRDPARTY_RELATIONSHIP_CHOICES
 from flask_babel import lazy_gettext as _
 from wtforms.validators import InputRequired, Length, Optional
 from enum import Enum
@@ -79,6 +79,7 @@ class ContactUsForm(FlaskForm):
     def __init__(self, *args, **kwargs):
         super(ContactUsForm, self).__init__(*args, **kwargs)
         self.other_language.choices = LANG_CHOICES
+        self.thirdparty_relationship.choices = THIRDPARTY_RELATIONSHIP_CHOICES
 
     page_title = _("Contact Civil Legal Advice")
 
@@ -110,6 +111,156 @@ class ContactUsForm(FlaskForm):
             Length(
                 max=20, message=_("Your telephone number must be 20 characters or less")
             ),
+        ],
+    )
+
+    time_to_call = RadioField(
+        _("Select a time for us to call"),
+        widget=ContactRadioInput(),
+        validators=[
+            InputRequired(message=_("Select a time for us to call")),
+            ValidateIf("contact_type", "callback", condition_type=ValidateIfType.EQ),
+        ],
+        choices=["Call today", "Call on another day"],
+    )
+
+    call_today_time = SelectMultipleField(
+        _("Time"),
+        choices=[],
+        widget=GovSelect(),
+        validators=[
+            ValidateIf("time_to_call", "Call today", condition_type=ValidateIfType.EQ),
+            InputRequired(message=_("Select what time you want to be called today")),
+        ],
+    )
+
+    call_another_day = SelectMultipleField(
+        _("Day"),
+        choices=[],
+        widget=GovSelect(),
+        validators=[
+            ValidateIf(
+                "time_to_call", "Call on another day", condition_type=ValidateIfType.EQ
+            ),
+            InputRequired(message=_("Select which day you want to be called")),
+        ],
+    )
+
+    call_another_time = SelectMultipleField(
+        _("Time"),
+        choices=[],
+        widget=GovSelect(),
+        validators=[
+            ValidateIf(
+                "time_to_call", "Call on another day", condition_type=ValidateIfType.EQ
+            ),
+            InputRequired(message=_("Select what time you want to be called")),
+        ],
+    )
+
+    announce_call_from_cla = RadioField(
+        _("Can we say that we're calling from Civil Legal Advice?"),
+        widget=ContactRadioInput(),
+        choices=[
+            ("true", _("Yes")),
+            ("false", _("No - do not say where you are calling from")),
+        ],
+        validators=[
+            ValidateIf("contact_type", "callback", condition_type=ValidateIfType.EQ),
+            InputRequired(
+                message=_(
+                    "Select if we can say that we’re calling from Civil Legal Advice"
+                )
+            ),
+        ],
+    )
+
+    thirdparty_full_name = StringField(
+        _("Full name of the person to call"),
+        widget=GovTextInput(),
+        validators=[
+            ValidateIf("contact_type", "thirdparty", condition_type=ValidateIfType.EQ),
+            Length(
+                max=400, message=_("Their full name must be 400 characters or less")
+            ),
+            InputRequired(message=_("Tell us the name of the person to call")),
+        ],
+    )
+
+    thirdparty_relationship = SelectMultipleField(
+        _("Relationship to you"),
+        choices=[],
+        widget=GovSelect(),
+        validators=[
+            ValidateIf("contact_type", "thirdparty", condition_type=ValidateIfType.EQ),
+            InputRequired(message=_("Tell us how you know this person")),
+        ],
+    )
+
+    thirdparty_contact_number = StringField(
+        _("Phone number"),
+        widget=GovTextInput(),
+        description=_(
+            "Enter the full number, including the area code. For example, 01632 960 1111."
+        ),
+        validators=[
+            ValidateIf("contact_type", "thirdparty", condition_type=ValidateIfType.EQ),
+            InputRequired(message=_("Tell us what number to ring")),
+            Length(
+                max=20, message=_("Your telephone number must be 20 characters or less")
+            ),
+        ],
+    )
+
+    thirdparty_time_to_call = RadioField(
+        _("Select a time for us to call"),
+        widget=ContactRadioInput(),
+        validators=[
+            InputRequired(message=_("Select a time for us to call")),
+            ValidateIf("contact_type", "thirdparty", condition_type=ValidateIfType.EQ),
+        ],
+        choices=["Call today", "Call on another day"],
+    )
+
+    thirdparty_call_today_time = SelectMultipleField(
+        _("Time"),
+        choices=[],
+        widget=GovSelect(),
+        validators=[
+            ValidateIf(
+                "thirdparty_time_to_call",
+                "Call today",
+                condition_type=ValidateIfType.EQ,
+            ),
+            InputRequired(message=_("Select what time you want to be called today")),
+        ],
+    )
+
+    thirdparty_call_another_day = SelectMultipleField(
+        _("Day"),
+        choices=[],
+        widget=GovSelect(),
+        validators=[
+            ValidateIf(
+                "thirdparty_time_to_call",
+                "Call on another day",
+                condition_type=ValidateIfType.EQ,
+            ),
+            InputRequired(message=_("Select which day you want to be called")),
+        ],
+    )
+
+    thirdparty_call_another_time = SelectMultipleField(
+        _("Time"),
+        choices=[],
+        widget=GovSelect(),
+        validators=[
+            ValidateIf(
+                "thirdparty_time_to_call",
+                "Call on another day",
+                condition_type=ValidateIfType.EQ,
+            ),
+            InputRequired(message=_("Select what time you want to be called")),
         ],
     )
 
