@@ -109,16 +109,18 @@ document.getElementById("bsl_webcam").addEventListener("change", function () {
     let webcamChecked = document.getElementById("bsl_webcam").getAttribute("aria-expanded") === "true";
     let emailInput = document.getElementById("email");
     let bslEmailInput = document.getElementById("bsl_email");
+    let bslContainer = bslEmailInput.closest('.govuk-checkboxes__conditional');
+    let emailContainer = emailInput.closest('.govuk-form-group');
 
-    if (webcamChecked && emailInput.value.trim() !== "") {
-        bslEmailInput.closest('.govuk-checkboxes__conditional').classList.add("govuk-!-display-none");
-        emailInput.closest('.govuk-form-group').classList.remove("govuk-!-display-none");
+    if (webcamChecked) {
+        if (emailInput.value.trim() === "") {
+            bslContainer.classList.remove("govuk-!-display-none");
+            emailContainer.classList.add("govuk-!-display-none");
+        } else {
+            bslContainer.classList.add("govuk-!-display-none");
+            emailContainer.classList.remove("govuk-!-display-none");
+        }
+    } else {
+        emailContainer.classList.remove("govuk-!-display-none");
     }
-    if (webcamChecked && emailInput.value.trim() === "") {
-        bslEmailInput.closest('.govuk-checkboxes__conditional').classList.remove("govuk-!-display-none");
-        emailInput.closest('.govuk-form-group').classList.add("govuk-!-display-none");
-    }
-    if (!webcamChecked) {
-        emailInput.closest('.govuk-form-group').classList.remove("govuk-!-display-none")
-    }
-})
+});
