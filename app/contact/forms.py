@@ -32,7 +32,6 @@ from app.contact.validators import (
     ValidateIfType,
     ValidateDayTime,
 )
-from app.find_a_legal_adviser.validators import ValidRegionPostcode
 from app.api import cla_backend
 from datetime import datetime
 
@@ -354,11 +353,6 @@ class ContactUsForm(FlaskForm):
     post_code = StringField(
         _("Postcode (optional)"),
         widget=GovTextInput(),
-        validators=[
-            Length(max=12, message=_("Your postcode must be 12 characters or less")),
-            ValidRegionPostcode(),
-            Optional(),
-        ],
     )
     address_finder = SelectField(
         _("Select an address"), choices=[""], widget=GovSelect()
