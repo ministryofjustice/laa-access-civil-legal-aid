@@ -54,6 +54,7 @@
                     ]
                 }) }}
                 {{ form.email(params={
+                    "id": "email",
                     "label": {
                         "classes": "govuk-label--m"
                     },
@@ -105,6 +106,7 @@
                 {{ form.adaptations(params={
                     'items': [
                     {
+                        'id': 'bsl_webcam',
                         'conditional': {
                         'html': bslEmailHtml
                         }
