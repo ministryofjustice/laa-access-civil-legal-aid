@@ -114,12 +114,27 @@ class ContactUsForm(FlaskForm):
             (key, datetime.strptime(key, "%Y-%m-%d").strftime("%a %d %b"))
             for key in slot_days
         ]
-        self.call_another_time.choices = [
-            ("", "Select a time:")
-        ] + self.get_all_time_slots()
-        self.thirdparty_call_another_time.choices = [
-            ("", "Select a time:")
-        ] + self.get_all_time_slots()
+        # If the user has already selected a day field, the time field is populated from that selection
+        if self.call_another_day.data:
+            if self.call_another_day.data[0]:
+                self.call_another_time.choices = [
+                    ("", "Select a time:")
+                ] + self.time_slots.get(self.call_another_day.data[0])
+            else:
+                self.call_another_time.choices = [
+                    ("", "Select a time:")
+                ] + self.get_all_time_slots()
+        if self.thirdparty_call_another_day.data:
+            if self.thirdparty_call_another_day.data[0]:
+                self.thirdparty_call_another_time.choices = [
+                    ("", "Select a time:")
+                ] + self.thirdparty_time_slots.get(
+                    self.thirdparty_call_another_day.data[0]
+                )
+            else:
+                self.thirdparty_call_another_time.choices = [
+                    ("", "Select a time:")
+                ] + self.get_all_time_slots()
 
     def get_all_time_slots(self):
         valid_time_slots = set()
@@ -276,8 +291,8 @@ class ContactUsForm(FlaskForm):
         _("Select a time for us to call"),
         widget=ContactRadioInput(),
         validators=[
-            InputRequired(message=_("Select a time for us to call")),
             ValidateIf("contact_type", "thirdparty", condition_type=ValidateIfType.EQ),
+            InputRequired(message=_("Select a time for us to call")),
         ],
         choices=["Call today", "Call on another day"],
     )
