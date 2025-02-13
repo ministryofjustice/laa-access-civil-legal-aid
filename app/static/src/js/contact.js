@@ -43,11 +43,28 @@ document.getElementById("show-postcode").addEventListener("click", async functio
     try {
         let response = await fetch(`/addresses/${postcode}`);
         let data = await response.json();
+        let addressCount = data.length;
+        const postcodeSearchForm = document.getElementById("postcode-search")
 
+        if (addressCount === 0){
+            if (!postcodeSearchForm.classList.contains("govuk-form-group--error")) {
+                let error = document.createElement("p");
+                error.classList.add("govuk-error-message");
+                error.innerHTML = '<span class="govuk-visually-hidden">Error:</span>No addresses were found with that postcode, but you can still enter your address manually</p>'
+                postcodeSearchForm.classList.add('govuk-form-group--error')
+                postcodeSearchForm.insertBefore(error, document.getElementById("field-label-address-post_code"))
+                addressInfo.classList.add("govuk-!-display-none");
+            }
+            return;
+        }
+
+        if (postcodeSearchForm.classList.contains("govuk-form-group--error")) {
+            postcodeSearchForm.classList.remove('govuk-form-group--error')
+            postcodeSearchForm.removeChild(postcodeSearchForm.getElementsByClassName("govuk-error-message")[0])
+        }
         addressInfo.classList.remove("govuk-!-display-none");
         addressSelect.innerHTML = '';
 
-        let addressCount = data.length;
         let labelText = `${addressCount} address${addressCount !== 1 ? 'es' : ''} found`;
 
         let initialOption = document.createElement('option');
