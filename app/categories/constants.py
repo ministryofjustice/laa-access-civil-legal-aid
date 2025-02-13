@@ -47,6 +47,9 @@ class Category:
     def referrer_text(self, value):
         self._referrer_text = value
 
+    def get_referrer_text(self):
+        return self.referrer_text or self.title
+
     def __str__(self):
         # Returns the translated display text
         return str(self.display_text)
