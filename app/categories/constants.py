@@ -13,6 +13,7 @@ class Category:
     # Internal code
     code: Optional[str] = None
     children: dict[str, "Category"] | None = field(default_factory=dict)
+    referrer_text: Optional[LazyString] = None
 
     @property
     def display_text(self):
@@ -38,6 +39,9 @@ class Category:
             for name, child in children.items():
                 category.children[name] = Category(**child)
         return category
+
+    def get_referrer_text(self):
+        return self.referrer_text or self.title
 
     def __str__(self):
         # Returns the translated display text
@@ -359,6 +363,7 @@ COMMUNITY_CARE = Category(
 
 BENEFITS = Category(
     title=_("Benefits"),
+    referrer_text=_("Welfare benefits"),
     description=_("Appeal a decision about your benefits."),
     article_category_name="Welfare benefits",
     chs_code="benefits",
