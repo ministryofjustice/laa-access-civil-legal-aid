@@ -29,8 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-
-document.getElementById("show-postcode").addEventListener("click", async function() {
+async function handlePostcodeSearch() {
     let postcode = document.getElementById("post_code").value.trim();
     let addressInfo = document.getElementById("address-information-container");
     let addressSelect = document.getElementById("address_finder");
@@ -82,7 +81,16 @@ document.getElementById("show-postcode").addEventListener("click", async functio
     } catch (error) {
         console.error("Error fetching addresses:", error);
     }
-});
+}
+
+document.getElementById("post_code").addEventListener("keypress", function(event) {
+    if (event.key == "Enter" && event.target.tagName === "INPUT") {
+        event.preventDefault();
+        handlePostcodeSearch();
+    }
+})
+
+document.getElementById("show-postcode").addEventListener("click", handlePostcodeSearch);
 
 document.getElementById("address_finder").addEventListener("change", function() {
     let selectedAddress = this.value;
