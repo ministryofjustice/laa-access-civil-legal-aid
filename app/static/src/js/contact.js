@@ -103,3 +103,22 @@ document.getElementById("address_finder").addEventListener("change", function() 
         streetAddressField.value = selectedAddress;
     }
 });
+
+
+document.getElementById("bsl_webcam").addEventListener("change", function () {
+    let webcamChecked = document.getElementById("bsl_webcam").getAttribute("aria-expanded") === "true";
+    let emailInput = document.getElementById("email");
+    let bslEmailInput = document.getElementById("bsl_email");
+
+    if (webcamChecked && emailInput.value.trim() !== "") {
+        bslEmailInput.closest('.govuk-checkboxes__conditional').classList.add("govuk-!-display-none");
+        emailInput.closest('.govuk-form-group').classList.remove("govuk-!-display-none");
+    }
+    if (webcamChecked && emailInput.value.trim() === "") {
+        bslEmailInput.closest('.govuk-checkboxes__conditional').classList.remove("govuk-!-display-none");
+        emailInput.closest('.govuk-form-group').classList.add("govuk-!-display-none");
+    }
+    if (!webcamChecked) {
+        emailInput.closest('.govuk-form-group').classList.remove("govuk-!-display-none")
+    }
+})
