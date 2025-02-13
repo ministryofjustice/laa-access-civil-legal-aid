@@ -5,7 +5,6 @@ from app.categories.constants import DOMESTIC_ABUSE
 
 
 class DomesticAbuseLandingPage(CategoryLandingPage):
-    path = "domestic-abuse"
     question_title = DOMESTIC_ABUSE.title
 
     category = DOMESTIC_ABUSE

@@ -26,7 +26,7 @@
         <br>
 
         {% for sub_category, route in routing_map.main %}
-            {{ list_item(sub_category.title, sub_category.description, url_for(route)) }}
+            {{ list_item(sub_category.title, sub_category.description, route|category_url_for) }}
         {% endfor %}
 
         <br>
@@ -36,10 +36,10 @@
         <br>
 
         {% for sub_category, route in routing_map.more %}
-            {{ list_item_small(sub_category.title, sub_category.description, url_for(route)) }}
+            {{ list_item_small(sub_category.title, sub_category.description, route|category_url_for) }}
         {% endfor %}
 
-        {{ cannot_find_your_problem((category.title.lower()), url_for(routing_map.other))}}
+        {{ cannot_find_your_problem((category.title.lower()), routing_map.other|category_url_for)}}
 
     </div>
 </div>
