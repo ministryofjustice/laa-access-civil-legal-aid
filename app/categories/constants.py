@@ -14,6 +14,7 @@ class Category:
     code: Optional[str] = None
     children: dict[str, "Category"] | None = field(default_factory=dict)
     _referrer_text: Optional[LazyString] = None
+    exit_page: Optional[bool] = False
 
     @property
     def display_text(self):
@@ -64,6 +65,7 @@ DOMESTIC_ABUSE = Category(
     article_category_name="Domestic Abuse",
     chs_code="family",
     code="domestic_abuse",
+    exit_page=True,
     children={
         "protect_you_and_your_children": Category(
             title=_("Help to keep yourself safe and protect children"),
@@ -75,7 +77,7 @@ DOMESTIC_ABUSE = Category(
         "leaving_an_abusive_relationship": Category(
             title=_("Leaving an abusive relationship"),
             description=_(
-                "Help with divorce, separation, or leaving your partner. Includes legal arrangements for children, money and housing"
+                "Help with divorce, separation, or leaving your partner. Includes legal arrangements for children, money and housing."
             ),
             code="leaving_an_abusive_relationship",
         ),
