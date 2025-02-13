@@ -25,7 +25,6 @@ def reasons_for_contacting():
 @bp.route("/contact-us", methods=["GET", "POST"])
 def contact_us():
     form = ContactUsForm()
-    print(form.get_all_time_slots())
     if form.validate_on_submit():
         render_template("contact/contact.html", form=form)
     return render_template("contact/contact.html", form=form)
