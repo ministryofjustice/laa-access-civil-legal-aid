@@ -2,6 +2,7 @@ from wtforms.validators import ValidationError
 from email_validator import validate_email, EmailNotValidError
 from enum import Enum
 from wtforms.validators import StopValidation
+from flask_babel import lazy_gettext as _
 
 
 class EmailValidator:
@@ -58,3 +59,11 @@ class ValidateIf:
         if not match:
             field.errors = []
             raise StopValidation()
+
+
+def validate_not_default(err_msg="Not a valid choice"):
+    def _validate(form, field):
+        if not field.data or field.data == [""]:
+            raise ValidationError(_(err_msg))
+
+    return _validate

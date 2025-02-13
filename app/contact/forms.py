@@ -22,7 +22,12 @@ from app.contact.constants import LANG_CHOICES, THIRDPARTY_RELATIONSHIP_CHOICES
 from flask_babel import lazy_gettext as _
 from wtforms.validators import InputRequired, Length, Optional
 from enum import Enum
-from app.contact.validators import EmailValidator, ValidateIf, ValidateIfType
+from app.contact.validators import (
+    EmailValidator,
+    ValidateIf,
+    ValidateIfType,
+    validate_not_default,
+)
 from app.find_a_legal_adviser.validators import ValidRegionPostcode
 from app.api import cla_backend
 from datetime import datetime
@@ -101,10 +106,18 @@ class ContactUsForm(FlaskForm):
             (key, datetime.strptime(key, "%Y-%m-%d").strftime("%a %d %b"))
             for key in slot_days
         ]
+        self.thirdparty_call_another_day.choices = [("", "Select a day:")] + [
+            (key, datetime.strptime(key, "%Y-%m-%d").strftime("%a %d %b"))
+            for key in slot_days
+        ]
 
     @property
     def time_slots_json(self):
         return json.dumps(self.time_slots)
+
+    @property
+    def thirdparty_time_slots_json(self):
+        return json.dumps(self.thirdparty_time_slots)
 
     page_title = _("Contact Civil Legal Advice")
 
@@ -168,18 +181,20 @@ class ContactUsForm(FlaskForm):
                 "time_to_call", "Call on another day", condition_type=ValidateIfType.EQ
             ),
             InputRequired(message=_("Select which day you want to be called")),
+            validate_not_default(err_msg="Select which day you want to be called"),
         ],
     )
 
     call_another_time = SelectMultipleField(
         _("Time"),
-        choices=[],
+        choices=["Select a time:"],
         widget=GovSelect(),
         validators=[
             ValidateIf(
                 "time_to_call", "Call on another day", condition_type=ValidateIfType.EQ
             ),
             InputRequired(message=_("Select what time you want to be called")),
+            validate_not_default(err_msg="Select what time you want to be called"),
         ],
     )
 
@@ -249,7 +264,7 @@ class ContactUsForm(FlaskForm):
 
     thirdparty_call_today_time = SelectMultipleField(
         _("Time"),
-        choices=[],
+        choices=["Select a time:"],
         widget=GovSelect(),
         validators=[
             ValidateIf(
@@ -272,6 +287,7 @@ class ContactUsForm(FlaskForm):
                 condition_type=ValidateIfType.EQ,
             ),
             InputRequired(message=_("Select which day you want to be called")),
+            validate_not_default(err_msg="Select which day you want to be called"),
         ],
     )
 
@@ -286,6 +302,7 @@ class ContactUsForm(FlaskForm):
                 condition_type=ValidateIfType.EQ,
             ),
             InputRequired(message=_("Select what time you want to be called")),
+            validate_not_default(err_msg="Select what time you want to be called"),
         ],
     )
 
