@@ -7,7 +7,7 @@ from flask_babel import lazy_gettext as _, LazyString
 class Category:
     title: LazyString
     description: LazyString
-    article_category_name: Optional[LazyString] = None
+    article_category_name: Optional[str] = None
     # One of legalaid_categories.code
     chs_code: Optional[str] = None
     # Internal code
@@ -46,32 +46,32 @@ class Category:
 
 # Categories definition
 DOMESTIC_ABUSE = Category(
-    title=_("Domestic Abuse"),
+    title=_("Domestic abuse"),
     description=_(
         "Includes controlling behaviour, emotional abuse, or if someone is harassing, threatening or hurting you or a child. This could be a partner, ex-partner, or family member."
     ),
-    article_category_name=_("Domestic Abuse"),
+    article_category_name="Domestic abuse",
     chs_code="family",
     code="domestic_abuse",
     children={
         "protect_you_and_your_children": Category(
-            title=_("Help to protect you and your children"),
+            title=_("Help to keep yourself safe and protect children"),
             description=_(
-                "This includes advice about keeping you and your family safe, getting court orders and help if someone is ignoring a court order. Also, if you’re being stalked or harassed."
+                "Includes keeping you or your family safe, getting court orders and help if someone is ignoring a court order. Also, if you’re being stalked, threatened or harassed."
             ),
             code="protect_you_and_your_children",
         ),
         "leaving_an_abusive_relationship": Category(
             title=_("Leaving an abusive relationship"),
             description=_(
-                "Help with divorce or separation. It includes making plans for the children, money, and housing. It also covers child contact and where the children will live."
+                "Help with divorce, separation, or leaving your partner. Includes legal arrangements for children, money and housing"
             ),
             code="leaving_an_abusive_relationship",
         ),
         "problems_with_ex_partner": Category(
             title=_("Problems with an ex-partner: children or money"),
             description=_(
-                "Includes contact with children, where children live; money; when an ex-partner doesn’t follow court orders or agreements. Also if you’re worried about a child; child taken or kept without your permission."
+                "Includes arrangements for children and money. If an ex-partner is not following agreements or court orders. If you’re worried about a child, or if a child is taken or kept without your permission."
             ),
             code="problems_with_ex_partner",
         ),
@@ -109,7 +109,7 @@ FAMILY = Category(
     description=_(
         "Includes children in care, children and social services. Also, help with children and finances if you divorce or split up."
     ),
-    article_category_name=_("Family"),
+    article_category_name="Family",
     chs_code="family",
     code="family",
     children={
@@ -175,7 +175,7 @@ HOUSING = Category(
     description=_(
         "Includes being evicted or forced to sell your home. Problems with landlords, repairs, neighbours or council housing."
     ),
-    article_category_name=_("Housing"),
+    article_category_name="Housing",
     chs_code="housing",
     code="housing",
     children={
@@ -246,7 +246,7 @@ DISCRIMINATION = Category(
     description=_(
         "Treated unfairly because of things like your disability or health condition, race, age, sex, religion or pregnancy."
     ),
-    article_category_name=_("Discrimination"),
+    article_category_name="Discrimination",
     chs_code="discrimination",
     code="discrimination",
 )
@@ -254,7 +254,7 @@ DISCRIMINATION = Category(
 EDUCATION = Category(
     title=_("Special educational needs and disability (SEND)"),
     description=_("Help if your child has SEND."),
-    article_category_name=_("Education"),
+    article_category_name="Education",
     chs_code="education",
     code="education",
     children={
@@ -301,7 +301,7 @@ COMMUNITY_CARE = Category(
     description=_(
         "Problems getting the local authority or council to provide or pay for the right care. For carers, children, young people and adults."
     ),
-    article_category_name=_("Community care"),
+    article_category_name="Community care",
     chs_code="commcare",
     code="community_care",
     children={
@@ -360,7 +360,7 @@ COMMUNITY_CARE = Category(
 BENEFITS = Category(
     title=_("Benefits"),
     description=_("Appeal a decision about your benefits."),
-    article_category_name=_("Welfare benefits"),
+    article_category_name="Welfare benefits",
     chs_code="benefits",
     code="benefits",
 )
@@ -370,7 +370,7 @@ PUBLIC_LAW = Category(
     description=_(
         "Includes schools, the police, government, prisons, NHS, the council."
     ),
-    article_category_name=_("Public"),
+    article_category_name="Public",
     chs_code="publiclaw",
     code="public_law",
 )
@@ -424,7 +424,7 @@ MENTAL_CAPACITY = Category(
     description=_(
         "Help if someone cannot make decisions about their health, day-to-day life or care. Help at mental health tribunals."
     ),
-    article_category_name=_("Mental health"),
+    article_category_name="Mental health",
     chs_code="mentalhealth",
     code="mental_health",
     children={
