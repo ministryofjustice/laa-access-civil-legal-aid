@@ -2,7 +2,6 @@ from wtforms.validators import ValidationError
 from email_validator import validate_email, EmailNotValidError
 from enum import Enum
 from wtforms.validators import StopValidation
-from flask_babel import lazy_gettext as _
 
 
 class EmailValidator:
@@ -61,9 +60,24 @@ class ValidateIf:
             raise StopValidation()
 
 
-def validate_not_default(err_msg="Not a valid choice"):
-    def _validate(form, field):
-        if not field.data or field.data == [""]:
-            raise ValidationError(_(err_msg))
+class ValidateDayTime:
+    def __init__(self, day_field: str, message: bool = None):
+        self.day_field = day_field
+        self.message = (
+            message
+            if message is not None
+            else "Can not schedule a callback at the requested time"
+        )
 
-    return _validate
+    def __call__(self, form, field):
+        selected_time = field.data[0]
+        selected_day = form._fields.get(self.day_field).data[0]
+
+        valid_time_slots = form.time_slots[selected_day]
+
+        for time in valid_time_slots:
+            if selected_time == time[0]:
+                field.errors = []
+                raise StopValidation()
+
+        raise ValidationError(self.message)
