@@ -32,3 +32,4 @@ class Config(object):
     SESSION_TIMEOUT = timedelta(minutes=30)
     OS_PLACES_API_KEY = os.environ.get("OS_PLACES_API_KEY")
     SESSION_COOKIE_SECURE = True
+    EMAIL_ORCHESTRATOR_URL = os.environ.get("EMAIL_ORCHESTRATOR_URL")
