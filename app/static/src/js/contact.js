@@ -2,8 +2,6 @@ function updateTimes(daySelect, timeSelect) {
     let timeSlotsData = JSON.parse(daySelect.dataset.timeSlots);
     let selectedDay = daySelect.value;
 
-    console.log(selectedDay)
-
     timeSelect.innerHTML = '<option value="">Select a time:</option>';
 
     let times = timeSlotsData[selectedDay];

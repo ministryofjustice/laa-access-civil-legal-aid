@@ -15,7 +15,11 @@ from govuk_frontend_wtf.wtforms_widgets import (
     GovTextArea,
     GovSelect,
 )
-from app.contact.widgets import ContactRadioInput, ContactCheckboxInput
+from app.contact.widgets import (
+    ContactRadioInput,
+    ContactCheckboxInput,
+    ContactSelectMultipleField,
+)
 from wtforms.fields import SubmitField
 from app.categories.widgets import CategoryCheckboxInput
 from app.contact.constants import LANG_CHOICES, THIRDPARTY_RELATIONSHIP_CHOICES
@@ -26,7 +30,7 @@ from app.contact.validators import (
     EmailValidator,
     ValidateIf,
     ValidateIfType,
-    validate_not_default,
+    ValidateDayTime,
 )
 from app.find_a_legal_adviser.validators import ValidRegionPostcode
 from app.api import cla_backend
@@ -110,6 +114,23 @@ class ContactUsForm(FlaskForm):
             (key, datetime.strptime(key, "%Y-%m-%d").strftime("%a %d %b"))
             for key in slot_days
         ]
+        self.call_another_time.choices = [
+            ("", "Select a time:")
+        ] + self.get_all_time_slots()
+        self.thirdparty_call_another_time.choices = [
+            ("", "Select a time:")
+        ] + self.get_all_time_slots()
+
+    def get_all_time_slots(self):
+        valid_time_slots = set()
+        for times in self.time_slots.values():
+            for time in times:
+                valid_time_slots.add((time[0], time[1]))
+
+        valid_time_slots = list(valid_time_slots)
+        sorted_valid_time_slots = sorted(valid_time_slots)
+
+        return sorted_valid_time_slots
 
     @property
     def time_slots_json(self):
@@ -181,11 +202,10 @@ class ContactUsForm(FlaskForm):
                 "time_to_call", "Call on another day", condition_type=ValidateIfType.EQ
             ),
             InputRequired(message=_("Select which day you want to be called")),
-            validate_not_default(err_msg="Select which day you want to be called"),
         ],
     )
 
-    call_another_time = SelectMultipleField(
+    call_another_time = ContactSelectMultipleField(
         _("Time"),
         choices=["Select a time:"],
         widget=GovSelect(),
@@ -194,7 +214,7 @@ class ContactUsForm(FlaskForm):
                 "time_to_call", "Call on another day", condition_type=ValidateIfType.EQ
             ),
             InputRequired(message=_("Select what time you want to be called")),
-            validate_not_default(err_msg="Select what time you want to be called"),
+            ValidateDayTime(day_field="call_another_day"),
         ],
     )
 
@@ -287,7 +307,6 @@ class ContactUsForm(FlaskForm):
                 condition_type=ValidateIfType.EQ,
             ),
             InputRequired(message=_("Select which day you want to be called")),
-            validate_not_default(err_msg="Select which day you want to be called"),
         ],
     )
 
@@ -302,7 +321,7 @@ class ContactUsForm(FlaskForm):
                 condition_type=ValidateIfType.EQ,
             ),
             InputRequired(message=_("Select what time you want to be called")),
-            validate_not_default(err_msg="Select what time you want to be called"),
+            ValidateDayTime(day_field="thirdparty_call_another_day"),
         ],
     )
 
