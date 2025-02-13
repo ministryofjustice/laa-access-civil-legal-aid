@@ -22,6 +22,8 @@ class IndexPage(CategoryPage):
 
 
 class CategoryLandingPage(CategoryPage):
+    template: str = "categories/landing.html"
+
     question_title: str = ""
 
     routing_map: dict[str, str] = {}
@@ -30,22 +32,59 @@ class CategoryLandingPage(CategoryPage):
 
     def dispatch_request(self):
         session["category"] = self.category
-        return render_template(self.template, category=self.category)
+        return render_template(
+            self.template, category=self.category, routing_map=self.routing_map
+        )
 
     @classmethod
     def register_routes(cls, blueprint: Blueprint):
         for answer, next_page in cls.routing_map.items():
-            category = cls.category
-            if category.children and answer in category.children:
-                category = category.children[answer]
             blueprint.add_url_rule(
-                f"/{cls.category.code.replace('_', '-')}/{answer.replace('_', '-')}",
+                f"/{cls.category}/{answer}",
                 view_func=CategoryAnswerPage.as_view(
                     answer,
                     question=cls.question_title,
                     answer=answer,
                     next_page=next_page,
-                    category=category,
+                    category=cls.category,
+                ),
+            )
+
+    @classmethod
+    def register_routes_2(cls, blueprint: Blueprint, path: str = None):
+        if not path:
+            path = cls.category.code.lower().replace("_", "-")
+
+        blueprint.add_url_rule(
+            f"/{path}/",
+            view_func=cls.as_view("landing", template=cls.template),
+        )
+        cls.register_sub_routes(blueprint, path, cls.routing_map["main"])
+        cls.register_sub_routes(blueprint, path, cls.routing_map["more"])
+
+        if "other" in cls.routing_map and cls.routing_map["other"] is not None:
+            blueprint.add_url_rule(
+                f"/{path}/answer/other",
+                view_func=CategoryAnswerPage.as_view(
+                    "answer_other",
+                    question=cls.question_title,
+                    answer="other",
+                    next_page=cls.routing_map["other"],
+                    category=cls.category,
+                ),
+            )
+
+    @classmethod
+    def register_sub_routes(cls, blueprint: Blueprint, path, routes):
+        for sub_category, next_page in routes:
+            blueprint.add_url_rule(
+                f"/{path}/answer/{sub_category.code.replace('_', '-')}",
+                view_func=CategoryAnswerPage.as_view(
+                    f"answer_{sub_category.code.replace('_', '-')}",
+                    question=cls.question_title,
+                    answer=sub_category.code,
+                    next_page=next_page,
+                    category=sub_category,
                 ),
             )
 
