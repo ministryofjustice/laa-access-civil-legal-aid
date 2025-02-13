@@ -9,6 +9,7 @@ from wtforms import (
     TextAreaField,
     SelectField,
 )
+from app.contact import YES, NO
 from govuk_frontend_wtf.wtforms_widgets import (
     GovSubmitInput,
     GovTextInput,
@@ -423,3 +424,45 @@ class ContactUsForm(FlaskForm):
     )
 
     submit = SubmitField(_("Submit details"), widget=GovSubmitInput())
+
+    def get_payload(self) -> dict:
+        """
+        Returns the contact payload.
+        """
+        payload = {
+            "personal_details": {
+                "full_name": self.data.get("full_name"),
+                "postcode": self.data.get("post_code"),
+                "street": self.data.get("street_address"),
+                "mobile_phone": self.data.get("contact_number"),
+                "email": self.data.get("email")
+                if len(self.data.get("email")) > 0
+                else self.data.get("bsl_email"),
+                "announce_call": self.data.get("announce_call_from_cla"),
+            },
+            "thirdparty_details": {
+                "personal_details": {
+                    "full_name": self.data.get("thirdparty_full_name"),
+                    "mobile_phone": self.data.get("thirdparty_contact_number"),
+                },
+                "personal_relationship": self.data.get("thirdparty_relationship"),
+            },
+            "callback_type": "web_form_self",
+            "callback_window_type": "HALF_HOUR_WINDOW",
+            "adaptations": {
+                "bsl_webcam": YES
+                if "bsl_webcam" in self.data.get("adaptations", [])
+                else NO,
+                "text_relay": YES
+                if "text_relay" in self.data.get("adaptations", [])
+                else NO,
+                "welsh": YES if "welsh" in self.data.get("adaptations", []) else NO,
+                "is_other_language": YES
+                if "is_other_language" in self.data.get("adaptations", [])
+                else NO,
+                "other_language": self.data.get("other_language")[0],
+                "other_adaptation": self.data.get("other_adaptation"),
+            },
+        }
+
+        return payload

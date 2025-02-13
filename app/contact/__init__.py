@@ -1,5 +1,8 @@
 from flask import Blueprint
 
+YES = "1"
+NO = "0"
+
 bp = Blueprint(
     "contact",
     __name__,
