@@ -9,6 +9,7 @@ from wtforms import (
     TextAreaField,
     SelectField,
 )
+from app.config import Config
 from app.contact import YES, NO
 from govuk_frontend_wtf.wtforms_widgets import (
     GovSubmitInput,
@@ -34,7 +35,8 @@ from app.contact.validators import (
     ValidateDayTime,
 )
 from app.api import cla_backend
-from datetime import datetime
+from datetime import datetime, timedelta
+import pytz
 
 
 class ContactPreference(Enum):
@@ -425,44 +427,130 @@ class ContactUsForm(FlaskForm):
 
     submit = SubmitField(_("Submit details"), widget=GovSubmitInput())
 
+    def set_callback_time_string(self):
+        """
+        Sets the callback time string in the format day,
+        date month and time from and too using time as an input
+        """
+        callback_requested = ["thirdparty", "callback"]
+        contact_type = self.data.get("contact_type")
+        call_today = self.data.get("call_today_time")
+        call_another_time = self.data.get("call_another_time")
+
+        if contact_type in callback_requested:
+            call_today = self.data.get("call_today_time")[0]
+            call_another_time = self.data.get("call_another_time")[0]
+            if self.data.get("time_to_call") == "Call today" and call_today:
+                date = datetime.today().date()
+                call_today = datetime.strptime(call_today, "%H%M").replace(
+                    year=date.year, month=date.month, day=date.day
+                )
+                end_time = call_today + timedelta(minutes=30)
+                callback_time_string = call_today.strftime(
+                    "%A, %d %B at %H:%M - "
+                ) + end_time.strftime("%H:%M")
+            elif (
+                self.data.get("time_to_call") == "Call on another day"
+                and call_another_time
+            ):
+                date = datetime.strptime(
+                    self.data.get("call_another_day")[0], "%Y-%m-%d"
+                )
+                call_another_time = datetime.strptime(
+                    call_another_time, "%H%M"
+                ).replace(year=date.year, month=date.month, day=date.day)
+                end_time = call_another_time + timedelta(minutes=30)
+                callback_time_string = call_another_time.strftime(
+                    "%A, %d %B at %H:%M - "
+                ) + end_time.strftime("%H:%M")
+
+            return callback_time_string
+
     def get_payload(self) -> dict:
         """
         Returns the contact payload.
         """
+
+        def get_time(self):
+            callback_requested = ["thirdparty", "callback"]
+            contact_type = self.data.get("contact_type")
+            call_today = self.data.get("call_today_time")
+            call_another_time = self.data.get("call_another_time")
+
+            time = None
+
+            if contact_type in callback_requested:
+                call_today = self.data.get("call_today_time")[0]
+                call_another_time = self.data.get("call_another_time")[0]
+                if self.data.get("time_to_call") == "Call today" and call_today:
+                    date = datetime.today().date()
+                    time = datetime.strptime(call_today, "%H%M").replace(
+                        year=date.year, month=date.month, day=date.day
+                    )
+                elif (
+                    self.data.get("time_to_call") == "Call on another day"
+                    and call_another_time
+                ):
+                    date = datetime.strptime(
+                        self.data.get("call_another_day")[0], "%Y-%m-%d"
+                    )
+                    time = datetime.strptime(call_another_time, "%H%M").replace(
+                        year=date.year, month=date.month, day=date.day
+                    )
+            if time is not None:
+                naive = time
+                local_tz = pytz.timezone(Config.TIMEZONE)
+                local = local_tz.localize(naive)
+                return local.astimezone(pytz.utc).isoformat()
+
+        safe_to_contact = "SAFE" if self.data.get("contact_type") == "callback" else ""
         payload = {
             "personal_details": {
                 "full_name": self.data.get("full_name"),
-                "postcode": self.data.get("post_code"),
-                "street": self.data.get("street_address"),
-                "mobile_phone": self.data.get("contact_number"),
                 "email": self.data.get("email")
-                if len(self.data.get("email")) > 0
+                if self.data.get("email")
                 else self.data.get("bsl_email"),
-                "announce_call": self.data.get("announce_call_from_cla"),
+                "postcode": self.data.get("post_code"),
+                "mobile_phone": self.data.get("contact_number"),
+                "street": self.data.get("street_address"),
+                "safe_to_contact": safe_to_contact,
+                "announce_call": True,
             },
-            "thirdparty_details": {
-                "personal_details": {
-                    "full_name": self.data.get("thirdparty_full_name"),
-                    "mobile_phone": self.data.get("thirdparty_contact_number"),
-                },
-                "personal_relationship": self.data.get("thirdparty_relationship"),
-            },
-            "callback_type": "web_form_self",
-            "callback_window_type": "HALF_HOUR_WINDOW",
-            "adaptations": {
+            "adaptation_details": {
                 "bsl_webcam": YES
-                if "bsl_webcam" in self.data.get("adaptations", [])
+                if "bsl_webcam" in (self.data.get("adaptations") or [])
                 else NO,
                 "text_relay": YES
-                if "text_relay" in self.data.get("adaptations", [])
+                if "text_relay" in (self.data.get("adaptations") or [])
                 else NO,
-                "welsh": YES if "welsh" in self.data.get("adaptations", []) else NO,
-                "is_other_language": YES
-                if "is_other_language" in self.data.get("adaptations", [])
-                else NO,
-                "other_language": self.data.get("other_language")[0],
-                "other_adaptation": self.data.get("other_adaptation"),
+                "language": "welsh"
+                if "welsh" in (self.data.get("adaptations") or [])
+                else self.data.get("other_language")[0],
+                "notes": self.data.get("other_adaptation"),
             },
         }
+        if self.data.get("contact_type") == "callback":
+            payload["requires_action_at"] = get_time(self)
+            payload["personal_details"]["announce_call"] = self.data.get(
+                "announce_call_from_cla"
+            )
+            payload["callback_type"] = "web_form_self"
+
+        if self.contact_type.data == "thirdparty":
+            payload["thirdparty_details"] = {"personal_details": {}}
+            payload["thirdparty_details"]["personal_details"]["full_name"] = (
+                self.data.get("thirdparty_full_name")
+            )
+            payload["thirdparty_details"]["personal_details"]["mobile_phone"] = (
+                self.data.get("thirdparty_contact_number")
+            )
+            payload["thirdparty_details"]["personal_details"]["safe_to_contact"] = (
+                "SAFE"
+            )
+            payload["thirdparty_details"]["personal_relationship"] = self.data.get(
+                "thirdparty_relationship"
+            )[0]
+            payload["callback_type"] = "web_form_third_party"
+            payload["requires_action_at"] = get_time(self)
 
         return payload
