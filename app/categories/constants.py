@@ -54,7 +54,7 @@ DOMESTIC_ABUSE = Category(
     description=_(
         "Includes controlling behaviour, emotional abuse, or if someone is harassing, threatening or hurting you or a child. This could be a partner, ex-partner, or family member."
     ),
-    article_category_name="Domestic abuse",
+    article_category_name="Domestic Abuse",
     chs_code="family",
     code="domestic_abuse",
     children={
@@ -483,4 +483,4 @@ ALL_CATEGORIES = [
     ASYLUM_AND_IMMIGRATION,
     MENTAL_CAPACITY,
 ]
-map(init_children, ALL_CATEGORIES)
+list(map(init_children, ALL_CATEGORIES))
