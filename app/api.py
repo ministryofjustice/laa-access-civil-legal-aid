@@ -1,7 +1,7 @@
 from urllib.parse import urljoin
 import requests
 from flask_babel import LazyString
-from flask import current_app
+from flask import current_app, session
 import logging
 from datetime import datetime, timedelta
 from app.extensions import cache
@@ -9,6 +9,14 @@ from app.extensions import cache
 logger = logging.getLogger(__name__)
 
 CALLBACK_API_DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
+
+
+def should_attach_eligibility_check():
+    return "eligibility" in session
+
+
+def attach_eligibility_check(payload):
+    payload["eligibility_check"] = session.get_eligibility()
 
 
 class BackendAPIClient:
@@ -163,6 +171,16 @@ class BackendAPIClient:
                 )
 
         return slots_by_day
+
+    def post_case(self, form=None, payload=None):
+        contact_endpoint = "checker/api/v1/case/"
+        gtm_anon_id = session.get("gtm_anon_id", "")
+        payload["gtm_anon_id"] = gtm_anon_id
+        if should_attach_eligibility_check():
+            attach_eligibility_check(payload)
+
+        response = self.post(contact_endpoint, json=payload)
+        session["reference"] = response["reference"]
 
 
 cla_backend = BackendAPIClient()

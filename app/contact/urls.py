@@ -25,10 +25,18 @@ def reasons_for_contacting():
 @bp.route("/contact-us", methods=["GET", "POST"])
 def contact_us():
     form = ContactUsForm()
-    print(form.get_payload())
     if form.validate_on_submit():
-        render_template("contact/contact.html", form=form)
+        payload = form.get_payload()
+        result = cla_backend.post_case(payload=payload)
+        logger.info("API Response: %s", result)
+        return render_template("contact/contact.html", form=form)
+        # return render_template("contact/confirmation.html")
     return render_template("contact/contact.html", form=form)
+
+
+@bp.route("/confirmation", methods=["GET", "POST"])
+def confirmation():
+    return render_template("contact/confirmation.html")
 
 
 @bp.route("/addresses/<postcode>", methods=["GET"])
