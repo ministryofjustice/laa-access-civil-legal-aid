@@ -2,6 +2,7 @@ from flask.sansio.blueprints import Blueprint
 from flask.views import View
 from flask import render_template, redirect, url_for, session, request
 from app.categories.forms import QuestionForm
+from app.categories.constants import Category
 
 
 class CategoryPage(View):
@@ -23,21 +24,28 @@ class IndexPage(CategoryPage):
 class CategoryLandingPage(CategoryPage):
     question_title: str = ""
 
-    category: str = ""
-
     routing_map: dict[str, str] = {}
+
+    category: Category
+
+    def dispatch_request(self):
+        session["category"] = self.category
+        return render_template(self.template, category=self.category)
 
     @classmethod
     def register_routes(cls, blueprint: Blueprint):
         for answer, next_page in cls.routing_map.items():
+            category = cls.category
+            if category.children and answer in category.children:
+                category = category.children[answer]
             blueprint.add_url_rule(
-                f"/{cls.category}/{answer}",
+                f"/{cls.category.code.replace('_', '-')}/{answer.replace('_', '-')}",
                 view_func=CategoryAnswerPage.as_view(
                     answer,
                     question=cls.question_title,
                     answer=answer,
                     next_page=next_page,
-                    category=cls.category,
+                    category=category,
                 ),
             )
 
