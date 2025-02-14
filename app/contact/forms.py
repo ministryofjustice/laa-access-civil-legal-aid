@@ -10,7 +10,6 @@ from wtforms import (
     SelectField,
 )
 from app.config import Config
-from app.contact import YES, NO
 from govuk_frontend_wtf.wtforms_widgets import (
     GovSubmitInput,
     GovTextInput,
@@ -239,8 +238,8 @@ class ContactUsForm(FlaskForm):
         _("Can we say that we're calling from Civil Legal Advice?"),
         widget=ContactRadioInput(),
         choices=[
-            ("true", _("Yes")),
-            ("false", _("No - do not say where you are calling from")),
+            (True, _("Yes")),
+            (False, _("No - do not say where you are calling from")),
         ],
         validators=[
             ValidateIf("contact_type", "callback", condition_type=ValidateIfType.EQ),
@@ -436,6 +435,9 @@ class ContactUsForm(FlaskForm):
         contact_type = self.data.get("contact_type")
         call_today = self.data.get("call_today_time")
         call_another_time = self.data.get("call_another_time")
+        thirdparty_call_today = self.data.get("thirdparty_call_today_time")
+        call_another_time = self.data.get("call_another_time")
+        thirdparty_call_another_time = self.data.get("thirdparty_call_another_time")
 
         if contact_type in callback_requested:
             call_today = self.data.get("call_today_time")[0]
@@ -463,6 +465,32 @@ class ContactUsForm(FlaskForm):
                 callback_time_string = call_another_time.strftime(
                     "%A, %d %B at %H:%M - "
                 ) + end_time.strftime("%H:%M")
+            elif (
+                self.data.get("thirdparty_time_to_call") == "Call today"
+                and thirdparty_call_today
+            ):
+                date = datetime.today().date()
+                thirdparty_call_today = datetime.strptime(
+                    thirdparty_call_today, "%H%M"
+                ).replace(year=date.year, month=date.month, day=date.day)
+                end_time = thirdparty_call_today + timedelta(minutes=30)
+                callback_time_string = thirdparty_call_today.strftime(
+                    "%A, %d %B at %H:%M - "
+                ) + end_time.strftime("%H:%M")
+            elif (
+                self.data.get("thirdparty_time_to_call") == "Call on another day"
+                and thirdparty_call_another_time
+            ):
+                date = datetime.strptime(
+                    self.data.get("thirdparty_call_another_day")[0], "%Y-%m-%d"
+                )
+                thirdparty_call_another_time = datetime.strptime(
+                    thirdparty_call_another_time, "%H%M"
+                ).replace(year=date.year, month=date.month, day=date.day)
+                end_time = thirdparty_call_another_time + timedelta(minutes=30)
+                callback_time_string = thirdparty_call_another_time.strftime(
+                    "%A, %d %B at %H:%M - "
+                ) + end_time.strftime("%H:%M")
 
             return callback_time_string
 
@@ -475,13 +503,23 @@ class ContactUsForm(FlaskForm):
             callback_requested = ["thirdparty", "callback"]
             contact_type = self.data.get("contact_type")
             call_today = self.data.get("call_today_time")
+            thirdparty_call_today = self.data.get("thirdparty_call_today_time")
             call_another_time = self.data.get("call_another_time")
+            thirdparty_call_another_time = self.data.get("thirdparty_call_another_time")
 
             time = None
 
             if contact_type in callback_requested:
-                call_today = self.data.get("call_today_time")[0]
-                call_another_time = self.data.get("call_another_time")[0]
+                if contact_type == "callback":
+                    call_today = self.data.get("call_today_time")[0]
+                    call_another_time = self.data.get("call_another_time")[0]
+                elif contact_type == "thirdparty":
+                    thirdparty_call_today = self.data.get("thirdparty_call_today_time")[
+                        0
+                    ]
+                    thirdparty_call_another_time = self.data.get(
+                        "thirdparty_call_another_time"
+                    )[0]
                 if self.data.get("time_to_call") == "Call today" and call_today:
                     date = datetime.today().date()
                     time = datetime.strptime(call_today, "%H%M").replace(
@@ -497,6 +535,25 @@ class ContactUsForm(FlaskForm):
                     time = datetime.strptime(call_another_time, "%H%M").replace(
                         year=date.year, month=date.month, day=date.day
                     )
+                elif (
+                    self.data.get("thirdparty_time_to_call") == "Call today"
+                    and thirdparty_call_today
+                ):
+                    date = datetime.today().date()
+                    time = datetime.strptime(thirdparty_call_today, "%H%M").replace(
+                        year=date.year, month=date.month, day=date.day
+                    )
+                elif (
+                    self.data.get("thirdparty_time_to_call") == "Call on another day"
+                    and thirdparty_call_another_time
+                ):
+                    date = datetime.strptime(
+                        self.data.get("thirdparty_call_another_day")[0], "%Y-%m-%d"
+                    )
+                    time = datetime.strptime(
+                        thirdparty_call_another_time, "%H%M"
+                    ).replace(year=date.year, month=date.month, day=date.day)
+
             if time is not None:
                 naive = time
                 local_tz = pytz.timezone(Config.TIMEZONE)
@@ -517,15 +574,15 @@ class ContactUsForm(FlaskForm):
                 "announce_call": True,
             },
             "adaptation_details": {
-                "bsl_webcam": YES
+                "bsl_webcam": True
                 if "bsl_webcam" in (self.data.get("adaptations") or [])
-                else NO,
-                "text_relay": YES
+                else False,
+                "text_relay": True
                 if "text_relay" in (self.data.get("adaptations") or [])
-                else NO,
-                "language": "welsh"
+                else False,
+                "language": "WELSH"
                 if "welsh" in (self.data.get("adaptations") or [])
-                else self.data.get("other_language")[0],
+                else self.data.get("other_language")[0].upper(),
                 "notes": self.data.get("other_adaptation"),
             },
         }
@@ -549,7 +606,7 @@ class ContactUsForm(FlaskForm):
             )
             payload["thirdparty_details"]["personal_relationship"] = self.data.get(
                 "thirdparty_relationship"
-            )[0]
+            )[0].upper()
             payload["callback_type"] = "web_form_third_party"
             payload["requires_action_at"] = get_time(self)
 

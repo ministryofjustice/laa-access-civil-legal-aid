@@ -16,7 +16,7 @@ def should_attach_eligibility_check():
 
 
 def attach_eligibility_check(payload):
-    payload["eligibility_check"] = session.get_eligibility()
+    payload["eligibility_check"] = session.get("reference")
 
 
 class BackendAPIClient:
@@ -173,8 +173,8 @@ class BackendAPIClient:
         return slots_by_day
 
     def post_case(self, form=None, payload=None):
-        contact_endpoint = "checker/api/v1/case/"
-        gtm_anon_id = session.get("gtm_anon_id", "")
+        contact_endpoint = "checker/api/v1/case"
+        gtm_anon_id = session.get("gtm_anon_id", None)
         payload["gtm_anon_id"] = gtm_anon_id
         if should_attach_eligibility_check():
             attach_eligibility_check(payload)
