@@ -15,22 +15,18 @@ class CommunityCareLandingPage(CategoryLandingPage):
     category = COMMUNITY_CARE
 
     routing_map = {
-        COMMUNITY_CARE.sub.care_from_council.code: FALA_REDIRECT,
-        COMMUNITY_CARE.sub.carer.code: FALA_REDIRECT,
-        COMMUNITY_CARE.sub.receive_care_in_own_home.code: FALA_REDIRECT,
-        COMMUNITY_CARE.sub.care_or_funding_stops.code: FALA_REDIRECT,
-        COMMUNITY_CARE.sub.placement_care_homes_care_housing.code: FALA_REDIRECT,
-        COMMUNITY_CARE.sub.problems_with_quality_of_care.code: FALA_REDIRECT,
-        COMMUNITY_CARE.sub.care_leaver.code: FALA_REDIRECT,
+        "main": [
+            (COMMUNITY_CARE.sub.care_from_council, FALA_REDIRECT),
+            (COMMUNITY_CARE.sub.carer, FALA_REDIRECT),
+            (COMMUNITY_CARE.sub.receive_care_in_own_home, FALA_REDIRECT),
+            (COMMUNITY_CARE.sub.care_or_funding_stops, FALA_REDIRECT),
+            (COMMUNITY_CARE.sub.placement_care_homes_care_housing, FALA_REDIRECT),
+            (COMMUNITY_CARE.sub.problems_with_quality_of_care, FALA_REDIRECT),
+            (COMMUNITY_CARE.sub.care_leaver, FALA_REDIRECT),
+        ],
+        "more": [],
         "other": "categories.results.refer",
     }
 
 
-bp.add_url_rule(
-    "/community-care/",
-    view_func=CommunityCareLandingPage.as_view(
-        "landing", template="categories/community_care/landing.html"
-    ),
-)
-
-CommunityCareLandingPage.register_routes(blueprint=bp)
+CommunityCareLandingPage.register_routes_2(blueprint=bp)
