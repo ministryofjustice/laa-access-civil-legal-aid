@@ -194,8 +194,8 @@ class ContactUsForm(FlaskForm):
         _("Select a time for us to call"),
         widget=ContactRadioInput(),
         validators=[
-            InputRequired(message=_("Select a time for us to call")),
             ValidateIf("contact_type", "callback", condition_type=ValidateIfType.EQ),
+            InputRequired(message=_("Select a time for us to call")),
         ],
         choices=["Call today", "Call on another day"],
     )
