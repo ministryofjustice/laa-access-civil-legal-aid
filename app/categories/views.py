@@ -7,12 +7,35 @@ from app.categories.constants import Category
 
 class CategoryPage(View):
     template: str = None
+    question_title: str = ""
+    category: Category
 
     def __init__(self, template, *args, **kwargs):
         self.template = template
 
+    def update_session(self, question: str, answer: str, category: Category) -> None:
+        """
+        Update the session with the current page and answer.
+
+        """
+        session.set_category_question_answer(
+            question_title=question,
+            answer=answer,
+            category=category,
+        )
+
     def dispatch_request(self):
-        return render_template(self.template)
+        category = getattr(self, "category", None)
+        if category is not None:
+            session["category"] = category
+
+        response = self.process_request()
+        if not response:
+            response = render_template(self.template)
+        return response
+
+    def process_request(self):
+        return None
 
 
 class IndexPage(CategoryPage):
@@ -24,14 +47,9 @@ class IndexPage(CategoryPage):
 class CategoryLandingPage(CategoryPage):
     template: str = "categories/landing.html"
 
-    question_title: str = ""
-
     routing_map: dict[str, str] = {}
 
-    category: Category
-
-    def dispatch_request(self):
-        session["category"] = self.category
+    def process_request(self):
         return render_template(
             self.template, category=self.category, routing_map=self.routing_map
         )
@@ -115,7 +133,7 @@ class CategoryAnswerPage(View):
         return redirect(url_for(self.next_page))
 
 
-class QuestionPage(View):
+class QuestionPage(CategoryPage):
     """Base view for handling question pages with form submission and session management.
 
     This view handles:
@@ -137,6 +155,8 @@ class QuestionPage(View):
         """
         self.form_class = form_class
         self.template = template or self.template
+        self.category = form_class.category
+        super().__init__(self.template)
 
     def get_next_page(self, answer: str) -> redirect:
         """Determine and redirect to the next page based on the user's answer.
@@ -172,21 +192,7 @@ class QuestionPage(View):
             return redirect(url_for(**next_page))
         return redirect(url_for(next_page))
 
-    def update_session(self, answer: str | None = None) -> None:
-        """
-        Update the session with the current page and answer.
-
-        Args:
-            answer: The user's selected answer
-        """
-        session["previous_page"] = request.endpoint
-        session.set_category_question_answer(
-            question_title=self.form_class.title,
-            answer=answer,
-            category=self.form_class.category,
-        )
-
-    def dispatch_request(self):
+    def process_request(self):
         """Handle requests for the question page, including form submissions.
 
         This method processes both initial page loads and form submissions,
@@ -197,10 +203,12 @@ class QuestionPage(View):
             Either a redirect to the next page or the rendered template
         """
         form = self.form_class(request.args)
-        session["category"] = self.form_class.category
+        session["category"] = form.category
 
         if form.submit.data and form.validate():
-            self.update_session(form.question.data)
+            self.update_session(
+                question=form.title, answer=form.question.data, category=form.category
+            )
             return self.get_next_page(form.question.data)
 
         # Pre-populate form with previous answer if it exists

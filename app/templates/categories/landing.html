@@ -31,15 +31,21 @@
 
         <br>
 
-        <h2 class="govuk-heading-m">{% trans %}More problems{% endtrans %}</h2>
+        {% if routing_map.more %}
+            <h2 class="govuk-heading-m">{% trans %}More problems{% endtrans %}</h2>
 
-        <br>
+            <br>
 
-        {% for sub_category, route in routing_map.more %}
-            {{ list_item_small(sub_category.title, sub_category.description, route|category_url_for) }}
-        {% endfor %}
+            {% for sub_category, route in routing_map.more %}
+                {{ list_item_small(sub_category.title, sub_category.description, route|category_url_for) }}
+            {% endfor %}
+        {% endif %}
 
-        {{ cannot_find_your_problem((category.title.lower()), routing_map.other|category_url_for)}}
+        {% if category.code == "community_care" %}
+            {{ cannot_find_your_problem("", routing_map.other|category_url_for)}}
+        {% else %}
+            {{ cannot_find_your_problem((category.title.lower()), routing_map.other|category_url_for)}}
+        {% endif %}
 
     </div>
 </div>
