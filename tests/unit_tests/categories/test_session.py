@@ -60,7 +60,8 @@ def test_set_category_dataclass(app, client):
 def test_set_category_dict(app, client):
     new_category = {
         "code": "EDUCATION",
-        "display_text": "Education",
+        "title": "Education",
+        "description": "This is a test",
         "chs_code": "EDUCATION",
         "article_category_name": "education",
     }
