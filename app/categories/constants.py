@@ -118,7 +118,7 @@ DOMESTIC_ABUSE = Category(
 )
 
 FAMILY = Category(
-    title=_("Children, families and relationships"),
+    title=_("Children, families, relationships"),
     description=_(
         "Includes children in care, children and social services. Also, help with children and finances if you divorce or split up."
     ),
