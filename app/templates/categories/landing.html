@@ -41,11 +41,13 @@
             {% endfor %}
         {% endif %}
 
+        {% set other_text = category.title.lower() %}
         {% if category.code == "community_care" %}
-            {{ cannot_find_your_problem("", routing_map.other|category_url_for)}}
-        {% else %}
-            {{ cannot_find_your_problem((category.title.lower()), routing_map.other|category_url_for)}}
+            {% set other_text = "" %}
+        {% elif  category.code == "housing" %}
+            {% set other_text = "housing" %}
         {% endif %}
+        {{ cannot_find_your_problem(other_text, routing_map.other|category_url_for)}}
 
     </div>
 </div>

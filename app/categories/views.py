@@ -84,7 +84,7 @@ class CategoryLandingPage(CategoryPage):
             blueprint.add_url_rule(
                 f"/{path}/answer/other",
                 view_func=CategoryAnswerPage.as_view(
-                    "answer_other",
+                    "other",
                     question=cls.question_title,
                     answer="other",
                     next_page=cls.routing_map["other"],
@@ -98,7 +98,7 @@ class CategoryLandingPage(CategoryPage):
             blueprint.add_url_rule(
                 f"/{path}/answer/{sub_category.code.replace('_', '-')}",
                 view_func=CategoryAnswerPage.as_view(
-                    f"answer_{sub_category.code.replace('_', '-')}",
+                    sub_category.code,
                     question=cls.question_title,
                     answer=sub_category.code,
                     next_page=next_page,
