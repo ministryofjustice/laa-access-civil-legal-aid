@@ -2,7 +2,15 @@ from app.contact import bp
 from app.contact.forms import ReasonsForContactingForm, ContactUsForm
 from app.contact.address_finder.widgets import FormattedAddressLookup
 from app.api import cla_backend
-from flask import request, redirect, url_for, render_template, Response, current_app
+from flask import (
+    request,
+    redirect,
+    url_for,
+    render_template,
+    Response,
+    current_app,
+    session,
+)
 import json
 import logging
 
@@ -29,8 +37,7 @@ def contact_us():
         payload = form.get_payload()
         result = cla_backend.post_case(payload=payload)
         logger.info("API Response: %s", result)
-        return render_template("contact/contact.html", form=form)
-        # return render_template("contact/confirmation.html")
+        return render_template("contact/confirmation.html", data=session["reference"])
     return render_template("contact/contact.html", form=form)
 
 
