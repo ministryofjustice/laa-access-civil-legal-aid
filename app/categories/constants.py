@@ -240,14 +240,14 @@ HOUSING = Category(
         "discrimination": Category(
             title=_("Discrimination"),
             description=_(
-                "Treated unfairly because of things like your disability or health condition, race, age, sex, religion or pregnancy."
+                "Treated unfairly by a landlord, council or housing association."
             ),
             code="discrimination",
         ),
         "antisocial_behaviour": Category(
             title=_("If you’ve been accused of anti-social behaviour"),
             description=_(
-                "Accused of anti-social behaviour, including by your neighbours."
+                "Accused of anti-social behaviour by the landlord, council or housing association."
             ),
             code="antisocial_behaviour",
         ),
