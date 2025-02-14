@@ -29,6 +29,7 @@ class CategoryLandingPage(CategoryPage):
     category: Category
 
     def dispatch_request(self):
+        session["category"] = self.category
         return render_template(self.template, category=self.category)
 
     @classmethod
