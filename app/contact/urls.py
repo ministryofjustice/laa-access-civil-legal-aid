@@ -26,6 +26,8 @@ def reasons_for_contacting():
         result = cla_backend.post_reasons_for_contacting(form=form)
         next_step = form.next_step_mapping.get("*")
         logger.info("API Response: %s", result)
+        if result and "reference" in result:
+            session[form.MODEL_REF_SESSION_KEY] = result["reference"]
         return redirect(url_for(next_step))
     return render_template("contact/rfc.html", form=form)
 
@@ -37,6 +39,12 @@ def contact_us():
         payload = form.get_payload()
         result = cla_backend.post_case(payload=payload)
         logger.info("API Response: %s", result)
+        if ReasonsForContactingForm.MODEL_REF_SESSION_KEY in session:
+            cla_backend.update_reasons_for_contacting(
+                session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY],
+                payload={"case": session["reference"]},
+            )
+            del session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY]
         return render_template("contact/confirmation.html", data=session["reference"])
     return render_template("contact/contact.html", form=form)
 

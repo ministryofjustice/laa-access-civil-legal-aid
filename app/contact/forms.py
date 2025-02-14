@@ -49,6 +49,7 @@ class ContactPreference(Enum):
 
 
 class ReasonsForContactingForm(FlaskForm):
+    MODEL_REF_SESSION_KEY = "reason_for_contact"
     next_step_mapping = {
         "*": "contact.contact_us",
     }
@@ -510,43 +511,32 @@ class ContactUsForm(FlaskForm):
             time = None
 
             if contact_type in callback_requested:
-                if contact_type == "callback":
+                if self.data.get("time_to_call") == "Call today":
                     call_today = self.data.get("call_today_time")[0]
-                    call_another_time = self.data.get("call_another_time")[0]
-                elif contact_type == "thirdparty":
-                    thirdparty_call_today = self.data.get("thirdparty_call_today_time")[
-                        0
-                    ]
-                    thirdparty_call_another_time = self.data.get(
-                        "thirdparty_call_another_time"
-                    )[0]
-                if self.data.get("time_to_call") == "Call today" and call_today:
                     date = datetime.today().date()
                     time = datetime.strptime(call_today, "%H%M").replace(
                         year=date.year, month=date.month, day=date.day
                     )
-                elif (
-                    self.data.get("time_to_call") == "Call on another day"
-                    and call_another_time
-                ):
+                elif self.data.get("time_to_call") == "Call on another day":
+                    call_another_time = self.data.get("call_another_time")[0]
                     date = datetime.strptime(
                         self.data.get("call_another_day")[0], "%Y-%m-%d"
                     )
                     time = datetime.strptime(call_another_time, "%H%M").replace(
                         year=date.year, month=date.month, day=date.day
                     )
-                elif (
-                    self.data.get("thirdparty_time_to_call") == "Call today"
-                    and thirdparty_call_today
-                ):
+                elif self.data.get("thirdparty_time_to_call") == "Call today":
+                    thirdparty_call_today = self.data.get("thirdparty_call_today_time")[
+                        0
+                    ]
                     date = datetime.today().date()
                     time = datetime.strptime(thirdparty_call_today, "%H%M").replace(
                         year=date.year, month=date.month, day=date.day
                     )
-                elif (
-                    self.data.get("thirdparty_time_to_call") == "Call on another day"
-                    and thirdparty_call_another_time
-                ):
+                elif self.data.get("thirdparty_time_to_call") == "Call on another day":
+                    thirdparty_call_another_time = self.data.get(
+                        "thirdparty_call_another_time"
+                    )[0]
                     date = datetime.strptime(
                         self.data.get("thirdparty_call_another_day")[0], "%Y-%m-%d"
                     )

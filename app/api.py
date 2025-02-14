@@ -182,5 +182,11 @@ class BackendAPIClient:
         response = self.post(contact_endpoint, json=payload)
         session["reference"] = response["reference"]
 
+    def update_reasons_for_contacting(self, reference, form=None, payload={}):
+        payload = form.api_payload() if form else payload
+        return self.patch(
+            f"checker/api/v1/reasons_for_contacting/{reference}", json=payload
+        )
+
 
 cla_backend = BackendAPIClient()
