@@ -427,128 +427,77 @@ class ContactUsForm(FlaskForm):
 
     submit = SubmitField(_("Submit details"), widget=GovSubmitInput())
 
-    def set_callback_time_string(self):
+    def get_callback_time(self):
         """
-        Sets the callback time string in the format day,
-        date month and time from and too using time as an input
+        Gets the callback time in both:
+        - ISO format (UTC)
+        - Readable format (e.g., "Monday, 12 February at 14:30 - 15:00")
+        This is used in both the payload and email.
+
+        Returns:
+            tuple: (iso_time, formatted_time) or (None, None) if no valid time.
         """
-        callback_requested = ["thirdparty", "callback"]
+        callback_requested = {"thirdparty", "callback"}
         contact_type = self.data.get("contact_type")
-        call_today = self.data.get("call_today_time")
-        call_another_time = self.data.get("call_another_time")
-        thirdparty_call_today = self.data.get("thirdparty_call_today_time")
-        call_another_time = self.data.get("call_another_time")
-        thirdparty_call_another_time = self.data.get("thirdparty_call_another_time")
 
-        if contact_type in callback_requested:
-            call_today = self.data.get("call_today_time")[0]
-            call_another_time = self.data.get("call_another_time")[0]
-            if self.data.get("time_to_call") == "Call today" and call_today:
-                date = datetime.today().date()
-                call_today = datetime.strptime(call_today, "%H%M").replace(
-                    year=date.year, month=date.month, day=date.day
-                )
-                end_time = call_today + timedelta(minutes=30)
-                callback_time_string = call_today.strftime(
-                    "%A, %d %B at %H:%M - "
-                ) + end_time.strftime("%H:%M")
-            elif (
-                self.data.get("time_to_call") == "Call on another day"
-                and call_another_time
-            ):
-                date = datetime.strptime(
-                    self.data.get("call_another_day")[0], "%Y-%m-%d"
-                )
-                call_another_time = datetime.strptime(
-                    call_another_time, "%H%M"
-                ).replace(year=date.year, month=date.month, day=date.day)
-                end_time = call_another_time + timedelta(minutes=30)
-                callback_time_string = call_another_time.strftime(
-                    "%A, %d %B at %H:%M - "
-                ) + end_time.strftime("%H:%M")
-            elif (
-                self.data.get("thirdparty_time_to_call") == "Call today"
-                and thirdparty_call_today
-            ):
-                date = datetime.today().date()
-                thirdparty_call_today = datetime.strptime(
-                    thirdparty_call_today, "%H%M"
-                ).replace(year=date.year, month=date.month, day=date.day)
-                end_time = thirdparty_call_today + timedelta(minutes=30)
-                callback_time_string = thirdparty_call_today.strftime(
-                    "%A, %d %B at %H:%M - "
-                ) + end_time.strftime("%H:%M")
-            elif (
-                self.data.get("thirdparty_time_to_call") == "Call on another day"
-                and thirdparty_call_another_time
-            ):
-                date = datetime.strptime(
-                    self.data.get("thirdparty_call_another_day")[0], "%Y-%m-%d"
-                )
-                thirdparty_call_another_time = datetime.strptime(
-                    thirdparty_call_another_time, "%H%M"
-                ).replace(year=date.year, month=date.month, day=date.day)
-                end_time = thirdparty_call_another_time + timedelta(minutes=30)
-                callback_time_string = thirdparty_call_another_time.strftime(
-                    "%A, %d %B at %H:%M - "
-                ) + end_time.strftime("%H:%M")
+        if contact_type not in callback_requested:
+            return None, None
 
-            return callback_time_string
+        time_to_call = self.data.get("time_to_call")
+        thirdparty_time_to_call = self.data.get("thirdparty_time_to_call")
+
+        def parse_time(time_str, date_str=None):
+            """Helper function to parse time with optional date."""
+            if not time_str:
+                return None
+            date = (
+                datetime.today().date()
+                if not date_str
+                else datetime.strptime(date_str, "%Y-%m-%d").date()
+            )
+            return datetime.strptime(time_str, "%H%M").replace(
+                year=date.year, month=date.month, day=date.day
+            )
+
+        def format_time(dt):
+            """Helper function to format the callback time string."""
+            if not dt:
+                return None
+            end_time = dt + timedelta(minutes=30)
+            return dt.strftime("%A, %d %B at %H:%M - ") + end_time.strftime("%H:%M")
+
+        if time_to_call == "Call today":
+            time = parse_time(self.data.get("call_today_time", [None])[0])
+        elif time_to_call == "Call on another day":
+            time = parse_time(
+                self.data.get("call_another_time", [None])[0],
+                self.data.get("call_another_day", [None])[0],
+            )
+        elif thirdparty_time_to_call == "Call today":
+            time = parse_time(self.data.get("thirdparty_call_today_time", [None])[0])
+        elif thirdparty_time_to_call == "Call on another day":
+            time = parse_time(
+                self.data.get("thirdparty_call_another_time", [None])[0],
+                self.data.get("thirdparty_call_another_day", [None])[0],
+            )
+        else:
+            return None, None
+
+        local_tz = pytz.timezone(Config.TIMEZONE)
+        iso_time = (
+            local_tz.localize(time).astimezone(pytz.utc).isoformat() if time else None
+        )
+
+        formatted_time = format_time(time)
+
+        return iso_time, formatted_time
 
     def get_payload(self) -> dict:
         """
         Returns the contact payload.
         """
 
-        def get_time(self):
-            callback_requested = ["thirdparty", "callback"]
-            contact_type = self.data.get("contact_type")
-            call_today = self.data.get("call_today_time")
-            thirdparty_call_today = self.data.get("thirdparty_call_today_time")
-            call_another_time = self.data.get("call_another_time")
-            thirdparty_call_another_time = self.data.get("thirdparty_call_another_time")
-
-            time = None
-
-            if contact_type in callback_requested:
-                if self.data.get("time_to_call") == "Call today":
-                    call_today = self.data.get("call_today_time")[0]
-                    date = datetime.today().date()
-                    time = datetime.strptime(call_today, "%H%M").replace(
-                        year=date.year, month=date.month, day=date.day
-                    )
-                elif self.data.get("time_to_call") == "Call on another day":
-                    call_another_time = self.data.get("call_another_time")[0]
-                    date = datetime.strptime(
-                        self.data.get("call_another_day")[0], "%Y-%m-%d"
-                    )
-                    time = datetime.strptime(call_another_time, "%H%M").replace(
-                        year=date.year, month=date.month, day=date.day
-                    )
-                elif self.data.get("thirdparty_time_to_call") == "Call today":
-                    thirdparty_call_today = self.data.get("thirdparty_call_today_time")[
-                        0
-                    ]
-                    date = datetime.today().date()
-                    time = datetime.strptime(thirdparty_call_today, "%H%M").replace(
-                        year=date.year, month=date.month, day=date.day
-                    )
-                elif self.data.get("thirdparty_time_to_call") == "Call on another day":
-                    thirdparty_call_another_time = self.data.get(
-                        "thirdparty_call_another_time"
-                    )[0]
-                    date = datetime.strptime(
-                        self.data.get("thirdparty_call_another_day")[0], "%Y-%m-%d"
-                    )
-                    time = datetime.strptime(
-                        thirdparty_call_another_time, "%H%M"
-                    ).replace(year=date.year, month=date.month, day=date.day)
-
-            if time is not None:
-                naive = time
-                local_tz = pytz.timezone(Config.TIMEZONE)
-                local = local_tz.localize(naive)
-                return local.astimezone(pytz.utc).isoformat()
+        requires_action_at, formatted_time = self.get_callback_time()
 
         safe_to_contact = "SAFE" if self.data.get("contact_type") == "callback" else ""
         payload = {
@@ -577,7 +526,7 @@ class ContactUsForm(FlaskForm):
             },
         }
         if self.data.get("contact_type") == "callback":
-            payload["requires_action_at"] = get_time(self)
+            payload["requires_action_at"] = requires_action_at
             payload["personal_details"]["announce_call"] = self.data.get(
                 "announce_call_from_cla"
             )
@@ -598,6 +547,6 @@ class ContactUsForm(FlaskForm):
                 "thirdparty_relationship"
             )[0].upper()
             payload["callback_type"] = "web_form_third_party"
-            payload["requires_action_at"] = get_time(self)
+            payload["requires_action_at"] = requires_action_at
 
         return payload
