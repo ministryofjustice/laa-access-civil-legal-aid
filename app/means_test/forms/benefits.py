@@ -201,6 +201,7 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
     )
     total_other_benefit = MoneyIntervalField(
         label=_("If Yes, total amount of benefits not listed above"),
+        hint_text=_("For example, £32.18 per week"),
         exclude_intervals=["per_month"],
         widget=MoneyIntervalWidget(),
         validators=[
