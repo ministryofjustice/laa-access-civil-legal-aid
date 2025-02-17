@@ -40,6 +40,7 @@ class Category:
             for name, child in children.items():
                 category.children[name] = Category(**child)
         return category
+
     @property
     def referrer_text(self):
         return self._referrer_text or self.title
@@ -47,9 +48,6 @@ class Category:
     @referrer_text.setter
     def referrer_text(self, value):
         self._referrer_text = value
-
-    def get_referrer_text(self):
-        return self.referrer_text or self.title
 
     def __str__(self):
         # Returns the translated display text
