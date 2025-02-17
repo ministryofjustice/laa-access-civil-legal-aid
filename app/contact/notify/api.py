@@ -1,8 +1,7 @@
 import logging
 
-from app.config import Config
 from app.contact.constants import GOVUK_NOTIFY_TEMPLATES
-from flask import session, request
+from flask import session, request, current_app
 import requests
 
 
@@ -12,16 +11,16 @@ log = logging.getLogger(__name__)
 def get_locale():
     if request and request.cookies.get("locale"):
         return request.cookies.get("locale")[:2]
-    language_keys = [key for key, _ in Config["LANGUAGES"]]
+    language_keys = [key for key, _ in current_app.config["LANGUAGES"]]
     return request.accept_languages.best_match(language_keys) or "en"
 
 
 class NotifyEmailOrchestrator(object):
     def __init__(self):
         self.base_url = None
-        if Config.EMAIL_ORCHESTRATOR_URL:
-            self.base_url = Config.EMAIL_ORCHESTRATOR_URL
-        elif not Config.TESTING:
+        if current_app.config["EMAIL_ORCHESTRATOR_URL"]:
+            self.base_url = current_app.config["EMAIL_ORCHESTRATOR_URL"]
+        elif not current_app.config["TESTING"]:
             raise EnvironmentError("EMAIL_ORCHESTRATOR_URL is not set.")
         self.endpoint = "email"
 
@@ -44,7 +43,7 @@ class NotifyEmailOrchestrator(object):
                                           will return False if the EMAIL_ORCHESTRATOR_URL is not set or
                                           the application is in TESTING mode
         """
-        if Config.TESTING:
+        if current_app.config["TESTING"]:
             log.info("Application is in TESTING mode, will not send the request")
             return False
 
