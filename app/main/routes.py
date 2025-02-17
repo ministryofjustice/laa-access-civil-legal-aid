@@ -19,8 +19,13 @@ from app.main import bp
 from app.main.forms import CookiesForm
 
 
+@bp.get("/main")
+def index():
+    return redirect(url_for("categories.index"))
+
+
 @bp.get("/start")
-def landing_page():
+def start():
     """This is the main entry point for the service from www.gov.uk/check-legal-aid
     The Welsh version of this page directs the user to /start?locale=cy_GB, we need to set their locale cookie accordingly
     """
@@ -34,7 +39,7 @@ def landing_page():
 
 
 @bp.get("/bsl-start")
-def contact_us():
+def bsl_start():
     """This an entry point for the service from www.gov.uk/check-legal-aid
     This is a route for users who need to contact us via BSL, they are routed directly to the contact us page
     """
