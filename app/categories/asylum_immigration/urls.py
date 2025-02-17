@@ -27,6 +27,6 @@ class AsylumAndImmigrationLandingPage(CategoryLandingPage):
     }
 
 
-AsylumAndImmigrationLandingPage.register_routes_2(
+AsylumAndImmigrationLandingPage.register_routes(
     blueprint=bp, path="/asylum-and-immigration"
 )

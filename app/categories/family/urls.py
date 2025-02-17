@@ -28,4 +28,4 @@ class FamilyLandingPage(CategoryLandingPage):
     }
 
 
-FamilyLandingPage.register_routes_2(bp, path="children-families-relationships")
+FamilyLandingPage.register_routes(bp, path="children-families-relationships")

@@ -26,4 +26,4 @@ class HousingLandingPage(CategoryLandingPage):
     }
 
 
-HousingLandingPage.register_routes_2(bp)
+HousingLandingPage.register_routes(bp)

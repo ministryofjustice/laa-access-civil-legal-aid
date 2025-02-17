@@ -23,7 +23,7 @@ class SendLandingPage(CategoryLandingPage):
     }
 
 
-SendLandingPage.register_routes_2(blueprint=bp, path="send")
+SendLandingPage.register_routes(blueprint=bp, path="send")
 bp.add_url_rule(
     "/send/child-in-care",
     view_func=QuestionPage.as_view(

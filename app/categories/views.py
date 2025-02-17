@@ -55,21 +55,7 @@ class CategoryLandingPage(CategoryPage):
         )
 
     @classmethod
-    def register_routes(cls, blueprint: Blueprint):
-        for answer, next_page in cls.routing_map.items():
-            blueprint.add_url_rule(
-                f"/{cls.category}/{answer}",
-                view_func=CategoryAnswerPage.as_view(
-                    answer,
-                    question=cls.question_title,
-                    answer=answer,
-                    next_page=next_page,
-                    category=cls.category,
-                ),
-            )
-
-    @classmethod
-    def register_routes_2(cls, blueprint: Blueprint, path: str = None):
+    def register_routes(cls, blueprint: Blueprint, path: str = None):
         if not path:
             path = cls.category.code.lower().replace("_", "-")
 

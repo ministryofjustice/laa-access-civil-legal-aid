@@ -29,4 +29,4 @@ class CommunityCareLandingPage(CategoryLandingPage):
     }
 
 
-CommunityCareLandingPage.register_routes_2(blueprint=bp)
+CommunityCareLandingPage.register_routes(blueprint=bp)

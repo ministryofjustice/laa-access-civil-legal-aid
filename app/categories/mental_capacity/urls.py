@@ -41,4 +41,4 @@ class MentalCapacityLandingPage(CategoryLandingPage):
     }
 
 
-MentalCapacityLandingPage.register_routes_2(bp, "mental-capacity-health")
+MentalCapacityLandingPage.register_routes(bp, "mental-capacity-health")

@@ -42,7 +42,7 @@ class DomesticAbuseLandingPage(CategoryLandingPage):
     }
 
 
-DomesticAbuseLandingPage.register_routes_2(bp)
+DomesticAbuseLandingPage.register_routes(bp)
 bp.add_url_rule(
     "/domestic-abuse/are-you-at-risk-of-harm",
     view_func=QuestionPage.as_view(
