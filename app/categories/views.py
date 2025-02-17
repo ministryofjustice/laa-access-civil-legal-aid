@@ -158,6 +158,7 @@ class QuestionPage(View):
             Either a redirect to the next page or the rendered template
         """
         form = self.form_class(request.args)
+        session["category"] = self.form_class.category
 
         if form.submit.data and form.validate():
             self.update_session(form.question.data)
