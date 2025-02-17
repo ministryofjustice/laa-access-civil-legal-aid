@@ -11,14 +11,6 @@ logger = logging.getLogger(__name__)
 CALLBACK_API_DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
 
 
-def should_attach_eligibility_check():
-    return "eligibility" in session
-
-
-def attach_eligibility_check(payload):
-    payload["eligibility_check"] = session.get("reference")
-
-
 class BackendAPIClient:
     @property
     def hostname(self):
@@ -172,12 +164,12 @@ class BackendAPIClient:
 
         return slots_by_day
 
-    def post_case(self, form=None, payload=None):
+    def post_case(self, form=None, payload=None, attach_eligiblity_data: bool = False):
         contact_endpoint = "checker/api/v1/case"
         gtm_anon_id = session.get("gtm_anon_id", None)
         payload["gtm_anon_id"] = gtm_anon_id
-        if should_attach_eligibility_check():
-            attach_eligibility_check(payload)
+        if attach_eligiblity_data:
+            payload["eligibility_check"] = session.get("reference")
 
         response = self.post(contact_endpoint, json=payload)
         session["reference"] = response["reference"]

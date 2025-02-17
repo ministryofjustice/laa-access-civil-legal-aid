@@ -1,10 +1,7 @@
 from app.contact import bp
-from app.contact.forms import ReasonsForContactingForm, ContactUsForm
+from app.contact.forms import ReasonsForContactingForm
 from app.contact.address_finder.widgets import FormattedAddressLookup
-from app.contact.notify.api import (
-    NotifyEmailOrchestrator,
-    create_and_send_confirmation_email,
-)
+from app.contact.views import ContactUs
 from app.api import cla_backend
 from flask import (
     request,
@@ -36,42 +33,6 @@ def reasons_for_contacting():
     return render_template("contact/rfc.html", form=form)
 
 
-@bp.route("/contact-us", methods=["GET", "POST"])
-def contact_us():
-    form = ContactUsForm()
-    if form.validate_on_submit():
-        # Add notes from tell us more about your problem
-        payload = form.get_payload()
-        # Catches duplicate case exceptions and redirect to error page
-        try:
-            result = cla_backend.post_case(payload=payload)
-        except Exception as e:
-            if hasattr(e, "response") and e.response.status_code == 500:
-                return render_template("components/error_page.html")
-        logger.info("API Response: %s", result)
-        callback = ["callback", "thirdparty"]
-        session["callback_requested"] = (
-            True if form.data.get("contact_type") in callback else False
-        )
-        session["contact_type"] = form.data.get("contact_type")
-        requires_action_at, formatted_time = ContactUsForm.get_callback_time(form)
-        session["formatted_time"] = formatted_time
-        email = form.get_email()
-        if email:
-            govuk_notify = NotifyEmailOrchestrator()
-            data = form.data
-            data["email"] = email
-            create_and_send_confirmation_email(govuk_notify, data)
-        if ReasonsForContactingForm.MODEL_REF_SESSION_KEY in session:
-            cla_backend.update_reasons_for_contacting(
-                session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY],
-                payload={"case": session["reference"]},
-            )
-            del session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY]
-        return render_template("contact/confirmation.html", data=session["reference"])
-    return render_template("contact/contact.html", form=form)
-
-
 @bp.route("/confirmation", methods=["GET", "POST"])
 def confirmation():
     return render_template("contact/confirmation.html")
@@ -86,3 +47,9 @@ def geocode(postcode):
         {"formatted_address": address} for address in formatted_addresses if address
     ]
     return Response(json.dumps(response), mimetype="application/json")
+
+
+bp.add_url_rule(
+    "/contact-us",
+    view_func=ContactUs.as_view("contact_us", attach_eligiblity_data=False),
+)
