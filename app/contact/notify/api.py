@@ -122,16 +122,16 @@ def generate_confirmation_email_data(data):
             return email_address, template_id, personalisation
 
         # Decides between a personal callback or a third party callback
-        if data["callback"]["contact_number"]:
+        if data["contact_number"]:
             template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CALLBACK_WITH_NUMBER"][
                 get_locale()[:2]
             ]
-            personalisation.update(contact_number=data["callback"]["contact_number"])
-        elif data["thirdparty"]["contact_number"]:
+            personalisation.update(contact_number=data["contact_number"])
+        elif data["thirdparty_contact_number"]:
             template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CALLBACK_THIRD_PARTY"][
                 get_locale()[:2]
             ]
-            personalisation.update(contact_number=data["thirdparty"]["contact_number"])
+            personalisation.update(contact_number=data["thirdparty_contact_number"])
 
         return email_address, template_id, personalisation
     except Exception as error:
