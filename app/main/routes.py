@@ -10,17 +10,56 @@ from flask import (
     current_app,
     url_for,
     abort,
+    Response,
+    session,
 )
 from flask_wtf.csrf import CSRFError
 from werkzeug.exceptions import HTTPException
-
 from app.main import bp
 from app.main.forms import CookiesForm
 
 
-@bp.get("/main")
-def index():
-    return redirect(url_for("categories.index"))
+@bp.get("/start")
+def landing_page():
+    """This is the main entry point for the service from www.gov.uk/check-legal-aid
+    The Welsh version of this page directs the user to /start?locale=cy_GB, we need to set their locale cookie accordingly
+    """
+    session.clear()
+
+    response = redirect(url_for("categories.index"))
+    locale = request.args.get("locale")
+    if locale:
+        response = set_locale_cookie(response, locale)
+    return response
+
+
+@bp.get("/bsl-start")
+def contact_us():
+    """This an entry point for the service from www.gov.uk/check-legal-aid
+    This is a route for users who need to contact us via BSL, they are routed directly to the contact us page
+    """
+    session.clear()
+
+    response = redirect(url_for("contact.contact_us"))
+    locale = request.args.get("locale")
+    if locale:
+        response = set_locale_cookie(response, locale)
+    return response
+
+
+def set_locale_cookie(response: Response, locale: str) -> Response:
+    """Takes in a response and a locale string, sets the locale cookie on the response and returns it"""
+    if not locale or not isinstance(locale, str):
+        return response
+    locale = locale.strip("_GB")
+    if locale not in current_app.config["LANGUAGES"]:
+        return abort(404)
+
+    expires = datetime.datetime.now() + datetime.timedelta(days=30)
+    response.set_cookie(
+        "locale", locale, expires=expires, secure=True, httponly=True, samesite="Strict"
+    )
+    return response
 
 
 @bp.route("/locale/<locale>")
@@ -40,10 +79,7 @@ def set_locale(locale):
         redirect_url = ["/"]
 
     response = redirect("".join(redirect_url))
-    expires = datetime.datetime.now() + datetime.timedelta(days=30)
-    response.set_cookie(
-        "locale", locale, expires=expires, secure=True, httponly=True, samesite="Strict"
-    )
+    response = set_locale_cookie(response, locale)
     return response
 
 
