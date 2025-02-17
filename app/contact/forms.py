@@ -205,6 +205,7 @@ class ContactUsForm(FlaskForm):
         choices=[],
         widget=GovSelect(),
         validators=[
+            ValidateIf("contact_type", "callback", condition_type=ValidateIfType.EQ),
             ValidateIf("time_to_call", "Call today", condition_type=ValidateIfType.EQ),
             InputRequired(message=_("Select what time you want to be called today")),
         ],
@@ -215,6 +216,7 @@ class ContactUsForm(FlaskForm):
         choices=[],
         widget=GovSelect(),
         validators=[
+            ValidateIf("contact_type", "callback", condition_type=ValidateIfType.EQ),
             ValidateIf(
                 "time_to_call", "Call on another day", condition_type=ValidateIfType.EQ
             ),
@@ -227,6 +229,7 @@ class ContactUsForm(FlaskForm):
         choices=["Select a time:"],
         widget=GovSelect(),
         validators=[
+            ValidateIf("contact_type", "callback", condition_type=ValidateIfType.EQ),
             ValidateIf(
                 "time_to_call", "Call on another day", condition_type=ValidateIfType.EQ
             ),
@@ -304,6 +307,7 @@ class ContactUsForm(FlaskForm):
         choices=["Select a time:"],
         widget=GovSelect(),
         validators=[
+            ValidateIf("contact_type", "thirdparty", condition_type=ValidateIfType.EQ),
             ValidateIf(
                 "thirdparty_time_to_call",
                 "Call today",
@@ -318,6 +322,7 @@ class ContactUsForm(FlaskForm):
         choices=[],
         widget=GovSelect(),
         validators=[
+            ValidateIf("contact_type", "thirdparty", condition_type=ValidateIfType.EQ),
             ValidateIf(
                 "thirdparty_time_to_call",
                 "Call on another day",
@@ -332,6 +337,7 @@ class ContactUsForm(FlaskForm):
         choices=[],
         widget=GovSelect(),
         validators=[
+            ValidateIf("contact_type", "thirdparty", condition_type=ValidateIfType.EQ),
             ValidateIf(
                 "thirdparty_time_to_call",
                 "Call on another day",
