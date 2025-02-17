@@ -3,22 +3,20 @@ from app.categories.domestic_abuse.forms import WorriedAboutSomeonesSafetyForm
 from app.categories.views import QuestionPage, CategoryLandingPage
 from app.categories.constants import DOMESTIC_ABUSE
 
-CATEGORY_NAME = DOMESTIC_ABUSE
-
 
 class DomesticAbuseLandingPage(CategoryLandingPage):
-    question_title = CATEGORY_NAME
+    question_title = DOMESTIC_ABUSE.title
 
-    category = CATEGORY_NAME
+    category = DOMESTIC_ABUSE
 
     routing_map = {
-        "protect_you_and_your_children": "categories.domestic_abuse.are_you_at_risk_of_harm",
-        "leaving_an_abusive_relationship": "categories.domestic_abuse.are_you_at_risk_of_harm",
-        "problems_with_ex_partner": "categories.domestic_abuse.are_you_at_risk_of_harm",
-        "problems_with_neighbours": "contact.contact_us",
-        "housing_homelessness_losing_home": "categories.housing.landing",
-        "forced_marriage": "categories.domestic_abuse.are_you_at_risk_of_harm",
-        "fgm": "categories.domestic_abuse.are_you_at_risk_of_harm",
+        DOMESTIC_ABUSE.sub.protect_you_and_your_children.code: "categories.domestic_abuse.are_you_at_risk_of_harm",
+        DOMESTIC_ABUSE.sub.leaving_an_abusive_relationship.code: "categories.domestic_abuse.are_you_at_risk_of_harm",
+        DOMESTIC_ABUSE.sub.problems_with_ex_partner.code: "categories.domestic_abuse.are_you_at_risk_of_harm",
+        DOMESTIC_ABUSE.sub.problems_with_neighbours.code: "contact.contact_us",
+        DOMESTIC_ABUSE.sub.housing_homelessness_losing_home.code: "categories.housing.landing",
+        DOMESTIC_ABUSE.sub.forced_marriage.code: "categories.domestic_abuse.are_you_at_risk_of_harm",
+        DOMESTIC_ABUSE.sub.fgm.code: "categories.domestic_abuse.are_you_at_risk_of_harm",
         "other": "categories.results.refer",
     }
 
