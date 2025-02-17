@@ -83,3 +83,8 @@ envVars:
     secret:
       name: os-places
       key: apiKey
+  EMAIL_ORCHESTRATOR_URL:
+    configmap:
+      name: notify-orchestrator
+      key: url
+      optional: true

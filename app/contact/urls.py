@@ -41,7 +41,12 @@ def contact_us():
     form = ContactUsForm()
     if form.validate_on_submit():
         payload = form.get_payload()
-        result = cla_backend.post_case(payload=payload)
+        # Catches duplicate case exceptions and redirect to error page
+        try:
+            result = cla_backend.post_case(payload=payload)
+        except Exception as e:
+            if hasattr(e, "response") and e.response.status_code == 500:
+                return render_template("components/error_page.html")
         logger.info("API Response: %s", result)
         callback = ["callback", "thirdparty"]
         session["callback_requested"] = (
