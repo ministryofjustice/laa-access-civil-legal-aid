@@ -1,6 +1,6 @@
 import json
 from flask_wtf import FlaskForm
-from flask import request
+from flask import request, current_app
 from wtforms import (
     SelectMultipleField,
     HiddenField,
@@ -9,7 +9,6 @@ from wtforms import (
     TextAreaField,
     SelectField,
 )
-from app.config import Config
 from govuk_frontend_wtf.wtforms_widgets import (
     GovSubmitInput,
     GovTextInput,
@@ -492,7 +491,7 @@ class ContactUsForm(FlaskForm):
         else:
             return None, None
 
-        local_tz = pytz.timezone(Config.TIMEZONE)
+        local_tz = pytz.timezone(current_app.config["TIMEZONE"])
         iso_time = (
             local_tz.localize(time).astimezone(pytz.utc).isoformat() if time else None
         )
