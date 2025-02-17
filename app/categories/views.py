@@ -38,12 +38,6 @@ class CategoryPage(View):
         return None
 
 
-class IndexPage(CategoryPage):
-    def dispatch_request(self):
-        session.clear()
-        return render_template(self.template)
-
-
 class CategoryLandingPage(CategoryPage):
     template: str = "categories/landing.html"
 
