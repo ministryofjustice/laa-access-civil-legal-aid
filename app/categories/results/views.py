@@ -25,7 +25,7 @@ class ResultPage(CategoryPage):
             else []
         )
         return {
-            "category_name": category.display_text
+            "category_name": category.referrer_text
             if isinstance(category, Category)
             else None,
             "organisations": organisations,

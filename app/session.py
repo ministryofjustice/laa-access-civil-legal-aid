@@ -129,7 +129,7 @@ class Session(SecureCookieSession):
             return None
         if isinstance(category_dict, Category):
             return category_dict
-        return Category(**category_dict)
+        return Category.from_dict(category_dict)
 
     @property
     def has_children(self):
@@ -167,9 +167,6 @@ class Session(SecureCookieSession):
         )
 
         self["category_answers"] = answers
-        self["category"] = (
-            category  # Update the category based on the question the user last answered
-        )
 
     def get_category_question_answer(self, question_title: str) -> str | None:
         """Retrieve an answer for a question from the session.
