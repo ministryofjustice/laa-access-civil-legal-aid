@@ -44,7 +44,11 @@ def get_item_from_dict(d, s):
 @bp.app_template_filter("category_url_for")
 def category_url_for(data, **kwargs):
     if isinstance(data, dict):
-        url = url_for(data["endpoint"], category=data["category"])
+        data = data.copy()
+        endpoint = data.pop("endpoint", None)
+        if endpoint is None:
+            raise ValueError("No endpoint provided")
+        url = url_for(endpoint, **data)
     else:
         url = url_for(data)
     return url

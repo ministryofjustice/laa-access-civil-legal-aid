@@ -42,7 +42,7 @@
         {% endif %}
 
         {% set other_text = category.title.lower() %}
-        {% if category.code == "community_care" %}
+        {% if category.code in ["community_care","mental_health"] %}
             {% set other_text = "" %}
         {% elif  category.code == "housing" %}
             {% set other_text = "housing" %}
