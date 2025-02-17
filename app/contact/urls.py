@@ -40,6 +40,7 @@ def reasons_for_contacting():
 def contact_us():
     form = ContactUsForm()
     if form.validate_on_submit():
+        # Add notes from tell us more about your problem
         payload = form.get_payload()
         # Catches duplicate case exceptions and redirect to error page
         try:
