@@ -2,7 +2,7 @@ from wtforms import SubmitField, RadioField, Form
 from govuk_frontend_wtf.wtforms_widgets import GovSubmitInput
 from app.categories.widgets import CategoryRadioInput
 from wtforms.validators import InputRequired
-from flask_babel import gettext as _
+from flask_babel import lazy_gettext as _
 
 
 class QuestionForm(Form):
