@@ -520,13 +520,13 @@ class ContactUsForm(FlaskForm):
             },
             "adaptation_details": {
                 "bsl_webcam": True
-                if "bsl_webcam" in (self.data.get("adaptations") or [])
+                if "bsl_webcam" in (self.data.get("adaptations", []))
                 else False,
                 "text_relay": True
-                if "text_relay" in (self.data.get("adaptations") or [])
+                if "text_relay" in (self.data.get("adaptations", []))
                 else False,
                 "language": "WELSH"
-                if "welsh" in (self.data.get("adaptations") or [])
+                if "welsh" in (self.data.get("adaptations", []))
                 else self.data.get("other_language")[0].upper(),
                 "notes": self.data.get("other_adaptation"),
             },
