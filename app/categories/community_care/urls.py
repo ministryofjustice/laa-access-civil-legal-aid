@@ -22,7 +22,7 @@ class CommunityCareLandingPage(CategoryLandingPage):
         COMMUNITY_CARE.sub.placement_care_homes_care_housing.code: FALA_REDIRECT,
         COMMUNITY_CARE.sub.problems_with_quality_of_care.code: FALA_REDIRECT,
         COMMUNITY_CARE.sub.care_leaver.code: FALA_REDIRECT,
-        "other": "categories.results.refer",
+        "other": "categories.results.cannot_find_problem",
     }
 
 

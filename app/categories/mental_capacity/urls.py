@@ -24,7 +24,7 @@ class MentalCapacityLandingPage(CategoryLandingPage):
             "category": "mhe",
         },
         MENTAL_CAPACITY.sub.social_care.code: "categories.community_care.landing",  # This needs to be updated to route to the community care landing page once it has been made
-        "other": "categories.results.refer",
+        "other": "categories.results.cannot_find_problem",
     }
 
 
