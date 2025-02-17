@@ -1,18 +1,12 @@
 import logging
 
 from app.contact.constants import GOVUK_NOTIFY_TEMPLATES
-from flask import session, request, current_app
+from flask import session, current_app
 import requests
+from app.main import get_locale
 
 
 log = logging.getLogger(__name__)
-
-
-def get_locale():
-    if request and request.cookies.get("locale"):
-        return request.cookies.get("locale")[:2]
-    language_keys = [key for key, _ in current_app.config["LANGUAGES"]]
-    return request.accept_languages.best_match(language_keys) or "en"
 
 
 class NotifyEmailOrchestrator(object):

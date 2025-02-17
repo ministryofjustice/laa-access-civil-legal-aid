@@ -26,6 +26,7 @@ from app.contact.constants import LANG_CHOICES, THIRDPARTY_RELATIONSHIP_CHOICES
 from flask_babel import lazy_gettext as _
 from wtforms.validators import InputRequired, Length, Optional
 from enum import Enum
+from app.main import get_locale
 from app.contact.validators import (
     EmailValidator,
     ValidateIf,
@@ -91,6 +92,7 @@ class ReasonsForContactingForm(FlaskForm):
 class ContactUsForm(FlaskForm):
     def __init__(self, *args, **kwargs):
         super(ContactUsForm, self).__init__(*args, **kwargs)
+        self.adaptations.data = ["welsh"] if get_locale()[:2] == "cy" else []
         self.other_language.choices = LANG_CHOICES
         self.thirdparty_relationship.choices = THIRDPARTY_RELATIONSHIP_CHOICES
 
