@@ -427,6 +427,9 @@ class ContactUsForm(FlaskForm):
 
     submit = SubmitField(_("Submit details"), widget=GovSubmitInput())
 
+    def get_email(self):
+        return self.data.get("email") or self.data.get("bsl_email")
+
     def get_callback_time(self):
         """
         Gets the callback time in both:
@@ -503,9 +506,7 @@ class ContactUsForm(FlaskForm):
         payload = {
             "personal_details": {
                 "full_name": self.data.get("full_name"),
-                "email": self.data.get("email")
-                if self.data.get("email")
-                else self.data.get("bsl_email"),
+                "email": self.get_email(),
                 "postcode": self.data.get("post_code"),
                 "mobile_phone": self.data.get("contact_number"),
                 "street": self.data.get("street_address"),
