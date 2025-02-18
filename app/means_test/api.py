@@ -10,7 +10,7 @@ from app.means_test.money_interval import MoneyInterval
 def update_means_test(payload):
     means_test_endpoint = "checker/api/v1/eligibility_check/"
 
-    ec_reference = session.get("reference")
+    ec_reference = session.get("ec_reference")
 
     if ec_reference:
         response = cla_backend.patch(
@@ -19,7 +19,7 @@ def update_means_test(payload):
         return response
     else:
         response = cla_backend.post(means_test_endpoint, json=payload)
-        session["reference"] = response["reference"]
+        session["ec_reference"] = response["reference"]
         return response
 
 
@@ -68,7 +68,7 @@ def get_means_test_payload(eligibility_data) -> dict:
     payload = {
         "category": eligibility_data.category,
         "your_problem_notes": "",
-        "notes": "",
+        "notes": "\n\n".join(f"{k}:\n{v}" for k, v in eligibility_data.notes.items()),
         "property_set": property_data.get("property_set"),
         "you": {
             "income": {

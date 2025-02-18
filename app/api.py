@@ -169,7 +169,7 @@ class BackendAPIClient:
         gtm_anon_id = session.get("gtm_anon_id", None)
         payload["gtm_anon_id"] = gtm_anon_id
         if attach_eligiblity_data:
-            payload["eligibility_check"] = session.get("reference")
+            payload["eligibility_check"] = session.get("ec_reference")
 
         response = self.post(contact_endpoint, json=payload)
         session["reference"] = response["reference"]
