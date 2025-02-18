@@ -235,6 +235,14 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
         data = session.get("eligibility").forms.get("benefits")
         return data and "other-benefit" in data["benefits"]
 
+    def filter_summary(self, summary: dict) -> dict:
+        if (
+            summary["other_benefits"]["answer"] != YES_LABEL
+            and "total_other_benefit" in summary
+        ):
+            del summary["total_other_benefit"]
+        return summary
+
     def get_payload(
         self,
     ) -> dict:
@@ -247,8 +255,3 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
         }
 
         return payload
-
-    def filter_summary(self, summary: dict) -> dict:
-        if summary["other_benefits"]["answer"] != YES_LABEL:
-            del summary["total_other_benefit"]
-        return summary

@@ -3,6 +3,7 @@ from app.categories.constants import Category
 from flask import session
 from dataclasses import dataclass
 from datetime import timedelta
+from app.categories.models import ScopeAnswer
 
 
 @dataclass
@@ -155,9 +156,11 @@ class Session(SecureCookieSession):
         # Todo: Needs implementation
         return True
 
-    def set_category_question_answer(
-        self, question_title: str, answer: str, category: Category
-    ) -> None:
+    def _get_scope_answers(self) -> list[ScopeAnswer]:
+        answers: list[dict] = self.get("category_answers", [])
+        return [ScopeAnswer(**answer) for answer in answers]
+
+    def set_category_question_answer(self, scope_answer: ScopeAnswer) -> None:
         """Store a question-answer pair with the question category in the session.
 
         Args:
@@ -171,14 +174,14 @@ class Session(SecureCookieSession):
         if "category_answers" not in self:
             self["category_answers"] = []
 
-        answers: list[dict[str, str]] = self["category_answers"]
+        answers: list[ScopeAnswer] = self._get_scope_answers()
 
         # Remove existing entry if present
-        answers = [entry for entry in answers if entry["question"] != question_title]
+        answers = [
+            entry for entry in answers if entry.question != scope_answer.question
+        ]
 
-        answers.append(
-            {"question": question_title, "answer": answer, "category": category}
-        )
+        answers.append(scope_answer)
 
         self["category_answers"] = answers
 
@@ -191,14 +194,11 @@ class Session(SecureCookieSession):
         Returns:
             The stored answer string if found, None otherwise
         """
-        if "category_answers" not in self:
-            return None
-
-        answers: list[dict[str, str]] = self["category_answers"]
-
+        answers = self._get_scope_answers()
         for answer in answers:
-            if answer["question"] == question_title:
-                return answer["answer"]
+            if answer.question == question_title:
+                return answer.answer
+
         return None
 
 
