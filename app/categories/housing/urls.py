@@ -9,23 +9,21 @@ class HousingLandingPage(CategoryLandingPage):
     category = HOUSING
 
     routing_map = {
-        HOUSING.sub.homelessness.code: "categories.results.in_scope_hlpas",
-        HOUSING.sub.eviction.code: "categories.results.in_scope_hlpas",
-        HOUSING.sub.forced_to_sell.code: "categories.results.in_scope_hlpas",
-        HOUSING.sub.repairs.code: "categories.results.in_scope",
-        HOUSING.sub.council_housing.code: "categories.results.in_scope",
-        HOUSING.sub.threatened.code: "categories.results.in_scope",
-        HOUSING.sub.asylum_seeker.code: "categories.results.in_scope",
-        HOUSING.sub.discrimination.code: "categories.discrimination.where",
-        HOUSING.sub.antisocial_behaviour.code: "categories.results.in_scope",
+        "main": [
+            (HOUSING.sub.homelessness, "categories.results.in_scope_hlpas"),
+            (HOUSING.sub.eviction, "categories.results.in_scope_hlpas"),
+            (HOUSING.sub.forced_to_sell, "categories.results.in_scope_hlpas"),
+            (HOUSING.sub.repairs, "categories.results.in_scope"),
+            (HOUSING.sub.council_housing, "categories.results.in_scope"),
+        ],
+        "more": [
+            (HOUSING.sub.threatened, "categories.results.in_scope"),
+            (HOUSING.sub.asylum_seeker, "categories.results.in_scope"),
+            (HOUSING.sub.discrimination, "categories.discrimination.where"),
+            (HOUSING.sub.antisocial_behaviour, "categories.results.in_scope"),
+        ],
         "other": "categories.results.refer",
     }
 
 
-bp.add_url_rule(
-    "/housing",
-    view_func=HousingLandingPage.as_view(
-        "landing", template="categories/housing/landing.html"
-    ),
-)
 HousingLandingPage.register_routes(bp)
