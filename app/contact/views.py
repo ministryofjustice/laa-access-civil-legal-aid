@@ -42,6 +42,18 @@ class ContactUs(View):
                 if hasattr(e, "response") and e.response.status_code == 500:
                     return render_template("components/error_page.html")
             logger.info("API Response: %s", result)
+            # RFC Handling
+            if ReasonsForContactingForm.MODEL_REF_SESSION_KEY in session:
+                notes_data = form.data.get("extra_notes")
+                cla_backend.update_reasons_for_contacting(
+                    session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY],
+                    payload={
+                        "case": session["reference"],
+                        "other_reasons": "Reasons for Contacting notes:\n" + notes_data,
+                    },
+                )
+                del session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY]
+            # Email Handling
             callback = ["callback", "thirdparty"]
             session["callback_requested"] = (
                 True if form.data.get("contact_type") in callback else False
@@ -49,12 +61,6 @@ class ContactUs(View):
             session["contact_type"] = form.data.get("contact_type")
             requires_action_at, formatted_time = ContactUsForm.get_callback_time(form)
             session["formatted_time"] = formatted_time
-            if ReasonsForContactingForm.MODEL_REF_SESSION_KEY in session:
-                cla_backend.update_reasons_for_contacting(
-                    session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY],
-                    payload={"case": session["reference"]},
-                )
-                del session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY]
             email = form.get_email()
             if email:
                 govuk_notify = NotifyEmailOrchestrator()
