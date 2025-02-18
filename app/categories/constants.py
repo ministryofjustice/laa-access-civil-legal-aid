@@ -14,6 +14,7 @@ class Category:
     code: Optional[str] = None
     children: dict[str, "Category"] | None = field(default_factory=dict)
     _referrer_text: Optional[LazyString] = None
+    exit_page: Optional[bool] = False
 
     @property
     def display_text(self):
@@ -62,6 +63,7 @@ DOMESTIC_ABUSE = Category(
     article_category_name="Domestic Abuse",
     chs_code="family",
     code="domestic_abuse",
+    exit_page=True,
     children={
         "protect_you_and_your_children": Category(
             title=_("Help to keep yourself safe and protect children"),
@@ -73,7 +75,7 @@ DOMESTIC_ABUSE = Category(
         "leaving_an_abusive_relationship": Category(
             title=_("Leaving an abusive relationship"),
             description=_(
-                "Help with divorce, separation, or leaving your partner. Includes legal arrangements for children, money and housing"
+                "Help with divorce, separation, or leaving your partner. Includes legal arrangements for children, money and housing."
             ),
             code="leaving_an_abusive_relationship",
         ),
@@ -114,7 +116,7 @@ DOMESTIC_ABUSE = Category(
 )
 
 FAMILY = Category(
-    title=_("Children, families and relationships"),
+    title=_("Children, families, relationships"),
     description=_(
         "Includes children in care, children and social services. Also, help with children and finances if you divorce or split up."
     ),
@@ -236,14 +238,14 @@ HOUSING = Category(
         "discrimination": Category(
             title=_("Discrimination"),
             description=_(
-                "Treated unfairly because of things like your disability or health condition, race, age, sex, religion or pregnancy."
+                "Treated unfairly by a landlord, council or housing association."
             ),
             code="discrimination",
         ),
         "antisocial_behaviour": Category(
             title=_("If you’ve been accused of anti-social behaviour"),
             description=_(
-                "Accused of anti-social behaviour, including by your neighbours."
+                "Accused of anti-social behaviour by the landlord, council or housing association."
             ),
             code="antisocial_behaviour",
         ),
