@@ -3,8 +3,7 @@ from app.categories.constants import Category, get_category_from_code
 from flask import session
 from dataclasses import dataclass
 from datetime import timedelta
-from app.categories.models import CategoryAnswer
-from flask_babel import LazyString
+from app.categories.models import ScopeAnswer
 
 
 @dataclass
@@ -179,39 +178,11 @@ class Session(SecureCookieSession):
         # Todo: Needs implementation
         return True
 
-    @property
-    def category_answers(self) -> list[CategoryAnswer]:
-        items: list[dict] = self.get("category_answers", [])
-        category_answers = []
-        for item in items:
-            answer = item.copy()
-            answer["category"] = self._category_from_dict_from_session_storage(
-                answer["category"]
-            )
-            category_answers.append(CategoryAnswer(**answer))
+    def _get_scope_answers(self) -> list[ScopeAnswer]:
+        answers: list[dict] = self.get("category_answers", [])
+        return [ScopeAnswer(**answer) for answer in answers]
 
-        return category_answers
-
-    @staticmethod
-    def _untranslate_category_answer(category_answer: CategoryAnswer):
-        """Remove translation from the category_answer object"""
-        category_answer_dict = {}
-        for key, value in category_answer.__dict__.items():
-            if isinstance(value, list):
-                values = []
-                for item in value:
-                    if isinstance(item, LazyString):
-                        values.append(item._args[0])
-                    else:
-                        values.append(item)
-                value = values
-            elif isinstance(value, LazyString):
-                value = value._args[0]
-            category_answer_dict[key] = value
-
-        return CategoryAnswer(**category_answer_dict)
-
-    def set_category_question_answer(self, category_answer: CategoryAnswer) -> None:
+    def set_category_question_answer(self, scope_answer: ScopeAnswer) -> None:
         """Store a question-answer pair with the question category in the session.
 
         Args:
@@ -229,21 +200,14 @@ class Session(SecureCookieSession):
         if "category_answers" not in self:
             self["category_answers"] = []
 
-        answers: list[CategoryAnswer] = self.category_answers
+        answers: list[ScopeAnswer] = self._get_scope_answers()
 
         # Remove existing entry if present
         answers = [
-            entry for entry in answers if entry.question != category_answer.question
+            entry for entry in answers if entry.question != scope_answer.question
         ]
-        answers.append(category_answer)
 
-        category_answers = []
-        for answer in answers:
-            answer_dict = answer.__dict__
-            answer_dict["category"] = self._category_to_dict_for_session_storage(
-                answer.category
-            )
-            category_answers.append(answer_dict)
+        answers.append(scope_answer)
 
         self["category_answers"] = category_answers
 
@@ -256,10 +220,10 @@ class Session(SecureCookieSession):
         Returns:
             The stored answer string if found, None otherwise
         """
-        answers = self.category_answers
+        answers = self._get_scope_answers()
         for answer in answers:
             if answer.question == question_title:
-                return answer.answer_value
+                return answer.answer
 
         return None
 
