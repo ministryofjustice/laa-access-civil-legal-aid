@@ -3,37 +3,49 @@ from app.categories.domestic_abuse.forms import WorriedAboutSomeonesSafetyForm
 from app.categories.views import QuestionPage, CategoryLandingPage
 from app.categories.constants import DOMESTIC_ABUSE
 
-CATEGORY_NAME = DOMESTIC_ABUSE
-
 
 class DomesticAbuseLandingPage(CategoryLandingPage):
-    question_title = CATEGORY_NAME
+    question_title = DOMESTIC_ABUSE.title
 
-    category = CATEGORY_NAME
-
+    category = DOMESTIC_ABUSE
     routing_map = {
-        "protect_you_and_your_children": "categories.domestic_abuse.are_you_at_risk_of_harm",
-        "leaving_an_abusive_relationship": "categories.domestic_abuse.are_you_at_risk_of_harm",
-        "problems_with_ex_partner": "categories.domestic_abuse.are_you_at_risk_of_harm",
-        "problems_with_neighbours": "contact.contact_us",
-        "housing_homelessness_losing_home": "categories.housing.landing",
-        "forced_marriage": "categories.domestic_abuse.are_you_at_risk_of_harm",
-        "fgm": "categories.domestic_abuse.are_you_at_risk_of_harm",
+        "main": [
+            (
+                DOMESTIC_ABUSE.sub.protect_you_and_your_children,
+                "categories.domestic_abuse.are_you_at_risk_of_harm",
+            ),
+            (
+                DOMESTIC_ABUSE.sub.leaving_an_abusive_relationship,
+                "categories.domestic_abuse.are_you_at_risk_of_harm",
+            ),
+            (
+                DOMESTIC_ABUSE.sub.problems_with_ex_partner,
+                "categories.domestic_abuse.are_you_at_risk_of_harm",
+            ),
+        ],
+        "more": [
+            (
+                DOMESTIC_ABUSE.sub.forced_marriage,
+                "categories.domestic_abuse.are_you_at_risk_of_harm",
+            ),
+            (
+                DOMESTIC_ABUSE.sub.fgm,
+                "categories.domestic_abuse.are_you_at_risk_of_harm",
+            ),
+            (DOMESTIC_ABUSE.sub.problems_with_neighbours, "contact.contact_us"),
+            (
+                DOMESTIC_ABUSE.sub.housing_homelessness_losing_home,
+                "categories.housing.landing",
+            ),
+        ],
         "other": "categories.results.refer",
     }
 
 
-bp.add_url_rule(
-    "/domestic-abuse/",
-    view_func=DomesticAbuseLandingPage.as_view(
-        "landing", template="categories/domestic_abuse/landing.html"
-    ),
-)
+DomesticAbuseLandingPage.register_routes(bp)
 bp.add_url_rule(
     "/domestic-abuse/are-you-at-risk-of-harm",
     view_func=QuestionPage.as_view(
         "are_you_at_risk_of_harm", form_class=WorriedAboutSomeonesSafetyForm
     ),
 )
-
-DomesticAbuseLandingPage.register_routes(bp)
