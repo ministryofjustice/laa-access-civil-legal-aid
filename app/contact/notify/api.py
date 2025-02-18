@@ -78,7 +78,7 @@ def generate_confirmation_email_data(data):
                 if session.get("contact_type") == "thirdparty":
                     personalisation = {
                         "case_reference": data["case_ref"],
-                        "date_time": session.get("formatted_time"),
+                        "date_time": session.get("callback_time"),
                     }
                     template_id = GOVUK_NOTIFY_TEMPLATES[
                         "PUBLIC_CONFIRMATION_EMAIL_CALLBACK_REQUESTED_THIRDPARTY"
@@ -86,7 +86,7 @@ def generate_confirmation_email_data(data):
                 else:
                     personalisation = {
                         "case_reference": data["case_ref"],
-                        "date_time": session.get("formatted_time"),
+                        "date_time": session.get("callback_time"),
                     }
                     template_id = GOVUK_NOTIFY_TEMPLATES[
                         "PUBLIC_CONFIRMATION_EMAIL_CALLBACK_REQUESTED"
@@ -104,7 +104,7 @@ def generate_confirmation_email_data(data):
             "full_name": data["full_name"],
             "thirdparty_full_name": data["thirdparty_full_name"],
             "case_reference": data["case_ref"],
-            "date_time": session.get("formatted_time"),
+            "date_time": session.get("callback_time"),
         }
 
         if session.get("callback_requested") is False:
