@@ -55,7 +55,7 @@ def category_url_for(data, **kwargs):
         url = url_for(data)
     return url
 
-  
+
 @bp.app_template_global()
 def wtforms_errors(form, params={}):
     """An adapted version of the wtforms_errors function from the govuk_frontend_wtf package that marks the "There is a problem" text as translatable."""
