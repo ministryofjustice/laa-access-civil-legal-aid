@@ -187,7 +187,9 @@ class QuestionPage(CategoryPage):
         session["category"] = form.category
 
         if form.validate_on_submit():
-            self.update_session(question=form.title, answer=form.question.data, category=form.category)
+            self.update_session(
+                question=form.title, answer=form.question.data, category=form.category
+            )
             return self.get_next_page(form.question.data)
 
         # Clear session data if form has errors, this prevents ghost answers from re-appearing from previously
