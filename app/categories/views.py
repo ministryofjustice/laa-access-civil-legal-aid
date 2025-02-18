@@ -87,6 +87,7 @@ class QuestionPage(View):
     """
 
     template: str = "categories/question-page.html"
+    methods = ["GET", "POST"]
     form_class: type[QuestionForm] | None = None
 
     def __init__(self, form_class: type[QuestionForm], template=None):
@@ -157,12 +158,17 @@ class QuestionPage(View):
         Returns:
             Either a redirect to the next page or the rendered template
         """
-        form = self.form_class(request.args)
+        form = self.form_class()
         session["category"] = self.form_class.category
 
-        if form.submit.data and form.validate():
+        if form.validate_on_submit():
             self.update_session(form.question.data)
             return self.get_next_page(form.question.data)
+
+        # Clear session data if form has errors, this prevents ghost answers from re-appearing from previously
+        # valid form submissions.
+        if form.question.errors:
+            self.update_session(None)
 
         # Pre-populate form with previous answer if it exists
         previous_answer = session.get_category_question_answer(form.title)

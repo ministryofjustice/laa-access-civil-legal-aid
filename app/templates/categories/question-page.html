@@ -25,7 +25,9 @@
             <span class="govuk-caption-l">{{ form.category }}</span>
         {% endblock %}
 
-        <form action="" method="get" novalidate>
+        <form action="" method="post" novalidate>
+
+            {{ form.csrf_token() }}
 
             {{ form.question() }}
 
