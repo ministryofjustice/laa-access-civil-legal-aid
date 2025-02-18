@@ -14,19 +14,19 @@ class AsylumAndImmigrationLandingPage(CategoryLandingPage):
     category = ASYLUM_AND_IMMIGRATION
 
     routing_map = {
-        ASYLUM_AND_IMMIGRATION.sub.apply.code: FALA_REDIRECT,
-        ASYLUM_AND_IMMIGRATION.sub.housing.code: "categories.housing.homelessness",
-        ASYLUM_AND_IMMIGRATION.sub.domestic_abuse.code: FALA_REDIRECT,
-        ASYLUM_AND_IMMIGRATION.sub.detained.code: FALA_REDIRECT,
-        ASYLUM_AND_IMMIGRATION.sub.modern_slavery.code: FALA_REDIRECT,
+        "main": [
+            (ASYLUM_AND_IMMIGRATION.sub.apply, FALA_REDIRECT),
+            (ASYLUM_AND_IMMIGRATION.sub.housing, "categories.housing.homelessness"),
+            (ASYLUM_AND_IMMIGRATION.sub.domestic_abuse, FALA_REDIRECT),
+            (ASYLUM_AND_IMMIGRATION.sub.detained, FALA_REDIRECT),
+        ],
+        "more": [
+            (ASYLUM_AND_IMMIGRATION.sub.modern_slavery, FALA_REDIRECT),
+        ],
+        "other": {"endpoint": "categories.results.refer", "category": "immas"},
     }
 
 
-bp.add_url_rule(
-    "/asylum-and-immigration",
-    view_func=AsylumAndImmigrationLandingPage.as_view(
-        "landing", template="categories/asylum-and-immigration/landing.html"
-    ),
+AsylumAndImmigrationLandingPage.register_routes(
+    blueprint=bp, path="/asylum-and-immigration"
 )
-
-AsylumAndImmigrationLandingPage.register_routes(blueprint=bp)
