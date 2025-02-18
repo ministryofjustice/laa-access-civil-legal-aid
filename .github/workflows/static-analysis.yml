@@ -46,7 +46,7 @@ jobs:
         with:
           args: format --check
 
-  sonarqube-scan:
+  sonarqube:
     name: SonarQube
     runs-on: ubuntu-latest
     steps:
