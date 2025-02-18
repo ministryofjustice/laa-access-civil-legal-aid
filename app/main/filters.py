@@ -1,3 +1,4 @@
+from flask import url_for
 from app.main import bp
 import json
 from markupsafe import Markup
@@ -38,3 +39,16 @@ def get_item_from_dict(d, s):
     if s not in d:
         return None
     return d[s]
+
+
+@bp.app_template_filter("category_url_for")
+def category_url_for(data, **kwargs):
+    if isinstance(data, dict):
+        data = data.copy()
+        endpoint = data.pop("endpoint", None)
+        if endpoint is None:
+            raise ValueError("No endpoint provided")
+        url = url_for(endpoint, **data)
+    else:
+        url = url_for(data)
+    return url
