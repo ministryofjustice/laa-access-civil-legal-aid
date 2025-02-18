@@ -181,6 +181,12 @@ LANG_CHOICES = list(
 
 LANG_CHOICES = [(lang_code.lower(), lang_name) for lang_code, lang_name in LANG_CHOICES]
 
+CONTACT_PREFERENCE = [
+    ("call", "I will call you"),
+    ("callback", "Call me back"),
+    ("thirdparty", "Call someone else instead of me"),
+]
+
 SELECT_OPTION_DEFAULT = [("", _("-- Please select --"))]
 THIRDPARTY_RELATIONSHIP = [
     ("parent_guardian", "Parent or guardian"),

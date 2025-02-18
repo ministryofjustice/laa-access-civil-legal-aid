@@ -22,30 +22,21 @@ from app.contact.widgets import (
 )
 from wtforms.fields import SubmitField
 from app.categories.widgets import CategoryCheckboxInput
-from app.contact.constants import LANG_CHOICES, THIRDPARTY_RELATIONSHIP_CHOICES
+from app.contact.constants import (
+    LANG_CHOICES,
+    THIRDPARTY_RELATIONSHIP_CHOICES,
+    CONTACT_PREFERENCE,
+)
 from flask_babel import lazy_gettext as _
-from wtforms.validators import InputRequired, Length, Optional
-from enum import Enum
+from wtforms.validators import InputRequired, Length, Optional, Email
 from app.main import get_locale
 from app.contact.validators import (
-    EmailValidator,
-    ValidateIf,
-    ValidateIfType,
     ValidateDayTime,
 )
+from app.means_test.validators import ValidateIf, ValidateIfType
 from app.api import cla_backend
 from datetime import datetime, timedelta
 import pytz
-
-
-class ContactPreference(Enum):
-    CALL = ("call", "I will call you")
-    CALLBACK = ("callback", "Call me back")
-    THIRDPARTY = ("thirdparty", "Call someone else instead of me")
-
-    @classmethod
-    def choices(cls):
-        return [(choice.value[0], choice.value[1]) for choice in cls]
 
 
 class ReasonsForContactingForm(FlaskForm):
@@ -92,6 +83,7 @@ class ReasonsForContactingForm(FlaskForm):
 class ContactUsForm(FlaskForm):
     def __init__(self, *args, **kwargs):
         super(ContactUsForm, self).__init__(*args, **kwargs)
+        self.contact_type.choices = CONTACT_PREFERENCE
         self.adaptations.data = ["welsh"] if get_locale()[:2] == "cy" else []
         self.other_language.choices = LANG_CHOICES
         self.thirdparty_relationship.choices = THIRDPARTY_RELATIONSHIP_CHOICES
@@ -172,7 +164,7 @@ class ContactUsForm(FlaskForm):
     contact_type = RadioField(
         _("Select a contact option"),
         widget=ContactRadioInput(),
-        choices=ContactPreference.choices(),
+        choices=[],
         validators=[InputRequired(message=_("Tell us how we should get in contact"))],
     )
 
@@ -355,7 +347,7 @@ class ContactUsForm(FlaskForm):
         description=_("We will use this to send your reference number."),
         validators=[
             Length(max=255, message=_("Your address must be 255 characters or less")),
-            EmailValidator(message=_("Invalid email address")),
+            Email(message=_("Invalid email address")),
             Optional(),
         ],
     )
@@ -402,7 +394,7 @@ class ContactUsForm(FlaskForm):
         validators=[
             ValidateIf("adaptations", "bsl_webcam", condition_type=ValidateIfType.IN),
             Length(max=255, message=_("Your address must be 255 characters or less")),
-            EmailValidator(message=_("Enter your email address")),
+            Email(message=_("Enter your email address")),
         ],
     )
     other_language = SelectMultipleField(
@@ -445,7 +437,7 @@ class ContactUsForm(FlaskForm):
         This is used in both the payload and email.
 
         Returns:
-            tuple: (iso_time, formatted_time) or (None, None) if no valid time.
+            tuple: (iso_time, callback_time) or (None, None) if no valid time.
         """
         callback_requested = {"thirdparty", "callback"}
         contact_type = self.data.get("contact_type")
@@ -498,16 +490,16 @@ class ContactUsForm(FlaskForm):
             local_tz.localize(time).astimezone(pytz.utc).isoformat() if time else None
         )
 
-        formatted_time = format_time(time)
+        callback_time = format_time(time)
 
-        return iso_time, formatted_time
+        return iso_time, callback_time
 
     def get_payload(self) -> dict:
         """
         Returns the contact payload.
         """
 
-        requires_action_at, formatted_time = self.get_callback_time()
+        requires_action_at, callback_time = self.get_callback_time()
 
         safe_to_contact = "SAFE" if self.data.get("contact_type") == "callback" else ""
         payload = {
