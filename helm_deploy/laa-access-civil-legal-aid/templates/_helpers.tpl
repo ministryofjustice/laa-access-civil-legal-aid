@@ -24,7 +24,7 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{- define "laa-access-civil-legal-aid.whitelist" -}}
-{{ join "," (list .Values.sharedIPRangesLAA .Values.pingdomIPs)}}
+{{ join "," (concat .Values.sharedIPRangesLAA .Values.pingdomIPs (list "80.195.27.199/32")) }}
 {{- end -}}
 
 {{/*
