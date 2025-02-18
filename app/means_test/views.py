@@ -137,7 +137,39 @@ class CheckYourAnswers(FormsMixin, MethodView):
             form_data = MultiDict(eligibility.forms.get(key, {}))
             form = form_class(form_data)
             means_test_summary[str(form.title)] = self.get_form_summary(form, key)
-        params = {"means_test_summary": means_test_summary, "form": ReviewForm()}
+
+        answers = [
+            {
+                "key": {"text": "The problem you need help with"},
+                "value": {"markdown": "Homelessness\nHelp if you're homeless"},
+                "actions": {
+                    "items": [
+                        {
+                            "href": url_for("categories.housing.landing"),
+                            "text": _("Change"),
+                        }
+                    ]
+                },
+            },
+            {
+                "key": {"text": "are you under 18?"},
+                "value": {"markdown": "Yes"},
+                "actions": {
+                    "items": [
+                        {
+                            "href": url_for("categories.housing.landing"),
+                            "text": _("Change"),
+                        }
+                    ]
+                },
+            },
+        ]
+        params = {
+            "means_test_summary": means_test_summary,
+            "form": ReviewForm(),
+            "category": session.category,
+            "scope_answers": answers,
+        }
         return render_template("means_test/review.html", **params)
 
     @staticmethod
