@@ -25,7 +25,7 @@ class CommunityCareLandingPage(CategoryLandingPage):
             (COMMUNITY_CARE.sub.care_leaver, FALA_REDIRECT),
         ],
         "more": [],
-        "other": "categories.results.refer",
+        "other": "categories.results.cannot_find_problem",
     }
 
 

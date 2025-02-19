@@ -15,3 +15,9 @@ bp.add_url_rule(
     "/refer",
     view_func=ResultPage.as_view("refer", template="categories/refer.html"),
 )
+bp.add_url_rule(
+    "/cannot-find-problem",
+    view_func=ResultPage.as_view(
+        "cannot_find_problem", template="categories/cannot-find-problem.html"
+    ),
+)
