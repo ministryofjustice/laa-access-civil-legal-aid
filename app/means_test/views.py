@@ -138,6 +138,16 @@ class CheckYourAnswers(FormsMixin, MethodView):
             form = form_class(form_data)
             means_test_summary[str(form.title)] = self.get_form_summary(form, key)
 
+        params = {
+            "means_test_summary": means_test_summary,
+            "form": ReviewForm(),
+            "category": session.category,
+            "scope_answers": self.get_scope_answers(),
+        }
+        return render_template("means_test/review.html", **params)
+
+    @staticmethod
+    def get_scope_answers():
         answers = [
             {
                 "key": {"text": _("The problem you need help with")},
@@ -156,13 +166,7 @@ class CheckYourAnswers(FormsMixin, MethodView):
                     },
                 }
             )
-        params = {
-            "means_test_summary": means_test_summary,
-            "form": ReviewForm(),
-            "category": session.category,
-            "scope_answers": answers,
-        }
-        return render_template("means_test/review.html", **params)
+        return answers
 
     @staticmethod
     def get_form_summary(form: BaseMeansTestForm, form_name: str) -> list:
