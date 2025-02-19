@@ -149,16 +149,21 @@ class CheckYourAnswers(FormsMixin, MethodView):
     @staticmethod
     def get_scope_answers():
         answers = session.category_answers
+        if not answers:
+            return []
+
         category = session.category
         change_your_problem_link = url_for("categories.index")
+        category_has_children = hasattr(category, "children")
         if len(answers) > 0:
             category = answers[0].category
-            change_your_problem_link = answers[0].edit_url
+            if category_has_children:
+                change_your_problem_link = answers[0].edit_url
             answers.pop(0)
 
         category_text = [f"**{category.title}**"]
-        # if category doesn't have children then it does not have sub pages and we don't show description for those
-        if hasattr(category, "children"):
+        # if category doesn't have children then it does not have subpages and we don't show description for those
+        if category_has_children:
             category_text.append(category.description)
 
         results = [

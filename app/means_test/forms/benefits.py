@@ -142,6 +142,7 @@ class BenefitsForm(BaseMeansTestForm):
         }
 
         return payload
+
     def filter_summary(self, summary: dict) -> dict:
         if "child_benefits" not in summary:
             return summary
