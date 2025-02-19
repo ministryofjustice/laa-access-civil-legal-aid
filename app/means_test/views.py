@@ -136,7 +136,8 @@ class CheckYourAnswers(FormsMixin, MethodView):
                 continue
             form_data = MultiDict(eligibility.forms.get(key, {}))
             form = form_class(form_data)
-            means_test_summary[str(form.title)] = self.get_form_summary(form, key)
+            if form.should_show():
+                means_test_summary[str(form.title)] = self.get_form_summary(form, key)
 
         params = {
             "means_test_summary": means_test_summary,
@@ -148,25 +149,39 @@ class CheckYourAnswers(FormsMixin, MethodView):
 
     @staticmethod
     def get_scope_answers():
-        answers = [
+        answers = session.category_answers
+        category = session.category
+        change_your_problem_link = url_for("categories.index")
+        if len(answers) > 0:
+            category = answers[0].category
+            change_your_problem_link = answers[0].edit_url
+            answers.pop(0)
+
+        category_text = [f"**{category.title}**"]
+        # if category doesn't have children then it does not have sub pages and we don't show description for those
+        if hasattr(category, "children"):
+            category_text.append(category.description)
+
+        results = [
             {
                 "key": {"text": _("The problem you need help with")},
-                "value": {
-                    "markdown": f"{session.category}\n{session.category.description}"
+                "value": {"markdown": "\n".join(category_text)},
+                "actions": {
+                    "items": [{"text": _("Change"), "href": change_your_problem_link}]
                 },
             }
         ]
-        for answer in session.category_answers:
-            answers.append(
+        for answer in answers:
+            results.append(
                 {
-                    "key": {"text", answer.question},
-                    "value": {"text": answer.answer},
+                    "key": {"text": answer.question},
+                    "value": {"text": answer.answer_label},
                     "actions": {
                         "items": [{"text": _("Change"), "href": answer.edit_url}]
                     },
                 }
             )
-        return answers
+        return results
 
     @staticmethod
     def get_form_summary(form: BaseMeansTestForm, form_name: str) -> list:

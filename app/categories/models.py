@@ -6,7 +6,8 @@ from app.categories.constants import Category
 @dataclass
 class ScopeAnswer:
     question: str
-    answer: str
+    answer_value: str
+    answer_label: str
     category: Category
     question_page: str
     next_page: str

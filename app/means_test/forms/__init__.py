@@ -5,7 +5,7 @@ from wtforms.fields.choices import SelectField, SelectMultipleField
 from wtforms.csrf.core import CSRFTokenField
 from flask_babel import lazy_gettext as _
 from flask import session
-from app.means_test.fields import MoneyIntervalField, MoneyInterval
+from app.means_test.fields import MoneyIntervalField, MoneyInterval, MoneyField
 import decimal
 
 
@@ -70,11 +70,13 @@ class BaseMeansTestForm(FlaskForm):
 
             if isinstance(field_instance, SelectField):
                 answer = self.get_selected_answers(field_instance)
-            if isinstance(field_instance, MoneyIntervalField):
+            elif isinstance(field_instance, MoneyIntervalField):
+                answer = self.get_money_interval_field_answers(field_instance)
+            elif isinstance(field_instance, MoneyField):
                 answer = self.get_money_field_answers(field_instance)
-                if answer is None:
-                    continue
 
+            if answer is None:
+                continue
             summary[field_instance.name] = {
                 "question": question,
                 "answer": answer,
@@ -96,13 +98,23 @@ class BaseMeansTestForm(FlaskForm):
         return answers
 
     @staticmethod
-    def get_money_field_answers(field_instance):
+    def get_money_interval_field_answers(field_instance):
         if field_instance.data["per_interval_value"] is None:
             return None
 
+        if field_instance.data["per_interval_value"] == 0:
+            return "£0"
         amount = decimal.Decimal(int(field_instance.data["per_interval_value"]) / 100)
         amount = amount.quantize(decimal.Decimal("0.01"))
         interval = MoneyInterval._intervals[field_instance.data["interval_period"]][
             "label"
         ]
-        return f"£{amount} {_('every')} {interval}"
+        return f"£{amount} ({interval})"
+
+    @staticmethod
+    def get_money_field_answers(field_instance):
+        if field_instance.data == 0:
+            return "£0"
+        amount = decimal.Decimal(int(field_instance.data) / 100)
+        amount = amount.quantize(decimal.Decimal("0.01"))
+        return f"£{amount}"
