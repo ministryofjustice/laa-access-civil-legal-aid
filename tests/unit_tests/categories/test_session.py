@@ -1,25 +1,44 @@
-from app.categories.constants import Category
+from app.categories.constants import Category, HOUSING
+from app.categories.models import ScopeAnswer
 
 
 def test_set_category_question_answer_new_session(app, client):
     with client.session_transaction() as session:
-        session.set_category_question_answer("Q1", "A1", "C1")
+        answer = ScopeAnswer(
+            question="What is your favourite mode of transport?",
+            answer_value="bus",
+            answer_label="Bus",
+            next_page="categories.index",
+            question_page="categories.housing.landing",
+            category=HOUSING,
+        )
+        session.set_category_question_answer(answer)
 
         assert "category_answers" in session
-        assert session["category_answers"] == [
-            {"question": "Q1", "answer": "A1", "category": "C1"}
-        ]
+        assert session["category_answers"] == [answer]
 
 
 def test_set_category_question_answer_updates_existing(app, client):
     with client.session_transaction() as session:
-        session["category_answers"] = [
-            {"question": "Q1", "answer": "A1", "category": "C1"}
-        ]
-        session.set_category_question_answer("Q1", "A2", "C2")
-        assert session["category_answers"] == [
-            {"question": "Q1", "answer": "A2", "category": "C2"}
-        ]
+        answer = ScopeAnswer(
+            question="What is your favourite mode of transport?",
+            answer_value="bus",
+            answer_label="Bus",
+            next_page="categories.index",
+            question_page="categories.housing.landing",
+            category=HOUSING,
+        )
+        updated_answer = ScopeAnswer(
+            question="What is your favourite mode of transport?",
+            answer_value="car",
+            answer_label="Car",
+            next_page="categories.index",
+            question_page="categories.housing.landing",
+            category=HOUSING,
+        )
+        session["category_answers"] = [answer]
+        session.set_category_question_answer(updated_answer)
+        assert session["category_answers"] == [updated_answer]
 
 
 def test_get_category_question_answer_empty_session(app, client):
@@ -29,20 +48,40 @@ def test_get_category_question_answer_empty_session(app, client):
 
 
 def test_get_category_question_answer_found(app, client):
+    first_answer = ScopeAnswer(
+        question="What is your favourite mode of transport?",
+        answer_value="bus",
+        answer_label="Bus",
+        next_page="categories.index",
+        question_page="categories.housing.landing",
+        category=HOUSING,
+    )
+    second_answer = ScopeAnswer(
+        question="Where did this happen?",
+        answer_value="home",
+        answer_label="Home",
+        next_page="categories.index",
+        question_page="categories.housing.landing",
+        category=HOUSING,
+    )
     with client.session_transaction() as session:
-        session["category_answers"] = [
-            {"question": "test_question", "answer": "A1", "category": "C1"}
-        ]
-        result = session.get_category_question_answer("test_question")
-        assert result == "A1"
+        session["category_answers"] = [first_answer, second_answer]
+        result = session.get_category_question_answer("Where did this happen?")
+        assert result == "home"
 
 
 def test_get_category_question_answer_not_found(app, client):
+    answer = ScopeAnswer(
+        question="What is your favourite mode of transport?",
+        answer_value="bus",
+        answer_label="Bus",
+        next_page="categories.index",
+        question_page="categories.housing.landing",
+        category=HOUSING,
+    )
     with client.session_transaction() as session:
-        session["category_answers"] = [
-            {"question": "other_question", "answer": "A1", "category": "C1"}
-        ]
-        result = session.get_category_question_answer("test_question")
+        session["category_answers"] = [answer]
+        result = session.get_category_question_answer("Hello?")
         assert result is None
 
 
