@@ -120,7 +120,7 @@ class BenefitsForm(BaseMeansTestForm):
 
     @classmethod
     def should_show(cls) -> bool:
-        return session.get("eligibility").on_benefits
+        return session.get_eligibility().on_benefits
 
     def get_payload(self) -> dict:
         """Returns the benefits payload for the user and the partner.
@@ -142,6 +142,7 @@ class BenefitsForm(BaseMeansTestForm):
         }
 
         return payload
+
     def filter_summary(self, summary: dict) -> dict:
         if "child_benefits" not in summary:
             return summary

@@ -41,21 +41,22 @@ class CategoryLandingPage(CategoryPage):
     routing_map: dict[str, []] = {}
     listing: dict[str, []] = {}
 
-    def __init__(self, route_endpoint: str, *args, **kwargs):
+    def __init__(self, route_endpoint: str = None, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.listing["main"] = []
-        for category, next_page in self.routing_map["main"]:
-            self.listing["main"].append(
-                (category, f"categories.{route_endpoint}.{category.code}")
-            )
+        if self.routing_map and route_endpoint:
+            self.listing["main"] = []
+            for category, next_page in self.routing_map["main"]:
+                self.listing["main"].append(
+                    (category, f"categories.{route_endpoint}.{category.code}")
+                )
 
-        self.listing["more"] = []
-        for category, next_page in self.routing_map["more"]:
-            self.listing["more"].append(
-                (category, f"categories.{route_endpoint}.{category.code}")
-            )
+            self.listing["more"] = []
+            for category, next_page in self.routing_map["more"]:
+                self.listing["more"].append(
+                    (category, f"categories.{route_endpoint}.{category.code}")
+                )
 
-        self.listing["other"] = f"categories.{route_endpoint}.other"
+            self.listing["other"] = f"categories.{route_endpoint}.other"
 
     def process_request(self):
         return render_template(
