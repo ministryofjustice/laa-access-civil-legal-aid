@@ -1,34 +1,403 @@
-msgid "Children, families and relationships"
+msgid "Domestic abuse"
+msgstr "Cam-drin domestig"
+
+msgid ""
+"Includes controlling behaviour, emotional abuse, or if someone is "
+"harassing, threatening or hurting you or a child. This could be a "
+"partner, ex-partner, or family member."
+msgstr ""
+
+msgid "Help to keep yourself safe and protect children"
+msgstr ""
+
+msgid ""
+"Includes keeping you or your family safe, getting court orders and help "
+"if someone is ignoring a court order. Also, if you’re being stalked, "
+"threatened or harassed."
+msgstr ""
+
+msgid "Leaving an abusive relationship"
+msgstr ""
+
+msgid ""
+"Help with divorce, separation, or leaving your partner. Includes legal "
+"arrangements for children, money and housing."
+msgstr ""
+
+msgid "Problems with an ex-partner: children or money"
+msgstr ""
+
+msgid ""
+"Includes arrangements for children and money. If an ex-partner is not "
+"following agreements or court orders. If you’re worried about a child, or"
+" if a child is taken or kept without your permission."
+msgstr ""
+
+msgid "Problems with neighbours, landlords or other people"
+msgstr ""
+
+msgid "Threats, abuse or harassment by someone who is not a family member."
 msgstr ""
 
 msgid "Housing, homelessness, losing your home"
 msgstr ""
 
-msgid "Community care"
-msgstr "Gofal cymunedol"
+msgid ""
+"Includes being forced to leave your home, problems with council housing, "
+"if you’re homeless or might be homeless in the next 2 months."
+msgstr ""
 
-msgid "Domestic abuse"
-msgstr "Cam-drin domestig"
+msgid "Forced Marriage"
+msgstr ""
 
-msgid "Welfare benefits"
-msgstr "Budd-daliadau lles"
+msgid "Help with forced marriage and Forced Marriage Protection Orders."
+msgstr ""
+
+msgid "Female genital mutilation (FGM)"
+msgstr ""
+
+msgid "If you or someone else is at risk of FGM."
+msgstr ""
+
+msgid "Children, families, relationships"
+msgstr ""
+
+msgid ""
+"Includes children in care, children and social services. Also, help with "
+"children and finances if you divorce or split up."
+msgstr ""
+
+msgid "Children and social services, children in care"
+msgstr ""
+
+msgid ""
+"Help for any problem if social services are involved with a child. "
+"Includes children in care, or being adopted. Also special guardianship."
+msgstr ""
+
+msgid "Problems with an ex-partner, divorce, when a relationship ends"
+msgstr ""
+
+msgid ""
+"If you cannot agree about money, finances and property. Includes contact "
+"with children, where children live, and other child arrangements. If an "
+"ex-partner is not doing what they agreed. If you’re worried about a "
+"child."
+msgstr ""
+
+msgid "If there is domestic abuse in your family"
+msgstr ""
+
+msgid ""
+"Making arrangements for children and finances. Also, keeping yourself "
+"safe, protecting children and legal help to leave the relationship."
+msgstr ""
+
+msgid "Family mediation"
+msgstr ""
+
+msgid ""
+"Help to cover the costs of family mediation (solve problems about money "
+"and children before you go to court)."
+msgstr ""
+
+msgid "Child taken without your consent"
+msgstr ""
+
+msgid ""
+"If a child has been abducted (taken without your permission), including "
+"outside the UK."
+msgstr ""
+
+msgid "Children with special educational needs and disabilities (SEND)"
+msgstr ""
+
+msgid "Get help with a child’s SEND."
+msgstr ""
+
+msgid "Schools, colleges, other education settings"
+msgstr ""
+
+msgid ""
+"Advice about legal action against a school. Includes if a child is out of"
+" school, exclusions, transport to school, judicial reviews."
+msgstr ""
+
+msgid "Forced marriage"
+msgstr ""
+
+msgid ""
+"Includes being evicted or forced to sell your home. Problems with "
+"landlords, repairs, neighbours or council housing."
+msgstr ""
+
+msgid "Homelessness"
+msgstr ""
+
+msgid ""
+"Help if you’re homeless, or might be homeless in the next 2 months. This "
+"could be because of rent arrears, debt, the end of a relationship, or "
+"because you have nowhere to live."
+msgstr ""
+
+msgid "Eviction, told to leave your home"
+msgstr ""
+
+msgid ""
+"Landlord has told you to leave or is trying to force you to leave. "
+"Includes if you’ve got a Section 21 or a possession order."
+msgstr ""
+
+msgid "Forced to sell or losing the home you own"
+msgstr ""
+
+msgid ""
+"Repossession by your mortgage company; bankruptcy or other debt that "
+"means you will lose the home you own."
+msgstr ""
+
+msgid "Repairs, health and safety"
+msgstr ""
+
+msgid ""
+"If your house is not safe to live in, or needs repairs, and this is "
+"causing health or safety problems."
+msgstr ""
+
+msgid "Problems with council housing"
+msgstr ""
+
+msgid ""
+"Help to challenge the council’s decision about giving you housing. It "
+"includes if the council has offered a house that is not right for you, or"
+" that needs repairs or adaptations."
+msgstr ""
+
+msgid "Being threatened or harassed where you live"
+msgstr ""
+
+msgid "By a landlord, neighbour or someone else."
+msgstr ""
+
+msgid "If you’re an asylum-seeker"
+msgstr ""
+
+msgid "Applying for housing, losing your housing or homelessness."
+msgstr ""
 
 msgid "Discrimination"
 msgstr "Gwahaniaethu"
 
-msgid "Mental capacity, mental health"
+msgid "Treated unfairly by a landlord, council or housing association."
 msgstr ""
 
-msgid "Asylum and immigration"
+msgid "If you’ve been accused of anti-social behaviour"
+msgstr ""
+
+msgid ""
+"Accused of anti-social behaviour by the landlord, council or housing "
+"association."
+msgstr ""
+
+msgid ""
+"Treated unfairly because of things like your disability or health "
+"condition, race, age, sex, religion or pregnancy."
+msgstr ""
+
+msgid "Special educational needs and disability (SEND)"
+msgstr ""
+
+msgid "Help if your child has SEND."
+msgstr ""
+
+msgid "Help with a child or young person's SEND"
+msgstr ""
+
+msgid ""
+"Help with schools, other education settings and local authorities. "
+"Includes help with education, health and care plans (EHCP) or if a "
+"child’s needs are not being met."
+msgstr ""
+
+msgid "SEND tribunals"
+msgstr ""
+
+msgid ""
+"Applying for or going to a SEND tribunal, appealing a decision by a "
+"tribunal."
+msgstr ""
+
+msgid "Child treated unfairly at school, discrimination"
+msgstr ""
+
+msgid ""
+"If a child is treated unfairly at school because of their disability. Or "
+"if you were treated badly for complaining about this."
+msgstr ""
+
+msgid "Other problems with schools"
+msgstr ""
+
+msgid "Care needs for disability (social care)"
+msgstr ""
+
+msgid ""
+"Problems getting the local authority or council to provide or pay for the"
+" right care. For carers, children, young people and adults."
 msgstr ""
 
 msgid "Care needs for disability and old age (social care)"
 msgstr ""
 
+msgid "Care from the council (local authority)"
+msgstr ""
+
+msgid ""
+"Includes problems with care needs assessments, financial assessments and "
+"care support plans. Getting an advocate for assessments. Problems with "
+"transport, personal budgets and direct payments."
+msgstr ""
+
+msgid "If you’re a carer"
+msgstr ""
+
+msgid ""
+"Includes problems with carer’s assessments and respite care. Problems to "
+"do with making decisions about someone’s care."
+msgstr ""
+
+msgid "If you receive care in your own home"
+msgstr ""
+
+msgid ""
+"Problems with care providers, social workers, care agencies. Also getting"
+" adaptations and disabled facilities grants."
+msgstr ""
+
+msgid "If care or funding stops"
+msgstr ""
+
+msgid ""
+"Problems if care or money for care is stopped or reduced, or if care "
+"facilities close."
+msgstr ""
+
+msgid "Placements, care homes and care housing"
+msgstr ""
+
+msgid ""
+"Problems with placements in care homes, group homes or other supported "
+"housing. If a placement isn't working because someone's care needs have "
+"changed."
+msgstr ""
+
+msgid "Problems with the quality of care, safeguarding"
+msgstr ""
+
+msgid ""
+"Issues with safeguarding, abuse, neglect, or care that is not good "
+"enough. This includes in group homes or other placements, or from a carer"
+" or social worker."
+msgstr ""
+
+msgid "If you’re a care leaver"
+msgstr ""
+
+msgid ""
+"Problems if the local authority is not providing the right support. "
+"Includes problems with housing, financial support, education, personal "
+"advisers and Pathway Plans."
+msgstr ""
+
+msgid "Benefits"
+msgstr ""
+
+msgid "Welfare benefits"
+msgstr "Budd-daliadau lles"
+
+msgid "Appeal a decision about your benefits."
+msgstr ""
+
 msgid "Legal action against police and public organisations"
 msgstr ""
 
-msgid "Special educational needs and disability (SEND)"
+msgid "Includes schools, the police, government, prisons, NHS, the council."
+msgstr ""
+
+msgid "Asylum and immigration"
+msgstr ""
+
+msgid ""
+"Help if you’re seeking asylum. Help to stay in the UK if you experienced "
+"domestic abuse."
+msgstr ""
+
+msgid "Applying for asylum"
+msgstr ""
+
+msgid ""
+"Help to apply for asylum, go to asylum interviews, or appeal an asylum "
+"decision."
+msgstr ""
+
+msgid "Housing and homelessness"
+msgstr ""
+
+msgid "Help to apply for housing, problems with housing or if you are homeless."
+msgstr ""
+
+msgid "Stay in the UK if you experienced domestic abuse"
+msgstr ""
+
+msgid ""
+"Help to remain in the UK or EU if your relationship ended because of "
+"domestic abuse. This could be by a partner, ex-partner or family member."
+msgstr ""
+
+msgid "Help if you’re being detained"
+msgstr ""
+
+msgid ""
+"Help if you’re in immigration detention, including if you want to apply "
+"for bail. Help if you’re in prison."
+msgstr ""
+
+msgid "Trafficking, modern slavery"
+msgstr ""
+
+msgid "Help if you’re a victim of trafficking or modern slavery."
+msgstr ""
+
+msgid "Mental capacity, mental health"
+msgstr ""
+
+msgid ""
+"Help if someone cannot make decisions about their health, day-to-day life"
+" or care. Help at mental health tribunals."
+msgstr ""
+
+msgid "If someone cannot decide for themselves (lacks mental capacity)"
+msgstr ""
+
+msgid ""
+"Help to challenge a decision made about someone’s living arrangements, "
+"care, health, relationships, family contact or finances. Includes if "
+"someone is deprived of their liberty, and ‘deprivation of liberty "
+"safeguards’ (DoLS)."
+msgstr ""
+
+msgid "Court of Protection"
+msgstr ""
+
+msgid "Advice about issues covered by the Court of Protection."
+msgstr ""
+
+msgid "Mental health detention and tribunals"
+msgstr ""
+
+msgid ""
+"Help if someone has been sectioned (held in a mental health hospital), or"
+" is under a community treatment order. Help with mental health tribunals."
 msgstr ""
 
 msgid "special educational needs and disability (SEND)"
@@ -86,15 +455,12 @@ msgid "Select if this is about the police, prisons or detention centres"
 msgstr ""
 
 msgid "Are you under 18?"
-msgstr ""
+msgstr "Ydych chi dan 18 oed?"
 
 msgid "Select if you’re under 18"
-msgstr ""
+msgstr "Dewiswch os ydych chi dan 18 oed"
 
 msgid "Were you accused by a landlord or the council?"
-msgstr ""
-
-msgid "Anti-social behaviour and gangs"
 msgstr ""
 
 msgid "Select ‘Yes’ if you were accused by a landlord or the council"
@@ -975,6 +1341,12 @@ msgstr "Rhowch gyfanswm yr holl eitemau gwerthfawr dros £500"
 msgid "Enter 0 if you have no valuable items worth over £500 each"
 msgstr "Rhowch 0 os nad oes gennych eitemau gwerthfawr sy’n werth dros £500 yr un"
 
+msgid "Sorry, you’re not likely to get legal aid"
+msgstr ""
+
+msgid "Next steps to get help"
+msgstr ""
+
 msgid "Legal aid is available for this type of problem"
 msgstr "Mae cymorth cyfreithiol ar gael ar gyfer y math hwn o broblem"
 
@@ -1121,6 +1493,9 @@ msgstr ""
 msgid "More problems covered by legal aid"
 msgstr ""
 
+msgid "More problems"
+msgstr ""
+
 msgid "Adopting a child from outside the UK"
 msgstr ""
 
@@ -1131,6 +1506,9 @@ msgid "Appeal a decision that you cannot work with children or vulnerable adults
 msgstr ""
 
 msgid "Including if you’re on a ‘barred list’ or disqualified from teaching."
+msgstr ""
+
+msgid "Anti-social behaviour and gangs"
 msgstr ""
 
 msgid ""
@@ -1170,18 +1548,6 @@ msgid ""
 "environment."
 msgstr ""
 
-msgid "Female genital mutilation (FGM)"
-msgstr ""
-
-msgid "If you or someone else is at risk of FGM."
-msgstr ""
-
-msgid "Forced marriage"
-msgstr ""
-
-msgid "Help with forced marriage and Forced Marriage Protection Orders."
-msgstr ""
-
 msgid "Inquests for family members"
 msgstr ""
 
@@ -1206,9 +1572,6 @@ msgid "Terrorism"
 msgstr ""
 
 msgid "If you’re accused of terrorism or financing terrorist groups."
-msgstr ""
-
-msgid "Trafficking, modern slavery"
 msgstr ""
 
 msgid "Help if you’re a victim of human trafficking or modern slavery."
@@ -1283,42 +1646,6 @@ msgstr "gyflwyno cais yn uniongyrchol"
 msgid "You can also %(ecf_link)s to the Legal Aid Agency."
 msgstr "Gallwch hefyd %(ecf_link)s i’r Asiantaeth Cymorth Cyfreithiol."
 
-msgid "Applying for asylum"
-msgstr ""
-
-msgid ""
-"Help to apply for asylum, go to asylum interviews, or appeal an asylum "
-"decision."
-msgstr ""
-
-msgid "Housing and homelessness"
-msgstr ""
-
-msgid "Help to apply for housing, problems with housing or if you are homeless."
-msgstr ""
-
-msgid "Stay in the UK if you experienced domestic abuse"
-msgstr ""
-
-msgid ""
-"Help to remain in the UK or EU if your relationship ended because of "
-"domestic abuse. This could be by a partner, ex-partner or family member."
-msgstr ""
-
-msgid "Help if you’re being detained"
-msgstr ""
-
-msgid ""
-"Help if you’re in immigration detention, including if you want to apply "
-"for bail. Help if you’re in prison."
-msgstr ""
-
-msgid "More problems"
-msgstr ""
-
-msgid "Help if you’re a victim of trafficking or modern slavery."
-msgstr ""
-
 msgid "Appeal a decision about your benefits"
 msgstr ""
 
@@ -1329,66 +1656,6 @@ msgid ""
 "For all other benefits appeals, go to GOV.UK and read <a "
 "href=\"https://www.gov.uk/appeal-benefit-decision\" "
 "target=\"_blank\">Appeal a benefits decision (opens in new tab)</a>."
-msgstr ""
-
-msgid "Care from the council (local authority)"
-msgstr ""
-
-msgid ""
-"Includes problems with care needs assessments, financial assessments and "
-"care support plans. Getting an advocate for assessments. Problems with "
-"transport, personal budgets and direct payments."
-msgstr ""
-
-msgid "If you’re a carer"
-msgstr ""
-
-msgid ""
-"Includes problems with carer’s assessments and respite care. Problems to "
-"do with making decisions about someone’s care."
-msgstr ""
-
-msgid "If you receive care in your own home"
-msgstr ""
-
-msgid ""
-"Problems with care providers, social workers, care agencies. Also getting"
-" adaptations and disabled facilities grants."
-msgstr ""
-
-msgid "If care or funding stops"
-msgstr ""
-
-msgid ""
-"Problems if care or money for care is stopped or reduced, or if care "
-"facilities close."
-msgstr ""
-
-msgid "Placements, care homes and care housing"
-msgstr ""
-
-msgid ""
-"Problems with placements in care homes, group homes or other supported "
-"housing. If a placement isn't working because someone's care needs have "
-"changed."
-msgstr ""
-
-msgid "Problems with the quality of care, safeguarding"
-msgstr ""
-
-msgid ""
-"Issues with safeguarding, abuse, neglect, or care that is not good "
-"enough. This includes in group homes or other placements, or from a carer"
-" or social worker."
-msgstr ""
-
-msgid "If you’re a care leaver"
-msgstr ""
-
-msgid ""
-"Problems if the local authority is not providing the right support. "
-"Includes problems with housing, financial support, education, personal "
-"advisers and Pathway Plans."
 msgstr ""
 
 msgid "If you cannot find your problem"
@@ -1406,162 +1673,6 @@ msgstr "Oriau agor"
 
 msgid "Email"
 msgstr "E-bost"
-
-msgid "Children and social services, children in care"
-msgstr ""
-
-msgid ""
-"Help for any problem if social services are involved with a child. "
-"Includes children in care, or being adopted. Also special guardianship."
-msgstr ""
-
-msgid "Problems with an ex-partner, divorce, when a relationship ends"
-msgstr ""
-
-msgid ""
-"If you cannot agree about money, finances and property. Includes contact "
-"with children, where children live, and other child arrangements. If an "
-"ex-partner is not doing what they agreed. If you’re worried about a "
-"child."
-msgstr ""
-
-msgid "If there is domestic abuse in your family"
-msgstr ""
-
-msgid ""
-"Making arrangements for children and finances. Also, keeping yourself "
-"safe, protecting children and legal help to leave the relationship."
-msgstr ""
-
-msgid "Family mediation"
-msgstr ""
-
-msgid ""
-"Help to cover the costs of family mediation (solve problems about money "
-"and children before you go to court)."
-msgstr ""
-
-msgid "Child taken without your consent"
-msgstr ""
-
-msgid ""
-"If a child has been abducted (taken without your permission), including "
-"outside the UK."
-msgstr ""
-
-msgid "Children with special educational needs and disabilities (SEND)"
-msgstr ""
-
-msgid "Get help with a child’s SEND."
-msgstr ""
-
-msgid "Schools, colleges, other education settings"
-msgstr ""
-
-msgid ""
-"Advice about legal action against a school. Includes if a child is out of"
-" school, exclusions, transport to school, judicial reviews."
-msgstr ""
-
-msgid "children, families, relationships"
-msgstr ""
-
-msgid "Homelessness"
-msgstr ""
-
-msgid ""
-"Help if you’re homeless, or might be homeless in the next 2 months. This "
-"could be because of rent arrears, debt, the end of a relationship, or "
-"because you have nowhere to live."
-msgstr ""
-
-msgid "Eviction, told to leave your home"
-msgstr ""
-
-msgid ""
-"Landlord has told you to leave or is trying to force you to leave. "
-"Includes if you’ve got a Section 21 or a possession order."
-msgstr ""
-
-msgid "Forced to sell or losing the home you own"
-msgstr ""
-
-msgid ""
-"Repossession by your mortgage company; bankruptcy or other debt that "
-"means you will lose the home you own."
-msgstr ""
-
-msgid "Repairs, health and safety"
-msgstr ""
-
-msgid ""
-"If your house is not safe to live in, or needs repairs, and this is "
-"causing health or safety problems."
-msgstr ""
-
-msgid "Problems with council housing"
-msgstr ""
-
-msgid ""
-"Help to challenge the council’s decision about giving you housing. It "
-"includes if the council has offered a house that is not right for you, or"
-" that needs repairs or adaptations."
-msgstr ""
-
-msgid "Being threatened or harassed where you live"
-msgstr ""
-
-msgid "By a landlord, neighbour or someone else."
-msgstr ""
-
-msgid "If you’re an asylum-seeker"
-msgstr ""
-
-msgid "Applying for housing, losing your housing or homelessness."
-msgstr ""
-
-msgid "Treated unfairly by a landlord, council or housing association."
-msgstr ""
-
-msgid "If you’ve been accused of anti-social behaviour"
-msgstr ""
-
-msgid ""
-"Accused of anti-social behaviour by the landlord, council or housing "
-"association."
-msgstr ""
-
-msgid "housing"
-msgstr "tai"
-
-msgid "If someone cannot decide for themselves (lacks mental capacity)"
-msgstr ""
-
-msgid ""
-"Help to challenge a decision made about someone’s living arrangements, "
-"care, health, relationships, family contact or finances. Includes if "
-"someone is deprived of their liberty, and ‘deprivation of liberty "
-"safeguards’ (DoLS)."
-msgstr ""
-
-msgid "Court of Protection"
-msgstr ""
-
-msgid "Advice about issues covered by the Court of Protection."
-msgstr ""
-
-msgid "Mental health detention and tribunals"
-msgstr ""
-
-msgid ""
-"Help if someone has been sectioned (held in a mental health hospital), or"
-" is under a community treatment order. Help with mental health tribunals."
-msgstr ""
-
-msgid ""
-"Problems getting the local authority or council to provide or pay for the"
-" right care. For carers, children, young people and adults."
-msgstr ""
 
 msgid "Legal action against public organisations"
 msgstr ""
@@ -1598,40 +1709,6 @@ msgid "wrongfully arrested, stopped, held or detained anywhere"
 msgstr ""
 
 msgid "physically, sexually or emotionally abused"
-msgstr ""
-
-msgid "Help with a child or young person's SEND"
-msgstr ""
-
-msgid ""
-"Help with schools, other education settings and local authorities. "
-"Includes help with education, health and care plans (EHCP) or if a "
-"child’s needs are not being met."
-msgstr ""
-
-msgid "SEND tribunals"
-msgstr ""
-
-msgid ""
-"Applying for or going to a SEND tribunal, appealing a decision by a "
-"tribunal."
-msgstr ""
-
-msgid "Child treated unfairly at school, discrimination"
-msgstr ""
-
-msgid ""
-"If a child is treated unfairly at school because of their disability. Or "
-"if you were treated badly for complaining about this."
-msgstr ""
-
-msgid "Other problems with schools"
-msgstr ""
-
-msgid "Care needs for disability (social care)"
-msgstr ""
-
-msgid "SEND"
 msgstr ""
 
 msgid "Back"
@@ -1962,5 +2039,20 @@ msgstr "Offerynnau cerddorol, oni bai’ch bod yn gerddor proffesiynol"
 #~ msgstr ""
 
 #~ msgid "Help with a child or young person's SEND)"
+#~ msgstr ""
+
+#~ msgid "Children, families and relationships"
+#~ msgstr ""
+
+#~ msgid "Community care"
+#~ msgstr "Gofal cymunedol"
+
+#~ msgid "children, families, relationships"
+#~ msgstr ""
+
+#~ msgid "housing"
+#~ msgstr "tai"
+
+#~ msgid "SEND"
 #~ msgstr ""
 
