@@ -4,6 +4,17 @@ from app import create_app
 from flask import url_for
 
 
+@pytest.fixture(scope="session")
+def browser_context_args(browser_context_args):
+    return {
+        **browser_context_args,
+        "viewport": {
+            "width": 1920,
+            "height": 1080,
+        },
+    }
+
+
 class TestConfig(Config):
     TESTING = True
     DEBUG = True
@@ -13,9 +24,8 @@ class TestConfig(Config):
 
 
 @pytest.fixture(scope="session")
-def app():
-    app = create_app(TestConfig)
-    yield app
+def app(config=TestConfig):
+    return create_app(config)
 
 
 @pytest.fixture()

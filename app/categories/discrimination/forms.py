@@ -1,61 +1,101 @@
+from wtforms import SelectMultipleField
+from app.categories.validators import ExclusiveValue
+from app.categories.widgets import CategoryCheckboxInput
 from app.categories.forms import QuestionForm
-from wtforms import RadioField
-from app.categories.widgets import CategoryRadioInput
 from wtforms.validators import InputRequired
+from app.categories.x_cat.forms import AreYouUnder18Form
+from app.categories.constants import DISCRIMINATION
 
 
-class DiscriminationWhereForm(QuestionForm):
-    category = "Discrimination"
+class DiscriminationQuestionForm(QuestionForm):
+    category = DISCRIMINATION
 
+
+class DiscriminationWhereForm(DiscriminationQuestionForm):
     title = "Where did the discrimination happen?"
 
-    question = RadioField(
+    next_step_mapping = {
+        "*": "categories.discrimination.why",
+        "notsure": "categories.discrimination.why",
+    }
+
+    question = SelectMultipleField(
         title,
-        widget=CategoryRadioInput(),
+        widget=CategoryCheckboxInput(
+            show_divider=True, hint_text="You can select more than one."
+        ),
         validators=[InputRequired(message="Select where the discrimination happened")],
         choices=[
             ("work", "Work - including colleagues, employer or employment agency"),
-            ("school", "School, college, university or other education settings"),
+            ("school", "School, college, university or other education setting"),
             (
                 "business",
-                "Businesses or service provision - like a shop, restaurant, train, hotel, bank, law firm",
+                "Businesses or services - such as a shop, restaurant, train, hotel, bank, law firm",
             ),
-            ("healthcare", "Health or care - like a hospital or care home"),
-            ("housing", "Housing provision - like a landlord or estate agent"),
+            ("healthcare", "Health or care - such as a hospital or care home"),
+            ("housing", "Housing - such as a landlord or estate agent"),
             (
                 "public",
-                "Public services and authorities - like the police, social services, council or local authority, jobcentre, government",
+                "Public services and authorities - such as the police, social services, council or local authority, jobcentre, government",
             ),
-            ("club", "Clubs and associations - like a sports club"),
+            ("club", "Clubs and associations - such as a sports club"),
             ("", ""),
-            ("notsure", "Not sure"),
+            ("notsure", "I’m not sure"),
         ],
     )
 
 
-class DiscriminationWhyForm(QuestionForm):
-    category = "Discrimination"
+class DiscriminationWhyForm(DiscriminationQuestionForm):
+    title = "Why were you discriminated against?"
 
-    title = "Why were you treated differently?"
+    next_step_mapping = {
+        "*": "categories.discrimination.age",
+        "none": "categories.results.refer",
+    }
 
-    question = RadioField(
+    question = SelectMultipleField(
         title,
-        widget=CategoryRadioInput(),
-        validators=[InputRequired(message="Select why you were treated differently")],
+        widget=CategoryCheckboxInput(
+            show_divider=True,
+            hint_text="You can select more than one.",
+            behaviour="exclusive",
+        ),
+        validators=[
+            InputRequired(message="Select why you were discriminated against"),
+            ExclusiveValue(
+                exclusive_value="none",
+                message="Select why you were discriminated against, or select ‘None of these’",
+            ),
+        ],
         choices=[
-            ("race", "Race, colour of skin, ethnicity"),
+            ("race", "Race, colour, ethnicity, nationality"),
             ("sex", "Sex (male or female)"),
             ("disability", "Disability, health condition, mental health condition"),
             ("religion", "Religion, belief, lack of religion"),
             ("age", "Age"),
-            ("sexualorientation", "Sexual orientation - gay, bi, other sexuality"),
-            ("gender", "Gender - trans, gender reassignment, other gender issue"),
             ("pregnancy", "Pregnancy or being a mother"),
             (
+                "sexualorientation",
+                "Sexual orientation - gay, bisexual, other sexuality",
+            ),
+            (
+                "gender",
+                "Gender reassignment, being transgender, non-binary or gender-fluid",
+            ),
+            (
                 "marriage",
-                "Married status - being married, in a civil partnership, unmarried",
+                "Married status - being married, in a civil partnership",
             ),
             ("", ""),
-            ("none", "None of the above"),
+            ("none", "None of these"),
         ],
     )
+
+
+class DiscriminationAreYouUnder18Form(AreYouUnder18Form):
+    category = DISCRIMINATION
+
+    next_step_mapping = {
+        "yes": "contact.contact_us",
+        "no": "categories.results.in_scope",
+    }

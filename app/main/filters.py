@@ -1,5 +1,17 @@
+from flask import url_for
 from app.main import bp
 import json
+from markupsafe import Markup
+from markdown import markdown
+
+
+@bp.app_template_filter("markdown")
+def render_markdown(text):
+    """Renders Markdown text as HTML, this can be invoked in Jinja templates using the markdown filter:
+    {{ "# Hello, World!" | markdown }}
+    We use markupsafe to ensure characters are escaped correctly so they can be safely rendered.
+    """
+    return Markup(markdown(text))
 
 
 @bp.app_template_filter("dict")
@@ -27,3 +39,16 @@ def get_item_from_dict(d, s):
     if s not in d:
         return None
     return d[s]
+
+
+@bp.app_template_filter("category_url_for")
+def category_url_for(data, **kwargs):
+    if isinstance(data, dict):
+        data = data.copy()
+        endpoint = data.pop("endpoint", None)
+        if endpoint is None:
+            raise ValueError("No endpoint provided")
+        url = url_for(endpoint, **data)
+    else:
+        url = url_for(data)
+    return url

@@ -8,3 +8,7 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
+
+envVars:
+  CLA_BACKEND_URL:
+    value: "http://cla-backend-app.laa-cla-backend-staging.svc.cluster.local"

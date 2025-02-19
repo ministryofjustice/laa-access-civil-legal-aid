@@ -2,5 +2,13 @@
 @import "govuk-frontend/dist/govuk/all.scss";
 
 
-/* Import your custom SCSS below to be compiled into one by Flask Assets -2 */
+/* Import your custom SCSS below to be compiled into one by Flask Assets */
 @import "./custom";
+@import "./sidebar";
+@import "./exit_this_page";
+@import "./help-organisations";
+@import "./means-test";
+@import "./conditionals";
+@import "./modal-dialog";
+@import "./progress_bar";
+@import "./back-link";

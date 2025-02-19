@@ -1,0 +1,15 @@
+{% extends "means_test/form-page.html" %}
+
+
+{% block formHeading %}
+    
+{% endblock %}
+
+{% block form %}
+
+    {{ form.csrf_token }}
+
+    {{ form.render_conditional(form.benefits, form.child_benefits, "child_benefit") }}
+
+    {{ form.submit }}
+{% endblock %}

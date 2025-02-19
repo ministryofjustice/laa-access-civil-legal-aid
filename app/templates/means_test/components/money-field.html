@@ -1,0 +1,61 @@
+{%- from 'govuk_frontend_jinja/components/input/macro.html' import govukInput %}
+{%- from 'govuk_frontend_jinja/components/select/macro.html' import govukSelect %}
+{%- from 'govuk_frontend_jinja/components/error-message/macro.html' import govukErrorMessage %}
+
+{% macro renderError(field_errors) %}
+    {% if field_errors %}
+    {{ govukErrorMessage(params={
+            "text": field.errors[0],
+            })
+        }}
+    {% endif %}
+{% endmacro %}
+
+<div class="govuk-form-group {%- if field.errors %} govuk-form-group--error{% endif %}">
+    <fieldset class="govuk-fieldset" role="group" id={{ field.name }}>
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+          <h3 class="govuk-fieldset__heading">
+              {{ field.title }}
+          </h3>
+        </legend>
+        {% if field.hint_text %}
+         <div class="govuk-hint">
+            {{ field.hint_text }}
+        </div>
+        {% endif %}
+        {{ renderError(field.field_with_error) }}
+        <div class="govuk-grid-row" class="govuk-form-group {% if field.errors %}govuk-form-group--error{% endif %}">
+            <div class="govuk-grid-column-one-half">
+            {{ govukInput(params={
+                "id": field.id + "-value",
+                "name": field.name,
+                "prefix": {
+                    "text": "£"
+                },
+                "value": value,
+                "classes": "govuk-input--width-10",
+                "spellcheck": false,
+                "label": {
+                    "text": _("Amount"),
+                    "classes": "govuk-label--s",
+                    },
+                "errorMessage": {"class": "govuk-error-message"} if "value" in field.field_with_error else {},})
+            }}
+            </div>
+            <div class="govuk-grid-column-one-half">
+            {{ govukSelect(params={
+                "id": field.id + "-interval",
+                "name": field.name,
+                "value": field.interval,
+                "label": {
+                    "text": _("Frequency"),
+                    "classes": "govuk-label--s",
+                },
+                "items": field.interval_choices,
+                "errorMessage": {"class": "govuk-error-message"} if "interval" in field.field_with_error else {},
+                })
+            }}
+            </div>
+        </div>
+    </fieldset>
+</div>

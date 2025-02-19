@@ -1,22 +1,6 @@
-from app.categories.forms import QuestionForm
-from wtforms import RadioField
-from app.categories.widgets import CategoryRadioInput
-from wtforms.validators import InputRequired
+from app.categories.forms import SafeguardingQuestionForm
+from app.categories.constants import DOMESTIC_ABUSE
 
 
-class AreYouAtRiskOfHarmForm(QuestionForm):
-    category = "Domestic Abuse"
-
-    title = "Are you or your children at immediate risk of harm?"
-
-    question = RadioField(
-        title,
-        widget=CategoryRadioInput(),
-        validators=[
-            InputRequired(message="Select if you are at immediate risk of harm?")
-        ],
-        choices=[
-            ("yes", "Yes"),
-            ("no", "No"),
-        ],
-    )
+class WorriedAboutSomeonesSafetyForm(SafeguardingQuestionForm):
+    category = DOMESTIC_ABUSE

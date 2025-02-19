@@ -1,0 +1,19 @@
+{% macro searchInstructions(category) %}
+    {% if category == 'hlpas' %}
+        <p class="govuk-body">We’ll show you a list of legal advisers. You can contact any adviser from this list.<p>
+        <p class="govuk-body">If they are busy, you might need to contact more than one.<p>
+        <p class="govuk-body">All our legal advisers are regulated and contracted by the government. They will check whether you qualify for legal aid at no cost to you by asking about your problem and your finances. In some cases you may need to pay a contribution towards your legal aid.</p>
+    {% else %}
+        <p class="govuk-body">Your adviser will check whether you qualify for legal aid <b>at no cost to you</b> by asking about your problem and your finances. In some cases you may need to pay a contribution towards your legal aid.</p>
+    {% endif %}
+{% endmacro %}
+
+{% macro resultInstructions(category) %}
+    {% if category == 'hlpas' %}
+        <p class="govuk-body">You can contact any legal adviser from this list.<p>
+        <p class="govuk-body">Tell them that your home is at risk and that you want advice through the Housing Loss Prevention Advice Scheme.<p>
+    {% else %}
+        <p class="govuk-body">Your adviser will check whether you qualify for legal aid <b>at no cost to you</b> by asking about your problem and your finances. In some cases you may need to pay a contribution towards your legal aid.</p>
+        <p class="govuk-body">You can contact any legal adviser from this list.</p>
+    {% endif %}
+{% endmacro %}

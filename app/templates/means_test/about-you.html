@@ -1,0 +1,100 @@
+{% extends "means_test/form-page.html" %}
+{%- from 'govuk_frontend_jinja/components/details/macro.html' import govukDetails %}
+
+{% set areYouInADisputeHtml %}
+    {{ form.are_you_in_a_dispute() }}
+{% endset %}
+
+{% set howManyChildrenUnder16Html %}
+    {{ form.num_children(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "classes": "govuk-input--width-4",
+        "inputmode": "numeric",
+        "spellcheck": false
+    }) }}
+{% endset %}
+
+{% set howManyDependentsOver16Html %}
+    {{ form.num_dependents(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "classes": "govuk-input--width-4",
+        "inputmode": "numeric",
+        "spellcheck": false,
+    }) }}
+{% endset %}
+
+{% block form %}
+    {{ form.csrf_token }}
+
+    {{ form.has_partner(params={
+        'items': [
+            {
+                'conditional': {
+                    'html': areYouInADisputeHtml
+                },
+            },
+            {
+            },
+        ]
+    }) }}
+
+    {{ form.on_benefits() }}
+
+    {{ form.have_children(params={
+        'items': [
+            {
+                'conditional': {
+                    'html': howManyChildrenUnder16Html
+                }
+            },
+            {
+            },
+        ]
+    }) }}
+
+    {{ form.have_dependents(params={
+        'items': [
+            {
+                'conditional': {
+                    'html': howManyDependentsOver16Html
+                }
+            },
+            {
+            },
+        ]
+    }) }}
+
+    {{ form.own_property() }}
+
+    {{ form.is_employed() }}
+
+    {{ form.partner_is_employed(params={
+        "attributes": {
+            "data-controlled-by": "are_you_in_a_dispute",
+            "data-show-value": "0"
+        }
+    }) }}
+
+    {{ form.is_self_employed() }}
+
+    {{ form.partner_is_self_employed(params={
+        "attributes": {
+            "data-controlled-by": "are_you_in_a_dispute",
+            "data-show-value": "0"
+        }
+    }) }}
+
+    {{ form.aged_60_or_over() }}
+
+    {{ form.have_savings() }}
+
+    {{ form.have_valuables() }}
+
+    {% include "means_test/components/valuable-info.html" %}
+
+    {{ form.submit }}
+{% endblock %}

@@ -1,0 +1,158 @@
+{% extends "means_test/form-page.html" %}
+
+{% block form %}
+    {{ form.csrf_token }}
+    
+    {% if form.has_partner %}
+        <p class="govuk-body">{% trans %}Please tell us about any property owned by you, your partner or both of you.{% endtrans %}</p>
+    {% endif %}
+    
+    <p class="govuk-body">{% trans %}You can add more than one property below.{% endtrans %}</p>
+    <p class="govuk-body">{% trans %}You’ll need to provide evidence of the financial information you’ve given us through this service.{% endtrans %}</p>
+
+    {# Property 1 should always show, but title only if Property 2 exists #}
+    <fieldset class="govuk-fieldset">
+        {% if form.properties|length > 1 %}
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                Property 1
+            </legend>
+        {% endif %}
+        
+        {% set rentAmountHtml %}
+            {{ form.properties[0].rent_amount() }}
+        {% endset %}
+        
+        {{ form.properties[0].is_main_home() }}
+        {{ form.properties[0].other_shareholders() }}
+
+        {{ form.properties[0].property_value(params={
+            "label": {
+                "classes": "govuk-label--m"
+            },
+            "prefix": {
+                "text": "£"
+            },
+            "classes": "govuk-input--width-10",
+            "inputmode": "numeric",
+            "spellcheck": false
+        }) }}
+
+        {{ form.properties[0].mortgage_remaining(params={
+            "label": {
+                "classes": "govuk-label--m"
+            },
+            "prefix": {
+                "text": "£"
+            },
+            "classes": "govuk-input--width-10",
+            "inputmode": "numeric",
+            "spellcheck": false
+        }) }}
+
+        {{ form.properties[0].mortgage_payments(params={
+            "label": {
+                "classes": "govuk-label--m"
+            },
+            "prefix": {
+                "text": "£"
+            },
+            "classes": "govuk-input--width-10",
+            "inputmode": "numeric",
+            "spellcheck": false
+        }) }}
+
+        {{ form.properties[0].is_rented(params={
+            'items': [
+                {
+                    'conditional': {
+                        'html': rentAmountHtml
+                    },
+                },
+                {},
+            ]
+        }) }}
+
+        {{ form.properties[0].in_dispute() }}
+    </fieldset>
+
+    {% for property_form in form.properties[1:] %}
+        <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                Property {{ loop.index + 1 }}
+            </legend>
+
+            <button type="submit" class="govuk-button govuk-button--secondary" name="remove-property-{{ loop.index + 1 }}">
+                {% trans %}Remove Property{% endtrans %}
+            </button>
+
+            {% set rentAmountHtml %}
+                {{ property_form.rent_amount() }}
+            {% endset %}
+
+            {{ property_form.is_main_home() }}
+            {{ property_form.other_shareholders() }}
+
+            {{ property_form.property_value(params={
+                "label": {
+                    "classes": "govuk-label--m"
+                },
+                "prefix": {
+                    "text": "£"
+                },
+                "classes": "govuk-input--width-10",
+                "inputmode": "numeric",
+                "spellcheck": false
+            }) }}
+
+            {{ property_form.mortgage_remaining(params={
+                "label": {
+                    "classes": "govuk-label--m"
+                },
+                "prefix": {
+                    "text": "£"
+                },
+                "classes": "govuk-input--width-10",
+                "inputmode": "numeric",
+                "spellcheck": false
+            }) }}
+
+            {{ property_form.mortgage_payments(params={
+                "label": {
+                    "classes": "govuk-label--m"
+                },
+                "prefix": {
+                    "text": "£"
+                },
+                "classes": "govuk-input--width-10",
+                "inputmode": "numeric",
+                "spellcheck": false
+            }) }}
+
+            {{ property_form.is_rented(params={
+                'items': [
+                    {
+                        'conditional': {
+                            'html': rentAmountHtml
+                        },
+                    },
+                    {},
+                ]
+            }) }}
+
+            {{ property_form.in_dispute() }}
+        </fieldset>
+    {% endfor %}
+
+    {% if form.properties|length < form.properties.max_entries %}
+        <input 
+            type="submit" 
+            class="govuk-button govuk-button--secondary" 
+            name="add-property" 
+            value="{{ _('Add another property') }}" 
+        />
+    {% endif %}
+
+    <div class="govuk-button-wrapper">
+      {{ form.submit }}
+    </div>
+{% endblock %}

@@ -1,0 +1,67 @@
+/* Handles 'Show more' functionality */
+.help-org--hidden {
+  display: none;
+}
+/* The checkbox shouldn't be visible, the user interacts with the button label */
+#show-more {
+    display: none;
+}
+/* When the button is checked, show the hidden content and hide the button */
+#show-more:checked ~ .org-list .help-org--hidden {
+  display: block;
+}
+#show-more:checked ~ #show-more-button {
+    display: none;
+}
+
+
+.org-list {
+  margin: 20px 0;
+  padding: 0;
+  list-style: none;
+
+  ul,
+  p {
+    margin: .5em 0 0;
+  }
+
+  ul {
+    list-style: disc;
+
+    li p {
+      margin: 0;
+    }
+
+    p:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .help-org {
+    padding: 20px 0;
+    border-bottom: 1px solid $govuk-border-colour;
+  }
+}
+
+.org-details {
+  padding: 0 15px;
+  margin-top: .5em;
+  border-left: 5px solid govuk-colour("mid-grey");
+
+  dl {
+    margin: 5px 0;
+    font-size: .9em;
+  }
+
+  dt {
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: top;
+  }
+
+  dd {
+    display: inline-block;
+    margin: 0;
+  }
+}

@@ -5,10 +5,10 @@ on:
       environment:
         required: true
         type: string
-      ECR_REGION:
+      ACCESS_ECR_REGION:
         required: true
         type: string
-      ECR_REPOSITORY:
+      ACCESS_ECR_REPOSITORY:
         required: true
         type: string
       DEPLOYMENT_URL:
@@ -17,7 +17,7 @@ on:
     secrets:
       ECR_REGISTRY:
         required: true
-      ECR_ROLE_TO_ASSUME:
+      ACCESS_ECR_ROLE_TO_ASSUME:
         required: true
       KUBE_CERT:
         required: true
@@ -67,7 +67,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ github.sha }}
           REGISTRY: ${{ secrets.ECR_REGISTRY }}
-          REPOSITORY: ${{ inputs.ECR_REPOSITORY }}
+          REPOSITORY: ${{ inputs.ACCESS_ECR_REPOSITORY }}
           HELM_DIR: "helm_deploy/laa-access-civil-legal-aid"
           SHARED_IP_RANGES_LAA: ${{ env.SHARED_IP_RANGES_LAA }}
         run: |

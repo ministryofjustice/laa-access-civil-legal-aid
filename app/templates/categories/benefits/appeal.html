@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{%- from 'components/back_link.html' import govukBackLink -%}
+{%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
+
+{% block pageTitle %}{%- if form.errors %}Error: {% endif -%}{{ form.title }} - GOV.UK{% endblock %}
+
+{% block beforeContent%}
+{{ super() }}
+{{ govukBackLink() }}
+
+{% if form.category == "Domestic Abuse" %}
+    {{ govukExitThisPage("Exit this page")}}
+{% endif %}
+
+{% endblock %}
+
+{% block content %}
+
+{{ super() }}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-xl">{% trans %}Appeal a decision about your benefits{% endtrans %}</h1>
+        <p class="govuk-body">{% trans %}Legal aid only covers appeals to the:{% endtrans %}</p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>{% trans %}Upper Tribunal (Administrative Appeals Chamber){% endtrans %}</li>
+            <li>{% trans %}Supreme Court{% endtrans %}</li>
+            <li>{% trans %}Court of Appeal{% endtrans %}</li>
+        </ul>
+        <p class="govuk-body">{% trans %}For all other benefits appeals, go to GOV.UK and read <a href="https://www.gov.uk/appeal-benefit-decision" target="_blank">Appeal a benefits decision (opens in new tab)</a>.{% endtrans %}</p>
+
+        <form class="govuk-!-margin-top-6" action="" method="get" novalidate>
+
+            {{ form.question() }}
+
+            {{ form.submit }}
+        </form>
+
+    </div>
+</div>
+{% endblock %}

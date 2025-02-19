@@ -1,0 +1,26 @@
+{% macro formatCategoryName(category) %}
+    {% if category | upper == 'HLPAS' %}
+        the Housing Loss Prevention Advice Service
+    {% else %}
+        {{ category | category_name | lower }}
+    {% endif %}
+{% endmacro %}
+
+{% macro searchPageHeader(category) %}
+    {% if category %}
+        <h1 class="govuk-heading-xl govuk-!-margin-top-0 govuk-!-margin-bottom-0">Find a legal adviser</h1>
+        <p class="govuk-caption-l govuk-!-margin-top-0 govuk-!-margin-bottom-6">For {{ formatCategoryName(category) }}</p>
+    {% else %}
+        <h1 class="govuk-heading-xl">Find a legal adviser</h1>
+    {% endif %}
+{% endmacro %}
+
+{% macro resultsPageHeader(category) %}
+    {% if category %}
+        <h1 class="govuk-heading-xl govuk-!-margin-top-0 govuk-!-margin-bottom-0">Contact a legal adviser</h1>
+        <p class="govuk-caption-l  govuk-!-margin-top-0 govuk-!-margin-bottom-6">For {{ formatCategoryName(category) }}</p>
+    {% else %}
+        <h1 class="govuk-heading-xl">Contact a legal adviser</h1>
+    {% endif %}
+{% endmacro %}
+

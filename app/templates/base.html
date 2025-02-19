@@ -1,10 +1,12 @@
 {%  set htmlLang = language.current %}
+{%  set cspNonce = csp_nonce() %}
 {% extends 'govuk_frontend_jinja/template.html' %}
 
 {%- from 'govuk_frontend_jinja/components/cookie-banner/macro.html' import govukCookieBanner-%}
 {%- from 'govuk_frontend_jinja/components/error-summary/macro.html' import govukErrorSummary-%}
 {%- from 'govuk_frontend_jinja/components/notification-banner/macro.html' import govukNotificationBanner -%}
 {%- from 'govuk_frontend_jinja/components/phase-banner/macro.html' import govukPhaseBanner -%}
+{%- from 'main/_modal-dialog.html' import timeout_dialog %}
 
 {% set assetPath = url_for('static', filename='').rstrip('/') %}
 
@@ -19,6 +21,8 @@
     <meta name="description" content="{{config['SERVICE_NAME']}}">
     <meta name="author" content="{{config['DEPARTMENT_NAME']}}">
 {% endblock %}
+
+{% set bodyClasses = "govuk-frontend-supported" %}
 
 {% block bodyStart %}
 {% if "cookies_policy" not in request.cookies %}
@@ -123,15 +127,14 @@
         'tag': {
           'text': config['SERVICE_PHASE'],
         },
-        'html': '<a class="govuk-link" href="here">Contact us</a> if you need help or would like to give feedback to improve this service'
+        'html': '<a class="govuk-link" href="' + url_for('contact.reasons_for_contacting') + '">Contact us</a> if you need help or would like to give feedback to improve this service'
     }) }}
 
-    <p class="watermark">Prototype</p>
 {% endblock %}
 
 {% block content %}
 
-
+    {{ timeout_dialog() }}
     {% if form and form.errors %}
         {{ govukErrorSummary(wtforms_errors(form)) }}
     {% endif %}
@@ -173,5 +176,5 @@
 {% endblock %}
 
 {% block bodyEnd %}
-<script src="{{ url_for('static', filename='scripts.js') }}" nonce="{{ csp_nonce() }}" ></script>
+<script src="{{ url_for('static', filename='scripts.js') }}" nonce="{{ csp_nonce() }}"></script>
 {% endblock %}

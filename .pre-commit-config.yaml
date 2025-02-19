@@ -7,14 +7,21 @@ repos:
       - id: pip-compile
         name: pip-compile requirements-development.in
         files: requirements-(base|development).in
-        args: [requirements/source/requirements-development.in, "--output-file", requirements/generated/requirements-development.txt]
+        args: [requirements/source/requirements-development.in, "--output-file", requirements/generated/requirements-development.txt, "--no-annotate"]
       - id: pip-compile
         name: pip-compile requirements-production.in
         files: requirements-(base|production).in
-        args: [requirements/source/requirements-production.in, "--output-file", requirements/generated/requirements-production.txt]
+        args: [requirements/source/requirements-production.in, "--output-file", requirements/generated/requirements-production.txt, "--no-annotate"]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.6.2
+    rev: v0.9.3
     hooks:
       - id: ruff
         args: [ --fix ]
       - id: ruff-format
+  - repo: local
+    hooks:
+      - id: trufflehog3
+        name: truffleHog3
+        entry: bash -c 'trufflehog3 filesystem .'
+        language: system
+        stages: ["commit", "push"]

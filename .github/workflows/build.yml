@@ -2,14 +2,14 @@ name: Build and Push image
 on:
   workflow_call:
     inputs:
-      ECR_REGION:
+      ACCESS_ECR_REGION:
         required: true
         type: string
-      ECR_REPOSITORY:
+      ACCESS_ECR_REPOSITORY:
         required: true
         type: string
     secrets:
-      ECR_ROLE_TO_ASSUME:
+      ACCESS_ECR_ROLE_TO_ASSUME:
         required: true
 
 
@@ -27,8 +27,8 @@ jobs:
       - name: Assume role in Cloud Platform
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
-          aws-region: ${{ inputs.ECR_REGION }}
+          role-to-assume: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ inputs.ACCESS_ECR_REGION }}
 
       - name: Login to container repository
         uses: aws-actions/amazon-ecr-login@v2
@@ -43,7 +43,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ steps.login-ecr.outputs.registry }}/${{ inputs.ECR_REPOSITORY }}
+          images: ${{ steps.login-ecr.outputs.registry }}/${{ inputs.ACCESS_ECR_REPOSITORY }}
           tags: |
             type=sha,format=long,prefix=,suffix=
 

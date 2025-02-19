@@ -1,0 +1,58 @@
+name: Scan image for vulnerabilities
+on:
+  workflow_call:
+    inputs:
+      ACCESS_ECR_REPOSITORY:
+        required: true
+        type: string
+      ACCESS_ECR_REGION:
+        required: true
+        type: string
+    secrets:
+      ECR_REGISTRY:
+        required: true
+      ACCESS_ECR_ROLE_TO_ASSUME:
+        required: true
+
+jobs:
+  trivy-image-scan:
+    name: Trivy Image Scan
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
+    steps:
+      - name: Assume role in Cloud Platform
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
+          aws-region: ${{ inputs.ACCESS_ECR_REGION }}
+
+      - name: Login to container repository
+        uses: aws-actions/amazon-ecr-login@v2
+        id: login-ecr
+        with:
+          mask-password: true
+
+      - name: Scan for breaking vulnerabilities
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ secrets.ECR_REGISTRY }}/${{ inputs.ACCESS_ECR_REPOSITORY }}:${{ github.sha }}
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Scan for vulnerabilities (informative, non-breaking)
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ secrets.ECR_REGISTRY }}/${{ inputs.ACCESS_ECR_REPOSITORY }}:${{ github.sha }}
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: false
+          vuln-type: 'os,library'
+          severity: 'UNKNOWN,LOW,MEDIUM,CRITICAL,HIGH'
+        env:
+          TRIVY_SKIP_DB_UPDATE: true
+          TRIVY_SKIP_JAVA_DB_UPDATE: true

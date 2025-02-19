@@ -1,72 +1,79 @@
-{# This page was built as a prototype #}
 {% extends "base.html" %}
-{%- from 'govuk_frontend_jinja/components/back-link/macro.html' import govukBackLink-%}
+{%- from 'components/back_link.html' import govukBackLink -%}
 {%- from 'categories/components/list-item.html' import list_item, list_item_small -%}
+{%- from 'categories/components/cannot-find-your-problem.html' import cannot_find_your_problem -%}
+
+{% set title = _("More problems covered by legal aid") %}
+{% block pageTitle %}{{ title }} - GOV.UK{% endblock %}
 
 {% block beforeContent%}
 {{ super() }}
-{{ govukBackLink({
-    'href': url_for('categories.index'),
-    'text': "Back"
-  }) }}
+{{ govukBackLink() }}
 {% endblock %}
 
 {% block content %}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-m">More problems covered by legal aid</h1>
-        <br>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-8">{{ title }}</h1>
 
-        {{ list_item_small("Appeal a decision that you cannot work with children or vulnerable adults ",
-                     "Including if you’re on a ‘barred list’ or disqualified from teaching.",
+        {{ list_item_small(_("Adopting a child from outside the UK"),
+                _("Adoption processes in the courts."),
+                url_for("categories.index")) }}
+
+        {{ list_item_small(_("Appeal a decision that you cannot work with children or vulnerable adults"),
+                     _("Including if you’re on a ‘barred list’ or disqualified from teaching."),
                      url_for("categories.index")) }}
 
-        {{ list_item_small("Anti-social behaviour and gangs",
-             "If you’re accused or taken to court for anti-social behaviour, including being in a gang.",
+        {{ list_item_small(_("Anti-social behaviour and gangs"),
+             _("If you’re accused or taken to court for anti-social behaviour, including being in a gang."),
+             url_for("categories.x_cat.landlord-council")) }}
+
+        {{ list_item_small(_("Clinical negligence in babies"),
+             _("Help if a baby has brain or nerve damage caused during pregnancy, childbirth or up to 8 weeks old."),
+             url_for("find-a-legal-adviser.search", category="med")) }}
+
+        {{ list_item_small(_("Compensation for abuse, assault or neglect"),
+             _("Includes child abuse, sexual assault, abuse of a vulnerable adult. Claims can be against a person or an organisation."),
              url_for("categories.index")) }}
 
-        {{ list_item_small("Clinical negligence in babies",
-             "Help if a baby has brain or nerve damage caused during pregnancy, childbirth or up to 8 weeks old.",
-             "https://checklegalaid.service.gov.uk/scope/refer/legal-adviser?category=clinneg&hlpas=no") }}
+        {{ list_item_small(_("Domestic abuse - if you have been accused"),
+                _("Legal help if you’ve been accused of domestic abuse or forced marriage. Includes non-molestation orders and other court orders."),
+                url_for("categories.index")) }}
 
-        {{ list_item_small("Compensation for abuse, assault or neglect",
-             "Includes child abuse, sexual assault, abuse of a vulnerable adult. Claims can be against a person or an organisation.",
+        {{ list_item_small(_("Environmental pollution"),
+             _("Issues about air, water or land pollution that is harming you or the environment."),
              url_for("categories.index")) }}
 
-        {{ list_item_small("Environmental pollution",
-             "Issues about air, water or land pollution that is harming you or the environment.",
+        {{ list_item_small(_("Female genital mutilation (FGM)"),
+             _("If you or someone else is at risk of FGM."),
              url_for("categories.index")) }}
 
-        {{ list_item_small("Female genital mutilation (FGM)",
-             "If you or someone else is at risk of FGM.",
+        {{ list_item_small(_("Forced marriage"),
+             _("Help with forced marriage and Forced Marriage Protection Orders."),
              url_for("categories.index")) }}
 
-        {{ list_item_small("Forced Marriage",
-             "Help with forced marriage and Forced Marriage Protection Orders.",
+        {{ list_item_small(_("Inquests for family members"),
+             _("Advice to prepare for the inquest of a family member."),
              url_for("categories.index")) }}
 
-        {{ list_item_small("Inquests for family members",
-             "Advice and help to prepare for the inquest of a family member.",
+        {{ list_item_small(_("Mental health detention"),
+                _("Help if you’re held in hospital (‘sectioned’), mental health tribunals and community treatment orders."),
+                url_for("categories.index"))}}
+
+        {{ list_item_small(_("Proceeds of Crime Act"),
+             _("If you’re facing legal action to take your money or other assets."),
              url_for("categories.index")) }}
 
-        {{ list_item_small("Proceeds of Crime Act",
-             "If you’re facing legal action to take your money or other assets.",
+        {{ list_item_small(_("Terrorism"),
+             _("If you’re accused of terrorism or financing terrorist groups."),
              url_for("categories.index")) }}
 
-        {{ list_item_small("Terrorism",
-             "If you’re accused of terrorism or financing terrorist groups.",
+        {{ list_item_small(_("Trafficking, modern slavery"),
+             _("Help if you’re a victim of human trafficking or modern slavery."),
              url_for("categories.index")) }}
 
-        {{ list_item_small("Trafficking, modern slavery",
-             "Help if you’re a victim of human trafficking or modern slavery.",
-             url_for("categories.index")) }}
-
-        <br>
-        <br>
-
-        <div class="govuk-inset-text">
-            <p class="govuk-heading-s">If you cannot find the right problem on this page</p>
-            <a class="govuk-link govuk-link--no-visited-state" href="{{ url_for('categories.index') }}">Find other help</a>
+        <div class="govuk-!-margin-top-9 govuk-!-margin-bottom-9">
+            {{ cannot_find_your_problem(None, url_for("categories.results.cannot_find_problem"))}}
         </div>
     </div>
 </div>

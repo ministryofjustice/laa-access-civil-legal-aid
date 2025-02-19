@@ -14,6 +14,11 @@ jobs:
   test:
     name: Test
     uses: ./.github/workflows/test.yml
+    with:
+      ACCESS_ECR_REGION: ${{vars.ACCESS_ECR_REGION}}
+      CLA_BACKEND_ECR_REPOSITORY: ${{vars.CLA_BACKEND_ECR_REPOSITORY}}
+    secrets:
+      ECR_ROLE_TO_ASSUME: ${{secrets.CLA_BACKEND_ECR_ROLE_TO_ASSUME}}
 
   static-analysis:
     name: Static Analysis
@@ -26,20 +31,20 @@ jobs:
     name: Build
     uses: ./.github/workflows/build.yml
     with:
-      ECR_REGION: ${{vars.ECR_REGION}}
-      ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
+      ACCESS_ECR_REGION: ${{vars.ACCESS_ECR_REGION}}
+      ACCESS_ECR_REPOSITORY: ${{vars.ACCESS_ECR_REPOSITORY}}
     secrets:
-      ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+      ACCESS_ECR_ROLE_TO_ASSUME: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
 
   scan-image:
-    uses: ./.github/workflows/scan-image.yml
+    uses: ./.github/workflows/trivy-image-scan.yml
     needs: build-and-push
     with:
-      ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
-      ECR_REGION: ${{vars.ECR_REGION}}
+      ACCESS_ECR_REPOSITORY: ${{vars.ACCESS_ECR_REPOSITORY}}
+      ACCESS_ECR_REGION: ${{vars.ACCESS_ECR_REGION}}
     secrets:
       ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-      ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+      ACCESS_ECR_ROLE_TO_ASSUME: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
 
 
   deploy-dev:
@@ -48,11 +53,11 @@ jobs:
     needs: build-and-push
     with:
       environment: dev
-      ECR_REGION: ${{vars.ECR_REGION}}
-      ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
+      ACCESS_ECR_REGION: ${{vars.ACCESS_ECR_REGION}}
+      ACCESS_ECR_REPOSITORY: ${{vars.ACCESS_ECR_REPOSITORY}}
     secrets:
       ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-      ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+      ACCESS_ECR_ROLE_TO_ASSUME: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
       KUBE_CERT: ${{ secrets.KUBE_CERT }}
       KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
       KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
@@ -64,12 +69,12 @@ jobs:
     needs: [build-and-push, static-analysis, test]
     with:
       environment: uat
-      ECR_REGION: ${{vars.ECR_REGION}}
-      ECR_REPOSITORY: ${{vars.ECR_REPOSITORY}}
+      ACCESS_ECR_REGION: ${{vars.ACCESS_ECR_REGION}}
+      ACCESS_ECR_REPOSITORY: ${{vars.ACCESS_ECR_REPOSITORY}}
       DEPLOYMENT_URL: ${{vars.DEPLOYMENT_URL}}
     secrets:
       ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-      ECR_ROLE_TO_ASSUME: ${{ secrets.ECR_ROLE_TO_ASSUME }}
+      ACCESS_ECR_ROLE_TO_ASSUME: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
       KUBE_CERT: ${{ secrets.KUBE_CERT }}
       KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
       KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
