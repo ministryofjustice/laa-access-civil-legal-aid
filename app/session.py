@@ -149,7 +149,7 @@ class Session(SecureCookieSession):
     @category.setter
     def category(self, category: Category):
         current_category = self.category
-        if current_category != category:
+        if current_category and current_category.code != category.code:
             self["category_answers"] = []
         self["category"] = category
 
