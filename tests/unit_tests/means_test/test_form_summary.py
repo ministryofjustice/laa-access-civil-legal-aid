@@ -38,7 +38,7 @@ def test_summary(app):
         },
         "salary": {
             "question": "What is your salary?",
-            "answer": "£200.50 every 4 weekly",
+            "answer": "£200.50 (4 weekly)",
             "id": "salary",
         },
     }
