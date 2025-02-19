@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{%- from 'components/back_link.html' import govukBackLink -%}
+{%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton %}
+
+{% block beforeContent %}
+    {{ super() }}
+    {{ govukBackLink() }}
+{% endblock %}
+
+{% set title = _("Sorry, you’re not likely to get legal aid") %}
+{% block pageTitle %}{{ title }} - GOV.UK{% endblock %}
+
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">{{ title }}</h1>
+
+        <p class="govuk-body">If you cannot find your problem, it’s probably not covered by legal aid.</p>
+
+        <br>
+
+        {{ govukButton({
+            "text": _("Next steps to get help"),
+            "href": url_for("categories.index"),
+        }) }}
+
+    </div>
+</div>
+{% endblock %}

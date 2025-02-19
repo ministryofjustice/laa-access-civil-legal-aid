@@ -10,7 +10,9 @@ def test_contact_us_journey(page: Page):
     page.get_by_role("link", name="Children and social services").click()
     expect(page.get_by_role("heading", name="Contact us page")).to_be_visible()
     page.get_by_role("button", name="Back").click()
-    expect(page.get_by_role("heading", name="Children, families and")).to_be_visible()
+    expect(
+        page.get_by_role("heading", name="Children, families, relationships")
+    ).to_be_visible()
     page.get_by_role("button", name="Back").click()
     expect(
         page.get_by_role("heading", name="Find problems covered by legal aid")
@@ -42,7 +44,9 @@ def test_out_of_scope_journey(page: Page):
     page.get_by_role("link", name="Benefits").click()
     page.get_by_role("radio", name="None of the above").check()
     page.get_by_role("button", name="Continue").click()
-    expect(page.get_by_role("heading", name="Referral page")).to_be_visible()
+    expect(
+        page.get_by_role("heading", name="Legal aid doesn’t cover all types of problem")
+    ).to_be_visible()
     page.get_by_role("button", name="Back").click()
     expect(
         page.get_by_role("heading", name="Appeal a decision about your")

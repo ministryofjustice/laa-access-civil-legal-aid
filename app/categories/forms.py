@@ -2,13 +2,15 @@ from wtforms import SubmitField, RadioField, Form
 from govuk_frontend_wtf.wtforms_widgets import GovSubmitInput
 from app.categories.widgets import CategoryRadioInput
 from wtforms.validators import InputRequired
-from flask_babel import gettext as _
+from flask_babel import lazy_gettext as _
+from app.categories.constants import Category
 
 
 class QuestionForm(Form):
     """Base form for question pages with configurable routing based on answers."""
 
-    category = "Question category"  # Populates the H1, subclasses should overwrite this with their category of law
+    # Populates the H1, subclasses should overwrite this with their category of law
+    category: Category
 
     title = "Question title"  # Populates the H2 and page title, subclasses overwrite this with their question title
 

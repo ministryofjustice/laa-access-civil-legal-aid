@@ -27,3 +27,4 @@ bp.register_blueprint(benefits_bp)
 bp.register_blueprint(x_cat_bp)
 
 from app.categories import urls  # noqa: E402,F401
+from app.categories import filters  # noqa: E402,F401

@@ -8,7 +8,7 @@ housing_page_heading = "Housing, homelessness, losing your home"
 
 ROUTING = [
     {
-        "link_text": "Help to protect you and your children",
+        "link_text": "Help to keep yourself safe and protect children",
         "next_page_heading": risk_of_harm_page_heading,
     },
     {
@@ -35,7 +35,10 @@ ROUTING = [
         "link_text": "Female genital mutilation (FGM)",
         "next_page_heading": risk_of_harm_page_heading,
     },
-    {"link_text": "Next steps to get help", "next_page_heading": "Referral page"},
+    {
+        "link_text": "Next steps to get help",
+        "next_page_heading": "Legal aid doesn’t cover all types of problem",
+    },
 ]
 
 

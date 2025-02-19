@@ -32,7 +32,10 @@ ROUTING = [
         "link_text": "If you’re a care leaver",
         "next_page_heading": fala_page_heading,
     },
-    {"link_text": "Next steps to get help", "next_page_heading": "Referral page"},
+    {
+        "link_text": "Next steps to get help",
+        "next_page_heading": "Sorry, you’re not likely to get legal aid",
+    },
 ]
 
 

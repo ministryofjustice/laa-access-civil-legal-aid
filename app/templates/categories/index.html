@@ -16,45 +16,9 @@
         <p class="govuk-body-l">These are the problems covered by legal aid. Choose the problem you need help with.</p>
 
         <div class="govuk-!-margin-top-8">
-        {{ list_item("Children, families, relationships",
-                     "Includes children in care, children and social services. Also, help with children and finances if you divorce or split up.",
-                     url_for("categories.family.landing")) }}
-
-        {{ list_item("Housing, homelessness, losing your home",
-             "Includes being evicted or forced to sell your home. Problems with landlords, repairs, neighbours or council housing.",
-             url_for("categories.housing.landing")) }}
-
-        {{ list_item("Domestic abuse",
-             "Includes controlling behaviour, emotional abuse, or if someone is harassing, threatening or hurting you or a child. This could be a partner, ex-partner, or family member.",
-             url_for("categories.domestic_abuse.landing")) }}
-
-        {{ list_item("Discrimination",
-             "Treated unfairly because of things like your disability or health condition, race, age, sex, religion or pregnancy.",
-             url_for("categories.discrimination.where")) }}
-
-        {{ list_item("Special educational needs and disability (SEND)",
-             "Help if your child has SEND.",
-             url_for("categories.send.landing")) }}
-
-        {{ list_item("Care needs for disability and old age (social care)",
-             "Problems getting the local authority or council to provide or pay for the right care. For carers, children, young people and adults.",
-             url_for("categories.community_care.landing")) }}
-
-        {{ list_item("Benefits",
-             "Appeal a decision about your benefits.",
-             url_for("categories.benefits.appeal")) }}
-
-        {{ list_item("Legal action against police and public organisations",
-             "Includes schools, the police, government, prisons, NHS, the council.",
-             url_for("categories.public.landing")) }}
-
-        {{ list_item("Asylum and immigration",
-             "Help if you’re seeking asylum. Help to stay in the UK if you experienced domestic abuse.",
-             url_for("categories.asylum_immigration.landing")) }}
-
-        {{ list_item("Mental capacity, mental health",
-             "Help if someone cannot make decisions about their health, day-to-day life or care. Help at mental health tribunals.",
-             url_for("categories.mental_capacity.landing")) }}
+            {% for category, next_page in listing %}
+                {{ list_item(category.title, category.description, next_page) }}
+            {% endfor %}
 
         <hr class="govuk-section-break--l govuk-!-margin-top-9">
         <h2 class="govuk-heading-m arrow-box">
