@@ -11,7 +11,9 @@ from app.categories.results.views import (
 
 def test_category_page_dispatch(app):
     with app.app_context():
-        page = FamilyLandingPage(FamilyLandingPage.template)
+        page = FamilyLandingPage(
+            route_endpoint="family", template=FamilyLandingPage.template
+        )
         page.dispatch_request()
         assert session.category == FamilyLandingPage.category
 
