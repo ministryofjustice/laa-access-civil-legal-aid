@@ -1,5 +1,5 @@
 {% extends "contact/contact.html" %}
-
+{%- from 'means_test/components/progress-bar.html' import progress as means_test_progress %}
 
 {% if session.category.code == "FAMILY" %}
     {% set first_paragraph =
@@ -34,4 +34,12 @@
         {% endtrans %}
     </p>
     <p class="govuk-body">{{ _('You’ll need to provide evidence of the financial information you’ve given us through this service.') }}</p>
+{% endblock %}
+
+{% block sidebar %}
+  <div class="govuk-grid-column-one-third">
+    <aside class="sidebar">
+      {{ means_test_progress(form_progress["steps"], form_progress["current_step"], 100) }}
+    </aside>
+  </div>
 {% endblock %}

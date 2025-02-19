@@ -8,6 +8,7 @@ from app.contact.notify.api import (
     create_and_send_confirmation_email,
 )
 from app.means_test.api import get_means_test_payload, update_means_test
+from app.means_test.views import MeansTest
 
 logger = logging.getLogger(__name__)
 
@@ -23,8 +24,9 @@ class ContactUs(View):
 
     def dispatch_request(self):
         form = ContactUsForm()
+        form_progress = MeansTest(ContactUsForm, "Contact us").get_form_progress(form)
         if form.validate_on_submit():
-            # Progress Bar
+            # Welsh
             # Tests
             payload = form.get_payload()
             # Catches duplicate case exceptions and redirect to error page
@@ -66,4 +68,4 @@ class ContactUs(View):
             return render_template(
                 "contact/confirmation.html", data=session["reference"]
             )
-        return render_template(self.template, form=form)
+        return render_template(self.template, form=form, form_progress=form_progress)
