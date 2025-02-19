@@ -38,7 +38,9 @@ class Category:
 
     @classmethod
     def from_dict(cls, data: dict) -> "Category":
-        children: dict = data.pop("children", {})
+        children = {}
+        if "children" in data:
+            children: dict = data.pop("children")
         category = cls(**data)
         if children:
             for name, child in children.items():
