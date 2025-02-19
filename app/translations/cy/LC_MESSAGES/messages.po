@@ -431,22 +431,22 @@ msgid "Select if the child is or has been in care"
 msgstr ""
 
 msgid "Where will the appeal be held?"
-msgstr ""
+msgstr "Ble fydd yr apêl yn cael ei chynnal?"
 
 msgid "Select where the appeal will be held"
-msgstr ""
+msgstr "Dewiswch ble bydd yr apêl yn cael ei chynnal"
 
 msgid "Upper Tribunal (Administrative Appeals Chamber)"
-msgstr ""
+msgstr "Uwch Dribiwnlys (Siambr Apeliadau Gweinyddol)"
 
 msgid "Supreme Court"
-msgstr ""
+msgstr "Goruchel Lys"
 
 msgid "Court of Appeal"
-msgstr ""
+msgstr "Llys Apêl"
 
-msgid "None of the above"
-msgstr ""
+msgid "None of these"
+msgstr "Dim un o'r rhain"
 
 msgid "Is this to do with police, prisons or detention centres?"
 msgstr ""
@@ -1647,16 +1647,20 @@ msgid "You can also %(ecf_link)s to the Legal Aid Agency."
 msgstr "Gallwch hefyd %(ecf_link)s i’r Asiantaeth Cymorth Cyfreithiol."
 
 msgid "Appeal a decision about your benefits"
-msgstr ""
+msgstr "Apelio yn erbyn penderfyniad am eich budd-daliadau"
 
 msgid "Legal aid only covers appeals to the:"
-msgstr ""
+msgstr "Dim ond apeliadau i’r canlynol y mae cymorth cyfreithiol yn eu cwmpasu:"
 
 msgid ""
 "For all other benefits appeals, go to GOV.UK and read <a "
 "href=\"https://www.gov.uk/appeal-benefit-decision\" "
 "target=\"_blank\">Appeal a benefits decision (opens in new tab)</a>."
 msgstr ""
+"Ar gyfer pob apêl arall sy’n ymwneud â phenderfyniadau ynghylch budd-"
+"daliadau, ewch i GOV.UK a darllenwch <a href=\"https://www.gov.uk/apelio-"
+"penderfyniad-budd-dal\" target=\"_blank\">Apelio yn erbyn penderfyniad am"
+" eich budd-daliadau (yn agor mewn tab newydd)</a>."
 
 msgid "If you cannot find your problem"
 msgstr ""
@@ -2034,25 +2038,4 @@ msgstr "Carafannau a cherbydau eraill nad ydych chi’n eu defnyddio bob dydd"
 
 msgid "Musical instruments, unless you’re a professional musician"
 msgstr "Offerynnau cerddorol, oni bai’ch bod yn gerddor proffesiynol"
-
-#~ msgid "community care"
-#~ msgstr ""
-
-#~ msgid "Help with a child or young person's SEND)"
-#~ msgstr ""
-
-#~ msgid "Children, families and relationships"
-#~ msgstr ""
-
-#~ msgid "Community care"
-#~ msgstr "Gofal cymunedol"
-
-#~ msgid "children, families, relationships"
-#~ msgstr ""
-
-#~ msgid "housing"
-#~ msgstr "tai"
-
-#~ msgid "SEND"
-#~ msgstr ""
 
