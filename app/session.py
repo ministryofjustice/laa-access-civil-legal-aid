@@ -168,6 +168,13 @@ class Session(SecureCookieSession):
         else:
             return get_category_from_code(category_dict["code"])
 
+    @category.setter
+    def category(self, category: Category):
+        current_category = self.category
+        if current_category != category:
+            self["category_answers"] = []
+        self["category"] = category
+
     @property
     def has_children(self):
         # Todo: Needs implementation
@@ -180,8 +187,14 @@ class Session(SecureCookieSession):
 
     @property
     def category_answers(self) -> list[ScopeAnswer]:
-        answers: list[dict] = self.get("category_answers", [])
-        return [ScopeAnswer(**answer) for answer in answers]
+        items: list[dict] = self.get("category_answers", [])
+        category_answers = []
+        for answer in items:
+            if isinstance(answer["category"], dict):
+                answer["category"] = Category.from_dict(answer["category"])
+            category_answers.append(ScopeAnswer(**answer))
+
+        return category_answers
 
     def set_category_question_answer(self, scope_answer: ScopeAnswer) -> None:
         """Store a question-answer pair with the question category in the session.
@@ -224,7 +237,7 @@ class Session(SecureCookieSession):
         answers = self.category_answers
         for answer in answers:
             if answer.question == question_title:
-                return answer.answer
+                return answer.answer_value
 
         return None
 

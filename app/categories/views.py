@@ -41,6 +41,22 @@ class CategoryLandingPage(CategoryPage):
     routing_map: dict[str, []] = {}
     listing: dict[str, []] = {}
 
+    def __init__(self, route_endpoint: str, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.listing["main"] = []
+        for category, next_page in self.routing_map["main"]:
+            self.listing["main"].append(
+                (category, f"categories.{route_endpoint}.{category.code}")
+            )
+
+        self.listing["more"] = []
+        for category, next_page in self.routing_map["more"]:
+            self.listing["more"].append(
+                (category, f"categories.{route_endpoint}.{category.code}")
+            )
+
+        self.listing["other"] = f"categories.{route_endpoint}.other"
+
     def process_request(self):
         return render_template(
             self.template, category=self.category, listing=self.listing
@@ -57,8 +73,8 @@ class CategoryLandingPage(CategoryPage):
                 "landing", route_endpoint=blueprint.name, template=cls.template
             ),
         )
-        cls.register_sub_routes(blueprint, path, "main")
-        cls.register_sub_routes(blueprint, path, "more")
+        cls.register_sub_routes(blueprint, path, cls.routing_map["main"])
+        cls.register_sub_routes(blueprint, path, cls.routing_map["more"])
 
         if "other" in cls.routing_map and cls.routing_map["other"] is not None:
             category_answer = CategoryAnswer(
@@ -73,26 +89,21 @@ class CategoryLandingPage(CategoryPage):
                 f"/{path}/answer/other",
                 view_func=CategoryAnswerPage.as_view("other", category_answer),
             )
-            cls.listing["other"] = f"categories.{blueprint.name}.other"
 
     @classmethod
-    def register_sub_routes(cls, blueprint: Blueprint, path, index):
-        routes = cls.routing_map[index]
-        cls.listing[index] = []
+    def register_sub_routes(cls, blueprint: Blueprint, path, routes):
         for sub_category, next_page in routes:
             scope_answer = ScopeAnswer(
                 question=cls.question_title,
                 question_page=f"categories.{blueprint.name}.landing",
-                answer=sub_category.code,
+                answer_value=sub_category.code,
+                answer_label=sub_category.title,
                 next_page=next_page,
                 category=sub_category,
             )
             blueprint.add_url_rule(
                 f"/{path}/answer/{sub_category.url_friendly_name}",
                 view_func=CategoryAnswerPage.as_view(sub_category.code, scope_answer),
-            )
-            cls.listing[index].append(
-                (sub_category, f"categories.{blueprint.name}.{sub_category.code}")
             )
 
 
@@ -196,9 +207,15 @@ class QuestionPage(CategoryPage):
         super().update_session(category_answer)
 
     def update_session(self, form: QuestionForm) -> None:
+        answer = form.question.data
+        answer = answer if isinstance(answer, list) else [answer]
+        answer_labels = [
+            label for value, label in form.question.choices if value in answer
+        ]
         scope_answer = ScopeAnswer(
             question=form.title,
-            answer=form.question.data,
+            answer_value=form.question.data,
+            answer_label=answer_labels if len(answer) > 1 else answer_labels[0],
             category=form.category,
             next_page=self.get_next_page(form.question.data, should_redirect=False),
             question_page=request.url_rule.endpoint,
