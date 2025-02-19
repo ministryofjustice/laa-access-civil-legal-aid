@@ -189,10 +189,14 @@ class Session(SecureCookieSession):
     def category_answers(self) -> list[ScopeAnswer]:
         items: list[dict] = self.get("category_answers", [])
         category_answers = []
-        for answer in items:
-            if isinstance(answer["category"], dict):
-                answer["category"] = Category.from_dict(answer["category"])
-            category_answers.append(ScopeAnswer(**answer))
+        for item in items:
+            answer = item
+            if isinstance(answer, dict):
+                if isinstance(answer["category"], dict):
+                    answer["category"] = Category.from_dict(answer["category"])
+                answer = ScopeAnswer(**answer)
+
+            category_answers.append(answer)
 
         return category_answers
 
