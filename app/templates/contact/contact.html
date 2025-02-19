@@ -34,6 +34,7 @@
                     },
                     "spellcheck": false
                 }) }}
+                {% if form.call_today_time.choices|length == 1 and form.call_another_day.choices|length == 1 %}
                 {{ form.contact_type(params={
                     'items': [
                     {
@@ -43,16 +44,32 @@
                     },
                     {
                         'conditional': {
-                        'html': callMeHtml
-                        }
-                    },
-                    {
-                        'conditional': {
                         'html': callthirdPartyHtml
                         }
                     }
                     ]
                 }) }}
+                    {% else %}
+                    {{ form.contact_type(params={
+                        'items': [
+                        {
+                            'conditional': {
+                            'html': willCallHtml
+                            }
+                        },
+                        {
+                            'conditional': {
+                            'html': callMeHtml
+                            }
+                        },
+                        {
+                            'conditional': {
+                            'html': callthirdPartyHtml
+                            }
+                        }
+                        ]
+                    }) }}
+                {% endif %}
                 {{ form.email(params={
                     "id": "email",
                     "label": {

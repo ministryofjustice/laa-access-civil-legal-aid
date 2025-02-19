@@ -26,6 +26,7 @@ from app.contact.constants import (
     LANG_CHOICES,
     THIRDPARTY_RELATIONSHIP_CHOICES,
     CONTACT_PREFERENCE,
+    NO_SLOT_CONTACT_PREFERENCE,
 )
 from flask_babel import lazy_gettext as _
 from wtforms.validators import InputRequired, Length, Optional, Email
@@ -83,7 +84,6 @@ class ReasonsForContactingForm(FlaskForm):
 class ContactUsForm(FlaskForm):
     def __init__(self, *args, **kwargs):
         super(ContactUsForm, self).__init__(*args, **kwargs)
-        self.contact_type.choices = CONTACT_PREFERENCE
         self.adaptations.data = ["welsh"] if get_locale()[:2] == "cy" else []
         self.other_language.choices = LANG_CHOICES
         self.thirdparty_relationship.choices = THIRDPARTY_RELATIONSHIP_CHOICES
@@ -138,6 +138,15 @@ class ContactUsForm(FlaskForm):
                 ] + self.get_all_time_slots()
         if len(self.thirdparty_call_another_day.choices) == 1:
             self.thirdparty_time_to_call.choices = ["Call today"]
+
+        # Hide the call me back if no slots are available
+        if (
+            len(self.call_today_time.choices) == 1
+            and len(self.call_another_day.choices) == 1
+        ):
+            self.contact_type.choices = NO_SLOT_CONTACT_PREFERENCE
+        else:
+            self.contact_type.choices = CONTACT_PREFERENCE
 
     def get_all_time_slots(self):
         valid_time_slots = set()
