@@ -98,15 +98,13 @@ class ContactUsForm(FlaskForm):
         )
         if len(self.call_today_time.choices) == 1:
             self.time_to_call.choices = ["Call on another day"]
-
         self.thirdparty_call_today_time.choices = [
             ("", "Select a day:")
         ] + self.thirdparty_time_slots.get(today, [])
         if len(self.thirdparty_call_today_time.choices) == 1:
             self.thirdparty_time_to_call.choices = ["Call on another day"]
 
-        slot_days = list(self.time_slots)[1:8]
-
+        slot_days = list({k: v for k, v in self.time_slots.items() if k != today})
         self.call_another_day.choices = [("", "Select a day:")] + [
             (key, datetime.strptime(key, "%Y-%m-%d").strftime("%a %d %b"))
             for key in slot_days
