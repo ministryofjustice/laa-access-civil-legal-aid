@@ -38,13 +38,13 @@ msgid "Validation failed message"
 msgstr ""
 
 msgid "Yes"
-msgstr "Gallwch"
+msgstr "Ydw"
 
 msgid "No"
-msgstr "Na"
+msgstr "Nac ydw"
 
 msgid "Continue"
-msgstr "Ymlaen"
+msgstr "Parhau"
 
 msgid "Are you worried about someone's safety?"
 msgstr ""
@@ -86,10 +86,10 @@ msgid "Select if this is about the police, prisons or detention centres"
 msgstr ""
 
 msgid "Are you under 18?"
-msgstr ""
+msgstr "Ydych chi dan 18 oed?"
 
 msgid "Select if you’re under 18"
-msgstr ""
+msgstr "Dewiswch os ydych chi dan 18 oed"
 
 msgid "Were you accused by a landlord or the council?"
 msgstr ""
