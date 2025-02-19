@@ -5,6 +5,10 @@
 {% block beforeContent%}
 {{ super() }}
 {{ govukBackLink() }}
+
+{% if session.category.exit_page %}
+    {{ govukExitThisPage("Exit this page")}}
+{% endif %}
 {% endblock %}
 
 {% block content %}
