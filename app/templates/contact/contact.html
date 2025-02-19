@@ -96,15 +96,21 @@
             }
         }
     ] %}
-    {% if form.call_today_time.choices|length == 1 %}
-        {% set items = items[1:] %}
+    {% if form.call_today_time.choices|length == 1 and form.call_another_day.choices|length == 1 %}
+        {% set items = [] %}
+    {% else %}
+        {% if form.call_today_time.choices|length == 1 %}
+            {% set items = items[1:] %}
+        {% endif %}
+        {% if form.call_another_day.choices|length == 1 %}
+            {% set items = items[:1] %}
+        {% endif %}
     {% endif %}
-    {% if form.call_another_day.choices|length == 1 %}
-        {% set items = items[:1] %}
+    {% if items %}
+        {{ form.time_to_call(params={'items': items}) }}
+    {% else %}
+        <p class="govuk-body">No available options</p>
     {% endif %}
-    {{ form.time_to_call(params={
-        "items": items
-    }) }}
     {{ form.announce_call_from_cla }}
 {% endset -%}
 
@@ -150,15 +156,21 @@
             }
         }
     ] %}
-    {% if form.thirdparty_call_today_time.choices|length == 1 %}
-        {% set items = items[1:] %}
+    {% if form.thirdparty_call_today_time.choices|length == 1 and form.thirdparty_call_another_day.choices|length == 1 %}
+        {% set items = [] %}
+    {% else %}
+        {% if form.thirdparty_call_today_time.choices|length == 1 %}
+            {% set items = items[1:] %}
+        {% endif %}
+        {% if form.thirdparty_call_another_day.choices|length == 1 %}
+            {% set items = items[:1] %}
+        {% endif %}
     {% endif %}
-    {% if form.thirdparty_call_another_day.choices|length == 1 %}
-        {% set items = items[:1] %}
+    {% if items %}
+        {{ form.thirdparty_time_to_call(params={'items': items}) }}
+    {% else %}
+        <p class="govuk-body">No available options</p>
     {% endif %}
-    {{ form.thirdparty_time_to_call(params={
-        "items": items
-    }) }}
 {% endset -%}
 
 {% set addressFinderHtml %}
