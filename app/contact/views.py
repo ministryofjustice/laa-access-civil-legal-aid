@@ -24,7 +24,6 @@ class ContactUs(View):
     def dispatch_request(self):
         form = ContactUsForm()
         if form.validate_on_submit():
-            # No slots available remove radio button
             # Progress Bar
             # Domestic abuse exit this page
             # Tests
