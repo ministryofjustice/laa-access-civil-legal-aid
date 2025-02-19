@@ -25,18 +25,18 @@
 
         <br>
 
-        {% for sub_category, route in routing_map.main %}
+        {% for sub_category, route in listing.main %}
             {{ list_item(sub_category.title, sub_category.description, route|category_url_for) }}
         {% endfor %}
 
         <br>
 
-        {% if routing_map.more %}
+        {% if listing.more %}
             <h2 class="govuk-heading-m">{% trans %}More problems{% endtrans %}</h2>
 
             <br>
 
-            {% for sub_category, route in routing_map.more %}
+            {% for sub_category, route in listing.more %}
                 {{ list_item_small(sub_category.title, sub_category.description, route|category_url_for) }}
             {% endfor %}
         {% endif %}
@@ -49,7 +49,7 @@
         {% elif category.code == "send" %}
             {% set other_text = _("SEND") %}
         {% endif %}
-        {{ cannot_find_your_problem(other_text, routing_map.other|category_url_for)}}
+        {{ cannot_find_your_problem(other_text, listing.other|category_url_for)}}
 
     </div>
 </div>

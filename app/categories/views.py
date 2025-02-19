@@ -3,6 +3,7 @@ from flask.views import View
 from flask import render_template, redirect, url_for, session, request
 from app.categories.forms import QuestionForm
 from app.categories.constants import Category
+from app.categories.models import ScopeAnswer
 
 
 class CategoryPage(View):
@@ -13,16 +14,12 @@ class CategoryPage(View):
     def __init__(self, template, *args, **kwargs):
         self.template = template
 
-    def update_session(self, question: str, answer: str, category: Category) -> None:
+    def update_session(self, scope_answer: ScopeAnswer) -> None:
         """
         Update the session with the current page and answer.
 
         """
-        session.set_category_question_answer(
-            question_title=question,
-            answer=answer,
-            category=category,
-        )
+        session.set_category_question_answer(scope_answer)
 
     def dispatch_request(self):
         category = getattr(self, "category", None)
@@ -41,24 +38,25 @@ class CategoryPage(View):
 class CategoryLandingPage(CategoryPage):
     template: str = "categories/landing.html"
 
-    routing_map: dict[str, str] = {}
+    routing_map: dict[str, []] = {}
+    listing: dict[str, []] = {}
 
     def process_request(self):
         return render_template(
-            self.template, category=self.category, routing_map=self.routing_map
+            self.template, category=self.category, listing=self.listing
         )
 
     @classmethod
     def register_routes(cls, blueprint: Blueprint, path: str = None):
         if not path:
-            path = cls.category.code.lower().replace("_", "-")
+            path = cls.category.url_friendly_name
 
         blueprint.add_url_rule(
             f"/{path}/",
             view_func=cls.as_view("landing", template=cls.template),
         )
-        cls.register_sub_routes(blueprint, path, cls.routing_map["main"])
-        cls.register_sub_routes(blueprint, path, cls.routing_map["more"])
+        cls.register_sub_routes(blueprint, path, "main")
+        cls.register_sub_routes(blueprint, path, "more")
 
         if "other" in cls.routing_map and cls.routing_map["other"] is not None:
             blueprint.add_url_rule(
@@ -71,46 +69,45 @@ class CategoryLandingPage(CategoryPage):
                     category=cls.category,
                 ),
             )
+            cls.listing["other"] = f"categories.{blueprint.name}.other"
 
     @classmethod
-    def register_sub_routes(cls, blueprint: Blueprint, path, routes):
+    def register_sub_routes(cls, blueprint: Blueprint, path, index):
+        routes = cls.routing_map[index]
+        cls.listing[index] = []
         for sub_category, next_page in routes:
+            scope_answer = ScopeAnswer(
+                question=cls.question_title,
+                question_page=f"categories.{blueprint.name}.landing",
+                answer=sub_category.code,
+                next_page=next_page,
+                category=sub_category,
+            )
             blueprint.add_url_rule(
-                f"/{path}/answer/{sub_category.code.replace('_', '-')}",
-                view_func=CategoryAnswerPage.as_view(
-                    sub_category.code,
-                    question=cls.question_title,
-                    answer=sub_category.code,
-                    next_page=next_page,
-                    category=sub_category,
-                ),
+                f"/{path}/answer/{sub_category.url_friendly_name}",
+                view_func=CategoryAnswerPage.as_view(sub_category.code, scope_answer),
+            )
+            cls.listing[index].append(
+                (sub_category, f"categories.{blueprint.name}.{sub_category.code}")
             )
 
 
 class CategoryAnswerPage(View):
-    def __init__(self, question, answer, next_page, category):
-        self.question = question
-        self.answer = answer
-        self.next_page = next_page
-        self.category = category
+    def __init__(self, scope_answer: ScopeAnswer):
+        self.scope_answer = scope_answer
 
     def update_session(self) -> None:
         """
         Update the session with the current page and answer.
 
         """
-        session["previous_page"] = request.endpoint
-        session.set_category_question_answer(
-            question_title=self.question,
-            answer=self.answer,
-            category=self.category,
-        )
+        session.set_category_question_answer(self.scope_answer)
 
     def dispatch_request(self):
         self.update_session()
-        if isinstance(self.next_page, dict):
-            return redirect(url_for(**self.next_page))
-        return redirect(url_for(self.next_page))
+        if isinstance(self.scope_answer.next_page, dict):
+            return redirect(url_for(**self.scope_answer.next_page))
+        return redirect(url_for(self.scope_answer.next_page))
 
 
 class QuestionPage(CategoryPage):
@@ -138,11 +135,12 @@ class QuestionPage(CategoryPage):
         self.category = form_class.category
         super().__init__(self.template)
 
-    def get_next_page(self, answer: str) -> redirect:
+    def get_next_page(self, answer: str, should_redirect=True) -> redirect:
         """Determine and redirect to the next page based on the user's answer.
 
         Args:
             answer: The user's selected answer
+            should_redirect: Whether to redirect to the next page or not.
 
         Returns:
             A Flask redirect response to the next appropriate page
@@ -168,9 +166,23 @@ class QuestionPage(CategoryPage):
             raise ValueError(f"No mapping found for answer: {answer}")
 
         next_page = self.form_class.next_step_mapping[answer]
+
+        if not should_redirect:
+            return next_page
+
         if isinstance(next_page, dict):
             return redirect(url_for(**next_page))
         return redirect(url_for(next_page))
+
+    def update_session(self, form: QuestionForm) -> None:
+        scope_answer = ScopeAnswer(
+            question=form.title,
+            answer=form.question.data,
+            category=form.category,
+            next_page=self.get_next_page(form.question.data, should_redirect=False),
+            question_page=request.url_rule.endpoint,
+        )
+        super().update_session(scope_answer)
 
     def process_request(self):
         """Handle requests for the question page, including form submissions.
@@ -186,9 +198,7 @@ class QuestionPage(CategoryPage):
         session["category"] = form.category
 
         if form.submit.data and form.validate():
-            self.update_session(
-                question=form.title, answer=form.question.data, category=form.category
-            )
+            self.update_session(form)
             return self.get_next_page(form.question.data)
 
         # Pre-populate form with previous answer if it exists

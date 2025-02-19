@@ -17,6 +17,10 @@ class Category:
     exit_page: Optional[bool] = False
 
     @property
+    def url_friendly_name(self):
+        return self.code.replace("_", "-").lower()
+
+    @property
     def display_text(self):
         return self.title
 

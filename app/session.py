@@ -156,7 +156,8 @@ class Session(SecureCookieSession):
         # Todo: Needs implementation
         return True
 
-    def _get_scope_answers(self) -> list[ScopeAnswer]:
+    @property
+    def category_answers(self) -> list[ScopeAnswer]:
         answers: list[dict] = self.get("category_answers", [])
         return [ScopeAnswer(**answer) for answer in answers]
 
@@ -174,7 +175,7 @@ class Session(SecureCookieSession):
         if "category_answers" not in self:
             self["category_answers"] = []
 
-        answers: list[ScopeAnswer] = self._get_scope_answers()
+        answers: list[ScopeAnswer] = self.category_answers
 
         # Remove existing entry if present
         answers = [
@@ -194,7 +195,7 @@ class Session(SecureCookieSession):
         Returns:
             The stored answer string if found, None otherwise
         """
-        answers = self._get_scope_answers()
+        answers = self.category_answers
         for answer in answers:
             if answer.question == question_title:
                 return answer.answer
