@@ -25,7 +25,6 @@ class ContactUs(View):
         form = ContactUsForm()
         if form.validate_on_submit():
             # Progress Bar
-            # Domestic abuse exit this page
             # Tests
             payload = form.get_payload()
             # Catches duplicate case exceptions and redirect to error page
