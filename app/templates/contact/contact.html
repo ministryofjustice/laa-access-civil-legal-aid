@@ -84,19 +84,23 @@
         },
         "spellcheck": false
     }) }}
-    {{ form.time_to_call(params={
-        'items': [
+    {% set items = [
         {
-            'conditional': {
-            'html': callTodayHtml
+            "conditional": {
+                "html": callTodayHtml
             }
         },
         {
-            'conditional': {
-            'html': callAnotherHtml
+            "conditional": {
+                "html": callAnotherHtml
             }
         }
-        ]
+    ] %}
+    {% if form.call_today_time.choices|length == 1 %}
+        {% set items = items[1:] %}
+    {% endif %}
+    {{ form.time_to_call(params={
+        "items": items
     }) }}
     {{ form.announce_call_from_cla }}
 {% endset -%}
@@ -131,19 +135,23 @@
         },
         "spellcheck": false
     }) }}
-    {{ form.thirdparty_time_to_call(params={
-        'items': [
+    {% set items = [
         {
-            'conditional': {
-            'html': thirdpartycallTodayHtml
+            "conditional": {
+                "html": thirdpartycallTodayHtml
             }
         },
         {
-            'conditional': {
-            'html': thirdpartycallAnotherHtml
+            "conditional": {
+                "html": thirdpartycallAnotherHtml
             }
         }
-        ]
+    ] %}
+    {% if form.thirdparty_call_today_time.choices|length == 1 %}
+        {% set items = items[1:] %}
+    {% endif %}
+    {{ form.thirdparty_time_to_call(params={
+        "items": items
     }) }}
 {% endset -%}
 

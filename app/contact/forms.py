@@ -92,13 +92,19 @@ class ContactUsForm(FlaskForm):
         self.thirdparty_time_slots = cla_backend.get_time_slots(
             num_days=8, is_third_party_callback=True
         )
-        today = list(self.time_slots)[0]
+        today = datetime.today().strftime("%Y-%m-%d")
         self.call_today_time.choices = [("", "Select a day:")] + self.time_slots.get(
-            today
+            today, []
         )
+        if len(self.call_today_time.choices) == 1:
+            self.time_to_call.choices = ["Call on another day"]
+
         self.thirdparty_call_today_time.choices = [
             ("", "Select a day:")
-        ] + self.thirdparty_time_slots.get(today)
+        ] + self.thirdparty_time_slots.get(today, [])
+        if len(self.thirdparty_call_today_time.choices) == 1:
+            self.thirdparty_time_to_call.choices = ["Call on another day"]
+
         slot_days = list(self.time_slots)[1:8]
 
         self.call_another_day.choices = [("", "Select a day:")] + [
@@ -327,7 +333,7 @@ class ContactUsForm(FlaskForm):
 
     thirdparty_call_another_time = SelectMultipleField(
         _("Time"),
-        choices=[],
+        choices=["Select a time:"],
         widget=GovSelect(),
         validators=[
             ValidateIf("contact_type", "thirdparty", condition_type=ValidateIfType.EQ),
