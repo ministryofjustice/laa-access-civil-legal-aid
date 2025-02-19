@@ -18,6 +18,16 @@ bp.add_url_rule(
 bp.add_url_rule(
     "/cannot-find-problem",
     view_func=ResultPage.as_view(
-        "cannot_find_problem", template="categories/cannot-find-problem.html"
+        "cannot_find_problem",
+        template="categories/cannot-find-problem.html",
+        get_help_organisations=False,
+    ),
+)
+bp.add_url_rule(
+    "/next-steps-get-help",
+    view_func=ResultPage.as_view(
+        "next_steps",
+        template="categories/next-steps-to-get-help.html",
+        get_help_organisations=False,
     ),
 )
