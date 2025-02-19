@@ -1917,6 +1917,7 @@ msgstr "E-bost"
 msgid "Legal action against public organisations"
 msgstr "Camau cyfreithiol yn erbyn sefydliadau cyhoeddus"
 
+#, python-format
 msgid ""
 "Legal help to challenge something done by a public organisation. You "
 "might have been told you need to bring a ‘judicial review’."
@@ -2115,21 +2116,6 @@ msgstr "Gallwch ddechrau eto isod."
 
 msgid "Start again"
 msgstr "Dechrau eto"
-
-msgid ""
-"Your session will time out after 30 minutes of inactivity. We do this for"
-" your security."
-msgstr ""
-"Bydd eich sesiwn yn dod i ben os yw wedi bod yn anweithredol am hanner "
-"awr. Rydym yn gwneud hyn er mwyn eich cadw’n ddiogel."
-
-#, python-format
-msgid ""
-"If you're having trouble completing this form, <a "
-"href=\"%(contact_url)s\" class=\"govuk-link\">get in touch</a>."
-msgstr ""
-"Os ydych yn cael problemau wrth lenwi’r ffurflen hon, gofynnwch i ni, <a "
-"href=\"%(contact_url)s\" class=\"govuk-link\">cysylltwch â ni</a>."
 
 msgid ""
 "We only need to know about any money you received last month, even if "

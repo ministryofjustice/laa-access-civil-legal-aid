@@ -560,7 +560,7 @@ msgstr ""
 msgid "Were you accused by a landlord or the council?"
 msgstr ""
 
-msgid "Select ‘Yes’ if you were accused by a landlord or the council"
+msgid "-- Please select --"
 msgstr ""
 
 msgid "Why do you want to contact Civil Legal Advice?"
@@ -1644,9 +1644,7 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-msgid "Legal action against public organisations"
-msgstr ""
-
+#, python-format
 msgid ""
 "Legal help to challenge something done by a public organisation. You "
 "might have been told you need to bring a ‘judicial review’."
@@ -1833,17 +1831,6 @@ msgid "You can start again below."
 msgstr ""
 
 msgid "Start again"
-msgstr ""
-
-msgid ""
-"Your session will time out after 30 minutes of inactivity. We do this for"
-" your security."
-msgstr ""
-
-#, python-format
-msgid ""
-"If you're having trouble completing this form, <a "
-"href=\"%(contact_url)s\" class=\"govuk-link\">get in touch</a>."
 msgstr ""
 
 msgid ""

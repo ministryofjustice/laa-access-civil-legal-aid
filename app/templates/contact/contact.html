@@ -23,9 +23,9 @@
         {% endblock %}
 
         {% block formDescription %}
-            <p class="govuk-body">Civil Legal Advice will check if you can get legal aid and help you contact the right legal adviser. If you cannot get legal aid, we’ll tell you about other help you can get.</p>
-            <p class="govuk-body">You can call Civil Legal Advice yourself - this is an 0345 number, so <a class="govuk-link" href="https://www.gov.uk/call-charges">call charges</a> apply. Or you can ask us to call you back, which is free.</p>
-            <p class="govuk-body">We’ll ask questions about your legal problem and your financial situation. You might need to provide evidence of any financial information you give us.</p>
+            <p class="govuk-body">{% trans %}Civil Legal Advice will check if you can get legal aid and help you contact the right legal adviser. If you cannot get legal aid, we’ll tell you about other help you can get.{% endtrans %}</p>
+            <p class="govuk-body">{% trans %}You can call Civil Legal Advice yourself - this is an 0345 number, so <a class="govuk-link" href="https://www.gov.uk/call-charges">call charges</a> apply. Or you can ask us to call you back, which is free.{% endtrans %}</p>
+            <p class="govuk-body">{% trans %}We’ll ask questions about your legal problem and your financial situation. You might need to provide evidence of any financial information you give us.{% endtrans %}</p>
         {% endblock %}
 
         <form action="" method="post" novalidate>
@@ -83,9 +83,9 @@
                 }) }}
 
                 <div class="govuk-form-group" id="postcode-search">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Address</legend>
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">{% trans %}Address{% endtrans %}</legend>
                 <label class="govuk-label govuk-label--s" for="address-post_code" id="field-label-address-post_code">
-                    Postcode (optional)
+                    {% trans %}Postcode (optional){% endtrans %}
                 </label>
                 <div class="govuk-grid-row">
                     <div class="govuk-grid-column-one-third">
