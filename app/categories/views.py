@@ -78,17 +78,17 @@ class CategoryLandingPage(CategoryPage):
         cls.register_sub_routes(blueprint, path, cls.routing_map["more"])
 
         if "other" in cls.routing_map and cls.routing_map["other"] is not None:
-            category_answer = CategoryAnswer(
+            scope_answer = ScopeAnswer(
                 question=cls.question_title,
                 question_page=f"categories.{blueprint.name}.landing",
                 answer_value="other",
                 answer_label="Other",
                 next_page=cls.routing_map["other"],
-                category=cls.category,
+                category=None,
             )
             blueprint.add_url_rule(
                 f"/{path}/answer/other",
-                view_func=CategoryAnswerPage.as_view("other", category_answer),
+                view_func=CategoryAnswerPage.as_view("other", scope_answer),
             )
 
     @classmethod
@@ -170,12 +170,18 @@ class QuestionPage(CategoryPage):
         ]  # We should only route to these pages if they are the only answer
 
         if len(answer) == 1 and answer[0] in optional_answers:
-            return url_for(self.form_class.next_step_mapping[answer[0]])
+            next_page = url_for(self.form_class.next_step_mapping[answer[0]])
+            if not should_redirect:
+                return next_page
+            return redirect(next_page)
 
         if isinstance(answer, list):
             for a in answer:
                 if a in self.form_class.next_step_mapping and a not in optional_answers:
-                    return url_for(self.form_class.next_step_mapping[a])
+                    next_page = url_for(self.form_class.next_step_mapping[a])
+                    if not should_redirect:
+                        return next_page
+                    return redirect(next_page)
             answer = "*"
 
         if answer not in self.form_class.next_step_mapping:

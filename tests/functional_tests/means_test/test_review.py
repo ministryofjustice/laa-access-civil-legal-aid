@@ -74,7 +74,7 @@ def test_reviews_page(page: Page, complete_benefits_form):
                 question
                 == "If yes, enter the total amount you get for all your children"
             ):
-                answer = "£500.89 every 4 weekly"
+                answer = "£500.89 (4 weekly)"
             if question == "How many children aged 15 or under?":
                 question = "How many?"
             question_cell = table.get_by_text(question)
