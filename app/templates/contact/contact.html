@@ -99,6 +99,9 @@
     {% if form.call_today_time.choices|length == 1 %}
         {% set items = items[1:] %}
     {% endif %}
+    {% if form.call_another_day.choices|length == 1 %}
+        {% set items = items[:1] %}
+    {% endif %}
     {{ form.time_to_call(params={
         "items": items
     }) }}
@@ -149,6 +152,9 @@
     ] %}
     {% if form.thirdparty_call_today_time.choices|length == 1 %}
         {% set items = items[1:] %}
+    {% endif %}
+    {% if form.thirdparty_call_another_day.choices|length == 1 %}
+        {% set items = items[:1] %}
     {% endif %}
     {{ form.thirdparty_time_to_call(params={
         "items": items

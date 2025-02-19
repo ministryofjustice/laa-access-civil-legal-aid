@@ -123,6 +123,8 @@ class ContactUsForm(FlaskForm):
                 self.call_another_time.choices = [
                     ("", "Select a time:")
                 ] + self.get_all_time_slots()
+        if len(self.call_another_day.choices) == 1:
+            self.time_to_call.choices = ["Call today"]
         if self.thirdparty_call_another_day.data:
             if self.thirdparty_call_another_day.data[0]:
                 self.thirdparty_call_another_time.choices = [
@@ -134,6 +136,8 @@ class ContactUsForm(FlaskForm):
                 self.thirdparty_call_another_time.choices = [
                     ("", "Select a time:")
                 ] + self.get_all_time_slots()
+        if len(self.thirdparty_call_another_day.choices) == 1:
+            self.thirdparty_time_to_call.choices = ["Call today"]
 
     def get_all_time_slots(self):
         valid_time_slots = set()
