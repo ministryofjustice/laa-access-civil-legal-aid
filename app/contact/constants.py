@@ -187,6 +187,11 @@ CONTACT_PREFERENCE = [
     ("thirdparty", "Call someone else instead of me"),
 ]
 
+NO_SLOT_CONTACT_PREFERENCE = [
+    ("call", "I will call you"),
+    ("thirdparty", "Call someone else instead of me"),
+]
+
 SELECT_OPTION_DEFAULT = [("", _("-- Please select --"))]
 THIRDPARTY_RELATIONSHIP = [
     ("parent_guardian", "Parent or guardian"),
