@@ -137,7 +137,30 @@ class CheckYourAnswers(FormsMixin, MethodView):
             form = form_class(form_data)
             means_test_summary[str(form.title)] = self.get_form_summary(form, key)
 
-        params = {"means_test_summary": means_test_summary, "form": ReviewForm()}
+        answers = [
+            {
+                "key": {"text": _("The problem you need help with")},
+                "value": {
+                    "markdown": f"{session.category}\n{session.category.description}"
+                },
+            }
+        ]
+        for answer in session.category_answers:
+            answers.append(
+                {
+                    "key": {"text", answer.question},
+                    "value": {"text": answer.answer},
+                    "actions": {
+                        "items": [{"text": _("Change"), "href": answer.edit_url}]
+                    },
+                }
+            )
+        params = {
+            "means_test_summary": means_test_summary,
+            "form": ReviewForm(),
+            "category": session.category,
+            "scope_answers": answers,
+        }
         return render_template("means_test/review.html", **params)
 
     @staticmethod
