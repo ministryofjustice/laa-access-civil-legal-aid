@@ -18,7 +18,7 @@ class FamilyLandingPage(CategoryLandingPage):
                 "categories.domestic_abuse.are_you_at_risk_of_harm",
             ),
             (FAMILY.sub.family_mediation, "categories.results.in_scope"),
-            (FAMILY.sub.child_abducted, "contact.contact_us"),
+            (FAMILY.sub.child_abducted, "means_test.eligible"),
         ],
         "more": [
             (FAMILY.sub.send, "categories.send.landing"),

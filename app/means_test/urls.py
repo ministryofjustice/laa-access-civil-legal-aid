@@ -14,6 +14,6 @@ bp.add_url_rule("/review", view_func=CheckYourAnswers.as_view("review"))
 bp.add_url_rule(
     "/eligible",
     view_func=ContactUs.as_view(
-        "contact_us", template="contact/eligible.html", attach_eligiblity_data=True
+        "eligible", template="contact/eligible.html", attach_eligiblity_data=True
     ),
 )
