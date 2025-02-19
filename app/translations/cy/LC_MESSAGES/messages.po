@@ -21,7 +21,7 @@ msgstr ""
 
 msgid ""
 "Help with divorce, separation, or leaving your partner. Includes legal "
-"arrangements for children, money and housing"
+"arrangements for children, money and housing."
 msgstr ""
 
 msgid "Problems with an ex-partner: children or money"
@@ -59,7 +59,7 @@ msgstr ""
 msgid "If you or someone else is at risk of FGM."
 msgstr ""
 
-msgid "Children, families and relationships"
+msgid "Children, families, relationships"
 msgstr ""
 
 msgid ""
@@ -188,15 +188,20 @@ msgstr ""
 msgid "Discrimination"
 msgstr "Gwahaniaethu"
 
-msgid ""
-"Treated unfairly because of things like your disability or health "
-"condition, race, age, sex, religion or pregnancy."
+msgid "Treated unfairly by a landlord, council or housing association."
 msgstr ""
 
 msgid "If you’ve been accused of anti-social behaviour"
 msgstr ""
 
-msgid "Accused of anti-social behaviour, including by your neighbours."
+msgid ""
+"Accused of anti-social behaviour by the landlord, council or housing "
+"association."
+msgstr ""
+
+msgid ""
+"Treated unfairly because of things like your disability or health "
+"condition, race, age, sex, religion or pregnancy."
 msgstr ""
 
 msgid "Special educational needs and disability (SEND)"
@@ -402,22 +407,22 @@ msgid "Validation failed message"
 msgstr ""
 
 msgid "Yes"
-msgstr "Gallwch"
+msgstr "Ydw"
 
 msgid "No"
-msgstr "Na"
+msgstr "Nac ydw"
 
 msgid "Continue"
 msgstr "Parhau"
 
 msgid "Are you worried about someone's safety?"
-msgstr ""
+msgstr "Ydych chi’n poeni am ddiogelwch rhywun?"
 
 msgid "This could be you, a child or someone else."
-msgstr ""
+msgstr "Gallai hyn fod yn chi, yn blentyn neu'n rhywun arall."
 
 msgid "Select if you’re worried about someone’s safety"
-msgstr ""
+msgstr "Dewiswch os ydych chi’n poeni am ddiogelwch rhywun"
 
 msgid "Is this about a child who is or has been in care?"
 msgstr ""
@@ -450,10 +455,10 @@ msgid "Select if this is about the police, prisons or detention centres"
 msgstr ""
 
 msgid "Are you under 18?"
-msgstr ""
+msgstr "Ydych chi dan 18 oed?"
 
 msgid "Select if you’re under 18"
-msgstr ""
+msgstr "Dewiswch os ydych chi dan 18 oed"
 
 msgid "Were you accused by a landlord or the council?"
 msgstr ""
@@ -493,6 +498,9 @@ msgstr "Rheswm arall"
 
 msgid "Continue to contact CLA"
 msgstr "Parhau i gysylltu â CLA"
+
+msgid "There is a problem"
+msgstr "Mae problem"
 
 msgid "-- Please select --"
 msgstr "-- Dewiswch --"
@@ -1333,6 +1341,12 @@ msgstr "Rhowch gyfanswm yr holl eitemau gwerthfawr dros £500"
 msgid "Enter 0 if you have no valuable items worth over £500 each"
 msgstr "Rhowch 0 os nad oes gennych eitemau gwerthfawr sy’n werth dros £500 yr un"
 
+msgid "Sorry, you’re not likely to get legal aid"
+msgstr ""
+
+msgid "Next steps to get help"
+msgstr ""
+
 msgid "Legal aid is available for this type of problem"
 msgstr "Mae cymorth cyfreithiol ar gael ar gyfer y math hwn o broblem"
 
@@ -1477,6 +1491,9 @@ msgid "Find problems covered by legal aid"
 msgstr ""
 
 msgid "More problems covered by legal aid"
+msgstr ""
+
+msgid "More problems"
 msgstr ""
 
 msgid "Adopting a child from outside the UK"
@@ -1629,9 +1646,6 @@ msgstr "gyflwyno cais yn uniongyrchol"
 msgid "You can also %(ecf_link)s to the Legal Aid Agency."
 msgstr "Gallwch hefyd %(ecf_link)s i’r Asiantaeth Cymorth Cyfreithiol."
 
-msgid "More problems"
-msgstr ""
-
 msgid "Appeal a decision about your benefits"
 msgstr "Apelio yn erbyn penderfyniad am eich budd-daliadau"
 
@@ -1663,20 +1677,6 @@ msgstr "Oriau agor"
 
 msgid "Email"
 msgstr "E-bost"
-
-msgid "children, families, relationships"
-msgstr ""
-
-msgid "Treated unfairly by a landlord, council or housing association."
-msgstr ""
-
-msgid ""
-"Accused of anti-social behaviour by the landlord, council or housing "
-"association."
-msgstr ""
-
-msgid "housing"
-msgstr "tai"
 
 msgid "Legal action against public organisations"
 msgstr ""
@@ -1713,9 +1713,6 @@ msgid "wrongfully arrested, stopped, held or detained anywhere"
 msgstr ""
 
 msgid "physically, sexually or emotionally abused"
-msgstr ""
-
-msgid "SEND"
 msgstr ""
 
 msgid "Back"
@@ -2041,3 +2038,4 @@ msgstr "Carafannau a cherbydau eraill nad ydych chi’n eu defnyddio bob dydd"
 
 msgid "Musical instruments, unless you’re a professional musician"
 msgstr "Offerynnau cerddorol, oni bai’ch bod yn gerddor proffesiynol"
+

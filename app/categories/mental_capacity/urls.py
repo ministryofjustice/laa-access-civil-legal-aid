@@ -37,7 +37,7 @@ class MentalCapacityLandingPage(CategoryLandingPage):
             (MENTAL_CAPACITY.sub.social_care, "categories.community_care.landing"),
         ],
         "more": [],
-        "other": "categories.results.refer",
+        "other": "categories.results.cannot_find_problem",
     }
 
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-02-17 22:54+0000\n"
+"POT-Creation-Date: 2025-02-19 15:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,7 +40,7 @@ msgstr ""
 
 msgid ""
 "Help with divorce, separation, or leaving your partner. Includes legal "
-"arrangements for children, money and housing"
+"arrangements for children, money and housing."
 msgstr ""
 
 msgid "Problems with an ex-partner: children or money"
@@ -78,7 +78,7 @@ msgstr ""
 msgid "If you or someone else is at risk of FGM."
 msgstr ""
 
-msgid "Children, families and relationships"
+msgid "Children, families, relationships"
 msgstr ""
 
 msgid ""
@@ -207,15 +207,20 @@ msgstr ""
 msgid "Discrimination"
 msgstr ""
 
-msgid ""
-"Treated unfairly because of things like your disability or health "
-"condition, race, age, sex, religion or pregnancy."
+msgid "Treated unfairly by a landlord, council or housing association."
 msgstr ""
 
 msgid "If you’ve been accused of anti-social behaviour"
 msgstr ""
 
-msgid "Accused of anti-social behaviour, including by your neighbours."
+msgid ""
+"Accused of anti-social behaviour by the landlord, council or housing "
+"association."
+msgstr ""
+
+msgid ""
+"Treated unfairly because of things like your disability or health "
+"condition, race, age, sex, religion or pregnancy."
 msgstr ""
 
 msgid "Special educational needs and disability (SEND)"
@@ -511,6 +516,9 @@ msgid "Another reason"
 msgstr ""
 
 msgid "Continue to contact CLA"
+msgstr ""
+
+msgid "There is a problem"
 msgstr ""
 
 msgid "-- Please select --"
@@ -1253,6 +1261,12 @@ msgstr ""
 msgid "Enter 0 if you have no valuable items worth over £500 each"
 msgstr ""
 
+msgid "Sorry, you’re not likely to get legal aid"
+msgstr ""
+
+msgid "Next steps to get help"
+msgstr ""
+
 msgid "Legal aid is available for this type of problem"
 msgstr ""
 
@@ -1369,6 +1383,9 @@ msgid "Find problems covered by legal aid"
 msgstr ""
 
 msgid "More problems covered by legal aid"
+msgstr ""
+
+msgid "More problems"
 msgstr ""
 
 msgid "Adopting a child from outside the UK"
@@ -1510,9 +1527,6 @@ msgstr ""
 msgid "You can also %(ecf_link)s to the Legal Aid Agency."
 msgstr ""
 
-msgid "More problems"
-msgstr ""
-
 msgid "Appeal a decision about your benefits"
 msgstr ""
 
@@ -1539,20 +1553,6 @@ msgid "Opening hours"
 msgstr ""
 
 msgid "Email"
-msgstr ""
-
-msgid "children, families, relationships"
-msgstr ""
-
-msgid "Treated unfairly by a landlord, council or housing association."
-msgstr ""
-
-msgid ""
-"Accused of anti-social behaviour by the landlord, council or housing "
-"association."
-msgstr ""
-
-msgid "housing"
 msgstr ""
 
 msgid "Legal action against public organisations"
@@ -1590,9 +1590,6 @@ msgid "wrongfully arrested, stopped, held or detained anywhere"
 msgstr ""
 
 msgid "physically, sexually or emotionally abused"
-msgstr ""
-
-msgid "SEND"
 msgstr ""
 
 msgid "Back"
