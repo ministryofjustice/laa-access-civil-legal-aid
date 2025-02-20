@@ -30,8 +30,13 @@ class Category:
         class Subcategory:
             def __init__(self, category):
                 self.children: dict[str, Category] = category.children
+                self.category: Category = category
 
             def __getattr__(self, item):
+                if item not in self.children:
+                    raise AttributeError(
+                        f"Could not find {item} in category {self.category.title}"
+                    )
                 return self.children.get(item)
 
         return Subcategory(self)
