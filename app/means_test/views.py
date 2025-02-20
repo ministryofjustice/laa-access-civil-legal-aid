@@ -154,7 +154,7 @@ class CheckYourAnswers(FormsMixin, MethodView):
 
         category = session.category
         change_your_problem_link = url_for("categories.index")
-        category_has_children = hasattr(category, "children")
+        category_has_children = bool(getattr(category, "children"))
         if len(answers) > 0:
             category = answers[0].category
             if category_has_children:
@@ -162,7 +162,7 @@ class CheckYourAnswers(FormsMixin, MethodView):
             answers.pop(0)
 
         category_text = [str(category.title)]
-        # if category doesn't have children then it does not have subpages and we don't show description for those
+        # if a category doesn't have children then it does not have subpages so we don't show the category description
         if category_has_children:
             category_text = [f"**{str(category.title)}**", str(category.description)]
 

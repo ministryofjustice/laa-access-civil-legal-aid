@@ -44,6 +44,7 @@ class Category:
 
     @classmethod
     def from_dict(cls, data: dict) -> "Category":
+        data = data.copy()
         children = {}
         if "children" in data:
             children: dict = data.pop("children")
