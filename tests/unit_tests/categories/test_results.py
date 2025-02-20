@@ -22,7 +22,8 @@ def test_get_context_with_housing_category(mock_organisations):
             "app.categories.results.views.get_fala_category_code", return_value="HOU"
         ),
     ):
-        result = ResultPage.get_context(category=HOUSING)
+        view = ResultPage(template="categories/results/housing.html")
+        result = view.get_context(category=HOUSING)
 
         assert result["category_name"] == "Housing, homelessness, losing your home"
         assert result["organisations"] == mock_organisations
@@ -42,7 +43,8 @@ def test_get_context_with_immigration_category():
             "app.categories.results.views.get_fala_category_code", return_value="IMMAS"
         ),
     ):
-        result = ResultPage.get_context(category=ASYLUM_AND_IMMIGRATION)
+        view = ResultPage(template="")
+        result = view.get_context(category=ASYLUM_AND_IMMIGRATION)
 
         assert result["category_name"] == "Asylum and immigration"
         assert result["organisations"] == []
@@ -59,7 +61,8 @@ def test_get_context_with_no_category():
         ) as mock_get_orgs,
         patch("app.categories.results.views.get_fala_category_code", return_value=None),
     ):
-        result = ResultPage.get_context()
+        view = ResultPage(template="")
+        result = view.get_context()
 
         # Assertions
         assert result["category_name"] is None
@@ -78,7 +81,8 @@ def test_get_context_with_invalid_category():
         ) as mock_get_orgs,
         patch("app.categories.results.views.get_fala_category_code", return_value=None),
     ):
-        result = ResultPage.get_context(category="not_a_category_object")
+        view = ResultPage(template="")
+        result = view.get_context(category="not_a_category_object")
 
         assert result["category_name"] is None
         assert result["organisations"] == []

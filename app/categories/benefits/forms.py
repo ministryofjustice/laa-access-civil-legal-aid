@@ -32,6 +32,6 @@ class AppealQuestionForm(QuestionForm):
             ("supreme_court", _("Supreme Court")),
             ("appeal_court", _("Court of Appeal")),
             ("", ""),
-            ("none", _("None of the above")),
+            ("none", _("None of these")),
         ],
     )

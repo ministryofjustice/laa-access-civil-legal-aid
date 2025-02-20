@@ -105,7 +105,10 @@ def create_app(config_class=Config):
     # Initialise app extensions
     compress.init_app(app)
     csrf.init_app(app)
-    limiter.init_app(app)
+
+    if app.config["RATELIMIT_ENABLED"]:
+        limiter.init_app(app)
+
     talisman.init_app(
         app,
         content_security_policy=csp if not Config.TESTING else None,

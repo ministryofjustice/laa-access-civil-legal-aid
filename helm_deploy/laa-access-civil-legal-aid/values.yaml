@@ -82,3 +82,8 @@ envVars:
       name: notify-orchestrator
       key: url
       optional: true
+  RATELIMIT_ENABLED:
+    configmap:
+      name: ratelimit
+      key: enabled
+      optional: true

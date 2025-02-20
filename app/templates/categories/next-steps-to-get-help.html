@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{%- from 'components/back_link.html' import govukBackLink -%}
+{%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton %}
+
+{% block beforeContent %}
+    {{ super() }}
+    {{ govukBackLink() }}
+{% endblock %}
+
+{% set title = _("Next steps to get help") %}
+{% block pageTitle %}{{ title }} - GOV.UK{% endblock %}
+
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">{{ title }}</h1>
+
+        <br>
+
+        <h2 class="govuk-heading-m">{% trans %}Find other free or low-cost legal help{% endtrans %}</h2>
+
+        {% set citizens_advice_link %}<a class="govuk-link" href="https://www.citizensadvice.org.uk/law-and-courts/legal-system/finding-free-or-affordable-legal-help/" target="_blank">{% trans %}free or affordable legal help (opens new tab).{% endtrans %}</a>{% endset %}
+        <p class="govuk-body">{% trans %}The Citizen’s Advice website explains how to find {% endtrans %}{{ citizens_advice_link }}</p>
+
+        <br>
+
+        <h2 class="govuk-heading-m">{% trans %}Speak to an advice organisation{% endtrans %}</h2>
+
+        <p class="govuk-body">You can get free, independent advice from:</p>
+
+        {% set citizens_advice_contact_link %}<a class="govuk-link" href="https://www.citizensadvice.org.uk/about-us/contact-us/" target="_blank">{% trans %}Citizen’s Advice (opens new tab){% endtrans %}</a>{% endset %}
+        {% set advicelocal_link %}<a class="govuk-link" href="https://advicelocal.uk/find-an-adviser" target="_blank">{% trans %}Advicelocal (opens new tab){% endtrans %}</a>{% endset %}
+        <ul class="govuk-list govuk-list--bullet">
+            <li>{{ citizens_advice_contact_link }}</li>
+            <li>{{ advicelocal_link }}</li>
+        </ul>
+
+        <br>
+
+        {% set ecf_link %}<a class="govuk-link" href="https://www.gov.uk/legal-aid/funding-for-exceptional-cases" target="_blank">exceptional case funding (opens new tab)</a>{% endset %}
+        <h2 class="govuk-heading-m">Exceptional case funding</h2>
+        <p class="govuk-body">In rare cases, you can still get government-funded legal help. Go to GOV.UK to find out about {{ ecf_link }}.</p>
+
+        <br>
+
+        {% set survey_link %}<a class="govuk-link" href="https://www.gov.uk/done/check-if-civil-legal-advice-can-help-you" target="_blank">What did you think of this service?</a>{% endset %}
+        <p class="govuk-body">{{ survey_link }} (takes 30 seconds)</p>
+
+    </div>
+</div>
+{% endblock %}

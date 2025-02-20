@@ -7,7 +7,7 @@ REFERRAL_PAGE_HEADING = "Legal aid doesn’t cover all types of problem"
 @pytest.mark.usefixtures("live_server")
 def test_benefits_referral(page: Page):
     page.get_by_role("link", name="Benefits").click()
-    page.get_by_role("radio", name="None of the above").check()
+    page.get_by_role("radio", name="None of these").check()
     page.get_by_role("button", name="Continue").click()
     expect(page.get_by_role("heading", name=REFERRAL_PAGE_HEADING)).to_be_visible()
     expect(
