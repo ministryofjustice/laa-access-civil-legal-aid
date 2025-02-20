@@ -4,7 +4,7 @@ from app.categories.constants import Category
 
 
 @dataclass
-class ScopeAnswer:
+class CategoryAnswer:
     question: str
     answer_value: str
     answer_label: str

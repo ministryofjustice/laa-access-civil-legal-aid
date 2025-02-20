@@ -142,7 +142,7 @@ class CheckYourAnswers(FormsMixin, MethodView):
             "means_test_summary": means_test_summary,
             "form": ReviewForm(),
             "category": session.category,
-            "scope_answers": self.get_category_answers_summary(),
+            "category_answers": self.get_category_answers_summary(),
         }
         return render_template("means_test/review.html", **params)
 

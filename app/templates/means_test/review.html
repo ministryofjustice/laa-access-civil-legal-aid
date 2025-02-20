@@ -20,11 +20,11 @@
             <form action="" method="post" novalidate>
                 {{ form.csrf_token }}
 
-                {% if scope_answers %}
+                {% if category_answers %}
                     <h1 class="govuk-heading-l">{% trans %}About the problem{% endtrans %}</h1>
                     {# Parse the markdown before passing it to govukSummaryList #}
                     {% set ns = namespace(rows=[]) %}
-                    {% for answer in scope_answers %}
+                    {% for answer in category_answers %}
                         {%  if answer.value.markdown %}
                             {% set _ = answer.__setitem__("value", {"text": answer.value.markdown | markdown(extensions=['nl2br'])}) %}
                         {% endif %}

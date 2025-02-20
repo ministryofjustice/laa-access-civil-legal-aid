@@ -1,10 +1,10 @@
 from app.categories.constants import Category, HOUSING
-from app.categories.models import ScopeAnswer
+from app.categories.models import CategoryAnswer
 
 
 def test_set_category_question_answer_new_session(app, client):
     with client.session_transaction() as session:
-        answer = ScopeAnswer(
+        answer = CategoryAnswer(
             question="What is your favourite mode of transport?",
             answer_value="bus",
             answer_label="Bus",
@@ -20,7 +20,7 @@ def test_set_category_question_answer_new_session(app, client):
 
 def test_set_category_question_answer_updates_existing(app, client):
     with client.session_transaction() as session:
-        answer = ScopeAnswer(
+        answer = CategoryAnswer(
             question="What is your favourite mode of transport?",
             answer_value="bus",
             answer_label="Bus",
@@ -28,7 +28,7 @@ def test_set_category_question_answer_updates_existing(app, client):
             question_page="categories.housing.landing",
             category=HOUSING,
         )
-        updated_answer = ScopeAnswer(
+        updated_answer = CategoryAnswer(
             question="What is your favourite mode of transport?",
             answer_value="car",
             answer_label="Car",
@@ -48,7 +48,7 @@ def test_get_category_question_answer_empty_session(app, client):
 
 
 def test_get_category_question_answer_found(app, client):
-    first_answer = ScopeAnswer(
+    first_answer = CategoryAnswer(
         question="What is your favourite mode of transport?",
         answer_value="bus",
         answer_label="Bus",
@@ -56,7 +56,7 @@ def test_get_category_question_answer_found(app, client):
         question_page="categories.housing.landing",
         category=HOUSING,
     )
-    second_answer = ScopeAnswer(
+    second_answer = CategoryAnswer(
         question="Where did this happen?",
         answer_value="home",
         answer_label="Home",
@@ -71,7 +71,7 @@ def test_get_category_question_answer_found(app, client):
 
 
 def test_get_category_question_answer_not_found(app, client):
-    answer = ScopeAnswer(
+    answer = CategoryAnswer(
         question="What is your favourite mode of transport?",
         answer_value="bus",
         answer_label="Bus",
