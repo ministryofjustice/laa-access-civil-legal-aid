@@ -1,4 +1,5 @@
 from app.categories.public import bp
+from app.categories.results.views import CannotFindYourProblemPage, NextStepsPage
 from app.categories.views import CategoryLandingPage, QuestionPage
 from app.categories.public.forms import PolicePrisonOrDetentionCentreForm
 from app.categories.constants import PUBLIC_LAW
@@ -21,5 +22,22 @@ bp.add_url_rule(
     view_func=QuestionPage.as_view(
         "reason",
         form_class=PolicePrisonOrDetentionCentreForm,
+    ),
+)
+bp.add_url_rule(
+    "/public/cannot-find-your-problem",
+    view_func=CannotFindYourProblemPage.as_view(
+        "cannot_find_problem",
+        category=PUBLIC_LAW,
+        get_help_organisations=False,
+        next_steps_page="categories.public.next_steps",
+    ),
+)
+bp.add_url_rule(
+    "/public/next-steps",
+    view_func=NextStepsPage.as_view(
+        "next_steps",
+        category=PUBLIC_LAW,
+        get_help_organisations=True,
     ),
 )
