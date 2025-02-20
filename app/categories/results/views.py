@@ -44,7 +44,7 @@ class OutOfScopePage(ResultPage):
     This allows them to be linked to without having to go through the journey.
     """
 
-    def __init__(self, template, category: Category, *args, **kwargs):
+    def __init__(self, template, category: Category | None = None, *args, **kwargs):
         super().__init__(template, *args, **kwargs)
         self.category = category
 
@@ -56,12 +56,14 @@ class OutOfScopePage(ResultPage):
 class CannotFindYourProblemPage(OutOfScopePage):
     template = "categories/cannot-find-problem.html"
 
-    def __init__(self, next_steps_page, *args, **kwargs):
+    def __init__(self, next_steps_page: str = None, *args, **kwargs):
         kwargs["get_help_organisations"] = (
             False  # Disables fetching help orgs from backend as this page doesn't require it.
         )
         kwargs["template"] = self.template
         super().__init__(*args, **kwargs)
+        if next_steps_page is None:
+            next_steps_page = "categories.results.next_steps"
         self.next_steps_page = next_steps_page
 
     def get_context(self, *args, **kwargs):

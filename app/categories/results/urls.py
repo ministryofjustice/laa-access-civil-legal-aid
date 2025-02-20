@@ -1,5 +1,10 @@
 from app.categories.results import bp
-from app.categories.results.views import HlpasInScopePage, ResultPage
+from app.categories.results.views import (
+    HlpasInScopePage,
+    ResultPage,
+    CannotFindYourProblemPage,
+    NextStepsPage,
+)
 
 bp.add_url_rule(
     "/legal-aid-available",
@@ -16,15 +21,14 @@ bp.add_url_rule(
     view_func=ResultPage.as_view("refer", template="categories/refer.html"),
 )
 bp.add_url_rule(
-    "/cannot-find-problem",
-    view_func=ResultPage.as_view(
-        "cannot_find_problem",
-        get_help_organisations=False,
+    "/cannot-find-your-problem",
+    view_func=CannotFindYourProblemPage.as_view(
+        "cannot_find_your_problem",
     ),
 )
 bp.add_url_rule(
-    "/next-steps-get-help",
-    view_func=ResultPage.as_view(
+    "/next-steps",
+    view_func=NextStepsPage.as_view(
         "next_steps",
         get_help_organisations=True,
     ),

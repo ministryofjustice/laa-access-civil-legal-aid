@@ -1,4 +1,5 @@
 from app.categories.asylum_immigration import bp
+from app.categories.results.views import CannotFindYourProblemPage, NextStepsPage
 from app.categories.views import CategoryLandingPage
 from app.categories.constants import ASYLUM_AND_IMMIGRATION
 
@@ -29,4 +30,19 @@ class AsylumAndImmigrationLandingPage(CategoryLandingPage):
 
 AsylumAndImmigrationLandingPage.register_routes(
     blueprint=bp, path="/asylum-and-immigration"
+)
+bp.add_url_rule(
+    "/mental-capacity-health/cannot-find-your-problem",
+    view_func=CannotFindYourProblemPage.as_view(
+        "cannot_find_your_problem",
+        category=ASYLUM_AND_IMMIGRATION,
+        next_steps_page="categories.asylum_immigration.next_steps",
+    ),
+)
+bp.add_url_rule(
+    "/mental-capacity-health/next-steps",
+    view_func=NextStepsPage.as_view(
+        "next_steps",
+        category=ASYLUM_AND_IMMIGRATION,
+    ),
 )
