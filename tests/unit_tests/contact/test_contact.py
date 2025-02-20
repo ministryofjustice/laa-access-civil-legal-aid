@@ -2,10 +2,13 @@ import pytest
 from unittest.mock import patch
 from flask import request, Flask, session
 from app.api import cla_backend
-from app.contact.forms import ReasonsForContactingForm
+from app.contact.forms import ContactUsForm, ReasonsForContactingForm
 import unittest
+import requests
 from datetime import datetime
 from app.api import BackendAPIClient
+from app.contact.address_finder.widgets import AddressLookup, FormattedAddressLookup
+from app import create_app
 
 
 def test_post_reasons_for_contacting_success(mocker, app):
@@ -131,3 +134,154 @@ class TestBackendAPIClient(unittest.TestCase):
             f"checker/api/v1/reasons_for_contacting/{reference}", json=payload
         )
         self.assertEqual(response, {"success": True})
+
+
+class TestAddressLookup(unittest.TestCase):
+    def setUp(self):
+        """Set up test instance with mock API key."""
+        self.lookup = AddressLookup(key="test_api_key")
+
+    @patch("app.contact.address_finder.widgets.requests.get")
+    def test_by_postcode_success(self, mock_get):
+        """Test successful address lookup"""
+        mock_get.return_value.status_code = 200
+        mock_get.return_value.json.return_value = {
+            "results": [{"DPA": {"POSTCODE": "SW1A 1AA"}}]
+        }
+
+        results = self.lookup.by_postcode("SW1A 1AA")
+        self.assertEqual(results, [{"DPA": {"POSTCODE": "SW1A 1AA"}}])
+        mock_get.assert_called_once_with(
+            "https://api.os.uk/search/places/v1/postcode",
+            params={
+                "postcode": "SW1A 1AA",
+                "key": "test_api_key",
+                "output_srs": "WGS84",
+                "dataset": "DPA",
+            },
+            timeout=3,
+        )
+
+    @patch(
+        "app.contact.address_finder.widgets.requests.get",
+        side_effect=requests.exceptions.ConnectTimeout,
+    )
+    def test_by_postcode_timeout(self, mock_get):
+        """Test handling of request timeout"""
+        results = self.lookup.by_postcode("SW1A 1AA")
+        self.assertEqual(results, [])
+
+    @patch("app.contact.address_finder.widgets.requests.get")
+    def test_by_postcode_request_exception(self, mock_get):
+        """Test handling of a general request failure"""
+        mock_get.side_effect = requests.exceptions.RequestException("API failure")
+        results = self.lookup.by_postcode("SW1A 1AA")
+        self.assertEqual(results, [])
+
+
+class TestFormattedAddressLookup(unittest.TestCase):
+    def setUp(self):
+        self.lookup = FormattedAddressLookup(key="test_api_key")
+
+    @patch.object(AddressLookup, "by_postcode")
+    def test_by_postcode_formatted(self, mock_by_postcode):
+        """Test formatted address lookup"""
+        mock_by_postcode.return_value = [
+            {"DPA": {"POSTCODE": "SW1A 1AA", "POST_TOWN": "London"}}
+        ]
+
+        results = self.lookup.by_postcode("SW1A 1AA")
+        self.assertEqual(results, ["London\nSW1A 1AA"])
+
+    def test_format_address_from_dpa_result(self):
+        """Test address formatting"""
+        raw_result = {
+            "ORGANISATION_NAME": "Big Ben",
+            "BUILDING_NUMBER": "10",
+            "THOROUGHFARE_NAME": "Downing Street",
+            "POST_TOWN": "London",
+            "POSTCODE": "sw1a 2aa",
+        }
+        expected_output = "Big Ben\n10 Downing Street\nLondon\nSW1A 2AA"
+
+        result = self.lookup.format_address_from_dpa_result(raw_result)
+        self.assertEqual(result, expected_output)
+
+
+class TestContactUsForm(unittest.TestCase):
+    def setUp(self):
+        self.app = create_app()
+        self.client = self.app.test_client()
+
+    def test_get_callback_time_call_on_another_day(self):
+        with self.app.test_request_context(
+            "/contact",
+            method="POST",
+            data={
+                "contact_type": "callback",
+                "time_to_call": "Call on another day",
+                "call_another_day": ["2025-02-21"],
+                "call_another_time": ["1400"],
+            },
+        ):
+            form = ContactUsForm()
+            iso_time, callback_time = form.get_callback_time()
+            self.assertIsNotNone(iso_time)
+            self.assertIsNotNone(callback_time)
+            self.assertIn("Friday, 21 February at 14:00 - 14:30", callback_time)
+
+    def test_get_callback_time_call_today(self):
+        with self.app.test_request_context(
+            "/contact",
+            method="POST",
+            data={
+                "contact_type": "callback",
+                "time_to_call": "Call today",
+                "call_today_time": ["0900"],
+            },
+        ):
+            form = ContactUsForm()
+            iso_time, callback_time = form.get_callback_time()
+            self.assertIsNotNone(iso_time)
+            self.assertIsNotNone(callback_time)
+            self.assertIn("Thursday, 20 February at 09:00 - 09:30", callback_time)
+
+    def test_get_callback_time_no_callback(self):
+        with self.app.test_request_context(
+            "/contact",
+            method="POST",
+            data={
+                "contact_type": "email",
+            },
+        ):
+            form = ContactUsForm()
+            iso_time, callback_time = form.get_callback_time()
+            self.assertIsNone(iso_time)
+            self.assertIsNone(callback_time)
+
+    def test_get_email_with_bsl_email_field(self):
+        with self.app.test_request_context(
+            "/contact",
+            method="POST",
+            data={
+                "bsl_email": "test@example.com",
+            },
+        ):
+            form = ContactUsForm()
+            email = form.get_email()
+            self.assertEqual(email, "test@example.com")
+
+    def test_get_email_with_email_field(self):
+        with self.app.test_request_context(
+            "/contact",
+            method="POST",
+            data={
+                "email": "test@example.com",
+            },
+        ):
+            form = ContactUsForm()
+            email = form.get_email()
+            self.assertEqual(email, "test@example.com")
+
+    def tearDown(self):
+        pass
