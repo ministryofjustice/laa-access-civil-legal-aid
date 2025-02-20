@@ -10,12 +10,12 @@ class FamilyLandingPage(CategoryLandingPage):
 
     routing_map = {
         "main": [
-            (FAMILY.sub.social_services, "means_test.eligible"),
-            (FAMILY.sub.divorce, "means_test.eligible"),
+            (FAMILY.sub.social_services, "contact.eligible"),
+            (FAMILY.sub.divorce, "contact.eligible"),
             # Todo: This needs to be updated to the onward question page when this is made
-            (FAMILY.sub.domestic_abuse, "means_test.eligible"),
+            (FAMILY.sub.domestic_abuse, "contact.eligible"),
             (FAMILY.sub.family_mediation, "categories.results.in_scope"),
-            (FAMILY.sub.child_abducted, "means_test.eligible"),
+            (FAMILY.sub.child_abducted, "contact.eligible"),
         ],
         "more": [
             # Todo: This needs to be updated to SEND landing page when this page is made

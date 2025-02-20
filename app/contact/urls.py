@@ -1,16 +1,10 @@
 from app.contact import bp
-from app.contact.forms import ReasonsForContactingForm
 from app.contact.address_finder.widgets import FormattedAddressLookup
-from app.contact.views import ContactUs
-from app.api import cla_backend
+from app.contact.views import ContactUs, ReasonForContacting
 from flask import (
-    request,
-    redirect,
-    url_for,
     render_template,
     Response,
     current_app,
-    session,
 )
 import json
 import logging
@@ -18,19 +12,10 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-@bp.route("/reasons-for-contacting", methods=["GET", "POST"])
-def reasons_for_contacting():
-    form = ReasonsForContactingForm()
-    if request.method == "GET":
-        form.referrer.data = request.referrer or "Unknown"
-    if form.validate_on_submit():
-        result = cla_backend.post_reasons_for_contacting(form=form)
-        next_step = form.next_step_mapping.get("*")
-        logger.info("API Response: %s", result)
-        if result and "reference" in result:
-            session[form.MODEL_REF_SESSION_KEY] = result["reference"]
-        return redirect(url_for(next_step))
-    return render_template("contact/rfc.html", form=form)
+bp.add_url_rule(
+    "/reasons-for-contacting",
+    view_func=ReasonForContacting.as_view("reasons_for_contacting"),
+)
 
 
 @bp.route("/confirmation", methods=["GET", "POST"])
@@ -52,4 +37,11 @@ def geocode(postcode):
 bp.add_url_rule(
     "/contact-us",
     view_func=ContactUs.as_view("contact_us", attach_eligiblity_data=False),
+)
+
+bp.add_url_rule(
+    "/eligible",
+    view_func=ContactUs.as_view(
+        "eligible", template="contact/eligible.html", attach_eligiblity_data=True
+    ),
 )
