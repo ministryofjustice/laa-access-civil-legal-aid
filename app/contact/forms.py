@@ -37,7 +37,7 @@ from app.contact.validators import (
 from app.means_test.validators import ValidateIf, ValidateIfType
 from app.api import cla_backend
 from datetime import datetime, timedelta
-import pytz
+from zoneinfo import ZoneInfo
 
 
 class ReasonsForContactingForm(FlaskForm):
@@ -500,9 +500,11 @@ class ContactUsForm(FlaskForm):
         else:
             return None, None
 
-        local_tz = pytz.timezone(current_app.config["TIMEZONE"])
+        local_tz = ZoneInfo(current_app.config["TIMEZONE"])
         iso_time = (
-            local_tz.localize(time).astimezone(pytz.utc).isoformat() if time else None
+            time.replace(tzinfo=local_tz).astimezone(ZoneInfo("UTC")).isoformat()
+            if time
+            else None
         )
 
         callback_time = format_time(time)
