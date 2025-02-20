@@ -105,6 +105,6 @@ class DiscriminationAreYouUnder18Form(AreYouUnder18Form):
     category = DISCRIMINATION
 
     next_step_mapping = {
-        "yes": "means_test.eligible",
+        "yes": "contact.eligible",
         "no": "categories.results.in_scope",
     }

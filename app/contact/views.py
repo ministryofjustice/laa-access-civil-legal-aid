@@ -1,7 +1,7 @@
 from flask.views import View
 from app.contact.forms import ContactUsForm, ReasonsForContactingForm
 import logging
-from flask import session, render_template
+from flask import session, render_template, request, redirect, url_for
 from app.api import cla_backend
 from app.contact.notify.api import (
     NotifyEmailOrchestrator,
@@ -11,6 +11,24 @@ from app.means_test.api import get_means_test_payload, update_means_test
 from app.means_test.views import MeansTest
 
 logger = logging.getLogger(__name__)
+
+
+class ReasonForContacting(View):
+    methods = ["GET", "POST"]
+    template = "contact/rfc.html"
+
+    def dispatch_request(self):
+        form = ReasonsForContactingForm()
+        if request.method == "GET":
+            form.referrer.data = request.referrer or "Unknown"
+        if form.validate_on_submit():
+            result = cla_backend.post_reasons_for_contacting(form=form)
+            next_step = form.next_step_mapping.get("*")
+            logger.info("API Response: %s", result)
+            if result and "reference" in result:
+                session[form.MODEL_REF_SESSION_KEY] = result["reference"]
+            return redirect(url_for(next_step))
+        return render_template(self.template, form=form)
 
 
 class ContactUs(View):

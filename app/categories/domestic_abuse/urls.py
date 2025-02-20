@@ -33,7 +33,7 @@ class DomesticAbuseLandingPage(CategoryLandingPage):
                 DOMESTIC_ABUSE.sub.fgm,
                 "categories.domestic_abuse.are_you_at_risk_of_harm",
             ),
-            (DOMESTIC_ABUSE.sub.problems_with_neighbours, "means_test.eligible"),
+            (DOMESTIC_ABUSE.sub.problems_with_neighbours, "contact.eligible"),
             (
                 DOMESTIC_ABUSE.sub.housing_homelessness_losing_home,
                 "categories.housing.landing",
