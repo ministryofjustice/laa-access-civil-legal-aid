@@ -216,8 +216,15 @@ class TestContactUsForm(unittest.TestCase):
 
     def test_get_callback_time_call_on_another_day(self):
         with mock.patch("requests.get") as mock_get:
-            mock_get.return_value.status_code = 200
-            mock_get.return_value.json.return_value = {"some_key": "some_value"}
+            mock_response = mock.Mock()
+            mock_response.status_code = 200
+            mock_response.json.return_value = {
+                "time_slots": [
+                    {"time": "2025-02-21T14:00:00Z", "availability": "available"}
+                ]
+            }
+
+            mock_get.return_value = mock_response
 
             with self.app.test_request_context(
                 "/contact",
@@ -231,6 +238,7 @@ class TestContactUsForm(unittest.TestCase):
             ):
                 form = ContactUsForm()
                 iso_time, callback_time = form.get_callback_time()
+
                 self.assertIsNotNone(iso_time)
                 self.assertIsNotNone(callback_time)
                 self.assertIn("Friday, 21 February at 14:00 - 14:30", callback_time)
