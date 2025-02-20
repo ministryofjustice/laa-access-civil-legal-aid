@@ -137,8 +137,10 @@ def test_contact_page_routing(page: Page, contact_answers: dict):
         elif answer[1] == "input":
             page.get_by_label(question).first.fill(answer[0])
         elif answer[1] == "select":
-            page.locator("select").nth(0).select_option(index=1)
-            page.locator("select").nth(1).select_option(index=1)
+            page.get_by_role("group", name="Select a time for us to call").get_by_label(
+                "Day", exact=True
+            ).select_option(index=1)
+            page.locator("#call_another_time").select_option(index=1)
         elif answer[1] == "checkbox":
             page.get_by_role("checkbox", name=question).first.check()
 
