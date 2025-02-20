@@ -18,7 +18,7 @@ bp.add_url_rule(
 )
 
 
-@bp.route("/confirmation", methods=["GET", "POST"])
+@bp.route("/confirmation", methods=["GET"])
 def confirmation():
     return render_template("contact/confirmation.html")
 
