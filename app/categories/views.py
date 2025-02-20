@@ -3,7 +3,7 @@ from flask.views import View
 from flask import render_template, redirect, url_for, session, request
 from app.categories.forms import QuestionForm
 from app.categories.constants import Category
-from app.categories.models import ScopeAnswer
+from app.categories.models import CategoryAnswer
 
 
 class CategoryPage(View):
@@ -14,12 +14,12 @@ class CategoryPage(View):
     def __init__(self, template, *args, **kwargs):
         self.template = template
 
-    def update_session(self, scope_answer: ScopeAnswer) -> None:
+    def update_session(self, category_answer: CategoryAnswer) -> None:
         """
         Update the session with the current page and answer.
 
         """
-        session.set_category_question_answer(scope_answer)
+        session.set_category_question_answer(category_answer)
 
     def dispatch_request(self):
         category = getattr(self, "category", None)
@@ -78,7 +78,7 @@ class CategoryLandingPage(CategoryPage):
         cls.register_sub_routes(blueprint, path, cls.routing_map["more"])
 
         if "other" in cls.routing_map and cls.routing_map["other"] is not None:
-            scope_answer = ScopeAnswer(
+            category_answer = CategoryAnswer(
                 question=cls.question_title,
                 question_page=f"categories.{blueprint.name}.landing",
                 answer_value="other",
@@ -88,13 +88,13 @@ class CategoryLandingPage(CategoryPage):
             )
             blueprint.add_url_rule(
                 f"/{path}/answer/other",
-                view_func=CategoryAnswerPage.as_view("other", scope_answer),
+                view_func=CategoryAnswerPage.as_view("other", category_answer),
             )
 
     @classmethod
     def register_sub_routes(cls, blueprint: Blueprint, path, routes):
         for sub_category, next_page in routes:
-            scope_answer = ScopeAnswer(
+            category_answer = CategoryAnswer(
                 question=cls.question_title,
                 question_page=f"categories.{blueprint.name}.landing",
                 answer_value=sub_category.code,
@@ -104,26 +104,28 @@ class CategoryLandingPage(CategoryPage):
             )
             blueprint.add_url_rule(
                 f"/{path}/answer/{sub_category.url_friendly_name}",
-                view_func=CategoryAnswerPage.as_view(sub_category.code, scope_answer),
+                view_func=CategoryAnswerPage.as_view(
+                    sub_category.code, category_answer
+                ),
             )
 
 
 class CategoryAnswerPage(View):
-    def __init__(self, scope_answer: ScopeAnswer):
-        self.scope_answer = scope_answer
+    def __init__(self, category_answer: CategoryAnswer):
+        self.category_answer = category_answer
 
     def update_session(self) -> None:
         """
         Update the session with the current page and answer.
 
         """
-        session.set_category_question_answer(self.scope_answer)
+        session.set_category_question_answer(self.category_answer)
 
     def dispatch_request(self):
         self.update_session()
-        if isinstance(self.scope_answer.next_page, dict):
-            return redirect(url_for(**self.scope_answer.next_page))
-        return redirect(url_for(self.scope_answer.next_page))
+        if isinstance(self.category_answer.next_page, dict):
+            return redirect(url_for(**self.category_answer.next_page))
+        return redirect(url_for(self.category_answer.next_page))
 
 
 class QuestionPage(CategoryPage):
@@ -192,7 +194,7 @@ class QuestionPage(CategoryPage):
         answer_labels = [
             label for value, label in form.question.choices if value in answer
         ]
-        scope_answer = ScopeAnswer(
+        category_answer = CategoryAnswer(
             question=form.title,
             answer_value=form.question.data,
             answer_label=answer_labels if len(answer) > 1 else answer_labels[0],
@@ -200,7 +202,7 @@ class QuestionPage(CategoryPage):
             next_page=self.get_next_page(form.question.data),
             question_page=request.url_rule.endpoint,
         )
-        super().update_session(scope_answer)
+        super().update_session(category_answer)
 
     def process_request(self):
         """Handle requests for the question page, including form submissions.
