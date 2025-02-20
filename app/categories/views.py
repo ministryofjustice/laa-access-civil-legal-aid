@@ -151,15 +151,14 @@ class QuestionPage(CategoryPage):
         self.category = form_class.category
         super().__init__(self.template)
 
-    def get_next_page(self, answer: str, should_redirect=True) -> redirect:
+    def get_next_page(self, answer: str) -> str:
         """Determine and redirect to the next page based on the user's answer.
 
         Args:
             answer: The user's selected answer
-            should_redirect: Whether to redirect to the next page or not.
 
         Returns:
-            A Flask redirect response to the next appropriate page
+            A string representing the next page to take the user to
 
         Raises:
             ValueError if the answer does not have a mapping to a next page
@@ -170,18 +169,12 @@ class QuestionPage(CategoryPage):
         ]  # We should only route to these pages if they are the only answer
 
         if len(answer) == 1 and answer[0] in optional_answers:
-            next_page = url_for(self.form_class.next_step_mapping[answer[0]])
-            if not should_redirect:
-                return next_page
-            return redirect(next_page)
+            return url_for(self.form_class.next_step_mapping[answer[0]])
 
         if isinstance(answer, list):
             for a in answer:
                 if a in self.form_class.next_step_mapping and a not in optional_answers:
-                    next_page = url_for(self.form_class.next_step_mapping[a])
-                    if not should_redirect:
-                        return next_page
-                    return redirect(next_page)
+                    return url_for(self.form_class.next_step_mapping[a])
             answer = "*"
 
         if answer not in self.form_class.next_step_mapping:
@@ -189,12 +182,9 @@ class QuestionPage(CategoryPage):
 
         next_page = self.form_class.next_step_mapping[answer]
 
-        if not should_redirect:
-            return next_page
-
         if isinstance(next_page, dict):
-            return redirect(url_for(**next_page))
-        return redirect(url_for(next_page))
+            return url_for(**next_page)
+        return url_for(next_page)
 
     def update_session(self, form: QuestionForm) -> None:
         answer = form.question.data
@@ -207,7 +197,7 @@ class QuestionPage(CategoryPage):
             answer_value=form.question.data,
             answer_label=answer_labels if len(answer) > 1 else answer_labels[0],
             category=form.category,
-            next_page=self.get_next_page(form.question.data, should_redirect=False),
+            next_page=self.get_next_page(form.question.data),
             question_page=request.url_rule.endpoint,
         )
         super().update_session(scope_answer)
@@ -227,7 +217,7 @@ class QuestionPage(CategoryPage):
 
         if form.submit.data and form.validate():
             self.update_session(form)
-            return self.get_next_page(form.question.data)
+            return redirect(self.get_next_page(form.question.data))
 
         # Pre-populate form with previous answer if it exists
         previous_answer = session.get_category_question_answer(form.title)
