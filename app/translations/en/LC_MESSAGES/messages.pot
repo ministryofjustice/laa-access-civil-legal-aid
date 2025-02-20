@@ -8,7 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2025-03-03 14:56+0000\n"
+=======
+"POT-Creation-Date: 2025-02-20 15:15+0000\n"
+>>>>>>> e531086d (Update welsh translations)
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -560,6 +564,9 @@ msgstr ""
 msgid "Were you accused by a landlord or the council?"
 msgstr ""
 
+msgid "Select ‘Yes’ if you were accused by a landlord or the council"
+msgstr ""
+
 msgid "-- Please select --"
 msgstr ""
 
@@ -596,10 +603,144 @@ msgstr ""
 msgid "Continue to contact CLA"
 msgstr ""
 
-msgid "There is a problem"
+msgid "Contact Civil Legal Advice"
 msgstr ""
 
-msgid "-- Please select --"
+msgid "Your full name"
+msgstr ""
+
+msgid "Your full name must be 400 characters or less"
+msgstr ""
+
+msgid "Tell us your name"
+msgstr ""
+
+msgid "Select a contact option"
+msgstr ""
+
+msgid "Tell us how we should get in contact"
+msgstr ""
+
+msgid "Phone number"
+msgstr ""
+
+msgid ""
+"Enter the full number, including the area code. For example, 01632 960 "
+"1111."
+msgstr ""
+
+msgid "Tell us what number to ring"
+msgstr ""
+
+msgid "Your telephone number must be 20 characters or less"
+msgstr ""
+
+msgid "Select a time for us to call"
+msgstr ""
+
+msgid "Time"
+msgstr ""
+
+msgid "Select what time you want to be called today"
+msgstr ""
+
+msgid "Day"
+msgstr ""
+
+msgid "Select which day you want to be called"
+msgstr ""
+
+msgid "Select what time you want to be called"
+msgstr ""
+
+msgid "Can we say that we're calling from Civil Legal Advice?"
+msgstr ""
+
+msgid "No - do not say where you are calling from"
+msgstr ""
+
+msgid "Select if we can say that we’re calling from Civil Legal Advice"
+msgstr ""
+
+msgid "Full name of the person to call"
+msgstr ""
+
+msgid "Their full name must be 400 characters or less"
+msgstr ""
+
+msgid "Tell us the name of the person to call"
+msgstr ""
+
+msgid "Relationship to you"
+msgstr ""
+
+msgid "Tell us how you know this person"
+msgstr ""
+
+msgid "Email (optional)"
+msgstr ""
+
+msgid "We will use this to send your reference number."
+msgstr ""
+
+msgid "Your address must be 255 characters or less"
+msgstr ""
+
+msgid "Invalid email address"
+msgstr ""
+
+msgid "Postcode (optional)"
+msgstr ""
+
+msgid "Select an address"
+msgstr ""
+
+msgid "Street address (optional)"
+msgstr ""
+
+msgid "Tell us more about your problem (optional)"
+msgstr ""
+
+msgid "Your notes must be 4000 characters or less"
+msgstr ""
+
+msgid "Do you have any special communication needs? (optional)"
+msgstr ""
+
+msgid "British Sign Language (BSL)"
+msgstr ""
+
+msgid "Text relay"
+msgstr ""
+
+msgid "Welsh"
+msgstr ""
+
+msgid "Other language - need an interpreter"
+msgstr ""
+
+msgid "Any other communication need"
+msgstr ""
+
+msgid "Enter your email address so we can arrange a BSL call"
+msgstr ""
+
+msgid "Enter your email address"
+msgstr ""
+
+msgid "Choose a language"
+msgstr ""
+
+msgid "Please tell us what you need"
+msgstr ""
+
+msgid "Your other communication needs must be 4000 characters or fewer"
+msgstr ""
+
+msgid "Submit details"
+msgstr ""
+
+msgid "There is a problem"
 msgstr ""
 
 msgid "per week"
@@ -1558,6 +1699,24 @@ msgstr ""
 msgid "Help if you’re a victim of human trafficking or modern slavery."
 msgstr ""
 
+msgid "Find other free or low-cost legal help"
+msgstr ""
+
+msgid "free or affordable legal help (opens new tab)."
+msgstr ""
+
+msgid "The Citizen’s Advice website explains how to find "
+msgstr ""
+
+msgid "Speak to an advice organisation"
+msgstr ""
+
+msgid "Citizen’s Advice (opens new tab)"
+msgstr ""
+
+msgid "Advicelocal (opens new tab)"
+msgstr ""
+
 msgid "Legal aid doesn’t cover all types of problem"
 msgstr ""
 
@@ -1644,7 +1803,9 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#, python-format
+msgid "Legal action against public organisations"
+msgstr ""
+
 msgid ""
 "Legal help to challenge something done by a public organisation. You "
 "might have been told you need to bring a ‘judicial review’."
@@ -1683,6 +1844,85 @@ msgid "physically, sexually or emotionally abused"
 msgstr ""
 
 msgid "Back"
+msgstr ""
+
+msgid ""
+"We’ll give you the Civil Legal Advice phone number when you submit your "
+"details."
+msgstr ""
+
+msgid "We’ll call during the time you choose."
+msgstr ""
+
+msgid "The call will come from an unknown or withheld number."
+msgstr ""
+
+msgid "If you miss the call, we will call 2 more times in the next few days."
+msgstr ""
+
+msgid "We will not leave a message."
+msgstr ""
+
+msgid "If you miss all 3 calls, or if you need urgent advice, call us on:"
+msgstr ""
+
+msgid "You must be with the person when we call."
+msgstr ""
+
+msgid ""
+"Civil Legal Advice will check if you can get legal aid and help you "
+"contact the right legal adviser. If you cannot get legal aid, we’ll tell "
+"you about other help you can get."
+msgstr ""
+
+msgid ""
+"You can call Civil Legal Advice yourself - this is an 0345 number, so <a "
+"class=\"govuk-link\" href=\"https://www.gov.uk/call-charges\">call "
+"charges</a> apply. Or you can ask us to call you back, which is free."
+msgstr ""
+
+msgid ""
+"We’ll ask questions about your legal problem and your financial "
+"situation. You might need to provide evidence of any financial "
+"information you give us."
+msgstr ""
+
+msgid "Address"
+msgstr ""
+
+msgid "Find UK Address"
+msgstr ""
+
+msgid ""
+"Your session will time out after 30 minutes of inactivity. We do this for"
+" your security."
+msgstr ""
+
+#, python-format
+msgid ""
+"If you're having trouble completing this form, <a "
+"href=\"%(contact_url)s\" class=\"govuk-link\">get in touch</a>."
+msgstr ""
+
+msgid "In some cases, you may need to pay a contribution towards your legal aid."
+msgstr ""
+
+msgid ""
+"Complete your application by submitting your details\n"
+"        below."
+msgstr ""
+
+msgid "call charges"
+msgstr ""
+
+#, python-format
+msgid ""
+"\n"
+"        You can choose to contact CLA yourself and speak to someone "
+"immediately (this is an 0345 number -\n"
+"        %(call_charges_link)s apply) or ask us to call you back, which is"
+" free.\n"
+"        "
 msgstr ""
 
 #, python-format

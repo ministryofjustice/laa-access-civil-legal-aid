@@ -685,11 +685,145 @@ msgstr "Rheswm arall"
 msgid "Continue to contact CLA"
 msgstr "Parhau i gysylltu â CLA"
 
+msgid "Contact Civil Legal Advice"
+msgstr "Cyngor Cyfreithiol Sifil"
+
+msgid "Your full name"
+msgstr "Eich enw llawn"
+
+msgid "Your full name must be 400 characters or less"
+msgstr "Rhaid i’ch enw llawn fod yn 400 nod neu lai"
+
+msgid "Tell us your name"
+msgstr "Dywedwch wrthym beth yw eich enw"
+
+msgid "Select a contact option"
+msgstr "Dewiswch opsiwn ar gyfer cysylltu"
+
+msgid "Tell us how we should get in contact"
+msgstr "Dywedwch wrthym sut dylem gysylltu"
+
+msgid "Phone number"
+msgstr "Rhif ffôn"
+
+msgid ""
+"Enter the full number, including the area code. For example, 01632 960 "
+"1111."
+msgstr "Rhowch y rhif cyfan, gan gynnwys côd yr ardal. Er enghraifft, 01632 960 1111."
+
+msgid "Tell us what number to ring"
+msgstr "Dywedwch wrthym pa rif i’w ffonio"
+
+msgid "Your telephone number must be 20 characters or less"
+msgstr "Rhaid i’ch rhif ffôn fod yn 20 llythyren neu lai"
+
+msgid "Select a time for us to call"
+msgstr "Dewiswch amser i ni eich ffonio"
+
+msgid "Time"
+msgstr "Amser"
+
+msgid "Select what time you want to be called today"
+msgstr ""
+
+msgid "Day"
+msgstr "Dydd"
+
+msgid "Select which day you want to be called"
+msgstr ""
+
+msgid "Select what time you want to be called"
+msgstr ""
+
+msgid "Can we say that we're calling from Civil Legal Advice?"
+msgstr ""
+
+msgid "No - do not say where you are calling from"
+msgstr "Na allwch – peidiwch â dweud o le rydych chi’n galw."
+
+msgid "Select if we can say that we’re calling from Civil Legal Advice"
+msgstr ""
+
+msgid "Full name of the person to call"
+msgstr "Enw llawn yr unigolion i’w ffonio"
+
+msgid "Their full name must be 400 characters or less"
+msgstr "Rhaid i’w enw llawn fod yn 400 nod neu lai"
+
+msgid "Tell us the name of the person to call"
+msgstr "Dywedwch wrthym beth yw enw’r unigolyn y dylem ei ffonio"
+
+msgid "Relationship to you"
+msgstr "Ei gysylltiad/chysylltiad â chi"
+
+msgid "Tell us how you know this person"
+msgstr "Dywedwch wrthym sut rydych chi’n adnabod yr unigolyn hwn"
+
+msgid "Email (optional)"
+msgstr "E-bost (dewisol)"
+
+msgid "We will use this to send your reference number."
+msgstr "Byddwn yn defnyddio hwn i anfon eich cyfeirnod i chi."
+
+msgid "Your address must be 255 characters or less"
+msgstr "Rhaid i’ch cyfeiriad fod yn 255 nod neu lai"
+
+msgid "Invalid email address"
+msgstr "Cyfeiriad e-bost annilys"
+
+msgid "Postcode (optional)"
+msgstr "Côd post (dewisol)"
+
+msgid "Select an address"
+msgstr "Dewiswch gyfeiriad"
+
+msgid "Street address (optional)"
+msgstr "Cyfeiriad y stryd (dewisol)"
+
+msgid "Tell us more about your problem (optional)"
+msgstr "Dywedwch fwy wrthym am eich problem (dewisol)"
+
+msgid "Your notes must be 4000 characters or less"
+msgstr ""
+
+msgid "Do you have any special communication needs? (optional)"
+msgstr "Oes gennych chi unrhyw anghenion cyfathrebu arbennig? (dewisol)"
+
+msgid "British Sign Language (BSL)"
+msgstr "Iaith Arwyddion Prydain (BSL)"
+
+msgid "Text relay"
+msgstr "Cyfnewid testun"
+
+msgid "Welsh"
+msgstr "Cymraeg"
+
+msgid "Other language - need an interpreter"
+msgstr "Iaith arall – angen cyfieithydd"
+
+msgid "Any other communication need"
+msgstr "Unrhyw anghenion cyfathrebu eraill"
+
+msgid "Enter your email address so we can arrange a BSL call"
+msgstr "Rhowch eich cyfeiriad e-bost er mwyn i ni allu trefnu galwad Iaith Arwyddion Prydain (BSL)"
+
+msgid "Enter your email address"
+msgstr "Rhowch eich cyfeiriad e-bost"
+
+msgid "Choose a language"
+msgstr "Dewiswch iaith"
+
+msgid "Please tell us what you need"
+msgstr "Dywedwch wrthym beth sydd ei angen arnoch"
+
+msgid "Your other communication needs must be 4000 characters or fewer"
+msgstr ""
+
+msgid "Submit details"
+msgstr "Cyflwyno manylion"
+
 msgid "There is a problem"
 msgstr "Mae problem"
-
-msgid "-- Please select --"
-msgstr "-- Dewiswch --"
 
 msgid "per week"
 msgstr "yr wythnos"
@@ -1793,6 +1927,24 @@ msgstr ""
 "terfysgol."
 
 msgid "Help if you’re a victim of human trafficking or modern slavery."
+msgstr ""
+
+msgid "Find other free or low-cost legal help"
+msgstr ""
+
+msgid "free or affordable legal help (opens new tab)."
+msgstr ""
+
+msgid "The Citizen’s Advice website explains how to find "
+msgstr ""
+
+msgid "Speak to an advice organisation"
+msgstr ""
+
+msgid "Citizen’s Advice (opens new tab)"
+msgstr ""
+
+msgid "Advicelocal (opens new tab)"
 msgstr "Cymorth os ydych chi’n ddioddefwr masnachu pobl neu gaethwasiaeth fodern."
 
 msgid "Find other free or low-cost legal help"
@@ -1917,7 +2069,6 @@ msgstr "E-bost"
 msgid "Legal action against public organisations"
 msgstr "Camau cyfreithiol yn erbyn sefydliadau cyhoeddus"
 
-#, python-format
 msgid ""
 "Legal help to challenge something done by a public organisation. You "
 "might have been told you need to bring a ‘judicial review’."
@@ -1960,6 +2111,86 @@ msgstr "cael eich cam-drin yn gorfforol, yn rhywiol neu’n emosiynol"
 
 msgid "Back"
 msgstr "Yn ôl"
+
+msgid ""
+"We’ll give you the Civil Legal Advice phone number when you submit your "
+"details."
+msgstr "Byddwn yn rhoi rhif ffôn Civil Legal Advice i chi pan fyddwch yn cyflwyno eich manylion."
+
+msgid "We’ll call during the time you choose."
+msgstr "Byddwn yn galw chi yn ystod yr amser rydych chi’n dewis"
+
+msgid "The call will come from an unknown or withheld number."
+msgstr "Bydd y galwad yn dod o rif anghyfarwydd neu wedi ei ddal yn ôl"
+
+msgid "If you miss the call, we will call 2 more times in the next few days."
+msgstr "Os ydych chi’n colli’r galwad, byddwn yn galw chi yn ôl dwywaith eto dros y dyddiau nesaf."
+
+msgid "We will not leave a message."
+msgstr "Byddwn ni ddim yn gadael neges."
+
+msgid "If you miss all 3 calls, or if you need urgent advice, call us on:"
+msgstr "Os gollwch chi'r tair galwad, neu os rydych chi angen gymorth ar brys, galwch ni ar y rhif canlynol:"
+
+msgid "You must be with the person when we call."
+msgstr "Byddwn yn galw chi yn ystod yr amser rydych chi’n dewis"
+
+msgid ""
+"Civil Legal Advice will check if you can get legal aid and help you "
+"contact the right legal adviser. If you cannot get legal aid, we’ll tell "
+"you about other help you can get."
+msgstr "Bydd Cyngor Cyfreithiol Sifil yn gwirio os allwch chi gael cymorth cyfreithiol, a byddan nhw yn eich helpu i gysylltu efo’r cynghorydd cyfreithiol cywir. Os na allwch chi gael cymorth cyfreithiol, mi fydden ni’n hysbysu chi am gymorth arall sydd ar gael."
+
+msgid ""
+"You can call Civil Legal Advice yourself - this is an 0345 number, so <a "
+"class=\"govuk-link\" href=\"https://www.gov.uk/call-charges\">call "
+"charges</a> apply. Or you can ask us to call you back, which is free."
+msgstr "Gallwch chi alw Cyngor Cyfreithiol Sifil eich hun – mae hon yn rhif 0345, felly bydd <a "
+"class=\"govuk-link\" href=\"https://www.gov.uk/call-charges\"> tâl galwad. Neu mi allwch chi ofyn i ni alw chi yn ôl, sydd am ddim."
+
+msgid ""
+"We’ll ask questions about your legal problem and your financial "
+"situation. You might need to provide evidence of any financial "
+"information you give us."
+msgstr "Byddwn ni’n gofyn cwestiynau am eich problem gyfreithiol ac eich sefyllfa gyllidol. Efallai bydd rhaid i chi ddangos tystiolaeth o unrhyw wybodaeth ariannol rydych chi’n cyflenwi."
+
+msgid "Address"
+msgstr "Pellter"
+
+msgid "Find UK Address"
+msgstr "Dod o hyd i gyfeiriad yn y DU"
+
+msgid ""
+"Your session will time out after 30 minutes of inactivity. We do this for"
+" your security."
+msgstr "Bydd eich sesiwn yn dod i ben os yw wedi bod yn anweithredol am hanner awr. Rydym yn gwneud hyn er mwyn eich cadw’n ddiogel."
+
+#, python-format
+msgid ""
+"If you're having trouble completing this form, <a "
+"href=\"%(contact_url)s\" class=\"govuk-link\">get in touch</a>."
+msgstr ""
+
+msgid "In some cases, you may need to pay a contribution towards your legal aid."
+msgstr "Mewn rhai achosion, os ydych yn gymwys, mae’n bosibl y bydd angen i chi dalu cyfraniad tuag at eich cymorth cyfreithiol."
+
+msgid ""
+"Complete your application by submitting your details\n"
+"        below."
+msgstr "Cwblhewch eich cais drwy gyflwyno eich manylion isod."
+
+msgid "call charges"
+msgstr "cyfraddau galwadau"
+
+#, python-format
+msgid ""
+"\n"
+"        You can choose to contact CLA yourself and speak to someone "
+"immediately (this is an 0345 number -\n"
+"        %(call_charges_link)s apply) or ask us to call you back, which is"
+" free.\n"
+"        "
+msgstr ""
 
 #, python-format
 msgid "%(miles)s miles away"
