@@ -84,7 +84,7 @@ class CategoryLandingPage(CategoryPage):
                 answer_value="other",
                 answer_label="Other",
                 next_page=cls.routing_map["other"],
-                category=None,
+                category=cls.category,
             )
             blueprint.add_url_rule(
                 f"/{path}/answer/other",
