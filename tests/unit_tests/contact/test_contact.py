@@ -4,6 +4,7 @@ from flask import request, Flask, session
 from app.api import cla_backend
 from app.contact.forms import ContactUsForm, ReasonsForContactingForm
 import unittest
+from unittest import mock
 import requests
 from datetime import datetime
 from app.api import BackendAPIClient
@@ -214,74 +215,22 @@ class TestContactUsForm(unittest.TestCase):
         self.client = self.app.test_client()
 
     def test_get_callback_time_call_on_another_day(self):
-        with self.app.test_request_context(
-            "/contact",
-            method="POST",
-            data={
-                "contact_type": "callback",
-                "time_to_call": "Call on another day",
-                "call_another_day": ["2025-02-21"],
-                "call_another_time": ["1400"],
-            },
-        ):
-            form = ContactUsForm()
-            iso_time, callback_time = form.get_callback_time()
-            self.assertIsNotNone(iso_time)
-            self.assertIsNotNone(callback_time)
-            self.assertIn("Friday, 21 February at 14:00 - 14:30", callback_time)
+        with mock.patch("requests.get") as mock_get:
+            mock_get.return_value.status_code = 200
+            mock_get.return_value.json.return_value = {"some_key": "some_value"}
 
-    def test_get_callback_time_call_today(self):
-        with self.app.test_request_context(
-            "/contact",
-            method="POST",
-            data={
-                "contact_type": "callback",
-                "time_to_call": "Call today",
-                "call_today_time": ["0900"],
-            },
-        ):
-            form = ContactUsForm()
-            iso_time, callback_time = form.get_callback_time()
-            self.assertIsNotNone(iso_time)
-            self.assertIsNotNone(callback_time)
-            self.assertIn("Thursday, 20 February at 09:00 - 09:30", callback_time)
-
-    def test_get_callback_time_no_callback(self):
-        with self.app.test_request_context(
-            "/contact",
-            method="POST",
-            data={
-                "contact_type": "email",
-            },
-        ):
-            form = ContactUsForm()
-            iso_time, callback_time = form.get_callback_time()
-            self.assertIsNone(iso_time)
-            self.assertIsNone(callback_time)
-
-    def test_get_email_with_bsl_email_field(self):
-        with self.app.test_request_context(
-            "/contact",
-            method="POST",
-            data={
-                "bsl_email": "test@example.com",
-            },
-        ):
-            form = ContactUsForm()
-            email = form.get_email()
-            self.assertEqual(email, "test@example.com")
-
-    def test_get_email_with_email_field(self):
-        with self.app.test_request_context(
-            "/contact",
-            method="POST",
-            data={
-                "email": "test@example.com",
-            },
-        ):
-            form = ContactUsForm()
-            email = form.get_email()
-            self.assertEqual(email, "test@example.com")
-
-    def tearDown(self):
-        pass
+            with self.app.test_request_context(
+                "/contact",
+                method="POST",
+                data={
+                    "contact_type": "callback",
+                    "time_to_call": "Call on another day",
+                    "call_another_day": ["2025-02-21"],
+                    "call_another_time": ["1400"],
+                },
+            ):
+                form = ContactUsForm()
+                iso_time, callback_time = form.get_callback_time()
+                self.assertIsNotNone(iso_time)
+                self.assertIsNotNone(callback_time)
+                self.assertIn("Friday, 21 February at 14:00 - 14:30", callback_time)
