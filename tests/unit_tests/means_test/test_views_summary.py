@@ -3,7 +3,7 @@ from flask_babel import lazy_gettext as _
 from app.means_test.views import CheckYourAnswers, ReviewForm
 from app.means_test import YES, NO
 from app.session import Eligibility
-from app.categories.models import ScopeAnswer
+from app.categories.models import CategoryAnswer
 from app.categories.constants import DISCRIMINATION, HOUSING
 
 
@@ -135,7 +135,7 @@ def test_get_category_answers_summary_no_description(app):
     category_mocker.start()
 
     mock_category_answers = [
-        ScopeAnswer(
+        CategoryAnswer(
             question="Discrimination",
             category=DISCRIMINATION,
             answer_label="discrimination",
@@ -143,7 +143,7 @@ def test_get_category_answers_summary_no_description(app):
             next_page="categories.discrimination.where",
             question_page="categories.index",
         ),
-        ScopeAnswer(
+        CategoryAnswer(
             question="Where did the discrimination happen?",
             category=DISCRIMINATION,
             answer_label="Work - including colleagues, employer or employment agency",
@@ -151,7 +151,7 @@ def test_get_category_answers_summary_no_description(app):
             next_page="categories.discrimination.why",
             question_page="categories.discrimination.where",
         ),
-        ScopeAnswer(
+        CategoryAnswer(
             question="Why were you discriminated against?",
             category=DISCRIMINATION,
             answer_label="Disability, health condition, mental health condition",
@@ -159,7 +159,7 @@ def test_get_category_answers_summary_no_description(app):
             next_page="categories.discrimination.age",
             question_page="categories.discrimination.why",
         ),
-        ScopeAnswer(
+        CategoryAnswer(
             question="Are you under 18?",
             category=DISCRIMINATION,
             answer_label="No",
@@ -199,7 +199,7 @@ def test_get_category_answers_summary_with_description(app):
     ]
 
     mock_category_answers = [
-        ScopeAnswer(
+        CategoryAnswer(
             question="Homelessness",
             category=HOUSING.sub.homelessness,
             answer_label="Homelessness",
@@ -207,7 +207,7 @@ def test_get_category_answers_summary_with_description(app):
             next_page="categories.discrimination.age",
             question_page="categories.housing.landing",
         ),
-        ScopeAnswer(
+        CategoryAnswer(
             question="Are you under 18?",
             category=HOUSING.sub.homelessness,
             answer_label="No",

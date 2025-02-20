@@ -3,7 +3,7 @@ from app.categories.constants import Category
 from flask import session
 from dataclasses import dataclass
 from datetime import timedelta
-from app.categories.models import ScopeAnswer
+from app.categories.models import CategoryAnswer
 
 
 @dataclass
@@ -164,7 +164,7 @@ class Session(SecureCookieSession):
         return True
 
     @property
-    def category_answers(self) -> list[ScopeAnswer]:
+    def category_answers(self) -> list[CategoryAnswer]:
         items: list[dict] = self.get("category_answers", [])
         category_answers = []
         for item in items:
@@ -172,13 +172,13 @@ class Session(SecureCookieSession):
             if isinstance(answer, dict):
                 if isinstance(answer["category"], dict):
                     answer["category"] = Category.from_dict(answer["category"])
-                answer = ScopeAnswer(**answer)
+                answer = CategoryAnswer(**answer)
 
             category_answers.append(answer)
 
         return category_answers
 
-    def set_category_question_answer(self, scope_answer: ScopeAnswer) -> None:
+    def set_category_question_answer(self, category_answer: CategoryAnswer) -> None:
         """Store a question-answer pair with the question category in the session.
 
         Args:
@@ -192,14 +192,14 @@ class Session(SecureCookieSession):
         if "category_answers" not in self:
             self["category_answers"] = []
 
-        answers: list[ScopeAnswer] = self.category_answers
+        answers: list[CategoryAnswer] = self.category_answers
 
         # Remove existing entry if present
         answers = [
-            entry for entry in answers if entry.question != scope_answer.question
+            entry for entry in answers if entry.question != category_answer.question
         ]
 
-        answers.append(scope_answer)
+        answers.append(category_answer)
 
         self["category_answers"] = answers
 
