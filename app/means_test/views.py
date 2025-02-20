@@ -143,12 +143,12 @@ class CheckYourAnswers(FormsMixin, MethodView):
             "means_test_summary": means_test_summary,
             "form": ReviewForm(),
             "category": session.category,
-            "scope_answers": self.get_scope_answers(),
+            "scope_answers": self.get_category_answers_summary(),
         }
         return render_template("means_test/review.html", **params)
 
     @staticmethod
-    def get_scope_answers():
+    def get_category_answers_summary():
         answers = session.category_answers
         if not answers:
             return []
@@ -162,10 +162,10 @@ class CheckYourAnswers(FormsMixin, MethodView):
                 change_your_problem_link = answers[0].edit_url
             answers.pop(0)
 
-        category_text = [f"**{category.title}**"]
+        category_text = [str(category.title)]
         # if category doesn't have children then it does not have subpages and we don't show description for those
         if category_has_children:
-            category_text.append(category.description)
+            category_text = [f"**{str(category.title)}**", str(category.description)]
 
         results = [
             {
@@ -174,7 +174,7 @@ class CheckYourAnswers(FormsMixin, MethodView):
                 "actions": {
                     "items": [{"text": _("Change"), "href": change_your_problem_link}]
                 },
-            }
+            },
         ]
         for answer in answers:
             results.append(
