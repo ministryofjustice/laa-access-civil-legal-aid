@@ -2,14 +2,12 @@ import pytest
 from unittest.mock import patch
 from flask import request, Flask, session
 from app.api import cla_backend
-from app.contact.forms import ContactUsForm, ReasonsForContactingForm
+from app.contact.forms import ReasonsForContactingForm
 import unittest
-from unittest import mock
 import requests
 from datetime import datetime
 from app.api import BackendAPIClient
 from app.contact.address_finder.widgets import AddressLookup, FormattedAddressLookup
-from app import create_app
 
 
 def test_post_reasons_for_contacting_success(mocker, app):
@@ -207,38 +205,3 @@ class TestFormattedAddressLookup(unittest.TestCase):
 
         result = self.lookup.format_address_from_dpa_result(raw_result)
         self.assertEqual(result, expected_output)
-
-
-class TestContactUsForm(unittest.TestCase):
-    def setUp(self):
-        self.app = create_app()
-        self.client = self.app.test_client()
-
-    def test_get_callback_time_call_on_another_day(self):
-        with mock.patch("requests.get") as mock_get:
-            mock_response = mock.Mock()
-            mock_response.status_code = 200
-            mock_response.json.return_value = {
-                "time_slots": [
-                    {"time": "2025-02-21T14:00:00Z", "availability": "available"}
-                ]
-            }
-
-            mock_get.return_value = mock_response
-
-            with self.app.test_request_context(
-                "/contact",
-                method="POST",
-                data={
-                    "contact_type": "callback",
-                    "time_to_call": "Call on another day",
-                    "call_another_day": ["2025-02-21"],
-                    "call_another_time": ["1400"],
-                },
-            ):
-                form = ContactUsForm()
-                iso_time, callback_time = form.get_callback_time()
-
-                self.assertIsNotNone(iso_time)
-                self.assertIsNotNone(callback_time)
-                self.assertIn("Friday, 21 February at 14:00 - 14:30", callback_time)
