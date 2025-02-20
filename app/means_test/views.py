@@ -154,25 +154,25 @@ class CheckYourAnswers(FormsMixin, MethodView):
             return []
 
         category = session.category
-        change_your_problem_link = url_for("categories.index")
         category_has_children = bool(getattr(category, "children"))
-        if len(answers) > 0:
-            category = answers[0].category
-            if category_has_children:
-                change_your_problem_link = answers[0].edit_url
-            answers.pop(0)
 
-        category_text = [str(category.title)]
+        # The first answer will be used as the answer to the question "The problem you need help with"
+        first_answer = answers.pop(0)
+        first_answer.question = _("The problem you need help with")
+        first_answer.answer_label = [str(first_answer.category.title)]
         # if a category doesn't have children then it does not have subpages so we don't show the category description
         if category_has_children:
-            category_text = [f"**{str(category.title)}**", str(category.description)]
+            first_answer.answer_label = [
+                f"**{str(first_answer.category.title)}**",
+                str(first_answer.category.description),
+            ]
 
         results = [
             {
-                "key": {"text": _("The problem you need help with")},
-                "value": {"markdown": "\n".join(category_text)},
+                "key": {"text": _(first_answer.question)},
+                "value": {"markdown": "\n".join(first_answer.answer_label)},
                 "actions": {
-                    "items": [{"text": _("Change"), "href": change_your_problem_link}]
+                    "items": [{"text": _("Change"), "href": first_answer.edit_url}],
                 },
             },
         ]
