@@ -28,6 +28,7 @@ bp.add_url_rule(
     "/public/cannot-find-your-problem",
     view_func=CannotFindYourProblemPage.as_view(
         "cannot_find_your_problem",
+        next_steps_page="categories.public.next_steps",
     ),
 )
 bp.add_url_rule(

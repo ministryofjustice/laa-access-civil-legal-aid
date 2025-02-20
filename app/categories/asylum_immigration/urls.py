@@ -24,7 +24,7 @@ class AsylumAndImmigrationLandingPage(CategoryLandingPage):
         "more": [
             (ASYLUM_AND_IMMIGRATION.sub.modern_slavery, FALA_REDIRECT),
         ],
-        "other": {"endpoint": "categories.results.refer", "category": "immas"},
+        "other": {"endpoint": "categories.asylum_immigration.cannot_find_your_problem"},
     }
 
 
