@@ -3,6 +3,8 @@ from flask_babel import lazy_gettext as _
 from app.means_test.views import CheckYourAnswers, ReviewForm
 from app.means_test import YES, NO
 from app.session import Eligibility
+from app.categories.models import ScopeAnswer
+from app.categories.constants import DISCRIMINATION, HOUSING
 
 
 def mock_render_template(template_name, **kwargs):
@@ -89,4 +91,135 @@ def test_views_summary(app):
     with app.app_context():
         summary = CheckYourAnswers().get()
         assert summary["means_test_summary"] == expected_summary
+
         assert isinstance(summary["form"], ReviewForm)
+
+
+def test_get_category_answers_summary_no_description(app):
+    expected_summary = [
+        {
+            "key": {"text": _("The problem you need help with")},
+            "value": {"markdown": "Discrimination"},
+            "actions": {"items": [{"text": _("Change"), "href": "/"}]},
+        },
+        {
+            "key": {"text": "Where did the discrimination happen?"},
+            "value": {
+                "text": "Work - including colleagues, employer or employment agency"
+            },
+            "actions": {
+                "items": [{"text": _("Change"), "href": "/discrimination/where"}]
+            },
+        },
+        {
+            "key": {"text": "Why were you discriminated against?"},
+            "value": {"text": "Disability, health condition, mental health condition"},
+            "actions": {
+                "items": [{"text": _("Change"), "href": "/discrimination/why"}]
+            },
+        },
+        {
+            "key": {"text": "Are you under 18?"},
+            "value": {"text": "No"},
+            "actions": {
+                "items": [{"text": _("Change"), "href": "/discrimination/age"}]
+            },
+        },
+    ]
+
+    mock_category_answers = [
+        ScopeAnswer(
+            question="Discrimination",
+            category=DISCRIMINATION,
+            answer_label="discrimination",
+            answer_value="discrimination",
+            next_page="categories.discrimination.where",
+            question_page="categories.index",
+        ),
+        ScopeAnswer(
+            question="Where did the discrimination happen?",
+            category=DISCRIMINATION,
+            answer_label="Work - including colleagues, employer or employment agency",
+            answer_value="work",
+            next_page="categories.discrimination.why",
+            question_page="categories.discrimination.where",
+        ),
+        ScopeAnswer(
+            question="Why were you discriminated against?",
+            category=DISCRIMINATION,
+            answer_label="Disability, health condition, mental health condition",
+            answer_value="disability",
+            next_page="categories.discrimination.age",
+            question_page="categories.discrimination.why",
+        ),
+        ScopeAnswer(
+            question="Are you under 18?",
+            category=DISCRIMINATION,
+            answer_label="No",
+            answer_value="no",
+            next_page="categories.index",
+            question_page="categories.discrimination.age",
+        ),
+    ]
+
+    with app.app_context():
+        with mock.patch(
+            "app.session.Session.category_answers", new_callable=mock.PropertyMock
+        ) as mocker:
+            mocker.return_value = mock_category_answers
+            summary = CheckYourAnswers().get_category_answers_summary()
+        assert summary == expected_summary
+
+
+def test_get_category_answers_summary_with_description(app):
+    expected_summary = [
+        {
+            "key": {"text": _("The problem you need help with")},
+            "value": {
+                "markdown": "**Homelessness**\nHelp if you’re homeless, or might be homeless in the next 2 months. This could be because of rent arrears, debt, the end of a relationship, or because you have nowhere to live."
+            },
+            "actions": {"items": [{"text": _("Change"), "href": "/housing/"}]},
+        },
+        {
+            "key": {"text": "Are you under 18?"},
+            "value": {"text": "No"},
+            "actions": {
+                "items": [{"text": _("Change"), "href": "/discrimination/age"}]
+            },
+        },
+    ]
+
+    mock_category_answers = [
+        ScopeAnswer(
+            question="Homelessness",
+            category=HOUSING.sub.homelessness,
+            answer_label="Homelessness",
+            answer_value="homelessness",
+            next_page="categories.discrimination.age",
+            question_page="categories.housing.landing",
+        ),
+        ScopeAnswer(
+            question="Are you under 18?",
+            category=HOUSING.sub.homelessness,
+            answer_label="No",
+            answer_value="no",
+            next_page="categories.index",
+            question_page="categories.discrimination.age",
+        ),
+    ]
+
+    category_mocker = mock.patch(
+        "app.session.Session.category", new_callable=mock.PropertyMock
+    )
+    category_mocker.return_value = HOUSING
+    category_mocker.start()
+
+    with app.app_context():
+        with mock.patch(
+            "app.session.Session.category_answers", new_callable=mock.PropertyMock
+        ) as mocker:
+            mocker.return_value = mock_category_answers
+            summary = CheckYourAnswers().get_category_answers_summary()
+        assert summary == expected_summary
+
+    category_mocker.stop()
