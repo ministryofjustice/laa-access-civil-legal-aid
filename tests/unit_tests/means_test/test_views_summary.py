@@ -127,6 +127,13 @@ def test_get_category_answers_summary_no_description(app):
         },
     ]
 
+    category_mocker = mock.patch(
+        "app.session.Session.category",
+        new_callable=mock.PropertyMock,
+        return_value=DISCRIMINATION,
+    )
+    category_mocker.start()
+
     mock_category_answers = [
         ScopeAnswer(
             question="Discrimination",
@@ -169,6 +176,8 @@ def test_get_category_answers_summary_no_description(app):
             mocker.return_value = mock_category_answers
             summary = CheckYourAnswers().get_category_answers_summary()
         assert summary == expected_summary
+
+    category_mocker.stop()
 
 
 def test_get_category_answers_summary_with_description(app):
