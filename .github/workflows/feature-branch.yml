@@ -22,7 +22,6 @@ jobs:
 
   static-analysis:
     name: Static Analysis
-    needs: test
     uses: ./.github/workflows/static-analysis.yml
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -45,7 +44,6 @@ jobs:
     secrets:
       ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
       ACCESS_ECR_ROLE_TO_ASSUME: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
-
 
   deploy-dev:
     name: Dev

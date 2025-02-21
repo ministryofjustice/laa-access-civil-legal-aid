@@ -19,7 +19,6 @@ jobs:
 
   static-analysis:
     name: Static Analysis
-    needs: test
     uses: ./.github/workflows/static-analysis.yml
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
