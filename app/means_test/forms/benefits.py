@@ -11,8 +11,7 @@ from app.means_test.validators import (
     ValidateIf,
     ValidateIfType,
 )
-from app.means_test import YES, NO
-
+from app.means_test import YES, NO, YES_LABEL
 from dataclasses import dataclass, field
 
 
@@ -121,7 +120,7 @@ class BenefitsForm(BaseMeansTestForm):
 
     @classmethod
     def should_show(cls) -> bool:
-        return session.get("eligibility").on_benefits
+        return session.get_eligibility().on_benefits
 
     def get_payload(self) -> dict:
         """Returns the benefits payload for the user and the partner.
@@ -143,6 +142,14 @@ class BenefitsForm(BaseMeansTestForm):
         }
 
         return payload
+
+    def filter_summary(self, summary: dict) -> dict:
+        if "child_benefits" not in summary:
+            return summary
+
+        if "child_benefit" not in self.data["benefits"]:
+            del summary["child_benefits"]
+        return summary
 
 
 class AdditionalBenefitsForm(BaseMeansTestForm):
@@ -227,6 +234,14 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
     def should_show(cls) -> bool:
         data = session.get("eligibility").forms.get("benefits")
         return data and "other-benefit" in data["benefits"]
+
+    def filter_summary(self, summary: dict) -> dict:
+        if (
+            summary["other_benefits"]["answer"] != YES_LABEL
+            and "total_other_benefit" in summary
+        ):
+            del summary["total_other_benefit"]
+        return summary
 
     def get_payload(
         self,

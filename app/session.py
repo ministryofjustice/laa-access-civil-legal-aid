@@ -3,6 +3,7 @@ from app.categories.constants import Category
 from flask import session
 from dataclasses import dataclass
 from datetime import timedelta
+from app.categories.models import CategoryAnswer
 
 
 @dataclass
@@ -131,6 +132,13 @@ class Session(SecureCookieSession):
             return category_dict
         return Category.from_dict(category_dict)
 
+    @category.setter
+    def category(self, category: Category):
+        current_category = self.category
+        if current_category and current_category.code != category.code:
+            self["category_answers"] = []
+        self["category"] = category
+
     @property
     def has_children(self):
         # Todo: Needs implementation
@@ -141,9 +149,22 @@ class Session(SecureCookieSession):
         # Todo: Needs implementation
         return True
 
-    def set_category_question_answer(
-        self, question_title: str, answer: str, category: Category
-    ) -> None:
+    @property
+    def category_answers(self) -> list[CategoryAnswer]:
+        items: list[dict] = self.get("category_answers", [])
+        category_answers = []
+        for item in items:
+            answer = item
+            if isinstance(answer, dict):
+                if isinstance(answer["category"], dict):
+                    answer["category"] = Category.from_dict(answer["category"])
+                answer = CategoryAnswer(**answer)
+
+            category_answers.append(answer)
+
+        return category_answers
+
+    def set_category_question_answer(self, category_answer: CategoryAnswer) -> None:
         """Store a question-answer pair with the question category in the session.
 
         Args:
@@ -157,14 +178,14 @@ class Session(SecureCookieSession):
         if "category_answers" not in self:
             self["category_answers"] = []
 
-        answers: list[dict[str, str]] = self["category_answers"]
+        answers: list[CategoryAnswer] = self.category_answers
 
         # Remove existing entry if present
-        answers = [entry for entry in answers if entry["question"] != question_title]
+        answers = [
+            entry for entry in answers if entry.question != category_answer.question
+        ]
 
-        answers.append(
-            {"question": question_title, "answer": answer, "category": category}
-        )
+        answers.append(category_answer)
 
         self["category_answers"] = answers
 
@@ -177,14 +198,11 @@ class Session(SecureCookieSession):
         Returns:
             The stored answer string if found, None otherwise
         """
-        if "category_answers" not in self:
-            return None
-
-        answers: list[dict[str, str]] = self["category_answers"]
-
+        answers = self.category_answers
         for answer in answers:
-            if answer["question"] == question_title:
-                return answer["answer"]
+            if answer.question == question_title:
+                return answer.answer_value
+
         return None
 
 
