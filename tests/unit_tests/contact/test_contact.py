@@ -127,7 +127,7 @@ def test_post_case(mock_post, client, app):
             "eligibility_check": "elig123",
         }
         mock_post.assert_called_once_with("checker/api/v1/case", json=expected_payload)
-        assert session["reference"] == "ABC123"
+        assert session["case_reference"] == "ABC123"
 
 
 @patch.object(BackendAPIClient, "patch")

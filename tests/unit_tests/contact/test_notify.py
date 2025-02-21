@@ -86,7 +86,7 @@ class TestNotifyEmailOrchestrator(unittest.TestCase):
     def test_generate_confirmation_email_data(self, mock_templates, mock_locale):
         """Test generating confirmation email data"""
         with self.app.test_request_context():
-            session["reference"] = "ABC123"
+            session["case_reference"] = "ABC123"
             session["callback_requested"] = True
             session["contact_type"] = "thirdparty"
             session["callback_time"] = "2025-02-21 10:00 AM"
@@ -127,7 +127,7 @@ class TestNotifyEmailOrchestrator(unittest.TestCase):
     ):
         """Test create_and_send_confirmation_email function"""
         with self.app.test_request_context():
-            session["reference"] = "ABC123"
+            session["case_reference"] = "ABC123"
             session["callback_requested"] = False
             session["contact_type"] = "email"
             session["callback_time"] = "2025-02-21 10:00 AM"
