@@ -44,8 +44,6 @@ class ContactUs(View):
         form = ContactUsForm()
         form_progress = MeansTest(ContactUsForm, "Contact us").get_form_progress(form)
         if form.validate_on_submit():
-            # Welsh
-            # Tests
             payload = form.get_payload()
             # Catches duplicate case exceptions and redirect to error page
             result = cla_backend.post_case(

@@ -8,6 +8,9 @@ import requests
 from datetime import datetime
 from app.api import BackendAPIClient
 from app.contact.address_finder.widgets import AddressLookup, FormattedAddressLookup
+from wtforms import Form, StringField, FieldList
+from wtforms.validators import ValidationError, StopValidation
+from app.contact.validators import ValidateDayTime
 
 
 def test_post_reasons_for_contacting_success(mocker, app):
@@ -205,3 +208,46 @@ class TestFormattedAddressLookup(unittest.TestCase):
 
         result = self.lookup.format_address_from_dpa_result(raw_result)
         self.assertEqual(result, expected_output)
+
+
+# Test Contact Validators
+class MockForm(Form):
+    day = FieldList(StringField())
+    time = FieldList(StringField())
+
+    time_slots = {
+        "2025-02-26": [
+            ["1000", "10:00am to 10:30am"],
+            ["1100", "11:00am to 11:30am"],
+            ["1200", "12:00am to 12:30am"],
+        ],
+        "2025-02-27": [["1400", "14:00am to 14:30am"], ["1500", "15:00am to 15:30am"]],
+    }
+
+
+class TestValidateDayTime(unittest.TestCase):
+    def test_valid_time_slot(self):
+        """Test when the selected time exists in available time slots."""
+        form = MockForm()
+        form.day.append_entry("2025-02-26")
+        form.time.append_entry("1000")
+
+        validator = ValidateDayTime(day_field="day")
+
+        with self.assertRaises(StopValidation):
+            validator(form, form.time)
+
+    def test_invalid_time_slot(self):
+        """Test when the selected time does not exist in available time slots."""
+        form = MockForm()
+        form.day.append_entry("2025-02-26")
+        form.time.append_entry("0930")
+
+        validator = ValidateDayTime(day_field="day")
+
+        with self.assertRaises(ValidationError) as context:
+            validator(form, form.time)
+
+        self.assertEqual(
+            str(context.exception), "Can not schedule a callback at the requested time"
+        )
