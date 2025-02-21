@@ -99,7 +99,7 @@ def test_get_category_answers_summary_no_description(app):
     expected_summary = [
         {
             "key": {"text": _("The problem you need help with")},
-            "value": {"markdown": "Discrimination"},
+            "value": {"text": _("Discrimination")},
             "actions": {"items": [{"text": _("Change"), "href": "/"}]},
         },
         {
@@ -135,14 +135,6 @@ def test_get_category_answers_summary_no_description(app):
     category_mocker.start()
 
     mock_category_answers = [
-        CategoryAnswer(
-            question="Discrimination",
-            category=DISCRIMINATION,
-            answer_label="discrimination",
-            answer_value="discrimination",
-            next_page="categories.discrimination.where",
-            question_page="categories.index",
-        ),
         CategoryAnswer(
             question="Where did the discrimination happen?",
             category=DISCRIMINATION,
