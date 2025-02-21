@@ -3,7 +3,6 @@ from unittest.mock import patch
 from flask import request, Flask, session
 from app.api import cla_backend
 from app.contact.forms import ReasonsForContactingForm
-import unittest
 import requests
 from datetime import datetime
 from app.api import BackendAPIClient
@@ -11,6 +10,7 @@ from app.contact.address_finder.widgets import AddressLookup, FormattedAddressLo
 from wtforms import Form, StringField, FieldList
 from wtforms.validators import ValidationError, StopValidation
 from app.contact.validators import ValidateDayTime
+from flask_babel import Babel
 
 
 def test_post_reasons_for_contacting_success(mocker, app):
@@ -55,159 +55,174 @@ def test_api_payload(mock_form):
     assert payload == expected_payload
 
 
-class TestBackendAPIClient(unittest.TestCase):
-    def setUp(self):
-        """Setup Flask app context for session handling"""
-        self.app = Flask(__name__)
-        self.app.config["SECRET_KEY"] = "test_secret"
-        self.client = BackendAPIClient()
+# Backend API tests
+@pytest.fixture
+def app():
+    """Fixture to set up Flask app context for session handling."""
+    app = Flask(__name__)
+    app.config["SECRET_KEY"] = "test_secret"
 
-    @patch.object(BackendAPIClient, "get")
-    @patch("app.api.datetime")
-    def test_get_time_slots(self, mock_datetime, mock_get):
-        """Test get_time_slots correctly formats slots"""
-        mock_datetime.today.return_value = datetime(2025, 3, 1)
-        mock_datetime.strptime.side_effect = lambda *args, **kw: datetime.strptime(
-            *args, **kw
-        )
+    # Initialize Babel for the Flask app - Errors otherwise
+    babel = Babel(app)  # noqa
 
-        mock_get.return_value = {
-            "slots": [
-                "2025-03-01T09:00:00",
-                "2025-03-01T09:30:00",
-                "2025-03-02T10:00:00",
-            ]
-        }
-
-        with self.app.app_context():
-            result = self.client.get_time_slots(
-                num_days=8, is_third_party_callback=False
-            )
-
-        expected = {
-            "2025-03-01": [
-                ["0900", "9:00am to 9:30am"],
-                ["0930", "9:30am to 10:00am"],
-            ],
-            "2025-03-02": [
-                ["1000", "10:00am to 10:30am"],
-            ],
-        }
-        self.assertEqual(result, expected)
-        mock_get.assert_called_once_with(
-            "checker/api/v1/callback_time_slots/",
-            "?third_party_callback=False&num_days=8",
-        )
-
-    @patch.object(BackendAPIClient, "post")
-    def test_post_case(self, mock_post):
-        """Test post_case makes correct API call and updates session"""
-        mock_post.return_value = {"reference": "ABC123"}
-        payload = {"test": "data"}
-
-        with self.app.test_request_context():
-            session["gtm_anon_id"] = "anon123"
-            session["ec_reference"] = "elig123"
-            self.client.post_case(payload=payload, attach_eligiblity_data=True)
-
-            expected_payload = {
-                "test": "data",
-                "gtm_anon_id": "anon123",
-                "eligibility_check": "elig123",
-            }
-            mock_post.assert_called_once_with(
-                "checker/api/v1/case", json=expected_payload
-            )
-            self.assertEqual(session["reference"], "ABC123")
-
-    @patch.object(BackendAPIClient, "patch")
-    def test_update_reasons_for_contacting(self, mock_patch):
-        """Test update_reasons_for_contacting makes correct API call"""
-        mock_patch.return_value = {"success": True}
-        reference = "ABC123"
-        payload = {"reason": "test_reason"}
-
-        with self.app.test_request_context():
-            response = self.client.update_reasons_for_contacting(
-                reference, payload=payload
-            )
-
-        mock_patch.assert_called_once_with(
-            f"checker/api/v1/reasons_for_contacting/{reference}", json=payload
-        )
-        self.assertEqual(response, {"success": True})
+    return app
 
 
-class TestAddressLookup(unittest.TestCase):
-    def setUp(self):
-        """Set up test instance with mock API key."""
-        self.lookup = AddressLookup(key="test_api_key")
+@pytest.fixture
+def client(app):
+    """Fixture to set up the BackendAPIClient."""
+    return BackendAPIClient()
 
-    @patch("app.contact.address_finder.widgets.requests.get")
-    def test_by_postcode_success(self, mock_get):
-        """Test successful address lookup"""
-        mock_get.return_value.status_code = 200
-        mock_get.return_value.json.return_value = {
-            "results": [{"DPA": {"POSTCODE": "SW1A 1AA"}}]
-        }
 
-        results = self.lookup.by_postcode("SW1A 1AA")
-        self.assertEqual(results, [{"DPA": {"POSTCODE": "SW1A 1AA"}}])
-        mock_get.assert_called_once_with(
-            "https://api.os.uk/search/places/v1/postcode",
-            params={
-                "postcode": "SW1A 1AA",
-                "key": "test_api_key",
-                "output_srs": "WGS84",
-                "dataset": "DPA",
-            },
-            timeout=3,
-        )
-
-    @patch(
-        "app.contact.address_finder.widgets.requests.get",
-        side_effect=requests.exceptions.ConnectTimeout,
+@patch.object(BackendAPIClient, "get")
+@patch("app.api.datetime")
+def test_get_time_slots(mock_datetime, mock_get, client, app):
+    """Test get_time_slots correctly formats slots"""
+    mock_datetime.today.return_value = datetime(2025, 3, 1)
+    mock_datetime.strptime.side_effect = lambda *args, **kw: datetime.strptime(
+        *args, **kw
     )
-    def test_by_postcode_timeout(self, mock_get):
-        """Test handling of request timeout"""
-        results = self.lookup.by_postcode("SW1A 1AA")
-        self.assertEqual(results, [])
 
-    @patch("app.contact.address_finder.widgets.requests.get")
-    def test_by_postcode_request_exception(self, mock_get):
-        """Test handling of a general request failure"""
-        mock_get.side_effect = requests.exceptions.RequestException("API failure")
-        results = self.lookup.by_postcode("SW1A 1AA")
-        self.assertEqual(results, [])
-
-
-class TestFormattedAddressLookup(unittest.TestCase):
-    def setUp(self):
-        self.lookup = FormattedAddressLookup(key="test_api_key")
-
-    @patch.object(AddressLookup, "by_postcode")
-    def test_by_postcode_formatted(self, mock_by_postcode):
-        """Test formatted address lookup"""
-        mock_by_postcode.return_value = [
-            {"DPA": {"POSTCODE": "SW1A 1AA", "POST_TOWN": "London"}}
+    mock_get.return_value = {
+        "slots": [
+            "2025-03-01T09:00:00",
+            "2025-03-01T09:30:00",
+            "2025-03-02T10:00:00",
         ]
+    }
 
-        results = self.lookup.by_postcode("SW1A 1AA")
-        self.assertEqual(results, ["London\nSW1A 1AA"])
+    with app.app_context():
+        result = client.get_time_slots(num_days=8, is_third_party_callback=False)
 
-    def test_format_address_from_dpa_result(self):
-        """Test address formatting"""
-        raw_result = {
-            "ORGANISATION_NAME": "Big Ben",
-            "BUILDING_NUMBER": "10",
-            "THOROUGHFARE_NAME": "Downing Street",
-            "POST_TOWN": "London",
-            "POSTCODE": "sw1a 2aa",
+    expected = {
+        "2025-03-01": [
+            ["0900", "9:00am to 9:30am"],
+            ["0930", "9:30am to 10:00am"],
+        ],
+        "2025-03-02": [
+            ["1000", "10:00am to 10:30am"],
+        ],
+    }
+    assert result == expected
+    mock_get.assert_called_once_with(
+        "checker/api/v1/callback_time_slots/",
+        "?third_party_callback=False&num_days=8",
+    )
+
+
+@patch.object(BackendAPIClient, "post")
+def test_post_case(mock_post, client, app):
+    """Test post_case makes correct API call and updates session"""
+    mock_post.return_value = {"reference": "ABC123"}
+    payload = {"test": "data"}
+
+    with app.test_request_context():
+        session["gtm_anon_id"] = "anon123"
+        session["ec_reference"] = "elig123"
+        client.post_case(payload=payload, attach_eligiblity_data=True)
+
+        expected_payload = {
+            "test": "data",
+            "gtm_anon_id": "anon123",
+            "eligibility_check": "elig123",
         }
-        expected_output = "Big Ben\n10 Downing Street\nLondon\nSW1A 2AA"
+        mock_post.assert_called_once_with("checker/api/v1/case", json=expected_payload)
+        assert session["reference"] == "ABC123"
 
-        result = self.lookup.format_address_from_dpa_result(raw_result)
-        self.assertEqual(result, expected_output)
+
+@patch.object(BackendAPIClient, "patch")
+def test_update_reasons_for_contacting(mock_patch, client, app):
+    """Test update_reasons_for_contacting makes correct API call"""
+    mock_patch.return_value = {"success": True}
+    reference = "ABC123"
+    payload = {"reason": "test_reason"}
+
+    with app.test_request_context():
+        response = client.update_reasons_for_contacting(reference, payload=payload)
+
+    mock_patch.assert_called_once_with(
+        f"checker/api/v1/reasons_for_contacting/{reference}", json=payload
+    )
+    assert response == {"success": True}
+
+
+# Test postcode lookup
+@pytest.fixture
+def address_lookup():
+    """Fixture to set up AddressLookup with a mock API key."""
+    return AddressLookup(key="test_api_key")
+
+
+@patch("app.contact.address_finder.widgets.requests.get")
+def test_by_postcode_success(mock_get, address_lookup):
+    """Test successful address lookup"""
+    mock_get.return_value.status_code = 200
+    mock_get.return_value.json.return_value = {
+        "results": [{"DPA": {"POSTCODE": "SW1A 1AA"}}]
+    }
+
+    results = address_lookup.by_postcode("SW1A 1AA")
+    assert results == [{"DPA": {"POSTCODE": "SW1A 1AA"}}]
+    mock_get.assert_called_once_with(
+        "https://api.os.uk/search/places/v1/postcode",
+        params={
+            "postcode": "SW1A 1AA",
+            "key": "test_api_key",
+            "output_srs": "WGS84",
+            "dataset": "DPA",
+        },
+        timeout=3,
+    )
+
+
+@patch(
+    "app.contact.address_finder.widgets.requests.get",
+    side_effect=requests.exceptions.ConnectTimeout,
+)
+def test_by_postcode_timeout(mock_get, address_lookup):
+    """Test handling of request timeout"""
+    results = address_lookup.by_postcode("SW1A 1AA")
+    assert results == []
+
+
+@patch("app.contact.address_finder.widgets.requests.get")
+def test_by_postcode_request_exception(mock_get, address_lookup):
+    """Test handling of a general request failure"""
+    mock_get.side_effect = requests.exceptions.RequestException("API failure")
+    results = address_lookup.by_postcode("SW1A 1AA")
+    assert results == []
+
+
+@pytest.fixture
+def formatted_address_lookup():
+    """Fixture to set up FormattedAddressLookup with a mock API key."""
+    return FormattedAddressLookup(key="test_api_key")
+
+
+@patch.object(AddressLookup, "by_postcode")
+def test_by_postcode_formatted(mock_by_postcode, formatted_address_lookup):
+    """Test formatted address lookup"""
+    mock_by_postcode.return_value = [
+        {"DPA": {"POSTCODE": "SW1A 1AA", "POST_TOWN": "London"}}
+    ]
+
+    results = formatted_address_lookup.by_postcode("SW1A 1AA")
+    assert results == ["London\nSW1A 1AA"]
+
+
+def test_format_address_from_dpa_result(formatted_address_lookup):
+    """Test address formatting"""
+    raw_result = {
+        "ORGANISATION_NAME": "Big Ben",
+        "BUILDING_NUMBER": "10",
+        "THOROUGHFARE_NAME": "Downing Street",
+        "POST_TOWN": "London",
+        "POSTCODE": "sw1a 2aa",
+    }
+    expected_output = "Big Ben\n10 Downing Street\nLondon\nSW1A 2AA"
+
+    result = formatted_address_lookup.format_address_from_dpa_result(raw_result)
+    assert result == expected_output
 
 
 # Test Contact Validators
@@ -225,29 +240,31 @@ class MockForm(Form):
     }
 
 
-class TestValidateDayTime(unittest.TestCase):
-    def test_valid_time_slot(self):
-        """Test when the selected time exists in available time slots."""
-        form = MockForm()
-        form.day.append_entry("2025-02-26")
-        form.time.append_entry("1000")
+@pytest.mark.parametrize(
+    "day, time, expected_exception, expected_message",
+    [
+        ("2025-02-26", "1000", StopValidation, None),  # valid time slot
+        (
+            "2025-02-26",
+            "0930",
+            ValidationError,
+            "Can not schedule a callback at the requested time",
+        ),  # invalid time slot
+    ],
+)
+def test_validate_day_time(day, time, expected_exception, expected_message):
+    """Test validation of time slots against available slots."""
 
-        validator = ValidateDayTime(day_field="day")
+    form = MockForm()
+    form.day.append_entry(day)
+    form.time.append_entry(time)
 
-        with self.assertRaises(StopValidation):
+    validator = ValidateDayTime(day_field="day")
+
+    if expected_exception is StopValidation:
+        with pytest.raises(StopValidation):
             validator(form, form.time)
-
-    def test_invalid_time_slot(self):
-        """Test when the selected time does not exist in available time slots."""
-        form = MockForm()
-        form.day.append_entry("2025-02-26")
-        form.time.append_entry("0930")
-
-        validator = ValidateDayTime(day_field="day")
-
-        with self.assertRaises(ValidationError) as context:
+    elif expected_exception is ValidationError:
+        with pytest.raises(ValidationError) as context:
             validator(form, form.time)
-
-        self.assertEqual(
-            str(context.exception), "Can not schedule a callback at the requested time"
-        )
+        assert str(context.value) == expected_message

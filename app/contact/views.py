@@ -67,9 +67,9 @@ class ContactUs(View):
                 )
                 del session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY]
             # Email Handling
-            callback = ["callback", "thirdparty"]
+            callback_types = ["callback", "thirdparty"]
             session["callback_requested"] = (
-                True if form.data.get("contact_type") in callback else False
+                form.data.get("contact_type") in callback_types
             )
             session["contact_type"] = form.data.get("contact_type")
             requires_action_at, callback_time = ContactUsForm.get_callback_time(form)
