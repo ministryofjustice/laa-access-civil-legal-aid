@@ -148,33 +148,48 @@ class CheckYourAnswers(FormsMixin, MethodView):
 
     @staticmethod
     def get_category_answers_summary():
+        def get_your_problem__no_description():
+            return [
+                {
+                    "key": {"text": _("The problem you need help with")},
+                    "value": {"text": session.category.title},
+                    "actions": {
+                        "items": [
+                            {"text": _("Change"), "href": url_for("categories.index")}
+                        ],
+                    },
+                },
+            ]
+
+        def get_your_problem__with_description(first_answer):
+            value = "\n".join(
+                [
+                    f"**{first_answer.category.title}**",
+                    first_answer.category.description,
+                ]
+            )
+            return [
+                {
+                    "key": {"text": _("The problem you need help with")},
+                    "value": {"markdown": value},
+                    "actions": {
+                        "items": [{"text": _("Change"), "href": first_answer.edit_url}],
+                    },
+                },
+            ]
+
         answers = session.category_answers
         if not answers:
             return []
 
         category = session.category
         category_has_children = bool(getattr(category, "children"))
-
-        # The first answer will be used as the answer to the question "The problem you need help with"
-        first_answer = answers.pop(0)
-        first_answer.question = _("The problem you need help with")
-        first_answer.answer_label = [str(first_answer.category.title)]
-        # if a category doesn't have children then it does not have subpages so we don't show the category description
         if category_has_children:
-            first_answer.answer_label = [
-                f"**{str(first_answer.category.title)}**",
-                str(first_answer.category.description),
-            ]
+            results = get_your_problem__with_description(answers.pop(0))
+        else:
+            # if a category doesn't have children then it does not have subpages so we don't show the category description
+            results = get_your_problem__no_description()
 
-        results = [
-            {
-                "key": {"text": _(first_answer.question)},
-                "value": {"markdown": "\n".join(first_answer.answer_label)},
-                "actions": {
-                    "items": [{"text": _("Change"), "href": first_answer.edit_url}],
-                },
-            },
-        ]
         for answer in answers:
             results.append(
                 {
