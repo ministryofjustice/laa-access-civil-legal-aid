@@ -8,10 +8,10 @@ from app.extensions import cache
 
 logger = logging.getLogger(__name__)
 
-CALLBACK_API_DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
-
 
 class BackendAPIClient:
+    CALLBACK_API_DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
+
     @property
     def hostname(self):
         return current_app.config["CLA_BACKEND_URL"]
@@ -133,18 +133,7 @@ class BackendAPIClient:
         payload = form.api_payload() if form else payload
         return self.post("checker/api/v1/reasons_for_contacting/", json=payload)
 
-    def get_time_slots(self, num_days=8, is_third_party_callback=False):
-        slots = self.get(
-            "checker/api/v1/callback_time_slots/",
-            f"?third_party_callback={is_third_party_callback}&num_days={num_days}",
-        )["slots"]
-        slots = [
-            datetime.strptime(slot, CALLBACK_API_DATETIME_FORMAT) for slot in slots
-        ]
-        today = datetime.today().date()
-
-        next_7_days = [today + timedelta(days=i) for i in range(8)]
-
+    def format_slots_by_day(self, slots, next_7_days):
         slots_by_day = {}
 
         for slot in slots:
@@ -161,6 +150,22 @@ class BackendAPIClient:
                         f"{(slot + timedelta(minutes=30)).strftime('%I:%M%p').lstrip('0').lower()}",
                     ]
                 )
+
+        return slots_by_day
+
+    def get_time_slots(self, num_days=8, is_third_party_callback=False):
+        slots = self.get(
+            "checker/api/v1/callback_time_slots/",
+            f"?third_party_callback={is_third_party_callback}&num_days={num_days}",
+        )["slots"]
+        slots = [
+            datetime.strptime(slot, self.CALLBACK_API_DATETIME_FORMAT) for slot in slots
+        ]
+        today = datetime.today().date()
+
+        next_7_days = [today + timedelta(days=i) for i in range(num_days)]
+
+        slots_by_day = self.format_slots_by_day(slots, next_7_days)
 
         return slots_by_day
 
