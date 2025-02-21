@@ -24,7 +24,7 @@ class ReasonForContacting(View):
         if form.validate_on_submit():
             result = cla_backend.post_reasons_for_contacting(form=form)
             next_step = form.next_step_mapping.get("*")
-            logger.info("API Response: %s", result)
+            logger.info("RFC Created Reference: %s", result.get("reference"))
             if result and "reference" in result:
                 session[form.MODEL_REF_SESSION_KEY] = result["reference"]
             return redirect(url_for(next_step))
@@ -46,7 +46,7 @@ class ContactUs(View):
         if form.validate_on_submit():
             payload = form.get_payload()
             # Catches duplicate case exceptions and redirect to error page
-            result = cla_backend.post_case(
+            cla_backend.post_case(
                 payload=payload, attach_eligiblity_data=self.attach_eligiblity_data
             )
             # Add the extra notes to the eligibility object
@@ -55,7 +55,6 @@ class ContactUs(View):
                 session.get_eligibility().add_note("User problem", notes_data)
                 eligibility_data = get_means_test_payload(session.get_eligibility())
                 update_means_test(eligibility_data)
-            logger.info("API Response: %s", result)
             # RFC Handling
             if ReasonsForContactingForm.MODEL_REF_SESSION_KEY in session:
                 notes_data = form.data.get("extra_notes")
