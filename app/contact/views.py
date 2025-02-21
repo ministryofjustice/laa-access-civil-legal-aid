@@ -61,7 +61,7 @@ class ContactUs(View):
                 cla_backend.update_reasons_for_contacting(
                     session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY],
                     payload={
-                        "case": session["reference"],
+                        "case": session["case_reference"],
                         "other_reasons": notes_data,
                     },
                 )
@@ -81,6 +81,6 @@ class ContactUs(View):
                 data["email"] = email
                 create_and_send_confirmation_email(govuk_notify, data)
             return render_template(
-                "contact/confirmation.html", data=session["reference"]
+                "contact/confirmation.html", data=session["case_reference"]
             )
         return render_template(self.template, form=form, form_progress=form_progress)

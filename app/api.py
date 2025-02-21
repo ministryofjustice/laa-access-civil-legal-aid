@@ -177,9 +177,18 @@ class BackendAPIClient:
             payload["eligibility_check"] = session.get("ec_reference")
 
         response = self.post(contact_endpoint, json=payload)
-        session["reference"] = response["reference"]
+        session["case_reference"] = response["reference"]
 
     def update_reasons_for_contacting(self, reference, form=None, payload={}):
+        """
+        This function only runs if a case is created after the reason for contacting
+        form has been completed. This patches the case information to the rfc reference
+        and can update the other_reasons field with the notes on contact.
+
+        This function can be used to update the rfc if the user heads back to the rfc page
+        without using the contact page. Otherwise it uses the form.api_payload from contact
+        to append the rfc information.
+        """
         payload = form.api_payload() if form else payload
         return self.patch(
             f"checker/api/v1/reasons_for_contacting/{reference}", json=payload

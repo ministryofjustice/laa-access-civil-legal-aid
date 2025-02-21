@@ -1,4 +1,3 @@
-# coding=utf-8
 import logging
 import re
 
@@ -10,7 +9,7 @@ log = logging.getLogger(__name__)
 class AddressLookup(object):
     def __init__(self, key, url=None):
         if not key:
-            raise Exception("OS Places API key required")
+            raise RuntimeError("OS Places API key required")
         self.key = key
         if not url:
             url = "https://api.os.uk/search/places/v1/postcode"
@@ -27,18 +26,23 @@ class AddressLookup(object):
             os_places_response = requests.get(self.url, params=params, timeout=3)
             os_places_response.raise_for_status()
         except requests.exceptions.ConnectTimeout as e:
-            log.error("OS Places request timed out: {}".format(e))
+            log.error(f"OS Places request timed out: {e}")
         except requests.exceptions.RequestException as e:
-            log.error("OS Places request error: {}".format(e))
+            log.error(f"OS Places request error: {e}")
         else:
             try:
                 return os_places_response.json().get("results", [])
             except ValueError as e:
-                log.warning("OS Places response JSON parse error: {}".format(e))
+                log.warning(f"OS Places response JSON parse error: {e}")
         return []
 
 
 class FormattedAddressLookup(AddressLookup):
+    """
+    A subclass of AddressLookup that formats the raw address data returned by the OS Places API.
+    This class transforms the raw address components into a well-structured, readable address string.
+    """
+
     def format_address_from_result(self, raw_result):
         dpa_result = raw_result.get("DPA")
         if dpa_result:
