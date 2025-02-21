@@ -115,10 +115,10 @@
 
 {% block header %}
     {{ govukHeader({
-    'homepageUrl': url_for('categories.index'),
-    'serviceName': config['SERVICE_NAME'],
-    'serviceUrl': url_for('categories.index'),
-    'useTudorCrown': true
+        'homepageUrl': "https://gov.uk",
+        'serviceName': config['SERVICE_NAME'],
+        'serviceUrl': url_for('main.start_page'),
+        'useTudorCrown': true
   }) }}
 {% endblock %}
 

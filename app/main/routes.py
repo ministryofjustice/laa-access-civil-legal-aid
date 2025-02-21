@@ -19,9 +19,15 @@ from app.main import bp
 from app.main.forms import CookiesForm
 
 
-@bp.get("/main")
-def index():
-    return redirect(url_for("categories.index"))
+@bp.get("/")
+def start_page():
+    """Directs the user to the start page of the service, hosted on GOV.UK
+    This is the endpoint directed to from the header text, clicking this link will reset the users' session.
+    """
+    session.clear()
+    if current_app.config.get("CLA_ENVIRONMENT") != "production":
+        return redirect(url_for("categories.index"))
+    return redirect(current_app.config.get("GOV_UK_START_PAGE"))
 
 
 @bp.get("/start")
