@@ -1,11 +1,13 @@
 from dataclasses import dataclass
-from typing import Dict
+from typing import Dict, Optional
 
 
 @dataclass
 class EligibilityData:
-    category: str
-    forms: Dict
+    def __init__(self, category: str, forms: Dict, notes: Optional[Dict] = None):
+        self.category = category
+        self.forms = forms
+        self.notes = notes
 
 
 ABOUT_YOU_TEST_CASES = [
@@ -15,6 +17,7 @@ ABOUT_YOU_TEST_CASES = [
         "description": "Basic case with no benefits or partner",
         "input": EligibilityData(
             category="immigration",
+            notes={"User problem": "test"},
             forms={
                 "about-you": {
                     "is_self_employed": False,
@@ -29,6 +32,7 @@ ABOUT_YOU_TEST_CASES = [
         ),
         "expected": {
             "category": "immigration",
+            "notes": "User problem:\ntest",
             "has_partner": False,
             "dependants_young": 0,
             "dependants_old": 0,
@@ -50,6 +54,7 @@ ABOUT_YOU_TEST_CASES = [
         "description": "Case with partner and universal credit and pension credit benefits",
         "input": EligibilityData(
             category="debt",
+            notes={"User problem": "test"},
             forms={
                 "about-you": {
                     "is_self_employed": True,
@@ -64,6 +69,7 @@ ABOUT_YOU_TEST_CASES = [
         ),
         "expected": {
             "category": "debt",
+            "notes": "User problem:\ntest",
             "has_partner": True,
             "dependants_young": 0,
             "dependants_old": 0,
@@ -84,6 +90,7 @@ ABOUT_YOU_TEST_CASES = [
         "description": "Case with young and old dependants and income support",
         "input": EligibilityData(
             category="family",
+            notes={"User problem": "test"},
             forms={
                 "about-you": {
                     "is_self_employed": False,
@@ -100,6 +107,7 @@ ABOUT_YOU_TEST_CASES = [
         ),
         "expected": {
             "category": "family",
+            "notes": "User problem:\ntest",
             "has_partner": False,
             "dependants_young": 2,
             "dependants_old": 1,
@@ -118,9 +126,12 @@ ABOUT_YOU_TEST_CASES = [
         "id": "no_forms",
         "name": "no_forms",
         "description": "Edge case with no forms present",
-        "input": EligibilityData(category="immigration", forms={}),
+        "input": EligibilityData(
+            category="immigration", notes={"User problem": "test"}, forms={}
+        ),
         "expected": {
             "category": "immigration",
+            "notes": "User problem:\ntest",
             "has_partner": False,
             "dependants_young": 0,
             "dependants_old": 0,
@@ -145,6 +156,7 @@ INCOME_TEST_CASES = [
         "description": "Basic case with employed person, no partner",
         "input": EligibilityData(
             category="debt",
+            notes={"User problem": "test"},
             forms={
                 "about-you": {
                     "is_employed": True,
@@ -228,6 +240,7 @@ INCOME_TEST_CASES = [
         "description": "Self-employed person with income in different intervals",
         "input": EligibilityData(
             category="debt",
+            notes={"User problem": "test"},
             forms={
                 "about-you": {
                     "is_employed": False,
@@ -322,6 +335,7 @@ INCOME_TEST_CASES = [
         "description": "Case with partner and child tax credits",
         "input": EligibilityData(
             category="debt",
+            notes={"User problem": "test"},
             forms={
                 "about-you": {
                     "is_employed": True,
@@ -490,6 +504,7 @@ SAVINGS_TEST_CASES = [
         "description": "Case with no savings",
         "input": EligibilityData(
             category="debt",
+            notes={"User problem": "test"},
             forms={
                 "about-you": {
                     "is_employed": False,
@@ -507,6 +522,7 @@ SAVINGS_TEST_CASES = [
         "description": "Case with savings",
         "input": EligibilityData(
             category="debt",
+            notes={"User problem": "test"},
             forms={
                 "about-you": {
                     "is_employed": False,
@@ -543,6 +559,7 @@ OUTGOINGS_TEST_CASES = [
         "description": "Case with no outgoings",
         "input": EligibilityData(
             category="debt",
+            notes={"User problem": "test"},
             forms={
                 "about-you": {
                     "is_employed": False,
@@ -560,6 +577,7 @@ OUTGOINGS_TEST_CASES = [
         "description": "Case with outgoings",
         "input": EligibilityData(
             category="debt",
+            notes={"User problem": "test"},
             forms={
                 "about-you": {
                     "is_employed": False,

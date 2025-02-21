@@ -8,7 +8,9 @@ def test_contact_us_journey(page: Page):
     """Test the reverse flow through a contact us journey"""
     page.get_by_role("link", name="Children, families,").click()
     page.get_by_role("link", name="Children and social services").click()
-    expect(page.get_by_role("heading", name="Contact us page")).to_be_visible()
+    expect(
+        page.get_by_role("heading", name="Contact Civil Legal Advice")
+    ).to_be_visible()
     page.get_by_role("button", name="Back").click()
     expect(
         page.get_by_role("heading", name="Children, families, relationships")

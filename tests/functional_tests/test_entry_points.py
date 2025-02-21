@@ -27,7 +27,9 @@ def test_bsl_route(page: Page):
     url = url_for("main.bsl_start", _external=True)
     assert url.endswith("/bsl-start"), url
     page.goto(url)
-    expect(page.get_by_role("heading", name="Contact us")).to_be_visible()
+    expect(
+        page.get_by_role("heading", name="Contact Civil Legal Advice")
+    ).to_be_visible()
 
 
 @pytest.mark.usefixtures("live_server")

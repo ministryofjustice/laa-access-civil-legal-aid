@@ -1,14 +1,17 @@
 from urllib.parse import urljoin
 import requests
 from flask_babel import LazyString
-from flask import current_app
+from flask import current_app, session
 import logging
+from datetime import datetime, timedelta
 from app.extensions import cache
 
 logger = logging.getLogger(__name__)
 
 
 class BackendAPIClient:
+    CALLBACK_API_DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S"
+
     @property
     def hostname(self):
         return current_app.config["CLA_BACKEND_URL"]
@@ -129,6 +132,67 @@ class BackendAPIClient:
             payload = {}
         payload = form.api_payload() if form else payload
         return self.post("checker/api/v1/reasons_for_contacting/", json=payload)
+
+    def format_slots_by_day(self, slots, next_7_days):
+        slots_by_day = {}
+
+        for slot in slots:
+            if slot.date() in next_7_days:
+                date_str = slot.date().strftime("%Y-%m-%d")
+
+                if date_str not in slots_by_day:
+                    slots_by_day[date_str] = []
+
+                slots_by_day[date_str].append(
+                    [
+                        slot.strftime("%H%M"),
+                        f"{slot.strftime('%I:%M%p').lstrip('0').lower()} to "
+                        f"{(slot + timedelta(minutes=30)).strftime('%I:%M%p').lstrip('0').lower()}",
+                    ]
+                )
+
+        return slots_by_day
+
+    def get_time_slots(self, num_days=8, is_third_party_callback=False):
+        slots = self.get(
+            "checker/api/v1/callback_time_slots/",
+            f"?third_party_callback={is_third_party_callback}&num_days={num_days}",
+        )["slots"]
+        slots = [
+            datetime.strptime(slot, self.CALLBACK_API_DATETIME_FORMAT) for slot in slots
+        ]
+        today = datetime.today().date()
+
+        next_7_days = [today + timedelta(days=i) for i in range(num_days)]
+
+        slots_by_day = self.format_slots_by_day(slots, next_7_days)
+
+        return slots_by_day
+
+    def post_case(self, form=None, payload=None, attach_eligiblity_data: bool = False):
+        contact_endpoint = "checker/api/v1/case"
+        gtm_anon_id = session.get("gtm_anon_id", None)
+        payload["gtm_anon_id"] = gtm_anon_id
+        if attach_eligiblity_data:
+            payload["eligibility_check"] = session.get("ec_reference")
+
+        response = self.post(contact_endpoint, json=payload)
+        session["case_reference"] = response["reference"]
+
+    def update_reasons_for_contacting(self, reference, form=None, payload={}):
+        """
+        This function only runs if a case is created after the reason for contacting
+        form has been completed. This patches the case information to the rfc reference
+        and can update the other_reasons field with the notes on contact.
+
+        This function can be used to update the rfc if the user heads back to the rfc page
+        without using the contact page. Otherwise it uses the form.api_payload from contact
+        to append the rfc information.
+        """
+        payload = form.api_payload() if form else payload
+        return self.patch(
+            f"checker/api/v1/reasons_for_contacting/{reference}", json=payload
+        )
 
 
 cla_backend = BackendAPIClient()

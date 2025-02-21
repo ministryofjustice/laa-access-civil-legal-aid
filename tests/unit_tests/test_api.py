@@ -2,6 +2,7 @@ import pytest
 from unittest.mock import Mock, patch
 from flask_babel import LazyString
 from app.api import BackendAPIClient
+from datetime import datetime
 
 
 class TestHostname:
@@ -118,3 +119,42 @@ class TestReasonsForContacting:
         assert result == {"status": "success"}
         prepared_request = mock_send.call_args[0][0]
         assert prepared_request.method == "POST"
+
+
+# Test Callback
+@pytest.fixture
+def mock_slots():
+    return [
+        datetime(2025, 2, 21, 9, 0),
+        datetime(2025, 2, 21, 9, 30),
+        datetime(2025, 2, 22, 10, 0),
+        datetime(2025, 2, 23, 10, 0),
+    ]
+
+
+@pytest.fixture
+def next_7_days():
+    return {
+        datetime(2025, 2, 21).date(),
+        datetime(2025, 2, 22).date(),
+        datetime(2025, 2, 23).date(),
+    }
+
+
+class TestCallbackSlots:
+    @pytest.fixture(autouse=True)
+    def setup_method(self, mock_slots, next_7_days):
+        self.client = BackendAPIClient()
+        self.slots = mock_slots
+        self.next_7_days = next_7_days
+
+    def test_format_slots_by_day(self):
+        result = self.client.format_slots_by_day(self.slots, self.next_7_days)
+
+        expected = {
+            "2025-02-21": [["0900", "9:00am to 9:30am"], ["0930", "9:30am to 10:00am"]],
+            "2025-02-22": [["1000", "10:00am to 10:30am"]],
+            "2025-02-23": [["1000", "10:00am to 10:30am"]],
+        }
+
+        assert result == expected

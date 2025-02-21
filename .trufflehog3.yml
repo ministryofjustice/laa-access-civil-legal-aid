@@ -1,6 +1,7 @@
 exclude: # exclude matching issues
   - message: Build directories
     paths:
+      - .env
       - build/**
       - dist/**
       - python3.12/**
