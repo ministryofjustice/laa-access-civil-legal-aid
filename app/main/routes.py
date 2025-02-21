@@ -102,7 +102,7 @@ def status():
 @bp.route("/service-unavailable", methods=["GET"])
 def service_unavailable_page():
     if not current_app.config["SERVICE_UNAVAILABLE"]:
-        return redirect(url_for("main.index"))
+        return redirect(url_for("categories.index"))
     abort(503)
 
 
