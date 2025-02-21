@@ -163,8 +163,8 @@ class CheckYourAnswers(FormsMixin, MethodView):
         def get_your_problem__with_description(first_answer):
             value = "\n".join(
                 [
-                    f"**{first_answer.category.title}**",
-                    first_answer.category.description,
+                    f"**{str(first_answer.category.title)}**",
+                    str(first_answer.category.description),
                 ]
             )
             return [
