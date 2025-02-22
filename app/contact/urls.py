@@ -24,3 +24,8 @@ def reasons_for_contacting():
         logger.info("API Response: %s", result)
         return redirect(url_for(next_step))
     return render_template("contact/rfc.html", form=form)
+
+
+@bp.get("/confirmation")
+def confirmation():
+    return render_template("contact/confirmation.html")
