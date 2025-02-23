@@ -42,7 +42,7 @@ def test_in_scope_journey(page: Page):
 def test_out_of_scope_journey(page: Page):
     """Test the reverse flow through an out-of-scope journey"""
     page.get_by_role("link", name="Benefits").click()
-    page.get_by_role("radio", name="None of the above").check()
+    page.get_by_role("radio", name="None of these").check()
     page.get_by_role("button", name="Continue").click()
     expect(
         page.get_by_role("heading", name="Legal aid doesn’t cover all types of problem")

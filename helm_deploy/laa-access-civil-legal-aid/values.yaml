@@ -73,3 +73,8 @@ envVars:
       name: maintenance-mode
       key: enabled
       optional: true
+  RATELIMIT_ENABLED:
+    configmap:
+      name: ratelimit
+      key: enabled
+      optional: true
