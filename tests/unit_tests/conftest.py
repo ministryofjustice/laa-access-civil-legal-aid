@@ -1,5 +1,5 @@
 import pytest
-from app import Config
+from app import Config, SessionInterface
 from app import create_app
 from unittest.mock import patch
 from app.api import BackendAPIClient
@@ -13,6 +13,7 @@ class TestConfig(Config):
     SECRET_KEY = "TEST_KEY"
     CLA_BACKEND_URL = "http://backend-test.local"
     WTF_CSRF_ENABLED = False
+    SESSION_INTERFACE = SessionInterface()
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -36,3 +37,16 @@ def client(app):
 def api_client(app):
     with app.app_context():
         return BackendAPIClient()
+
+
+@pytest.fixture
+def mock_url_for():
+    with patch("app.categories.views.url_for") as mock:
+
+        def side_effect(*args, **kwargs):
+            if kwargs and "endpoint" in kwargs:
+                return f"/mocked/{kwargs['endpoint']}"
+            return f"/mocked/{args[0]}"
+
+        mock.side_effect = side_effect
+        yield mock
