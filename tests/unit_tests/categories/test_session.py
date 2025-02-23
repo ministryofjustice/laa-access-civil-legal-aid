@@ -72,3 +72,34 @@ def test_set_category_dict(app, client):
         session["category"] = new_category
         assert session.category == Category(**new_category)
         assert isinstance(session.category, Category)
+
+
+class TestRemoveCategoryQuestionAnswer:
+    def test_simple_case(self, app, client):
+        with client.session_transaction() as session:
+            session["category_answers"] = [
+                {
+                    "question": "test_question",
+                    "answer": "test_answer",
+                    "category": "test_category",
+                }
+            ]
+            assert len(session["category_answers"]) == 1
+            session.remove_category_question_answer("test_question")
+            assert len(session["category_answers"]) == 0
+            assert session["category_answers"] == []
+
+    def test_multiple_answers(self, app, client):
+        with client.session_transaction() as session:
+            session["category_answers"] = [
+                {"question": "Q1", "answer": "A1", "category": "C1"},
+                {"question": "Q2", "answer": "A1", "category": "C1"},
+                {"question": "Q3", "answer": "A1", "category": "C3"},
+            ]
+            assert len(session["category_answers"]) == 3
+            session.remove_category_question_answer("Q2")
+            assert len(session["category_answers"]) == 2
+            assert session["category_answers"] == [
+                {"question": "Q1", "answer": "A1", "category": "C1"},
+                {"question": "Q3", "answer": "A1", "category": "C3"},
+            ]

@@ -6,7 +6,7 @@ from app.categories.constants import Category
 
 
 class CategoryPage(View):
-    template: str = None
+    template: str = ""
     question_title: str = ""
     category: Category
 
@@ -195,11 +195,14 @@ class QuestionPage(CategoryPage):
         # Clear session data if form has errors, this prevents ghost answers from re-appearing from previously
         # valid form submissions.
         if form.question.errors:
-            self.update_session(None)
+            session.remove_category_question_answer(question_title=form.title)
 
         # Pre-populate form with previous answer if it exists
+        print(form.title)
         previous_answer = session.get_category_question_answer(form.title)
+        print("HERE")
         if previous_answer:
+            print("HERE 2")
             form.question.data = previous_answer
 
         return render_template(

@@ -1,5 +1,8 @@
+from unittest.mock import patch
 import pytest
 from flask import session
+from wtforms.fields.choices import RadioField
+
 from app.categories.family.urls import FamilyLandingPage
 from app.categories.forms import QuestionForm
 from app.categories.views import QuestionPage
@@ -24,13 +27,26 @@ class MockQuestionForm(QuestionForm):
         "dict_route": {"endpoint": "custom_page", "param": "value"},
     }
 
-    def validate_on_submit(self, *args, **kwargs):
-        return True
+    question = RadioField(
+        "Question",
+        choices=[
+            ("yes", "Yes"),
+            ("no", "No"),
+        ],
+    )
+
+    @property
+    def csrf_token(self):
+        def generate_csrf_token():
+            return "fake-csrf-token"
+
+        return generate_csrf_token
 
 
 @pytest.fixture
 def question_page():
-    return QuestionPage(MockQuestionForm)
+    page = QuestionPage(MockQuestionForm)
+    return page
 
 
 def test_initialization(question_page):
@@ -91,3 +107,38 @@ def test_get_next_page_invalid_answer(app, client, question_page):
         with pytest.raises(ValueError) as exc_info:
             question_page.get_next_page("invalid_answer")
         assert "No mapping found for answer" in str(exc_info.value)
+
+
+class TestProcessRequest:
+    def test_process_request_form(self, app, client, question_page):
+        with patch("app.categories.views.render_template") as mock_render_template:
+            question_page.process_request()
+            assert isinstance(
+                mock_render_template.mock_calls[0].kwargs["form"], MockQuestionForm
+            )
+
+    def test_process_request_on_valid_submit(self, app, client, question_page):
+        with app.test_request_context(
+            "/fake-url", method="POST", data={"question": "yes", "submit": "y"}
+        ):
+            with (
+                patch.object(question_page, "get_next_page") as mock_get_next_page,
+                patch.object(question_page, "update_session") as mock_update_session,
+            ):
+                question_page.process_request()
+                mock_get_next_page.assert_called_once_with("yes")
+                mock_update_session.assert_called_once_with(
+                    question="test_question", answer="yes", category="test_category"
+                )
+
+    def test_clear_session_if_called_with_errors(self, app, client, question_page):
+        with app.test_request_context(
+            "/fake-url",
+            method="POST",
+            data={"question": "invalid_answer", "submit": "y"},
+        ):
+            with patch(
+                "app.categories.views.session.remove_category_question_answer"
+            ) as mock_remove_answer_from_session:
+                question_page.process_request()
+                mock_remove_answer_from_session.assert_called()

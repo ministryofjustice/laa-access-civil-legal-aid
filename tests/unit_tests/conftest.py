@@ -13,7 +13,6 @@ class TestConfig(Config):
     SECRET_KEY = "TEST_KEY"
     CLA_BACKEND_URL = "http://backend-test.local"
     WTF_CSRF_ENABLED = False
-    SESSION_INTERFACE = SessionInterface()
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -25,7 +24,9 @@ def mock_cache():
 
 @pytest.fixture(scope="session")
 def app():
-    return create_app(TestConfig)
+    app = create_app(TestConfig)
+    app.session_interface = SessionInterface()
+    return app
 
 
 @pytest.fixture()
