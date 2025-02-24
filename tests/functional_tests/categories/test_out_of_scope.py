@@ -71,7 +71,7 @@ onward_links = [
 @pytest.mark.usefixtures("live_server")
 @pytest.mark.parametrize("onward_link_text, expected_title", onward_links)
 def test_onward_links(page: Page, onward_link_text, expected_title):
-    page.get_by_role("link", name="Mental capacity, mental health").click()
+    page.get_by_role("link", name="More problems covered by legal aid").click()
     page.get_by_role("link", name="Next steps to get help").click()
     page.get_by_role("button", name="Next steps to get help").click()
     with page.expect_popup() as popup_info:

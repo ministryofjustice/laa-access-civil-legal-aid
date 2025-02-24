@@ -28,7 +28,7 @@ class ResultPage(CategoryPage):
             else []
         )
         return {
-            "category": category if isinstance(category, Category) else {},
+            "category": category if isinstance(category, Category) else None,
             "organisations": organisations,
             "fala_category_code": get_fala_category_code(article_category_name),
         }
