@@ -3,7 +3,7 @@ import re
 from decimal import Decimal, InvalidOperation
 from enum import Enum
 from flask import session
-from wtforms.validators import StopValidation
+from wtforms.validators import StopValidation, NumberRange
 
 
 class ValidateIfType(Enum):
@@ -128,17 +128,11 @@ class CurrencyValidator:
         return decimal_value
 
 
-class AllowedExceptions:
-    """Allows for additional allowed values that are accepted but would fail subsequent validation.
-    This is typically used for when we want to allow £0 or a value greater than £x.
-    """
-
-    def __init__(self, allowed_values: list[int | str] | int | str):
-        # Convert single value to list for consistency
-        self.allowed_values = (
-            [allowed_values] if not isinstance(allowed_values, list) else allowed_values
-        )
+class NumberRangeAllowZero(NumberRange):
+    """Number range validator that allows 0 as a valid input."""
 
     def __call__(self, form, field):
-        if field.data in self.allowed_values:
-            raise StopValidation()
+        if field.data == 0:
+            return
+
+        super().__call__(form, field)
