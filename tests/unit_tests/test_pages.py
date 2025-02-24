@@ -1,3 +1,6 @@
+import pytest
+
+
 def test_set_locale(app, client):
     response = client.get("/locale/cy", headers={"referer": "http://localhost/privacy"})
     assert response.status_code == 302
@@ -19,6 +22,17 @@ def test_service_unavailable_on(app, client):
     response = client.get("/", follow_redirects=True)
     assert response.status_code == 503
     assert response.request.path == "/service-unavailable"
+
+
+@pytest.mark.parametrize(
+    "resource_path",
+    ["/assets/styles.css", "/assets/scripts.js", "/assets/images/govuk-crest.png"],
+)
+def test_service_unavailable_static_assets(app, client, resource_path):
+    app.config["SERVICE_UNAVAILABLE"] = True
+    response = client.get(resource_path)
+    assert response.status_code == 200
+    assert response.request.path == resource_path
 
 
 def test_service_unavailable_off(app, client):
