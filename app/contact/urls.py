@@ -4,6 +4,7 @@ from app.contact.forms import ReasonsForContactingForm
 from app.api import cla_backend
 from flask import request, redirect, url_for, render_template
 import logging
+from app.contact.views import ConfirmationPage
 
 logger = logging.getLogger(__name__)
 
@@ -26,6 +27,4 @@ def reasons_for_contacting():
     return render_template("contact/rfc.html", form=form)
 
 
-@bp.get("/confirmation")
-def confirmation():
-    return render_template("contact/confirmation.html")
+bp.add_url_rule("/confirmation", view_func=ConfirmationPage.as_view("confirmation"))
