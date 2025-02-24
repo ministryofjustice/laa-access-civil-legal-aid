@@ -135,7 +135,9 @@ class CheckYourAnswers(FormsMixin, MethodView):
             form_data = MultiDict(eligibility.forms.get(key, {}))
             form = form_class(form_data)
             if form.should_show():
-                means_test_summary[str(form.title)] = self.get_form_summary(form, key)
+                means_test_summary[str(form.page_title)] = self.get_form_summary(
+                    form, key
+                )
 
         params = {
             "means_test_summary": means_test_summary,
