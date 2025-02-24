@@ -1,13 +1,18 @@
 import pytest
+
 from flask import url_for
 from playwright.sync_api import Page, expect
+from tests.functional_tests.means_test.conftest import (
+    assert_benefits_form_is_prefilled,
+    assert_about_you_form_is_prefilled,
+)
 
 
 about_you_form_routing = [
     pytest.param(
         {
-            "Do you have a partner": "No",
-            "Do you receive any benefits": "Yes",
+            "Do you have a partner?": "No",
+            "Do you receive any benefits (including Child Benefit)?": "Yes",
             "Do you have any children aged 15 or under?": "Yes",
             "How many children aged 15 or under?": "1",
             "Do you have any dependants aged 16 or over?": "No",
@@ -42,24 +47,25 @@ benefits_form_routing = [
     )
 ]
 
-ANSWERS = {
-    "The problem you need help with": {
-        "The problem you need help with": "Homelessness\nHelp if you’re homeless, or might be homeless in the next 2 months. This could be because of rent arrears, debt, the end of a relationship, or because you have nowhere to live."
-    },
-    "About you": about_you_form_routing[0].values[0],
-    "Which benefits do you receive?": benefits_form_routing[0].values[0],
-}
+
+def get_answers():
+    return {
+        "The problem you need help with": {
+            "The problem you need help with": "Homelessness\nHelp if you’re homeless, or might be homeless in the next 2 months. This could be because of rent arrears, debt, the end of a relationship, or because you have nowhere to live."
+        },
+        "About you": about_you_form_routing[0].values[0].copy(),
+        "Which benefits do you receive?": benefits_form_routing[0].values[0].copy(),
+    }
 
 
-def assert_answers(page, answers):
+def assert_answers(page: Page, answers):
     for title, route in answers.items():
         table = page.locator(f".govuk-summary-list[data-question='{title}']")
         for question, answer in route.items():
-            if (
-                question
-                == "If yes, enter the total amount you get for all your children"
-            ):
-                answer = "£500.89 (4 weekly)"
+            if isinstance(answer, dict) and "Amount" in answer:
+                answer = f"{answer['Amount']} ({answer['Frequency']})"
+                if not answer.startswith("£"):
+                    answer = f"£{answer}"
             if question == "How many children aged 15 or under?":
                 question = "How many?"
             question_cell = table.get_by_text(question)
@@ -89,7 +95,7 @@ def test_reviews_page(page: Page, complete_benefits_form):
         page.get_by_role("heading", name="Which benefits do you receive?")
     ).to_be_visible()
 
-    assert_answers(page, ANSWERS)
+    assert_answers(page, get_answers())
 
 
 @pytest.mark.usefixtures("live_server")
@@ -97,13 +103,16 @@ def test_reviews_page(page: Page, complete_benefits_form):
 @pytest.mark.parametrize("benefits_answers", benefits_form_routing)
 def test_reviews_page_change_benefits_answer(page: Page, complete_benefits_form):
     expect(page).to_have_title("Review your answers - GOV.UK")
+    answers = get_answers()
     page.locator("a[href='/benefits#benefits']").click()
     expect(page).to_have_title("Which benefits do you receive? - GOV.UK")
+    assert_benefits_form_is_prefilled(page, answers["Which benefits do you receive?"])
+
+    # Remove 'Universal Credit' as a selected benefit
     page.get_by_label("Universal Credit").first.uncheck()
     page.get_by_role("button", name="Continue").click()
     expect(page).to_have_title("Review your answers - GOV.UK")
 
-    answers = ANSWERS.copy()
     benefits_answers = answers["Which benefits do you receive?"][
         "Which benefits do you receive?"
     ][:]
@@ -121,19 +130,25 @@ def test_reviews_page_change_benefits_answer(page: Page, complete_benefits_form)
 @pytest.mark.parametrize("about_you_answers", about_you_form_routing)
 @pytest.mark.parametrize("benefits_answers", benefits_form_routing)
 def test_reviews_page_change_sub_category(page: Page, complete_benefits_form):
+    answers = get_answers()
     expect(page).to_have_title("Review your answers - GOV.UK")
     page.locator(".govuk-summary-list__actions a[href='/housing/']").click()
     page.get_by_text("Eviction, told to leave your home").click()
     expect(page).to_have_title(
         "Legal aid is available for this type of problem - Access Civil Legal Aid – GOV.UK"
     )
+
     page.locator("a[href='/about-you']").click()
     expect(page).to_have_title("About you - GOV.UK")
+    assert_about_you_form_is_prefilled(page, answers["About you"])
     page.get_by_role("button", name="Continue").click()
+
     expect(page).to_have_title("Which benefits do you receive? - GOV.UK")
+    assert_benefits_form_is_prefilled(page, answers["Which benefits do you receive?"])
     page.get_by_role("button", name="Continue").click()
+
     expect(page).to_have_title("Review your answers - GOV.UK")
-    answers = ANSWERS.copy()
+
     answers["The problem you need help with"]["The problem you need help with"] = (
         "Eviction, told to leave your home\nLandlord has told you to leave or is trying to force you to leave. Includes if you’ve got a Section 21 or a possession order."
     )
@@ -159,7 +174,7 @@ def test_reviews_page_change_category(page: Page, complete_benefits_form):
         "Legal aid is available for this type of problem - Access Civil Legal Aid – GOV.UK"
     )
     page.goto(url_for("means_test.review", _external=True))
-    answers = ANSWERS.copy()
+    answers = get_answers()
     answers["The problem you need help with"].update(
         {
             "The problem you need help with": "Discrimination",
@@ -170,18 +185,93 @@ def test_reviews_page_change_category(page: Page, complete_benefits_form):
     )
     assert_answers(page, answers)
 
-    import time
 
-    time.sleep(10)
-    # page.locator(".govuk-summary-list__actions a[href='/housing/']").click()
-    # page.get_by_text("Eviction, told to leave your home").click()
-    # expect(page).to_have_title("Legal aid is available for this type of problem - Access Civil Legal Aid – GOV.UK")
-    # page.locator("a[href='/about-you']").click()
-    # expect(page).to_have_title("About you - GOV.UK")
-    # page.get_by_role("button", name="Continue").click()
-    # expect(page).to_have_title("Which benefits do you receive? - GOV.UK")
-    # page.get_by_role("button", name="Continue").click()
-    # expect(page).to_have_title("Review your answers - GOV.UK")
-    # answers = ANSWERS.copy()
-    # answers["The problem you need help with"]["The problem you need help with"] = "Eviction, told to leave your home\nLandlord has told you to leave or is trying to force you to leave. Includes if you’ve got a Section 21 or a possession order."
-    # assert_answers(page, answers)
+@pytest.mark.usefixtures("live_server")
+@pytest.mark.parametrize("about_you_answers", about_you_form_routing)
+@pytest.mark.parametrize("benefits_answers", benefits_form_routing)
+def test_change_answer_skip_means(page: Page, complete_benefits_form):
+    expect(page).to_have_title("Review your answers - GOV.UK")
+    page.goto(url_for("categories.domestic_abuse.landing", _external=True))
+    page.get_by_text("Problems with neighbours, landlords or other people").click()
+    page.get_by_role("heading", name="Contact us page")
+
+
+@pytest.mark.usefixtures("live_server")
+@pytest.mark.parametrize("about_you_answers", about_you_form_routing)
+@pytest.mark.parametrize("benefits_answers", benefits_form_routing)
+def test_change_answer_out_of_scope_problem(page: Page, complete_benefits_form):
+    expect(page).to_have_title("Review your answers - GOV.UK")
+    page.goto(url_for("categories.housing.landing", _external=True))
+    page.get_by_text("Next steps to get help").click()
+    page.get_by_role("heading", name="Legal aid doesn’t cover all types of problem")
+
+
+@pytest.mark.usefixtures("live_server")
+@pytest.mark.parametrize("about_you_answers", about_you_form_routing)
+@pytest.mark.parametrize("benefits_answers", benefits_form_routing)
+def test_change_answer_nolonger_passported(page: Page, complete_benefits_form):
+    # Change from passported means to non-passported
+    answers = get_answers()
+
+    expect(page).to_have_title("Review your answers - GOV.UK")
+    page.goto(url_for("means_test.about-you", _external=True))
+    assert_about_you_form_is_prefilled(page, answers["About you"])
+    # You no longer receive benefits
+    locator = page.get_by_text(
+        "Do you receive any benefits (including Child Benefit)?"
+    ).locator("..")
+    locator.get_by_label("No").click()
+    page.get_by_role("button", name="Continue").click()
+
+    expect(page).to_have_title("Your money coming in - GOV.UK")
+    answers["Your money coming in"] = {
+        "Maintenance received": {
+            "Amount": "120.56",
+            "Frequency": "per month",
+            "prefix": "maintenance_received",
+        },
+        "Pension received": {
+            "Amount": "8.01",
+            "Frequency": "per month",
+            "prefix": "pension",
+        },
+        "Any other income": {
+            "Amount": "100.50",
+            "Frequency": "per month",
+            "prefix": "other_income",
+        },
+    }
+    for field in answers["Your money coming in"].values():
+        page.locator(f"#{field['prefix']}-value").scroll_into_view_if_needed()
+        page.locator(f"#{field['prefix']}-value").fill(field["Amount"])
+        page.locator(f"#{field['prefix']}-interval").select_option(field["Frequency"])
+
+    page.get_by_role("button", name="Continue").click()
+
+    answers["Your outgoings"] = {
+        "Rent": {"Amount": "50.99", "Frequency": "per week", "prefix": "rent"},
+        "Maintenance": {
+            "Amount": "18.28",
+            "Frequency": "per month",
+            "prefix": "maintenance",
+        },
+        "Childcare": {
+            "Amount": "12.34",
+            "Frequency": "per month",
+            "prefix": "childcare",
+        },
+    }
+    for field in answers["Your outgoings"].values():
+        page.locator(f"#{field['prefix']}-value").scroll_into_view_if_needed()
+        page.locator(f"#{field['prefix']}-value").fill(field["Amount"])
+        page.locator(f"#{field['prefix']}-interval").select_option(field["Frequency"])
+
+    answers["Your outgoings"]["Monthly Income Contribution Order"] = "£50.00"
+    page.get_by_label("Monthly Income Contribution Order").fill("50.00")
+    page.get_by_role("button", name="Review your answers").click()
+    # No longer on benefits
+    del answers["Which benefits do you receive?"]
+    del answers["About you"]["Do you receive any benefits (including Child Benefit)?"]
+    assert_answers(page, answers)
+
+    expect(page.get_by_text("Which benefits do you receive?")).not_to_be_visible()
