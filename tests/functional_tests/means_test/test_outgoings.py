@@ -93,7 +93,9 @@ def test_outgoings_routing(page: Page, navigate_to_outgoings):
     page.get_by_role("textbox", name="Monthly Income Contribution").fill("500")
 
     page.get_by_role("button", name="Review your answers").click()
-    expect(page.get_by_role("heading", name="Review your answers")).to_be_visible()
+    expect(
+        page.get_by_role("heading", name="Check your answers and confirm")
+    ).to_be_visible()
 
 
 @pytest.mark.usefixtures("live_server")
@@ -123,4 +125,6 @@ def test_outgoings_childcare(page: Page, navigate_to_outgoings):
     )
 
     page.get_by_role("button", name="Review your answers").click()
-    expect(page.get_by_role("heading", name="Review your answers")).to_be_visible()
+    expect(
+        page.get_by_role("heading", name="Check your answers and confirm")
+    ).to_be_visible()
