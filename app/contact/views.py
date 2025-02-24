@@ -3,10 +3,7 @@ from app.contact.forms import ContactUsForm, ReasonsForContactingForm
 import logging
 from flask import session, render_template, request, redirect, url_for
 from app.api import cla_backend
-from app.contact.notify.api import (
-    NotifyEmailOrchestrator,
-    create_and_send_confirmation_email,
-)
+from app.contact.notify.api import notify
 from app.means_test.api import get_means_test_payload, update_means_test
 from app.means_test.views import MeansTest
 
@@ -76,10 +73,9 @@ class ContactUs(View):
             session["callback_time"] = callback_time
             email = form.get_email()
             if email:
-                govuk_notify = NotifyEmailOrchestrator()
                 data = form.data
                 data["email"] = email
-                create_and_send_confirmation_email(govuk_notify, data)
+                notify.create_and_send_confirmation_email(data)
             return render_template(
                 "contact/confirmation.html", data=session["case_reference"]
             )

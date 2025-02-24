@@ -133,23 +133,22 @@ class BackendAPIClient:
         payload = form.api_payload() if form else payload
         return self.post("checker/api/v1/reasons_for_contacting/", json=payload)
 
-    def format_slots_by_day(self, slots, next_7_days):
+    def format_slots_by_day(self, slots):
         slots_by_day = {}
 
         for slot in slots:
-            if slot.date() in next_7_days:
-                date_str = slot.date().strftime("%Y-%m-%d")
+            date_str = slot.date().strftime("%Y-%m-%d")
 
-                if date_str not in slots_by_day:
-                    slots_by_day[date_str] = []
+            if date_str not in slots_by_day:
+                slots_by_day[date_str] = []
 
-                slots_by_day[date_str].append(
-                    [
-                        slot.strftime("%H%M"),
-                        f"{slot.strftime('%I:%M%p').lstrip('0').lower()} to "
-                        f"{(slot + timedelta(minutes=30)).strftime('%I:%M%p').lstrip('0').lower()}",
-                    ]
-                )
+            slots_by_day[date_str].append(
+                [
+                    slot.strftime("%H%M"),
+                    f"{slot.strftime('%I:%M%p').lstrip('0').lower()} to "
+                    f"{(slot + timedelta(minutes=30)).strftime('%I:%M%p').lstrip('0').lower()}",
+                ]
+            )
 
         return slots_by_day
 
@@ -161,18 +160,13 @@ class BackendAPIClient:
         slots = [
             datetime.strptime(slot, self.CALLBACK_API_DATETIME_FORMAT) for slot in slots
         ]
-        today = datetime.today().date()
 
-        next_7_days = [today + timedelta(days=i) for i in range(num_days)]
-
-        slots_by_day = self.format_slots_by_day(slots, next_7_days)
+        slots_by_day = self.format_slots_by_day(slots)
 
         return slots_by_day
 
     def post_case(self, form=None, payload=None, attach_eligiblity_data: bool = False):
         contact_endpoint = "checker/api/v1/case"
-        gtm_anon_id = session.get("gtm_anon_id", None)
-        payload["gtm_anon_id"] = gtm_anon_id
         if attach_eligiblity_data:
             payload["eligibility_check"] = session.get("ec_reference")
 

@@ -1,6 +1,6 @@
 import json
 from flask_wtf import FlaskForm
-from flask import request, current_app
+from flask import request, current_app, session
 from wtforms import (
     SelectMultipleField,
     HiddenField,
@@ -85,8 +85,6 @@ class ContactUsForm(FlaskForm):
     def __init__(self, *args, **kwargs):
         super(ContactUsForm, self).__init__(*args, **kwargs)
         self.adaptations.data = ["welsh"] if get_locale()[:2] == "cy" else []
-        self.other_language.choices = LANG_CHOICES
-        self.thirdparty_relationship.choices = THIRDPARTY_RELATIONSHIP_CHOICES
 
         self.time_slots = cla_backend.get_time_slots(num_days=8)
         self.thirdparty_time_slots = cla_backend.get_time_slots(
@@ -279,7 +277,7 @@ class ContactUsForm(FlaskForm):
 
     thirdparty_relationship = SelectMultipleField(
         _("Relationship to you"),
-        choices=[],
+        choices=THIRDPARTY_RELATIONSHIP_CHOICES,
         widget=GovSelect(),
         validators=[
             ValidateIf("contact_type", "thirdparty", condition_type=ValidateIfType.EQ),
@@ -416,7 +414,7 @@ class ContactUsForm(FlaskForm):
     )
     other_language = SelectMultipleField(
         _("Choose a language"),
-        choices=[],
+        choices=LANG_CHOICES,
         widget=GovSelect(),
         validators=[
             ValidateIf(
@@ -529,6 +527,7 @@ class ContactUsForm(FlaskForm):
                 "safe_to_contact": safe_to_contact,
                 "announce_call": True,
             },
+            "gtm_anon_id": session.get("gtm_anon_id", None),
             "adaptation_details": {
                 "bsl_webcam": "bsl_webcam" in (self.data.get("adaptations", [])),
                 "text_relay": "text_relay" in (self.data.get("adaptations", [])),
