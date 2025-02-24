@@ -198,11 +198,8 @@ class QuestionPage(CategoryPage):
             session.remove_category_question_answer(question_title=form.title)
 
         # Pre-populate form with previous answer if it exists
-        print(form.title)
         previous_answer = session.get_category_question_answer(form.title)
-        print("HERE")
         if previous_answer:
-            print("HERE 2")
             form.question.data = previous_answer
 
         return render_template(
