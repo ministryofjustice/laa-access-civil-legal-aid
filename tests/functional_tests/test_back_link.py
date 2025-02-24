@@ -45,7 +45,7 @@ def test_out_of_scope_journey(page: Page):
     page.get_by_role("radio", name="None of these").check()
     page.get_by_role("button", name="Continue").click()
     expect(
-        page.get_by_role("heading", name="Legal aid doesn’t cover all types of problem")
+        page.get_by_role("heading", name="Sorry, you’re not likely to get legal aid")
     ).to_be_visible()
     page.get_by_role("button", name="Back").click()
     expect(
