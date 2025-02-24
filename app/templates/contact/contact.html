@@ -23,9 +23,21 @@
         {% endblock %}
 
         {% block formDescription %}
+            {% if session.category.exit_page %}
+            <div class="govuk-warning-text">
+                <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                <strong class="govuk-warning-text__text">
+                  <span class="govuk-visually-hidden">Warning</span>
+                  If you’re in an emergency situation, please call the police on 999.
+                </strong>
+              </div>
+            <p class="govuk-body">If you’re in immediate danger please call Civil Legal Advice on <b>0345 345 4 345</b>. <a class="govuk-link" href="https://www.gov.uk/call-charges">Call charges apply.</a></p>
+            <p class="govuk-body">You can also ask us to call you back using the form below, which is free.</p>
+            {% else %}
             <p class="govuk-body">{% trans %}Civil Legal Advice will check if you can get legal aid and help you contact the right legal adviser. If you cannot get legal aid, we’ll tell you about other help you can get.{% endtrans %}</p>
             <p class="govuk-body">{% trans %}You can call Civil Legal Advice yourself - this is an 0345 number, so <a class="govuk-link" href="https://www.gov.uk/call-charges">call charges</a> apply. Or you can ask us to call you back, which is free.{% endtrans %}</p>
             <p class="govuk-body">{% trans %}We’ll ask questions about your legal problem and your financial situation. You might need to provide evidence of any financial information you give us.{% endtrans %}</p>
+            {% endif %}
         {% endblock %}
 
         <form action="" method="post" novalidate>
