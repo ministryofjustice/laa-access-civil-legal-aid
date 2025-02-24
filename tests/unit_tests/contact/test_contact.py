@@ -1,11 +1,10 @@
 import pytest
 from unittest.mock import patch
 from flask import request, Flask, session
-from app.api import cla_backend
-from app.contact.forms import ReasonsForContactingForm
+from app.api import cla_backend, BackendAPIClient
+from app.contact.forms import ReasonsForContactingForm, ContactUsForm
 import requests
 from datetime import datetime
-from app.api import BackendAPIClient
 from app.contact.address_finder.widgets import AddressLookup, FormattedAddressLookup
 from wtforms import Form, StringField, FieldList
 from wtforms.validators import ValidationError, StopValidation
@@ -61,6 +60,7 @@ def app():
     app = Flask(__name__)
     app.config["OS_PLACES_API_KEY"] = "test_api_key"
     app.config["SECRET_KEY"] = "secret_key"
+    app.config["TIMEZONE"] = "Europe/London"
     Babel(app)
     with app.app_context():
         yield app
@@ -311,3 +311,62 @@ def test_get_all_time_slots():
     ]
 
     assert result == expected
+
+
+# Test get callback time
+class DummyCallback:
+    def __init__(self, data):
+        self.data = data
+
+    get_callback_time = ContactUsForm.get_callback_time
+
+
+def test_get_callback_time_invalid(app):
+    """
+    Test that get_callback_time returns (None, None) when the contact_type
+    is not 'callback' or 'thirdparty'.
+    """
+    dummy = DummyCallback({"contact_type": "email"})
+    iso_time, callback_time = dummy.get_callback_time()
+    assert iso_time is None
+    assert callback_time is None
+
+
+# Test get payload
+class DummyPayload:
+    def __init__(self, data):
+        self.data = data
+        self.contact_type = self
+
+    def get_callback_time(self):
+        return "2024-02-24T14:30:00Z", "Monday, 24 February at 14:30 - 15:00"
+
+    def get_email(self):
+        return "test@example.com"
+
+    get_payload = ContactUsForm.get_payload
+
+
+def test_get_payload_callback(app):
+    """Test payload generation for a callback request."""
+    dummy = DummyPayload(
+        {
+            "contact_type": "callback",
+            "full_name": "John Doe",
+            "post_code": "SW1A 1AA",
+            "contact_number": "07123456789",
+            "street_address": "10 Downing Street",
+            "announce_call_from_cla": True,
+            "adaptations": ["bsl_webcam"],
+            "other_language": ["english"],
+            "other_adaptation": "None",
+        }
+    )
+
+    payload = dummy.get_payload()
+
+    assert payload["personal_details"]["full_name"] == "John Doe"
+    assert payload["personal_details"]["safe_to_contact"] == "SAFE"
+    assert payload["callback_type"] == "web_form_self"
+    assert payload["adaptation_details"]["bsl_webcam"] is True
+    assert payload["adaptation_details"]["language"] == "ENGLISH"
