@@ -4,7 +4,7 @@ from flask import current_app
 
 import requests
 
-log = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
 class AddressLookup(object):
@@ -25,14 +25,14 @@ class AddressLookup(object):
             os_places_response = requests.get(self.url, params=params, timeout=3)
             os_places_response.raise_for_status()
         except requests.exceptions.ConnectTimeout as e:
-            log.error(f"OS Places request timed out: {e}")
+            logger.error(f"OS Places request timed out: {e}")
         except requests.exceptions.RequestException as e:
-            log.error(f"OS Places request error: {e}")
+            logger.error(f"OS Places request error: {e}")
         else:
             try:
                 return os_places_response.json().get("results", [])
             except ValueError as e:
-                log.warning(f"OS Places response JSON parse error: {e}")
+                logger.warning(f"OS Places response JSON parse error: {e}")
         return []
 
 

@@ -6,7 +6,7 @@ import requests
 from app.main import get_locale
 
 
-log = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
 class NotifyEmailOrchestrator(object):
@@ -38,11 +38,11 @@ class NotifyEmailOrchestrator(object):
                                           the application is in TESTING mode
         """
         if current_app.config["TESTING"]:
-            log.info("Application is in TESTING mode, will not send the request")
+            logger.info("Application is in TESTING mode, will not send the request")
             return False
 
         if not self.base_url:
-            log.error("EMAIL_ORCHESTRATOR_URL is not set, unable to send email")
+            logger.error("EMAIL_ORCHESTRATOR_URL is not set, unable to send email")
             return False
 
         data = {"email_address": email_address, "template_id": template_id}

@@ -530,12 +530,8 @@ class ContactUsForm(FlaskForm):
                 "announce_call": True,
             },
             "adaptation_details": {
-                "bsl_webcam": True
-                if "bsl_webcam" in (self.data.get("adaptations", []))
-                else False,
-                "text_relay": True
-                if "text_relay" in (self.data.get("adaptations", []))
-                else False,
+                "bsl_webcam": "bsl_webcam" in (self.data.get("adaptations", [])),
+                "text_relay": "text_relay" in (self.data.get("adaptations", [])),
                 "language": "WELSH"
                 if "welsh" in (self.data.get("adaptations", []))
                 else self.data.get("other_language")[0].upper(),
