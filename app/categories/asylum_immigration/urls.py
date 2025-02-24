@@ -32,7 +32,7 @@ AsylumAndImmigrationLandingPage.register_routes(
     blueprint=bp, path="/asylum-and-immigration"
 )
 bp.add_url_rule(
-    "/mental-capacity-health/cannot-find-your-problem",
+    "/asylum-and-immigration/cannot-find-your-problem",
     view_func=CannotFindYourProblemPage.as_view(
         "cannot_find_your_problem",
         category=ASYLUM_AND_IMMIGRATION,
@@ -40,7 +40,7 @@ bp.add_url_rule(
     ),
 )
 bp.add_url_rule(
-    "/mental-capacity-health/next-steps",
+    "/asylum-and-immigration/next-steps",
     view_func=NextStepsPage.as_view(
         "next_steps",
         category=ASYLUM_AND_IMMIGRATION,

@@ -30,9 +30,9 @@ class CommunityCareLandingPage(CategoryLandingPage):
     }
 
 
-CommunityCareLandingPage.register_routes(blueprint=bp)
+CommunityCareLandingPage.register_routes(blueprint=bp, path="/disability-social-care")
 bp.add_url_rule(
-    "/community-care/cannot-find-your-problem",
+    "/disability-social-care/cannot-find-your-problem",
     view_func=CannotFindYourProblemPage.as_view(
         "cannot_find_your_problem",
         category=COMMUNITY_CARE,
@@ -40,7 +40,7 @@ bp.add_url_rule(
     ),
 )
 bp.add_url_rule(
-    "/community-care/next-steps",
+    "/disability-social-care/next-steps",
     view_func=NextStepsPage.as_view(
         "next_steps",
         category=COMMUNITY_CARE,
