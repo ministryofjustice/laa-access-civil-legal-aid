@@ -1,4 +1,4 @@
-from flask import session, url_for, render_template
+from flask import url_for, render_template
 from app.categories import bp
 from app.categories.views import CategoryPage
 from app.categories.constants import (
@@ -31,12 +31,12 @@ class IndexPage(CategoryPage):
             (ASYLUM_AND_IMMIGRATION, url_for("categories.asylum_immigration.landing")),
             (MENTAL_CAPACITY, url_for("categories.mental_capacity.landing")),
         ]
-        session.clear()
         return render_template(self.template, listing=listing)
 
 
 bp.add_url_rule(
-    "/", view_func=IndexPage.as_view("index", template="categories/index.html")
+    "/find-your-problem",
+    view_func=IndexPage.as_view("index", template="categories/index.html"),
 )
 bp.add_url_rule(
     "/more-problems",

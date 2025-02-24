@@ -1,4 +1,5 @@
 from app.categories.housing import bp
+from app.categories.results.views import CannotFindYourProblemPage, NextStepsPage
 from app.categories.views import CategoryLandingPage
 from app.categories.constants import HOUSING
 
@@ -22,8 +23,23 @@ class HousingLandingPage(CategoryLandingPage):
             (HOUSING.sub.discrimination, "categories.discrimination.where"),
             (HOUSING.sub.antisocial_behaviour, "categories.results.in_scope"),
         ],
-        "other": "categories.results.refer",
+        "other": "categories.housing.cannot_find_your_problem",
     }
 
 
 HousingLandingPage.register_routes(bp)
+bp.add_url_rule(
+    "/housing/cannot-find-your-problem",
+    view_func=CannotFindYourProblemPage.as_view(
+        "cannot_find_your_problem",
+        category=HOUSING,
+        next_steps_page="categories.housing.next_steps",
+    ),
+)
+bp.add_url_rule(
+    "/housing/next-steps",
+    view_func=NextStepsPage.as_view(
+        "next_steps",
+        category=HOUSING,
+    ),
+)

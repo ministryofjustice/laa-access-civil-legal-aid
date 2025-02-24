@@ -25,4 +25,14 @@ def test_service_unavailable_off(app, client):
     app.config["SERVICE_UNAVAILABLE"] = False
     response = client.get("/service-unavailable", follow_redirects=True)
     assert response.status_code == 200
-    assert response.request.path == "/"
+    assert response.request.path == "/find-your-problem"
+
+
+def test_header_link_clears_session(app, client):
+    with client.session_transaction() as session:
+        session["test"] = "test"
+
+    client.get("/")
+
+    with client.session_transaction() as session:
+        assert "test" not in session
