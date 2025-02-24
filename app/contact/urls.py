@@ -4,7 +4,6 @@ from app.contact.views import ContactUs, ReasonForContacting
 from flask import (
     render_template,
     Response,
-    current_app,
 )
 import json
 import logging
@@ -26,8 +25,7 @@ def confirmation():
 @bp.route("/addresses/<postcode>", methods=["GET"])
 def geocode(postcode):
     """Lookup addresses with the specified postcode"""
-    key = current_app.config["OS_PLACES_API_KEY"]
-    formatted_addresses = FormattedAddressLookup(key=key).by_postcode(postcode)
+    formatted_addresses = FormattedAddressLookup().by_postcode(postcode)
     response = [
         {"formatted_address": address} for address in formatted_addresses if address
     ]

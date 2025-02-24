@@ -1,5 +1,6 @@
 import logging
 import re
+from flask import current_app
 
 import requests
 
@@ -7,10 +8,8 @@ log = logging.getLogger(__name__)
 
 
 class AddressLookup(object):
-    def __init__(self, key, url=None):
-        if not key:
-            raise RuntimeError("OS Places API key required")
-        self.key = key
+    def __init__(self, url=None):
+        self.key = current_app.config["OS_PLACES_API_KEY"]
         if not url:
             url = "https://api.os.uk/search/places/v1/postcode"
         self.url = url
