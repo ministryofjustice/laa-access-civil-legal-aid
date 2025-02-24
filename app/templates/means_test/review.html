@@ -3,7 +3,7 @@
 {%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
 {%- from 'govuk_frontend_jinja/components/summary-list/macro.html' import govukSummaryList -%}
 
-{% block pageTitle %}Review your answers - GOV.UK{% endblock %}
+{% block pageTitle %}Check your answers and confirm - GOV.UK{% endblock %}
 
 {% block beforeContent%}
 {{ super() }}
@@ -16,7 +16,7 @@
     <div class="govuk-grid-column-two-thirds">
 
         {% block formHeading %}
-            <h1 class="govuk-heading-xl">Review your answers</h1>
+            <h1 class="govuk-heading-xl">Check your answers and confirm</h1>
             <form action="" method="post" novalidate>
                 {{ form.csrf_token }}
 

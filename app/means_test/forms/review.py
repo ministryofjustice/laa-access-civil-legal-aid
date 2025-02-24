@@ -3,4 +3,4 @@ from app.means_test.forms import BaseMeansTestForm
 
 
 class ReviewForm(BaseMeansTestForm):
-    title = _("Review your answers")
+    title = _("Check your answers and confirm")

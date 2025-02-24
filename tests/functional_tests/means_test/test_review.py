@@ -79,7 +79,7 @@ def assert_answers(page: Page, answers):
 @pytest.mark.parametrize("about_you_answers", about_you_form_routing)
 @pytest.mark.parametrize("benefits_answers", benefits_form_routing)
 def test_reviews_page(page: Page, complete_benefits_form):
-    expect(page).to_have_title("Review your answers - GOV.UK")
+    expect(page).to_have_title("Check your answers and confirm - GOV.UK")
     # These forms were not completed and should not be on the reviews form
     expect(page.get_by_role("heading", name="Your income and tax")).not_to_be_visible()
     expect(page.get_by_role("heading", name="Your property")).not_to_be_visible()
@@ -102,7 +102,7 @@ def test_reviews_page(page: Page, complete_benefits_form):
 @pytest.mark.parametrize("about_you_answers", about_you_form_routing)
 @pytest.mark.parametrize("benefits_answers", benefits_form_routing)
 def test_reviews_page_change_benefits_answer(page: Page, complete_benefits_form):
-    expect(page).to_have_title("Review your answers - GOV.UK")
+    expect(page).to_have_title("Check your answers and confirm - GOV.UK")
     answers = get_answers()
     page.locator("a[href='/benefits#benefits']").click()
     expect(page).to_have_title("Which benefits do you receive? - GOV.UK")
@@ -111,7 +111,7 @@ def test_reviews_page_change_benefits_answer(page: Page, complete_benefits_form)
     # Remove 'Universal Credit' as a selected benefit
     page.get_by_label("Universal Credit").first.uncheck()
     page.get_by_role("button", name="Continue").click()
-    expect(page).to_have_title("Review your answers - GOV.UK")
+    expect(page).to_have_title("Check your answers and confirm - GOV.UK")
 
     benefits_answers = answers["Which benefits do you receive?"][
         "Which benefits do you receive?"
@@ -131,7 +131,7 @@ def test_reviews_page_change_benefits_answer(page: Page, complete_benefits_form)
 @pytest.mark.parametrize("benefits_answers", benefits_form_routing)
 def test_reviews_page_change_sub_category(page: Page, complete_benefits_form):
     answers = get_answers()
-    expect(page).to_have_title("Review your answers - GOV.UK")
+    expect(page).to_have_title("Check your answers and confirm - GOV.UK")
     page.locator(".govuk-summary-list__actions a[href='/housing/']").click()
     page.get_by_text("Eviction, told to leave your home").click()
     expect(page).to_have_title(
@@ -147,7 +147,7 @@ def test_reviews_page_change_sub_category(page: Page, complete_benefits_form):
     assert_benefits_form_is_prefilled(page, answers["Which benefits do you receive?"])
     page.get_by_role("button", name="Continue").click()
 
-    expect(page).to_have_title("Review your answers - GOV.UK")
+    expect(page).to_have_title("Check your answers and confirm - GOV.UK")
 
     answers["The problem you need help with"]["The problem you need help with"] = (
         "Eviction, told to leave your home\nLandlord has told you to leave or is trying to force you to leave. Includes if you’ve got a Section 21 or a possession order."
@@ -159,7 +159,7 @@ def test_reviews_page_change_sub_category(page: Page, complete_benefits_form):
 @pytest.mark.parametrize("about_you_answers", about_you_form_routing)
 @pytest.mark.parametrize("benefits_answers", benefits_form_routing)
 def test_reviews_page_change_category(page: Page, complete_benefits_form):
-    expect(page).to_have_title("Review your answers - GOV.UK")
+    expect(page).to_have_title("Check your answers and confirm - GOV.UK")
     page.locator(".govuk-header__link--homepage[href='/']").click()
     page.get_by_text("Discrimination").click()
     page.get_by_label(
@@ -190,7 +190,7 @@ def test_reviews_page_change_category(page: Page, complete_benefits_form):
 @pytest.mark.parametrize("about_you_answers", about_you_form_routing)
 @pytest.mark.parametrize("benefits_answers", benefits_form_routing)
 def test_change_answer_skip_means(page: Page, complete_benefits_form):
-    expect(page).to_have_title("Review your answers - GOV.UK")
+    expect(page).to_have_title("Check your answers and confirm - GOV.UK")
     page.goto(url_for("categories.domestic_abuse.landing", _external=True))
     page.get_by_text("Problems with neighbours, landlords or other people").click()
     page.get_by_role("heading", name="Contact us page")
@@ -200,7 +200,7 @@ def test_change_answer_skip_means(page: Page, complete_benefits_form):
 @pytest.mark.parametrize("about_you_answers", about_you_form_routing)
 @pytest.mark.parametrize("benefits_answers", benefits_form_routing)
 def test_change_answer_out_of_scope_problem(page: Page, complete_benefits_form):
-    expect(page).to_have_title("Review your answers - GOV.UK")
+    expect(page).to_have_title("Check your answers and confirm - GOV.UK")
     page.goto(url_for("categories.housing.landing", _external=True))
     page.get_by_text("Next steps to get help").click()
     page.get_by_role("heading", name="Legal aid doesn’t cover all types of problem")
@@ -213,7 +213,7 @@ def test_change_answer_nolonger_passported(page: Page, complete_benefits_form):
     # Change from passported means to non-passported
     answers = get_answers()
 
-    expect(page).to_have_title("Review your answers - GOV.UK")
+    expect(page).to_have_title("Check your answers and confirm - GOV.UK")
     page.goto(url_for("means_test.about-you", _external=True))
     assert_about_you_form_is_prefilled(page, answers["About you"])
     # You no longer receive benefits
