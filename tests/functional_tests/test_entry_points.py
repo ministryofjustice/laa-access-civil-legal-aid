@@ -25,7 +25,7 @@ def test_start_route_welsh(page: Page):
 @pytest.mark.usefixtures("live_server")
 def test_bsl_route(page: Page):
     url = url_for("main.start_bsl", _external=True)
-    assert url.endswith("/bsl-start"), url
+    assert url.endswith("/start-bsl"), url
     page.goto(url)
     expect(page.get_by_role("heading", name="Contact us")).to_be_visible()
 
@@ -33,7 +33,7 @@ def test_bsl_route(page: Page):
 @pytest.mark.usefixtures("live_server")
 def test_bsl_route_welsh(page: Page):
     url = url_for("main.start_bsl", locale="cy_GB", _external=True)
-    assert url.endswith("/bsl-start?locale=cy_GB"), url
+    assert url.endswith("/start-bsl?locale=cy_GB"), url
     page.goto(url)
     locale = page.locator("html").get_attribute("lang")
     assert locale == "cy", f"Expected 'cy' but got {locale}"
