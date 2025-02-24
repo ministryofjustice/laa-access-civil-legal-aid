@@ -24,6 +24,9 @@ metadata:
     {{- end }}
     nginx.ingress.kubernetes.io/enable-modsecurity: "false"
     # Some ModSec rules have been disabled to large numbers of false positives that impact standard user behaviour.
+    # 942230 - SQL Injection - Directory Traversal Sequences
+    # 930120 - Local File Inclusion
+    # 933210 - PHP Injection
     nginx.ingress.kubernetes.io/modsecurity-snippet: |
       SecRuleEngine On
       SecDefaultAction "phase:2,pass,log,tag:github_team=laa-get-access"
