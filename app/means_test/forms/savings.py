@@ -4,7 +4,7 @@ from app.means_test.fields import MoneyField
 from app.means_test.forms import BaseMeansTestForm
 from app.means_test.widgets import MoneyInput
 from flask_babel import lazy_gettext as _
-from app.means_test.validators import ValidateIfSession, AllowedExceptions
+from app.means_test.validators import ValidateIfSession
 
 
 class SavingsForm(BaseMeansTestForm):
@@ -44,7 +44,6 @@ class SavingsForm(BaseMeansTestForm):
         validators=[
             ValidateIfSession("has_valuables", True),
             InputRequired(message=_("Enter the total of all valuable items over £500")),
-            AllowedExceptions(0),
             NumberRange(
                 min=50000,
                 message=_("Enter 0 if you have no valuable items worth over £500 each"),

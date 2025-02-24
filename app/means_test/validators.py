@@ -126,19 +126,3 @@ class CurrencyValidator:
             raise ValueError("Enter a valid amount (maximum 2 decimal places)")
 
         return decimal_value
-
-
-class AllowedExceptions:
-    """Allows for additional allowed values that are accepted but would fail subsequent validation.
-    This is typically used for when we want to allow £0 or a value greater than £x.
-    """
-
-    def __init__(self, allowed_values: list[int | str] | int | str):
-        # Convert single value to list for consistency
-        self.allowed_values = (
-            [allowed_values] if not isinstance(allowed_values, list) else allowed_values
-        )
-
-    def __call__(self, form, field):
-        if field.data in self.allowed_values:
-            raise StopValidation()
