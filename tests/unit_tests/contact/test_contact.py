@@ -60,10 +60,30 @@ def app():
     app = Flask(__name__)
     app.config["OS_PLACES_API_KEY"] = "test_api_key"
     app.config["SECRET_KEY"] = "secret_key"
+    app.config["LANGUAGES"] = {"en": "English", "cy": "Welsh"}
     app.config["TIMEZONE"] = "Europe/London"
     Babel(app)
     with app.app_context():
         yield app
+
+
+class MockForm(Form):
+    day = FieldList(StringField())
+    time = FieldList(StringField())
+    email = StringField("Email")
+    bsl_email = StringField("BSL Email")
+
+    def get_email(self):
+        return self.data.get("email") or self.data.get("bsl_email")
+
+    time_slots = {
+        "2025-02-26": [
+            ["1000", "10:00am to 10:30am"],
+            ["1100", "11:00am to 11:30am"],
+            ["1200", "12:00am to 12:30am"],
+        ],
+        "2025-02-27": [["1400", "14:00am to 14:30am"], ["1500", "15:00am to 15:30am"]],
+    }
 
 
 # Backend API tests
@@ -223,20 +243,6 @@ def test_format_address_from_dpa_result(formatted_address_lookup):
 
 
 # Test Contact Validators
-class MockForm(Form):
-    day = FieldList(StringField())
-    time = FieldList(StringField())
-
-    time_slots = {
-        "2025-02-26": [
-            ["1000", "10:00am to 10:30am"],
-            ["1100", "11:00am to 11:30am"],
-            ["1200", "12:00am to 12:30am"],
-        ],
-        "2025-02-27": [["1400", "14:00am to 14:30am"], ["1500", "15:00am to 15:30am"]],
-    }
-
-
 @pytest.mark.parametrize(
     "day, time, expected_exception, expected_message",
     [
@@ -368,3 +374,18 @@ def test_get_payload_callback(app):
     assert payload["callback_type"] == "web_form_self"
     assert payload["adaptation_details"]["bsl_webcam"] is True
     assert payload["adaptation_details"]["language"] == "ENGLISH"
+
+
+# Test get email
+def test_get_email():
+    # Test when "email" is in the data
+    form_with_email = MockForm(data={"email": "test@example.com"})
+    assert form_with_email.get_email() == "test@example.com"
+
+    # Test when "bsl_email" is in the data but "email" is not
+    form_with_bsl_email = MockForm(data={"bsl_email": "test_bsl@example.com"})
+    assert form_with_bsl_email.get_email() == "test_bsl@example.com"
+
+    # Test when neither "email" nor "bsl_email" are in the data
+    form_with_no_email = MockForm(data={})
+    assert form_with_no_email.get_email() is None
