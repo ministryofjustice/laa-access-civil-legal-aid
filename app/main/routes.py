@@ -19,9 +19,15 @@ from app.main import bp
 from app.main.forms import CookiesForm
 
 
-@bp.get("/main")
-def index():
-    return redirect(url_for("categories.index"))
+@bp.get("/")
+def start_page():
+    """Directs the user to the start page of the service, hosted on GOV.UK
+    This is the endpoint directed to from the header text, clicking this link will reset the users' session.
+    """
+    session.clear()
+    if current_app.config.get("CLA_ENVIRONMENT") != "production":
+        return redirect(url_for("categories.index"))
+    return redirect(current_app.config.get("GOV_UK_START_PAGE"))
 
 
 @bp.get("/start")
@@ -96,7 +102,7 @@ def status():
 @bp.route("/service-unavailable", methods=["GET"])
 def service_unavailable_page():
     if not current_app.config["SERVICE_UNAVAILABLE"]:
-        return redirect(url_for("main.index"))
+        return redirect(url_for("categories.index"))
     abort(503)
 
 
