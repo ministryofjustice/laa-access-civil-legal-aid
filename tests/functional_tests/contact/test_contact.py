@@ -96,8 +96,28 @@ def test_contact_page_rfc_routing(page: Page):
     expect(page).to_have_url(re.compile(".*/contact-us"))
 
 
+''' Test to be updated once review your answers is in
+about_you_form_routing = [
+    pytest.param(
+        {
+            "Do you have a partner": "No",
+            "Do you receive any benefits": "Yes",
+            "Do you have any children aged 15 or under?": "No",
+            "Do you have any dependants aged 16 or over?": "No",
+            "Do you own any property?": "No",
+            "Are you employed?": "No",
+            "Are you self-employed?": "No",
+            "Are you or your partner (if you have one) aged 60 or over?": "No",
+            "Do you have any savings or investments?": "No",
+            "Do you have any valuable items worth over £500 each?": "No",
+        },
+        "Your money coming in",
+        id="all_no_route",
+    ),]
+
 @pytest.mark.usefixtures("live_server")
-def test_contact_page_eligible_routing(page: Page):
+@pytest.mark.parametrize("answers,route_to", about_you_form_routing)
+def test_contact_page_eligible_routing(page: Page, answers: dict, route_to: str):
     """
     Test the contact page to ensure the correct url is shown for eligible.
     """
@@ -109,10 +129,28 @@ def test_contact_page_eligible_routing(page: Page):
     page.get_by_label("Age").check()
     page.get_by_role("button", name="Continue").click()
 
-    page.get_by_label("Yes").check()
+    page.get_by_label("No").check()
+    page.get_by_role("button", name="Continue").click()
+
+    page.get_by_role("button", name="Check if you qualify financially").click()
+
+    expect(page.get_by_role("heading", name="About You")).to_be_visible()
+    for question, answer in answers.items():
+        form_group = page.get_by_role("group", name=question)
+        if question == "Do you have a partner":
+            locator = "#has_partner" if answer == "Yes" else "#has_partner-2"
+            form_group.locator(locator).check()
+            continue
+        form_group.get_by_label(answer).first.check()
+
+    page.get_by_label("Income Support").check()
+    page.get_by_role("button", name="Continue").click()
+
+    # Submit form
     page.get_by_role("button", name="Continue").click()
 
     expect(page).to_have_url(re.compile(".*/eligible"))
+'''
 
 
 @pytest.mark.usefixtures("live_server")

@@ -1,11 +1,7 @@
 import unittest
 from unittest.mock import patch, MagicMock
 from flask import Flask, session
-from app.contact.notify.api import (
-    NotifyEmailOrchestrator,
-    create_and_send_confirmation_email,
-    generate_confirmation_email_data,
-)
+from app.contact.notify.api import NotifyEmailOrchestrator
 
 
 class TestNotifyEmailOrchestrator(unittest.TestCase):
@@ -96,10 +92,12 @@ class TestNotifyEmailOrchestrator(unittest.TestCase):
                 "full_name": "John Doe",
                 "thirdparty_full_name": "Jane Doe",
                 "contact_number": "123456789",
+                "case_ref": "AB12345",
             }
 
+            orchestrator = NotifyEmailOrchestrator()
             email_address, template_id, personalisation = (
-                generate_confirmation_email_data(data)
+                orchestrator.generate_confirmation_email_data(data)
             )
 
             self.assertEqual(email_address, "user@example.com")
@@ -142,5 +140,7 @@ class TestNotifyEmailOrchestrator(unittest.TestCase):
             mock_send_email.return_value = True
             govuk_notify = NotifyEmailOrchestrator()
 
-            create_and_send_confirmation_email(govuk_notify, data)
+            NotifyEmailOrchestrator.create_and_send_confirmation_email(
+                govuk_notify, data
+            )
             mock_send_email.assert_called_once()

@@ -116,13 +116,11 @@ def test_post_case(mock_post, client, app):
     payload = {"test": "data"}
 
     with app.test_request_context():
-        session["gtm_anon_id"] = "anon123"
         session["ec_reference"] = "elig123"
         client.post_case(payload=payload, attach_eligiblity_data=True)
 
         expected_payload = {
             "test": "data",
-            "gtm_anon_id": "anon123",
             "eligibility_check": "elig123",
         }
         mock_post.assert_called_once_with("checker/api/v1/case", json=expected_payload)
