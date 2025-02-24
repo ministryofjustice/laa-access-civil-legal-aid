@@ -55,19 +55,18 @@ def test_api_payload(mock_form):
     assert payload == expected_payload
 
 
-# Backend API tests
 @pytest.fixture
 def app():
-    """Fixture to set up Flask app context for session handling."""
+    """Creates a Flask app with the required configuration."""
     app = Flask(__name__)
-    app.config["SECRET_KEY"] = "test_secret"
+    app.config["OS_PLACES_API_KEY"] = "test_api_key"
+    app.config["SECRET_KEY"] = "secret_key"
+    Babel(app)
+    with app.app_context():
+        yield app
 
-    # Initialize Babel for the Flask app - Errors otherwise
-    babel = Babel(app)  # noqa
 
-    return app
-
-
+# Backend API tests
 @pytest.fixture
 def client(app):
     """Fixture to set up the BackendAPIClient."""
@@ -148,9 +147,10 @@ def test_update_reasons_for_contacting(mock_patch, client, app):
 
 # Test postcode lookup
 @pytest.fixture
-def address_lookup():
-    """Fixture to set up AddressLookup with a mock API key."""
-    return AddressLookup(key="test_api_key")
+def address_lookup(app):
+    """Fixture to set up AddressLookup within an active Flask app context."""
+    with app.app_context():
+        yield AddressLookup()
 
 
 @patch("app.contact.address_finder.widgets.requests.get")
@@ -194,9 +194,10 @@ def test_by_postcode_request_exception(mock_get, address_lookup):
 
 
 @pytest.fixture
-def formatted_address_lookup():
-    """Fixture to set up FormattedAddressLookup with a mock API key."""
-    return FormattedAddressLookup(key="test_api_key")
+def formatted_address_lookup(app):
+    """Fixture to set up FormattedAddressLookup within an active Flask app context."""
+    with app.app_context():
+        yield FormattedAddressLookup()
 
 
 @patch.object(AddressLookup, "by_postcode")
@@ -205,7 +206,6 @@ def test_by_postcode_formatted(mock_by_postcode, formatted_address_lookup):
     mock_by_postcode.return_value = [
         {"DPA": {"POSTCODE": "SW1A 1AA", "POST_TOWN": "London"}}
     ]
-
     results = formatted_address_lookup.by_postcode("SW1A 1AA")
     assert results == ["London\nSW1A 1AA"]
 
@@ -220,7 +220,6 @@ def test_format_address_from_dpa_result(formatted_address_lookup):
         "POSTCODE": "sw1a 2aa",
     }
     expected_output = "Big Ben\n10 Downing Street\nLondon\nSW1A 2AA"
-
     result = formatted_address_lookup.format_address_from_dpa_result(raw_result)
     assert result == expected_output
 
@@ -268,3 +267,47 @@ def test_validate_day_time(day, time, expected_exception, expected_message):
         with pytest.raises(ValidationError) as context:
             validator(form, form.time)
         assert str(context.value) == expected_message
+
+
+# Test for time slots functionality
+class DummyTimeSlotProvider:
+    def __init__(self, time_slots):
+        self.time_slots = time_slots
+
+    def get_all_time_slots(self):
+        valid_time_slots = set()
+        for times in self.time_slots.values():
+            for time in times:
+                valid_time_slots.add((time[0], time[1]))
+
+        valid_time_slots = list(valid_time_slots)
+        sorted_valid_time_slots = sorted(valid_time_slots)
+
+        return sorted_valid_time_slots
+
+
+def test_get_all_time_slots():
+    sample_time_slots = {
+        "2025-02-26": [
+            ["1000", "10:00am to 10:30am"],
+            ["1100", "11:00am to 11:30am"],
+            ["1200", "12:00am to 12:30am"],
+        ],
+        "2025-02-27": [
+            ["1400", "14:00am to 14:30am"],
+            ["1500", "15:00am to 15:30am"],
+        ],
+    }
+
+    provider = DummyTimeSlotProvider(sample_time_slots)
+    result = provider.get_all_time_slots()
+
+    expected = [
+        ("1000", "10:00am to 10:30am"),
+        ("1100", "11:00am to 11:30am"),
+        ("1200", "12:00am to 12:30am"),
+        ("1400", "14:00am to 14:30am"),
+        ("1500", "15:00am to 15:30am"),
+    ]
+
+    assert result == expected

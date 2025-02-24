@@ -185,6 +185,7 @@ CONTACT_PREFERENCE = [
     ("thirdparty", "Call someone else instead of me"),
 ]
 
+# If there are no slots available for call me back this will show
 NO_SLOT_CONTACT_PREFERENCE = [
     ("call", "I will call you"),
     ("thirdparty", "Call someone else instead of me"),
