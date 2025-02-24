@@ -186,8 +186,8 @@ def test_by_postcode_success(mock_get, address_lookup):
         params={
             "postcode": "SW1A 1AA",
             "key": "test_api_key",
-            "output_srs": "WGS84",
-            "dataset": "DPA",
+            "output_srs": "WGS84",  # Specifies the coordinate reference system (WGS84 is a global standard)
+            "dataset": "DPA",  # Specifies the dataset to query ("DPA" stands for "Definitive Postcode Address")
         },
         timeout=3,
     )

@@ -18,8 +18,8 @@ class AddressLookup(object):
         params = {
             "postcode": postcode,
             "key": self.key,
-            "output_srs": "WGS84",
-            "dataset": "DPA",
+            "output_srs": "WGS84",  # Specifies the coordinate reference system (WGS84 is a global standard)
+            "dataset": "DPA",  # Specifies the dataset to query ("DPA" stands for "Definitive Postcode Address")
         }
         try:
             os_places_response = requests.get(self.url, params=params, timeout=3)
