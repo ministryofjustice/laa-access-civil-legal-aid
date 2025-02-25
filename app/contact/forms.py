@@ -89,74 +89,112 @@ class ContactUsForm(FlaskForm):
         ):  # Data defaults to None when form is first loaded
             self.adaptations.data = ["welsh"] if get_locale()[:2] == "cy" else []
 
+        # Get the valid timeslots once from backend and cache them
         self.time_slots = cla_backend.get_time_slots(num_days=8)
         self.thirdparty_time_slots = cla_backend.get_time_slots(
             num_days=8, is_third_party_callback=True
         )
-        today = datetime.today().strftime("%Y-%m-%d")
-        self.call_today_time.choices = [("", "Select a day:")] + self.time_slots.get(
-            today, []
-        )
-        if len(self.call_today_time.choices) == 1:
+
+        self._setup_callback_time_choices()
+
+    def _setup_callback_time_choices(self):
+        """Setup callback day time select field choices based on the available slots"""
+        today: str = datetime.today().strftime("%Y-%m-%d")
+
+        # Setup today's time choices
+        self._setup_today_choices(today)
+
+        # Setup other days choices
+        self._setup_other_days_choices(today)
+
+        # Setup choices for previously selected days
+        self._setup_selections_for_chosen_days()
+
+        # Hide callback option if there are no slots available
+        self._adjust_contact_options_for_availability()
+
+    def _setup_today_choices(self, today):
+        """Setup today's time slot choices"""
+        # Regular callback
+        today_slots = self.time_slots.get(today, [])
+        self.call_today_time.choices.extend(today_slots)
+        if not today_slots:
             self.time_to_call.choices = ["Call on another day"]
-        self.thirdparty_call_today_time.choices = [
-            ("", "Select a day:")
-        ] + self.thirdparty_time_slots.get(today, [])
-        if len(self.thirdparty_call_today_time.choices) == 1:
+
+        # Third-party callback
+        thirdparty_today_slots = self.thirdparty_time_slots.get(today, [])
+        self.thirdparty_call_today_time.choices.extend(thirdparty_today_slots)
+        if not thirdparty_today_slots:
             self.thirdparty_time_to_call.choices = ["Call on another day"]
 
-        slot_days = list({k: v for k, v in self.time_slots.items() if k != today})
-        self.call_another_day.choices = [("", "Select a day:")] + [
-            (key, datetime.strptime(key, "%Y-%m-%d").strftime("%a %e %b"))
-            for key in slot_days
+    def _setup_other_days_choices(self, today: str):
+        """Setup choices for days other than today"""
+        # Regular callback setup
+        regular_upcoming_days = sorted(
+            [day for day in self.time_slots.keys() if day != today]
+        )
+        regular_day_choices = [
+            (day, datetime.strptime(day, "%Y-%m-%d").strftime("%a %e %b"))
+            for day in regular_upcoming_days
         ]
-        self.thirdparty_call_another_day.choices = [("", "Select a day:")] + [
-            (key, datetime.strptime(key, "%Y-%m-%d").strftime("%a %e %b"))
-            for key in slot_days
-        ]
-        # If the user has already selected a day field, the time field is populated from that selection
-        if self.call_another_day.data:
-            if self.call_another_day.data:
-                self.call_another_time.choices = [
-                    ("", "Select a time:")
-                ] + self.time_slots.get(self.call_another_day.data)
-            else:
-                self.call_another_time.choices = [
-                    ("", "Select a time:")
-                ] + self.get_all_time_slots()
-        if len(self.call_another_day.choices) == 1:
+
+        self.call_another_day.choices.extend(regular_day_choices)
+        if not regular_day_choices:
             self.time_to_call.choices = ["Call today"]
-        if self.thirdparty_call_another_day.data:
-            if self.thirdparty_call_another_day.data:
-                self.thirdparty_call_another_time.choices = [
-                    ("", "Select a time:")
-                ] + self.thirdparty_time_slots.get(
-                    self.thirdparty_call_another_day.data
-                )
-            else:
-                self.thirdparty_call_another_time.choices = [
-                    ("", "Select a time:")
-                ] + self.get_all_time_slots()
-        if len(self.thirdparty_call_another_day.choices) == 1:
+
+        # Third-party callback setup
+        thirdparty_upcoming_days = sorted(
+            [day for day in self.thirdparty_time_slots.keys() if day != today]
+        )
+        thirdparty_day_choices = [
+            (day, datetime.strptime(day, "%Y-%m-%d").strftime("%a %e %b"))
+            for day in thirdparty_upcoming_days
+        ]
+
+        self.thirdparty_call_another_day.choices.extend(thirdparty_day_choices)
+        if not thirdparty_day_choices:
             self.thirdparty_time_to_call.choices = ["Call today"]
 
-        # Hide the call me back if no slots are available
+    def _setup_selections_for_chosen_days(self):
+        """Setup time choices based on previously selected days"""
+
+        # Regular callback
+        if self.call_another_day.data:
+            self.call_another_time.choices = self.time_slots.get(
+                self.call_another_day.data, []
+            )
+        else:
+            self.call_another_time.choices.extend(self._get_all_unique_time_slots())
+
+        # Third-party callback
+        if self.thirdparty_call_another_day.data:
+            self.thirdparty_call_another_time.choices = self.thirdparty_time_slots.get(
+                self.thirdparty_call_another_day.data, []
+            )
+        else:
+            self.thirdparty_call_another_time.choices.extend(
+                self._get_all_unique_time_slots(thirdparty_callback=True)
+            )
+
+    def _adjust_contact_options_for_availability(self):
+        """Remove callback option if no slots are available"""
         if (
-            len(self.call_today_time.choices) == 1
-            and len(self.call_another_day.choices) == 1
+            len(self.call_today_time.choices) <= 1
+            and len(self.call_another_day.choices) <= 1
         ):
             self.contact_type.choices = NO_SLOT_CONTACT_PREFERENCE
 
-    def get_all_time_slots(self):
-        valid_time_slots = set()
-        for times in self.time_slots.values():
-            for time in times:
-                valid_time_slots.add((time[0], time[1]))
-
-        valid_time_slots = list(valid_time_slots)
-        sorted_valid_time_slots = sorted(valid_time_slots)
-
-        return sorted_valid_time_slots
+    def _get_all_unique_time_slots(self, thirdparty_callback=False):
+        """Get all unique time slots sorted by time"""
+        all_time_slots = (
+            self.time_slots.values()
+            if not thirdparty_callback
+            else self.thirdparty_time_slots.values()
+        )
+        valid_time_slots = {
+            (time[0], time[1]) for times in all_time_slots for time in times
+        }
+        return sorted(valid_time_slots)
 
     @property
     def time_slots_json(self):
@@ -211,7 +249,7 @@ class ContactUsForm(FlaskForm):
 
     call_today_time = SelectField(
         _("Time"),
-        choices=[],
+        choices=[("", "Select a time:")],
         widget=GovSelect(),
         validators=[
             ValidateIf("contact_type", "callback"),
@@ -222,7 +260,7 @@ class ContactUsForm(FlaskForm):
 
     call_another_day = SelectField(
         _("Day"),
-        choices=[],
+        choices=[("", "Select a day:")],
         widget=GovSelect(),
         validators=[
             ValidateIf("contact_type", "callback"),
@@ -233,7 +271,7 @@ class ContactUsForm(FlaskForm):
 
     call_another_time = ContactSelectField(
         _("Time"),
-        choices=["Select a time:"],
+        choices=[("", "Select a time:")],
         widget=GovSelect(),
         validators=[
             ValidateIf("contact_type", "callback"),
@@ -309,7 +347,7 @@ class ContactUsForm(FlaskForm):
 
     thirdparty_call_today_time = SelectField(
         _("Time"),
-        choices=["Select a time:"],
+        choices=[("", "Select a time:")],
         widget=GovSelect(),
         validators=[
             ValidateIf("contact_type", "thirdparty"),
@@ -323,7 +361,7 @@ class ContactUsForm(FlaskForm):
 
     thirdparty_call_another_day = SelectField(
         _("Day"),
-        choices=[],
+        choices=[("", "Select a day:")],
         widget=GovSelect(),
         validators=[
             ValidateIf("contact_type", "thirdparty"),
@@ -337,7 +375,7 @@ class ContactUsForm(FlaskForm):
 
     thirdparty_call_another_time = SelectField(
         _("Time"),
-        choices=["Select a time:"],
+        choices=[("", "Select a time:")],
         widget=GovSelect(),
         validators=[
             ValidateIf("contact_type", "thirdparty"),
@@ -437,50 +475,26 @@ class ContactUsForm(FlaskForm):
         return self.data.get("email") or self.data.get("bsl_email")
 
     def get_callback_time(self) -> datetime | None:
-        """Gets the selected callback time as a datetime
-
-        Returns:
-            datetime | None: The selected callback time, or None if no callback requested
-        """
+        """Gets the selected callback time as a datetime"""
         contact_type = self.data.get("contact_type")
 
         if contact_type not in {"callback", "thirdparty"}:
             return None
 
-        # Get time_to_call field based on contact type
-        time_to_call_field = (
-            "thirdparty_time_to_call"
-            if contact_type == "thirdparty"
-            else "time_to_call"
-        )
-        time_to_call = self.data.get(time_to_call_field)
+        # Determine field prefixes based on contact type
+        prefix = "thirdparty_" if contact_type == "thirdparty" else ""
 
-        # Handle today's callbacks
+        # Get callback time selection (today or another day)
+        time_to_call = self.data.get(f"{prefix}time_to_call")
+
         if time_to_call == "Call today":
-            today_time_field = (
-                "thirdparty_call_today_time"
-                if contact_type == "thirdparty"
-                else "call_today_time"
-            )
-            time_str = self.data.get(today_time_field)
+            time_str = self.data.get(f"{prefix}call_today_time")
             return datetime.combine(
                 date=datetime.today(), time=datetime.strptime(time_str, "%H%M").time()
             )
-
-        # Handle other day callbacks
         elif time_to_call == "Call on another day":
-            day_field = (
-                "thirdparty_call_another_day"
-                if contact_type == "thirdparty"
-                else "call_another_day"
-            )
-            time_field = (
-                "thirdparty_call_another_time"
-                if contact_type == "thirdparty"
-                else "call_another_time"
-            )
-            day_str = self.data.get(day_field)
-            time_str = self.data.get(time_field)
+            day_str = self.data.get(f"{prefix}call_another_day")
+            time_str = self.data.get(f"{prefix}call_another_time")
             return datetime.combine(
                 date=datetime.strptime(day_str, "%Y-%m-%d").date(),
                 time=datetime.strptime(time_str, "%H%M").time(),
