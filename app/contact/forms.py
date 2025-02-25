@@ -18,7 +18,7 @@ from govuk_frontend_wtf.wtforms_widgets import (
 from app.contact.widgets import (
     ContactRadioInput,
     ContactCheckboxInput,
-    ContactSelectMultipleField,
+    ContactSelectField,
 )
 from wtforms.fields import SubmitField
 from app.categories.widgets import CategoryCheckboxInput
@@ -116,10 +116,10 @@ class ContactUsForm(FlaskForm):
         ]
         # If the user has already selected a day field, the time field is populated from that selection
         if self.call_another_day.data:
-            if self.call_another_day.data[0]:
+            if self.call_another_day.data:
                 self.call_another_time.choices = [
                     ("", "Select a time:")
-                ] + self.time_slots.get(self.call_another_day.data[0])
+                ] + self.time_slots.get(self.call_another_day.data)
             else:
                 self.call_another_time.choices = [
                     ("", "Select a time:")
@@ -127,11 +127,11 @@ class ContactUsForm(FlaskForm):
         if len(self.call_another_day.choices) == 1:
             self.time_to_call.choices = ["Call today"]
         if self.thirdparty_call_another_day.data:
-            if self.thirdparty_call_another_day.data[0]:
+            if self.thirdparty_call_another_day.data:
                 self.thirdparty_call_another_time.choices = [
                     ("", "Select a time:")
                 ] + self.thirdparty_time_slots.get(
-                    self.thirdparty_call_another_day.data[0]
+                    self.thirdparty_call_another_day.data
                 )
             else:
                 self.thirdparty_call_another_time.choices = [
@@ -209,7 +209,7 @@ class ContactUsForm(FlaskForm):
         choices=["Call today", "Call on another day"],
     )
 
-    call_today_time = SelectMultipleField(
+    call_today_time = SelectField(
         _("Time"),
         choices=[],
         widget=GovSelect(),
@@ -220,7 +220,7 @@ class ContactUsForm(FlaskForm):
         ],
     )
 
-    call_another_day = SelectMultipleField(
+    call_another_day = SelectField(
         _("Day"),
         choices=[],
         widget=GovSelect(),
@@ -231,7 +231,7 @@ class ContactUsForm(FlaskForm):
         ],
     )
 
-    call_another_time = ContactSelectMultipleField(
+    call_another_time = ContactSelectField(
         _("Time"),
         choices=["Select a time:"],
         widget=GovSelect(),
@@ -272,7 +272,7 @@ class ContactUsForm(FlaskForm):
         ],
     )
 
-    thirdparty_relationship = SelectMultipleField(
+    thirdparty_relationship = SelectField(
         _("Relationship to you"),
         choices=THIRDPARTY_RELATIONSHIP_CHOICES,
         widget=GovSelect(),
@@ -307,7 +307,7 @@ class ContactUsForm(FlaskForm):
         choices=["Call today", "Call on another day"],
     )
 
-    thirdparty_call_today_time = SelectMultipleField(
+    thirdparty_call_today_time = SelectField(
         _("Time"),
         choices=["Select a time:"],
         widget=GovSelect(),
@@ -321,7 +321,7 @@ class ContactUsForm(FlaskForm):
         ],
     )
 
-    thirdparty_call_another_day = SelectMultipleField(
+    thirdparty_call_another_day = SelectField(
         _("Day"),
         choices=[],
         widget=GovSelect(),
@@ -335,7 +335,7 @@ class ContactUsForm(FlaskForm):
         ],
     )
 
-    thirdparty_call_another_time = SelectMultipleField(
+    thirdparty_call_another_time = SelectField(
         _("Time"),
         choices=["Select a time:"],
         widget=GovSelect(),
@@ -406,7 +406,7 @@ class ContactUsForm(FlaskForm):
             Email(message=_("Enter your email address")),
         ],
     )
-    other_language = SelectMultipleField(
+    other_language = SelectField(
         _("Choose a language"),
         choices=LANG_CHOICES,
         widget=GovSelect(),
@@ -453,7 +453,7 @@ class ContactUsForm(FlaskForm):
             if contact_type == "thirdparty"
             else "time_to_call"
         )
-        time_to_call = self.data.get(time_to_call_field)[0]
+        time_to_call = self.data.get(time_to_call_field)
 
         # Handle today's callbacks
         if time_to_call == "Call today":
@@ -462,7 +462,7 @@ class ContactUsForm(FlaskForm):
                 if contact_type == "thirdparty"
                 else "call_today_time"
             )
-            time_str = self.data.get(today_time_field)[0]
+            time_str = self.data.get(today_time_field)
             return datetime.combine(
                 date=datetime.today(), time=datetime.strptime(time_str, "%H%M").time()
             )
@@ -479,8 +479,8 @@ class ContactUsForm(FlaskForm):
                 if contact_type == "thirdparty"
                 else "call_another_time"
             )
-            day_str = self.data.get(day_field)[0]
-            time_str = self.data.get(time_field)[0]
+            day_str = self.data.get(day_field)
+            time_str = self.data.get(time_field)
             return datetime.combine(
                 date=datetime.strptime(day_str, "%Y-%m-%d").date(),
                 time=datetime.strptime(time_str, "%H%M").time(),
@@ -534,7 +534,7 @@ class ContactUsForm(FlaskForm):
                 "text_relay": "text_relay" in (self.data.get("adaptations", [])),
                 "language": "WELSH"
                 if "welsh" in (self.data.get("adaptations", []))
-                else self.data.get("other_language")[0].upper(),
+                else self.data.get("other_language").upper(),
                 "notes": self.data.get("other_adaptation"),
             },
         }
@@ -558,7 +558,7 @@ class ContactUsForm(FlaskForm):
             )
             payload["thirdparty_details"]["personal_relationship"] = self.data.get(
                 "thirdparty_relationship"
-            )[0].upper()
+            ).upper()
             payload["callback_type"] = "web_form_third_party"
             payload["requires_action_at"] = requires_action_at
 

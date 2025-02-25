@@ -1,5 +1,5 @@
 from govuk_frontend_wtf.wtforms_widgets import GovRadioInput, GovCheckboxesInput
-from wtforms import SelectMultipleField
+from wtforms import SelectField
 
 
 class ContactInputField:
@@ -55,7 +55,7 @@ class ContactCheckboxInput(ContactInputField, GovCheckboxesInput):
     pass
 
 
-class ContactSelectMultipleField(SelectMultipleField):
+class ContactSelectField(SelectField):
     def pre_validate(self, form):
         """Override to prevent WTForms' internal choice validation"""
         pass
