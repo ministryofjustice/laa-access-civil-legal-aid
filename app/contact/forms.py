@@ -84,7 +84,11 @@ class ReasonsForContactingForm(FlaskForm):
 class ContactUsForm(FlaskForm):
     def __init__(self, *args, **kwargs):
         super(ContactUsForm, self).__init__(*args, **kwargs)
-        self.adaptations.data = ["welsh"] if get_locale()[:2] == "cy" else []
+
+        if (
+            self.adaptations.data is None
+        ):  # Data defaults to None when form is first loaded
+            self.adaptations.data = ["welsh"] if get_locale()[:2] == "cy" else []
 
         self.time_slots = cla_backend.get_time_slots(num_days=8)
         self.thirdparty_time_slots = cla_backend.get_time_slots(
