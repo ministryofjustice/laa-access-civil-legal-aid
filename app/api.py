@@ -145,8 +145,8 @@ class BackendAPIClient:
             slots_by_day[date_str].append(
                 [
                     slot.strftime("%H%M"),
-                    f"{slot.strftime('%I:%M%p').lstrip('0').lower()} to "
-                    f"{(slot + timedelta(minutes=30)).strftime('%I:%M%p').lstrip('0').lower()}",
+                    f"{slot.strftime('%I:%M%p').lstrip('0').lower().replace(':00', '')} to "
+                    f"{(slot + timedelta(minutes=30)).strftime('%I:%M%p').lstrip('0').lower().replace(':00', '')}",
                 ]
             )
 

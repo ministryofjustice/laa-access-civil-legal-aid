@@ -200,7 +200,7 @@ class ContactUsForm(FlaskForm):
 
     time_to_call = RadioField(
         _("Select a time for us to call"),
-        widget=ContactRadioInput(),
+        widget=ContactRadioInput(label_class="govuk-fieldset__legend--s"),
         validators=[
             ValidateIf("contact_type", "callback", condition_type=ValidateIfType.EQ),
             InputRequired(message=_("Select a time for us to call")),
@@ -248,7 +248,7 @@ class ContactUsForm(FlaskForm):
 
     announce_call_from_cla = RadioField(
         _("Can we say that we're calling from Civil Legal Advice?"),
-        widget=ContactRadioInput(),
+        widget=ContactRadioInput(label_class="govuk-fieldset__legend--s"),
         choices=[
             (True, _("Yes")),
             (False, _("No - do not say where you are calling from")),
@@ -302,7 +302,7 @@ class ContactUsForm(FlaskForm):
 
     thirdparty_time_to_call = RadioField(
         _("Select a time for us to call"),
-        widget=ContactRadioInput(),
+        widget=ContactRadioInput(label_class="govuk-fieldset__legend--s"),
         validators=[
             ValidateIf("contact_type", "thirdparty", condition_type=ValidateIfType.EQ),
             InputRequired(message=_("Select a time for us to call")),
