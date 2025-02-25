@@ -153,9 +153,10 @@ class BackendAPIClient:
         return slots_by_day
 
     def get_time_slots(self, num_days=8, is_third_party_callback=False):
+        params = {"third_party_callback": is_third_party_callback, "num_days": num_days}
         slots = self.get(
             "checker/api/v1/callback_time_slots/",
-            f"?third_party_callback={is_third_party_callback}&num_days={num_days}",
+            params=params,
         )["slots"]
         slots = [
             datetime.strptime(slot, self.CALLBACK_API_DATETIME_FORMAT) for slot in slots
