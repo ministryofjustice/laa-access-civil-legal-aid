@@ -1,6 +1,6 @@
 import json
 from flask_wtf import FlaskForm
-from flask import request, current_app, session
+from flask import request, session
 from wtforms import (
     SelectMultipleField,
     HiddenField,
@@ -37,7 +37,6 @@ from app.contact.validators import (
 from app.means_test.validators import ValidateIf, ValidateIfType
 from app.api import cla_backend
 from datetime import datetime, timedelta
-from zoneinfo import ZoneInfo
 
 
 class ReasonsForContactingForm(FlaskForm):
@@ -437,79 +436,86 @@ class ContactUsForm(FlaskForm):
     def get_email(self):
         return self.data.get("email") or self.data.get("bsl_email")
 
-    def get_callback_time(self):
-        """
-        Gets the callback time in both:
-        - ISO format (UTC)
-        - Readable format (e.g., "Monday, 12 February at 14:30 - 15:00")
-        This is used in both the payload and email.
+    def get_callback_time(self) -> datetime | None:
+        """Gets the selected callback time as a datetime
 
         Returns:
-            tuple: (iso_time, callback_time) or (None, None) if no valid time.
+            datetime | None: The selected callback time, or None if no callback requested
         """
-        callback_requested = {"thirdparty", "callback"}
         contact_type = self.data.get("contact_type")
 
-        if contact_type not in callback_requested:
-            return None, None
+        if contact_type not in {"callback", "thirdparty"}:
+            return None
 
-        time_to_call = self.data.get("time_to_call")
-        thirdparty_time_to_call = self.data.get("thirdparty_time_to_call")
-
-        def parse_time(time_str, date_str=None):
-            """Helper function to parse time with optional date."""
-            if not time_str:
-                return None
-            date = (
-                datetime.today().date()
-                if not date_str
-                else datetime.strptime(date_str, "%Y-%m-%d").date()
-            )
-            return datetime.strptime(time_str, "%H%M").replace(
-                year=date.year, month=date.month, day=date.day
-            )
-
-        def format_time(dt):
-            """Helper function to format the callback time string."""
-            if not dt:
-                return None
-            end_time = dt + timedelta(minutes=30)
-            return dt.strftime("%A, %d %B at %H:%M - ") + end_time.strftime("%H:%M")
-
-        if time_to_call == "Call today":
-            time = parse_time(self.data.get("call_today_time", [None])[0])
-        elif time_to_call == "Call on another day":
-            time = parse_time(
-                self.data.get("call_another_time", [None])[0],
-                self.data.get("call_another_day", [None])[0],
-            )
-        elif thirdparty_time_to_call == "Call today":
-            time = parse_time(self.data.get("thirdparty_call_today_time", [None])[0])
-        elif thirdparty_time_to_call == "Call on another day":
-            time = parse_time(
-                self.data.get("thirdparty_call_another_time", [None])[0],
-                self.data.get("thirdparty_call_another_day", [None])[0],
-            )
-        else:
-            return None, None
-
-        local_tz = ZoneInfo(current_app.config["TIMEZONE"])
-        iso_time = (
-            time.replace(tzinfo=local_tz).astimezone(ZoneInfo("UTC")).isoformat()
-            if time
-            else None
+        # Get time_to_call field based on contact type
+        time_to_call_field = (
+            "thirdparty_time_to_call"
+            if contact_type == "thirdparty"
+            else "time_to_call"
         )
+        time_to_call = self.data.get(time_to_call_field)[0]
 
-        callback_time = format_time(time)
+        # Handle today's callbacks
+        if time_to_call == "Call today":
+            today_time_field = (
+                "thirdparty_call_today_time"
+                if contact_type == "thirdparty"
+                else "call_today_time"
+            )
+            time_str = self.data.get(today_time_field)[0]
+            return datetime.combine(
+                date=datetime.today(), time=datetime.strptime(time_str, "%H%M").time()
+            )
 
-        return iso_time, callback_time
+        # Handle other day callbacks
+        elif time_to_call == "Call on another day":
+            day_field = (
+                "thirdparty_call_another_day"
+                if contact_type == "thirdparty"
+                else "call_another_day"
+            )
+            time_field = (
+                "thirdparty_call_another_time"
+                if contact_type == "thirdparty"
+                else "call_another_time"
+            )
+            day_str = self.data.get(day_field)[0]
+            time_str = self.data.get(time_field)[0]
+            return datetime.combine(
+                date=datetime.strptime(day_str, "%Y-%m-%d").date(),
+                time=datetime.strptime(time_str, "%H%M").time(),
+            )
+
+        return None
+
+    @staticmethod
+    def format_callback_time(
+        start_time: datetime, callback_duration: timedelta = timedelta(minutes=30)
+    ) -> str | None:
+        """Helper function to format the callback time string.
+
+        Returns:
+            str | None: formatted callback time string in the form of "Friday, 3 January at 09:00 - 09:30"
+        """
+        if not start_time or not isinstance(start_time, datetime):
+            return None
+        end_time = start_time + callback_duration
+
+        formatted_start_date = start_time.strftime(
+            "%A, %d %B at %H:%M"
+        )  # E.g. Monday, 1 January at 09:00
+        formatted_end_time = end_time.strftime("%H:%M")  # E.g. 09:30
+
+        return f"{formatted_start_date} - {formatted_end_time}"
 
     def get_payload(self) -> dict:
-        """
-        Returns the contact payload.
-        """
+        """Returns the contact payload."""
 
-        requires_action_at, callback_time = self.get_callback_time()
+        callback_time: datetime = self.get_callback_time()
+
+        requires_action_at: str | None = (
+            callback_time.isoformat() if callback_time else None
+        )
 
         safe_to_contact = "SAFE" if self.data.get("contact_type") == "callback" else ""
         payload = {

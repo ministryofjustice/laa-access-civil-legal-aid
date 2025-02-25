@@ -69,7 +69,7 @@ class ContactUs(View):
                 form.data.get("contact_type") in callback_types
             )
             session["contact_type"] = form.data.get("contact_type")
-            requires_action_at, callback_time = ContactUsForm.get_callback_time(form)
+            callback_time = form.format_callback_time(form.get_callback_time())
             session["callback_time"] = callback_time
             email = form.get_email()
             if email:
