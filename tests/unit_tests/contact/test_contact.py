@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch
-from flask import request, Flask, session
+from flask import request, session, current_app
 from app.api import cla_backend, BackendAPIClient
 from app.contact.forms import ReasonsForContactingForm, ContactUsForm
 import requests
@@ -9,7 +9,6 @@ from app.contact.address_finder.widgets import AddressLookup, FormattedAddressLo
 from wtforms import Form, StringField, FieldList
 from wtforms.validators import ValidationError, StopValidation
 from app.contact.validators import ValidateDayTime
-from flask_babel import Babel
 
 
 def test_post_reasons_for_contacting_success(mocker, app):
@@ -54,19 +53,6 @@ def test_api_payload(mock_form):
     assert payload == expected_payload
 
 
-@pytest.fixture
-def app():
-    """Creates a Flask app with the required configuration."""
-    app = Flask(__name__)
-    app.config["OS_PLACES_API_KEY"] = "test_api_key"
-    app.config["SECRET_KEY"] = "secret_key"
-    app.config["LANGUAGES"] = {"en": "English", "cy": "Welsh"}
-    app.config["TIMEZONE"] = "Europe/London"
-    Babel(app)
-    with app.app_context():
-        yield app
-
-
 class MockForm(Form):
     day = FieldList(StringField())
     time = FieldList(StringField())
@@ -87,15 +73,9 @@ class MockForm(Form):
 
 
 # Backend API tests
-@pytest.fixture
-def client(app):
-    """Fixture to set up the BackendAPIClient."""
-    return BackendAPIClient()
-
-
 @patch.object(BackendAPIClient, "get")
 @patch("app.api.datetime")
-def test_get_time_slots(mock_datetime, mock_get, client, app):
+def test_get_time_slots(mock_datetime, mock_get, api_client, app):
     """Test get_time_slots correctly formats slots"""
     mock_datetime.today.return_value = datetime(2025, 3, 1)
     mock_datetime.strptime.side_effect = lambda *args, **kw: datetime.strptime(
@@ -111,15 +91,15 @@ def test_get_time_slots(mock_datetime, mock_get, client, app):
     }
 
     with app.app_context():
-        result = client.get_time_slots(num_days=8, is_third_party_callback=False)
+        result = api_client.get_time_slots(num_days=8, is_third_party_callback=False)
 
     expected = {
         "2025-03-01": [
-            ["0900", "9:00am to 9:30am"],
-            ["0930", "9:30am to 10:00am"],
+            ["0900", "9am to 9:30am"],
+            ["0930", "9:30am to 10am"],
         ],
         "2025-03-02": [
-            ["1000", "10:00am to 10:30am"],
+            ["1000", "10am to 10:30am"],
         ],
     }
     assert result == expected
@@ -130,14 +110,14 @@ def test_get_time_slots(mock_datetime, mock_get, client, app):
 
 
 @patch.object(BackendAPIClient, "post")
-def test_post_case(mock_post, client, app):
+def test_post_case(mock_post, api_client, app):
     """Test post_case makes correct API call and updates session"""
     mock_post.return_value = {"reference": "ABC123"}
     payload = {"test": "data"}
 
     with app.test_request_context():
         session["ec_reference"] = "elig123"
-        client.post_case(payload=payload, attach_eligiblity_data=True)
+        api_client.post_case(payload=payload, attach_eligiblity_data=True)
 
         expected_payload = {
             "test": "data",
@@ -148,14 +128,14 @@ def test_post_case(mock_post, client, app):
 
 
 @patch.object(BackendAPIClient, "patch")
-def test_update_reasons_for_contacting(mock_patch, client, app):
+def test_update_reasons_for_contacting(mock_patch, api_client, app):
     """Test update_reasons_for_contacting makes correct API call"""
     mock_patch.return_value = {"success": True}
     reference = "ABC123"
     payload = {"reason": "test_reason"}
 
     with app.test_request_context():
-        response = client.update_reasons_for_contacting(reference, payload=payload)
+        response = api_client.update_reasons_for_contacting(reference, payload=payload)
 
     mock_patch.assert_called_once_with(
         f"checker/api/v1/reasons_for_contacting/{reference}", json=payload
@@ -185,7 +165,7 @@ def test_by_postcode_success(mock_get, address_lookup):
         "https://api.os.uk/search/places/v1/postcode",
         params={
             "postcode": "SW1A 1AA",
-            "key": "test_api_key",
+            "key": current_app.config["OS_PLACES_API_KEY"],
             "output_srs": "WGS84",  # Specifies the coordinate reference system (WGS84 is a global standard)
             "dataset": "DPA",  # Specifies the dataset to query ("DPA" stands for "Definitive Postcode Address")
         },
