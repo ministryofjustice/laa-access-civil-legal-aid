@@ -1,11 +1,7 @@
 from app.contact import bp
 from app.contact.address_finder.widgets import FormattedAddressLookup
 from app.contact.views import ContactUs, ReasonForContacting
-from flask import (
-    render_template,
-    Response,
-)
-import json
+from flask import render_template, jsonify
 import logging
 
 logger = logging.getLogger(__name__)
@@ -29,7 +25,7 @@ def geocode(postcode):
     response = [
         {"formatted_address": address} for address in formatted_addresses if address
     ]
-    return Response(json.dumps(response), mimetype="application/json")
+    return jsonify(response)
 
 
 bp.add_url_rule(

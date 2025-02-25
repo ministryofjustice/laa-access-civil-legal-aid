@@ -174,7 +174,7 @@ ADAPTATION_LANGUAGES = [
 ]
 
 LANG_CHOICES = [
-    (lang_code.lower(), lang_name)
+    (lang_code, lang_name)
     for lang_code, lang_name in ADAPTATION_LANGUAGES
     if lang_code not in ("ENGLISH", "WELSH")
 ]

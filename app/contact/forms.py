@@ -143,8 +143,6 @@ class ContactUsForm(FlaskForm):
             and len(self.call_another_day.choices) == 1
         ):
             self.contact_type.choices = NO_SLOT_CONTACT_PREFERENCE
-        else:
-            self.contact_type.choices = CONTACT_PREFERENCE
 
     def get_all_time_slots(self):
         valid_time_slots = set()
@@ -179,7 +177,7 @@ class ContactUsForm(FlaskForm):
     contact_type = RadioField(
         _("Select a contact option"),
         widget=ContactRadioInput(),
-        choices=[],
+        choices=CONTACT_PREFERENCE,
         validators=[InputRequired(message=_("Tell us how we should get in contact"))],
     )
 

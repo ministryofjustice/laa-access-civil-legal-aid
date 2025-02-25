@@ -8,11 +8,10 @@ logger = logging.getLogger(__name__)
 
 
 class AddressLookup(object):
-    def __init__(self, url=None):
+    url = "https://api.os.uk/search/places/v1/postcode"
+
+    def __init__(self):
         self.key = current_app.config["OS_PLACES_API_KEY"]
-        if not url:
-            url = "https://api.os.uk/search/places/v1/postcode"
-        self.url = url
 
     def by_postcode(self, postcode):
         params = {
