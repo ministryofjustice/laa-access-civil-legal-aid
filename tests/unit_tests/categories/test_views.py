@@ -5,7 +5,6 @@ from app.categories.family.urls import FamilyLandingPage
 from app.categories.forms import QuestionForm
 from app.categories.views import QuestionPage
 from unittest.mock import Mock, patch
-from flask import session
 from app.categories.constants import FAMILY
 from app.categories.results.views import (
     OutOfScopePage,
