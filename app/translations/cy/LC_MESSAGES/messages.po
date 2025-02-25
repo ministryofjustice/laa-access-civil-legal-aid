@@ -2146,13 +2146,18 @@ msgid "You must be with the person when we call."
 msgstr "Byddwn yn galw chi yn ystod yr amser rydych chi’n dewis"
 
 msgid "If you’re in an emergency situation, please call the police on 999."
-msgstr ""
+msgstr "Os ydych mewn sefyllfa argyfwng, ffoniwch yr heddlu ar 999."
 
 msgid "If you’re in immediate danger please call Civil Legal Advice on "
-msgstr ""
+msgstr "Os ydych mewn perygl uniongyrchol, ffonwich Cyngor Cyfreithiol Sifil ar "
+
+msgid "Call charges apply."
+msgstr "Cyfraddau galwadau yn berthnasol"
 
 msgid "You can also ask us to call you back using the form below, which is free."
 msgstr ""
+"Gallwch hefyd ofyn i ni eich ffonio’n ôl gan ddefnyddio’r ffurflen isod, "
+"sydd yn rhad ac am ddim."
 
 msgid ""
 "Civil Legal Advice will check if you can get legal aid and help you "
@@ -2196,11 +2201,11 @@ msgstr ""
 "Bydd eich sesiwn yn dod i ben os yw wedi bod yn anweithredol am hanner "
 "awr. Rydym yn gwneud hyn er mwyn eich cadw’n ddiogel."
 
-#, python-format
-msgid ""
-"If you're having trouble completing this form, <a "
-"href=\"%(contact_url)s\" class=\"govuk-link\">get in touch</a>."
-msgstr ""
+msgid "If you're having trouble completing this form, "
+msgstr "Os ydych yn cael problemau wrth lenwi’r ffurflen hon, gofynnwch i ni, "
+
+msgid "get in touch"
+msgstr "cysylltwch â ni"
 
 msgid "In some cases, you may need to pay a contribution towards your legal aid."
 msgstr ""
@@ -2380,6 +2385,12 @@ msgstr "Gallwch ddechrau eto isod."
 
 msgid "Start again"
 msgstr "Dechrau eto"
+
+#, python-format
+msgid ""
+"If you're having trouble completing this form, <a "
+"href=\"%(contact_url)s\" class=\"govuk-link\">get in touch</a>."
+msgstr ""
 
 msgid ""
 "We only need to know about any money you received last month, even if "

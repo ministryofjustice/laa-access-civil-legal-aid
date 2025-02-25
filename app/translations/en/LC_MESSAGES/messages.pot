@@ -10,6 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "POT-Creation-Date: 2025-03-03 14:56+0000\n"
 =======
 "POT-Creation-Date: 2025-02-20 15:15+0000\n"
@@ -17,6 +18,9 @@ msgstr ""
 =======
 "POT-Creation-Date: 2025-02-25 15:28+0000\n"
 >>>>>>> 1282ce59 (Amend erroneous Welsh translation)
+=======
+"POT-Creation-Date: 2025-02-25 15:35+0000\n"
+>>>>>>> 5fb17521 (Add missing Welsh translations)
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1879,6 +1883,9 @@ msgstr ""
 msgid "If you’re in immediate danger please call Civil Legal Advice on "
 msgstr ""
 
+msgid "Call charges apply."
+msgstr ""
+
 msgid "You can also ask us to call you back using the form below, which is free."
 msgstr ""
 
@@ -1911,10 +1918,10 @@ msgid ""
 " your security."
 msgstr ""
 
-#, python-format
-msgid ""
-"If you're having trouble completing this form, <a "
-"href=\"%(contact_url)s\" class=\"govuk-link\">get in touch</a>."
+msgid "If you're having trouble completing this form, "
+msgstr ""
+
+msgid "get in touch"
 msgstr ""
 
 msgid "In some cases, you may need to pay a contribution towards your legal aid."
@@ -2084,6 +2091,12 @@ msgid "You can start again below."
 msgstr ""
 
 msgid "Start again"
+msgstr ""
+
+#, python-format
+msgid ""
+"If you're having trouble completing this form, <a "
+"href=\"%(contact_url)s\" class=\"govuk-link\">get in touch</a>."
 msgstr ""
 
 msgid ""

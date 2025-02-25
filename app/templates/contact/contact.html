@@ -161,7 +161,7 @@
                 }) }}
                 <hr class="govuk-section-break--l">
                 {% set contact_url = url_for('contact.reasons_for_contacting') %}
-                <p class="govuk-body">{% trans contact_url=contact_url %}If you're having trouble completing this form, <a href="{{ contact_url }}" class="govuk-link">get in touch</a>.{% endtrans %}</p>
+                <p class="govuk-body">{% trans %}If you're having trouble completing this form, {% endtrans %}<a href="{{ contact_url }}" class="govuk-link">{% trans %}get in touch{% endtrans %}</a>.</p>
             {% endblock %}
     </div>
     {% block sidebar %}
