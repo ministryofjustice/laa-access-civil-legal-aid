@@ -9,10 +9,14 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 <<<<<<< HEAD
+<<<<<<< HEAD
 "POT-Creation-Date: 2025-03-03 14:56+0000\n"
 =======
 "POT-Creation-Date: 2025-02-20 15:15+0000\n"
 >>>>>>> e531086d (Update welsh translations)
+=======
+"POT-Creation-Date: 2025-02-25 15:28+0000\n"
+>>>>>>> 1282ce59 (Amend erroneous Welsh translation)
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1867,6 +1871,15 @@ msgid "If you miss all 3 calls, or if you need urgent advice, call us on:"
 msgstr ""
 
 msgid "You must be with the person when we call."
+msgstr ""
+
+msgid "If you’re in an emergency situation, please call the police on 999."
+msgstr ""
+
+msgid "If you’re in immediate danger please call Civil Legal Advice on "
+msgstr ""
+
+msgid "You can also ask us to call you back using the form below, which is free."
 msgstr ""
 
 msgid ""
