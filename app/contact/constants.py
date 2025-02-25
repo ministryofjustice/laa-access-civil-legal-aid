@@ -1,6 +1,7 @@
 from flask_babel import lazy_gettext as _
 
 ADAPTATION_LANGUAGES = [
+    ("", ""),
     ("ASSAMESE", "Assamese"),
     ("AZERI", "Azeri"),
     ("AFRIKAANS", "Afrikaans"),

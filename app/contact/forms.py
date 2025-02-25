@@ -188,7 +188,7 @@ class ContactUsForm(FlaskForm):
             "Enter the full number, including the area code. For example, 01632 960 1111."
         ),
         validators=[
-            ValidateIf("contact_type", "callback", condition_type=ValidateIfType.EQ),
+            ValidateIf("contact_type", "callback"),
             InputRequired(message=_("Tell us what number to ring")),
             Length(
                 max=20, message=_("Your telephone number must be 20 characters or less")
@@ -200,7 +200,7 @@ class ContactUsForm(FlaskForm):
         _("Select a time for us to call"),
         widget=ContactRadioInput(label_class="govuk-fieldset__legend--s"),
         validators=[
-            ValidateIf("contact_type", "callback", condition_type=ValidateIfType.EQ),
+            ValidateIf("contact_type", "callback"),
             InputRequired(message=_("Select a time for us to call")),
         ],
         choices=["Call today", "Call on another day"],
@@ -211,8 +211,8 @@ class ContactUsForm(FlaskForm):
         choices=[],
         widget=GovSelect(),
         validators=[
-            ValidateIf("contact_type", "callback", condition_type=ValidateIfType.EQ),
-            ValidateIf("time_to_call", "Call today", condition_type=ValidateIfType.EQ),
+            ValidateIf("contact_type", "callback"),
+            ValidateIf("time_to_call", "Call today"),
             InputRequired(message=_("Select what time you want to be called today")),
         ],
     )
@@ -222,10 +222,8 @@ class ContactUsForm(FlaskForm):
         choices=[],
         widget=GovSelect(),
         validators=[
-            ValidateIf("contact_type", "callback", condition_type=ValidateIfType.EQ),
-            ValidateIf(
-                "time_to_call", "Call on another day", condition_type=ValidateIfType.EQ
-            ),
+            ValidateIf("contact_type", "callback"),
+            ValidateIf("time_to_call", "Call on another day"),
             InputRequired(message=_("Select which day you want to be called")),
         ],
     )
@@ -235,10 +233,8 @@ class ContactUsForm(FlaskForm):
         choices=["Select a time:"],
         widget=GovSelect(),
         validators=[
-            ValidateIf("contact_type", "callback", condition_type=ValidateIfType.EQ),
-            ValidateIf(
-                "time_to_call", "Call on another day", condition_type=ValidateIfType.EQ
-            ),
+            ValidateIf("contact_type", "callback"),
+            ValidateIf("time_to_call", "Call on another day"),
             InputRequired(message=_("Select what time you want to be called")),
             ValidateDayTime(day_field="call_another_day"),
         ],
@@ -252,7 +248,7 @@ class ContactUsForm(FlaskForm):
             (False, _("No - do not say where you are calling from")),
         ],
         validators=[
-            ValidateIf("contact_type", "callback", condition_type=ValidateIfType.EQ),
+            ValidateIf("contact_type", "callback"),
             InputRequired(
                 message=_(
                     "Select if we can say that we’re calling from Civil Legal Advice"
@@ -265,7 +261,7 @@ class ContactUsForm(FlaskForm):
         _("Full name of the person to call"),
         widget=GovTextInput(),
         validators=[
-            ValidateIf("contact_type", "thirdparty", condition_type=ValidateIfType.EQ),
+            ValidateIf("contact_type", "thirdparty"),
             Length(
                 max=400, message=_("Their full name must be 400 characters or less")
             ),
@@ -278,7 +274,7 @@ class ContactUsForm(FlaskForm):
         choices=THIRDPARTY_RELATIONSHIP_CHOICES,
         widget=GovSelect(),
         validators=[
-            ValidateIf("contact_type", "thirdparty", condition_type=ValidateIfType.EQ),
+            ValidateIf("contact_type", "thirdparty"),
             InputRequired(message=_("Tell us how you know this person")),
         ],
     )
@@ -290,7 +286,7 @@ class ContactUsForm(FlaskForm):
             "Enter the full number, including the area code. For example, 01632 960 1111."
         ),
         validators=[
-            ValidateIf("contact_type", "thirdparty", condition_type=ValidateIfType.EQ),
+            ValidateIf("contact_type", "thirdparty"),
             InputRequired(message=_("Tell us what number to ring")),
             Length(
                 max=20, message=_("Your telephone number must be 20 characters or less")
@@ -302,7 +298,7 @@ class ContactUsForm(FlaskForm):
         _("Select a time for us to call"),
         widget=ContactRadioInput(label_class="govuk-fieldset__legend--s"),
         validators=[
-            ValidateIf("contact_type", "thirdparty", condition_type=ValidateIfType.EQ),
+            ValidateIf("contact_type", "thirdparty"),
             InputRequired(message=_("Select a time for us to call")),
         ],
         choices=["Call today", "Call on another day"],
@@ -313,11 +309,10 @@ class ContactUsForm(FlaskForm):
         choices=["Select a time:"],
         widget=GovSelect(),
         validators=[
-            ValidateIf("contact_type", "thirdparty", condition_type=ValidateIfType.EQ),
+            ValidateIf("contact_type", "thirdparty"),
             ValidateIf(
                 "thirdparty_time_to_call",
                 "Call today",
-                condition_type=ValidateIfType.EQ,
             ),
             InputRequired(message=_("Select what time you want to be called today")),
         ],
@@ -328,11 +323,10 @@ class ContactUsForm(FlaskForm):
         choices=[],
         widget=GovSelect(),
         validators=[
-            ValidateIf("contact_type", "thirdparty", condition_type=ValidateIfType.EQ),
+            ValidateIf("contact_type", "thirdparty"),
             ValidateIf(
                 "thirdparty_time_to_call",
                 "Call on another day",
-                condition_type=ValidateIfType.EQ,
             ),
             InputRequired(message=_("Select which day you want to be called")),
         ],
@@ -343,11 +337,10 @@ class ContactUsForm(FlaskForm):
         choices=["Select a time:"],
         widget=GovSelect(),
         validators=[
-            ValidateIf("contact_type", "thirdparty", condition_type=ValidateIfType.EQ),
+            ValidateIf("contact_type", "thirdparty"),
             ValidateIf(
                 "thirdparty_time_to_call",
                 "Call on another day",
-                condition_type=ValidateIfType.EQ,
             ),
             InputRequired(message=_("Select what time you want to be called")),
             ValidateDayTime(day_field="thirdparty_call_another_day"),

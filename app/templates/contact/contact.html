@@ -44,7 +44,6 @@
                     "label": {
                         "classes": "govuk-label--m"
                     },
-                    "spellcheck": false
                 }) }}
                 {% if form.call_today_time.choices|length == 1 and form.call_another_day.choices|length == 1 %}
                 {{ form.contact_type(params={
@@ -87,7 +86,6 @@
                     "label": {
                         "classes": "govuk-label--m"
                     },
-                    "spellcheck": false
                 }) }}
 
                 <div class="govuk-form-group" id="postcode-search">
@@ -102,7 +100,6 @@
                                 "classes": "govuk-label govuk-visually-hidden",
                             },
                             "classes": "govuk-input govuk-input--width-10 govuk-!-margin-bottom-0 postcode-search",
-                            "spellcheck": false
                         }) }}
                     </div>
                     <div class="govuk-grid-column-two-third">
@@ -115,7 +112,6 @@
                             "label": {
                                 "classes": "govuk-label--s"
                             },
-                            "spellcheck": false
                         }) }}
                     </div>
                 </div>
@@ -126,13 +122,11 @@
                     "label": {
                         "classes": "govuk-label--s",
                     },
-                    "spellcheck": false
                 }) }}
                 {{ form.extra_notes(params={
                     "label": {
                         "classes": "govuk-label--m"
                     },
-                    "spellcheck": false
                 }) }}
                 {{ form.adaptations(params={
                     'items': [
