@@ -79,6 +79,7 @@ class BaseMeansTestForm(FlaskForm):
             if field_instance.data in [None, "None"]:
                 continue
 
+            # Skip fields that use ValidateIf or ValidateIfSession validator that raise a StopValidation
             if self.is_unvalidated_conditional_field(field_instance):
                 continue
 
@@ -92,8 +93,10 @@ class BaseMeansTestForm(FlaskForm):
             elif isinstance(field_instance, MoneyField):
                 answer = self.get_money_field_answers(field_instance)
 
+            # Skip empty answers
             if answer is None:
                 continue
+
             summary[field_instance.name] = {
                 "question": question,
                 "answer": answer,
