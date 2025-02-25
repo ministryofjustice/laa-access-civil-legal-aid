@@ -95,11 +95,11 @@ def test_get_time_slots(mock_datetime, mock_get, api_client, app):
 
     expected = {
         "2025-03-01": [
-            ["0900", "9am to 9:30am"],
-            ["0930", "9:30am to 10am"],
+            ["0900", "9am to 9.30am"],
+            ["0930", "9.30am to 10am"],
         ],
         "2025-03-02": [
-            ["1000", "10am to 10:30am"],
+            ["1000", "10am to 10.30am"],
         ],
     }
     assert result == expected

@@ -104,11 +104,11 @@ class ContactUsForm(FlaskForm):
 
         slot_days = list({k: v for k, v in self.time_slots.items() if k != today})
         self.call_another_day.choices = [("", "Select a day:")] + [
-            (key, datetime.strptime(key, "%Y-%m-%d").strftime("%a %d %b"))
+            (key, datetime.strptime(key, "%Y-%m-%d").strftime("%a %e %b"))
             for key in slot_days
         ]
         self.thirdparty_call_another_day.choices = [("", "Select a day:")] + [
-            (key, datetime.strptime(key, "%Y-%m-%d").strftime("%a %d %b"))
+            (key, datetime.strptime(key, "%Y-%m-%d").strftime("%a %e %b"))
             for key in slot_days
         ]
         # If the user has already selected a day field, the time field is populated from that selection
