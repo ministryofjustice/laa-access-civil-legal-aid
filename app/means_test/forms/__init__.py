@@ -7,6 +7,8 @@ from flask_babel import lazy_gettext as _
 from flask import session
 from app.means_test.fields import MoneyIntervalField, MoneyInterval, MoneyField
 import decimal
+from wtforms.fields.core import Field
+from app.means_test.validators import ValidateIf, StopValidation, ValidateIfSession
 
 
 class BaseMeansTestForm(FlaskForm):
@@ -56,6 +58,18 @@ class BaseMeansTestForm(FlaskForm):
         """Override this method to remove items from review page for this given form"""
         return summary
 
+    def is_unvalidated_conditional_field(self, field: Field):
+        # Return True if field has a ValidateIf or ValidateIfSession validator that raise a StopValidation
+        for validator in field.validators:
+            if isinstance(validator, (ValidateIf, ValidateIfSession)):
+                try:
+                    validator(self, field)
+                except StopValidation:
+                    return True
+                except Exception:
+                    return False
+        return False
+
     def summary(self):
         summary = {}
         for field_name, field_instance in self._fields.items():
@@ -63,6 +77,9 @@ class BaseMeansTestForm(FlaskForm):
                 continue
 
             if field_instance.data in [None, "None"]:
+                continue
+
+            if self.is_unvalidated_conditional_field(field_instance):
                 continue
 
             question = str(field_instance.label.text)
