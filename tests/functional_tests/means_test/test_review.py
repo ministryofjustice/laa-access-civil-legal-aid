@@ -160,7 +160,7 @@ def test_reviews_page_change_sub_category(page: Page, complete_benefits_form):
 @pytest.mark.parametrize("benefits_answers", benefits_form_routing)
 def test_reviews_page_change_category(page: Page, complete_benefits_form):
     expect(page).to_have_title("Check your answers and confirm - GOV.UK")
-    page.locator(".govuk-header__link--homepage[href='/']").click()
+    page.goto(url_for("categories.index", _external=True))
     page.get_by_text("Discrimination").click()
     page.get_by_label(
         "Work - including colleagues, employer or employment agency"
