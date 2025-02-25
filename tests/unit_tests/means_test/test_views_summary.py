@@ -100,7 +100,7 @@ def test_get_category_answers_summary_no_description(app):
         {
             "key": {"text": _("The problem you need help with")},
             "value": {"text": _("Discrimination")},
-            "actions": {"items": [{"text": _("Change"), "href": "/"}]},
+            "actions": {"items": [{"text": _("Change"), "href": "/find-your-problem"}]},
         },
         {
             "key": {"text": "Where did the discrimination happen?"},
