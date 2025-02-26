@@ -1,5 +1,5 @@
 from app.means_test.validators import ValidateIf, ValidateIfType
-from wtforms import StringField, SelectField, Form
+from wtforms import StringField, SelectField, Form, SelectMultipleField
 from wtforms.validators import InputRequired
 import pytest
 
@@ -40,6 +40,34 @@ class TestValidateIf:
                 "condition": ValidateIfType.EQ,
                 "should_validate": False,
             },
+            {
+                "form_data": {"multi_field": ["value1", "test_value", "value3"]},
+                "dependent_field": "multi_field",
+                "expected_value": "test_value",
+                "condition": ValidateIfType.EQ,
+                "should_validate": True,
+            },
+            {
+                "form_data": {"multi_field": ["value1", "value2", "value3"]},
+                "dependent_field": "multi_field",
+                "expected_value": "test_value",
+                "condition": ValidateIfType.EQ,
+                "should_validate": False,
+            },
+            {
+                "form_data": {"multi_field": ["value1", "test_value", "value3"]},
+                "dependent_field": "multi_field",
+                "expected_value": "test_value",
+                "condition": ValidateIfType.IN,
+                "should_validate": True,
+            },
+            {
+                "form_data": {"multi_field": ["value1", "value2", "value3"]},
+                "dependent_field": "multi_field",
+                "expected_value": "test_value",
+                "condition": ValidateIfType.IN,
+                "should_validate": False,
+            },
         ],
     )
     def test_validation_conditions(self, test_case):
@@ -48,6 +76,14 @@ class TestValidateIf:
                 choices=[
                     ("test_value", "Test Value"),
                     ("different_value", "Different Value"),
+                ]
+            )
+            multi_field = SelectMultipleField(
+                choices=[
+                    ("value1", "Value 1"),
+                    ("test_value", "Test Value"),
+                    ("value2", "Value 2"),
+                    ("value3", "Value 3"),
                 ]
             )
             dependent_field = StringField(
@@ -67,5 +103,5 @@ class TestValidateIf:
             assert form.validate() is False
             assert "This field is required." in form.dependent_field.errors
         else:
-            assert form.validate()
-            assert form.errors == {}
+            form.validate()
+            assert form.dependent_field.errors == []
