@@ -1,8 +1,11 @@
 import logging
-
 from flask import current_app
 import requests
+from datetime import datetime
 
+from app import get_locale
+from app.contact.constants import GOVUK_NOTIFY_TEMPLATES
+from app.contact.forms import ContactUsForm
 
 logger = logging.getLogger(__name__)
 
@@ -51,6 +54,98 @@ class NotifyEmailOrchestrator(object):
         if response.status_code != 201:
             response.raise_for_status()
         return True
+
+    def create_and_send_confirmation_email(
+        self,
+        email_address: str,
+        case_reference: str,
+        callback_time: datetime | None = None,
+        contact_type: str | None = None,
+        full_name: str | None = None,
+        third_party_name: str | None = None,
+        phone_number: str | None = None,
+        third_party_phone_number: str | None = None,
+    ):
+        template_id, personalisation = self.generate_confirmation_email_data(
+            case_reference,
+            callback_time,
+            contact_type,
+            full_name,
+            third_party_name,
+            phone_number,
+            third_party_phone_number,
+        )
+        notify.send_email(
+            email_address=email_address,
+            template_id=template_id,
+            personalisation=personalisation,
+        )
+
+    @staticmethod
+    def generate_confirmation_email_data(
+        case_reference: str,
+        callback_time: datetime | None = None,
+        contact_type: str | None = None,
+        full_name: str | None = None,
+        third_party_name: str | None = None,
+        phone_number: str | None = None,
+        third_party_phone_number: str | None = None,
+    ) -> (str, str):
+        """Generates the data used in the sending of the confirmation Gov Notify emails."""
+        formatted_callback_time = ContactUsForm.format_callback_time(callback_time)
+        callback_requested = callback_time is not None
+
+        template_id = ""
+        locale = "cy" if get_locale[:2] == "cy" else "en"
+
+        if not full_name:
+            if callback_requested:
+                if contact_type == "thirdparty":
+                    personalisation = {
+                        "case_reference": case_reference,
+                        "date_time": formatted_callback_time,
+                    }
+                    template_id = GOVUK_NOTIFY_TEMPLATES[
+                        "PUBLIC_CONFIRMATION_EMAIL_CALLBACK_REQUESTED_THIRDPARTY"
+                    ][locale]
+                else:
+                    personalisation = {
+                        "case_reference": case_reference,
+                        "date_time": formatted_callback_time,
+                    }
+                    template_id = GOVUK_NOTIFY_TEMPLATES[
+                        "PUBLIC_CONFIRMATION_EMAIL_CALLBACK_REQUESTED"
+                    ][locale]
+            else:
+                personalisation = {"case_reference": case_reference}
+                template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CONFIRMATION_NO_CALLBACK"][
+                    locale
+                ]
+
+            return template_id, personalisation
+
+        personalisation = {
+            "full_name": full_name,
+            "thirdparty_full_name": third_party_name,
+            "case_reference": case_reference,
+            "date_time": formatted_callback_time,
+        }
+
+        if callback_requested is False:
+            template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CALLBACK_NOT_REQUESTED"][
+                locale
+            ]
+            return template_id, personalisation
+
+        # Decides between a personal callback or a third party callback
+        if phone_number:
+            template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CALLBACK_WITH_NUMBER"][locale]
+            personalisation.update(contact_number=phone_number)
+        elif third_party_phone_number:
+            template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CALLBACK_THIRD_PARTY"][locale]
+            personalisation.update(contact_number=third_party_phone_number)
+
+        return template_id, personalisation
 
 
 notify = NotifyEmailOrchestrator()

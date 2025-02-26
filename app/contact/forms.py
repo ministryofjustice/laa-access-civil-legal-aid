@@ -16,7 +16,6 @@ from govuk_frontend_wtf.wtforms_widgets import (
     GovSelect,
 )
 
-from app.contact.notify.api import notify
 from app.contact.widgets import (
     ContactRadioInput,
     ContactCheckboxInput,
@@ -29,7 +28,6 @@ from app.contact.constants import (
     THIRDPARTY_RELATIONSHIP_CHOICES,
     CONTACT_PREFERENCE,
     NO_SLOT_CONTACT_PREFERENCE,
-    GOVUK_NOTIFY_TEMPLATES,
 )
 from flask_babel import lazy_gettext as _
 from wtforms.validators import InputRequired, Length, Optional, Email
@@ -527,51 +525,6 @@ class ContactUsForm(FlaskForm):
         formatted_end_time = end_time.strftime("%H:%M")  # E.g. 09:30
 
         return f"{formatted_start_date} - {formatted_end_time}"
-
-    def create_and_send_confirmation_email(
-        self, email_address: str, case_reference: str
-    ):
-        template_id, personalisation = self.generate_confirmation_email_data(
-            case_reference
-        )
-        notify.send_email(
-            email_address=email_address,
-            template_id=template_id,
-            personalisation=personalisation,
-        )
-
-    def generate_confirmation_email_data(self, case_reference: str) -> (str, str):
-        """Generates the data used in the sending of the confirmation Gov Notify emails."""
-        callback_time = self.get_callback_time()
-        formatted_callback_time = self.format_callback_time(callback_time)
-        callback_requested = callback_time is not None
-
-        template_id = ""
-
-        locale = "cy" if get_locale()[:2] == "cy" else "en"
-
-        personalisation = {
-            "full_name": self.full_name.data,
-            "thirdparty_full_name": self.thirdparty_full_name.data,
-            "case_reference": case_reference,
-            "date_time": formatted_callback_time,
-        }
-
-        if callback_requested is False:
-            template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CALLBACK_NOT_REQUESTED"][
-                locale
-            ]
-            return template_id, personalisation
-
-        # Decides between a personal callback or a third party callback
-        if self.contact_number.data:
-            template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CALLBACK_WITH_NUMBER"][locale]
-            personalisation.update(contact_number=self.contact_number.data)
-        elif self.thirdparty_contact_number.data:
-            template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CALLBACK_THIRD_PARTY"][locale]
-            personalisation.update(contact_number=self.thirdparty_contact_number.data)
-
-        return template_id, personalisation
 
     def get_payload(self) -> dict:
         """Returns the contact payload."""

@@ -3,6 +3,7 @@ from app.contact.forms import ContactUsForm, ReasonsForContactingForm
 import logging
 from flask import session, render_template, request, redirect, url_for
 from app.api import cla_backend
+from app.contact.notify.api import notify
 from app.means_test.api import get_means_test_payload, update_means_test
 from app.means_test.views import MeansTest
 from datetime import datetime
@@ -62,8 +63,15 @@ class ContactUs(View):
 
             email_address = form.get_email()
             if email_address:
-                form.create_and_send_confirmation_email(
-                    email_address, session["case_reference"]
+                notify.create_and_send_confirmation_email(
+                    email_address,
+                    session["case_reference"],
+                    session["callback_time"],
+                    session["contact_type"],
+                    form.data.get("full_name"),
+                    form.data.get("third_party_full_name"),
+                    form.data.get("contact_number"),
+                    form.data.get("third_party_contact_number"),
                 )
             return render_template(
                 "contact/confirmation.html", data=session["case_reference"]
