@@ -3,9 +3,9 @@ from app.contact.forms import ContactUsForm, ReasonsForContactingForm
 import logging
 from flask import session, render_template, request, redirect, url_for
 from app.api import cla_backend
-from app.contact.notify.api import notify
 from app.means_test.api import get_means_test_payload, update_means_test
 from app.means_test.views import MeansTest
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -46,36 +46,43 @@ class ContactUs(View):
             if not self.attach_eligiblity_data:
                 session.eligibility = {}
 
-            notes_data = form.data.get("extra_notes")
-            session.get_eligibility().add_note("User problem", notes_data)
-            eligibility_data = get_means_test_payload(session.get_eligibility())
-            update_means_test(eligibility_data)
+            self._append_notes_to_eligibility_check(form.data.get("extra_notes"))
 
             cla_backend.post_case(payload=payload)
 
-            # RFC Handling
             if ReasonsForContactingForm.MODEL_REF_SESSION_KEY in session:
-                cla_backend.update_reasons_for_contacting(
+                self._attach_rfc_to_case(
+                    session["case_reference"],
                     session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY],
-                    payload={
-                        "case": session["case_reference"],
-                    },
                 )
-                del session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY]
-            # Email Handling
-            callback_types = ["callback", "thirdparty"]
-            session["callback_requested"] = (
-                form.data.get("contact_type") in callback_types
-            )
+
+            # Set callback time
+            session["callback_time"]: datetime | None = form.get_callback_time()
             session["contact_type"] = form.data.get("contact_type")
-            callback_time = form.format_callback_time(form.get_callback_time())
-            session["callback_time"] = callback_time
+
             email = form.get_email()
             if email:
-                data = form.data
-                data["email"] = email
-                notify.create_and_send_confirmation_email(data)
+                form.create_and_send_confirmation_email(session["case_reference"])
             return render_template(
                 "contact/confirmation.html", data=session["case_reference"]
             )
         return render_template(self.template, form=form, form_progress=form_progress)
+
+    def _append_notes_to_eligibility_check(self, notes_data: str):
+        if not notes_data or len(notes_data) == 0:
+            return
+        session.get_eligibility().add_note("User problem", notes_data)
+        eligibility_data = get_means_test_payload(session.get_eligibility())
+        update_means_test(eligibility_data)
+
+    @staticmethod
+    def _attach_rfc_to_case(case_ref: str, rfc_ref: str):
+        cla_backend.update_reasons_for_contacting(
+            session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY],
+            payload={
+                "case": case_ref,
+            },
+        )
+        del session[
+            ReasonsForContactingForm.MODEL_REF_SESSION_KEY
+        ]  # TODO: Why does it do this?
