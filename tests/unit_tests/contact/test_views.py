@@ -1,5 +1,7 @@
 from unittest.mock import patch, MagicMock
 from flask import url_for
+
+from app.contact.forms import ReasonsForContactingForm
 from app.contact.views import ContactUs
 from app.means_test.views import MeansTest
 
@@ -102,4 +104,79 @@ class TestContactUsView:
             "contact/contact.html",
             form=mock_form_instance,
             form_progress={"step": "Review", "percentage_complete": 100},
+        )
+
+    @patch("app.contact.views.render_template")
+    @patch.object(MeansTest, "get_form_progress")
+    def test_attach_rfc_to_case(
+        self, mock_get_form_progress, mock_render_template, app, client
+    ):
+        with client.session_transaction() as session:
+            session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY] = "1234"
+
+        form_data = {
+            "full_name": "Test User",
+            "contact_type": "call",
+            "address_finder": "",
+            "other_language": "",
+        }
+
+        with (
+            patch("app.contact.forms.cla_backend"),
+            patch(
+                "app.contact.views.cla_backend.post_case",
+                return_value={"reference": "AB-1234-5678"},
+            ),
+            patch.object(ContactUs, "_attach_rfc_to_case") as mock_attach_rfc_to_case,
+        ):
+            client.post("/contact-us", data=form_data)
+
+            mock_attach_rfc_to_case.assert_called_once_with("AB-1234-5678", "1234")
+
+    @patch("app.contact.views.update_means_test")
+    def test_append_notes_to_eligibility_check_with_valid_notes(
+        self, mock_update_means_test, app, client
+    ):
+        notes_data = "User notes"
+
+        view = ContactUs()
+        view._append_notes_to_eligibility_check(notes_data)
+
+        mock_update_means_test.assert_called_once()
+        eligibility_check = mock_update_means_test.mock_calls[0][1][0]
+        assert "notes" in eligibility_check
+        assert eligibility_check["notes"] == "User problem:\nUser notes"
+
+    @patch("app.contact.views.get_means_test_payload")
+    @patch("app.contact.views.update_means_test")
+    def test_append_notes_to_eligibility_check_with_empty_notes(
+        self, mock_update_means_test, mock_get_payload, app, client
+    ):
+        # Test with empty string
+        view = ContactUs()
+        view._append_notes_to_eligibility_check("")
+
+        mock_get_payload.assert_not_called()
+        mock_update_means_test.assert_not_called()
+
+        # Test with None
+        view._append_notes_to_eligibility_check(None)
+
+        mock_get_payload.assert_not_called()
+        mock_update_means_test.assert_not_called()
+
+    @patch("app.contact.views.cla_backend.update_reasons_for_contacting")
+    def test_attaching_rfc_to_case(self, mock_update_rfc, app, client):
+        with client.session_transaction() as session:
+            session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY] = "1234"
+
+        case_ref = "AB-1234-5678"
+        rfc_ref = "1234"
+
+        ContactUs._attach_rfc_to_case(case_ref, rfc_ref)
+
+        # Verify behavior
+        mock_update_rfc.assert_called_once_with(
+            "1234",  # Value from mock_session.__getitem__
+            payload={"case": case_ref},
         )

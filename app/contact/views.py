@@ -58,6 +58,9 @@ class ContactUs(View):
                     session["case_reference"],
                     session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY],
                 )
+                del session[
+                    ReasonsForContactingForm.MODEL_REF_SESSION_KEY
+                ]  # TODO: Why does it do this?
 
             # Set callback time
             session["callback_time"]: datetime | None = form.get_callback_time()
@@ -88,11 +91,8 @@ class ContactUs(View):
     @staticmethod
     def _attach_rfc_to_case(case_ref: str, rfc_ref: str):
         cla_backend.update_reasons_for_contacting(
-            session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY],
+            rfc_ref,
             payload={
                 "case": case_ref,
             },
         )
-        del session[
-            ReasonsForContactingForm.MODEL_REF_SESSION_KEY
-        ]  # TODO: Why does it do this?
