@@ -171,9 +171,9 @@ class BackendAPIClient:
         payload["eligibility_check"] = session.get("ec_reference")
 
         response = self.post(contact_endpoint, json=payload)
-        session["case_reference"] = response["reference"]
+        return response
 
-    def update_reasons_for_contacting(self, reference, payload={}):
+    def update_reasons_for_contacting(self, reference, payload=None):
         return self.patch(
             f"checker/api/v1/reasons_for_contacting/{reference}", json=payload
         )

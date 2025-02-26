@@ -49,7 +49,9 @@ class ContactUs(View):
 
             self._append_notes_to_eligibility_check(form.data.get("extra_notes"))
 
-            cla_backend.post_case(payload=payload)
+            session["case_reference"] = cla_backend.post_case(payload=payload)[
+                "reference"
+            ]
 
             if ReasonsForContactingForm.MODEL_REF_SESSION_KEY in session:
                 self._attach_rfc_to_case(
@@ -73,9 +75,7 @@ class ContactUs(View):
                     form.data.get("contact_number"),
                     form.data.get("third_party_contact_number"),
                 )
-            return render_template(
-                "contact/confirmation.html", data=session["case_reference"]
-            )
+            return redirect(url_for("contact.confirmation"))
         return render_template(self.template, form=form, form_progress=form_progress)
 
     def _append_notes_to_eligibility_check(self, notes_data: str):
