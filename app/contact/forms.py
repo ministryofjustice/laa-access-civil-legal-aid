@@ -88,7 +88,7 @@ class ContactUsForm(FlaskForm):
         if (
             self.adaptations.data is None
         ):  # Data defaults to None when form is first loaded
-            self.adaptations.data = ["welsh"] if get_locale()[:2] == "cy" else []
+            self.adaptations.data = ["welsh"] if get_locale().startswith("cy") else []
 
         # Get the valid timeslots once from backend and cache them
         self.time_slots = cla_backend.get_time_slots(num_days=8)

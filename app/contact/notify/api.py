@@ -4,7 +4,7 @@ import requests
 from datetime import datetime
 
 from app import get_locale
-from app.contact.constants import GOVUK_NOTIFY_TEMPLATES
+from app.contact.notify.templates import GOVUK_NOTIFY_TEMPLATES
 from app.contact.forms import ContactUsForm
 
 logger = logging.getLogger(__name__)
@@ -96,7 +96,7 @@ class NotifyEmailOrchestrator(object):
         callback_requested = callback_time is not None
 
         template_id = ""
-        locale = "cy" if get_locale()[:2] == "cy" else "en"
+        locale = "cy" if get_locale().startswith("cy") else "en"
 
         if not full_name:
             if callback_requested:
