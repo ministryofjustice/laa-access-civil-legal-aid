@@ -104,23 +104,27 @@ document.getElementById("address_finder").addEventListener("change", function() 
     }
 });
 
-
-document.getElementById("bsl_webcam").addEventListener("change", function () {
-    let webcamChecked = document.getElementById("bsl_webcam").getAttribute("aria-expanded") === "true";
-    let emailInput = document.getElementById("email");
-    let bslEmailInput = document.getElementById("bsl_email");
-    let bslContainer = bslEmailInput.closest('.govuk-checkboxes__conditional');
-    let emailContainer = emailInput.closest('.govuk-form-group');
-
-    if (webcamChecked) {
-        if (emailInput.value.trim() === "") {
-            bslContainer.classList.remove("govuk-!-display-none");
-            emailContainer.classList.add("govuk-!-display-none");
+document.addEventListener("DOMContentLoaded", function () {
+    function toggleEmailFields() {
+        let webcamChecked = document.getElementById("bsl_webcam").getAttribute("aria-expanded") === "true";
+        let emailInput = document.getElementById("email");
+        let bslEmailInput = document.getElementById("bsl_email");
+        let bslContainer = bslEmailInput.closest('.govuk-checkboxes__conditional');
+        let emailContainer = emailInput.closest('.govuk-form-group');
+        if (webcamChecked) {
+            if (emailInput.value.trim() === "") {
+                bslContainer.classList.remove("govuk-!-display-none");
+                emailContainer.classList.add("govuk-!-display-none");
+            } else {
+                bslContainer.classList.add("govuk-!-display-none");
+                emailContainer.classList.remove("govuk-!-display-none");
+            }
         } else {
-            bslContainer.classList.add("govuk-!-display-none");
             emailContainer.classList.remove("govuk-!-display-none");
         }
-    } else {
-        emailContainer.classList.remove("govuk-!-display-none");
     }
+    // Run on page load
+    toggleEmailFields();
+    // Run on change event
+    document.getElementById("bsl_webcam").addEventListener("change", toggleEmailFields);
 });
