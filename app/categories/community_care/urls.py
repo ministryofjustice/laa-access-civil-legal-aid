@@ -1,4 +1,5 @@
 from app.categories.community_care import bp
+from app.categories.results.views import CannotFindYourProblemPage, NextStepsPage
 from app.categories.views import CategoryLandingPage
 from app.categories.constants import COMMUNITY_CARE
 
@@ -25,8 +26,23 @@ class CommunityCareLandingPage(CategoryLandingPage):
             (COMMUNITY_CARE.sub.care_leaver, FALA_REDIRECT),
         ],
         "more": [],
-        "other": "categories.results.cannot_find_problem",
+        "other": "categories.community_care.cannot_find_your_problem",
     }
 
 
-CommunityCareLandingPage.register_routes(blueprint=bp)
+CommunityCareLandingPage.register_routes(blueprint=bp, path="/disability-social-care")
+bp.add_url_rule(
+    "/disability-social-care/cannot-find-your-problem",
+    view_func=CannotFindYourProblemPage.as_view(
+        "cannot_find_your_problem",
+        category=COMMUNITY_CARE,
+        next_steps_page="categories.community_care.next_steps",
+    ),
+)
+bp.add_url_rule(
+    "/disability-social-care/next-steps",
+    view_func=NextStepsPage.as_view(
+        "next_steps",
+        category=COMMUNITY_CARE,
+    ),
+)

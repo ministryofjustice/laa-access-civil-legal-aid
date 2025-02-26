@@ -50,7 +50,7 @@ class DiscriminationWhyForm(DiscriminationQuestionForm):
 
     next_step_mapping = {
         "*": "categories.discrimination.age",
-        "none": "categories.results.refer",
+        "none": "categories.discrimination.cannot_find_your_problem",
     }
 
     question = SelectMultipleField(

@@ -4,7 +4,7 @@ from app.main.filters import category_url_for
 def test_filter_category_url(app):
     with app.app_context():
         # url is a string
-        assert category_url_for("categories.index") == "/"
+        assert category_url_for("categories.index") == "/find-your-problem"
         endpoint = {
             "endpoint": "find-a-legal-adviser.search",
             "category": "mhe",

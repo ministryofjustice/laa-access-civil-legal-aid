@@ -59,7 +59,7 @@ why_form_routing = [
         id="multiple_answers",
     ),
     pytest.param(
-        ["None of these"], "Legal aid doesn’t cover all types of problem", id="not_sure"
+        ["None of these"], "Sorry, you’re not likely to get legal aid", id="not_sure"
     ),
 ]
 
