@@ -357,15 +357,16 @@ def test_get_payload_callback(app):
 
 
 # Test get email
-def test_get_email():
+@patch("app.contact.forms.cla_backend")
+def test_get_email(app, client):
     # Test when "email" is in the data
-    form_with_email = MockForm(data={"email": "test@example.com"})
+    form_with_email = ContactUsForm(data={"email": "test@example.com"})
     assert form_with_email.get_email() == "test@example.com"
 
     # Test when "bsl_email" is in the data but "email" is not
-    form_with_bsl_email = MockForm(data={"bsl_email": "test_bsl@example.com"})
+    form_with_bsl_email = ContactUsForm(data={"bsl_email": "test_bsl@example.com"})
     assert form_with_bsl_email.get_email() == "test_bsl@example.com"
 
     # Test when neither "email" nor "bsl_email" are in the data
-    form_with_no_email = MockForm(data={})
+    form_with_no_email = ContactUsForm(data={})
     assert form_with_no_email.get_email() is None
