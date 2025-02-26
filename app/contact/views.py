@@ -60,9 +60,11 @@ class ContactUs(View):
             session["callback_time"]: datetime | None = form.get_callback_time()
             session["contact_type"] = form.data.get("contact_type")
 
-            email = form.get_email()
-            if email:
-                form.create_and_send_confirmation_email(session["case_reference"])
+            email_address = form.get_email()
+            if email_address:
+                form.create_and_send_confirmation_email(
+                    email_address, session["case_reference"]
+                )
             return render_template(
                 "contact/confirmation.html", data=session["case_reference"]
             )

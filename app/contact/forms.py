@@ -528,9 +528,11 @@ class ContactUsForm(FlaskForm):
 
         return f"{formatted_start_date} - {formatted_end_time}"
 
-    def create_and_send_confirmation_email(self, case_reference: str):
-        email_address, template_id, personalisation = (
-            self.generate_confirmation_email_data(case_reference)
+    def create_and_send_confirmation_email(
+        self, email_address: str, case_reference: str
+    ):
+        template_id, personalisation = self.generate_confirmation_email_data(
+            case_reference
         )
         notify.send_email(
             email_address=email_address,
@@ -538,47 +540,16 @@ class ContactUsForm(FlaskForm):
             personalisation=personalisation,
         )
 
-    def generate_confirmation_email_data(self, case_reference: str) -> (str, str, str):
-        """
-        Generates the data used in the sending of Gov Notify emails;
-        includes paths for 5 different templates based on circumstance
-        """
+    def generate_confirmation_email_data(self, case_reference: str) -> (str, str):
+        """Generates the data used in the sending of the confirmation Gov Notify emails."""
         callback_time = self.get_callback_time()
         formatted_callback_time = self.format_callback_time(callback_time)
         callback_requested = callback_time is not None
-        contact_type = self.contact_type.data
 
-        email_address = self.get_email()
         template_id = ""
 
-        # Path for confirmation email if no email is provided initially
-        if not self.full_name.data:
-            if callback_requested:
-                if contact_type == "thirdparty":
-                    personalisation = {
-                        "case_reference": case_reference,
-                        "date_time": formatted_callback_time,
-                    }
-                    template_id = GOVUK_NOTIFY_TEMPLATES[
-                        "PUBLIC_CONFIRMATION_EMAIL_CALLBACK_REQUESTED_THIRDPARTY"
-                    ][get_locale()[:2]]
-                else:
-                    personalisation = {
-                        "case_reference": case_reference,
-                        "date_time": formatted_callback_time,
-                    }
-                    template_id = GOVUK_NOTIFY_TEMPLATES[
-                        "PUBLIC_CONFIRMATION_EMAIL_CALLBACK_REQUESTED"
-                    ][get_locale()[:2]]
-            else:
-                personalisation = {"case_reference": case_reference}
-                template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CONFIRMATION_NO_CALLBACK"][
-                    get_locale()[:2]
-                ]
+        locale = "cy" if get_locale()[:2] == "cy" else "en"
 
-            return email_address, template_id, personalisation
-
-        # Returns email if provided on contact form
         personalisation = {
             "full_name": self.full_name.data,
             "thirdparty_full_name": self.thirdparty_full_name.data,
@@ -588,24 +559,19 @@ class ContactUsForm(FlaskForm):
 
         if callback_requested is False:
             template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CALLBACK_NOT_REQUESTED"][
-                get_locale()[:2]
+                locale
             ]
-
-            return email_address, template_id, personalisation
+            return template_id, personalisation
 
         # Decides between a personal callback or a third party callback
         if self.contact_number.data:
-            template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CALLBACK_WITH_NUMBER"][
-                get_locale()[:2]
-            ]
+            template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CALLBACK_WITH_NUMBER"][locale]
             personalisation.update(contact_number=self.contact_number.data)
         elif self.thirdparty_contact_number.data:
-            template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CALLBACK_THIRD_PARTY"][
-                get_locale()[:2]
-            ]
+            template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CALLBACK_THIRD_PARTY"][locale]
             personalisation.update(contact_number=self.thirdparty_contact_number.data)
 
-        return email_address, template_id, personalisation
+        return template_id, personalisation
 
     def get_payload(self) -> dict:
         """Returns the contact payload."""
