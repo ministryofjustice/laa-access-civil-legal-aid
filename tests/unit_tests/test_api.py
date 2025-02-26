@@ -142,9 +142,9 @@ class TestCallbackSlots:
         result = self.client.format_slots_by_day(self.slots)
 
         expected = {
-            "2025-02-21": [["0900", "9:00am to 9:30am"], ["0930", "9:30am to 10:00am"]],
-            "2025-02-22": [["1000", "10:00am to 10:30am"]],
-            "2025-02-23": [["1000", "10:00am to 10:30am"]],
+            "2025-02-21": [["0900", "9am to 9.30am"], ["0930", "9.30am to 10am"]],
+            "2025-02-22": [["1000", "10am to 10.30am"]],
+            "2025-02-23": [["1000", "10am to 10.30am"]],
         }
 
         assert result == expected

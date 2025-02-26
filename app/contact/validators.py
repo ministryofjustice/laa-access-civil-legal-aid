@@ -12,13 +12,13 @@ class ValidateDayTime:
         )
 
     def __call__(self, form, field):
-        selected_time = field.data
-        selected_day = form._fields.get(self.day_field).data
+        selected_time = field.data[0]
+        selected_day = form._fields.get(self.day_field).data[0]
 
         valid_time_slots = form.time_slots[selected_day]
 
         for time in valid_time_slots:
-            if selected_time == time:
+            if selected_time == time[0]:
                 field.errors = []
                 raise StopValidation()
 

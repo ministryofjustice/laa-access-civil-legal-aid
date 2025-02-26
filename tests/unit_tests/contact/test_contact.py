@@ -105,7 +105,7 @@ def test_get_time_slots(mock_datetime, mock_get, api_client, app):
     assert result == expected
     mock_get.assert_called_once_with(
         "checker/api/v1/callback_time_slots/",
-        "?third_party_callback=False&num_days=8",
+        params={"third_party_callback": False, "num_days": 8},
     )
 
 
@@ -311,8 +311,7 @@ def test_get_callback_time_invalid(app):
     is not 'callback' or 'thirdparty'.
     """
     dummy = DummyCallback({"contact_type": "email"})
-    iso_time, callback_time = dummy.get_callback_time()
-    assert iso_time is None
+    callback_time = dummy.get_callback_time()
     assert callback_time is None
 
 
@@ -323,7 +322,7 @@ class DummyPayload:
         self.contact_type = self
 
     def get_callback_time(self):
-        return "2024-02-24T14:30:00Z", "Monday, 24 February at 14:30 - 15:00"
+        return datetime(2024, 2, 24, 14, 30)
 
     def get_email(self):
         return "test@example.com"
@@ -342,7 +341,7 @@ def test_get_payload_callback(app):
             "street_address": "10 Downing Street",
             "announce_call_from_cla": True,
             "adaptations": ["bsl_webcam"],
-            "other_language": ["english"],
+            "other_language": "english",
             "other_adaptation": "None",
         }
     )
