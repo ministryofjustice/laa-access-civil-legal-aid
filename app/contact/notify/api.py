@@ -96,7 +96,7 @@ class NotifyEmailOrchestrator(object):
         callback_requested = callback_time is not None
 
         template_id = ""
-        locale = "cy" if get_locale[:2] == "cy" else "en"
+        locale = "cy" if get_locale()[:2] == "cy" else "en"
 
         if not full_name:
             if callback_requested:

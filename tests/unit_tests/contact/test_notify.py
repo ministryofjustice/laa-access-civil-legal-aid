@@ -96,11 +96,18 @@ class TestNotifyEmailOrchestrator(unittest.TestCase):
             }
 
             orchestrator = NotifyEmailOrchestrator()
-            email_address, template_id, personalisation = (
-                orchestrator.generate_confirmation_email_data(data)
+            template_id, personalisation = (
+                orchestrator.generate_confirmation_email_data(
+                    session["case_reference"],
+                    session["callback_time"],
+                    session["contact_type"],
+                    data["full_name"],
+                    data["thirdparty_full_name"],
+                    data["contact_number"],
+                    None,
+                )
             )
 
-            self.assertEqual(email_address, "user@example.com")
             self.assertIn("full_name", personalisation)
             self.assertIn("case_reference", personalisation)
             self.assertIn("date_time", personalisation)
@@ -127,7 +134,7 @@ class TestNotifyEmailOrchestrator(unittest.TestCase):
         with self.app.test_request_context():
             session["case_reference"] = "ABC123"
             session["callback_requested"] = False
-            session["contact_type"] = "email"
+            session["contact_type"] = "callback"
             session["callback_time"] = "2025-02-21 10:00 AM"
 
             data = {
@@ -140,7 +147,13 @@ class TestNotifyEmailOrchestrator(unittest.TestCase):
             mock_send_email.return_value = True
             govuk_notify = NotifyEmailOrchestrator()
 
-            NotifyEmailOrchestrator.create_and_send_confirmation_email(
-                govuk_notify, data
+            govuk_notify.create_and_send_confirmation_email(
+                "user@example.com",
+                session["case_reference"],
+                session["callback_time"],
+                session["contact_type"],
+                data["full_name"],
+                data["thirdparty_full_name"],
+                data["contact_number"],
             )
             mock_send_email.assert_called_once()
