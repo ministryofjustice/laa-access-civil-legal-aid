@@ -439,6 +439,9 @@ class ContactUsForm(FlaskForm):
         _("Enter your email address so we can arrange a BSL call"),
         widget=GovTextInput(),
         validators=[
+            ValidateIf(
+                "email", ""
+            ),  # We only care about the bsl_email if the user has not included an email address in the above field.
             ValidateIf("adaptations", "bsl_webcam", condition_type=ValidateIfType.IN),
             Length(max=255, message=_("Your address must be 255 characters or less")),
             Email(message=_("Enter your email address")),
