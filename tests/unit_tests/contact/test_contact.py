@@ -10,6 +10,7 @@ from app.contact.address_finder.widgets import AddressLookup, FormattedAddressLo
 from wtforms import Form, StringField
 from wtforms.validators import ValidationError, StopValidation
 from app.contact.validators import ValidateDayTime
+from freezegun import freeze_time
 
 
 def test_post_reasons_for_contacting_success(mocker, app):
@@ -369,3 +370,90 @@ def test_get_email(app, client):
     # Test when neither "email" nor "bsl_email" are in the data
     form_with_no_email = ContactUsForm(data={})
     assert form_with_no_email.get_email() is None
+
+
+class TestCallbackTimeFunctions:
+    @patch("app.contact.forms.cla_backend")
+    def test_get_callback_time_no_callback(self, app, client):
+        form_data = {"contact_type": "email"}
+        form = ContactUsForm(data=form_data)
+        result = form.get_callback_time()
+        assert result is None
+
+    @patch("app.contact.forms.cla_backend")
+    def test_get_callback_time_call_today(self, app, client):
+        form_data = {
+            "contact_type": "callback",
+            "time_to_call": "Call today",
+            "call_today_time": "1430",
+        }
+        form = ContactUsForm(data=form_data)
+
+        with freeze_time("2025-02-26"):
+            result = form.get_callback_time()
+
+            expected = datetime(2025, 2, 26, 14, 30)
+            assert result == expected
+
+    @patch("app.contact.forms.cla_backend")
+    def test_get_callback_time_call_another_day(self, app, client):
+        form_data = {
+            "contact_type": "callback",
+            "time_to_call": "Call on another day",
+            "call_another_day": "2025-02-26",
+            "call_another_time": "1000",
+        }
+        form = ContactUsForm(data=form_data)
+
+        result = form.get_callback_time()
+
+        expected = datetime(2025, 2, 26, 10, 0)
+        assert result == expected
+
+    @patch("app.contact.forms.cla_backend")
+    def test_get_callback_time_thirdparty(self, app, client):
+        form_data = {
+            "contact_type": "thirdparty",
+            "thirdparty_time_to_call": "Call on another day",
+            "thirdparty_call_another_day": "2025-05-19",
+            "thirdparty_call_another_time": "1600",
+        }
+        form = ContactUsForm(data=form_data)
+
+        result = form.get_callback_time()
+
+        expected = datetime(2023, 5, 19, 16, 0)
+        assert result == expected
+
+    @patch("app.contact.forms.cla_backend")
+    def test_get_callback_time_invalid_selection(self, app, client):
+        form_data = {
+            "contact_type": "callback",
+            "time_to_call": "Invalid option",
+        }
+        form = ContactUsForm(data=form_data)
+
+        result = form.get_callback_time()
+        assert result is None
+
+    @patch("app.contact.forms.cla_backend")
+    def test_format_callback_time_none_input(self, app, client):
+        result = ContactUsForm.format_callback_time(None)
+        assert result is None
+
+    @patch("app.contact.forms.cla_backend")
+    def test_format_callback_time_invalid_input(self, app, client):
+        result = ContactUsForm.format_callback_time("not a datetime")
+        assert result is None
+
+    @patch("app.contact.forms.cla_backend")
+    def test_format_callback_time_valid(self, app, client):
+        test_time = datetime(2024, 1, 1, 9, 0)
+        result = ContactUsForm.format_callback_time(test_time)
+        assert result == "Monday, 01 January at 09:00 - 09:30"
+
+    @patch("app.contact.forms.cla_backend")
+    def test_format_callback_time_with_midnight_crossing(self, app, client):
+        test_time = datetime(2024, 1, 1, 23, 45)
+        result = ContactUsForm.format_callback_time(test_time)
+        assert result == "Monday, 01 January at 23:45 - 00:15"
