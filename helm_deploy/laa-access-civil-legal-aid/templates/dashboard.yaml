@@ -5,10 +5,6 @@ metadata:
   namespace: laa-access-civil-legal-aid-production
   labels:
     grafana_dashboard: ""
-    app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
-  annotations:
-    meta.helm.sh/release-name: {{ .Release.Name | quote }}
-    meta.helm.sh/release-namespace: {{ .Release.Namespace | quote }}
 data:
-  laa-access-civil-legal-aid-dashboard.json: |
+  my-dashboard.json: |
 {{ .Files.Get "files/dashboard.json" | indent 4 }}
