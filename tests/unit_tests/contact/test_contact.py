@@ -1,12 +1,13 @@
 import pytest
 from unittest.mock import patch
 from flask import request, session, current_app
+from wtforms.fields.choices import SelectField
 from app.api import cla_backend, BackendAPIClient
 from app.contact.forms import ReasonsForContactingForm, ContactUsForm
 import requests
 from datetime import datetime
 from app.contact.address_finder.widgets import AddressLookup, FormattedAddressLookup
-from wtforms import Form, StringField, FieldList
+from wtforms import Form, StringField
 from wtforms.validators import ValidationError, StopValidation
 from app.contact.validators import ValidateDayTime
 
@@ -54,8 +55,8 @@ def test_api_payload(mock_form):
 
 
 class MockForm(Form):
-    day = FieldList(StringField())
-    time = FieldList(StringField())
+    day = SelectField(choices=[])
+    time = SelectField(choices=[])
     email = StringField("Email")
     bsl_email = StringField("BSL Email")
 
@@ -239,8 +240,8 @@ def test_validate_day_time(day, time, expected_exception, expected_message):
     """Test validation of time slots against available slots."""
 
     form = MockForm()
-    form.day.append_entry(day)
-    form.time.append_entry(time)
+    form.day.data = day
+    form.time.data = time
 
     validator = ValidateDayTime(day_field="day")
 
