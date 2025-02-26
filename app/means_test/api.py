@@ -32,6 +32,7 @@ def is_eligible(reference):
 def get_means_test_payload(eligibility_data) -> dict:
     about = eligibility_data.forms.get("about-you", {})
     savings_form = eligibility_data.forms.get("savings", {})
+    income_form = eligibility_data.forms.get("income", {})
 
     has_partner = eligibility_data.forms.get("about-you", {}).get(
         "has_partner", False
@@ -46,7 +47,7 @@ def get_means_test_payload(eligibility_data) -> dict:
     additional_benefits_data = AdditionalBenefitsForm.get_payload(
         eligibility_data.forms.get("additional-benefits", {})
     )
-    income_data = IncomeForm(**eligibility_data.forms.get("income", {})).get_payload(
+    income_data = IncomeForm(**income_form).get_payload(
         employed=is_employed,
         self_employed=is_self_employed,
         partner_employed=is_partner_employed,
@@ -86,7 +87,9 @@ def get_means_test_payload(eligibility_data) -> dict:
                 .get("maintenance_received"),
                 "pension": income_data.get("you", {}).get("income", {}).get("pension"),
                 "other_income": other_income,
-                "self_employed": is_self_employed,
+                "self_employed": income_data.get("you", {})
+                .get("income", {})
+                .get("self_employed"),
                 "benefits": additional_benefits_data.get("benefits"),
                 "child_benefits": benefits_data.get("child_benefits"),
             },
@@ -132,7 +135,9 @@ def get_means_test_payload(eligibility_data) -> dict:
                 "other_income": income_data.get("partner", {})
                 .get("income", {})
                 .get("other_income"),
-                "self_employed": "0",
+                "self_employed": income_data.get("partner", {})
+                .get("income", {})
+                .get("self_employed"),
                 "benefits": {
                     "per_interval_value": 0,
                     "per_interval_value_pounds": None,
@@ -190,7 +195,13 @@ def get_means_test_payload(eligibility_data) -> dict:
         "disregards": [],
     }
 
+    if not income_form:
+        del payload["you"]["income"]
+        del payload["partner"]["income"]
+
     if not has_partner:
         del payload["partner"]
+
+    print(payload)
 
     return payload

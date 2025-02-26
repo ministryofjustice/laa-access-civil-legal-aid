@@ -166,10 +166,9 @@ class BackendAPIClient:
 
         return slots_by_day
 
-    def post_case(self, form=None, payload=None, attach_eligiblity_data: bool = False):
+    def post_case(self, payload=None):
         contact_endpoint = "checker/api/v1/case"
-        if attach_eligiblity_data:
-            payload["eligibility_check"] = session.get("ec_reference")
+        payload["eligibility_check"] = session.get("ec_reference")
 
         response = self.post(contact_endpoint, json=payload)
         session["case_reference"] = response["reference"]

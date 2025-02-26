@@ -42,24 +42,23 @@ class ContactUs(View):
         form_progress = MeansTest(ContactUsForm, "Contact us").get_form_progress(form)
         if form.validate_on_submit():
             payload = form.get_payload()
-            # Catches duplicate case exceptions and redirect to error page
-            cla_backend.post_case(
-                payload=payload, attach_eligiblity_data=self.attach_eligiblity_data
-            )
             # Add the extra notes to the eligibility object
-            if self.attach_eligiblity_data:
-                notes_data = form.data.get("extra_notes")
-                session.get_eligibility().add_note("User problem", notes_data)
-                eligibility_data = get_means_test_payload(session.get_eligibility())
-                update_means_test(eligibility_data)
+            if not self.attach_eligiblity_data:
+                session.eligibility = {}
+
+            notes_data = form.data.get("extra_notes")
+            session.get_eligibility().add_note("User problem", notes_data)
+            eligibility_data = get_means_test_payload(session.get_eligibility())
+            update_means_test(eligibility_data)
+
+            cla_backend.post_case(payload=payload)
+
             # RFC Handling
             if ReasonsForContactingForm.MODEL_REF_SESSION_KEY in session:
-                notes_data = form.data.get("extra_notes")
                 cla_backend.update_reasons_for_contacting(
                     session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY],
                     payload={
                         "case": session["case_reference"],
-                        "other_reasons": notes_data,
                     },
                 )
                 del session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY]
