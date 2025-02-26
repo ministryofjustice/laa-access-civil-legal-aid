@@ -444,7 +444,7 @@ class ContactUsForm(FlaskForm):
             ),  # We only care about the bsl_email if the user has not included an email address in the above field.
             ValidateIf("adaptations", "bsl_webcam", condition_type=ValidateIfType.IN),
             Length(max=255, message=_("Your address must be 255 characters or less")),
-            Email(message=_("Enter your email address")),
+            Email(message=_("Invalid email address")),
         ],
     )
     other_language = SelectField(
