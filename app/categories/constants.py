@@ -394,6 +394,7 @@ ASYLUM_AND_IMMIGRATION = Category(
     ),
     chs_code="immigration",
     code="asylum_and_immigration",
+    article_category_name="Immigration and asylum",
     children={
         "apply": Category(
             title=_("Applying for asylum"),
