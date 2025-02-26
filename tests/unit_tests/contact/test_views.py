@@ -61,10 +61,10 @@ class TestContactUsView:
         mock_form.return_value = mock_form_instance
         mock_form_instance.validate_on_submit.return_value = True
         mock_form_instance.get_payload.return_value = {"case_details": "test"}
-        mock_form_instance.get_callback_time.return_value = "2023-01-01 12:00"
+        mock_form_instance.get_callback_time.return_value = "2025-01-01 12:00"
         mock_form_instance.get_email.return_value = "test@example.com"
         mock_form_instance.data = {
-            "contact_type": "personal",
+            "contact_type": "callback",
             "full_name": "John Doe",
             "third_party_full_name": None,
             "contact_number": "07777777777",
