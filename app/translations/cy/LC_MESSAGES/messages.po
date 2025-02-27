@@ -48,16 +48,20 @@ msgid ""
 msgstr ""
 
 msgid "Forced Marriage"
-msgstr ""
+msgstr "Priodas dan orfod"
 
 msgid "Help with forced marriage and Forced Marriage Protection Orders."
 msgstr ""
+"Cymorth gyda phriodas dan orfod a Gorchmynion Amddiffyn rhag Priodas dan "
+"Orfod. "
 
 msgid "Female genital mutilation (FGM)"
-msgstr ""
+msgstr "Anffurfio Organau Cenhedlu Benywod (FGM)"
 
 msgid "If you or someone else is at risk of FGM."
 msgstr ""
+"Os ydych chi neu rywun arall mewn perygl o brofi anffurfio organau "
+"cenhedlu benywod."
 
 msgid "Children, families, relationships"
 msgstr ""
@@ -124,7 +128,7 @@ msgid ""
 msgstr ""
 
 msgid "Forced marriage"
-msgstr ""
+msgstr "Priodas dan orfod"
 
 msgid ""
 "Includes being evicted or forced to sell your home. Problems with "
@@ -363,7 +367,7 @@ msgid ""
 msgstr ""
 
 msgid "Trafficking, modern slavery"
-msgstr ""
+msgstr "Masnachu pobl, caethwasiaeth fodern"
 
 msgid "Help if you’re a victim of trafficking or modern slavery."
 msgstr ""
@@ -1345,7 +1349,7 @@ msgid "Sorry, you’re not likely to get legal aid"
 msgstr ""
 
 msgid "Next steps to get help"
-msgstr ""
+msgstr "Camau nesaf i gael cymorth"
 
 msgid "Legal aid is available for this type of problem"
 msgstr "Mae cymorth cyfreithiol ar gael ar gyfer y math hwn o broblem"
@@ -1491,90 +1495,127 @@ msgid "Find problems covered by legal aid"
 msgstr ""
 
 msgid "More problems covered by legal aid"
-msgstr ""
+msgstr "Mwy o broblemau y mae cymorth cyfreithiol yn delio â nhw"
 
 msgid "More problems"
 msgstr ""
 
 msgid "Adopting a child from outside the UK"
-msgstr ""
+msgstr "Mabwysiadu plentyn o'r tu allan i’r Deyrnas Unedig"
 
 msgid "Adoption processes in the courts."
-msgstr ""
+msgstr "Y broses fabwysiadu yn y llysoedd."
 
 msgid "Appeal a decision that you cannot work with children or vulnerable adults"
 msgstr ""
+"Apelio penderfyniad sy’n nodi nad ydych chi’n cael gweithio gyda phlant "
+"ac oedolion bregus"
 
 msgid "Including if you’re on a ‘barred list’ or disqualified from teaching."
 msgstr ""
+"Mae hyn yn cynnwys bod ar ‘restr gwahardd’ neu gael eich gwahardd rhag "
+"addysgu."
 
 msgid "Anti-social behaviour and gangs"
-msgstr ""
+msgstr "Ymddygiad gwrthgymdeithasol a gangiau"
 
 msgid ""
 "If you’re accused or taken to court for anti-social behaviour, including "
 "being in a gang."
 msgstr ""
+"Os ydych chi wedi cael eich cyhuddo neu wedi ymddangos yn y llys am "
+"ymddwyn yn wrthgymdeithasol, gan gynnwys bod yn aelod o gang."
 
 msgid "Clinical negligence in babies"
-msgstr ""
+msgstr "Esgeulustra clinigol mewn babanod"
 
 msgid ""
 "Help if a baby has brain or nerve damage caused during pregnancy, "
 "childbirth or up to 8 weeks old."
 msgstr ""
+"Cymorth os yw babi wedi profi niwed i’r ymennydd neu'r system nerfol yn "
+"ystod beichiogrwydd, genedigaeth, neu cyn cyrraedd 8 wythnos oed"
 
 msgid "Compensation for abuse, assault or neglect"
-msgstr ""
+msgstr "Iawndal am gamdriniaeth, ymosodiad neu esgeulustod"
 
 msgid ""
 "Includes child abuse, sexual assault, abuse of a vulnerable adult. Claims"
 " can be against a person or an organisation."
 msgstr ""
+"Mae hyn yn cynnwys cam-drin plant, ymosod yn rhywiol, cam-drin oedolyn "
+"bregus. Gallwch chi hawlio iawndal gan berson neu sefydliad."
 
 msgid "Domestic abuse - if you have been accused"
-msgstr ""
+msgstr "Os ydych chi wedi cael eich cyhuddo o gam-drin domestig"
 
 msgid ""
 "Legal help if you’ve been accused of domestic abuse or forced marriage. "
 "Includes non-molestation orders and other court orders."
 msgstr ""
+"Cymorth cyfreithiol os ydych chi wedi cael eich cyhuddo o gam-drin "
+"domestig neu briodas dan orfod. Mae hyn yn cynnwys gorchmynion rhag "
+"molestu, a gorchmynion llys eraill."
 
 msgid "Environmental pollution"
-msgstr ""
+msgstr "Llygredd amgylcheddol"
 
 msgid ""
 "Issues about air, water or land pollution that is harming you or the "
 "environment."
 msgstr ""
+"Materion am lygredd aer, dŵr a thir sy’n achosi niwed i chi neu'r "
+"amgylchedd."
 
 msgid "Inquests for family members"
-msgstr ""
+msgstr "Cwestau aelodau o’r teulu"
 
 msgid "Advice to prepare for the inquest of a family member."
-msgstr ""
+msgstr "Cyngor ar sut i baratoi ar gyfer cwest aelod o’r teulu."
 
 msgid "Mental health detention"
-msgstr ""
+msgstr "Cadw dan glo oherwydd iechyd meddwl"
 
 msgid ""
 "Help if you’re held in hospital (‘sectioned’), mental health tribunals "
 "and community treatment orders."
 msgstr ""
+"Cymorth os ydych chi’n cael eich cadw yn yr ysbyty, tribiwnlysoedd iechyd"
+" meddwl, a gorchmynion triniaeth gymunedol."
 
 msgid "Proceeds of Crime Act"
-msgstr ""
+msgstr "Deddf Enillion Troseddau"
 
 msgid "If you’re facing legal action to take your money or other assets."
-msgstr ""
+msgstr "Os oes camau cyfreithiol ar waith i gymryd eich arian neu asedau eraill."
 
 msgid "Terrorism"
-msgstr ""
+msgstr "Terfysgaeth"
 
 msgid "If you’re accused of terrorism or financing terrorist groups."
 msgstr ""
+"Os ydych chi’n cael eich cyhuddo o derfysgaeth neu o ariannu grwpiau "
+"terfysgol."
 
 msgid "Help if you’re a victim of human trafficking or modern slavery."
+msgstr "Cymorth os ydych chi’n ddioddefwr masnachu pobl neu gaethwasiaeth fodern."
+
+msgid "Find other free or low-cost legal help"
+msgstr ""
+
+msgid "free or affordable legal help (opens new tab)."
+msgstr ""
+
+msgid "The Citizen’s Advice website explains how to find "
+msgstr ""
+
+msgid "Speak to an advice organisation"
+msgstr ""
+
+msgid "Citizen’s Advice (opens new tab)"
+msgstr ""
+
+msgid "Advicelocal (opens new tab)"
 msgstr ""
 
 msgid "Legal aid doesn’t cover all types of problem"
@@ -1663,7 +1704,7 @@ msgstr ""
 " eich budd-daliadau (yn agor mewn tab newydd)</a>."
 
 msgid "If you cannot find your problem"
-msgstr ""
+msgstr "Os nad ydych chi’n gallu dod o hyd i’ch problem"
 
 #, python-format
 msgid "Show %(count)s more"
