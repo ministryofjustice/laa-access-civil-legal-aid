@@ -335,7 +335,7 @@ msgid "Appeal a decision about your benefits."
 msgstr ""
 
 msgid "Legal action against police and public organisations"
-msgstr ""
+msgstr "Camau cyfreithiol yn erbyn yr heddlu a sefydliadau cyhoeddus"
 
 msgid "Includes schools, the police, government, prisons, NHS, the council."
 msgstr ""
