@@ -267,7 +267,7 @@ EDUCATION = Category(
     description=_("Help if your child has SEND."),
     article_category_name="Education",
     chs_code="education",
-    code="education",
+    code="send",
     children={
         "child_young_person": Category(
             title=_("Help with a child or young person's SEND"),
