@@ -2,42 +2,87 @@ from flask.sansio.blueprints import Blueprint
 from flask.views import View
 from flask import render_template, redirect, url_for, session, request
 from app.categories.forms import QuestionForm
+from app.categories.constants import Category
 
 
 class CategoryPage(View):
     template: str = None
+    question_title: str = ""
+    category: Category
 
     def __init__(self, template, *args, **kwargs):
         self.template = template
 
-    def dispatch_request(self):
-        return render_template(self.template)
+    def update_session(self, question: str, answer: str, category: Category) -> None:
+        """
+        Update the session with the current page and answer.
 
+        """
+        session.set_category_question_answer(
+            question_title=question,
+            answer=answer,
+            category=category,
+        )
 
-class IndexPage(CategoryPage):
     def dispatch_request(self):
-        session.clear()
-        return render_template(self.template)
+        category = getattr(self, "category", None)
+        if category is not None:
+            session["category"] = category
+
+        response = self.process_request()
+        if not response:
+            response = render_template(self.template)
+        return response
+
+    def process_request(self):
+        return None
 
 
 class CategoryLandingPage(CategoryPage):
-    question_title: str = ""
-
-    category: str = ""
+    template: str = "categories/landing.html"
 
     routing_map: dict[str, str] = {}
 
+    def process_request(self):
+        return render_template(
+            self.template, category=self.category, routing_map=self.routing_map
+        )
+
     @classmethod
-    def register_routes(cls, blueprint: Blueprint):
-        for answer, next_page in cls.routing_map.items():
+    def register_routes(cls, blueprint: Blueprint, path: str = None):
+        if not path:
+            path = cls.category.code.lower().replace("_", "-")
+
+        blueprint.add_url_rule(
+            f"/{path}/",
+            view_func=cls.as_view("landing", template=cls.template),
+        )
+        cls.register_sub_routes(blueprint, path, cls.routing_map["main"])
+        cls.register_sub_routes(blueprint, path, cls.routing_map["more"])
+
+        if "other" in cls.routing_map and cls.routing_map["other"] is not None:
             blueprint.add_url_rule(
-                f"/{cls.category}/{answer}",
+                f"/{path}/answer/other",
                 view_func=CategoryAnswerPage.as_view(
-                    answer,
+                    "other",
                     question=cls.question_title,
-                    answer=answer,
-                    next_page=next_page,
+                    answer="other",
+                    next_page=cls.routing_map["other"],
                     category=cls.category,
+                ),
+            )
+
+    @classmethod
+    def register_sub_routes(cls, blueprint: Blueprint, path, routes):
+        for sub_category, next_page in routes:
+            blueprint.add_url_rule(
+                f"/{path}/answer/{sub_category.code.replace('_', '-')}",
+                view_func=CategoryAnswerPage.as_view(
+                    sub_category.code,
+                    question=cls.question_title,
+                    answer=sub_category.code,
+                    next_page=next_page,
+                    category=sub_category,
                 ),
             )
 
@@ -68,7 +113,7 @@ class CategoryAnswerPage(View):
         return redirect(url_for(self.next_page))
 
 
-class QuestionPage(View):
+class QuestionPage(CategoryPage):
     """Base view for handling question pages with form submission and session management.
 
     This view handles:
@@ -90,6 +135,8 @@ class QuestionPage(View):
         """
         self.form_class = form_class
         self.template = template or self.template
+        self.category = form_class.category
+        super().__init__(self.template)
 
     def get_next_page(self, answer: str) -> redirect:
         """Determine and redirect to the next page based on the user's answer.
@@ -125,21 +172,7 @@ class QuestionPage(View):
             return redirect(url_for(**next_page))
         return redirect(url_for(next_page))
 
-    def update_session(self, answer: str | None = None) -> None:
-        """
-        Update the session with the current page and answer.
-
-        Args:
-            answer: The user's selected answer
-        """
-        session["previous_page"] = request.endpoint
-        session.set_category_question_answer(
-            question_title=self.form_class.title,
-            answer=answer,
-            category=self.form_class.category,
-        )
-
-    def dispatch_request(self):
+    def process_request(self):
         """Handle requests for the question page, including form submissions.
 
         This method processes both initial page loads and form submissions,
@@ -150,9 +183,12 @@ class QuestionPage(View):
             Either a redirect to the next page or the rendered template
         """
         form = self.form_class(request.args)
+        session["category"] = form.category
 
         if form.submit.data and form.validate():
-            self.update_session(form.question.data)
+            self.update_session(
+                question=form.title, answer=form.question.data, category=form.category
+            )
             return self.get_next_page(form.question.data)
 
         # Pre-populate form with previous answer if it exists

@@ -1,8 +1,8 @@
 from app.categories.community_care import bp
+from app.categories.results.views import CannotFindYourProblemPage, NextStepsPage
 from app.categories.views import CategoryLandingPage
 from app.categories.constants import COMMUNITY_CARE
 
-CATEGORY_NAME = COMMUNITY_CARE
 
 FALA_REDIRECT = {
     "endpoint": "find-a-legal-adviser.search",
@@ -11,27 +11,38 @@ FALA_REDIRECT = {
 
 
 class CommunityCareLandingPage(CategoryLandingPage):
-    question_title = CATEGORY_NAME
+    question_title = COMMUNITY_CARE.title
 
-    category = CATEGORY_NAME
+    category = COMMUNITY_CARE
 
     routing_map = {
-        "care_from_council": FALA_REDIRECT,
-        "carer": FALA_REDIRECT,
-        "receive_care_in_own_home": FALA_REDIRECT,
-        "care_or_funding_stops": FALA_REDIRECT,
-        "placement_care_homes_care_housing": FALA_REDIRECT,
-        "problems_with_quality_of_care": FALA_REDIRECT,
-        "care_leaver": FALA_REDIRECT,
-        "other": "categories.results.refer",
+        "main": [
+            (COMMUNITY_CARE.sub.care_from_council, FALA_REDIRECT),
+            (COMMUNITY_CARE.sub.carer, FALA_REDIRECT),
+            (COMMUNITY_CARE.sub.receive_care_in_own_home, FALA_REDIRECT),
+            (COMMUNITY_CARE.sub.care_or_funding_stops, FALA_REDIRECT),
+            (COMMUNITY_CARE.sub.placement_care_homes_care_housing, FALA_REDIRECT),
+            (COMMUNITY_CARE.sub.problems_with_quality_of_care, FALA_REDIRECT),
+            (COMMUNITY_CARE.sub.care_leaver, FALA_REDIRECT),
+        ],
+        "more": [],
+        "other": "categories.community_care.cannot_find_your_problem",
     }
 
 
+CommunityCareLandingPage.register_routes(blueprint=bp, path="/disability-social-care")
 bp.add_url_rule(
-    "/community-care/",
-    view_func=CommunityCareLandingPage.as_view(
-        "landing", template="categories/community_care/landing.html"
+    "/disability-social-care/cannot-find-your-problem",
+    view_func=CannotFindYourProblemPage.as_view(
+        "cannot_find_your_problem",
+        category=COMMUNITY_CARE,
+        next_steps_page="categories.community_care.next_steps",
     ),
 )
-
-CommunityCareLandingPage.register_routes(blueprint=bp)
+bp.add_url_rule(
+    "/disability-social-care/next-steps",
+    view_func=NextStepsPage.as_view(
+        "next_steps",
+        category=COMMUNITY_CARE,
+    ),
+)

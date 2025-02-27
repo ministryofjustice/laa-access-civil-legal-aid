@@ -24,8 +24,8 @@ class TestAsylumAndImmigrationLandingPage:
 
     def test_appeal_none(self, page: Page):
         page.get_by_role("link", name="Benefits").click()
-        page.get_by_label("None of the above").check()
+        page.get_by_label("None of these").check()
         page.get_by_role("button", name="Continue").click()
         expect(
-            page.get_by_text("Legal aid doesn’t cover all types of problem")
+            page.get_by_text("Sorry, you’re not likely to get legal aid")
         ).to_be_visible()

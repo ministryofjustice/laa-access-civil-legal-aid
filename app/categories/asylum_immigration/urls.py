@@ -1,4 +1,5 @@
 from app.categories.asylum_immigration import bp
+from app.categories.results.views import CannotFindYourProblemPage, NextStepsPage
 from app.categories.views import CategoryLandingPage
 from app.categories.constants import ASYLUM_AND_IMMIGRATION
 
@@ -10,23 +11,38 @@ FALA_REDIRECT = {
 
 
 class AsylumAndImmigrationLandingPage(CategoryLandingPage):
-    question_title = "Asylum and immigration"
+    question_title = ASYLUM_AND_IMMIGRATION.title
     category = ASYLUM_AND_IMMIGRATION
 
     routing_map = {
-        "apply": FALA_REDIRECT,
-        "housing": "categories.housing.homelessness",
-        "domestic_abuse": FALA_REDIRECT,
-        "detained": FALA_REDIRECT,
-        "modern_slavery": FALA_REDIRECT,
+        "main": [
+            (ASYLUM_AND_IMMIGRATION.sub.apply, FALA_REDIRECT),
+            (ASYLUM_AND_IMMIGRATION.sub.housing, "categories.housing.homelessness"),
+            (ASYLUM_AND_IMMIGRATION.sub.domestic_abuse, FALA_REDIRECT),
+            (ASYLUM_AND_IMMIGRATION.sub.detained, FALA_REDIRECT),
+        ],
+        "more": [
+            (ASYLUM_AND_IMMIGRATION.sub.modern_slavery, FALA_REDIRECT),
+        ],
+        "other": {"endpoint": "categories.asylum_immigration.cannot_find_your_problem"},
     }
 
 
+AsylumAndImmigrationLandingPage.register_routes(
+    blueprint=bp, path="/asylum-and-immigration"
+)
 bp.add_url_rule(
-    "/asylum-and-immigration",
-    view_func=AsylumAndImmigrationLandingPage.as_view(
-        "landing", template="categories/asylum-and-immigration/landing.html"
+    "/asylum-and-immigration/cannot-find-your-problem",
+    view_func=CannotFindYourProblemPage.as_view(
+        "cannot_find_your_problem",
+        category=ASYLUM_AND_IMMIGRATION,
+        next_steps_page="categories.asylum_immigration.next_steps",
     ),
 )
-
-AsylumAndImmigrationLandingPage.register_routes(blueprint=bp)
+bp.add_url_rule(
+    "/asylum-and-immigration/next-steps",
+    view_func=NextStepsPage.as_view(
+        "next_steps",
+        category=ASYLUM_AND_IMMIGRATION,
+    ),
+)

@@ -1,4 +1,5 @@
 from wtforms import SelectMultipleField
+from app.categories.validators import ExclusiveValue
 from app.categories.widgets import CategoryCheckboxInput
 from app.categories.forms import QuestionForm
 from wtforms.validators import InputRequired
@@ -15,7 +16,7 @@ class DiscriminationWhereForm(DiscriminationQuestionForm):
 
     next_step_mapping = {
         "*": "categories.discrimination.why",
-        "notsure": "categories.results.refer",
+        "notsure": "categories.discrimination.why",
     }
 
     question = SelectMultipleField(
@@ -23,11 +24,7 @@ class DiscriminationWhereForm(DiscriminationQuestionForm):
         widget=CategoryCheckboxInput(
             show_divider=True, hint_text="You can select more than one."
         ),
-        validators=[
-            InputRequired(
-                message="Select where the discrimination happened, or select ‘I’m not sure’"
-            )
-        ],
+        validators=[InputRequired(message="Select where the discrimination happened")],
         choices=[
             ("work", "Work - including colleagues, employer or employment agency"),
             ("school", "School, college, university or other education setting"),
@@ -53,15 +50,23 @@ class DiscriminationWhyForm(DiscriminationQuestionForm):
 
     next_step_mapping = {
         "*": "categories.discrimination.age",
-        "none": "categories.results.refer",
+        "none": "categories.discrimination.cannot_find_your_problem",
     }
 
     question = SelectMultipleField(
         title,
         widget=CategoryCheckboxInput(
-            show_divider=True, hint_text="You can select more than one."
+            show_divider=True,
+            hint_text="You can select more than one.",
+            behaviour="exclusive",
         ),
-        validators=[InputRequired(message="Select why you were discriminated against")],
+        validators=[
+            InputRequired(message="Select why you were discriminated against"),
+            ExclusiveValue(
+                exclusive_value="none",
+                message="Select why you were discriminated against, or select ‘None of these’",
+            ),
+        ],
         choices=[
             ("race", "Race, colour, ethnicity, nationality"),
             ("sex", "Sex (male or female)"),
