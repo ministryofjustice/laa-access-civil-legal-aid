@@ -40,7 +40,7 @@ msgid "Threats, abuse or harassment by someone who is not a family member."
 msgstr ""
 
 msgid "Housing, homelessness, losing your home"
-msgstr ""
+msgstr "Tai, digartrefedd, colli eich cartref"
 
 msgid ""
 "Includes being forced to leave your home, problems with council housing, "
@@ -132,72 +132,72 @@ msgid ""
 msgstr ""
 
 msgid "Homelessness"
-msgstr ""
+msgstr "Digartrefedd"
 
 msgid ""
 "Help if you’re homeless, or might be homeless in the next 2 months. This "
 "could be because of rent arrears, debt, the end of a relationship, or "
 "because you have nowhere to live."
-msgstr ""
+msgstr "Cymorth os ydych chi'n ddigartref, neu os gallech chi fod yn ddigartref yn ystod y 2 fis nesaf. Gallai hyn fod oherwydd ôl-ddyledion rhent, dyled, diwedd perthynas, neu oherwydd nad oes gennych unman i fyw."
 
 msgid "Eviction, told to leave your home"
-msgstr ""
+msgstr "Troi allan, wedi cael cyfarwyddyd i adael eich cartref"
 
 msgid ""
 "Landlord has told you to leave or is trying to force you to leave. "
 "Includes if you’ve got a Section 21 or a possession order."
-msgstr ""
+msgstr "Mae’r landlord wedi dweud wrthych am adael neu mae’n ceisio eich gorfodi i adael. Mae’n cynnwys os oes gennych chi orchymyn Adran 21 neu orchymyn meddiannu."
 
 msgid "Forced to sell or losing the home you own"
-msgstr ""
+msgstr "Cael eich gorfodi i werthu neu golli’r cartref rydych chi’n berchen arno"
 
 msgid ""
 "Repossession by your mortgage company; bankruptcy or other debt that "
 "means you will lose the home you own."
-msgstr ""
+msgstr "Adfeddiant gan eich cwmni morgais; methdaliad neu ddyled arall sy’n golygu y byddwch yn colli’r cartref yr ydych yn berchen arno."
 
 msgid "Repairs, health and safety"
-msgstr ""
+msgstr "Atgyweirio, iechyd a diogelwch"
 
 msgid ""
 "If your house is not safe to live in, or needs repairs, and this is "
 "causing health or safety problems."
-msgstr ""
+msgstr "Os nad yw eich tŷ yn ddiogel i fyw ynddo, neu os oes angen ei atgyweirio, a bod hyn yn achosi problemau iechyd neu ddiogelwch."
 
 msgid "Problems with council housing"
-msgstr ""
+msgstr "Problemau gyda thai cyngor"
 
 msgid ""
 "Help to challenge the council’s decision about giving you housing. It "
 "includes if the council has offered a house that is not right for you, or"
 " that needs repairs or adaptations."
-msgstr ""
+msgstr "Helpu i herio penderfyniad y cyngor ynghylch rhoi tŷ i chi. Mae hyn yn cynnwys os yw'r cyngor wedi cynnig tŷ nad yw'n addas i chi, neu fod angen ei atgyweirio neu ei addasu."
 
 msgid "Being threatened or harassed where you live"
-msgstr ""
+msgstr "Cael eich bygwth neu eich aflonyddu lle rydych chi’n byw"
 
 msgid "By a landlord, neighbour or someone else."
-msgstr ""
+msgstr "Gan landlord, cymydog neu rywun arall."
 
 msgid "If you’re an asylum-seeker"
-msgstr ""
+msgstr "Os ydych chi'n geisiwr lloches"
 
 msgid "Applying for housing, losing your housing or homelessness."
-msgstr ""
+msgstr "Gwneud cais am dŷ, colli eich cartref neu ddigartrefedd."
 
 msgid "Discrimination"
 msgstr "Gwahaniaethu"
 
 msgid "Treated unfairly by a landlord, council or housing association."
-msgstr ""
+msgstr "Cael eich trin yn annheg gan landlord, cyngor neu gymdeithas dai."
 
 msgid "If you’ve been accused of anti-social behaviour"
-msgstr ""
+msgstr "Os cawsoch eich cyhuddo o ymddygiad gwrthgymdeithasol"
 
 msgid ""
 "Accused of anti-social behaviour by the landlord, council or housing "
 "association."
-msgstr ""
+msgstr "Wedi cael eich cyhuddo o ymddygiad gwrthgymdeithasol gan y landlord, y cyngor neu'r gymdeithas dai."
 
 msgid ""
 "Treated unfairly because of things like your disability or health "
@@ -1345,7 +1345,7 @@ msgid "Sorry, you’re not likely to get legal aid"
 msgstr ""
 
 msgid "Next steps to get help"
-msgstr ""
+msgstr "Camau nesaf i gael cymorth"
 
 msgid "Legal aid is available for this type of problem"
 msgstr "Mae cymorth cyfreithiol ar gael ar gyfer y math hwn o broblem"
@@ -1494,7 +1494,7 @@ msgid "More problems covered by legal aid"
 msgstr ""
 
 msgid "More problems"
-msgstr ""
+msgstr "Mwy o broblemau"
 
 msgid "Adopting a child from outside the UK"
 msgstr ""
@@ -1663,7 +1663,7 @@ msgstr ""
 " eich budd-daliadau (yn agor mewn tab newydd)</a>."
 
 msgid "If you cannot find your problem"
-msgstr ""
+msgstr "Os na allwch ddod o hyd i'ch problem"
 
 #, python-format
 msgid "Show %(count)s more"
