@@ -244,10 +244,10 @@ msgstr ""
 msgid ""
 "Problems getting the local authority or council to provide or pay for the"
 " right care. For carers, children, young people and adults."
-msgstr ""
+msgstr "Problemau cael yr awdurdod neu’r cyngor lleol i ddarparu neu dalu am y gofal iawn. Ar gyfer gofalwyr, plant, pobl ifanc ac oedolion."
 
 msgid "Care needs for disability and old age (social care)"
-msgstr ""
+msgstr "Anghenion gofal ar gyfer anabledd a henaint (gofal cymdeithasol)"
 
 msgid "Care from the council (local authority)"
 msgstr ""
@@ -369,7 +369,7 @@ msgid "Help if you’re a victim of trafficking or modern slavery."
 msgstr ""
 
 msgid "Mental capacity, mental health"
-msgstr ""
+msgstr "Galluedd meddyliol, iechyd meddwl"
 
 msgid ""
 "Help if someone cannot make decisions about their health, day-to-day life"
@@ -377,28 +377,28 @@ msgid ""
 msgstr ""
 
 msgid "If someone cannot decide for themselves (lacks mental capacity)"
-msgstr ""
+msgstr "Os na all rhywun benderfynu drosto’i hun (diffyg galluedd meddyliol)"
 
 msgid ""
 "Help to challenge a decision made about someone’s living arrangements, "
 "care, health, relationships, family contact or finances. Includes if "
 "someone is deprived of their liberty, and ‘deprivation of liberty "
 "safeguards’ (DoLS)."
-msgstr ""
+msgstr "Cymorth i herio penderfyniad a wnaethpwyd am drefniadau byw, gofal, iechyd, perthnasoedd, cyswllt teuluol neu gyllid rhywun. Mae hyn yn cynnwys os yw rhywun yn cael ei amddifadu o’i ryddid, a ‘threfniadau diogelu wrth amddifadu o ryddid’ (DoLS)."
 
 msgid "Court of Protection"
-msgstr ""
+msgstr "Y Llys Gwarchod"
 
 msgid "Advice about issues covered by the Court of Protection."
-msgstr ""
+msgstr "Cyngor ar faterion y mae’r Llys Gwarchod yn ymdrin â nhw."
 
 msgid "Mental health detention and tribunals"
-msgstr ""
+msgstr "Canolfannau cadw a thribiwnlysoedd iechyd meddwl"
 
 msgid ""
 "Help if someone has been sectioned (held in a mental health hospital), or"
 " is under a community treatment order. Help with mental health tribunals."
-msgstr ""
+msgstr "Cymorth os bydd rhywun wedi cael ei gadw mewn ysbyty iechyd meddwl, neu os yw o dan orchymyn triniaeth gymunedol. Help gyda thribiwnlysoedd iechyd meddwl."
 
 msgid "special educational needs and disability (SEND)"
 msgstr ""
@@ -1345,7 +1345,7 @@ msgid "Sorry, you’re not likely to get legal aid"
 msgstr ""
 
 msgid "Next steps to get help"
-msgstr ""
+msgstr "Camau nesaf i gael cymorth"
 
 msgid "Legal aid is available for this type of problem"
 msgstr "Mae cymorth cyfreithiol ar gael ar gyfer y math hwn o broblem"
@@ -1663,7 +1663,7 @@ msgstr ""
 " eich budd-daliadau (yn agor mewn tab newydd)</a>."
 
 msgid "If you cannot find your problem"
-msgstr ""
+msgstr "Os na allwch ddod o hyd i'ch problem"
 
 #, python-format
 msgid "Show %(count)s more"
