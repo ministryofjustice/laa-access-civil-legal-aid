@@ -6,6 +6,9 @@ msgid ""
 "harassing, threatening or hurting you or a child. This could be a "
 "partner, ex-partner, or family member."
 msgstr ""
+"Mae hyn yn cynnwys ymddygiad rheolaethol, cam-drin emosiynol, neu os oes "
+"rhywun yn aflonyddu, yn eich bygwth neu eich brifo chi neu eich plentyn. "
+"Gall hyn fod yn bartner, cyn-bartner, neu aelod o’r teulu."
 
 msgid "Help to keep yourself safe and protect children"
 msgstr ""
@@ -40,7 +43,7 @@ msgid "Threats, abuse or harassment by someone who is not a family member."
 msgstr ""
 
 msgid "Housing, homelessness, losing your home"
-msgstr ""
+msgstr "Tai, digartrefedd, a cholli eich cartref"
 
 msgid ""
 "Includes being forced to leave your home, problems with council housing, "
@@ -60,12 +63,15 @@ msgid "If you or someone else is at risk of FGM."
 msgstr ""
 
 msgid "Children, families, relationships"
-msgstr ""
+msgstr "Plant, teuluoedd, a pherthnasoedd"
 
 msgid ""
 "Includes children in care, children and social services. Also, help with "
 "children and finances if you divorce or split up."
 msgstr ""
+"Mae hyn yn cynnwys, plant mewn gofal, plant, a gwasanaethau cymdeithasol."
+"  Yn ogystal â chymorth ariannol a chymorth gyda phlant os ydych chi’n "
+"ysgaru neu’n gwahanu."
 
 msgid "Children and social services, children in care"
 msgstr ""
@@ -130,6 +136,9 @@ msgid ""
 "Includes being evicted or forced to sell your home. Problems with "
 "landlords, repairs, neighbours or council housing."
 msgstr ""
+"Mae hyn yn cynnwys cael eich troi allan neu gael eich gorfodi i werthu "
+"eich cartref. Problemau gyda landlordiaid, gwaith atgyweirio, cymdogion, "
+"neu dai cyngor."
 
 msgid "Homelessness"
 msgstr ""
@@ -203,12 +212,14 @@ msgid ""
 "Treated unfairly because of things like your disability or health "
 "condition, race, age, sex, religion or pregnancy."
 msgstr ""
+"Wedi cael eich trin yn annheg oherwydd pethau fel eich anabledd neu "
+"gyflwr iechyd, hil, oed, rhyw, crefydd neu feichiogrwydd."
 
 msgid "Special educational needs and disability (SEND)"
-msgstr ""
+msgstr "Anghenion addysgol arbennig ac anableddau (SEND)"
 
 msgid "Help if your child has SEND."
-msgstr ""
+msgstr "Cymorth os oes gan eich plentyn anghenion addysgol arbennig ac anableddau."
 
 msgid "Help with a child or young person's SEND"
 msgstr ""
@@ -239,12 +250,14 @@ msgid "Other problems with schools"
 msgstr ""
 
 msgid "Care needs for disability (social care)"
-msgstr ""
+msgstr "Anghenion gofal ar gyfer anabledd neu henaint (gofal cymdeithasol)"
 
 msgid ""
 "Problems getting the local authority or council to provide or pay for the"
 " right care. For carers, children, young people and adults."
 msgstr ""
+"Problemau wrth gael yr awdurdod lleol neu’r cyngor i ddarparu neu dalu am"
+" y gofal cywir. Ar gyfer plant, pobl ifanc ac oedolion."
 
 msgid "Care needs for disability and old age (social care)"
 msgstr ""
@@ -310,27 +323,29 @@ msgid ""
 msgstr ""
 
 msgid "Benefits"
-msgstr ""
+msgstr "Budd-daliadau"
 
 msgid "Welfare benefits"
 msgstr "Budd-daliadau lles"
 
 msgid "Appeal a decision about your benefits."
-msgstr ""
+msgstr "Apelio penderfyniadau am eich budd-daliadau."
 
 msgid "Legal action against police and public organisations"
-msgstr ""
+msgstr "Cymryd camau cyfreithiol yn erbyn heddlu a sefydliadau cyhoeddus"
 
-msgid "Includes schools, the police, government, prisons, NHS, the council."
-msgstr ""
+msgid ""
+"Includes police, government, prisons, NHS, the council, care facilities "
+"and schools."
+msgstr "Mae hyn yn cynnwys yr heddlu, y llywodraeth, carchardai, y GIG, cyfleusterau gofal, ac ysgolion."
 
 msgid "Asylum and immigration"
-msgstr ""
+msgstr "Lloches a mewnfudo"
 
 msgid ""
 "Help if you’re seeking asylum. Help to stay in the UK if you experienced "
 "domestic abuse."
-msgstr ""
+msgstr "Cymorth os ydych chi’n ceisio lloches. Cymorth i aros yn y Deyrnas Unedig os ydych chi wedi profi cam-drin domestig."
 
 msgid "Applying for asylum"
 msgstr ""
@@ -369,12 +384,12 @@ msgid "Help if you’re a victim of trafficking or modern slavery."
 msgstr ""
 
 msgid "Mental capacity, mental health"
-msgstr ""
+msgstr "Galluedd meddyliol, ac iechyd meddwl"
 
 msgid ""
 "Help if someone cannot make decisions about their health, day-to-day life"
 " or care. Help at mental health tribunals."
-msgstr ""
+msgstr "Cymorth os nad yw rhywun yn gallu gwneud penderfyniadau am eu hiechyd, bywyd o ddydd i ddydd na gofal. Cymorth mewn tribiwnlysoedd iechyd meddwl."
 
 msgid "If someone cannot decide for themselves (lacks mental capacity)"
 msgstr ""
@@ -1488,10 +1503,17 @@ msgstr ""
 " oes arnoch angen cyngor am gam-drin domestig"
 
 msgid "Find problems covered by legal aid"
+msgstr "Dod o hyd i broblemau y mae cymorth cyfreithiol yn delio â nhw"
+
+msgid ""
+"These are the problems covered by legal aid. Choose the problem you need "
+"help with."
 msgstr ""
+"Dyma’r problemau y mae cymorth cyfreithiol yn delio â nhw. Dewiswch pa "
+"broblem y mae angen cymorth arnoch chi i ddelio ag o."
 
 msgid "More problems covered by legal aid"
-msgstr ""
+msgstr "Mwy o broblemau y mae cymorth cyfreithiol yn delio â nhw"
 
 msgid "More problems"
 msgstr ""
@@ -1575,6 +1597,24 @@ msgid "If you’re accused of terrorism or financing terrorist groups."
 msgstr ""
 
 msgid "Help if you’re a victim of human trafficking or modern slavery."
+msgstr ""
+
+msgid "Find other free or low-cost legal help"
+msgstr ""
+
+msgid "free or affordable legal help (opens new tab)."
+msgstr ""
+
+msgid "The Citizen’s Advice website explains how to find "
+msgstr ""
+
+msgid "Speak to an advice organisation"
+msgstr ""
+
+msgid "Citizen’s Advice (opens new tab)"
+msgstr ""
+
+msgid "Advicelocal (opens new tab)"
 msgstr ""
 
 msgid "Legal aid doesn’t cover all types of problem"
@@ -2038,4 +2078,7 @@ msgstr "Carafannau a cherbydau eraill nad ydych chi’n eu defnyddio bob dydd"
 
 msgid "Musical instruments, unless you’re a professional musician"
 msgstr "Offerynnau cerddorol, oni bai’ch bod yn gerddor proffesiynol"
+
+#~ msgid "Includes schools, the police, government, prisons, NHS, the council."
+#~ msgstr ""
 
