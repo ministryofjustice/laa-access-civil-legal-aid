@@ -192,7 +192,7 @@ msgid "Treated unfairly by a landlord, council or housing association."
 msgstr "Cael eich trin yn annheg gan landlord, cyngor neu gymdeithas dai."
 
 msgid "If you’ve been accused of anti-social behaviour"
-msgstr "Os cawsoch eich cyhuddo o ymddygiad gwrthgymdeithasol"
+msgstr "Os ydych wedi cael eich cyhuddo o ymddygiad gwrthgymdeithasol"
 
 msgid ""
 "Accused of anti-social behaviour by the landlord, council or housing "
