@@ -122,6 +122,9 @@ msgid ""
 "Advice about legal action against a school. Includes if a child is out of"
 " school, exclusions, transport to school, judicial reviews."
 msgstr ""
+"Cyngor ar gamau cyfreithiol yn erbyn ysgol. Mae hyn yn cynnwys os nad yw "
+"plentyn yn mynd i’r ysgol, gwaharddiadau, cludiant i’r ysgol, adolygiadau"
+" barnwrol."
 
 msgid "Forced marriage"
 msgstr ""
@@ -205,46 +208,55 @@ msgid ""
 msgstr ""
 
 msgid "Special educational needs and disability (SEND)"
-msgstr ""
+msgstr "Plant ag anghenion addysgol arbennig ac anableddau (SEND)"
 
 msgid "Help if your child has SEND."
 msgstr ""
 
 msgid "Help with a child or young person's SEND"
-msgstr ""
+msgstr "Cymorth gyda SEND plentyn neu berson ifanc"
 
 msgid ""
 "Help with schools, other education settings and local authorities. "
 "Includes help with education, health and care plans (EHCP) or if a "
 "child’s needs are not being met."
 msgstr ""
+"Cymorth gydag ysgolion, lleoliadau addysg eraill ac awdurdodau lleol. Mae"
+" hyn yn cynnwys cymorth gyda chynlluniau addysg, iechyd a gofal (EHCP) "
+"neu os nad yw anghenion plentyn yn cael eu diwallu."
 
 msgid "SEND tribunals"
-msgstr ""
+msgstr "Tribiwnlysoedd SEND"
 
 msgid ""
 "Applying for or going to a SEND tribunal, appealing a decision by a "
 "tribunal."
 msgstr ""
+"Gwneud cais i dribiwnlys SEND neu fynd i dribiwnlys SEND, apelio yn erbyn"
+" penderfyniad gan dribiwnlys."
 
 msgid "Child treated unfairly at school, discrimination"
-msgstr ""
+msgstr "Plentyn yn cael ei drin yn annheg yn yr ysgol, gwahaniaethu"
 
 msgid ""
 "If a child is treated unfairly at school because of their disability. Or "
 "if you were treated badly for complaining about this."
 msgstr ""
+"Os caiff plentyn ei drin yn annheg yn yr ysgol oherwydd ei anabledd. Neu "
+"os cawsoch chi eich trin yn wael am gwyno am hyn."
 
 msgid "Other problems with schools"
-msgstr ""
+msgstr "Problemau eraill gydag ysgolion"
 
 msgid "Care needs for disability (social care)"
-msgstr ""
+msgstr "Anghenion gofal ar gyfer anabledd (gofal cymdeithasol"
 
 msgid ""
 "Problems getting the local authority or council to provide or pay for the"
 " right care. For carers, children, young people and adults."
 msgstr ""
+"Problemau cael yr awdurdod neu’r cyngor lleol i ddarparu neu dalu am y "
+"gofal iawn. Ar gyfer gofalwyr, plant, pobl ifanc ac oedolion."
 
 msgid "Care needs for disability and old age (social care)"
 msgstr ""
@@ -461,10 +473,10 @@ msgid "Select if you’re under 18"
 msgstr "Dewiswch os ydych chi dan 18 oed"
 
 msgid "Were you accused by a landlord or the council?"
-msgstr ""
+msgstr "A gawsoch chi eich cyhuddo gan landlord neu'r cyngor?"
 
 msgid "Select ‘Yes’ if you were accused by a landlord or the council"
-msgstr ""
+msgstr "Dewiswch ‘Do’ os cawsoch eich cyhuddo gan landlord neu’r cyngor"
 
 msgid "Why do you want to contact Civil Legal Advice?"
 msgstr "Pam eich bod eisiau cysylltu â’r gwasanaeth Cyngor Cyfreithiol Sifil?"
@@ -1345,7 +1357,7 @@ msgid "Sorry, you’re not likely to get legal aid"
 msgstr ""
 
 msgid "Next steps to get help"
-msgstr ""
+msgstr "Camau nesaf i gael cymorth"
 
 msgid "Legal aid is available for this type of problem"
 msgstr "Mae cymorth cyfreithiol ar gael ar gyfer y math hwn o broblem"
@@ -1494,7 +1506,7 @@ msgid "More problems covered by legal aid"
 msgstr ""
 
 msgid "More problems"
-msgstr ""
+msgstr "Mwy o broblemau"
 
 msgid "Adopting a child from outside the UK"
 msgstr ""
@@ -1509,7 +1521,7 @@ msgid "Including if you’re on a ‘barred list’ or disqualified from teachin
 msgstr ""
 
 msgid "Anti-social behaviour and gangs"
-msgstr ""
+msgstr "Ymddygiad gwrthgymdeithasol a gangiau"
 
 msgid ""
 "If you’re accused or taken to court for anti-social behaviour, including "
@@ -1575,6 +1587,24 @@ msgid "If you’re accused of terrorism or financing terrorist groups."
 msgstr ""
 
 msgid "Help if you’re a victim of human trafficking or modern slavery."
+msgstr ""
+
+msgid "Find other free or low-cost legal help"
+msgstr ""
+
+msgid "free or affordable legal help (opens new tab)."
+msgstr ""
+
+msgid "The Citizen’s Advice website explains how to find "
+msgstr ""
+
+msgid "Speak to an advice organisation"
+msgstr ""
+
+msgid "Citizen’s Advice (opens new tab)"
+msgstr ""
+
+msgid "Advicelocal (opens new tab)"
 msgstr ""
 
 msgid "Legal aid doesn’t cover all types of problem"
@@ -1663,7 +1693,7 @@ msgstr ""
 " eich budd-daliadau (yn agor mewn tab newydd)</a>."
 
 msgid "If you cannot find your problem"
-msgstr ""
+msgstr "Os na allwch ddod o hyd i'ch problem"
 
 #, python-format
 msgid "Show %(count)s more"
