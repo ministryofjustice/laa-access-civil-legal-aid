@@ -50,7 +50,8 @@ def test_get_context_with_immigration_category():
         assert result["organisations"] == []
         assert result["fala_category_code"] == "IMMAS"
 
-        mock_get_orgs.assert_not_called()
+        # Verify correct article_category_name was used
+        mock_get_orgs.assert_called_once_with("Immigration and asylum")
 
 
 def test_get_context_with_no_category():
