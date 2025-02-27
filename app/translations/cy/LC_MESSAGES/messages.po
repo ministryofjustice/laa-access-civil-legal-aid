@@ -341,7 +341,7 @@ msgid "Includes schools, the police, government, prisons, NHS, the council."
 msgstr ""
 
 msgid "Asylum and immigration"
-msgstr ""
+msgstr "Lloches a mewnfudo"
 
 msgid ""
 "Help if you’re seeking asylum. Help to stay in the UK if you experienced "
@@ -349,40 +349,40 @@ msgid ""
 msgstr ""
 
 msgid "Applying for asylum"
-msgstr ""
+msgstr "Gwneud cais am loches"
 
 msgid ""
 "Help to apply for asylum, go to asylum interviews, or appeal an asylum "
 "decision."
-msgstr ""
+msgstr "Cymorth i wneud cais am loches, mynd i gyfweliadau lloches, neu apelio yn erbyn penderfyniad am loches."
 
 msgid "Housing and homelessness"
-msgstr ""
+msgstr "Tai a digartrefedd"
 
 msgid "Help to apply for housing, problems with housing or if you are homeless."
-msgstr ""
+msgstr "Cymorth i wneud cais am dŷ, problemau gyda thai neu os ydych chi'n ddigartref."
 
 msgid "Stay in the UK if you experienced domestic abuse"
-msgstr ""
+msgstr "Aros yn y DU os ydych chi wedi profi cam-drin domestig"
 
 msgid ""
 "Help to remain in the UK or EU if your relationship ended because of "
 "domestic abuse. This could be by a partner, ex-partner or family member."
-msgstr ""
+msgstr "Cymorth i aros yn y DU neu’r UE os daeth eich perthynas i ben oherwydd cam-drin domestig. Gallai hyn fod gan bartner, cyn-bartner neu aelod o’r teulu."
 
 msgid "Help if you’re being detained"
-msgstr ""
+msgstr "Cymorth os ydych chi'n cael eich cadw'n y ddalfa"
 
 msgid ""
 "Help if you’re in immigration detention, including if you want to apply "
 "for bail. Help if you’re in prison."
-msgstr ""
+msgstr "Cymorth os ydych chi’n cael eich cadw dan reolau mewnfudo, gan gynnwys os ydych chi eisiau gwneud cais am fechnïaeth. Cymorth os ydych chi yn y carchar."
 
 msgid "Trafficking, modern slavery"
-msgstr ""
+msgstr "Masnachu pobl, caethwasiaeth fodern"
 
 msgid "Help if you’re a victim of trafficking or modern slavery."
-msgstr ""
+msgstr "Cymorth os ydych chi’n ddioddefwr masnachu pobl neu gaethwasiaeth fodern."
 
 msgid "Mental capacity, mental health"
 msgstr "Galluedd meddyliol, iechyd meddwl"
