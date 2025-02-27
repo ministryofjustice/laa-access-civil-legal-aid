@@ -12,11 +12,6 @@ from playwright.sync_api import Page, expect
             id="family-category",
         ),
         pytest.param(
-            "Domestic abuse",
-            "These organisations give free, independent advice for problems about domestic abuse.",
-            id="domestic-abuse-category",
-        ),
-        pytest.param(
             "Police and public organisations",
             "These organisations give free, independent advice for problems with police and public organisations.",
             id="public-law-category",
