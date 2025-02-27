@@ -205,7 +205,7 @@ msgid ""
 msgstr ""
 
 msgid "Special educational needs and disability (SEND)"
-msgstr ""
+msgstr "Plant ag anghenion addysgol arbennig ac anableddau (SEND)"
 
 msgid "Help if your child has SEND."
 msgstr ""
@@ -401,7 +401,7 @@ msgid ""
 msgstr ""
 
 msgid "special educational needs and disability (SEND)"
-msgstr ""
+msgstr "plant ag anghenion addysgol arbennig ac anableddau (SEND)"
 
 msgid "Validation failed message"
 msgstr ""
@@ -425,10 +425,10 @@ msgid "Select if you’re worried about someone’s safety"
 msgstr "Dewiswch os ydych chi’n poeni am ddiogelwch rhywun"
 
 msgid "Is this about a child who is or has been in care?"
-msgstr ""
+msgstr "A yw hyn yn ymwneud â phlentyn sydd mewn gofal neu sydd wedi bod mewn gofal?"
 
 msgid "Select if the child is or has been in care"
-msgstr ""
+msgstr "Dewiswch a yw’r plentyn mewn gofal neu wedi bod mewn gofal"
 
 msgid "Where will the appeal be held?"
 msgstr "Ble fydd yr apêl yn cael ei chynnal?"
