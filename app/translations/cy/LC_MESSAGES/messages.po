@@ -247,67 +247,67 @@ msgid ""
 msgstr ""
 
 msgid "Care needs for disability and old age (social care)"
-msgstr ""
+msgstr "Anghenion gofal ar gyfer anabledd a henaint (gofal cymdeithasol)"
 
 msgid "Care from the council (local authority)"
-msgstr ""
+msgstr "Gofal gan y cyngor (awdurdod lleol)"
 
 msgid ""
 "Includes problems with care needs assessments, financial assessments and "
 "care support plans. Getting an advocate for assessments. Problems with "
 "transport, personal budgets and direct payments."
-msgstr ""
+msgstr "Mae hyn yn cynnwys problemau gydag asesiadau o anghenion gofal, asesiadau ariannol a chynlluniau cymorth gofal. Cael eiriolwr ar gyfer asesiadau. Problemau gyda thrafnidiaeth, cyllidebau personol a thaliadau uniongyrchol."
 
 msgid "If you’re a carer"
-msgstr ""
+msgstr "Os ydych chi'n ofalwr"
 
 msgid ""
 "Includes problems with carer’s assessments and respite care. Problems to "
 "do with making decisions about someone’s care."
-msgstr ""
+msgstr "Yn cynnwys problemau gydag asesiadau gofalwyr a gofal seibiant. Problemau sy’n ymwneud â gwneud penderfyniadau am ofal rhywun."
 
 msgid "If you receive care in your own home"
-msgstr ""
+msgstr "Os ydych chi'n cael gofal yn eich cartref eich hun"
 
 msgid ""
 "Problems with care providers, social workers, care agencies. Also getting"
 " adaptations and disabled facilities grants."
-msgstr ""
+msgstr "Problemau gyda darparwyr gofal, gweithwyr cymdeithasol, asiantaethau gofal. Hefyd cael grantiau addasiadau a grantiau cyfleusterau i bobl anabl."
 
 msgid "If care or funding stops"
-msgstr ""
+msgstr "Os bydd gofal neu gyllid yn dod i ben"
 
 msgid ""
 "Problems if care or money for care is stopped or reduced, or if care "
 "facilities close."
-msgstr ""
+msgstr "Problemau os yw gofal neu arian ar gyfer gofal yn cael ei atal neu ei leihau, neu os yw cyfleusterau gofal yn cau."
 
 msgid "Placements, care homes and care housing"
-msgstr ""
+msgstr "Lleoliadau, cartrefi gofal a thai gofal"
 
 msgid ""
 "Problems with placements in care homes, group homes or other supported "
 "housing. If a placement isn't working because someone's care needs have "
 "changed."
-msgstr ""
+msgstr "Problemau gyda lleoliadau mewn cartrefi gofal, cartrefi grŵp neu dai â chymorth eraill. Os nad yw lleoliad yn gweithio oherwydd bod anghenion gofal rhywun wedi newid. "
 
 msgid "Problems with the quality of care, safeguarding"
-msgstr ""
+msgstr "Problemau gydag ansawdd gofal, diogelu"
 
 msgid ""
 "Issues with safeguarding, abuse, neglect, or care that is not good "
 "enough. This includes in group homes or other placements, or from a carer"
 " or social worker."
-msgstr ""
+msgstr "Materion yn ymwneud â diogelu, cam-drin, esgeuluso, neu ofal nad yw’n ddigon da. Mae hyn yn cynnwys mewn cartrefi grŵp neu leoliadau eraill, neu gan ofalwr neu weithiwr cymdeithasol."
 
 msgid "If you’re a care leaver"
-msgstr ""
+msgstr "Os ydych chi wedi gadael gofal"
 
 msgid ""
 "Problems if the local authority is not providing the right support. "
 "Includes problems with housing, financial support, education, personal "
 "advisers and Pathway Plans."
-msgstr ""
+msgstr "Problemau os nad yw’r awdurdod lleol yn darparu’r gefnogaeth gywir. Mae hyn yn cynnwys problemau gyda thai, cymorth ariannol, addysg, ymgynghorwyr personol a Chynlluniau Llwybr."
 
 msgid "Benefits"
 msgstr ""
@@ -1345,7 +1345,7 @@ msgid "Sorry, you’re not likely to get legal aid"
 msgstr ""
 
 msgid "Next steps to get help"
-msgstr ""
+msgstr "Camau nesaf i gael cymorth"
 
 msgid "Legal aid is available for this type of problem"
 msgstr "Mae cymorth cyfreithiol ar gael ar gyfer y math hwn o broblem"
@@ -1663,7 +1663,7 @@ msgstr ""
 " eich budd-daliadau (yn agor mewn tab newydd)</a>."
 
 msgid "If you cannot find your problem"
-msgstr ""
+msgstr "Os na allwch ddod o hyd i'ch problem"
 
 #, python-format
 msgid "Show %(count)s more"
