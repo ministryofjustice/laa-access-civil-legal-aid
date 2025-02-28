@@ -346,7 +346,7 @@ msgstr "Lloches a mewnfudo"
 msgid ""
 "Help if you’re seeking asylum. Help to stay in the UK if you experienced "
 "domestic abuse."
-msgstr ""
+msgstr "Cymorth os ydych chi’n ceisio lloches. Cymorth i aros yn y Deyrnas Unedig os ydych chi wedi profi cam-drin domestig."
 
 msgid "Applying for asylum"
 msgstr "Gwneud cais am loches"
