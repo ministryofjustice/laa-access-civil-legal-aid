@@ -518,7 +518,7 @@ msgid "Were you accused by a landlord or the council?"
 msgstr "A gawsoch chi eich cyhuddo gan landlord neu'r cyngor?"
 
 msgid "Select ‘Yes’ if you were accused by a landlord or the council"
-msgstr "Dewiswch ‘Do’ os cawsoch eich cyhuddo gan landlord neu’r cyngor"
+msgstr "Dewiswch ‘Ydw’ os cawsoch eich cyhuddo gan landlord neu’r cyngor"
 
 msgid "Why do you want to contact Civil Legal Advice?"
 msgstr "Pam eich bod eisiau cysylltu â’r gwasanaeth Cyngor Cyfreithiol Sifil?"
