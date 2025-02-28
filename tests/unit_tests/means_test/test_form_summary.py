@@ -1,5 +1,7 @@
+from unittest import mock
 from wtforms.fields import IntegerField, RadioField, SelectMultipleField
 from app.means_test.forms import BaseMeansTestForm
+from app.means_test.validators import ValidateIf, ValidateIfSession
 from app.means_test.fields import MoneyIntervalField
 
 
@@ -70,3 +72,36 @@ def test_summary_with_multiple(app):
         form = TestForm(**{"confirm": "yes", "colour": ["red", "blue"]})
         summary = form.summary()
         assert summary == expected_summary
+
+
+def test_is_unvalidated_conditional_field(app):
+    class TestConditionalForm(BaseMeansTestForm):
+        confirm = RadioField(
+            "Do you like colours", choices=[("yes", "Yes"), ("no", "No")]
+        )
+        colours = SelectMultipleField(
+            validators=[ValidateIf("confirm", "yes")],
+            label="Please select your favourite colour",
+            choices=[("red", "Red"), ("green", "Green"), ("blue", "Blue")],
+        )
+        user_id = IntegerField(
+            "User Id", validators=[ValidateIfSession("is_returning_user", "yes")]
+        )
+
+    with app.app_context():
+        form = TestConditionalForm(**{"confirm": "yes", "colours": ["red", "blue"]})
+        # The colours validator condition has been met and should not be skipped
+        assert form.is_unvalidated_conditional_field(form.colours) is False
+        form = TestConditionalForm(**{"confirm": "no"})
+        # The colours validator condition has NOT been met and should be skipped
+        assert form.is_unvalidated_conditional_field(form.colours) is True
+        with mock.patch("app.means_test.validators.session") as mock_session:
+            form = TestConditionalForm(**{"confirm": "yes", "colours": ["red", "blue"]})
+            eligibility = mock.Mock()
+            mock_session.get_eligibility = mock.Mock(side_effect=lambda: eligibility)
+            eligibility.configure_mock(is_returning_user="no")
+            # The user_id validator condition has NOT been met and should be skipped
+            assert form.is_unvalidated_conditional_field(form.user_id) is True
+            eligibility.configure_mock(is_returning_user="yes")
+            # The user_id validator condition has been met and should not be skipped
+            assert form.is_unvalidated_conditional_field(form.user_id) is False
