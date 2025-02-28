@@ -51,8 +51,9 @@ msgid "Forced Marriage"
 msgstr "Priodas dan orfod"
 
 msgid "Help with forced marriage and Forced Marriage Protection Orders."
+msgstr ""
 "Cymorth gyda phriodas dan orfod a Gorchmynion Amddiffyn rhag Priodas dan "
-"Orfod. "
+"Orfod."
 
 msgid "Female genital mutilation (FGM)"
 msgstr "Anffurfio Organau Cenhedlu Benywod (FGM)"
