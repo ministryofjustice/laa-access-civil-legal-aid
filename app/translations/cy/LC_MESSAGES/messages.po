@@ -40,7 +40,7 @@ msgid "Threats, abuse or harassment by someone who is not a family member."
 msgstr ""
 
 msgid "Housing, homelessness, losing your home"
-msgstr ""
+msgstr "Tai, digartrefedd, colli eich cartref"
 
 msgid ""
 "Includes being forced to leave your home, problems with council housing, "
@@ -48,10 +48,9 @@ msgid ""
 msgstr ""
 
 msgid "Forced Marriage"
-msgstr ""
+msgstr "Priodas dan orfod"
 
 msgid "Help with forced marriage and Forced Marriage Protection Orders."
-msgstr ""
 "Cymorth gyda phriodas dan orfod a Gorchmynion Amddiffyn rhag Priodas dan "
 "Orfod. "
 
@@ -335,7 +334,7 @@ msgid "Appeal a decision about your benefits."
 msgstr ""
 
 msgid "Legal action against police and public organisations"
-msgstr ""
+msgstr "Camau cyfreithiol yn erbyn yr heddlu a sefydliadau cyhoeddus"
 
 msgid "Includes schools, the police, government, prisons, NHS, the council."
 msgstr ""
@@ -465,10 +464,10 @@ msgid "None of these"
 msgstr "Dim un o'r rhain"
 
 msgid "Is this to do with police, prisons or detention centres?"
-msgstr ""
+msgstr "A yw hyn yn ymwneud â’r heddlu, carchardai neu ganolfannau cadw?"
 
 msgid "Select if this is about the police, prisons or detention centres"
-msgstr ""
+msgstr "Dewiswch a yw hyn yn ymwneud â’r heddlu, carchardai neu ganolfannau cadw"
 
 msgid "Are you under 18?"
 msgstr "Ydych chi dan 18 oed?"
@@ -1732,7 +1731,7 @@ msgid "Email"
 msgstr "E-bost"
 
 msgid "Legal action against public organisations"
-msgstr ""
+msgstr "Camau cyfreithiol yn erbyn sefydliadau cyhoeddus"
 
 msgid ""
 "Legal help to challenge something done by a public organisation. You "
