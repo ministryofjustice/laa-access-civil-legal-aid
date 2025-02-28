@@ -121,14 +121,7 @@ msgstr "Ysgolion, colegau, lleoliadau addysg eraill"
 msgid ""
 "Advice about legal action against a school. Includes if a child is out of"
 " school, exclusions, transport to school, judicial reviews."
-<<<<<<< HEAD
-msgstr ""
-"Cyngor ar gamau cyfreithiol yn erbyn ysgol. Mae hyn yn cynnwys os nad yw "
-"plentyn yn mynd i’r ysgol, gwaharddiadau, cludiant i’r ysgol, adolygiadau"
-" barnwrol."
-=======
 msgstr "Cyngor ar gamau cyfreithiol yn erbyn ysgol. Mae hyn yn cynnwys os nad yw plentyn yn mynd i’r ysgol, gwaharddiadau, cludiant i’r ysgol, adolygiadau barnwrol."
->>>>>>> 8266b21f (Add welsh translations)
 
 msgid "Forced marriage"
 msgstr "Priodas dan orfod"
@@ -335,7 +328,7 @@ msgid "Appeal a decision about your benefits."
 msgstr ""
 
 msgid "Legal action against police and public organisations"
-msgstr ""
+msgstr "Camau cyfreithiol yn erbyn yr heddlu a sefydliadau cyhoeddus"
 
 msgid "Includes schools, the police, government, prisons, NHS, the council."
 msgstr ""
@@ -465,10 +458,10 @@ msgid "None of these"
 msgstr "Dim un o'r rhain"
 
 msgid "Is this to do with police, prisons or detention centres?"
-msgstr ""
+msgstr "A yw hyn yn ymwneud â’r heddlu, carchardai neu ganolfannau cadw?"
 
 msgid "Select if this is about the police, prisons or detention centres"
-msgstr ""
+msgstr "Dewiswch a yw hyn yn ymwneud â’r heddlu, carchardai neu ganolfannau cadw"
 
 msgid "Are you under 18?"
 msgstr "Ydych chi dan 18 oed?"
@@ -1713,7 +1706,7 @@ msgid "Email"
 msgstr "E-bost"
 
 msgid "Legal action against public organisations"
-msgstr ""
+msgstr "Camau cyfreithiol yn erbyn sefydliadau cyhoeddus"
 
 msgid ""
 "Legal help to challenge something done by a public organisation. You "
