@@ -380,7 +380,7 @@ BENEFITS = Category(
 PUBLIC_LAW = Category(
     title=_("Legal action against police and public organisations"),
     description=_(
-        "Includes schools, the police, government, prisons, NHS, the council."
+        "Includes police, government, prisons, NHS, the council, care facilities and schools."
     ),
     article_category_name="Public",
     chs_code="publiclaw",
