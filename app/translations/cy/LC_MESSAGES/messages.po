@@ -445,6 +445,9 @@ msgstr ""
 msgid "Select if the child is or has been in care"
 msgstr ""
 
+msgid "or"
+msgstr "neu"
+
 msgid "Where will the appeal be held?"
 msgstr "Ble fydd yr apêl yn cael ei chynnal?"
 
@@ -462,6 +465,48 @@ msgstr "Llys Apêl"
 
 msgid "None of these"
 msgstr "Dim un o'r rhain"
+
+msgid "Where did the discrimination happen?"
+msgstr "Ble digwyddodd y gwahaniaethu?"
+
+msgid "You can select more than one."
+msgstr "Gallwch ddewis mwy nag un."
+
+msgid "Select where the discrimination happened"
+msgstr "Dewiswch ble y digwyddodd y gwahaniaethu"
+
+msgid "Work - including colleagues, employer or employment agency"
+msgstr "Yn y gwaith – gan gynnwys cydweithwyr, cyflogwr neu asiantaeth gyflogi"
+
+msgid "School, college, university or other education setting"
+msgstr "Yn yr ysgol, coleg, prifysgol neu leoliad addysg arall"
+
+msgid ""
+"Businesses or services - such as a shop, restaurant, train, hotel, bank, "
+"law firm"
+msgstr ""
+"Busnesau neu wasanaethau – fel siop, bwyty, trên, gwesty, banc, cwmni "
+"cyfreithiol"
+
+msgid "Health or care - such as a hospital or care home"
+msgstr "Iechyd neu ofal – fel ysbyty neu gartref gofal"
+
+msgid "Housing - such as a landlord or estate agent"
+msgstr "Tai – fel landlord neu asiant tai"
+
+msgid ""
+"Public services and authorities - such as the police, social services, "
+"council or local authority, jobcentre, government"
+msgstr ""
+"Gwasanaethau cyhoeddus ac awdurdodau – fel yr heddlu, gwasanaethau "
+"cymdeithasol, cynghorau neu awdurdodau lleol, canolfannau gwaith, y "
+"llywodraeth"
+
+msgid "Clubs and associations - such as a sports club"
+msgstr "Clybiau a chymdeithasau – fel clwb chwaraeon"
+
+msgid "I’m not sure"
+msgstr "Dydw i ddim yn siŵr"
 
 msgid "Is this to do with police, prisons or detention centres?"
 msgstr "A yw hyn yn ymwneud â’r heddlu, carchardai neu ganolfannau cadw?"
