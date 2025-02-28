@@ -48,10 +48,10 @@ msgid ""
 msgstr ""
 
 msgid "Forced Marriage"
-msgstr ""
+msgstr "Priodas dan orfod"
 
 msgid "Help with forced marriage and Forced Marriage Protection Orders."
-msgstr ""
+msgstr "Cymorth gyda phriodas dan orfod a Gorchmynion Amddiffyn Priodi Dan Orfod."
 
 msgid "Female genital mutilation (FGM)"
 msgstr ""
@@ -60,7 +60,7 @@ msgid "If you or someone else is at risk of FGM."
 msgstr ""
 
 msgid "Children, families, relationships"
-msgstr ""
+msgstr "Plant, teuluoedd, perthnasoedd"
 
 msgid ""
 "Includes children in care, children and social services. Also, help with "
@@ -68,66 +68,70 @@ msgid ""
 msgstr ""
 
 msgid "Children and social services, children in care"
-msgstr ""
+msgstr "Plant a gwasanaethau cymdeithasol, plant mewn gofal"
 
 msgid ""
 "Help for any problem if social services are involved with a child. "
 "Includes children in care, or being adopted. Also special guardianship."
-msgstr ""
+msgstr "Cymorth ar gyfer unrhyw broblem os yw’r gwasanaethau cymdeithasol yn ymwneud â phlentyn. Mae hyn yn cynnwys plant mewn gofal, neu sy’n cael eu mabwysiadu. Yn ogystal â gwarcheidwadaeth arbennig."
 
 msgid "Problems with an ex-partner, divorce, when a relationship ends"
-msgstr ""
+msgstr "Problemau gyda chyn-bartner, ysgariad, pan fydd perthynas yn dod i ben"
 
 msgid ""
 "If you cannot agree about money, finances and property. Includes contact "
 "with children, where children live, and other child arrangements. If an "
 "ex-partner is not doing what they agreed. If you’re worried about a "
 "child."
-msgstr ""
+msgstr "Os na allwch chi gytuno ar arian, cyllid ac eiddo. Mae hyn yn cynnwys cyswllt â phlant, lle mae plant yn byw, a threfniadau eraill ar gyfer plant. Os nad yw cyn-bartner yn gwneud yr hyn y cytunwyd arno. Os ydych chi’n poeni am blentyn."
 
 msgid "If there is domestic abuse in your family"
-msgstr ""
+msgstr "Os oes achos o gam-drin domestig yn eich teulu"
 
 msgid ""
 "Making arrangements for children and finances. Also, keeping yourself "
 "safe, protecting children and legal help to leave the relationship."
-msgstr ""
+msgstr "Gwneud trefniadau o ran plant a chyllid. Hefyd, cadw eich hun yn ddiogel, amddiffyn plant a chymorth cyfreithiol i adael y berthynas."
 
 msgid "Family mediation"
-msgstr ""
+msgstr "Cyfryngu teuluol"
 
 msgid ""
 "Help to cover the costs of family mediation (solve problems about money "
 "and children before you go to court)."
-msgstr ""
+msgstr "Cymorth i dalu costau cyfryngu teuluol (datrys problemau ynghylch arian a phlant cyn i chi fynd i’r llys)."
 
 msgid "Child taken without your consent"
-msgstr ""
+msgstr "Plentyn a gymerwyd heb eich caniatâd"
 
 msgid ""
 "If a child has been abducted (taken without your permission), including "
 "outside the UK."
-msgstr ""
+msgstr "Os yw plentyn wedi cael ei gipio (ei gymryd heb eich caniatâd), gan gynnwys y tu allan i'r DU."
 
 msgid "Children with special educational needs and disabilities (SEND)"
-msgstr ""
+msgstr "Plant ag anghenion addysgol arbennig ac anableddau (SEND)"
 
 msgid "Get help with a child’s SEND."
-msgstr ""
+msgstr "Cael help gyda SEND plentyn."
 
 msgid "Schools, colleges, other education settings"
-msgstr ""
+msgstr "Ysgolion, colegau, lleoliadau addysg eraill"
 
 msgid ""
 "Advice about legal action against a school. Includes if a child is out of"
 " school, exclusions, transport to school, judicial reviews."
+<<<<<<< HEAD
 msgstr ""
 "Cyngor ar gamau cyfreithiol yn erbyn ysgol. Mae hyn yn cynnwys os nad yw "
 "plentyn yn mynd i’r ysgol, gwaharddiadau, cludiant i’r ysgol, adolygiadau"
 " barnwrol."
+=======
+msgstr "Cyngor ar gamau cyfreithiol yn erbyn ysgol. Mae hyn yn cynnwys os nad yw plentyn yn mynd i’r ysgol, gwaharddiadau, cludiant i’r ysgol, adolygiadau barnwrol."
+>>>>>>> 8266b21f (Add welsh translations)
 
 msgid "Forced marriage"
-msgstr ""
+msgstr "Priodas dan orfod"
 
 msgid ""
 "Includes being evicted or forced to sell your home. Problems with "
