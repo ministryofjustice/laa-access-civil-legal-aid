@@ -192,7 +192,7 @@ msgid "Treated unfairly by a landlord, council or housing association."
 msgstr "Cael eich trin yn annheg gan landlord, cyngor neu gymdeithas dai."
 
 msgid "If you’ve been accused of anti-social behaviour"
-msgstr "Os cawsoch eich cyhuddo o ymddygiad gwrthgymdeithasol"
+msgstr "Os ydych wedi cael eich cyhuddo o ymddygiad gwrthgymdeithasol"
 
 msgid ""
 "Accused of anti-social behaviour by the landlord, council or housing "
@@ -518,7 +518,7 @@ msgid "Were you accused by a landlord or the council?"
 msgstr "A gawsoch chi eich cyhuddo gan landlord neu'r cyngor?"
 
 msgid "Select ‘Yes’ if you were accused by a landlord or the council"
-msgstr "Dewiswch ‘Do’ os cawsoch eich cyhuddo gan landlord neu’r cyngor"
+msgstr "Dewiswch ‘Ydw’ os cawsoch eich cyhuddo gan landlord neu’r cyngor"
 
 msgid "Why do you want to contact Civil Legal Advice?"
 msgstr "Pam eich bod eisiau cysylltu â’r gwasanaeth Cyngor Cyfreithiol Sifil?"
