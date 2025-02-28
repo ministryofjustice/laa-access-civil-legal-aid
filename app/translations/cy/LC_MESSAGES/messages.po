@@ -121,14 +121,7 @@ msgstr "Ysgolion, colegau, lleoliadau addysg eraill"
 msgid ""
 "Advice about legal action against a school. Includes if a child is out of"
 " school, exclusions, transport to school, judicial reviews."
-<<<<<<< HEAD
-msgstr ""
-"Cyngor ar gamau cyfreithiol yn erbyn ysgol. Mae hyn yn cynnwys os nad yw "
-"plentyn yn mynd i’r ysgol, gwaharddiadau, cludiant i’r ysgol, adolygiadau"
-" barnwrol."
-=======
 msgstr "Cyngor ar gamau cyfreithiol yn erbyn ysgol. Mae hyn yn cynnwys os nad yw plentyn yn mynd i’r ysgol, gwaharddiadau, cludiant i’r ysgol, adolygiadau barnwrol."
->>>>>>> 8266b21f (Add welsh translations)
 
 msgid "Forced marriage"
 msgstr "Priodas dan orfod"
