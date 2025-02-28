@@ -8,7 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2025-02-27 12:09+0000\n"
+=======
+"POT-Creation-Date: 2025-02-27 13:01+0000\n"
+>>>>>>> ed98cb08 (Add in welsh translations)
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -449,6 +453,9 @@ msgstr ""
 msgid "Select if the child is or has been in care"
 msgstr ""
 
+msgid "or"
+msgstr ""
+
 msgid "Where will the appeal be held?"
 msgstr ""
 
@@ -465,6 +472,43 @@ msgid "Court of Appeal"
 msgstr ""
 
 msgid "None of these"
+msgstr ""
+
+msgid "Where did the discrimination happen?"
+msgstr ""
+
+msgid "You can select more than one."
+msgstr ""
+
+msgid "Select where the discrimination happened"
+msgstr ""
+
+msgid "Work - including colleagues, employer or employment agency"
+msgstr ""
+
+msgid "School, college, university or other education setting"
+msgstr ""
+
+msgid ""
+"Businesses or services - such as a shop, restaurant, train, hotel, bank, "
+"law firm"
+msgstr ""
+
+msgid "Health or care - such as a hospital or care home"
+msgstr ""
+
+msgid "Housing - such as a landlord or estate agent"
+msgstr ""
+
+msgid ""
+"Public services and authorities - such as the police, social services, "
+"council or local authority, jobcentre, government"
+msgstr ""
+
+msgid "Clubs and associations - such as a sports club"
+msgstr ""
+
+msgid "I’m not sure"
 msgstr ""
 
 msgid "Is this to do with police, prisons or detention centres?"
