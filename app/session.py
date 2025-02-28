@@ -30,55 +30,55 @@ class Eligibility:
 
     @property
     def has_partner(self):
-        return self.is_yes("about-you", "has_partner") and not self.is_yes(
-            "about-you", "are_you_in_a_dispute"
-        )
+        return self.forms.get("about-you", {}).get(
+            "has_partner", False
+        ) and not self.forms.get("about-you", {}).get("are_you_in_a_dispute", False)
 
     @property
     def is_employed(self):
-        return self.is_yes("about-you", "is_employed")
+        return self.forms.get("about-you", {}).get("is_employed", False)
 
     @property
     def is_self_employed(self):
-        return self.is_yes("about-you", "is_self_employed")
+        return self.forms.get("about-you", {}).get("is_self_employed", False)
 
     @property
     def is_employed_or_self_employed(self):
-        return self.is_yes("about-you", "is_employed") or self.is_yes(
-            "about-you", "is_self_employed"
-        )
+        return self.forms.get("about-you", {}).get("is_employed") or self.forms.get(
+            "about-you", {}
+        ).get("is_self_employed", False)
 
     @property
     def is_partner_employed(self):
         if not self.has_partner:
             return False
-        return self.is_yes("about-you", "partner_is_employed")
+        return self.forms.get("about-you", {}).get("partner_is_employed")
 
     @property
     def is_partner_self_employed(self):
         if not self.has_partner:
             return False
-        return self.is_yes("about-you", "partner_is_self_employed")
+        return self.forms.get("about-you", {}).get("partner_is_self_employed")
 
     @property
     def has_savings(self):
-        return self.is_yes("about-you", "have_savings")
+        return self.forms.get("about-you", {}).get("have_savings", False)
 
     @property
     def has_valuables(self):
-        return self.is_yes("about-you", "have_valuables")
+        return self.forms.get("about-you", {}).get("have_valuables", False)
 
     @property
     def has_children(self) -> bool:
-        return self.is_yes("about-you", "have_children")
+        return self.forms.get("about-you", {}).get("have_children", False)
 
     @property
     def has_dependants(self) -> bool:
-        return self.is_yes("about-you", "have_dependents")
+        return self.forms.get("about-you", {}).get("have_dependents", False)
 
     @property
     def on_benefits(self) -> bool:
-        return self.is_yes("about-you", "on_benefits")
+        return self.forms.get("about-you", {}).get("on_benefits", False)
 
     @property
     def is_eligible_for_child_benefits(self) -> bool:

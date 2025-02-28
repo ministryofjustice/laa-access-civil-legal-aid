@@ -1,4 +1,3 @@
-from wtforms.fields import RadioField
 from govuk_frontend_wtf.wtforms_widgets import GovTextInput
 from wtforms.validators import InputRequired, NumberRange
 from app.means_test.validators import ValidateIf
@@ -6,7 +5,7 @@ from app.means_test.widgets import MeansTestRadioInput
 from flask_babel import lazy_gettext as _
 from app.means_test import YES, NO
 from app.means_test.forms import BaseMeansTestForm
-from app.means_test.fields import IntegerField
+from app.means_test.fields import IntegerField, YesNoField
 
 
 class AboutYouForm(BaseMeansTestForm):
@@ -14,9 +13,8 @@ class AboutYouForm(BaseMeansTestForm):
 
     template = "means_test/about-you.html"
 
-    has_partner = RadioField(
+    has_partner = YesNoField(
         _("Do you have a partner?"),
-        choices=[(YES, _("Yes")), (NO, _("No"))],
         widget=MeansTestRadioInput(),
         description=_(
             "Your husband, wife, civil partner (unless you have permanently separated) or someone you live with as if you're married"
@@ -24,12 +22,11 @@ class AboutYouForm(BaseMeansTestForm):
         validators=[InputRequired(message=_("Tell us whether you have a partner"))],
     )
 
-    are_you_in_a_dispute = RadioField(
+    are_you_in_a_dispute = YesNoField(
         _("Are you in a dispute with your partner?"),
         description=_(
             "This means your partner is the opponent in the dispute you need help with, for example a dispute over money or property"
         ),
-        choices=[(YES, _("Yes")), (NO, _("No"))],
         widget=MeansTestRadioInput(),
         validators=[
             ValidateIf("has_partner", YES),
@@ -39,17 +36,15 @@ class AboutYouForm(BaseMeansTestForm):
         ],
     )
 
-    on_benefits = RadioField(
+    on_benefits = YesNoField(
         _("Do you receive any benefits (including Child Benefit)?"),
-        choices=[(YES, _("Yes")), (NO, _("No"))],
         widget=MeansTestRadioInput(),
         description=_("Being on some benefits can help you qualify for legal aid"),
         validators=[InputRequired(message=_("Tell us whether you receive benefits"))],
     )
 
-    have_children = RadioField(
+    have_children = YesNoField(
         _("Do you have any children aged 15 or under?"),
-        choices=[(YES, _("Yes")), (NO, _("No"))],
         widget=MeansTestRadioInput(),
         description=_("Don't include any children who don't live with you"),
         validators=[
@@ -71,9 +66,8 @@ class AboutYouForm(BaseMeansTestForm):
         ],
     )
 
-    have_dependents = RadioField(
+    have_dependents = YesNoField(
         _("Do you have any dependants aged 16 or over?"),
-        choices=[(YES, _("Yes")), (NO, _("No"))],
         widget=MeansTestRadioInput(),
         description=_(
             "People who you live with and support financially. This could be a young person for whom you get Child Benefit"
@@ -95,17 +89,15 @@ class AboutYouForm(BaseMeansTestForm):
         ],
     )
 
-    own_property = RadioField(
+    own_property = YesNoField(
         _("Do you own any property?"),
-        choices=[(YES, _("Yes")), (NO, _("No"))],
         widget=MeansTestRadioInput(),
         description=_("For example, a house, static caravan or flat"),
         validators=[InputRequired(message=_("Tell us if you own any properties"))],
     )
 
-    is_employed = RadioField(
+    is_employed = YesNoField(
         _("Are you employed?"),
-        choices=[(YES, _("Yes")), (NO, _("No"))],
         widget=MeansTestRadioInput(),
         description=_(
             "This means working as an employee - you may be both employed and self-employed"
@@ -113,12 +105,11 @@ class AboutYouForm(BaseMeansTestForm):
         validators=[InputRequired(message=_("Tell us if you are employed"))],
     )
 
-    partner_is_employed = RadioField(
+    partner_is_employed = YesNoField(
         _("Is your partner employed?"),
         description=_(
             "This means working as an employee - your partner may be both employed and self-employed"
         ),
-        choices=[(YES, _("Yes")), (NO, _("No"))],
         validators=[
             ValidateIf("are_you_in_a_dispute", NO),
             InputRequired(message=_("Tell us whether your partner is employed")),
@@ -126,9 +117,8 @@ class AboutYouForm(BaseMeansTestForm):
         widget=MeansTestRadioInput(),
     )
 
-    is_self_employed = RadioField(
+    is_self_employed = YesNoField(
         _("Are you self-employed?"),
-        choices=[(YES, _("Yes")), (NO, _("No"))],
         widget=MeansTestRadioInput(),
         description=_(
             "This means working for yourself - you may be both employed and self-employed"
@@ -136,12 +126,11 @@ class AboutYouForm(BaseMeansTestForm):
         validators=[InputRequired(message=_("Tell us if you are self-employed"))],
     )
 
-    partner_is_self_employed = RadioField(
+    partner_is_self_employed = YesNoField(
         _("Is your partner self-employed?"),
         description=_(
             "This means working for yourself - your partner may be both employed and self-employed"
         ),
-        choices=[(YES, _("Yes")), (NO, _("No"))],
         validators=[
             ValidateIf("are_you_in_a_dispute", NO),
             InputRequired(message=_("Tell us whether your partner is self-employed")),
@@ -149,9 +138,8 @@ class AboutYouForm(BaseMeansTestForm):
         widget=MeansTestRadioInput(),
     )
 
-    aged_60_or_over = RadioField(
+    aged_60_or_over = YesNoField(
         _("Are you or your partner (if you have one) aged 60 or over?"),
-        choices=[(YES, _("Yes")), (NO, _("No"))],
         widget=MeansTestRadioInput(),
         validators=[
             InputRequired(
@@ -160,18 +148,16 @@ class AboutYouForm(BaseMeansTestForm):
         ],
     )
 
-    have_savings = RadioField(
+    have_savings = YesNoField(
         _("Do you have any savings or investments?"),
-        choices=[(YES, _("Yes")), (NO, _("No"))],
         widget=MeansTestRadioInput(),
         validators=[
             InputRequired(message=_("Tell us whether you have savings or investments"))
         ],
     )
 
-    have_valuables = RadioField(
+    have_valuables = YesNoField(
         _("Do you have any valuable items worth over £500 each?"),
-        choices=[(YES, _("Yes")), (NO, _("No"))],
         widget=MeansTestRadioInput(),
         validators=[
             InputRequired(
