@@ -53,7 +53,7 @@ class DiscriminationWhereForm(DiscriminationQuestionForm):
 
 
 class DiscriminationWhyForm(DiscriminationQuestionForm):
-    title = "Why were you discriminated against?"
+    title = _("Why were you discriminated against?")
 
     next_step_mapping = {
         "*": "categories.discrimination.age",
@@ -64,37 +64,39 @@ class DiscriminationWhyForm(DiscriminationQuestionForm):
         title,
         widget=CategoryCheckboxInput(
             show_divider=True,
-            hint_text="You can select more than one.",
+            hint_text=_("You can select more than one."),
             behaviour="exclusive",
         ),
         validators=[
-            InputRequired(message="Select why you were discriminated against"),
+            InputRequired(message=_("Select why you were discriminated against")),
             ExclusiveValue(
                 exclusive_value="none",
-                message="Select why you were discriminated against, or select ‘None of these’",
+                message=_(
+                    "Select why you were discriminated against, or select ‘None of these’"
+                ),
             ),
         ],
         choices=[
-            ("race", "Race, colour, ethnicity, nationality"),
-            ("sex", "Sex (male or female)"),
-            ("disability", "Disability, health condition, mental health condition"),
-            ("religion", "Religion, belief, lack of religion"),
-            ("age", "Age"),
-            ("pregnancy", "Pregnancy or being a mother"),
+            ("race", _("Race, colour, ethnicity, nationality")),
+            ("sex", _("Sex (male or female)")),
+            ("disability", _("Disability, health condition, mental health condition")),
+            ("religion", _("Religion, belief, lack of religion")),
+            ("age", _("Age")),
+            ("pregnancy", _("Pregnancy or being a mother")),
             (
                 "sexualorientation",
-                "Sexual orientation - gay, bisexual, other sexuality",
+                _("Sexual orientation - gay, bisexual, other sexuality"),
             ),
             (
                 "gender",
-                "Gender reassignment, being transgender, non-binary or gender-fluid",
+                _("Gender reassignment, being transgender, non-binary or gender-fluid"),
             ),
             (
                 "marriage",
-                "Married status - being married, in a civil partnership",
+                _("Married status - being married, in a civil partnership"),
             ),
             ("", ""),
-            ("none", "None of these"),
+            ("none", _("None of these")),
         ],
     )
 

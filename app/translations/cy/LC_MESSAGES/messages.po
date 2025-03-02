@@ -481,6 +481,123 @@ msgstr "Llys Apêl"
 msgid "None of these"
 msgstr "Dim un o'r rhain"
 
+msgid "Why were you discriminated against?"
+msgstr "Pam y gwahaniaethwyd yn eich erbyn?"
+
+msgid "You can select more than one."
+msgstr "Gallwch ddewis mwy nag un."
+
+msgid "Select why you were discriminated against"
+msgstr "Dewiswch pam y gwahaniaethwyd yn eich erbyn"
+
+msgid "Select why you were discriminated against, or select ‘None of these’"
+msgstr "Dewiswch pam y gwahaniaethwyd yn eich erbyn, neu dewiswch ‘Dim un o’r rhain’."
+
+msgid "Race, colour, ethnicity, nationality"
+msgstr "Hil, lliw, ethnigrwydd, cenedligrwydd"
+
+msgid "Sex (male or female)"
+msgstr "Rhyw (gwryw neu fenyw)"
+
+msgid "Disability, health condition, mental health condition"
+msgstr "Anabledd, cyflwr iechyd, cyflwr iechyd meddwl"
+
+msgid "Religion, belief, lack of religion"
+msgstr "Crefydd, cred, diffyg crefydd"
+
+msgid "Age"
+msgstr "Oedran"
+
+msgid "Pregnancy or being a mother"
+msgstr "Beichiogrwydd neu bod yn fam"
+
+msgid "Sexual orientation - gay, bisexual, other sexuality"
+msgstr "Cyfeiriadedd rhywiol – hoyw, deurywiol, rhywioldeb arall"
+
+msgid "Gender reassignment, being transgender, non-binary or gender-fluid"
+msgstr "Ailbennu rhywedd, bod yn drawsryweddol, yn anneuaidd neu’n rhyweddhylifol"
+
+msgid "Married status - being married, in a civil partnership"
+msgstr "Statws priodasol – wedi priodi, mewn partneriaeth sifil"
+
+msgid "Why were you discriminated against?"
+msgstr "Pam y gwahaniaethwyd yn eich erbyn?"
+
+msgid "You can select more than one."
+msgstr "Gallwch ddewis mwy nag un."
+
+msgid "Select why you were discriminated against"
+msgstr "Dewiswch pam y gwahaniaethwyd yn eich erbyn"
+
+msgid "Select why you were discriminated against, or select ‘None of these’"
+msgstr "Dewiswch pam y gwahaniaethwyd yn eich erbyn, neu dewiswch ‘Dim un o’r rhain’."
+
+msgid "Race, colour, ethnicity, nationality"
+msgstr "Hil, lliw, ethnigrwydd, cenedligrwydd"
+
+msgid "Sex (male or female)"
+msgstr "Rhyw (gwryw neu fenyw)"
+
+msgid "Disability, health condition, mental health condition"
+msgstr "Anabledd, cyflwr iechyd, cyflwr iechyd meddwl"
+
+msgid "Religion, belief, lack of religion"
+msgstr "Crefydd, cred, diffyg crefydd"
+
+msgid "Age"
+msgstr "Oedran"
+
+msgid "Pregnancy or being a mother"
+msgstr "Beichiogrwydd neu bod yn fam"
+
+msgid "Sexual orientation - gay, bisexual, other sexuality"
+msgstr "Cyfeiriadedd rhywiol – hoyw, deurywiol, rhywioldeb arall"
+
+msgid "Gender reassignment, being transgender, non-binary or gender-fluid"
+msgstr "Ailbennu rhywedd, bod yn drawsryweddol, yn anneuaidd neu’n rhyweddhylifol"
+
+msgid "Married status - being married, in a civil partnership"
+msgstr "Statws priodasol – wedi priodi, mewn partneriaeth sifil"
+
+msgid "Why were you discriminated against?"
+msgstr "Pam y gwahaniaethwyd yn eich erbyn?"
+
+msgid "You can select more than one."
+msgstr "Gallwch ddewis mwy nag un."
+
+msgid "Select why you were discriminated against"
+msgstr "Dewiswch pam y gwahaniaethwyd yn eich erbyn"
+
+msgid "Select why you were discriminated against, or select ‘None of these’"
+msgstr "Dewiswch pam y gwahaniaethwyd yn eich erbyn, neu dewiswch ‘Dim un o’r rhain’."
+
+msgid "Race, colour, ethnicity, nationality"
+msgstr "Hil, lliw, ethnigrwydd, cenedligrwydd"
+
+msgid "Sex (male or female)"
+msgstr "Rhyw (gwryw neu fenyw)"
+
+msgid "Disability, health condition, mental health condition"
+msgstr "Anabledd, cyflwr iechyd, cyflwr iechyd meddwl"
+
+msgid "Religion, belief, lack of religion"
+msgstr "Crefydd, cred, diffyg crefydd"
+
+msgid "Age"
+msgstr "Oedran"
+
+msgid "Pregnancy or being a mother"
+msgstr "Beichiogrwydd neu bod yn fam"
+
+msgid "Sexual orientation - gay, bisexual, other sexuality"
+msgstr "Cyfeiriadedd rhywiol – hoyw, deurywiol, rhywioldeb arall"
+
+msgid "Gender reassignment, being transgender, non-binary or gender-fluid"
+msgstr "Ailbennu rhywedd, bod yn drawsryweddol, yn anneuaidd neu’n rhyweddhylifol"
+
+msgid "Married status - being married, in a civil partnership"
+msgstr "Statws priodasol – wedi priodi, mewn partneriaeth sifil"
+
 msgid "Where did the discrimination happen?"
 msgstr "Ble digwyddodd y gwahaniaethu?"
 
@@ -1676,6 +1793,24 @@ msgstr ""
 "terfysgol."
 
 msgid "Help if you’re a victim of human trafficking or modern slavery."
+msgstr ""
+
+msgid "Find other free or low-cost legal help"
+msgstr ""
+
+msgid "free or affordable legal help (opens new tab)."
+msgstr ""
+
+msgid "The Citizen’s Advice website explains how to find "
+msgstr ""
+
+msgid "Speak to an advice organisation"
+msgstr ""
+
+msgid "Citizen’s Advice (opens new tab)"
+msgstr ""
+
+msgid "Advicelocal (opens new tab)"
 msgstr "Cymorth os ydych chi’n ddioddefwr masnachu pobl neu gaethwasiaeth fodern."
 
 msgid "Find other free or low-cost legal help"
