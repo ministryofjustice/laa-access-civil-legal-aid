@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-02-27 14:38+0000\n"
+"POT-Creation-Date: 2025-03-02 21:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -472,45 +472,6 @@ msgstr ""
 msgid "None of these"
 msgstr ""
 
-msgid "Why were you discriminated against?"
-msgstr ""
-
-msgid "You can select more than one."
-msgstr ""
-
-msgid "Select why you were discriminated against"
-msgstr ""
-
-msgid "Select why you were discriminated against, or select ‘None of these’"
-msgstr ""
-
-msgid "Race, colour, ethnicity, nationality"
-msgstr ""
-
-msgid "Sex (male or female)"
-msgstr ""
-
-msgid "Disability, health condition, mental health condition"
-msgstr ""
-
-msgid "Religion, belief, lack of religion"
-msgstr ""
-
-msgid "Age"
-msgstr ""
-
-msgid "Pregnancy or being a mother"
-msgstr ""
-
-msgid "Sexual orientation - gay, bisexual, other sexuality"
-msgstr ""
-
-msgid "Gender reassignment, being transgender, non-binary or gender-fluid"
-msgstr ""
-
-msgid "Married status - being married, in a civil partnership"
-msgstr ""
-
 msgid "Where did the discrimination happen?"
 msgstr ""
 
@@ -546,6 +507,42 @@ msgid "Clubs and associations - such as a sports club"
 msgstr ""
 
 msgid "I’m not sure"
+msgstr ""
+
+msgid "Why were you discriminated against?"
+msgstr ""
+
+msgid "Select why you were discriminated against"
+msgstr ""
+
+msgid "Select why you were discriminated against, or select ‘None of these’"
+msgstr ""
+
+msgid "Race, colour, ethnicity, nationality"
+msgstr ""
+
+msgid "Sex (male or female)"
+msgstr ""
+
+msgid "Disability, health condition, mental health condition"
+msgstr ""
+
+msgid "Religion, belief, lack of religion"
+msgstr ""
+
+msgid "Age"
+msgstr ""
+
+msgid "Pregnancy or being a mother"
+msgstr ""
+
+msgid "Sexual orientation - gay, bisexual, other sexuality"
+msgstr ""
+
+msgid "Gender reassignment, being transgender, non-binary or gender-fluid"
+msgstr ""
+
+msgid "Married status - being married, in a civil partnership"
 msgstr ""
 
 msgid "Is this to do with police, prisons or detention centres?"
@@ -1573,82 +1570,6 @@ msgstr ""
 msgid "Advicelocal (opens new tab)"
 msgstr ""
 
-msgid "Find other free or low-cost legal help"
-msgstr ""
-
-msgid "free or affordable legal help (opens new tab)."
-msgstr ""
-
-msgid "The Citizen’s Advice website explains how to find "
-msgstr ""
-
-msgid "Speak to an advice organisation"
-msgstr ""
-
-msgid "Citizen’s Advice (opens new tab)"
-msgstr ""
-
-msgid "Advicelocal (opens new tab)"
-msgstr ""
-
-msgid "Legal aid doesn’t cover all types of problem"
-msgstr ""
-
-msgid ""
-"You can still ask a solicitor for help – you will have to pay for their "
-"advice."
-msgstr ""
-
-msgid ""
-"You can still ask a solicitor for help - you will have to pay for their "
-"advice."
-msgstr ""
-
-msgid "Find a solicitor"
-msgstr ""
-
-msgid "What did you think of this service?"
-msgstr ""
-
-msgid "(takes 30 seconds)"
-msgstr ""
-
-msgid ""
-"You may still get help and advice from the organisations listed below. "
-"You don’t have to qualify for legal aid."
-msgstr ""
-
-#, python-format
-msgid "Help organisations for problems about %(category_name)s"
-msgstr ""
-
-msgid "Exceptional cases"
-msgstr ""
-
-msgid ""
-"In exceptional cases or if your case is going to a judicial review, legal"
-" aid may still be available."
-msgstr ""
-
-msgid "In exceptional cases, legal aid may still be available."
-msgstr ""
-
-msgid "ask a legal adviser"
-msgstr ""
-
-#, python-format
-msgid ""
-"You can %(fala_link)s if an application might succeed in your case and "
-"how to apply."
-msgstr ""
-
-msgid "apply directly"
-msgstr ""
-
-#, python-format
-msgid "You can also %(ecf_link)s to the Legal Aid Agency."
-msgstr ""
-
 msgid "Appeal a decision about your benefits"
 msgstr ""
 
@@ -1789,6 +1710,9 @@ msgstr ""
 msgid "Legal Aid is different in Guernsey. Visit %(link)s for more information."
 msgstr ""
 
+msgid "the Housing Loss Prevention Advice Service"
+msgstr ""
+
 msgid "Sorry, the service is unavailable"
 msgstr ""
 
@@ -1876,6 +1800,34 @@ msgid ""
 "href=\"%(contact_url)s\" class=\"govuk-link\">get in touch</a>."
 msgstr ""
 
+msgid "You might qualify for free legal advice"
+msgstr ""
+
+msgid ""
+"You might be able to get free legal advice through the Housing Loss "
+"Prevention Advice Scheme."
+msgstr ""
+
+msgid ""
+"This advice is free to anyone who can show their home is at risk. It does"
+" not depend on what you earn or your financial situation."
+msgstr ""
+
+msgid "Next steps"
+msgstr ""
+
+msgid "We’ll show you a list of legal advisors."
+msgstr ""
+
+msgid "You need to contact the legal adviser."
+msgstr ""
+
+msgid "Explain that you could lose your home."
+msgstr ""
+
+msgid "Tell them if you have any letters or documents about your situation."
+msgstr ""
+
 msgid ""
 "We only need to know about any money you received last month, even if "
 "this varies from month to month."
@@ -1893,6 +1845,64 @@ msgid "Remove Property"
 msgstr ""
 
 msgid "Add another property"
+msgstr ""
+
+msgid "Legal aid doesn’t cover all types of problem"
+msgstr ""
+
+msgid ""
+"You can still ask a solicitor for help – you will have to pay for their "
+"advice."
+msgstr ""
+
+msgid ""
+"You can still ask a solicitor for help - you will have to pay for their "
+"advice."
+msgstr ""
+
+msgid "Find a solicitor"
+msgstr ""
+
+msgid "What did you think of this service?"
+msgstr ""
+
+msgid "(takes 30 seconds)"
+msgstr ""
+
+msgid ""
+"You may still get help and advice from the organisations listed below. "
+"You don’t have to qualify for legal aid."
+msgstr ""
+
+#, python-format
+msgid "Help organisations for problems about %(category_name)s"
+msgstr ""
+
+msgid "Exceptional cases"
+msgstr ""
+
+msgid ""
+"In exceptional cases or if your case is going to a judicial review, legal"
+" aid may still be available."
+msgstr ""
+
+msgid "In exceptional cases, legal aid may still be available."
+msgstr ""
+
+msgid "ask a legal adviser"
+msgstr ""
+
+#, python-format
+msgid ""
+"You can %(fala_link)s if an application might succeed in your case and "
+"how to apply."
+msgstr ""
+
+msgid "apply directly"
+msgstr ""
+
+#, python-format
+msgid "You can also %(ecf_link)s to the Legal Aid Agency."
 msgstr ""
 
 msgid ""
