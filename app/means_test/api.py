@@ -51,7 +51,6 @@ def is_eligible(reference) -> EligibilityStatus:
 
     means_test_endpoint = "checker/api/v1/eligibility_check/"
     response = cla_backend.post(f"{means_test_endpoint}{reference}/is_eligible/")
-    response.raise_for_status()
     eligibility = EligibilityStatus.from_string(response["is_eligible"])
     return eligibility
 
