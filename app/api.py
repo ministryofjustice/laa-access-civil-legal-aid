@@ -92,7 +92,7 @@ class BackendAPIClient:
         """
         return self._make_request(method="GET", endpoint=endpoint, params=params)
 
-    def post(self, endpoint: str, json: dict):
+    def post(self, endpoint: str, json: dict = None):
         """Make a POST request to CLA Backend.
         Args:
             endpoint (str): The endpoint to request

@@ -15,6 +15,7 @@ class Category:
     children: dict[str, "Category"] | None = field(default_factory=dict)
     _referrer_text: Optional[LazyString] = None
     exit_page: Optional[bool] = False
+    eligible_for_HLPAS: bool = False
 
     @property
     def display_text(self):
@@ -196,6 +197,7 @@ HOUSING = Category(
                 "Help if you’re homeless, or might be homeless in the next 2 months. This could be because of rent arrears, debt, the end of a relationship, or because you have nowhere to live."
             ),
             code="homelessness",
+            eligible_for_HLPAS=True,
         ),
         "eviction": Category(
             title=_("Eviction, told to leave your home"),
@@ -203,6 +205,7 @@ HOUSING = Category(
                 "Landlord has told you to leave or is trying to force you to leave. Includes if you’ve got a Section 21 or a possession order."
             ),
             code="eviction",
+            eligible_for_HLPAS=True,
         ),
         "forced_to_sell": Category(
             title=_("Forced to sell or losing the home you own"),
@@ -210,6 +213,7 @@ HOUSING = Category(
                 "Repossession by your mortgage company; bankruptcy or other debt that means you will lose the home you own."
             ),
             code="forced_to_sell",
+            eligible_for_HLPAS=True,
         ),
         "repairs": Category(
             title=_("Repairs, health and safety"),
@@ -408,6 +412,7 @@ ASYLUM_AND_IMMIGRATION = Category(
                 "Help to apply for housing, problems with housing or if you are homeless."
             ),
             code="housing",
+            eligible_for_HLPAS=True,
         ),
         "domestic_abuse": Category(
             title=_("Stay in the UK if you experienced domestic abuse"),

@@ -1,3 +1,4 @@
+from enum import Enum
 from app.api import cla_backend
 from flask import session
 from app.means_test.forms.income import IncomeForm
@@ -5,6 +6,9 @@ from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import MultiplePropertiesForm
 from app.means_test.forms.outgoings import OutgoingsForm
 from app.means_test.money_interval import MoneyInterval
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def update_means_test(payload):
@@ -23,10 +27,33 @@ def update_means_test(payload):
         return response
 
 
-def is_eligible(reference):
+class EligibilityStatus(Enum):
+    ELIGIBLE = "eligible"
+    INELIGIBLE = "not_eligible"
+    UNKNOWN = "pending"
+
+    @classmethod
+    def from_string(cls, value):
+        value_mapping = {
+            "yes": cls.ELIGIBLE,
+            "no": cls.INELIGIBLE,
+            "unknown": cls.UNKNOWN,
+        }
+        return value_mapping.get(value, cls.UNKNOWN)
+
+    def __bool__(self):
+        return self == self.ELIGIBLE
+
+
+def is_eligible(reference) -> EligibilityStatus:
+    if not reference:
+        raise ValueError("Reference cannot be empty")
+
     means_test_endpoint = "checker/api/v1/eligibility_check/"
     response = cla_backend.post(f"{means_test_endpoint}{reference}/is_eligible/")
-    return response["is_eligible"]
+    response.raise_for_status()
+    eligibility = EligibilityStatus.from_string(response["is_eligible"])
+    return eligibility
 
 
 def get_means_test_payload(eligibility_data) -> dict:
