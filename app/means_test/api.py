@@ -1,4 +1,3 @@
-from enum import Enum
 from app.api import cla_backend
 from flask import session
 from app.means_test.forms.income import IncomeForm
@@ -6,6 +5,7 @@ from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import MultiplePropertiesForm
 from app.means_test.forms.outgoings import OutgoingsForm
 from app.means_test.money_interval import MoneyInterval
+from app.means_test.constants import EligibilityStatus
 import logging
 
 logger = logging.getLogger(__name__)
@@ -25,24 +25,6 @@ def update_means_test(payload):
         response = cla_backend.post(means_test_endpoint, json=payload)
         session["reference"] = response["reference"]
         return response
-
-
-class EligibilityStatus(Enum):
-    ELIGIBLE = "eligible"
-    INELIGIBLE = "not_eligible"
-    UNKNOWN = "pending"
-
-    @classmethod
-    def from_string(cls, value):
-        value_mapping = {
-            "yes": cls.ELIGIBLE,
-            "no": cls.INELIGIBLE,
-            "unknown": cls.UNKNOWN,
-        }
-        return value_mapping.get(value, cls.UNKNOWN)
-
-    def __bool__(self):
-        return self == self.ELIGIBLE
 
 
 def is_eligible(reference) -> EligibilityStatus:
