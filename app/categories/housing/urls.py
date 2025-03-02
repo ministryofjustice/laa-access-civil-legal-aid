@@ -11,9 +11,9 @@ class HousingLandingPage(CategoryLandingPage):
 
     routing_map = {
         "main": [
-            (HOUSING.sub.homelessness, "categories.results.in_scope_hlpas"),
-            (HOUSING.sub.eviction, "categories.results.in_scope_hlpas"),
-            (HOUSING.sub.forced_to_sell, "categories.results.in_scope_hlpas"),
+            (HOUSING.sub.homelessness, "categories.results.in_scope"),
+            (HOUSING.sub.eviction, "categories.results.in_scope"),
+            (HOUSING.sub.forced_to_sell, "categories.results.in_scope"),
             (HOUSING.sub.repairs, "categories.results.in_scope"),
             (HOUSING.sub.council_housing, "categories.results.in_scope"),
         ],

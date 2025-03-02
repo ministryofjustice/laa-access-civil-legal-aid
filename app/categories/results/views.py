@@ -1,14 +1,8 @@
 from app.categories.constants import Category
 from app.categories.views import CategoryPage
-from flask import session, redirect, url_for, render_template
+from flask import session, render_template
 from app.find_a_legal_adviser.laalaa import get_category_code as get_fala_category_code
 from app.api import cla_backend
-
-
-class HlpasInScopePage(CategoryPage):
-    def dispatch_request(self):
-        session["hlpas_eligible"] = True
-        return redirect(url_for("categories.results.in_scope"))
 
 
 class ResultPage(CategoryPage):
