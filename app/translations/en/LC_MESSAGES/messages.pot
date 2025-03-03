@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-02-19 15:50+0000\n"
+"POT-Creation-Date: 2025-02-27 14:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -340,7 +340,9 @@ msgstr ""
 msgid "Legal action against police and public organisations"
 msgstr ""
 
-msgid "Includes schools, the police, government, prisons, NHS, the council."
+msgid ""
+"Includes police, government, prisons, NHS, the council, care facilities "
+"and schools."
 msgstr ""
 
 msgid "Asylum and immigration"
@@ -449,6 +451,9 @@ msgstr ""
 msgid "Select if the child is or has been in care"
 msgstr ""
 
+msgid "or"
+msgstr ""
+
 msgid "Where will the appeal be held?"
 msgstr ""
 
@@ -465,6 +470,82 @@ msgid "Court of Appeal"
 msgstr ""
 
 msgid "None of these"
+msgstr ""
+
+msgid "Why were you discriminated against?"
+msgstr ""
+
+msgid "You can select more than one."
+msgstr ""
+
+msgid "Select why you were discriminated against"
+msgstr ""
+
+msgid "Select why you were discriminated against, or select ‘None of these’"
+msgstr ""
+
+msgid "Race, colour, ethnicity, nationality"
+msgstr ""
+
+msgid "Sex (male or female)"
+msgstr ""
+
+msgid "Disability, health condition, mental health condition"
+msgstr ""
+
+msgid "Religion, belief, lack of religion"
+msgstr ""
+
+msgid "Age"
+msgstr ""
+
+msgid "Pregnancy or being a mother"
+msgstr ""
+
+msgid "Sexual orientation - gay, bisexual, other sexuality"
+msgstr ""
+
+msgid "Gender reassignment, being transgender, non-binary or gender-fluid"
+msgstr ""
+
+msgid "Married status - being married, in a civil partnership"
+msgstr ""
+
+msgid "Where did the discrimination happen?"
+msgstr ""
+
+msgid "You can select more than one."
+msgstr ""
+
+msgid "Select where the discrimination happened"
+msgstr ""
+
+msgid "Work - including colleagues, employer or employment agency"
+msgstr ""
+
+msgid "School, college, university or other education setting"
+msgstr ""
+
+msgid ""
+"Businesses or services - such as a shop, restaurant, train, hotel, bank, "
+"law firm"
+msgstr ""
+
+msgid "Health or care - such as a hospital or care home"
+msgstr ""
+
+msgid "Housing - such as a landlord or estate agent"
+msgstr ""
+
+msgid ""
+"Public services and authorities - such as the police, social services, "
+"council or local authority, jobcentre, government"
+msgstr ""
+
+msgid "Clubs and associations - such as a sports club"
+msgstr ""
+
+msgid "I’m not sure"
 msgstr ""
 
 msgid "Is this to do with police, prisons or detention centres?"
@@ -1382,6 +1463,11 @@ msgstr ""
 msgid "Find problems covered by legal aid"
 msgstr ""
 
+msgid ""
+"These are the problems covered by legal aid. Choose the problem you need "
+"help with."
+msgstr ""
+
 msgid "More problems covered by legal aid"
 msgstr ""
 
@@ -1467,6 +1553,42 @@ msgid "If you’re accused of terrorism or financing terrorist groups."
 msgstr ""
 
 msgid "Help if you’re a victim of human trafficking or modern slavery."
+msgstr ""
+
+msgid "Find other free or low-cost legal help"
+msgstr ""
+
+msgid "free or affordable legal help (opens new tab)."
+msgstr ""
+
+msgid "The Citizen’s Advice website explains how to find "
+msgstr ""
+
+msgid "Speak to an advice organisation"
+msgstr ""
+
+msgid "Citizen’s Advice (opens new tab)"
+msgstr ""
+
+msgid "Advicelocal (opens new tab)"
+msgstr ""
+
+msgid "Find other free or low-cost legal help"
+msgstr ""
+
+msgid "free or affordable legal help (opens new tab)."
+msgstr ""
+
+msgid "The Citizen’s Advice website explains how to find "
+msgstr ""
+
+msgid "Speak to an advice organisation"
+msgstr ""
+
+msgid "Citizen’s Advice (opens new tab)"
+msgstr ""
+
+msgid "Advicelocal (opens new tab)"
 msgstr ""
 
 msgid "Legal aid doesn’t cover all types of problem"

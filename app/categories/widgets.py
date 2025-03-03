@@ -1,4 +1,5 @@
 from govuk_frontend_wtf.wtforms_widgets import GovRadioInput, GovCheckboxesInput
+from flask_babel import lazy_gettext as _
 
 
 class CategoryInputField:
@@ -38,7 +39,7 @@ class CategoryInputField:
 
         # Add divider if enabled and there are enough items
         if self.show_divider and len(items) >= 2:
-            items[-2]["divider"] = "or"
+            items[-2]["divider"] = _("or")
 
         # Handle pre-selected answer if present
         if field.data:
