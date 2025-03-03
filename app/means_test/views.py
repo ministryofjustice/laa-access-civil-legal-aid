@@ -190,10 +190,17 @@ class CheckYourAnswers(FormsMixin, MethodView):
             results = get_your_problem__no_description()
 
         for answer in answers:
+            answer_key = "text"
+            answer_label = answer.answer_label
+            if isinstance(answer_label, list):
+                # Multiple items need to be separated by a new line
+                answer_key = "markdown"
+                answer_label = "\n".join(answer_label)
+
             results.append(
                 {
                     "key": {"text": answer.question},
-                    "value": {"text": answer.answer_label},
+                    "value": {answer_key: answer_label},
                     "actions": {
                         "items": [{"text": _("Change"), "href": answer.edit_url}]
                     },
