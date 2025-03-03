@@ -5,7 +5,7 @@ from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import MultiplePropertiesForm
 from app.means_test.forms.outgoings import OutgoingsForm
 from app.means_test.money_interval import MoneyInterval
-from app.means_test.constants import EligibilityStatus
+from app.means_test.constants import EligibilityResult
 import logging
 
 logger = logging.getLogger(__name__)
@@ -27,13 +27,13 @@ def update_means_test(payload):
         return response
 
 
-def is_eligible(reference) -> EligibilityStatus:
+def is_eligible(reference) -> EligibilityResult:
     if not reference:
         raise ValueError("Reference cannot be empty")
 
     means_test_endpoint = "checker/api/v1/eligibility_check/"
     response = cla_backend.post(f"{means_test_endpoint}{reference}/is_eligible/")
-    eligibility = EligibilityStatus.from_string(response["is_eligible"])
+    eligibility = EligibilityResult.from_string(response["is_eligible"])
     return eligibility
 
 

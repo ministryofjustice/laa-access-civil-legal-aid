@@ -5,7 +5,7 @@ from app.means_test.api import (
     update_means_test,
     get_means_test_payload,
     is_eligible,
-    EligibilityStatus,
+    EligibilityResult,
 )
 from app.means_test.forms import BaseMeansTestForm
 from app.means_test.forms.about_you import AboutYouForm
@@ -67,9 +67,9 @@ class MeansTest(View):
             reference = update_means_test(payload)["reference"]
 
             eligibility = is_eligible(reference)
-            if eligibility == EligibilityStatus.ELIGIBLE:
+            if eligibility == EligibilityResult.ELIGIBLE:
                 return redirect(url_for("contact.eligible"))
-            if eligibility == EligibilityStatus.INELIGIBLE:
+            if eligibility == EligibilityResult.INELIGIBLE:
                 return redirect(url_for("means_test.result.ineligible"))
 
             return redirect(next_page)
