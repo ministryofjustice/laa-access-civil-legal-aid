@@ -108,10 +108,11 @@ class BaseMeansTestForm(FlaskForm):
 
     @staticmethod
     def get_selected_answers(field_instance):
-        def choices_filter(choice):
+        def selected_answers_only(choice):
             return field_instance.data and choice[0] in field_instance.data
 
-        answers = list(filter(choices_filter, field_instance.choices))
+        # Remove any unselected choices
+        answers = list(filter(selected_answers_only, field_instance.choices))
         answers = [str(answer[1]) for answer in answers]
         if not isinstance(field_instance, SelectMultipleField):
             answers = answers[0]
