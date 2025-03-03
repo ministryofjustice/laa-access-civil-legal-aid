@@ -39,6 +39,15 @@ class CategoryLandingPage(CategoryPage):
     template: str = "categories/landing.html"
 
     routing_map: dict[str, []] = {}
+    """
+    A dictionary that organizes category listings into different sections: "main", "more", and "other".
+
+    - "main" and "more" contain lists of tuples, where each tuple consists of:
+      - `category`: Category object.  
+      - `route`:  String - an intermediary route than stores the selected category before redirecting to the target
+
+    - "other" is a string representing an intermediary route than stores the selected answer before redirecting to the target
+    """
     listing: dict[str, []] = {}
 
     def __init__(self, route_endpoint: str = None, *args, **kwargs):
