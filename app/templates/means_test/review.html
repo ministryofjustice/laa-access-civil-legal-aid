@@ -26,7 +26,7 @@
                     {% set ns = namespace(rows=[]) %}
                     {% for answer in category_answers %}
                         {%  if answer.value.markdown %}
-                            {% set _ = answer.__setitem__("value", {"text": answer.value.markdown | markdown(extensions=['nl2br'])}) %}
+                            {% set _ = answer.value.update({"text": answer.value.markdown | markdown(extensions=['nl2br'])}) %}
                         {% endif %}
                         {% set _ = ns.rows.append(answer) %}
                     {% endfor %}
@@ -50,7 +50,7 @@
                     {% set ns = namespace(rows=[]) %}
                     {% for question in questions %}
                         {%  if question.value.markdown %}
-                            {% set _ = question.__setitem__("value", {"text": question.value.markdown | markdown(extensions=['nl2br'])}) %}
+                            {% set _ = question.value.update({"text": question.value.markdown | markdown(extensions=['nl2br'])}) %}
                         {% endif %}
                         {% set _ = ns.rows.append(question) %}
                     {% endfor %}
