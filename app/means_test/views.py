@@ -57,8 +57,6 @@ class MeansTest(FormsMixin, View):
             if response is not None:
                 return response
 
-        # Todo: Handle invalidation of previous answers when current answer invalidates it
-        #   i.e when user changes their answers and no longer in dispute or no longer on benefits
         if form.validate_on_submit():
             session.get_eligibility().add(self.current_name, form.data)
             next_page = url_for(f"means_test.{self.get_next_page(self.current_name)}")
