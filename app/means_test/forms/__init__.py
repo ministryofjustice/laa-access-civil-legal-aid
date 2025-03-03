@@ -136,6 +136,5 @@ class BaseMeansTestForm(FlaskForm):
     def get_money_field_answers(field_instance):
         if field_instance.data == 0:
             return "£0"
-        amount = decimal.Decimal(int(field_instance.data) / 100)
-        amount = amount.quantize(decimal.Decimal("0.01"))
-        return f"£{amount}"
+
+        return f"£{field_instance._value()}"
