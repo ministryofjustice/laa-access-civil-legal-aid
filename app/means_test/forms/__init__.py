@@ -70,7 +70,21 @@ class BaseMeansTestForm(FlaskForm):
                     return False
         return False
 
-    def summary(self):
+    def summary(self) -> dict:
+        """
+        Generates a summary of all fields in this form, including their labels (questions) and formatted values (answers).
+        Monetary fields will have a '£' prefix, and selection fields will display their choice label.
+
+        Fields with no data or empty values will be excluded.
+
+        :return: A dictionary summarizing the form fields.
+        Each entry follows this structure:
+        {
+            "question": field label,
+            "answer": formatted field value (or choice label for selection fields),
+            "id": field ID
+        }
+        """
         summary = {}
         for field_name, field_instance in self._fields.items():
             if isinstance(field_instance, (SubmitField, CSRFTokenField)):
