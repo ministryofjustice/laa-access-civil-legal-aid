@@ -750,6 +750,12 @@ msgstr "Rhaid i’ch rhif ffôn fod yn 20 llythyren neu lai"
 msgid "Select a time for us to call"
 msgstr "Dewiswch amser i ni eich ffonio"
 
+msgid "Call today"
+msgstr "Ffoniwch heddiw"
+
+msgid "Call on another day"
+msgstr "Ffoniwch ar ddiwrnod arall"
+
 msgid "Time"
 msgstr "Amser"
 

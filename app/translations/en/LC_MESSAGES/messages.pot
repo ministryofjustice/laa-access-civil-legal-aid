@@ -12,6 +12,7 @@ msgstr ""
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "POT-Creation-Date: 2025-03-03 14:56+0000\n"
 =======
 "POT-Creation-Date: 2025-02-20 15:15+0000\n"
@@ -25,6 +26,9 @@ msgstr ""
 =======
 "POT-Creation-Date: 2025-03-04 00:09+0000\n"
 >>>>>>> 2192600b (Add Welsh translation for the contact preferences)
+=======
+"POT-Creation-Date: 2025-03-04 14:02+0000\n"
+>>>>>>> 9353e635 (Update translations)
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -672,6 +676,12 @@ msgid "Your telephone number must be 20 characters or less"
 msgstr ""
 
 msgid "Select a time for us to call"
+msgstr ""
+
+msgid "Call today"
+msgstr ""
+
+msgid "Call on another day"
 msgstr ""
 
 msgid "Time"

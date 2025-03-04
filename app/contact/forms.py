@@ -290,7 +290,7 @@ class ContactUsForm(FlaskForm):
             ValidateIf("contact_type", "callback"),
             InputRequired(message=_("Select a time for us to call")),
         ],
-        choices=["Call today", "Call on another day"],
+        choices=[_("Call today"), _("Call on another day")],
     )
 
     call_today_time = SelectField(
@@ -388,7 +388,7 @@ class ContactUsForm(FlaskForm):
             ValidateIf("contact_type", "thirdparty"),
             InputRequired(message=_("Select a time for us to call")),
         ],
-        choices=["Call today", "Call on another day"],
+        choices=[_("Call today"), _("Call on another day")],
     )
 
     thirdparty_call_today_time = SelectField(
