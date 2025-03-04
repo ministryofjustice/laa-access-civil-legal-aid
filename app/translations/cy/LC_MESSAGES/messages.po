@@ -651,6 +651,34 @@ msgstr "A gawsoch chi eich cyhuddo gan landlord neu'r cyngor?"
 
 msgid "Select ‘Yes’ if you were accused by a landlord or the council"
 msgstr "Dewiswch ‘Ydw’ os cawsoch eich cyhuddo gan landlord neu’r cyngor"
+msgstr ""
+
+msgid "I will call you"
+msgstr "Byddaf yn galw chi"
+
+msgid "Call me back"
+msgstr "Eich ffonio’n ôl"
+
+msgid "Call someone else instead of me"
+msgstr "Ffoniwch rywun arall yn fy lle"
+
+msgid "-- Please select --"
+msgstr "-- Dewiswch --"
+
+msgid "Parent or guardian"
+msgstr ""
+
+msgid "Family member or friend"
+msgstr ""
+
+msgid "Professional"
+msgstr ""
+
+msgid "Legal adviser"
+msgstr ""
+
+msgid "Other"
+msgstr ""
 
 msgid "Why do you want to contact Civil Legal Advice?"
 msgstr "Pam eich bod eisiau cysylltu â’r gwasanaeth Cyngor Cyfreithiol Sifil?"
@@ -810,9 +838,6 @@ msgid "Enter your email address so we can arrange a BSL call"
 msgstr ""
 "Rhowch eich cyfeiriad e-bost er mwyn i ni allu trefnu galwad Iaith "
 "Arwyddion Prydain (BSL)"
-
-msgid "Enter your email address"
-msgstr "Rhowch eich cyfeiriad e-bost"
 
 msgid "Choose a language"
 msgstr "Dewiswch iaith"
@@ -2541,4 +2566,7 @@ msgstr "Carafannau a cherbydau eraill nad ydych chi’n eu defnyddio bob dydd"
 
 msgid "Musical instruments, unless you’re a professional musician"
 msgstr "Offerynnau cerddorol, oni bai’ch bod yn gerddor proffesiynol"
+
+#~ msgid "Enter your email address"
+#~ msgstr "Rhowch eich cyfeiriad e-bost"
 

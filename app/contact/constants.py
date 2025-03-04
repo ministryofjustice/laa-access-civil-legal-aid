@@ -180,23 +180,23 @@ LANG_CHOICES = [
 ]
 
 CONTACT_PREFERENCE = [
-    ("call", "I will call you"),
-    ("callback", "Call me back"),
-    ("thirdparty", "Call someone else instead of me"),
+    ("call", _("I will call you")),
+    ("callback", _("Call me back")),
+    ("thirdparty", _("Call someone else instead of me")),
 ]
 
 # If there are no slots available for call me back this will show
 NO_SLOT_CONTACT_PREFERENCE = [
-    ("call", "I will call you"),
-    ("thirdparty", "Call someone else instead of me"),
+    ("call", _("I will call you")),
+    ("thirdparty", _("Call someone else instead of me")),
 ]
 
 SELECT_OPTION_DEFAULT = [("", _("-- Please select --"))]
 THIRDPARTY_RELATIONSHIP = [
-    ("parent_guardian", "Parent or guardian"),
-    ("family_friend", "Family member or friend"),
-    ("professional", "Professional"),
-    ("legal_advisor", "Legal adviser"),
-    ("other", "Other"),
+    ("parent_guardian", _("Parent or guardian")),
+    ("family_friend", _("Family member or friend")),
+    ("professional", _("Professional")),
+    ("legal_advisor", _("Legal adviser")),
+    ("other", _("Other")),
 ]
 THIRDPARTY_RELATIONSHIP_CHOICES = SELECT_OPTION_DEFAULT + THIRDPARTY_RELATIONSHIP

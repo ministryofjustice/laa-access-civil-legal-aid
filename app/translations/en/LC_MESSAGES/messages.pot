@@ -11,6 +11,7 @@ msgstr ""
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "POT-Creation-Date: 2025-03-03 14:56+0000\n"
 =======
 "POT-Creation-Date: 2025-02-20 15:15+0000\n"
@@ -21,6 +22,9 @@ msgstr ""
 =======
 "POT-Creation-Date: 2025-02-25 15:35+0000\n"
 >>>>>>> 5fb17521 (Add missing Welsh translations)
+=======
+"POT-Creation-Date: 2025-03-04 00:09+0000\n"
+>>>>>>> 2192600b (Add Welsh translation for the contact preferences)
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -575,7 +579,31 @@ msgstr ""
 msgid "Select ‘Yes’ if you were accused by a landlord or the council"
 msgstr ""
 
+msgid "I will call you"
+msgstr ""
+
+msgid "Call me back"
+msgstr ""
+
+msgid "Call someone else instead of me"
+msgstr ""
+
 msgid "-- Please select --"
+msgstr ""
+
+msgid "Parent or guardian"
+msgstr ""
+
+msgid "Family member or friend"
+msgstr ""
+
+msgid "Professional"
+msgstr ""
+
+msgid "Legal adviser"
+msgstr ""
+
+msgid "Other"
 msgstr ""
 
 msgid "Why do you want to contact Civil Legal Advice?"
@@ -731,9 +759,6 @@ msgid "Any other communication need"
 msgstr ""
 
 msgid "Enter your email address so we can arrange a BSL call"
-msgstr ""
-
-msgid "Enter your email address"
 msgstr ""
 
 msgid "Choose a language"
