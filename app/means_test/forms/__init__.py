@@ -101,7 +101,7 @@ class BaseMeansTestForm(FlaskForm):
             answer = field_instance.data
 
             if isinstance(field_instance, SelectField):
-                answer = self.get_selected_answers(field_instance)
+                answer = self.get_selected_answer(field_instance)
             elif isinstance(field_instance, MoneyIntervalField):
                 answer = self.get_money_interval_field_answers(field_instance)
             elif isinstance(field_instance, MoneyField):
@@ -121,16 +121,17 @@ class BaseMeansTestForm(FlaskForm):
         return summary
 
     @staticmethod
-    def get_selected_answers(field_instance):
+    def get_selected_answer(field_instance):
         def selected_answers_only(choice):
             return field_instance.data and choice[0] in field_instance.data
 
         # Remove any unselected choices
-        answers = list(filter(selected_answers_only, field_instance.choices))
-        answers = [str(answer[1]) for answer in answers]
+        selected_choices = list(filter(selected_answers_only, field_instance.choices))
+        # Get the labels of the selected answers
+        answer_labels = [str(choice[1]) for choice in selected_choices]
         if not isinstance(field_instance, SelectMultipleField):
-            answers = answers[0]
-        return answers
+            return answer_labels[0]
+        return answer_labels
 
     @staticmethod
     def get_money_interval_field_answers(field_instance):
