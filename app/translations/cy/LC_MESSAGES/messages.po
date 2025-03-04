@@ -347,7 +347,7 @@ msgid "Appeal a decision about your benefits."
 msgstr "Apelio penderfyniadau am eich budd-daliadau."
 
 msgid "Legal action against police and public organisations"
-msgstr "Cymryd camau cyfreithiol yn erbyn heddlu a sefydliadau cyhoeddus"
+msgstr "Camau cyfreithiol yn erbyn sefydliadau cyhoeddus"
 
 msgid ""
 "Includes police, government, prisons, NHS, the council, care facilities "
@@ -437,10 +437,10 @@ msgid "Validation failed message"
 msgstr ""
 
 msgid "Yes"
-msgstr "Ydw"
+msgstr "Ydy"
 
 msgid "No"
-msgstr "Nac ydw"
+msgstr "Nac ydy"
 
 msgid "Continue"
 msgstr "Parhau"
