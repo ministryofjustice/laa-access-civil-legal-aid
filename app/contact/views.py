@@ -58,9 +58,6 @@ class ContactUs(View):
                     session["case_reference"],
                     session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY],
                 )
-                del session[
-                    ReasonsForContactingForm.MODEL_REF_SESSION_KEY
-                ]  # TODO: Why does it do this?
 
             # Set callback time
             session["callback_time"]: datetime | None = form.get_callback_time()
@@ -78,6 +75,10 @@ class ContactUs(View):
                     form.data.get("contact_number"),
                     form.data.get("third_party_contact_number"),
                 )
+            # Clears session data once form is submitted
+            case_ref = session.get("case_reference")
+            session.clear()
+            session["case_reference"] = case_ref
             return redirect(url_for("contact.confirmation"))
         return render_template(self.template, form=form, form_progress=form_progress)
 
