@@ -25,25 +25,10 @@ class ValidateIf:
     def __call__(self, form, field):
         other_field = form._fields.get(self.dependent_field_name)
         if other_field is None:
-            raise ValueError(f'No field named "{self.dependent_field_name}" in form.')
+            raise ValueError('no field named "%s" in form' % self.dependent_field_name)
 
-        # If the dependent field is a SelectMultipleField, its data will be a list
-        dependent_data = other_field.data
-
-        # Update the condition check logic to handle lists
-        if isinstance(dependent_data, list):
-            # If using `IN` condition, check if dependent_value is in the list
-            if self.condition_type == ValidateIfType.IN:
-                match = self.dependent_field_value in dependent_data
-            # If using `EQ` condition, check if there's a match
-            elif self.condition_type == ValidateIfType.EQ:
-                match = self.dependent_field_value in dependent_data
-            else:
-                match = False
-        else:
-            # If the dependent data is not a list, use the same logic
-            match = self.condition_type(self.dependent_field_value, dependent_data)
-
+        # If the dependent field doesn't match the value, skip validation
+        match = self.condition_type(self.dependent_field_value, other_field.data)
         if not match:
             field.errors = []
             raise StopValidation()
