@@ -17,9 +17,6 @@ class ValidateDayTime:
 
         valid_time_slots = form.time_slots[selected_day]
 
-        print(selected_time)
-        print(valid_time_slots)
-
         for time in valid_time_slots:
             if selected_time == time[0]:
                 field.errors = []
