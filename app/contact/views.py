@@ -77,8 +77,12 @@ class ContactUs(View):
                 )
             # Clears session data once form is submitted
             case_ref = session.get("case_reference")
+            callback_time = session.get("callback_time")
+            contact_type = session.get("contact_type")
             session.clear()
             session["case_reference"] = case_ref
+            session["callback_time"] = callback_time
+            session["contact_type"] = contact_type
             return redirect(url_for("contact.confirmation"))
         return render_template(self.template, form=form, form_progress=form_progress)
 
