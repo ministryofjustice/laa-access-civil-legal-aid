@@ -38,7 +38,7 @@ class CategoryPage(View):
 class CategoryLandingPage(CategoryPage):
     template: str = "categories/landing.html"
 
-    routing_map: dict[str, []] = {}
+    routing_map: dict[str, list] = {}
     """
     A dictionary that organizes category listings into different sections: "main", "more", and "other".
 
@@ -48,7 +48,7 @@ class CategoryLandingPage(CategoryPage):
 
     - "other" is a string representing an intermediary route than stores the selected answer before redirecting to the target
     """
-    listing: dict[str, []] = {}
+    listing: dict[str, list] = {}
 
     def __init__(self, route_endpoint: str = None, *args, **kwargs):
         super().__init__(*args, **kwargs)
