@@ -263,7 +263,9 @@ class ContactUsForm(FlaskForm):
 
     contact_type = RadioField(
         _("Select a contact option"),
-        widget=ContactRadioInput(),
+        widget=ContactRadioInput(
+            is_inline=False, heading_class="govuk-fieldset__legend--m"
+        ),
         choices=CONTACT_PREFERENCE,
         validators=[InputRequired(message=_("Tell us how we should get in contact"))],
     )
@@ -285,7 +287,9 @@ class ContactUsForm(FlaskForm):
 
     time_to_call = RadioField(
         _("Select a time for us to call"),
-        widget=ContactRadioInput(label_class="govuk-fieldset__legend--s"),
+        widget=ContactRadioInput(
+            is_inline=False, heading_class="govuk-fieldset__legend--s"
+        ),
         validators=[
             ValidateIf("contact_type", "callback"),
             InputRequired(message=_("Select a time for us to call")),
@@ -329,7 +333,9 @@ class ContactUsForm(FlaskForm):
 
     announce_call_from_cla = RadioField(
         _("Can we say that we're calling from Civil Legal Advice?"),
-        widget=ContactRadioInput(label_class="govuk-fieldset__legend--s"),
+        widget=ContactRadioInput(
+            is_inline=False, heading_class="govuk-fieldset__legend--s"
+        ),
         choices=[
             (True, _("Yes")),
             (False, _("No - do not say where you are calling from")),
@@ -383,7 +389,9 @@ class ContactUsForm(FlaskForm):
 
     thirdparty_time_to_call = RadioField(
         _("Select a time for us to call"),
-        widget=ContactRadioInput(label_class="govuk-fieldset__legend--s"),
+        widget=ContactRadioInput(
+            is_inline=False, heading_class="govuk-fieldset__legend--s"
+        ),
         validators=[
             ValidateIf("contact_type", "thirdparty"),
             InputRequired(message=_("Select a time for us to call")),
@@ -472,7 +480,9 @@ class ContactUsForm(FlaskForm):
 
     adaptations = SelectMultipleField(
         _("Do you have any special communication needs? (optional)"),
-        widget=ContactCheckboxInput(),
+        widget=ContactCheckboxInput(
+            is_inline=False, heading_class="govuk-fieldset__legend--m"
+        ),
         choices=[
             ("bsl_webcam", _("British Sign Language (BSL)")),
             ("text_relay", _("Text relay")),
