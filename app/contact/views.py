@@ -45,7 +45,7 @@ class ContactUs(View):
             payload = form.get_payload()
             # Add the extra notes to the eligibility object
             if not self.attach_eligiblity_data:
-                session.eligibility = {}
+                session.clear_eligibility()
 
             self._append_notes_to_eligibility_check(form.data.get("extra_notes"))
 

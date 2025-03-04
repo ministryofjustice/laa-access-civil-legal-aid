@@ -128,6 +128,9 @@ class Session(SecureCookieSession):
     def get_eligibility(self):
         return self["eligibility"]
 
+    def clear_eligibility(self):
+        self["eligibility"] = {}
+
     @property
     def category(self) -> Category | None:
         """Get the category from the session.
