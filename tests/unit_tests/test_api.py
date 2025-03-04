@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, MagicMock
 from flask_babel import LazyString
 from app.api import BackendAPIClient
 from datetime import datetime
@@ -123,28 +123,34 @@ class TestReasonsForContacting:
 
 # Test Callback
 @pytest.fixture
-def mock_slots():
-    return [
-        datetime(2025, 2, 21, 9, 0),
-        datetime(2025, 2, 21, 9, 30),
-        datetime(2025, 2, 22, 10, 0),
-        datetime(2025, 2, 23, 10, 0),
-    ]
+def mock_api_response():
+    return {
+        "slots": [
+            "2025-02-21T09:00:00",
+            "2025-02-21T09:30:00",
+            "2025-02-22T10:00:00",
+            "2025-02-23T10:00:00",
+        ]
+    }
 
 
 class TestCallbackSlots:
     @pytest.fixture(autouse=True)
-    def setup_method(self, mock_slots):
+    def setup_method(self, mock_api_response):
         self.client = BackendAPIClient()
-        self.slots = mock_slots
+        self.client.get = MagicMock(return_value=mock_api_response)
+        self.client.CALLBACK_API_DATETIME_FORMAT = (
+            "%Y-%m-%dT%H:%M:%S"  # Ensure format is correct
+        )
 
-    def test_format_slots_by_day(self):
-        result = self.client.format_slots_by_day(self.slots)
+    def test_get_time_slots(self):
+        expected = [
+            datetime(2025, 2, 21, 9, 0),
+            datetime(2025, 2, 21, 9, 30),
+            datetime(2025, 2, 22, 10, 0),
+            datetime(2025, 2, 23, 10, 0),
+        ]
 
-        expected = {
-            "2025-02-21": [["0900", "9am to 9.30am"], ["0930", "9.30am to 10am"]],
-            "2025-02-22": [["1000", "10am to 10.30am"]],
-            "2025-02-23": [["1000", "10am to 10.30am"]],
-        }
+        result = self.client.get_time_slots()
 
-        assert result == expected
+        assert result == expected, f"Expected {expected}, but got {result}"

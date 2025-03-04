@@ -129,7 +129,7 @@ class Session(SecureCookieSession):
         return self["eligibility"]
 
     def clear_eligibility(self):
-        self["eligibility"] = {}
+        self["eligibility"] = Eligibility(forms={}, _notes={})
 
     @property
     def category(self) -> Category | None:

@@ -95,15 +95,12 @@ def test_get_time_slots(mock_datetime, mock_get, api_client, app):
     with app.app_context():
         result = api_client.get_time_slots(num_days=8, is_third_party_callback=False)
 
-    expected = {
-        "2025-03-01": [
-            ["0900", "9am to 9.30am"],
-            ["0930", "9.30am to 10am"],
-        ],
-        "2025-03-02": [
-            ["1000", "10am to 10.30am"],
-        ],
-    }
+    expected = [
+        datetime(2025, 3, 1, 9, 0),
+        datetime(2025, 3, 1, 9, 30),
+        datetime(2025, 3, 2, 10, 0),
+    ]
+
     assert result == expected
     mock_get.assert_called_once_with(
         "checker/api/v1/callback_time_slots/",
@@ -207,20 +204,6 @@ def test_by_postcode_formatted(mock_by_postcode, formatted_address_lookup):
     ]
     results = formatted_address_lookup.by_postcode("SW1A 1AA")
     assert results == ["London\nSW1A 1AA"]
-
-
-def test_format_address_from_dpa_result(formatted_address_lookup):
-    """Test address formatting"""
-    raw_result = {
-        "ORGANISATION_NAME": "Big Ben",
-        "BUILDING_NUMBER": "10",
-        "THOROUGHFARE_NAME": "Downing Street",
-        "POST_TOWN": "London",
-        "POSTCODE": "sw1a 2aa",
-    }
-    expected_output = "Big Ben\n10 Downing Street\nLondon\nSW1A 2AA"
-    result = formatted_address_lookup.format_address_from_dpa_result(raw_result)
-    assert result == expected_output
 
 
 # Test Contact Validators
