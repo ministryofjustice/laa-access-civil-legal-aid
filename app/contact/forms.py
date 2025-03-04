@@ -38,6 +38,7 @@ from app.contact.validators import (
 from app.means_test.validators import ValidateIf, ValidateIfType
 from app.api import cla_backend
 from datetime import datetime, timedelta
+from babel.dates import format_date
 
 
 class ReasonsForContactingForm(FlaskForm):
@@ -102,6 +103,13 @@ class ContactUsForm(FlaskForm):
         """Setup callback day time select field choices based on the available slots"""
         today: str = datetime.today().strftime("%Y-%m-%d")
 
+        self.time_slots = self._format_slots_by_day(
+            self.time_slots, locale=get_locale()
+        )
+        self.thirdparty_time_slots = self._format_slots_by_day(
+            self.thirdparty_time_slots
+        )
+
         # Setup today's time choices
         self._setup_today_choices(today)
 
@@ -113,6 +121,29 @@ class ContactUsForm(FlaskForm):
 
         # Hide callback option if there are no slots available
         self._adjust_contact_options_for_availability()
+
+    def _format_slots_by_day(self, slots, locale="en"):
+        slots_by_day = {}
+
+        for slot in slots:
+            date_str = slot.date().strftime("%Y-%m-%d")
+
+            slots_by_day.setdefault(date_str, [])
+            seperator = "to"
+            am_time_suffix = "am"
+            pm_time_suffix = "pm"
+            if locale == "cy":
+                seperator = "i"
+                am_time_suffix = "yb"
+                pm_time_suffix = "yh"
+            slots_by_day[date_str].append(
+                [
+                    slot.strftime("%H%M"),
+                    f"{slot.strftime('%I.%M%p').lstrip('0').replace('.00', '').replace('AM', am_time_suffix).replace('PM', pm_time_suffix)} {seperator} {(slot + timedelta(minutes=30)).strftime('%I.%M%p').lstrip('0').replace('.00', '').replace('AM', am_time_suffix).replace('PM', pm_time_suffix)}",
+                ]
+            )
+
+        return slots_by_day
 
     def _setup_today_choices(self, today):
         """Setup today's time slot choices"""
@@ -135,7 +166,14 @@ class ContactUsForm(FlaskForm):
             [day for day in self.time_slots.keys() if day != today]
         )
         regular_day_choices = [
-            (day, datetime.strptime(day, "%Y-%m-%d").strftime("%a %e %b"))
+            (
+                day,
+                format_date(
+                    datetime.strptime(day, "%Y-%m-%d"),
+                    format="EEE d MMM",
+                    locale=get_locale(),
+                ),
+            )
             for day in regular_upcoming_days
         ]
 
@@ -148,7 +186,14 @@ class ContactUsForm(FlaskForm):
             [day for day in self.thirdparty_time_slots.keys() if day != today]
         )
         thirdparty_day_choices = [
-            (day, datetime.strptime(day, "%Y-%m-%d").strftime("%a %e %b"))
+            (
+                day,
+                format_date(
+                    datetime.strptime(day, "%Y-%m-%d"),
+                    format="EEE d MMM",
+                    locale=get_locale(),
+                ),
+            )
             for day in thirdparty_upcoming_days
         ]
 

@@ -3,7 +3,7 @@ import requests
 from flask_babel import LazyString
 from flask import current_app, session
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime
 from app.extensions import cache
 
 logger = logging.getLogger(__name__)
@@ -133,25 +133,6 @@ class BackendAPIClient:
         payload = form.api_payload() if form else payload
         return self.post("checker/api/v1/reasons_for_contacting/", json=payload)
 
-    def format_slots_by_day(self, slots):
-        slots_by_day = {}
-
-        for slot in slots:
-            date_str = slot.date().strftime("%Y-%m-%d")
-
-            if date_str not in slots_by_day:
-                slots_by_day[date_str] = []
-
-            slots_by_day[date_str].append(
-                [
-                    slot.strftime("%H%M"),
-                    f"{slot.strftime('%I.%M%p').lstrip('0').lower().replace('.00', '')} to "
-                    f"{(slot + timedelta(minutes=30)).strftime('%I.%M%p').lstrip('0').lower().replace('.00', '')}",
-                ]
-            )
-
-        return slots_by_day
-
     def get_time_slots(self, num_days=8, is_third_party_callback=False):
         params = {"third_party_callback": is_third_party_callback, "num_days": num_days}
         slots = self.get(
@@ -162,9 +143,7 @@ class BackendAPIClient:
             datetime.strptime(slot, self.CALLBACK_API_DATETIME_FORMAT) for slot in slots
         ]
 
-        slots_by_day = self.format_slots_by_day(slots)
-
-        return slots_by_day
+        return slots
 
     def post_case(self, payload=None):
         contact_endpoint = "checker/api/v1/case"
