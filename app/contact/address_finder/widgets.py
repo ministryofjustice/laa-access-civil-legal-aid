@@ -43,21 +43,22 @@ class FormattedAddressLookup(AddressLookup):
 
     def format_address_from_result(self, raw_result):
         dpa_result = raw_result.get("DPA")
-        if dpa_result:
-            return self.format_address_from_dpa_result(dpa_result)
 
-    def format_address_from_dpa_result(self, raw_result):
-        address_format = [
-            {"fields": ["ORGANISATION_NAME"]},
-            {"fields": ["SUB_BUILDING_NAME"]},
-            {"fields": ["BUILDING_NAME"]},
-            {"fields": ["BUILDING_NUMBER", "THOROUGHFARE_NAME"]},
-            {"fields": ["DEPENDENT_LOCALITY"]},
-            {"fields": ["POST_TOWN"]},
-            {"fields": ["POSTCODE"], "transform": "upper"},
-        ]
-        formatted_lines = self.format_lines(address_format, raw_result)
-        return "\n".join([c for c in formatted_lines if c])
+        if dpa_result:
+            address_format = [
+                {"fields": ["ORGANISATION_NAME"]},
+                {"fields": ["SUB_BUILDING_NAME"]},
+                {"fields": ["BUILDING_NAME"]},
+                {"fields": ["BUILDING_NUMBER", "THOROUGHFARE_NAME"]},
+                {"fields": ["DEPENDENT_LOCALITY"]},
+                {"fields": ["POST_TOWN"]},
+                {"fields": ["POSTCODE"], "transform": "upper"},
+            ]
+
+            formatted_lines = self.format_lines(address_format, dpa_result)
+            return "\n".join([c for c in formatted_lines if c])
+        else:
+            return None
 
     def format_lines(self, address_format, raw_result):
         for line_format in address_format:
