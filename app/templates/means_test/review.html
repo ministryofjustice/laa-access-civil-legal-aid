@@ -2,8 +2,8 @@
 {%- from 'components/back_link.html' import govukBackLink -%}
 {%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
 {%- from 'govuk_frontend_jinja/components/summary-list/macro.html' import govukSummaryList -%}
-
-{% block pageTitle %}Check your answers and confirm - GOV.UK{% endblock %}
+{% set title = _("Check your answers and confirm") %}
+{% block pageTitle %}{{ title }} - GOV.UK{% endblock %}
 
 {% block beforeContent%}
 {{ super() }}
@@ -16,7 +16,7 @@
     <div class="govuk-grid-column-two-thirds">
 
         {% block formHeading %}
-            <h1 class="govuk-heading-xl">{% trans %}Check your answers and confirm{% endtrans %}</h1>
+            <h1 class="govuk-heading-xl">{{ title }}</h1>
             <form action="" method="post" novalidate>
                 {{ form.csrf_token }}
 
