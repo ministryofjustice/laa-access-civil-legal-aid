@@ -1,6 +1,182 @@
 {% extends "base.html" %}
+
 {%- from 'components/back_link.html' import govukBackLink -%}
 {%- from 'categories/components/list-item.html' import list_item, list_item_small -%}
+{%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
+{%- from 'govuk_frontend_jinja/components/inset-text/macro.html' import govukInsetText %}
+{%- from 'govuk_frontend_jinja/components/warning-text/macro.html' import govukWarningText %}
+
+{% set willCallHtml %}
+    <p class="govuk-body">{% trans %}We’ll give you the Civil Legal Advice phone number when you submit your details.{% endtrans %}</p>
+{% endset -%}
+
+{% set callTodayHtml %}
+    {{ form.call_today_time(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+    }) }}
+{% endset -%}
+
+{% set thirdpartycallTodayHtml %}
+    {{ form.thirdparty_call_today_time(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+    }) }}
+{% endset -%}
+
+{% set callAnotherHtml %}
+    {{ form.call_another_day(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "attributes": {
+            "data-time-slots": {
+                "value": form.time_slots_json
+            }
+        },
+    }) }}
+    {{ form.call_another_time(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+    }) }}
+{% endset -%}
+
+{% set thirdpartycallAnotherHtml %}
+    {{ form.thirdparty_call_another_day(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "attributes": {
+            "data-time-slots": {
+                "value": form.thirdparty_time_slots_json
+            }
+        },
+    }) }}
+    {{ form.thirdparty_call_another_time(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+    }) }}
+{% endset -%}
+
+{% set callMeHtml %}
+    <ul class="govuk-list govuk-list--bullet">
+    <li>{% trans %}We’ll call during the time you choose.{% endtrans %}</li>
+    <li>{% trans %}The call will come from an unknown or withheld number.{% endtrans %}</li>
+    <li>{% trans %}If you miss the call, we will call 2 more times in the next few days.{% endtrans %}</li>
+    <li>{% trans %}We will not leave a message.{% endtrans %}</li>
+    <li>{% trans %}If you miss all 3 calls, or if you need urgent advice, call us on:{% endtrans %}
+      <br>
+      <a class="govuk-link" href="tel:0345 345 4345">0345 345 4345</a>.
+    </li>
+    </ul>
+    {{ form.contact_number(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+    }) }}
+    {% set items = [
+        {
+            "conditional": {
+                "html": callTodayHtml
+            }
+        },
+        {
+            "conditional": {
+                "html": callAnotherHtml
+            }
+        }
+    ] %}
+    {% if form.call_today_time.choices|length == 1 %}
+        {% set items = items[1:] %}
+    {% endif %}
+    {% if form.call_another_day.choices|length == 1 %}
+        {% set items = items[:1] %}
+    {% endif %}
+    {{ form.time_to_call(params={
+        "items": items
+    }) }}
+    {{ form.announce_call_from_cla }}
+{% endset -%}
+
+{% set callthirdPartyHtml %}
+<ul class="govuk-list govuk-list--bullet">
+    <li>{% trans %}You must be with the person when we call.{% endtrans %}</li>
+    <li>{% trans %}We’ll call during the time you choose.{% endtrans %}</li>
+    <li>{% trans %}The call will come from an unknown or withheld number.{% endtrans %}</li>
+    <li>{% trans %}If you miss the call, we will call 2 more times in the next few days.{% endtrans %}</li>
+    <li>{% trans %}We will not leave a message.{% endtrans %}</li>
+    <li>{% trans %}If you miss all 3 calls, or if you need urgent advice, call us on:{% endtrans %}
+      <br>
+      <a class="govuk-link" href="tel:0345 345 4345">0345 345 4345</a>.
+    </li>
+    </ul>
+    {{ form.thirdparty_full_name(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+    }) }}
+    {{ form.thirdparty_relationship(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+    }) }}
+    {{ form.thirdparty_contact_number(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+    }) }}
+    {% set items = [
+        {
+            "conditional": {
+                "html": thirdpartycallTodayHtml
+            }
+        },
+        {
+            "conditional": {
+                "html": thirdpartycallAnotherHtml
+            }
+        }
+    ] %}
+    {% if form.thirdparty_call_today_time.choices|length == 1 %}
+        {% set items = items[1:] %}
+    {% endif %}
+    {% if form.thirdparty_call_another_day.choices|length == 1 %}
+        {% set items = items[:1] %}
+    {% endif %}
+    {{ form.thirdparty_time_to_call(params={
+        "items": items
+    }) }}
+{% endset -%}
+
+{% set addressFinderHtml %}
+    {{ form.address_finder }}
+{% endset -%}
+
+{% set bslEmailHtml %}
+    {{ form.bsl_email }}
+{% endset -%}
+
+{% set otherLangHtml %}
+    {{ form.other_language(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+    }) }}
+{% endset -%}
+
+{% set otherAdapHtml %}
+    {{ form.other_adaptation(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+    }) }}
+{% endset -%}
+
+{% block pageTitle %}{%- if form.errors %}Error: {% endif -%}{{ form.page_title }} - GOV.UK{% endblock %}
 
 {% block beforeContent%}
 {{ super() }}
