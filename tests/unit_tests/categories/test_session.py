@@ -15,7 +15,9 @@ def test_set_category_question_answer_new_session(app, client):
         session.set_category_question_answer(answer)
 
         assert "category_answers" in session
-        assert session["category_answers"] == [answer]
+        expected_category_answers = [answer.__dict__]
+        expected_category_answers[0]["category"] = {"code": "housing"}
+        assert session["category_answers"] == expected_category_answers
 
 
 def test_set_category_question_answer_updates_existing(app, client):
@@ -28,6 +30,7 @@ def test_set_category_question_answer_updates_existing(app, client):
             question_page="categories.housing.landing",
             category=HOUSING,
         )
+        session.set_category_question_answer(answer)
         updated_answer = CategoryAnswer(
             question="What is your favourite mode of transport?",
             answer_value="car",
@@ -36,9 +39,10 @@ def test_set_category_question_answer_updates_existing(app, client):
             question_page="categories.housing.landing",
             category=HOUSING,
         )
-        session["category_answers"] = [answer]
         session.set_category_question_answer(updated_answer)
-        assert session["category_answers"] == [updated_answer]
+        expected_category_answers = [updated_answer.__dict__]
+        expected_category_answers[0]["category"] = {"code": "housing"}
+        assert session["category_answers"] == expected_category_answers
 
 
 def test_get_category_question_answer_empty_session(app, client):
@@ -65,7 +69,8 @@ def test_get_category_question_answer_found(app, client):
         category=HOUSING,
     )
     with client.session_transaction() as session:
-        session["category_answers"] = [first_answer, second_answer]
+        session.set_category_question_answer(first_answer)
+        session.set_category_question_answer(second_answer)
         result = session.get_category_question_answer("Where did this happen?")
         assert result == "home"
 
@@ -80,7 +85,7 @@ def test_get_category_question_answer_not_found(app, client):
         category=HOUSING,
     )
     with client.session_transaction() as session:
-        session["category_answers"] = [answer]
+        session.set_category_question_answer(answer)
         result = session.get_category_question_answer("Hello?")
         assert result is None
 
