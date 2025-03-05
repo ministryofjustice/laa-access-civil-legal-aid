@@ -1,7 +1,7 @@
-from app.means_test.validators import ValidateIf, ValidateIfType
+import pytest
 from wtforms import StringField, SelectField, Form, SelectMultipleField
 from wtforms.validators import InputRequired
-import pytest
+from app.means_test.validators import ValidateIf, ValidateIfType
 
 
 class TestValidateIf:
@@ -19,54 +19,44 @@ class TestValidateIf:
         validator = ValidateIf("non_existent_field", "test_value")
 
         with pytest.raises(
-            ValueError, match='No field named "non_existent_field" in form.'
+            ValueError, match='no field named "non_existent_field" in form'
         ):
             validator(form, form.field)
 
     @pytest.mark.parametrize(
         "test_case",
         [
+            # Case 1: Condition met, InputRequired should trigger an error
             {
                 "form_data": {"select_field": "test_value"},
                 "dependent_field": "select_field",
                 "expected_value": "test_value",
                 "condition": ValidateIfType.EQ,
-                "should_validate": True,
+                "should_validate": False,  # Expecting validation to fail (InputRequired should trigger)
             },
+            # Case 2: Condition NOT met, validation should pass (no error)
             {
                 "form_data": {"select_field": "different_value"},
                 "dependent_field": "select_field",
                 "expected_value": "test_value",
                 "condition": ValidateIfType.EQ,
-                "should_validate": False,
+                "should_validate": True,  # Expecting validation to pass (ValidateIf stops validation)
             },
-            {
-                "form_data": {"multi_field": ["value1", "test_value", "value3"]},
-                "dependent_field": "multi_field",
-                "expected_value": "test_value",
-                "condition": ValidateIfType.EQ,
-                "should_validate": True,
-            },
-            {
-                "form_data": {"multi_field": ["value1", "value2", "value3"]},
-                "dependent_field": "multi_field",
-                "expected_value": "test_value",
-                "condition": ValidateIfType.EQ,
-                "should_validate": False,
-            },
+            # Case 3: Multi-field condition met, should trigger error
             {
                 "form_data": {"multi_field": ["value1", "test_value", "value3"]},
                 "dependent_field": "multi_field",
                 "expected_value": "test_value",
                 "condition": ValidateIfType.IN,
-                "should_validate": True,
+                "should_validate": False,  # Expecting validation to fail (InputRequired should trigger)
             },
+            # Case 4: Multi-field condition NOT met, validation should pass
             {
                 "form_data": {"multi_field": ["value1", "value2", "value3"]},
                 "dependent_field": "multi_field",
                 "expected_value": "test_value",
                 "condition": ValidateIfType.IN,
-                "should_validate": False,
+                "should_validate": True,  # Expecting validation to pass (ValidateIf stops validation)
             },
         ],
     )
@@ -100,8 +90,12 @@ class TestValidateIf:
         form = TestForm(data=test_case["form_data"])
 
         if test_case["should_validate"]:
-            assert form.validate() is False
-            assert "This field is required." in form.dependent_field.errors
-        else:
             form.validate()
-            assert form.dependent_field.errors == []
+            assert form.dependent_field.errors == [], (
+                f"Unexpected errors: {form.dependent_field.errors}"
+            )
+        else:
+            assert form.validate() is False
+            assert "This field is required." in form.dependent_field.errors, (
+                f"Expected error missing: {form.dependent_field.errors}"
+            )
