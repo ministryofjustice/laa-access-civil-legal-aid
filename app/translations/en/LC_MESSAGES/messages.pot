@@ -8,27 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-"POT-Creation-Date: 2025-03-03 14:56+0000\n"
-=======
-"POT-Creation-Date: 2025-02-20 15:15+0000\n"
->>>>>>> e531086d (Update welsh translations)
-=======
-"POT-Creation-Date: 2025-02-25 15:28+0000\n"
->>>>>>> 1282ce59 (Amend erroneous Welsh translation)
-=======
-"POT-Creation-Date: 2025-02-25 15:35+0000\n"
->>>>>>> 5fb17521 (Add missing Welsh translations)
-=======
-"POT-Creation-Date: 2025-03-04 00:09+0000\n"
->>>>>>> 2192600b (Add Welsh translation for the contact preferences)
-=======
-"POT-Creation-Date: 2025-03-04 14:02+0000\n"
->>>>>>> 9353e635 (Update translations)
+"POT-Creation-Date: 2025-03-05 08:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1742,6 +1722,59 @@ msgstr ""
 msgid "Help if you’re a victim of human trafficking or modern slavery."
 msgstr ""
 
+msgid ""
+"These organisations give free, independent advice for problems about "
+"domestic abuse."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems with "
+"police and public organisations."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems about "
+"mental health and mental capacity."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems about "
+"asylum and immigration."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems about "
+"disability and old age (social care)."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems about "
+"benefits."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems about "
+"children, families and relationships."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems about "
+"housing."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems about "
+"discrimination."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems about "
+"special educational needs (SEND)."
+msgstr ""
+
+msgid "These organisations give free, independent advice."
+msgstr ""
+
 msgid "Find other free or low-cost legal help"
 msgstr ""
 
@@ -1791,6 +1824,21 @@ msgstr ""
 msgid "Help organisations for problems about %(category_name)s"
 msgstr ""
 
+msgid "Appeal a decision about your benefits"
+msgstr ""
+
+msgid "Legal aid only covers appeals to the:"
+msgstr ""
+
+msgid ""
+"For all other benefits appeals, go to GOV.UK and read <a "
+"href=\"https://www.gov.uk/appeal-benefit-decision\" "
+"target=\"_blank\">Appeal a benefits decision (opens in new tab)</a>."
+msgstr ""
+
+msgid "If you cannot find your problem"
+msgstr ""
+
 msgid "Exceptional cases"
 msgstr ""
 
@@ -1816,21 +1864,6 @@ msgstr ""
 
 #, python-format
 msgid "You can also %(ecf_link)s to the Legal Aid Agency."
-msgstr ""
-
-msgid "Appeal a decision about your benefits"
-msgstr ""
-
-msgid "Legal aid only covers appeals to the:"
-msgstr ""
-
-msgid ""
-"For all other benefits appeals, go to GOV.UK and read <a "
-"href=\"https://www.gov.uk/appeal-benefit-decision\" "
-"target=\"_blank\">Appeal a benefits decision (opens in new tab)</a>."
-msgstr ""
-
-msgid "If you cannot find your problem"
 msgstr ""
 
 #, python-format

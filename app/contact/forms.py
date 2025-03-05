@@ -515,7 +515,6 @@ class ContactUsForm(FlaskForm):
         ],
     )
     other_adaptation = TextAreaField(
-        _(""),
         description=_("Please tell us what you need"),
         widget=GovTextArea(),
         validators=[

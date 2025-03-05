@@ -651,7 +651,6 @@ msgstr "A gawsoch chi eich cyhuddo gan landlord neu'r cyngor?"
 
 msgid "Select ‘Yes’ if you were accused by a landlord or the council"
 msgstr "Dewiswch ‘Ydw’ os cawsoch eich cyhuddo gan landlord neu’r cyngor"
-msgstr ""
 
 msgid "I will call you"
 msgstr "Byddaf yn galw chi"
@@ -1964,23 +1963,58 @@ msgstr ""
 msgid "Help if you’re a victim of human trafficking or modern slavery."
 msgstr ""
 
-msgid "Find other free or low-cost legal help"
+msgid ""
+"These organisations give free, independent advice for problems about "
+"domestic abuse."
 msgstr ""
 
-msgid "free or affordable legal help (opens new tab)."
+msgid ""
+"These organisations give free, independent advice for problems with "
+"police and public organisations."
 msgstr ""
 
-msgid "The Citizen’s Advice website explains how to find "
+msgid ""
+"These organisations give free, independent advice for problems about "
+"mental health and mental capacity."
 msgstr ""
 
-msgid "Speak to an advice organisation"
+msgid ""
+"These organisations give free, independent advice for problems about "
+"asylum and immigration."
 msgstr ""
 
-msgid "Citizen’s Advice (opens new tab)"
+msgid ""
+"These organisations give free, independent advice for problems about "
+"disability and old age (social care)."
 msgstr ""
 
-msgid "Advicelocal (opens new tab)"
-msgstr "Cymorth os ydych chi’n ddioddefwr masnachu pobl neu gaethwasiaeth fodern."
+msgid ""
+"These organisations give free, independent advice for problems about "
+"benefits."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems about "
+"children, families and relationships."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems about "
+"housing."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems about "
+"discrimination."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems about "
+"special educational needs (SEND)."
+msgstr ""
+
+msgid "These organisations give free, independent advice."
+msgstr ""
 
 msgid "Find other free or low-cost legal help"
 msgstr ""
@@ -2038,6 +2072,25 @@ msgstr ""
 msgid "Help organisations for problems about %(category_name)s"
 msgstr "Sefydliadau cymorth ar gyfer problemau ynghylch %(category_name)s"
 
+msgid "Appeal a decision about your benefits"
+msgstr "Apelio yn erbyn penderfyniad am eich budd-daliadau"
+
+msgid "Legal aid only covers appeals to the:"
+msgstr "Dim ond apeliadau i’r canlynol y mae cymorth cyfreithiol yn eu cwmpasu:"
+
+msgid ""
+"For all other benefits appeals, go to GOV.UK and read <a "
+"href=\"https://www.gov.uk/appeal-benefit-decision\" "
+"target=\"_blank\">Appeal a benefits decision (opens in new tab)</a>."
+msgstr ""
+"Ar gyfer pob apêl arall sy’n ymwneud â phenderfyniadau ynghylch budd-"
+"daliadau, ewch i GOV.UK a darllenwch <a href=\"https://www.gov.uk/apelio-"
+"penderfyniad-budd-dal\" target=\"_blank\">Apelio yn erbyn penderfyniad am"
+" eich budd-daliadau (yn agor mewn tab newydd)</a>."
+
+msgid "If you cannot find your problem"
+msgstr "Os na allwch ddod o hyd i'ch problem"
+
 msgid "Exceptional cases"
 msgstr "Achosion eithriadol"
 
@@ -2068,25 +2121,6 @@ msgstr "gyflwyno cais yn uniongyrchol"
 #, python-format
 msgid "You can also %(ecf_link)s to the Legal Aid Agency."
 msgstr "Gallwch hefyd %(ecf_link)s i’r Asiantaeth Cymorth Cyfreithiol."
-
-msgid "Appeal a decision about your benefits"
-msgstr "Apelio yn erbyn penderfyniad am eich budd-daliadau"
-
-msgid "Legal aid only covers appeals to the:"
-msgstr "Dim ond apeliadau i’r canlynol y mae cymorth cyfreithiol yn eu cwmpasu:"
-
-msgid ""
-"For all other benefits appeals, go to GOV.UK and read <a "
-"href=\"https://www.gov.uk/appeal-benefit-decision\" "
-"target=\"_blank\">Appeal a benefits decision (opens in new tab)</a>."
-msgstr ""
-"Ar gyfer pob apêl arall sy’n ymwneud â phenderfyniadau ynghylch budd-"
-"daliadau, ewch i GOV.UK a darllenwch <a href=\"https://www.gov.uk/apelio-"
-"penderfyniad-budd-dal\" target=\"_blank\">Apelio yn erbyn penderfyniad am"
-" eich budd-daliadau (yn agor mewn tab newydd)</a>."
-
-msgid "If you cannot find your problem"
-msgstr "Os na allwch ddod o hyd i'ch problem"
 
 #, python-format
 msgid "Show %(count)s more"
@@ -2136,7 +2170,9 @@ msgstr "gofalwyr maeth, cartrefi gofal, cyfleusterau gofal"
 msgid ""
 "It also includes problems with the police, prisons or detention centres, "
 "for example if you’ve been:"
-msgstr "Mae hefyd yn cynnwys problemau gyda'r heddlu, carchardai neu ganolfannau cadw, er enghraifft os ydych chi wedi:"
+msgstr ""
+"Mae hefyd yn cynnwys problemau gyda'r heddlu, carchardai neu ganolfannau "
+"cadw, er enghraifft os ydych chi wedi:"
 
 msgid "wrongfully arrested, stopped, held or detained anywhere"
 msgstr "cael eich arestio, eich stopio, eich dal neu eich cadw ar gam yn unrhyw le"
