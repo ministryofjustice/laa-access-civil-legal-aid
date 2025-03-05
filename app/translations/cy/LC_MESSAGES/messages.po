@@ -1787,7 +1787,7 @@ msgstr ""
 "terfysgol."
 
 msgid "Help if you’re a victim of human trafficking or modern slavery."
-msgstr ""
+msgstr "Cymorth os ydych chi’n ddioddefwr masnachu pobl neu gaethwasiaeth fodern."
 
 msgid "Find other free or low-cost legal help"
 msgstr ""
