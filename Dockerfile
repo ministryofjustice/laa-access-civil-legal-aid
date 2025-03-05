@@ -45,7 +45,7 @@ EXPOSE $FLASK_RUN_PORT
 
 # Run the Flask application for production
 FROM base AS production
-CMD gunicorn --bind "0.0.0.0:$FLASK_RUN_PORT" --workers ${GUNICORN_WORKERS:-4} "app:create_app()"
+CMD gunicorn --bind "0.0.0.0:$FLASK_RUN_PORT" "app:create_app()"
 
 # Run the Flask application for development
 FROM base AS development
