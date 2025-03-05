@@ -1,4 +1,4 @@
-
+{{- if eq .Values.environment "uat" -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -13,3 +13,4 @@ metadata:
 data:
   laa-access-civil-legal-aid-dashboard.json: |
 {{ .Files.Get "files/dashboard.json" | indent 4 }}
+{{- end }}
