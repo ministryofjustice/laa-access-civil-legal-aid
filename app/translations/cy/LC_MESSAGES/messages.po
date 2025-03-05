@@ -394,7 +394,7 @@ msgid "Appeal a decision about your benefits."
 msgstr "Apelio penderfyniadau am eich budd-daliadau."
 
 msgid "Legal action against police and public organisations"
-msgstr "Cymryd camau cyfreithiol yn erbyn heddlu a sefydliadau cyhoeddus"
+msgstr "Camau cyfreithiol yn erbyn yr heddlu a sefydliadau cyhoeddus"
 
 msgid ""
 "Includes police, government, prisons, NHS, the council, care facilities "
@@ -1921,35 +1921,41 @@ msgid ""
 "Legal help to challenge something done by a public organisation. You "
 "might have been told you need to bring a ‘judicial review’."
 msgstr ""
+"Cymorth cyfreithiol i herio rhywbeth a wneir gan sefydliad cyhoeddus. "
+"Efallai eich bod wedi cael gwybod bod angen i chi ddwyn ‘adolygiad "
+"barnwrol’."
+
+msgid "This includes organisations like:"
+msgstr "Mae hyn yn cynnwys sefydliadau fel:"
 
 msgid "schools or other education settings"
-msgstr ""
+msgstr "ysgolion neu leoliadau addysg eraill"
 
 msgid "council, social services, local authority"
-msgstr ""
+msgstr "cyngor, gwasanaethau cymdeithasol, awdurdod lleol"
 
 msgid "NHS, hospitals"
-msgstr ""
+msgstr "y GIG, ysbytai"
 
 msgid "housing providers"
-msgstr ""
+msgstr "darparwyr tai"
 
 msgid "a government department or agency"
-msgstr ""
+msgstr "un o adrannau neu asiantaethau'r llywodraeth"
 
 msgid "foster carers, care homes, care facilities"
-msgstr ""
+msgstr "gofalwyr maeth, cartrefi gofal, cyfleusterau gofal"
 
 msgid ""
 "It also includes problems with the police, prisons or detention centres, "
 "for example if you’ve been:"
-msgstr ""
+msgstr "Mae hefyd yn cynnwys problemau gyda'r heddlu, carchardai neu ganolfannau cadw, er enghraifft os ydych chi wedi:"
 
 msgid "wrongfully arrested, stopped, held or detained anywhere"
-msgstr ""
+msgstr "cael eich arestio, eich stopio, eich dal neu eich cadw ar gam yn unrhyw le"
 
 msgid "physically, sexually or emotionally abused"
-msgstr ""
+msgstr "cael eich cam-drin yn gorfforol, yn rhywiol neu’n emosiynol"
 
 msgid "Back"
 msgstr "Yn ôl"
