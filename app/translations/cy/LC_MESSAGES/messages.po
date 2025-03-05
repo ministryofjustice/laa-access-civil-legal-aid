@@ -11,36 +11,36 @@ msgstr ""
 "Gall hyn fod yn bartner, cyn-bartner, neu aelod o’r teulu."
 
 msgid "Help to keep yourself safe and protect children"
-msgstr ""
+msgstr "Cymorth i gadw eich hun yn ddiogel ac amddiffyn plant"
 
 msgid ""
 "Includes keeping you or your family safe, getting court orders and help "
 "if someone is ignoring a court order. Also, if you’re being stalked, "
 "threatened or harassed."
-msgstr ""
+msgstr "Mae hyn yn cynnwys eich cadw chi neu eich teulu’n ddiogel, cael gorchmynion llys a chymorth os bydd rhywun yn anwybyddu gorchymyn llys. Hefyd, os ydych chi’n cael eich stelcio, eich bygwth neu eich aflonyddu."
 
 msgid "Leaving an abusive relationship"
-msgstr ""
+msgstr "Gadael perthynas gamdriniol"
 
 msgid ""
 "Help with divorce, separation, or leaving your partner. Includes legal "
 "arrangements for children, money and housing."
-msgstr ""
+msgstr "Cymorth i ysgaru, i wahanu neu i adael eich partner. Mae hyn yn cynnwys trefniadau cyfreithiol ar gyfer plant, arian a thai."
 
 msgid "Problems with an ex-partner: children or money"
-msgstr ""
+msgstr "Problemau gyda chyn-bartner: plant neu arian"
 
 msgid ""
 "Includes arrangements for children and money. If an ex-partner is not "
 "following agreements or court orders. If you’re worried about a child, or"
 " if a child is taken or kept without your permission."
-msgstr ""
+msgstr "Mae'n cynnwys trefniadau ar gyfer plant ac arian. Os nad yw cynbartner yn dilyn cytundebau neu orchmynion llys. Os ydych chi'n poeni am blentyn, neu os yw plentyn yn cael ei gymryd neu ei gadw heb eich caniatâd."
 
 msgid "Problems with neighbours, landlords or other people"
-msgstr ""
+msgstr "Problemau gyda chymdogion, landlordiaid neu bobl eraill"
 
 msgid "Threats, abuse or harassment by someone who is not a family member."
-msgstr ""
+msgstr "Bygythiadau, cam-drin neu aflonyddu gan rywun nad yw’n aelod o’r teulu."
 
 msgid "Housing, homelessness, losing your home"
 msgstr "Tai, digartrefedd, colli eich cartref"
@@ -48,7 +48,7 @@ msgstr "Tai, digartrefedd, colli eich cartref"
 msgid ""
 "Includes being forced to leave your home, problems with council housing, "
 "if you’re homeless or might be homeless in the next 2 months."
-msgstr ""
+msgstr "Mae hyn yn cynnwys cael eich gorfodi i adael eich cartref, problemau gyda thai cyngor, os ydych chi'n ddigartref neu y gallech fod yn ddigartref yn ystod y 2 fis nesaf."
 
 msgid "Forced Marriage"
 msgstr "Priodas dan orfod"
@@ -63,8 +63,7 @@ msgstr "Anffurfio Organau Cenhedlu Benywod (FGM)"
 
 msgid "If you or someone else is at risk of FGM."
 msgstr ""
-"Os ydych chi neu rywun arall mewn perygl o brofi anffurfio organau "
-"cenhedlu benywod."
+"Os ydych chi neu rywun arall mewn perygl o FGM."
 
 msgid "Children, families, relationships"
 msgstr "Plant, teuluoedd, perthnasoedd"
