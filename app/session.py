@@ -4,6 +4,7 @@ from flask import session
 from dataclasses import dataclass
 from datetime import timedelta
 from app.categories.models import CategoryAnswer
+from flask_babel import LazyString
 
 
 @dataclass
@@ -168,13 +169,6 @@ class Session(SecureCookieSession):
         else:
             return get_category_from_code(category_dict["code"])
 
-    @category.setter
-    def category(self, category: Category):
-        current_category = self.category
-        if current_category and current_category.code != category.code:
-            self["category_answers"] = []
-        self["category"] = category
-
     @property
     def has_children(self):
         # Todo: Needs implementation
@@ -190,15 +184,32 @@ class Session(SecureCookieSession):
         items: list[dict] = self.get("category_answers", [])
         category_answers = []
         for item in items:
-            answer = item
-            if isinstance(answer, dict):
-                if isinstance(answer["category"], dict):
-                    answer["category"] = Category.from_dict(answer["category"])
-                answer = CategoryAnswer(**answer)
-
-            category_answers.append(answer)
+            answer = item.copy()
+            answer["category"] = self._category_from_dict_from_session_storage(
+                answer["category"]
+            )
+            category_answers.append(CategoryAnswer(**answer))
 
         return category_answers
+
+    @staticmethod
+    def _untranslate_category_answer(category_answer: CategoryAnswer):
+        """Remove translation from the category_answer object"""
+        category_answer_dict = {}
+        for key, value in category_answer.__dict__.items():
+            if isinstance(value, list):
+                values = []
+                for item in value:
+                    if isinstance(item, LazyString):
+                        values.append(item._args[0])
+                    else:
+                        values.append(item)
+                value = values
+            elif isinstance(value, LazyString):
+                value = value._args[0]
+            category_answer_dict[key] = value
+
+        return CategoryAnswer(**category_answer_dict)
 
     def set_category_question_answer(self, category_answer: CategoryAnswer) -> None:
         """Store a question-answer pair with the question category in the session.
@@ -224,8 +235,10 @@ class Session(SecureCookieSession):
         answers = [
             entry for entry in answers if entry.question != category_answer.question
         ]
-
-        answers.append(category_answer)
+        category_answer.category = self._category_to_dict_for_session_storage(
+            category_answer.category
+        )
+        answers.append(category_answer.__dict__)
 
         self["category_answers"] = category_answers
 

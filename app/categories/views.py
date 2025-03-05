@@ -3,7 +3,7 @@ from flask.views import View
 from flask import render_template, redirect, url_for, session, request
 from app.categories.forms import QuestionForm
 from app.categories.constants import Category
-from app.categories.models import CategoryAnswer
+from app.categories.models import CategoryAnswer, QuestionType
 
 
 class CategoryPage(View):
@@ -210,6 +210,7 @@ class QuestionPage(CategoryPage):
             category=form.category,
             next_page=self.get_next_page(form.question.data),
             question_page=request.url_rule.endpoint,
+            question_type=QuestionType.ONWARD,
         )
         super().update_session(category_answer)
 

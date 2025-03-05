@@ -1,7 +1,7 @@
 from typing import List
 from flask.views import View, MethodView
 from flask import render_template, url_for, redirect, session, request
-from flask_babel import lazy_gettext as _
+from flask_babel import lazy_gettext as _, gettext
 from werkzeug.datastructures import MultiDict
 from app.means_test.api import update_means_test, get_means_test_payload
 from app.means_test.forms.about_you import AboutYouForm
@@ -11,6 +11,7 @@ from app.means_test.forms.income import IncomeForm
 from app.means_test.forms.savings import SavingsForm
 from app.means_test.forms.outgoings import OutgoingsForm
 from app.means_test.forms.review import ReviewForm, BaseMeansTestForm
+from app.categories.models import CategoryAnswer
 
 
 class FormsMixin:
@@ -178,14 +179,29 @@ class CheckYourAnswers(FormsMixin, MethodView):
                 },
             ]
 
-        answers = session.category_answers
+        answers: List[CategoryAnswer] = session.category_answers
         if not answers:
             return []
 
         category = session.category
         category_has_children = bool(getattr(category, "children"))
         if category_has_children:
-            results = get_your_problem__with_description(answers.pop(0))
+            if answers[0].question_type_is_sub_category:
+                results = get_your_problem__with_description(answers.pop(0))
+            else:
+                # Sometimes there is only one answer and it was an onward question.
+                # However we still need to show 2 items: 'The problem you need help with' and the onward question
+                # Example journey:
+                #   -> Children, families, relationships
+                #   -> If there is domestic abuse in your family
+                #   -> Are you worried about someone's safety?
+                #
+                # Then the two items need be shown in `About the problem` section:
+                #   The `The problem you need help with` should be Domestic abuse with its description
+                #   And the `Are you worried about someone's safety` onward question
+                first_answer = CategoryAnswer(**answers[0].__dict__)
+                first_answer.question_page = "categories.index"
+                results = get_your_problem__with_description(first_answer)
         else:
             # if a category doesn't have children then it does not have subpages so we don't show the category description
             results = get_your_problem__no_description()
@@ -196,11 +212,13 @@ class CheckYourAnswers(FormsMixin, MethodView):
             if isinstance(answer_label, list):
                 # Multiple items need to be separated by a new line
                 answer_key = "markdown"
-                answer_label = "\n".join(answer_label)
+                answer_label = "\n".join([gettext(label) for label in answer_label])
+            else:
+                answer_label = gettext(answer_label)
 
             results.append(
                 {
-                    "key": {"text": answer.question},
+                    "key": {"text": gettext(answer.question)},
                     "value": {answer_key: answer_label},
                     "actions": {
                         "items": [{"text": _("Change"), "href": answer.edit_url}]
