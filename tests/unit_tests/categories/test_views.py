@@ -57,9 +57,13 @@ class TestCannotFindYourProblemPage:
 class TestNextStepsPage:
     def test_init(self):
         page = NextStepsPage()
-        assert page.template == "categories/next-steps.html"
+        assert page.template == "categories/next-steps-alternate-help.html"
 
     def test_init_with_category(self):
         page = NextStepsPage(category=FAMILY)
-        assert page.template == "categories/next-steps.html"
+        assert page.template == "categories/next-steps-alternate-help.html"
         assert page.category == FAMILY
+
+    def test_init_with_no_help_organisations(self):
+        page = NextStepsPage(get_help_organisations=False)
+        assert page.template == "categories/next-steps.html"
