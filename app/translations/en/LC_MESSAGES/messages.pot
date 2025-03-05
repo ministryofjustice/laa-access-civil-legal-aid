@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-03 23:59+0000\n"
+"POT-Creation-Date: 2025-03-03 14:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1471,6 +1471,12 @@ msgstr ""
 msgid "More problems"
 msgstr ""
 
+msgid "housing"
+msgstr ""
+
+msgid "SEND"
+msgstr ""
+
 msgid "Adopting a child from outside the UK"
 msgstr ""
 
@@ -1550,24 +1556,6 @@ msgid "If you’re accused of terrorism or financing terrorist groups."
 msgstr ""
 
 msgid "Help if you’re a victim of human trafficking or modern slavery."
-msgstr ""
-
-msgid "Find other free or low-cost legal help"
-msgstr ""
-
-msgid "free or affordable legal help (opens new tab)."
-msgstr ""
-
-msgid "The Citizen’s Advice website explains how to find "
-msgstr ""
-
-msgid "Speak to an advice organisation"
-msgstr ""
-
-msgid "Citizen’s Advice (opens new tab)"
-msgstr ""
-
-msgid "Advicelocal (opens new tab)"
 msgstr ""
 
 msgid "Legal aid doesn’t cover all types of problem"

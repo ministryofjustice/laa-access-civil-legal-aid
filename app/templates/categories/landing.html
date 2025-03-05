@@ -45,9 +45,9 @@
         {% if category.code in ["community_care","mental_health"] %}
             {% set other_text = "" %}
         {% elif  category.code == "housing" %}
-            {% set other_text = "housing" %}
+            {% set other_text = _("housing") %}
         {% elif category.code == "send" %}
-            {% set other_text = "SEND" %}
+            {% set other_text = _("SEND") %}
         {% endif %}
         {{ cannot_find_your_problem(other_text, routing_map.other|category_url_for)}}
 

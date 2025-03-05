@@ -234,7 +234,7 @@ msgid "Treated unfairly by a landlord, council or housing association."
 msgstr "Cael eich trin yn annheg gan landlord, cyngor neu gymdeithas dai."
 
 msgid "If you’ve been accused of anti-social behaviour"
-msgstr "Os ydych wedi cael eich cyhuddo o ymddygiad gwrthgymdeithasol"
+msgstr "Os cawsoch eich cyhuddo o ymddygiad gwrthgymdeithasol"
 
 msgid ""
 "Accused of anti-social behaviour by the landlord, council or housing "
@@ -1688,6 +1688,12 @@ msgstr "Mwy o broblemau y mae cymorth cyfreithiol yn delio â nhw"
 
 msgid "More problems"
 msgstr "Mwy o broblemau"
+
+msgid "housing"
+msgstr "tai"
+
+msgid "SEND"
+msgstr ""
 
 msgid "Adopting a child from outside the UK"
 msgstr "Mabwysiadu plentyn o'r tu allan i’r Deyrnas Unedig"
