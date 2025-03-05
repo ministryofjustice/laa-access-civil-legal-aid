@@ -235,12 +235,17 @@ class Session(SecureCookieSession):
         answers = [
             entry for entry in answers if entry.question != category_answer.question
         ]
-        category_answer.category = self._category_to_dict_for_session_storage(
-            category_answer.category
-        )
-        answers.append(category_answer.__dict__)
+        answers.append(category_answer)
 
-        self["category_answers"] = answers
+        category_answers = []
+        for answer in answers:
+            answer_dict = answer.__dict__
+            answer_dict["category"] = self._category_to_dict_for_session_storage(
+                answer.category
+            )
+            category_answers.append(answer_dict)
+
+        self["category_answers"] = category_answers
 
     def get_category_question_answer(self, question_title: str) -> str | None:
         """Retrieve an answer for a question from the session.
