@@ -1,9 +1,10 @@
 from flask.sessions import SecureCookieSession, SecureCookieSessionInterface
-from app.categories.constants import Category
+from app.categories.constants import Category, get_category_from_code
 from flask import session
 from dataclasses import dataclass
 from datetime import timedelta
 from app.categories.models import CategoryAnswer
+from flask_babel import LazyString
 
 
 @dataclass
@@ -142,16 +143,31 @@ class Session(SecureCookieSession):
         category_dict = self.get("category")
         if category_dict is None:
             return None
-        if isinstance(category_dict, Category):
-            return category_dict
-        return Category.from_dict(category_dict)
+
+        return self._category_from_dict_from_session_storage(category_dict)
 
     @category.setter
     def category(self, category: Category):
         current_category = self.category
         if current_category and current_category.code != category.code:
             self["category_answers"] = []
-        self["category"] = category
+        self["category"] = self._category_to_dict_for_session_storage(category)
+
+    @staticmethod
+    def _category_to_dict_for_session_storage(category: Category):
+        data = {"code": category.code}
+        if category.parent_code:
+            data["parent_code"] = category.parent_code
+        return data
+
+    @staticmethod
+    def _category_from_dict_from_session_storage(category_dict: dict):
+        parent_code = category_dict.get("parent_code", None)
+        if parent_code:
+            category = get_category_from_code(parent_code)
+            return category.children[category_dict["code"]]
+        else:
+            return get_category_from_code(category_dict["code"])
 
     @property
     def has_children(self):
@@ -168,15 +184,32 @@ class Session(SecureCookieSession):
         items: list[dict] = self.get("category_answers", [])
         category_answers = []
         for item in items:
-            answer = item
-            if isinstance(answer, dict):
-                if isinstance(answer["category"], dict):
-                    answer["category"] = Category.from_dict(answer["category"])
-                answer = CategoryAnswer(**answer)
-
-            category_answers.append(answer)
+            answer = item.copy()
+            answer["category"] = self._category_from_dict_from_session_storage(
+                answer["category"]
+            )
+            category_answers.append(CategoryAnswer(**answer))
 
         return category_answers
+
+    @staticmethod
+    def _untranslate_category_answer(category_answer: CategoryAnswer):
+        """Remove translation from the category_answer object"""
+        category_answer_dict = {}
+        for key, value in category_answer.__dict__.items():
+            if isinstance(value, list):
+                values = []
+                for item in value:
+                    if isinstance(item, LazyString):
+                        values.append(item._args[0])
+                    else:
+                        values.append(item)
+                value = values
+            elif isinstance(value, LazyString):
+                value = value._args[0]
+            category_answer_dict[key] = value
+
+        return CategoryAnswer(**category_answer_dict)
 
     def set_category_question_answer(self, category_answer: CategoryAnswer) -> None:
         """Store a question-answer pair with the question category in the session.
@@ -189,6 +222,10 @@ class Session(SecureCookieSession):
         Side effects:
             Updates session['category_answers'] list
         """
+
+        # Remove translation from the category_answer object before saving
+        category_answer = self._untranslate_category_answer(category_answer)
+
         if "category_answers" not in self:
             self["category_answers"] = []
 
@@ -198,8 +235,10 @@ class Session(SecureCookieSession):
         answers = [
             entry for entry in answers if entry.question != category_answer.question
         ]
-
-        answers.append(category_answer)
+        category_answer.category = self._category_to_dict_for_session_storage(
+            category_answer.category
+        )
+        answers.append(category_answer.__dict__)
 
         self["category_answers"] = answers
 

@@ -13,6 +13,7 @@ class Category:
     # Internal code
     code: Optional[str] = None
     children: dict[str, "Category"] | None = field(default_factory=dict)
+    parent_code: Optional[str] = None
     _referrer_text: Optional[LazyString] = None
     exit_page: Optional[bool] = False
 
@@ -486,21 +487,27 @@ MENTAL_CAPACITY = Category(
 def init_children(category: Category) -> None:
     for child in category.children.values():
         child.chs_code = child.chs_code or category.chs_code
+        child.parent_code = category.code
         child.article_category_name = (
             child.article_category_name or category.article_category_name
         )
 
 
-ALL_CATEGORIES = [
-    DOMESTIC_ABUSE,
-    FAMILY,
-    HOUSING,
-    DISCRIMINATION,
-    EDUCATION,
-    COMMUNITY_CARE,
-    BENEFITS,
-    PUBLIC_LAW,
-    ASYLUM_AND_IMMIGRATION,
-    MENTAL_CAPACITY,
-]
-list(map(init_children, ALL_CATEGORIES))
+ALL_CATEGORIES = {
+    DOMESTIC_ABUSE.code: DOMESTIC_ABUSE,
+    FAMILY.code: FAMILY,
+    HOUSING.code: HOUSING,
+    DISCRIMINATION.code: DISCRIMINATION,
+    EDUCATION.code: EDUCATION,
+    COMMUNITY_CARE.code: COMMUNITY_CARE,
+    BENEFITS.code: BENEFITS,
+    PUBLIC_LAW.code: PUBLIC_LAW,
+    ASYLUM_AND_IMMIGRATION.code: ASYLUM_AND_IMMIGRATION,
+    MENTAL_CAPACITY.code: MENTAL_CAPACITY,
+}
+
+list(map(init_children, ALL_CATEGORIES.values()))
+
+
+def get_category_from_code(code: str) -> Category:
+    return ALL_CATEGORIES[code]
