@@ -1,5 +1,9 @@
 from flask.views import View
-from app.contact.forms import ContactUsForm, ReasonsForContactingForm
+from app.contact.forms import (
+    ContactUsForm,
+    ReasonsForContactingForm,
+    ConfirmationEmailForm,
+)
 import logging
 from flask import session, render_template, request, redirect, url_for
 from app.api import cla_backend
@@ -105,10 +109,29 @@ class ContactUs(View):
 
 class ConfirmationPage(View):
     template = "contact/confirmation.html"
+    methods = ["GET", "POST"]
 
     @staticmethod
     def get_context():
-        return {}
+        return {
+            "case_reference": session.get("case_reference"),
+            "callback_time": session.get("callback_time"),
+            "contact_type": session.get("contact_type"),
+        }
 
     def dispatch_request(self):
-        return render_template(self.template, **self.get_context())
+        form = ConfirmationEmailForm()
+        if form.validate_on_submit():
+            notify.create_and_send_confirmation_email(
+                form.email.data,
+                session.get("case_reference"),
+                session.get("callback_time"),
+                session.get("contact_type"),
+            )
+            return render_template(
+                self.template,
+                form=form,
+                confirmation_email=form.email.data,
+                **self.get_context(),
+            )
+        return render_template(self.template, form=form, **self.get_context())

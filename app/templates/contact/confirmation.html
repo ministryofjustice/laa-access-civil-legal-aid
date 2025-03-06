@@ -9,12 +9,14 @@
     {# TODO: Add conditional logic to this section #}
     Your reference number is
     <br>
-    <strong>AB-1234-5678</strong>
-    <p class="confirmation-inset govuk-body">
-        {{ _('You can now call CLA on') }} <strong class="laa-telephone">0345 345 4 345</strong>.<br>
-        {% trans %}Please quote your reference number when you call. Find out about
-        <a class="govuk-link" href="https://www.gov.uk/call-charges" rel="external">call charges</a>.{% endtrans %}
-    </p>
+    <strong>{{ case_reference }}</strong>
+    {% if not callback_time %}
+        <p class="confirmation-inset govuk-body">
+            {{ _('You can now call CLA on') }} <strong class="laa-telephone">0345 345 4 345</strong>.<br>
+            {% trans %}Please quote your reference number when you call. Find out about
+            <a class="govuk-link" href="https://www.gov.uk/call-charges" rel="external">call charges</a>.{% endtrans %}
+        </p>
+    {% endif %}
     <div class="confirmation-actions">
         <button id="print-button" class="govuk-!-margin-top-5 govuk-!-font-size-19 govuk-link confirmation-button-link ">{{ _('Print this page') }}</button>
         <script nonce="{{ csp_nonce() }}">
@@ -29,12 +31,41 @@
 {% block content %}
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
+            {% set panelTitle =  _('We will call you back') if callback_time else _("Your details have been submitted") %}
+
             {{ govukPanel({
-                "titleText": _("Your details have been submitted"),
+                "titleText":panelTitle,
                 "html": panelHtml
             }) }}
 
+            {% if confirmation_email and not form.errors %}
+                <p class="govuk-body">
+                  {{ _('Your reference number was sent to') }}
+                  <strong>{{ confirmation_email }}</strong>.
+                </p>
+              {% else %}
+                <form class="confirmation-email-form" method="POST" novalidate>
+                    {{ form.csrf_token }}
+                    {{ form.email }}
+                    {{ form.submit }}
+                </form>
+            {% endif %}
+
             <h2 class="govuk-heading-m">{% trans %}What happens next?{% endtrans %}</h2>
+
+            {% if callback_time %}
+                <p class="govuk-body">
+                  {% if contact_type == "thirdparty" %}
+                    {% trans %}Your details have been submitted and an operator will call
+                    the person you nominated at least once during your chosen time, or as close to the time as possible{% endtrans %}
+                  {% else %}
+                    {% trans %}Your details have been submitted and an operator will call
+                    you at least once during your chosen time, or as close to the time as possible{% endtrans %}
+                  {% endif %}
+                  (<strong>{{ callback_time|format_callback_time }}</strong>).
+                  {% trans %}When a CLA operator calls, the call will come from an anonymous number.{% endtrans %}
+                </p>
+            {% endif %}
 
             {# TODO: Add conditioanl logic to this section #}
             <ul class="govuk-list govuk-list--bullet">
