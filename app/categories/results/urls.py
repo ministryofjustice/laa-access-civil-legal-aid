@@ -5,10 +5,18 @@ from app.categories.results.views import (
     CannotFindYourProblemPage,
     NextStepsPage,
 )
+from app.mixins import InScopeMixin
+
+
+class InScopeResultPage(InScopeMixin, ResultPage):
+    pass
+
 
 bp.add_url_rule(
     "/legal-aid-available",
-    view_func=ResultPage.as_view("in_scope", template="categories/in-scope.html"),
+    view_func=InScopeResultPage.as_view(
+        "in_scope", template="categories/in-scope.html"
+    ),
 )
 bp.add_url_rule(
     "/legal-aid-available-hlpas",
