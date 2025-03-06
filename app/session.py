@@ -9,9 +9,9 @@ from flask_babel import LazyString
 
 @dataclass
 class Eligibility:
-    def __init__(self, forms, _notes):
+    def __init__(self, forms, _notes=None):
         self.forms = forms
-        self._notes = _notes
+        self._notes = _notes or {}
 
     forms: dict[str, dict]
 
