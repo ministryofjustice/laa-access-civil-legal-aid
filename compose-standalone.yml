@@ -23,6 +23,8 @@ services:
       - MAINTENANCE_MODE=FALSE
       - FLASK_RUN_PORT=8020
       - SENTRY_DSN=${SENTRY_DSN:-}
+      - GOVUK_NOTIFY_API_KEY=${GOVUK_NOTIFY_API_KEY:-}
+      - EMAIL_ORCHESTRATOR_URL=${EMAIL_ORCHESTRATOR_URL:-}
     ports:
       - "8020:8020"
     volumes:

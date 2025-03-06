@@ -78,3 +78,13 @@ envVars:
       name: ratelimit
       key: enabled
       optional: true
+
+  OS_PLACES_API_KEY:
+    secret:
+      name: os-places
+      key: key
+  EMAIL_ORCHESTRATOR_URL:
+    configmap:
+      name: notify-orchestrator
+      key: url
+      optional: true

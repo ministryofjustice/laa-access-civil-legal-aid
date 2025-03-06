@@ -7,6 +7,10 @@ from datetime import timedelta
 
 @dataclass
 class Eligibility:
+    def __init__(self, forms, _notes):
+        self.forms = forms
+        self._notes = _notes
+
     forms: dict[str, dict]
 
     def add(self, form_name, data):
@@ -100,6 +104,13 @@ class Eligibility:
             .get("benefits", [])
         )
 
+    @property
+    def notes(self):
+        return self._notes
+
+    def add_note(self, key: str, note: str):
+        self._notes[key] = note
+
 
 class Session(SecureCookieSession):
     SESSION_TIMEOUT = timedelta(minutes=30)
@@ -109,13 +120,16 @@ class Session(SecureCookieSession):
         eligibility = {}
         if args:
             eligibility = args[0].get("eligibility", {})
-        self["eligibility"] = Eligibility(forms=eligibility.get("forms", {}))
+        self["eligibility"] = Eligibility(forms=eligibility.get("forms", {}), _notes={})
 
     def update_eligibility(self, form_name, form_data):
         self["eligibility"].add(form_name, form_data)
 
     def get_eligibility(self):
         return self["eligibility"]
+
+    def clear_eligibility(self):
+        self["eligibility"] = Eligibility(forms={}, _notes={})
 
     @property
     def category(self) -> Category | None:
