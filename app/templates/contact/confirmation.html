@@ -108,7 +108,7 @@
                           <a class="govuk-link" href="https://www.gov.uk/legal-aid/domestic-abuse-or-violence" rel="external">
                             {{ _('Find out what you can use as evidence') }}</a>.
                         </li>
-                      {% elif session.stored.category == 'family' %}
+                      {% elif category.code == 'family' %}
                         <li>
                           {% trans %}If your case involves domestic abuse or violence,
                           the specialist adviser will need evidence of this
@@ -134,7 +134,6 @@
                   </li>
                 {% endif %}
 
-                <li>{% trans %}You will need to provide evidence of your financial circumstances and maybe your problem. Your specialist adviser will explain what is needed.{% endtrans %}</li>
                 <li>{% trans %}If your specialist adviser thinks you need to speak to someone in person or have someone represent you in court, they will organise this.{% endtrans %}</li>
             </ul>
 
