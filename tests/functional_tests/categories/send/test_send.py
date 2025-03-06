@@ -4,7 +4,7 @@ import pytest
 
 child_in_care_heading = "Is this about a child who is or has been in care?"
 legalaid_available_page = "Legal aid is available for this type of problem"
-contact_page_heading = "Contact us page"
+contact_page_heading = "Contact Civil Legal Advice"
 ROUTING = [
     {
         "link_text": "Help with a child or young person's SEND",
@@ -49,7 +49,7 @@ class TestSendLandingPage:
             else [next_page_heading]
         )
         for page_heading in next_page_heading:
-            expect(page.get_by_text(page_heading)).to_be_visible()
+            expect(page.get_by_role("heading", name=page_heading)).to_be_visible()
 
     def test_child_in_care_form_yes(self, page: Page):
         page.get_by_role(
@@ -58,7 +58,7 @@ class TestSendLandingPage:
         page.get_by_role("link", name="SEND tribunals").click()
         page.get_by_label("Yes").check()
         page.get_by_role("button", name="Continue").click()
-        expect(page.get_by_text(contact_page_heading)).to_be_visible()
+        expect(page.get_by_role("heading", name=contact_page_heading)).to_be_visible()
 
     def test_child_in_care_form_no(self, page: Page):
         page.get_by_role(
@@ -67,4 +67,6 @@ class TestSendLandingPage:
         page.get_by_role("link", name="SEND tribunals").click()
         page.get_by_label("No").check()
         page.get_by_role("button", name="Continue").click()
-        expect(page.get_by_text(legalaid_available_page)).to_be_visible()
+        expect(
+            page.get_by_role("heading", name=legalaid_available_page)
+        ).to_be_visible()

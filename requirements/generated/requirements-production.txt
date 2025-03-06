@@ -13,6 +13,8 @@ charset-normalizer==3.4.1
 click==8.1.8
 deepmerge==2.0
 deprecated==1.2.18
+dnspython==2.7.0
+email-validator==2.2.0
 flask==3.1.0
 flask-babel==4.0.0
 flask-caching==2.3.1
@@ -22,6 +24,7 @@ flask-talisman==1.1.0
 flask-wtf==1.2.2
 govuk-frontend-jinja==3.5.0
 govuk-frontend-wtf==3.2.0
+gunicorn==23.0.0
 idna==3.10
 itsdangerous==2.2.0
 jinja2==3.1.6
