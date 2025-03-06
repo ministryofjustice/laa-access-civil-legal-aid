@@ -12,6 +12,7 @@ from app.means_test.forms.savings import SavingsForm
 from app.means_test.forms.outgoings import OutgoingsForm
 from app.means_test.forms.review import ReviewForm, BaseMeansTestForm
 from app.categories.models import CategoryAnswer
+from app.mixins import InScopeMixin
 
 
 class FormsMixin:
@@ -26,7 +27,7 @@ class FormsMixin:
     }
 
 
-class MeansTest(FormsMixin, View):
+class MeansTest(FormsMixin, InScopeMixin, View):
     def __init__(self, current_form_class, current_name):
         self.form_class = current_form_class
         self.current_name = current_name
@@ -50,6 +51,7 @@ class MeansTest(FormsMixin, View):
         return None
 
     def dispatch_request(self):
+        self.ensure_in_scope()
         eligibility = session.get_eligibility()
         form_data = eligibility.forms.get(self.current_name, {})
         form = self.form_class(formdata=request.form or None, data=form_data)
