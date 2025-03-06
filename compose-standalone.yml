@@ -13,7 +13,7 @@ services:
     build:
       context: .
       args:
-        BASE_IMAGE: python:3.12-bookworm
+        BASE_IMAGE: python:3.13-bookworm
         REQUIREMENTS_FILE: "requirements-development.txt"
       target: development
     restart: always

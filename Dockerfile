@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=python:3.12-slim
+ARG BASE_IMAGE=python:3.13-slim
 
 FROM node:lts-iron as node_build
 WORKDIR /home/node

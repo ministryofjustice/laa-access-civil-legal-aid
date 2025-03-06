@@ -4,7 +4,7 @@ exclude: # exclude matching issues
       - .env
       - build/**
       - dist/**
-      - python3.12/**
+      - python3.*/**
       - package-lock.json
       - README.md
       - app/static/**

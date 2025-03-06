@@ -6,3 +6,4 @@ pytest-mock
 axe-core-python
 trufflehog3==3.0.10
 freezegun
+pre-commit
