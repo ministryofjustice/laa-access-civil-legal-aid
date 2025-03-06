@@ -180,6 +180,18 @@ class Session(SecureCookieSession):
         return True
 
     @property
+    def in_scope(self):
+        category_answers = self.category_answers
+        if not category_answers:
+            return False
+
+        last_answer = category_answers[-1]
+        if not last_answer.category:
+            return False
+
+        return last_answer.category.in_scope
+
+    @property
     def category_answers(self) -> list[CategoryAnswer]:
         items: list[dict] = self.get("category_answers", [])
         category_answers = []
