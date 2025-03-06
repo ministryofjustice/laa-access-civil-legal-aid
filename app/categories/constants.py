@@ -267,7 +267,7 @@ EDUCATION = Category(
     description=_("Help if your child has SEND."),
     article_category_name="Education",
     chs_code="education",
-    code="education",
+    code="send",
     children={
         "child_young_person": Category(
             title=_("Help with a child or young person's SEND"),
@@ -380,7 +380,7 @@ BENEFITS = Category(
 PUBLIC_LAW = Category(
     title=_("Legal action against police and public organisations"),
     description=_(
-        "Includes schools, the police, government, prisons, NHS, the council."
+        "Includes police, government, prisons, NHS, the council, care facilities and schools."
     ),
     article_category_name="Public",
     chs_code="publiclaw",
@@ -394,6 +394,7 @@ ASYLUM_AND_IMMIGRATION = Category(
     ),
     chs_code="immigration",
     code="asylum_and_immigration",
+    article_category_name="Immigration and asylum",
     children={
         "apply": Category(
             title=_("Applying for asylum"),

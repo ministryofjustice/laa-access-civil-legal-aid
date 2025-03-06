@@ -11,9 +11,9 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">Find problems covered by legal aid</h1>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">{{ title }}</h1>
 
-        <p class="govuk-body-l">These are the problems covered by legal aid. Choose the problem you need help with.</p>
+        <p class="govuk-body-l">{% trans %}These are the problems covered by legal aid. Choose the problem you need help with.{% endtrans %}</p>
 
         <div class="govuk-!-margin-top-8">
             {% for category, next_page in listing %}

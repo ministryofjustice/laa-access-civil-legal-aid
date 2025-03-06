@@ -8,6 +8,9 @@ load_dotenv()
 
 class Config(object):
     ENVIRONMENT = os.environ.get("CLA_ENVIRONMENT", "production")
+    GOV_UK_START_PAGE = os.environ.get(
+        "GOV_UK_START_PAGE", "https://www.gov.uk/check-legal-aid"
+    )
     CONTACT_EMAIL = os.environ.get("CONTACT_EMAIL", "")
     CONTACT_PHONE = os.environ.get("CONTACT_PHONE", "")
     DEPARTMENT_NAME = os.environ.get("DEPARTMENT_NAME", "MOJ Digital")
@@ -32,3 +35,5 @@ class Config(object):
     CLA_BACKEND_URL = os.environ.get("CLA_BACKEND_URL", "http://localhost:8010")
     SESSION_TIMEOUT = timedelta(minutes=30)
     SESSION_COOKIE_SECURE = True
+    OS_PLACES_API_KEY = os.environ.get("OS_PLACES_API_KEY")
+    EMAIL_ORCHESTRATOR_URL = os.environ.get("EMAIL_ORCHESTRATOR_URL")
