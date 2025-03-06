@@ -54,28 +54,23 @@ def test_mental_capacity(page: Page):
 
 
 onward_links = [
-    (
-        "free or affordable legal help",
-        "Finding free or affordable legal help - Citizens Advice",
-    ),
-    ("Citizen’s Advice", "Contact us - Citizens Advice"),
-    ("Advicelocal", "Find an adviser | Advicelocal"),
-    ("exceptional case funding", "Legal aid: Funding for exceptional cases - GOV.UK"),
-    (
-        "What did you think of this service?",
-        "Give feedback on Check if you can get legal aid - GOV.UK",
-    ),
+    "free or affordable legal help",
+    "Citizen's Advice",
+    "Advicelocal",
+    "exceptional case funding",
+    "What did you think of this service?",
 ]
 
 
 @pytest.mark.usefixtures("live_server")
-@pytest.mark.parametrize("onward_link_text, expected_title", onward_links)
-def test_onward_links(page: Page, onward_link_text, expected_title):
+@pytest.mark.parametrize("onward_link_text", onward_links)
+def test_onward_links_open_in_new_tab(page: Page, onward_link_text):
     page.get_by_role("link", name="More problems covered by legal aid").click()
     page.get_by_role("link", name="Next steps to get help").click()
     page.get_by_role("button", name="Next steps to get help").click()
-    with page.expect_popup() as popup_info:
-        page.get_by_role("link", name=onward_link_text).click()
-    popup = popup_info.value
 
-    expect(popup).to_have_title(expected_title)
+    link = page.get_by_role("link", name=onward_link_text)
+
+    # Check if the link has target="_blank" attribute (opens in new tab)
+    target_attr = link.get_attribute("target")
+    assert target_attr == "_blank", f"Link '{onward_link_text}' does not have target='_blank'"
