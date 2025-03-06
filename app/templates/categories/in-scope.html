@@ -38,7 +38,10 @@
 
         <h2 class="govuk-heading-m">{% trans %}When you do not need to complete the financial assessment{% endtrans %}</h2>
 
-        <p class="govuk-body">{% trans %}You should <a class="govuk-link" href="/contact">contact CLA</a> without completing the financial assessment if you are:{% endtrans %}</p>
+        {% set contact_us_link %}
+            <a class="govuk-link" href={{ url_for('contact.contact_us') }}>contact CLA</a>
+        {% endset %}
+        <p class="govuk-body">{% trans %}You should {{ contact_us_link }}  without completing the financial assessment if you are:{% endtrans %}</p>
 
         <ul class="govuk-list govuk-list--bullet">
             <li>{% trans %}under 18{% endtrans %}</li>
@@ -49,7 +52,7 @@
 
         <p class="govuk-body">{% trans %}You can choose not to complete the financial assessment online, and instead ask for a call with a BSL interpreter.{% endtrans %}</p>
 
-        <p class="govuk-body">{% trans %}Fill in the '<a class="govuk-link" href="/contact">Contact CLA</a>' page. Select 'BSL' under 'Communication needs'.{% endtrans %}</p>
+        <p class="govuk-body">{% trans %}Fill in the '{{ contact_us_link }}' page. Select 'BSL' under 'Communication needs'.{% endtrans %}</p>
 
         {{ govukButton(params={
                 "text": _("Check if you qualify financially"),
