@@ -55,8 +55,8 @@ def test_mental_capacity(page: Page):
 
 onward_links = [
     "free or affordable legal help",
-    "Citizen's Advice",
-    "Advicelocal",
+    "Citizen’s Advice (opens new tab)",
+    "Advicelocal (opens new tab)",
     "exceptional case funding",
     "What did you think of this service?",
 ]
@@ -73,4 +73,6 @@ def test_onward_links_open_in_new_tab(page: Page, onward_link_text):
 
     # Check if the link has target="_blank" attribute (opens in new tab)
     target_attr = link.get_attribute("target")
-    assert target_attr == "_blank", f"Link '{onward_link_text}' does not have target='_blank'"
+    assert target_attr == "_blank", (
+        f"Link '{onward_link_text}' does not have target='_blank'"
+    )
