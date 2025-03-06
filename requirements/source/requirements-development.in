@@ -5,3 +5,4 @@ pytest-playwright
 pytest-mock
 axe-core-python
 trufflehog3==3.0.10
+pre-commit
