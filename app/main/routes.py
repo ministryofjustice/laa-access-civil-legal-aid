@@ -44,8 +44,8 @@ def start():
     return response
 
 
-@bp.get("/bsl-start")
-def bsl_start():
+@bp.get("/start-bsl")
+def start_bsl():
     """This an entry point for the service from www.gov.uk/check-legal-aid
     This is a route for users who need to contact us via BSL, they are routed directly to the contact us page
     """
