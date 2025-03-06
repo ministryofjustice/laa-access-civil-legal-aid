@@ -45,8 +45,7 @@ EXPOSE $FLASK_RUN_PORT
 
 # Run the Flask application for production
 FROM base AS production
-# TODO: Use a production ready WSGI
-CMD ["flask", "run"]
+CMD gunicorn --bind "$FLASK_RUN_HOST:$FLASK_RUN_PORT" "app:create_app()"
 
 # Run the Flask application for development
 FROM base AS development
