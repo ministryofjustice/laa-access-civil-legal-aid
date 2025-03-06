@@ -83,10 +83,12 @@ class ContactUs(View):
             case_ref = session.get("case_reference")
             callback_time = session.get("callback_time")
             contact_type = session.get("contact_type")
+            category = session.get("category")
             session.clear()
             session["case_reference"] = case_ref
             session["callback_time"] = callback_time
             session["contact_type"] = contact_type
+            session["category"] = category
             return redirect(url_for("contact.confirmation"))
         return render_template(self.template, form=form, form_progress=form_progress)
 
@@ -117,6 +119,7 @@ class ConfirmationPage(View):
             "case_reference": session.get("case_reference"),
             "callback_time": session.get("callback_time"),
             "contact_type": session.get("contact_type"),
+            "category": session.get("category", {}),
         }
 
     def dispatch_request(self):

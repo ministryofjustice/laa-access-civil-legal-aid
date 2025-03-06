@@ -2,11 +2,11 @@
 
 {%- from 'govuk_frontend_jinja/components/panel/macro.html' import govukPanel %}
 {%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton %}
+{%- from 'govuk_frontend_jinja/components/warning-text/macro.html' import govukWarningText %}
 
 {% block pageTitle %}Confirmation - {{ super() }}{% endblock %}
 
 {% set panelHtml %}
-    {# TODO: Add conditional logic to this section #}
     Your reference number is
     <br>
     <strong>{{ case_reference }}</strong>
@@ -51,6 +51,12 @@
                 </form>
             {% endif %}
 
+            {% if category.code in ['debt', 'housing'] %}
+                {{ govukWarningText({
+                    "text": _("If you have a court hearing date it is important that you get advice as soon as possible. You may be able to get last-minute help on the day of the hearing from an adviser in the court building.")
+                }) }}
+            {% endif %}
+
             <h2 class="govuk-heading-m">{% trans %}What happens next?{% endtrans %}</h2>
 
             {% if callback_time %}
@@ -67,11 +73,67 @@
                 </p>
             {% endif %}
 
-            {# TODO: Add conditioanl logic to this section #}
+            {% if category.code == 'domestic_abuse' %}
+                <p class="govuk-body">
+                    {% trans %}If you need to urgently protect yourself or your family you should try and get advice as soon as possible.{% endtrans %}
+                </p>
+            {% endif %}
+
             <ul class="govuk-list govuk-list--bullet">
-                <li>{% trans %}The first person they speak to will be an operator who will ask about your problem and your financial circumstances.{% endtrans %}
+                <li>
+                  {% if is_thirdparty %}
+                    {% trans %}The first person they speak to will be an operator who will ask about your problem and your financial circumstances.{% endtrans %}
+                  {% else %}
+                    {% trans %}The first person you speak to will be an operator who will ask about your problem and your financial circumstances.{% endtrans %}
+                  {% endif %}
                 </li>
-                <li>{% trans %}If it looks like you might qualify for legal aid you’ll be put through to a specialist adviser, who will make the final decision on your case.{% endtrans %}</li>
+                <li>
+                    {% if is_thirdparty %}
+                        {% trans %}If it looks like you might qualify for legal aid they’ll
+                        be put through to a specialist adviser, who will make the
+                        final decision on your case.{% endtrans %}
+                    {% else %}
+                        {% trans %}If it looks like you might qualify for legal aid you’ll
+                        be put through to a specialist adviser, who will make the
+                        final decision on your case.{% endtrans %}
+                    {% endif %}
+
+                {% if category.code in ['domestic_abuse','family'] %}
+                    <ul class="govuk-list">
+                      {% if category.code == 'domestic_abuse' %}
+                        <li>
+                          {% trans %}Please be aware that the specialist adviser will need
+                          evidence of the domestic violence before they can make a decision
+                          on your case.{% endtrans %}
+                          <a class="govuk-link" href="https://www.gov.uk/legal-aid/domestic-abuse-or-violence" rel="external">
+                            {{ _('Find out what you can use as evidence') }}</a>.
+                        </li>
+                      {% elif session.stored.category == 'family' %}
+                        <li>
+                          {% trans %}If your case involves domestic abuse or violence,
+                          the specialist adviser will need evidence of this
+                          before they can make a decision on your case.{% endtrans %}
+                          <a class="govuk-link" href="https://www.gov.uk/legal-aid/domestic-abuse-or-violence" rel="external">
+                          {{ _('Find out what you can use as evidence') }}</a>.
+                        </li>
+                      {% endif %}
+                    </ul>
+                  {% endif %}
+                </li>
+                {% if category.code in ['domestic_abuse', 'family'] %}
+                  <li>
+                    {% trans %}You will also need to provide evidence of your financial
+                    circumstances. Your specialist adviser will explain what is
+                    needed.{% endtrans %}
+                  </li>
+                {% else %}
+                  <li>
+                    {% trans %}You will need to provide evidence of your financial circumstances
+                    and maybe your problem. Your specialist adviser will explain
+                    what is needed.{% endtrans %}
+                  </li>
+                {% endif %}
+
                 <li>{% trans %}You will need to provide evidence of your financial circumstances and maybe your problem. Your specialist adviser will explain what is needed.{% endtrans %}</li>
                 <li>{% trans %}If your specialist adviser thinks you need to speak to someone in person or have someone represent you in court, they will organise this.{% endtrans %}</li>
             </ul>
@@ -88,6 +150,15 @@
                   <a class="govuk-link" href="{{ privacy_link }}">Civil Legal Advice Privacy Statement</a>.
                 {% endtrans %}
             </p>
+
+          {% if callback_time %}
+            <h2 class="govuk-heading-m">{{ _('What if I miss the operator’s call?') }}</h2>
+            <p class="govuk-body">
+              {% trans %}If you miss the call or you need advice urgently, you can call us on
+              <strong>0345 345 4 345</strong>. Find out about
+              <a class="govuk-link" href="https://www.gov.uk/call-charges" rel="external">call charges</a>.{% endtrans %}
+            </p>
+          {% endif %}
 
             {{ govukButton({
                 "text": _("Finish"),
