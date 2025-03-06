@@ -4,6 +4,7 @@ from flask import request, session, current_app
 from wtforms.fields.choices import SelectField
 from app.api import cla_backend, BackendAPIClient
 from app.contact.forms import ReasonsForContactingForm, ContactUsForm
+from app.contact.helpers import format_callback_time
 import requests
 from datetime import datetime
 from app.contact.address_finder.widgets import AddressLookup, FormattedAddressLookup
@@ -421,22 +422,22 @@ class TestCallbackTimeFunctions:
 
     @patch("app.contact.forms.cla_backend")
     def test_format_callback_time_none_input(self, app, client):
-        result = ContactUsForm.format_callback_time(None)
+        result = format_callback_time(None)
         assert result is None
 
     @patch("app.contact.forms.cla_backend")
     def test_format_callback_time_invalid_input(self, app, client):
-        result = ContactUsForm.format_callback_time("not a datetime")
+        result = format_callback_time("not a datetime")
         assert result is None
 
     @patch("app.contact.forms.cla_backend")
     def test_format_callback_time_valid(self, app, client):
         test_time = datetime(2024, 1, 1, 9, 0)
-        result = ContactUsForm.format_callback_time(test_time)
+        result = format_callback_time(test_time)
         assert result == "Monday, 01 January at 09:00 - 09:30"
 
     @patch("app.contact.forms.cla_backend")
     def test_format_callback_time_with_midnight_crossing(self, app, client):
         test_time = datetime(2024, 1, 1, 23, 45)
-        result = ContactUsForm.format_callback_time(test_time)
+        result = format_callback_time(test_time)
         assert result == "Monday, 01 January at 23:45 - 00:15"

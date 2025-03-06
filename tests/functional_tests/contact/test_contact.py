@@ -184,4 +184,9 @@ def test_contact_page_routing(page: Page, contact_answers: dict):
 
     page.get_by_role("button", name="Submit details").click()
 
-    expect(page.get_by_role("heading", name="Confirmation Page")).to_be_visible()
+    expected_heading = (
+        "We will call you back"
+        if "Call me back" in contact_answers["Select a contact option"]
+        else "Your details have been submitted"
+    )
+    expect(page.get_by_role("heading", name=expected_heading)).to_be_visible()
