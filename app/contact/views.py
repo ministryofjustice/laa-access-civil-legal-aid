@@ -129,7 +129,7 @@ class ConfirmationPage(View):
 
         if form.validate_on_submit():
             notify.create_and_send_confirmation_email(
-                email=form.email.data,
+                email_address=form.email.data,
                 case_reference=context["case_reference"],
                 callback_time=context["callback_time"],
                 contact_type=context["contact_type"],

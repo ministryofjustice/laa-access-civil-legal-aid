@@ -81,14 +81,14 @@
 
             <ul class="govuk-list govuk-list--bullet">
                 <li>
-                  {% if is_thirdparty %}
+                  {% if contact_type == "thirdparty" %}
                     {% trans %}The first person they speak to will be an operator who will ask about your problem and your financial circumstances.{% endtrans %}
                   {% else %}
                     {% trans %}The first person you speak to will be an operator who will ask about your problem and your financial circumstances.{% endtrans %}
                   {% endif %}
                 </li>
                 <li>
-                    {% if is_thirdparty %}
+                    {% if contact_type == "thirdparty" %}
                         {% trans %}If it looks like you might qualify for legal aid they’ll
                         be put through to a specialist adviser, who will make the
                         final decision on your case.{% endtrans %}
