@@ -113,8 +113,8 @@ class ConfirmationPage(View):
     template = "contact/confirmation.html"
     methods = ["GET", "POST"]
 
-    @staticmethod
-    def get_context():
+    @classmethod
+    def get_context(cls):
         return {
             "case_reference": session.get("case_reference"),
             "callback_time": session.get("callback_time"),
@@ -124,17 +124,22 @@ class ConfirmationPage(View):
 
     def dispatch_request(self):
         form = ConfirmationEmailForm()
+        context = self.get_context()
+        email_sent = False
+
         if form.validate_on_submit():
             notify.create_and_send_confirmation_email(
-                form.email.data,
-                session.get("case_reference"),
-                session.get("callback_time"),
-                session.get("contact_type"),
+                email=form.email.data,
+                case_reference=context["case_reference"],
+                callback_time=context["callback_time"],
+                contact_type=context["contact_type"],
             )
-            return render_template(
-                self.template,
-                form=form,
-                confirmation_email=form.email.data,
-                **self.get_context(),
-            )
-        return render_template(self.template, form=form, **self.get_context())
+            email_sent = True
+
+        return render_template(
+            self.template,
+            form=form,
+            confirmation_email=form.email.data if email_sent else None,
+            email_sent=email_sent,
+            **context,
+        )
