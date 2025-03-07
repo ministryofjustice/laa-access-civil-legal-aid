@@ -2,7 +2,6 @@
 
 {%- from 'components/back_link.html' import govukBackLink -%}
 {%- from 'categories/components/list-item.html' import list_item, list_item_small -%}
-{%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
 {%- from 'govuk_frontend_jinja/components/inset-text/macro.html' import govukInsetText %}
 {%- from 'govuk_frontend_jinja/components/warning-text/macro.html' import govukWarningText %}
 
@@ -182,9 +181,6 @@
 {{ super() }}
 {{ govukBackLink() }}
 
-{% if session.category.exit_page %}
-    {{ govukExitThisPage("Exit this page")}}
-{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -199,7 +195,7 @@
         {% endblock %}
 
         {% block formDescription %}
-            {% if session.category.exit_page %}
+            {% if show_exit_this_page %}
             {{ govukWarningText({
                 "text": _("If you’re in an emergency situation, please call the police on 999.")
               }) }}
