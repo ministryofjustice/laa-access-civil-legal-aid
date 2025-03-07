@@ -66,7 +66,7 @@ class TestConfirmationPage:
             )
 
             mock_notify.create_and_send_confirmation_email.assert_called_once_with(
-                email=test_email,
+                email_address=test_email,
                 case_reference="AB-1234-5678",
                 callback_time=datetime(2025, 3, 10, 10, 30, 0, tzinfo=timezone.utc),
                 contact_type="callback",

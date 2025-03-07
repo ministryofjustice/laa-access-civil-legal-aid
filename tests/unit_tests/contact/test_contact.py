@@ -434,10 +434,10 @@ class TestCallbackTimeFunctions:
     def test_format_callback_time_valid(self, app, client):
         test_time = datetime(2024, 1, 1, 9, 0)
         result = format_callback_time(test_time)
-        assert result == "Monday, 01 January at 09:00 - 09:30"
+        assert result == "Monday, 1 January at 09:00 - 09:30"
 
     @patch("app.contact.forms.cla_backend")
     def test_format_callback_time_with_midnight_crossing(self, app, client):
         test_time = datetime(2024, 1, 1, 23, 45)
         result = format_callback_time(test_time)
-        assert result == "Monday, 01 January at 23:45 - 00:15"
+        assert result == "Monday, 1 January at 23:45 - 00:15"
