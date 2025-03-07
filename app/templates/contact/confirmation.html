@@ -1,16 +1,170 @@
 {% extends "base.html" %}
-{%- from 'components/back_link.html' import govukBackLink -%}
-{%- from 'categories/components/list-item.html' import list_item, list_item_small -%}
 
-{% block beforeContent%}
-{{ super() }}
-{{ govukBackLink() }}
-{% endblock %}
+{%- from 'govuk_frontend_jinja/components/panel/macro.html' import govukPanel %}
+{%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton %}
+{%- from 'govuk_frontend_jinja/components/warning-text/macro.html' import govukWarningText %}
+
+{% block pageTitle %}Confirmation - {{ super() }}{% endblock %}
+
+{% set panelHtml %}
+    Your reference number is
+    <br>
+    <strong>{{ case_reference }}</strong>
+    {% if not callback_time %}
+        <p class="confirmation-inset govuk-body">
+            {{ _('You can now call CLA on') }} <strong class="laa-telephone">0345 345 4 345</strong>.<br>
+            {% trans %}Please quote your reference number when you call. Find out about
+            <a class="govuk-link" href="https://www.gov.uk/call-charges" rel="external">call charges</a>.{% endtrans %}
+        </p>
+    {% endif %}
+    <div class="confirmation-actions">
+        <button id="print-button" class="govuk-!-margin-top-5 govuk-!-font-size-19 govuk-link confirmation-button-link ">{{ _('Print this page') }}</button>
+        <script nonce="{{ csp_nonce() }}">
+            document.getElementById("print-button").addEventListener('click', function() {
+                window.print();
+            });
+        </script>
+    </div>
+{% endset %}
+
 
 {% block content %}
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l">Confirmation Page</h1>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            {% set panelTitle =  _('We will call you back') if callback_time else _("Your details have been submitted") %}
+
+            {{ govukPanel({
+                "titleText":panelTitle,
+                "html": panelHtml
+            }) }}
+
+            {% if confirmation_email and not form.errors %}
+                <p class="govuk-body">
+                  {{ _('Your reference number was sent to') }}
+                  <strong>{{ confirmation_email }}</strong>.
+                </p>
+              {% else %}
+                <form class="confirmation-email-form" method="POST" novalidate>
+                    {{ form.csrf_token }}
+                    {{ form.email }}
+                    {{ form.submit }}
+                </form>
+            {% endif %}
+
+            {% if category.code in ['debt', 'housing'] %}
+                {{ govukWarningText({
+                    "text": _("If you have a court hearing date it is important that you get advice as soon as possible. You may be able to get last-minute help on the day of the hearing from an adviser in the court building.")
+                }) }}
+            {% endif %}
+
+            <h2 class="govuk-heading-m">{% trans %}What happens next?{% endtrans %}</h2>
+
+            {% if callback_time %}
+                <p class="govuk-body">
+                  {% if contact_type == "thirdparty" %}
+                    {% trans %}Your details have been submitted and an operator will call
+                    the person you nominated at least once during your chosen time, or as close to the time as possible{% endtrans %}
+                  {% else %}
+                    {% trans %}Your details have been submitted and an operator will call
+                    you at least once during your chosen time, or as close to the time as possible{% endtrans %}
+                  {% endif %}
+                  (<strong>{{ callback_time|format_callback_time }}</strong>).
+                  {% trans %}When a CLA operator calls, the call will come from an anonymous number.{% endtrans %}
+                </p>
+            {% endif %}
+
+            {% if category.code == 'domestic_abuse' %}
+                <p class="govuk-body">
+                    {% trans %}If you need to urgently protect yourself or your family you should try and get advice as soon as possible.{% endtrans %}
+                </p>
+            {% endif %}
+
+            <ul class="govuk-list govuk-list--bullet">
+                <li>
+                  {% if contact_type == "thirdparty" %}
+                    {% trans %}The first person they speak to will be an operator who will ask about your problem and your financial circumstances.{% endtrans %}
+                  {% else %}
+                    {% trans %}The first person you speak to will be an operator who will ask about your problem and your financial circumstances.{% endtrans %}
+                  {% endif %}
+                </li>
+                <li>
+                    {% if contact_type == "thirdparty" %}
+                        {% trans %}If it looks like you might qualify for legal aid they’ll
+                        be put through to a specialist adviser, who will make the
+                        final decision on your case.{% endtrans %}
+                    {% else %}
+                        {% trans %}If it looks like you might qualify for legal aid you’ll
+                        be put through to a specialist adviser, who will make the
+                        final decision on your case.{% endtrans %}
+                    {% endif %}
+
+                {% if category.code in ['domestic_abuse','family'] %}
+                    <ul class="govuk-list">
+                      {% if category.code == 'domestic_abuse' %}
+                        <li>
+                          {% trans %}Please be aware that the specialist adviser will need
+                          evidence of the domestic violence before they can make a decision
+                          on your case.{% endtrans %}
+                          <a class="govuk-link" href="https://www.gov.uk/legal-aid/domestic-abuse-or-violence" rel="external">
+                            {{ _('Find out what you can use as evidence') }}</a>.
+                        </li>
+                      {% elif category.code == 'family' %}
+                        <li>
+                          {% trans %}If your case involves domestic abuse or violence,
+                          the specialist adviser will need evidence of this
+                          before they can make a decision on your case.{% endtrans %}
+                          <a class="govuk-link" href="https://www.gov.uk/legal-aid/domestic-abuse-or-violence" rel="external">
+                          {{ _('Find out what you can use as evidence') }}</a>.
+                        </li>
+                      {% endif %}
+                    </ul>
+                  {% endif %}
+                </li>
+                {% if category.code in ['domestic_abuse', 'family'] %}
+                  <li>
+                    {% trans %}You will also need to provide evidence of your financial
+                    circumstances. Your specialist adviser will explain what is
+                    needed.{% endtrans %}
+                  </li>
+                {% else %}
+                  <li>
+                    {% trans %}You will need to provide evidence of your financial circumstances
+                    and maybe your problem. Your specialist adviser will explain
+                    what is needed.{% endtrans %}
+                  </li>
+                {% endif %}
+
+                <li>{% trans %}If your specialist adviser thinks you need to speak to someone in person or have someone represent you in court, they will organise this.{% endtrans %}</li>
+            </ul>
+
+            <p class="govuk-body">
+                {% trans %}If CLA can’t help you, we’ll always suggest where else you might get help.{% endtrans %}
+            </p>
+            <p class="govuk-body">
+                {% trans %}If we can do anything to make it easier for you to communicate with us, please tell the operator.{% endtrans %}
+            </p>
+            <p class="govuk-body">
+              {% trans privacy_link=url_for('main.privacy') %}
+                  Protecting your personal data and your privacy is important to us. Read the full
+                  <a class="govuk-link" href="{{ privacy_link }}">Civil Legal Advice Privacy Statement</a>.
+                {% endtrans %}
+            </p>
+
+          {% if callback_time %}
+            <h2 class="govuk-heading-m">{{ _('What if I miss the operator’s call?') }}</h2>
+            <p class="govuk-body">
+              {% trans %}If you miss the call or you need advice urgently, you can call us on
+              <strong>0345 345 4 345</strong>. Find out about
+              <a class="govuk-link" href="https://www.gov.uk/call-charges" rel="external">call charges</a>.{% endtrans %}
+            </p>
+          {% endif %}
+
+            {{ govukButton({
+                "text": _("Finish"),
+                "href": "https://www.gov.uk/done/check-if-civil-legal-advice-can-help-you",
+            }) }}
+
+        </div>
     </div>
-</div>
+
 {% endblock %}

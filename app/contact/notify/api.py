@@ -5,7 +5,7 @@ from datetime import datetime
 
 from app import get_locale
 from app.contact.notify.templates import GOVUK_NOTIFY_TEMPLATES
-from app.contact.forms import ContactUsForm
+from app.contact.helpers import format_callback_time
 
 logger = logging.getLogger(__name__)
 
@@ -92,7 +92,7 @@ class NotifyEmailOrchestrator(object):
         third_party_phone_number: str | None = None,
     ) -> (str, str):
         """Generates the data used in the sending of the confirmation Gov Notify emails."""
-        formatted_callback_time = ContactUsForm.format_callback_time(callback_time)
+        formatted_callback_time = format_callback_time(callback_time)
         callback_requested = callback_time is not None
 
         template_id = ""
