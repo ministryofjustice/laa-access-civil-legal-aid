@@ -108,3 +108,15 @@ def test_thirdparty_callback(page: Page):
             "If it looks like you might qualify for legal aid they’ll be put through to a specialist adviser, who will make the final decision on your case."
         )
     ).to_be_visible()
+
+
+@pytest.mark.usefixtures("live_server")
+def test_survey_link(page: Page):
+    page.get_by_role("link", name="Contact us").click()
+    page.get_by_role("button", name="Continue to contact CLA").click()
+    page.get_by_role("textbox", name="Your full name").fill("John Doe")
+    page.get_by_role("radio", name="I will call you").check()
+    page.get_by_role("button", name="Submit details").click()
+    expect(page.get_by_role("button", name="Finish")).to_have_attribute(
+        "href", value="https://www.gov.uk/done/check-if-civil-legal-advice-can-help-you"
+    )
