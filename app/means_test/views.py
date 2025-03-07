@@ -12,7 +12,7 @@ from app.means_test.forms.savings import SavingsForm
 from app.means_test.forms.outgoings import OutgoingsForm
 from app.means_test.forms.review import ReviewForm, BaseMeansTestForm
 from app.categories.models import CategoryAnswer
-from app.mixins import InScopeMixin
+from app.categories.mixins import InScopeMixin
 
 
 class FormsMixin:
@@ -50,11 +50,28 @@ class MeansTest(FormsMixin, InScopeMixin, View):
 
         return None
 
+    def ensure_form_protection(self, current_form):
+        progress = self.get_form_progress(current_form=current_form)
+        for form in progress["steps"]:
+            if form["is_current"]:
+                break
+            if not form["is_completed"]:
+                return redirect(url_for("main.session_expired"))
+        return None
+
     def dispatch_request(self):
-        self.ensure_in_scope()
+        in_scope_redirect = self.ensure_in_scope()
+        if in_scope_redirect:
+            return in_scope_redirect
+
         eligibility = session.get_eligibility()
         form_data = eligibility.forms.get(self.current_name, {})
         form = self.form_class(formdata=request.form or None, data=form_data)
+
+        form_protection_redirect = self.ensure_form_protection(form)
+        if form_protection_redirect:
+            return form_protection_redirect
+
         if isinstance(form, MultiplePropertiesForm):
             response = self.handle_multiple_properties_ajax_request(form)
             if response is not None:
