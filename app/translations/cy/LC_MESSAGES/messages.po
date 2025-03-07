@@ -866,16 +866,16 @@ msgid "Submit details"
 msgstr "Cyflwyno manylion"
 
 msgid "Receive this confirmation by email"
-msgstr ""
+msgstr "Cael copi o’r cadarnhad hwn drwy e-bost"
 
 msgid "Enter a valid email address"
-msgstr ""
+msgstr "Rhowch gyfeiriad e-bost dilys"
 
 msgid "Tell us what email address to send to"
-msgstr ""
+msgstr "Dywedwch wrthym pa gyfeiriad e-bost y dylem ei ddefnyddio i anfon"
 
 msgid "Send"
-msgstr ""
+msgstr "Anfon"
 
 msgid "There is a problem"
 msgstr "Mae problem"
