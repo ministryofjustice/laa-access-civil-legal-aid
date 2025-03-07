@@ -20,7 +20,7 @@
         "editable": true,
         "fiscalYearStartMonth": 0,
         "graphTooltip": 1,
-        "id": 197,
+        "id": 198,
         "links": [],
         "panels": [
         {
@@ -594,7 +594,8 @@
                     "value": 80
                     }
                 ]
-                }
+                },
+                "unit": "bytes"
             },
             "overrides": []
             },
@@ -832,7 +833,8 @@
                     "value": 80
                     }
                 ]
-                }
+                },
+                "unit": "bytes"
             },
             "overrides": []
             },
@@ -894,8 +896,8 @@
         "list": [
             {
             "current": {
-                "text": "laa-access-civil-legal-aid-dnstest",
-                "value": "laa-access-civil-legal-aid-dnstest"
+                "text": "laa-access-civil-legal-aid-staging",
+                "value": "laa-access-civil-legal-aid-staging"
             },
             "datasource": "Prometheus",
             "definition": "label_values(kube_deployment_metadata_generation, namespace)",
@@ -910,8 +912,8 @@
             },
             {
             "current": {
-                "text": "",
-                "value": ""
+                "text": "laa-access-civil-legal-aid",
+                "value": "laa-access-civil-legal-aid"
             },
             "definition": "label_values(nginx_ingress_controller_requests{exported_namespace=\"$namespace\"},ingress)",
             "name": "ingress",
