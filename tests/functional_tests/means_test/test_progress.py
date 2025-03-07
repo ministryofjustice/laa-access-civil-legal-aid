@@ -57,7 +57,9 @@ def test_progress_component_full(page: Page):
     expect(
         page.get_by_text("Future page: You and your partner’s income and tax")
     ).to_be_visible()
-    expect(page.get_by_text("Future page: Review your answers")).to_be_visible()
+    expect(
+        page.get_by_text("Future page: Check your answers and confirm")
+    ).to_be_visible()
     expect(page.get_by_text("Future page: Contact information")).to_be_visible()
 
     page.get_by_role("link", name="Completed page: About you").click()

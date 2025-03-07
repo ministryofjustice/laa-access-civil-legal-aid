@@ -3,6 +3,7 @@ from flask.views import View
 from flask import render_template, redirect, url_for, session, request
 from app.categories.forms import QuestionForm
 from app.categories.constants import Category
+from app.categories.models import CategoryAnswer, QuestionType
 
 
 class CategoryPage(View):
@@ -13,21 +14,17 @@ class CategoryPage(View):
     def __init__(self, template, *args, **kwargs):
         self.template = template
 
-    def update_session(self, question: str, answer: str, category: Category) -> None:
+    def update_session(self, category_answer: CategoryAnswer) -> None:
         """
         Update the session with the current page and answer.
 
         """
-        session.set_category_question_answer(
-            question_title=question,
-            answer=answer,
-            category=category,
-        )
+        session.set_category_question_answer(category_answer)
 
     def dispatch_request(self):
         category = getattr(self, "category", None)
         if category is not None:
-            session["category"] = category
+            session.category = category
 
         response = self.process_request()
         if not response:
@@ -41,76 +38,103 @@ class CategoryPage(View):
 class CategoryLandingPage(CategoryPage):
     template: str = "categories/landing.html"
 
-    routing_map: dict[str, str] = {}
+    routing_map: dict[str, list] = {}
+    """
+    A dictionary that organizes category listings into different sections: "main", "more", and "other".
+
+    - "main" and "more" contain lists of tuples, where each tuple consists of:
+      - `category`: Category object.  
+      - `route`:  String - an intermediary route than stores the selected category before redirecting to the target
+
+    - "other" is a string representing an intermediary route than stores the selected answer before redirecting to the target
+    """
+    listing: dict[str, list] = {}
+
+    def __init__(self, route_endpoint: str = None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.routing_map and route_endpoint:
+            self.listing["main"] = []
+            for category, next_page in self.routing_map["main"]:
+                self.listing["main"].append(
+                    (category, f"categories.{route_endpoint}.{category.code}")
+                )
+
+            self.listing["more"] = []
+            for category, next_page in self.routing_map["more"]:
+                self.listing["more"].append(
+                    (category, f"categories.{route_endpoint}.{category.code}")
+                )
+
+            self.listing["other"] = f"categories.{route_endpoint}.other"
 
     def process_request(self):
         return render_template(
-            self.template, category=self.category, routing_map=self.routing_map
+            self.template, category=self.category, listing=self.listing
         )
 
     @classmethod
     def register_routes(cls, blueprint: Blueprint, path: str = None):
         if not path:
-            path = cls.category.code.lower().replace("_", "-")
+            path = cls.category.url_friendly_name
 
         blueprint.add_url_rule(
             f"/{path}/",
-            view_func=cls.as_view("landing", template=cls.template),
+            view_func=cls.as_view(
+                "landing", route_endpoint=blueprint.name, template=cls.template
+            ),
         )
         cls.register_sub_routes(blueprint, path, cls.routing_map["main"])
         cls.register_sub_routes(blueprint, path, cls.routing_map["more"])
 
         if "other" in cls.routing_map and cls.routing_map["other"] is not None:
+            category_answer = CategoryAnswer(
+                question=cls.question_title,
+                question_page=f"categories.{blueprint.name}.landing",
+                answer_value="other",
+                answer_label="Other",
+                next_page=cls.routing_map["other"],
+                category=cls.category,
+            )
             blueprint.add_url_rule(
                 f"/{path}/answer/other",
-                view_func=CategoryAnswerPage.as_view(
-                    "other",
-                    question=cls.question_title,
-                    answer="other",
-                    next_page=cls.routing_map["other"],
-                    category=cls.category,
-                ),
+                view_func=CategoryAnswerPage.as_view("other", category_answer),
             )
 
     @classmethod
     def register_sub_routes(cls, blueprint: Blueprint, path, routes):
         for sub_category, next_page in routes:
+            category_answer = CategoryAnswer(
+                question=cls.question_title,
+                question_page=f"categories.{blueprint.name}.landing",
+                answer_value=sub_category.code,
+                answer_label=sub_category.title,
+                next_page=next_page,
+                category=sub_category,
+            )
             blueprint.add_url_rule(
-                f"/{path}/answer/{sub_category.code.replace('_', '-')}",
+                f"/{path}/answer/{sub_category.url_friendly_name}",
                 view_func=CategoryAnswerPage.as_view(
-                    sub_category.code,
-                    question=cls.question_title,
-                    answer=sub_category.code,
-                    next_page=next_page,
-                    category=sub_category,
+                    sub_category.code, category_answer
                 ),
             )
 
 
 class CategoryAnswerPage(View):
-    def __init__(self, question, answer, next_page, category):
-        self.question = question
-        self.answer = answer
-        self.next_page = next_page
-        self.category = category
+    def __init__(self, category_answer: CategoryAnswer):
+        self.category_answer = category_answer
 
     def update_session(self) -> None:
         """
         Update the session with the current page and answer.
 
         """
-        session["previous_page"] = request.endpoint
-        session.set_category_question_answer(
-            question_title=self.question,
-            answer=self.answer,
-            category=self.category,
-        )
+        session.set_category_question_answer(self.category_answer)
 
     def dispatch_request(self):
         self.update_session()
-        if isinstance(self.next_page, dict):
-            return redirect(url_for(**self.next_page))
-        return redirect(url_for(self.next_page))
+        if isinstance(self.category_answer.next_page, dict):
+            return redirect(url_for(**self.category_answer.next_page))
+        return redirect(url_for(self.category_answer.next_page))
 
 
 class QuestionPage(CategoryPage):
@@ -138,14 +162,14 @@ class QuestionPage(CategoryPage):
         self.category = form_class.category
         super().__init__(self.template)
 
-    def get_next_page(self, answer: str) -> redirect:
+    def get_next_page(self, answer: str) -> str:
         """Determine and redirect to the next page based on the user's answer.
 
         Args:
             answer: The user's selected answer
 
         Returns:
-            A Flask redirect response to the next appropriate page
+            A string representing the next page to take the user to
 
         Raises:
             ValueError if the answer does not have a mapping to a next page
@@ -156,21 +180,39 @@ class QuestionPage(CategoryPage):
         ]  # We should only route to these pages if they are the only answer
 
         if len(answer) == 1 and answer[0] in optional_answers:
-            return redirect(url_for(self.form_class.next_step_mapping[answer[0]]))
+            return url_for(self.form_class.next_step_mapping[answer[0]])
 
         if isinstance(answer, list):
             for a in answer:
                 if a in self.form_class.next_step_mapping and a not in optional_answers:
-                    return redirect(url_for(self.form_class.next_step_mapping[a]))
+                    return url_for(self.form_class.next_step_mapping[a])
             answer = "*"
 
         if answer not in self.form_class.next_step_mapping:
             raise ValueError(f"No mapping found for answer: {answer}")
 
         next_page = self.form_class.next_step_mapping[answer]
+
         if isinstance(next_page, dict):
-            return redirect(url_for(**next_page))
-        return redirect(url_for(next_page))
+            return url_for(**next_page)
+        return url_for(next_page)
+
+    def update_session(self, form: QuestionForm) -> None:
+        answer = form.question.data
+        answer = answer if isinstance(answer, list) else [answer]
+        answer_labels = [
+            label for value, label in form.question.choices if value in answer
+        ]
+        category_answer = CategoryAnswer(
+            question=form.title,
+            answer_value=form.question.data,
+            answer_label=answer_labels if len(answer) > 1 else answer_labels[0],
+            category=form.category,
+            next_page=self.get_next_page(form.question.data),
+            question_page=request.url_rule.endpoint,
+            question_type=QuestionType.ONWARD,
+        )
+        super().update_session(category_answer)
 
     def process_request(self):
         """Handle requests for the question page, including form submissions.
@@ -183,13 +225,11 @@ class QuestionPage(CategoryPage):
             Either a redirect to the next page or the rendered template
         """
         form = self.form_class(request.args)
-        session["category"] = form.category
+        session.category = form.category
 
         if form.submit.data and form.validate():
-            self.update_session(
-                question=form.title, answer=form.question.data, category=form.category
-            )
-            return self.get_next_page(form.question.data)
+            self.update_session(form)
+            return redirect(self.get_next_page(form.question.data))
 
         # Pre-populate form with previous answer if it exists
         previous_answer = session.get_category_question_answer(form.title)
