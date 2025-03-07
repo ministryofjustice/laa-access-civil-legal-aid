@@ -873,6 +873,12 @@ msgstr "pob mis"
 msgid "per year"
 msgstr "y flwyddyn"
 
+msgid "The problem you need help with"
+msgstr "Y broblem y mae angen cymorth arnoch gyda hi"
+
+msgid "Change"
+msgstr "Newid"
+
 msgid "About you"
 msgstr "Amdanoch chi"
 
@@ -1649,6 +1655,9 @@ msgstr "Eich eiddo"
 
 msgid "You and your partner’s property"
 msgstr "Eich eiddo chi ac eiddo’ch partner"
+
+msgid "Check your answers and confirm"
+msgstr "Gwiriwch eich atebion a chadarnhewch"
 
 msgid "Your savings"
 msgstr "Eich cynilion"
@@ -2478,6 +2487,9 @@ msgstr "Dileu eiddo"
 
 msgid "Add another property"
 msgstr "Ychwanegu eiddo arall"
+
+msgid "About the problem"
+msgstr "Am y broblem"
 
 msgid ""
 "Any cash, savings or investments held in your name, your partner’s name "
