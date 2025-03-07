@@ -5,7 +5,7 @@ from app.categories.results.views import (
     CannotFindYourProblemPage,
     NextStepsPage,
 )
-from app.mixins import InScopeMixin
+from app.categories.mixins import InScopeMixin
 
 
 class InScopeResultPage(InScopeMixin, ResultPage):

@@ -1,3 +1,4 @@
+from enum import Enum
 from app.api import cla_backend
 from flask import session
 from app.means_test.forms.income import IncomeForm
@@ -7,10 +8,16 @@ from app.means_test.forms.outgoings import OutgoingsForm
 from app.means_test.money_interval import MoneyInterval
 
 
+class EligibilityState(str, Enum):
+    YES: str = "yes"
+    NO: str = "no"
+    UNKNOWN: str = "unknown"
+
+
 def update_means_test(payload):
     means_test_endpoint = "checker/api/v1/eligibility_check/"
 
-    ec_reference = session.get("ec_reference")
+    ec_reference = session.ec_reference
 
     if ec_reference:
         response = cla_backend.patch(
@@ -19,14 +26,15 @@ def update_means_test(payload):
         return response
     else:
         response = cla_backend.post(means_test_endpoint, json=payload)
-        session["ec_reference"] = response["reference"]
+        session.ec_reference = response["reference"]
         return response
 
 
-def is_eligible(reference):
+def is_eligible(reference) -> EligibilityState:
     means_test_endpoint = "checker/api/v1/eligibility_check/"
-    response = cla_backend.post(f"{means_test_endpoint}{reference}/is_eligible/")
-    return response["is_eligible"]
+    response = cla_backend.post(f"{means_test_endpoint}{reference}/is_eligible/", {})
+    state = response["is_eligible"]
+    return getattr(EligibilityState, state.upper(), EligibilityState.UNKNOWN)
 
 
 def get_means_test_payload(eligibility_data) -> dict:
