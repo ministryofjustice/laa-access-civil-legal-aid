@@ -16,7 +16,7 @@ def format_callback_time(
     end_time = start_time + callback_duration
 
     formatted_start_date = start_time.strftime(
-        "%A, %d %B at %H:%M"
+        "%A, %-d %B at %H:%M"
     )  # E.g. Monday, 1 January at 09:00
     formatted_end_time = end_time.strftime("%H:%M")  # E.g. 09:30
 
