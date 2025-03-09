@@ -1705,7 +1705,7 @@ msgid "Enter 0 if you have no valuable items worth over £500 each"
 msgstr "Rhowch 0 os nad oes gennych eitemau gwerthfawr sy’n werth dros £500 yr un"
 
 msgid "Staying safe online"
-msgstr ""
+msgstr "Cadw’n ddiogel ar-lein"
 
 msgid "Sorry, you’re not likely to get legal aid"
 msgstr ""
