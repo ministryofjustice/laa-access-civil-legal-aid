@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-05 08:35+0000\n"
+"POT-Creation-Date: 2025-03-09 17:53+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.16.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 msgid "Domestic abuse"
 msgstr ""
@@ -1503,6 +1503,9 @@ msgstr ""
 msgid "Enter 0 if you have no valuable items worth over £500 each"
 msgstr ""
 
+msgid "Staying safe online"
+msgstr ""
+
 msgid "Sorry, you’re not likely to get legal aid"
 msgstr ""
 
@@ -2139,6 +2142,134 @@ msgid "Extend time limit"
 msgstr ""
 
 msgid "Exit service"
+msgstr ""
+
+msgid "Stay safe when you use this website"
+msgstr ""
+
+msgid ""
+"If you need to hide what you’re doing on this website, or protect "
+"yourself from someone, it can be safer not to use your home computer or "
+"your own mobile phone."
+msgstr ""
+
+msgid ""
+"For example, use a computer at the library, or borrow a phone from "
+"someone you trust."
+msgstr ""
+
+msgid "What this website saves to your device"
+msgstr ""
+
+msgid ""
+"When you use this website, and every time you use the internet, your "
+"device saves a record of:"
+msgstr ""
+
+msgid ""
+"the pages you’ve looked at and the files you’ve downloaded - this is "
+"called your ‘browsing history’"
+msgstr ""
+
+msgid "small files called ‘cookies’"
+msgstr ""
+
+msgid "How to delete cookies and your browsing history"
+msgstr ""
+
+msgid "Be careful because:"
+msgstr ""
+
+msgid "deleting cookies will also delete stored passwords for online accounts"
+msgstr ""
+
+msgid "clearing your history could make someone more suspicious"
+msgstr ""
+
+msgid ""
+"Try to only remove information about the websites you want to keep "
+"private."
+msgstr ""
+
+msgid "Find out how to do that on:"
+msgstr ""
+
+msgid "Google Chrome"
+msgstr ""
+
+msgid "Internet Explorer"
+msgstr ""
+
+msgid "Mozilla Firefox"
+msgstr ""
+
+msgid "Safari"
+msgstr ""
+
+msgid "Samsung internet"
+msgstr ""
+
+msgid "How the ‘Exit this page’ button works on this website"
+msgstr ""
+
+msgid ""
+"There is an ‘Exit this page’ button on some pages. If you click this "
+"button, all the information you’ve entered will be deleted. This website "
+"will close."
+msgstr ""
+
+msgid "You’ll automatically go to the BBC Weather homepage:"
+msgstr ""
+
+msgid "https://www.bbc.co.uk/weather/"
+msgstr ""
+
+msgid "Cookies and browsing history will still be saved to your device."
+msgstr ""
+
+msgid ""
+"On any page where you see the ‘Exit this page’ button, pressing the "
+"‘Shift’ key 3 times will work the same way."
+msgstr ""
+
+msgid "To find this website again, search ‘Check if you can get legal aid’."
+msgstr ""
+
+msgid "How to use this website without storing cookies and browser history"
+msgstr ""
+
+msgid ""
+"Use the ‘private browsing’ settings. Go to the menu on your browser, "
+"click on ‘File’ and turn on:"
+msgstr ""
+
+msgid "<strong>Incognito</strong> on Google Chrome"
+msgstr ""
+
+msgid "<strong>Private Window</strong> on Safari"
+msgstr ""
+
+msgid "<strong>InPrivate</strong> on Internet Explorer"
+msgstr ""
+
+msgid "<strong>Private Browsing</strong> on Mozilla Firefox"
+msgstr ""
+
+msgid "On Samsung internet, you need to turn on"
+msgstr ""
+
+msgid "Secret mode."
+msgstr ""
+
+msgid "Get help to stay safe online"
+msgstr ""
+
+msgid ""
+"There are other ways someone can track you online, for example by using "
+"spying or tracking programmes. See the Refuge website"
+msgstr ""
+
+msgid "Secure your tech."
 msgstr ""
 
 msgid "Privacy notice"

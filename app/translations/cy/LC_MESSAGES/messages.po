@@ -17,7 +17,10 @@ msgid ""
 "Includes keeping you or your family safe, getting court orders and help "
 "if someone is ignoring a court order. Also, if you’re being stalked, "
 "threatened or harassed."
-msgstr "Mae hyn yn cynnwys eich cadw chi neu eich teulu’n ddiogel, cael gorchmynion llys a chymorth os bydd rhywun yn anwybyddu gorchymyn llys. Hefyd, os ydych chi’n cael eich stelcio, eich bygwth neu eich aflonyddu."
+msgstr ""
+"Mae hyn yn cynnwys eich cadw chi neu eich teulu’n ddiogel, cael "
+"gorchmynion llys a chymorth os bydd rhywun yn anwybyddu gorchymyn llys. "
+"Hefyd, os ydych chi’n cael eich stelcio, eich bygwth neu eich aflonyddu."
 
 msgid "Leaving an abusive relationship"
 msgstr "Gadael perthynas gamdriniol"
@@ -25,7 +28,9 @@ msgstr "Gadael perthynas gamdriniol"
 msgid ""
 "Help with divorce, separation, or leaving your partner. Includes legal "
 "arrangements for children, money and housing."
-msgstr "Cymorth i ysgaru, i wahanu neu i adael eich partner. Mae hyn yn cynnwys trefniadau cyfreithiol ar gyfer plant, arian a thai."
+msgstr ""
+"Cymorth i ysgaru, i wahanu neu i adael eich partner. Mae hyn yn cynnwys "
+"trefniadau cyfreithiol ar gyfer plant, arian a thai."
 
 msgid "Problems with an ex-partner: children or money"
 msgstr "Problemau gyda chyn-bartner: plant neu arian"
@@ -34,7 +39,10 @@ msgid ""
 "Includes arrangements for children and money. If an ex-partner is not "
 "following agreements or court orders. If you’re worried about a child, or"
 " if a child is taken or kept without your permission."
-msgstr "Mae'n cynnwys trefniadau ar gyfer plant ac arian. Os nad yw cynbartner yn dilyn cytundebau neu orchmynion llys. Os ydych chi'n poeni am blentyn, neu os yw plentyn yn cael ei gymryd neu ei gadw heb eich caniatâd."
+msgstr ""
+"Mae'n cynnwys trefniadau ar gyfer plant ac arian. Os nad yw cynbartner yn"
+" dilyn cytundebau neu orchmynion llys. Os ydych chi'n poeni am blentyn, "
+"neu os yw plentyn yn cael ei gymryd neu ei gadw heb eich caniatâd."
 
 msgid "Problems with neighbours, landlords or other people"
 msgstr "Problemau gyda chymdogion, landlordiaid neu bobl eraill"
@@ -48,7 +56,10 @@ msgstr "Tai, digartrefedd, colli eich cartref"
 msgid ""
 "Includes being forced to leave your home, problems with council housing, "
 "if you’re homeless or might be homeless in the next 2 months."
-msgstr "Mae hyn yn cynnwys cael eich gorfodi i adael eich cartref, problemau gyda thai cyngor, os ydych chi'n ddigartref neu y gallech fod yn ddigartref yn ystod y 2 fis nesaf."
+msgstr ""
+"Mae hyn yn cynnwys cael eich gorfodi i adael eich cartref, problemau gyda"
+" thai cyngor, os ydych chi'n ddigartref neu y gallech fod yn ddigartref "
+"yn ystod y 2 fis nesaf."
 
 msgid "Forced Marriage"
 msgstr "Priodas dan orfod"
@@ -62,8 +73,7 @@ msgid "Female genital mutilation (FGM)"
 msgstr "Anffurfio Organau Cenhedlu Benywod (FGM)"
 
 msgid "If you or someone else is at risk of FGM."
-msgstr ""
-"Os ydych chi neu rywun arall mewn perygl o FGM."
+msgstr "Os ydych chi neu rywun arall mewn perygl o FGM."
 
 msgid "Children, families, relationships"
 msgstr "Plant, teuluoedd, perthnasoedd"
@@ -1694,6 +1704,9 @@ msgstr "Rhowch gyfanswm yr holl eitemau gwerthfawr dros £500"
 msgid "Enter 0 if you have no valuable items worth over £500 each"
 msgstr "Rhowch 0 os nad oes gennych eitemau gwerthfawr sy’n werth dros £500 yr un"
 
+msgid "Staying safe online"
+msgstr ""
+
 msgid "Sorry, you’re not likely to get legal aid"
 msgstr ""
 
@@ -2429,6 +2442,134 @@ msgstr "Ymestyn y terfyn amser"
 
 msgid "Exit service"
 msgstr "Gadael y gwasanaeth"
+
+msgid "Stay safe when you use this website"
+msgstr "Cadwch yn ddiogel wrth ddefnyddio’r wefan hon"
+
+msgid ""
+"If you need to hide what you’re doing on this website, or protect "
+"yourself from someone, it can be safer not to use your home computer or "
+"your own mobile phone."
+msgstr "Os oes angen i chi guddio’r hyn rydych chi’n ei wneud ar y wefan hon, neu ddiogelu eich hun rhag rhywun, gall fod yn fwy diogel peidio â defnyddio eich cyfrifiadur gartref na’ch ffôn symudol eich hun."
+
+msgid ""
+"For example, use a computer at the library, or borrow a phone from "
+"someone you trust."
+msgstr "Er enghraifft, defnyddiwch gyfrifiadur yn y llyfrgell, neu fenthyg ffôn gan rywun rydych chi’n ymddiried ynddo."
+
+msgid "What this website saves to your device"
+msgstr "Beth mae'r wefan hon yn ei gadw ar eich dyfais"
+
+msgid ""
+"When you use this website, and every time you use the internet, your "
+"device saves a record of:"
+msgstr "Pan fyddwch chi’n defnyddio’r wefan hon, a phob tro y byddwch chi’n defnyddio’r rhyngrwyd, bydd eich dyfais yn cadw cofnod o’r canlynol:"
+
+msgid ""
+"the pages you’ve looked at and the files you’ve downloaded - this is "
+"called your ‘browsing history’"
+msgstr "y tudalennau rydych chi wedi edrych arnyn nhw a'r ffeiliau rydych chi wedi'u llwytho i lawr – gelwir hyn yn 'hanes pori'"
+
+msgid "small files called ‘cookies’"
+msgstr "ffeiliau bach o’r enw ‘cwcis’"
+
+msgid "How to delete cookies and your browsing history"
+msgstr "Sut mae dileu cwcis a'ch hanes pori"
+
+msgid "Be careful because:"
+msgstr "Byddwch yn ofalus oherwydd:"
+
+msgid "deleting cookies will also delete stored passwords for online accounts"
+msgstr "bydd dileu cwcis hefyd yn dileu cyfrineiriau sydd wedi’u storio ar gyfer cyfrifon ar-lein"
+
+msgid "clearing your history could make someone more suspicious"
+msgstr "gallai clirio eich hanes wneud rhywun yn fwy amheus"
+
+msgid ""
+"Try to only remove information about the websites you want to keep "
+"private."
+msgstr "Ceisiwch ddileu’r wybodaeth am y gwefannau rydych chi am eu cadw'n breifat yn unig."
+
+msgid "Find out how to do that on:"
+msgstr "Dysgwch sut mae gwneud hynny ar:"
+
+msgid "Google Chrome"
+msgstr ""
+
+msgid "Internet Explorer"
+msgstr ""
+
+msgid "Mozilla Firefox"
+msgstr ""
+
+msgid "Safari"
+msgstr ""
+
+msgid "Samsung internet"
+msgstr ""
+
+msgid "How the ‘Exit this page’ button works on this website"
+msgstr "Sut mae’r botwm ‘Gadael y dudalen hon’ yn gweithio ar y wefan hon"
+
+msgid ""
+"There is an ‘Exit this page’ button on some pages. If you click this "
+"button, all the information you’ve entered will be deleted. This website "
+"will close."
+msgstr "Mae botwm ‘Gadael y dudalen hon’ ar rai tudalennau. Os byddwch chi’n clicio’r botwm hwn, bydd yr holl wybodaeth rydych chi wedi’i rhoi yn cael ei dileu. Bydd y wefan hon yn cau."
+
+msgid "You’ll automatically go to the BBC Weather homepage:"
+msgstr "Byddwch yn mynd yn awtomatig i dudalen hafan BBC Weather:"
+
+msgid "https://www.bbc.co.uk/weather/"
+msgstr ""
+
+msgid "Cookies and browsing history will still be saved to your device."
+msgstr "Bydd y cwcis a’r hanes pori yn dal i gael eu cadw ar eich dyfais."
+
+msgid ""
+"On any page where you see the ‘Exit this page’ button, pressing the "
+"‘Shift’ key 3 times will work the same way."
+msgstr "Ar unrhyw dudalen lle gwelwch y botwm ‘Gadael y dudalen hon’, bydd pwyso’r fysell ‘Shift’ 3 gwaith yn gwneud yr un peth."
+
+msgid "To find this website again, search ‘Check if you can get legal aid’."
+msgstr "I ddod o hyd i’r wefan hon eto, chwiliwch am ‘Gwirio a ydych yn gymwys i gael cymorth cyfreithiol’."
+
+msgid "How to use this website without storing cookies and browser history"
+msgstr "Sut mae defnyddio'r wefan hon heb storio cwcis a hanes pori"
+
+msgid ""
+"Use the ‘private browsing’ settings. Go to the menu on your browser, "
+"click on ‘File’ and turn on:"
+msgstr "Defnyddiwch y gosodiadau ‘pori’n breifat’. Ewch i’r ddewislen ar eich porwr, cliciwch ‘Ffeil’ a rhoi’r canlynol ar waith:"
+
+msgid "<strong>Incognito</strong> on Google Chrome"
+msgstr "<strong>Incognito</strong> ar Google Chrome"
+
+msgid "<strong>Private Window</strong> on Safari"
+msgstr "<strong>Private Window</strong> ar Safari"
+
+msgid "<strong>InPrivate</strong> on Internet Explorer"
+msgstr "<strong>InPrivate</strong> ar Internet Explorer"
+
+msgid "<strong>Private Browsing</strong> on Mozilla Firefox"
+msgstr "<strong>Private Browsing</strong> ar Mozilla Firefox"
+
+msgid "On Samsung internet, you need to turn on"
+msgstr "Ar Samsung Internet, mae angen i chi roi"
+
+msgid "Secret mode."
+msgstr "Secret mode ar waith."
+
+msgid "Get help to stay safe online"
+msgstr "Cael help i gadw’n ddiogel ar-lein"
+
+msgid ""
+"There are other ways someone can track you online, for example by using "
+"spying or tracking programmes. See the Refuge website"
+msgstr "Mae ffyrdd eraill y gall rhywun eich tracio ar-lein, er enghraifft drwy ddefnyddio rhaglenni tracio neu ysbïo. Ewch i’r dudalen"
+
+msgid "Secure your tech."
+msgstr "Secure your tech ar wefan Refuge."
 
 msgid "Privacy notice"
 msgstr "Welsh Privacy notice"
