@@ -70,7 +70,7 @@
                 <a class="step-name" href="{{ url_for('means_test.review') }}">
               {% endif %}
                 {{ step_status(not has_remaining_forms, current_step.name == 'review') }}
-                {% trans %}Review your answers{% endtrans %}
+                {% trans %}Check your answers and confirm{% endtrans %}
               {% if has_remaining_forms or is_contact_page %}
                 </span>
               {% else %}
