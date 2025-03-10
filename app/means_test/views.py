@@ -52,6 +52,7 @@ class MeansTest(FormsMixin, InScopeMixin, View):
 
     def ensure_form_protection(self, current_form):
         progress = self.get_form_progress(current_form=current_form)
+        # Ensure all forms leading upto the current form(current_form) are completed
         for form in progress["steps"]:
             if form["is_current"]:
                 break
