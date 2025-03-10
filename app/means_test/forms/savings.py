@@ -20,7 +20,8 @@ class SavingsForm(BaseMeansTestForm):
             "The total amount of savings in cash, bank or building society; or enter 0 if you have none"
         ),
         validators=[
-            InputRequired(message=_("Enter your total savings, or 0 if you have none"))
+            ValidateIfSession("has_savings", True),
+            InputRequired(message=_("Enter your total savings, or 0 if you have none")),
         ],
     )
 
@@ -31,9 +32,10 @@ class SavingsForm(BaseMeansTestForm):
             "This includes stocks, shares, bonds (but not property); enter 0 if you have none"
         ),
         validators=[
+            ValidateIfSession("has_savings", True),
             InputRequired(
                 message=_("Enter your total investments, or 0 if you have none")
-            )
+            ),
         ],
     )
 
