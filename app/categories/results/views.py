@@ -22,9 +22,7 @@ class ResultPage(CategoryPage):
             else []
         )
         return {
-            "category_name": category.referrer_text
-            if isinstance(category, Category)
-            else None,
+            "category": category if isinstance(category, Category) else None,
             "organisations": organisations,
             "fala_category_code": get_fala_category_code(article_category_name),
         }
@@ -73,5 +71,7 @@ class CannotFindYourProblemPage(OutOfScopePage):
 class NextStepsPage(OutOfScopePage):
     template: str = "categories/next-steps.html"
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, get_help_organisations: bool = True, **kwargs):
+        if get_help_organisations:
+            self.template = "categories/next-steps-alternate-help.html"
         super().__init__(*args, self.template, **kwargs)

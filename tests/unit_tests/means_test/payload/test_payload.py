@@ -51,5 +51,4 @@ def test_get_means_test_payload(test_case: dict, app) -> None:
     """
     with app.app_context():
         result = get_means_test_payload(test_case["input"])
-        print(test_case)
         assert_partial_dict_match(test_case["expected"], result)

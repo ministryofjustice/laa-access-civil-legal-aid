@@ -5,7 +5,7 @@ from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import MultiplePropertiesForm
 from app.means_test.forms.outgoings import OutgoingsForm
 from app.means_test.money_interval import MoneyInterval
-from app.means_test.constants import EligibilityResult
+from app.means_test.constants import EligibilityState
 import logging
 
 logger = logging.getLogger(__name__)
@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 def update_means_test(payload):
     means_test_endpoint = "checker/api/v1/eligibility_check/"
 
-    ec_reference = session.get("reference")
+    ec_reference = session.get("ec_reference")
 
     if ec_reference:
         response = cla_backend.patch(
@@ -23,23 +23,25 @@ def update_means_test(payload):
         return response
     else:
         response = cla_backend.post(means_test_endpoint, json=payload)
-        session["reference"] = response["reference"]
+        session["ec_reference"] = response["reference"]
         return response
 
 
-def is_eligible(reference) -> EligibilityResult:
+def is_eligible(reference) -> EligibilityState:
     if not reference:
         raise ValueError("Reference cannot be empty")
 
     means_test_endpoint = "checker/api/v1/eligibility_check/"
-    response = cla_backend.post(f"{means_test_endpoint}{reference}/is_eligible/")
-    eligibility = EligibilityResult.from_string(response["is_eligible"])
-    return eligibility
+    response = cla_backend.post(f"{means_test_endpoint}{reference}/is_eligible/", {})
+    state = response["is_eligible"]
+    return EligibilityState(state)
 
 
 def get_means_test_payload(eligibility_data) -> dict:
+    # Todo: Need to add notes
     about = eligibility_data.forms.get("about-you", {})
     savings_form = eligibility_data.forms.get("savings", {})
+    income_form = eligibility_data.forms.get("income", {})
 
     has_partner = eligibility_data.forms.get("about-you", {}).get(
         "has_partner", False
@@ -54,7 +56,7 @@ def get_means_test_payload(eligibility_data) -> dict:
     additional_benefits_data = AdditionalBenefitsForm.get_payload(
         eligibility_data.forms.get("additional-benefits", {})
     )
-    income_data = IncomeForm(**eligibility_data.forms.get("income", {})).get_payload(
+    income_data = IncomeForm(**income_form).get_payload(
         employed=is_employed,
         self_employed=is_self_employed,
         partner_employed=is_partner_employed,
@@ -76,7 +78,7 @@ def get_means_test_payload(eligibility_data) -> dict:
     payload = {
         "category": eligibility_data.category,
         "your_problem_notes": "",
-        "notes": "",
+        "notes": "\n\n".join(f"{k}:\n{v}" for k, v in eligibility_data.notes.items()),
         "property_set": property_data.get("property_set"),
         "you": {
             "income": {
@@ -94,7 +96,9 @@ def get_means_test_payload(eligibility_data) -> dict:
                 .get("maintenance_received"),
                 "pension": income_data.get("you", {}).get("income", {}).get("pension"),
                 "other_income": other_income,
-                "self_employed": is_self_employed,
+                "self_employed": income_data.get("you", {})
+                .get("income", {})
+                .get("self_employed"),
                 "benefits": additional_benefits_data.get("benefits"),
                 "child_benefits": benefits_data.get("child_benefits"),
             },
@@ -140,7 +144,9 @@ def get_means_test_payload(eligibility_data) -> dict:
                 "other_income": income_data.get("partner", {})
                 .get("income", {})
                 .get("other_income"),
-                "self_employed": "0",
+                "self_employed": income_data.get("partner", {})
+                .get("income", {})
+                .get("self_employed"),
                 "benefits": {
                     "per_interval_value": 0,
                     "per_interval_value_pounds": None,
@@ -197,6 +203,10 @@ def get_means_test_payload(eligibility_data) -> dict:
         "specific_benefits": benefits_data["specific_benefits"],
         "disregards": [],
     }
+
+    if not income_form:
+        del payload["you"]["income"]
+        del payload["partner"]["income"]
 
     if not has_partner:
         del payload["partner"]

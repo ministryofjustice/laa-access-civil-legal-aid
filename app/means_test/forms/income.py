@@ -431,7 +431,7 @@ class IncomeForm(BaseMeansTestForm):
                     ),
                     "pension": MoneyInterval(self.data.get("pension", 0)),
                     "other_income": MoneyInterval(self.data.get("other_income", 0)),
-                    "self_employed": self_employed,
+                    "self_employed": self_employed if self_employed else False,
                 },
                 "deductions": {
                     "income_tax": MoneyInterval(self.data.get("income_tax", 0)),
@@ -461,7 +461,9 @@ class IncomeForm(BaseMeansTestForm):
                     "other_income": MoneyInterval(
                         self.data.get("partner_other_income", 0)
                     ),  # TODO: Add income from rent here?
-                    "self_employed": partner_self_employed,
+                    "self_employed": partner_self_employed
+                    if partner_self_employed
+                    else False,
                 },
                 "deductions": {
                     "income_tax": MoneyInterval(self.data.get("partner_income_tax", 0)),

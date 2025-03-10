@@ -1,7 +1,8 @@
 import pytest
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, MagicMock
 from flask_babel import LazyString
 from app.api import BackendAPIClient
+from datetime import datetime
 
 
 class TestHostname:
@@ -118,3 +119,38 @@ class TestReasonsForContacting:
         assert result == {"status": "success"}
         prepared_request = mock_send.call_args[0][0]
         assert prepared_request.method == "POST"
+
+
+# Test Callback
+@pytest.fixture
+def mock_api_response():
+    return {
+        "slots": [
+            "2025-02-21T09:00:00",
+            "2025-02-21T09:30:00",
+            "2025-02-22T10:00:00",
+            "2025-02-23T10:00:00",
+        ]
+    }
+
+
+class TestCallbackSlots:
+    @pytest.fixture(autouse=True)
+    def setup_method(self, mock_api_response):
+        self.client = BackendAPIClient()
+        self.client.get = MagicMock(return_value=mock_api_response)
+        self.client.CALLBACK_API_DATETIME_FORMAT = (
+            "%Y-%m-%dT%H:%M:%S"  # Ensure format is correct
+        )
+
+    def test_get_time_slots(self):
+        expected = [
+            datetime(2025, 2, 21, 9, 0),
+            datetime(2025, 2, 21, 9, 30),
+            datetime(2025, 2, 22, 10, 0),
+            datetime(2025, 2, 23, 10, 0),
+        ]
+
+        result = self.client.get_time_slots()
+
+        assert result == expected, f"Expected {expected}, but got {result}"

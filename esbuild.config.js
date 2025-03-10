@@ -9,7 +9,7 @@ async function build(should_watch) {
         plugins: [sassPlugin({
             quietDeps: true
         })],
-        entryPoints: ["app/static/src/js/scripts.js", "app/static/src/js/headscripts.js", "app/static/src/scss/styles.scss"],
+        entryPoints: ["app/static/src/js/scripts.js", "app/static/src/js/contact.js", "app/static/src/js/headscripts.js", "app/static/src/scss/styles.scss"],
         bundle: true,
         entryNames: '[name]',
         outdir: 'app/static/dist',   // Output directory,

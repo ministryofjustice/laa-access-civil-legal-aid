@@ -1,19 +1,17 @@
 from enum import Enum
 
 
-class EligibilityResult(Enum):
-    ELIGIBLE = "eligible"
-    INELIGIBLE = "ineligible"
-    UNKNOWN = "unknown"  # Represents the fact that we do not have enough information to determine the users' financial eligibility.
+class EligibilityState(str, Enum):
+    YES: str = "yes"
+    NO: str = "no"
+    UNKNOWN: str = "unknown"
 
     @classmethod
-    def from_string(cls, value):
-        value_mapping = {
-            "yes": cls.ELIGIBLE,
-            "no": cls.INELIGIBLE,
-            "unknown": cls.UNKNOWN,
-        }
-        return value_mapping.get(value, cls.UNKNOWN)
-
-    def __bool__(self):
-        return self == self.ELIGIBLE
+    def _missing_(cls, value):
+        """Handle missing values by trying their lowercase equivalent or returning UNKNOWN if there is no match."""
+        if isinstance(value, str):
+            try:
+                return cls(value.lower())
+            except ValueError:
+                return cls.UNKNOWN
+        return None

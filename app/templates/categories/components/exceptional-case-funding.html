@@ -1,0 +1,15 @@
+{% macro exceptionalCaseFundingSidebar(category) %}
+ <aside class="sidebar">
+    <h2 class="govuk-heading-m">{% trans %}Exceptional cases{% endtrans %}</h2>
+    {% if category == 'education' %}
+        <p class="govuk-body">{% trans %}In exceptional cases or if your case is going to a judicial review, legal aid may still be available.{% endtrans %}</p>
+    {% else %}
+        <p class="govuk-body">{% trans %}In exceptional cases, legal aid may still be available.{% endtrans %}</p>
+    {% endif %}
+    {% set fala_url = url_for("find-a-legal-adviser.search", category=fala_category_code.lower() if fala_category_code else None) %}
+    {% set fala_link %}<a class='govuk-link' href={{ fala_url }}>{% trans %}ask a legal adviser{% endtrans %}</a> {% endset %}
+    <p class="govuk-body">{% trans fala_link=fala_link %}You can {{fala_link}} if an application might succeed in your case and how to apply.{% endtrans %}</p>
+    {% set ecf_link %}<a href='https://www.gov.uk/legal-aid-apply-for-exceptional-case-funding' rel='external' class='govuk-link' target="_blank">{% trans %}apply directly{% endtrans %}</a>{% endset %}
+    <p class="govuk-body">{% trans ecf_link=ecf_link %}You can also {{ ecf_link }} to the Legal Aid Agency.{% endtrans %}</p>
+</aside>
+{% endmacro %}
