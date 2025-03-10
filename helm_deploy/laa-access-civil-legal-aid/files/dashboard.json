@@ -20,7 +20,7 @@
         "editable": true,
         "fiscalYearStartMonth": 0,
         "graphTooltip": 1,
-        "id": 198,
+        "id": 199,
         "links": [],
         "panels": [
         {
@@ -103,7 +103,7 @@
             "targets": [
             {
                 "editorMode": "code",
-                "expr": "sum by (remote_addr) (rate(container_network_transmit_packets_total{namespace=\"$namespace\"}[1m]))",
+                "expr": "sum by (remote_addr) (rate(container_network_transmit_packets_total{namespace=\"laa-access-civil-legal-aid-dnstest\"}[1m]))",
                 "legendFormat": "Usage of Access",
                 "range": true,
                 "refId": "A"
@@ -490,8 +490,7 @@
                 "mode": "absolute",
                 "steps": [
                     {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                     },
                     {
                     "color": "red",
@@ -586,8 +585,7 @@
                 "mode": "absolute",
                 "steps": [
                     {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                     },
                     {
                     "color": "red",
@@ -707,8 +705,7 @@
                 "mode": "absolute",
                 "steps": [
                     {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                     },
                     {
                     "color": "red",
@@ -825,8 +822,7 @@
                 "mode": "absolute",
                 "steps": [
                     {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                     },
                     {
                     "color": "red",
@@ -896,8 +892,8 @@
         "list": [
             {
             "current": {
-                "text": "laa-access-civil-legal-aid-staging",
-                "value": "laa-access-civil-legal-aid-staging"
+                "text": "laa-access-civil-legal-aid-dnstest",
+                "value": "laa-access-civil-legal-aid-dnstest"
             },
             "datasource": "Prometheus",
             "definition": "label_values(kube_deployment_metadata_generation, namespace)",
@@ -912,8 +908,8 @@
             },
             {
             "current": {
-                "text": "laa-access-civil-legal-aid",
-                "value": "laa-access-civil-legal-aid"
+                "text": "",
+                "value": ""
             },
             "definition": "label_values(nginx_ingress_controller_requests{exported_namespace=\"$namespace\"},ingress)",
             "name": "ingress",
