@@ -781,6 +781,12 @@ msgstr ""
 msgid "per year"
 msgstr ""
 
+msgid "The problem you need help with"
+msgstr ""
+
+msgid "Change"
+msgstr ""
+
 msgid "About you"
 msgstr ""
 
@@ -1461,6 +1467,9 @@ msgid "Your property"
 msgstr ""
 
 msgid "You and your partner’s property"
+msgstr ""
+
+msgid "Check your answers and confirm"
 msgstr ""
 
 msgid "Your savings"
@@ -2315,6 +2324,9 @@ msgid "Remove Property"
 msgstr ""
 
 msgid "Add another property"
+msgstr ""
+
+msgid "About the problem"
 msgstr ""
 
 msgid ""
