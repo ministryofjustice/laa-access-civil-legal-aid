@@ -3,7 +3,12 @@ from flask.views import View, MethodView
 from flask import render_template, url_for, redirect, session, request
 from flask_babel import lazy_gettext as _, gettext
 from werkzeug.datastructures import MultiDict
-from app.means_test.api import update_means_test, get_means_test_payload
+from app.means_test.api import (
+    update_means_test,
+    get_means_test_payload,
+    is_eligible,
+    EligibilityState,
+)
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import MultiplePropertiesForm
@@ -268,4 +273,6 @@ class CheckYourAnswers(FormsMixin, MethodView):
         return summary
 
     def post(self):
-        return self.get()
+        if is_eligible(session.ec_reference) == EligibilityState.YES:
+            return redirect(url_for("app.eligible"))
+        return redirect(url_for("categories.results.refer"))
