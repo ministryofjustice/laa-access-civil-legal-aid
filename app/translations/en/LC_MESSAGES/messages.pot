@@ -763,6 +763,18 @@ msgstr ""
 msgid "Submit details"
 msgstr ""
 
+msgid "Receive this confirmation by email"
+msgstr ""
+
+msgid "Enter a valid email address"
+msgstr ""
+
+msgid "Tell us what email address to send to"
+msgstr ""
+
+msgid "Send"
+msgstr ""
+
 msgid "There is a problem"
 msgstr ""
 
@@ -1561,9 +1573,10 @@ msgstr ""
 msgid "When you do not need to complete the financial assessment"
 msgstr ""
 
+#, python-format
 msgid ""
-"You should <a class=\"govuk-link\" href=\"/contact\">contact CLA</a> "
-"without completing the financial assessment if you are:"
+"You should %(contact_us_link)s  without completing the financial "
+"assessment if you are:"
 msgstr ""
 
 msgid "under 18"
@@ -1582,9 +1595,10 @@ msgid ""
 "instead ask for a call with a BSL interpreter."
 msgstr ""
 
+#, python-format
 msgid ""
-"Fill in the '<a class=\"govuk-link\" href=\"/contact\">Contact CLA</a>' "
-"page. Select 'BSL' under 'Communication needs'."
+"Fill in the '%(contact_us_link)s' page. Select 'BSL' under 'Communication"
+" needs'."
 msgstr ""
 
 msgid "Check if you qualify financially"
@@ -1932,6 +1946,147 @@ msgid "physically, sexually or emotionally abused"
 msgstr ""
 
 msgid "Back"
+msgstr ""
+
+msgid "You can now call CLA on"
+msgstr ""
+
+msgid ""
+"Please quote your reference number when you call. Find out about\n"
+"            <a class=\"govuk-link\" href=\"https://www.gov.uk/call-"
+"charges\" rel=\"external\">call charges</a>."
+msgstr ""
+
+msgid "Print this page"
+msgstr ""
+
+msgid "We will call you back"
+msgstr ""
+
+msgid "Your details have been submitted"
+msgstr ""
+
+msgid "Your reference number was sent to"
+msgstr ""
+
+msgid ""
+"If you have a court hearing date it is important that you get advice as "
+"soon as possible. You may be able to get last-minute help on the day of "
+"the hearing from an adviser in the court building."
+msgstr ""
+
+msgid "What happens next?"
+msgstr ""
+
+msgid ""
+"Your details have been submitted and an operator will call\n"
+"                    the person you nominated at least once during your "
+"chosen time, or as close to the time as possible"
+msgstr ""
+
+msgid ""
+"Your details have been submitted and an operator will call\n"
+"                    you at least once during your chosen time, or as "
+"close to the time as possible"
+msgstr ""
+
+msgid "When a CLA operator calls, the call will come from an anonymous number."
+msgstr ""
+
+msgid ""
+"If you need to urgently protect yourself or your family you should try "
+"and get advice as soon as possible."
+msgstr ""
+
+msgid ""
+"The first person they speak to will be an operator who will ask about "
+"your problem and your financial circumstances."
+msgstr ""
+
+msgid ""
+"The first person you speak to will be an operator who will ask about your"
+" problem and your financial circumstances."
+msgstr ""
+
+msgid ""
+"If it looks like you might qualify for legal aid they’ll\n"
+"                        be put through to a specialist adviser, who will "
+"make the\n"
+"                        final decision on your case."
+msgstr ""
+
+msgid ""
+"If it looks like you might qualify for legal aid you’ll\n"
+"                        be put through to a specialist adviser, who will "
+"make the\n"
+"                        final decision on your case."
+msgstr ""
+
+msgid ""
+"Please be aware that the specialist adviser will need\n"
+"                          evidence of the domestic violence before they "
+"can make a decision\n"
+"                          on your case."
+msgstr ""
+
+msgid "Find out what you can use as evidence"
+msgstr ""
+
+msgid ""
+"If your case involves domestic abuse or violence,\n"
+"                          the specialist adviser will need evidence of "
+"this\n"
+"                          before they can make a decision on your case."
+msgstr ""
+
+msgid ""
+"You will also need to provide evidence of your financial\n"
+"                    circumstances. Your specialist adviser will explain "
+"what is\n"
+"                    needed."
+msgstr ""
+
+msgid ""
+"You will need to provide evidence of your financial circumstances\n"
+"                    and maybe your problem. Your specialist adviser will "
+"explain\n"
+"                    what is needed."
+msgstr ""
+
+msgid ""
+"If your specialist adviser thinks you need to speak to someone in person "
+"or have someone represent you in court, they will organise this."
+msgstr ""
+
+msgid "If CLA can’t help you, we’ll always suggest where else you might get help."
+msgstr ""
+
+msgid ""
+"If we can do anything to make it easier for you to communicate with us, "
+"please tell the operator."
+msgstr ""
+
+#, python-format
+msgid ""
+"\n"
+"                  Protecting your personal data and your privacy is "
+"important to us. Read the full\n"
+"                  <a class=\"govuk-link\" href=\"%(privacy_link)s\">Civil"
+" Legal Advice Privacy Statement</a>.\n"
+"                "
+msgstr ""
+
+msgid "What if I miss the operator’s call?"
+msgstr ""
+
+msgid ""
+"If you miss the call or you need advice urgently, you can call us on\n"
+"              <strong>0345 345 4 345</strong>. Find out about\n"
+"              <a class=\"govuk-link\" href=\"https://www.gov.uk/call-"
+"charges\" rel=\"external\">call charges</a>."
+msgstr ""
+
+msgid "Finish"
 msgstr ""
 
 msgid ""
