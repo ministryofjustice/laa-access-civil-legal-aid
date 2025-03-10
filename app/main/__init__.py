@@ -1,4 +1,4 @@
-from flask import Blueprint, request, url_for
+from flask import Blueprint, request, url_for, session
 from flask import current_app
 
 bp = Blueprint("main", __name__, template_folder="../templates/main")
@@ -30,3 +30,13 @@ def inject_language_switcher():
             },
         }
     }
+
+
+@bp.app_context_processor
+def inject_exit_this_page():
+    category = session.category
+
+    if not category:
+        return {"show_exit_this_page": False}
+
+    return {"show_exit_this_page": getattr(category, "exit_page", False)}

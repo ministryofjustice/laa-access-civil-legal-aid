@@ -62,9 +62,7 @@ class TestFamilyLandingPage:
     @pytest.mark.parametrize("routing", ROUTING)
     def test_exit_this_page(self, page: Page, routing: dict):
         page.get_by_role("link", name="Domestic abuse").click()
-        expect(
-            page.get_by_role("button", name="Emergency Exit this page")
-        ).to_be_visible()
+        expect(page.get_by_role("button", name="Exit this page")).to_be_visible()
         page.get_by_role("link", name=routing["link_text"]).click()
         expect(
             page.get_by_role("heading", name=routing["next_page_heading"])
@@ -73,6 +71,4 @@ class TestFamilyLandingPage:
             page.get_by_role("heading", name=routing["next_page_heading"])
             == risk_of_harm_page_heading
         ):
-            expect(
-                page.get_by_role("button", name="Emergency Exit this page")
-            ).to_be_visible()
+            expect(page.get_by_role("button", name="Exit this page")).to_be_visible()
