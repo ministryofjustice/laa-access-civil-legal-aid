@@ -9,7 +9,7 @@ class TestConfirmationPage:
         "case_reference": "AB-1234-5678",
         "callback_time": datetime(2025, 3, 10, 10, 30, 0, tzinfo=timezone.utc),
         "contact_type": "callback",
-        "category": {"name": "Test Category"},
+        "category": {"code": "asylum_and_immigration"},
     }
 
     @pytest.fixture
