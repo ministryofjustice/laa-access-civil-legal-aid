@@ -4,7 +4,6 @@
 
 {%- from 'govuk_frontend_jinja/components/cookie-banner/macro.html' import govukCookieBanner-%}
 {%- from 'govuk_frontend_jinja/components/error-summary/macro.html' import govukErrorSummary-%}
-{%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
 {%- from 'govuk_frontend_jinja/components/notification-banner/macro.html' import govukNotificationBanner -%}
 {%- from 'govuk_frontend_jinja/components/phase-banner/macro.html' import govukPhaseBanner -%}
 {%- from 'main/_modal-dialog.html' import timeout_dialog %}
@@ -130,9 +129,12 @@
         },
         'html': '<a class="govuk-link" href="' + url_for('contact.reasons_for_contacting') + '">Contact us</a> if you need help or would like to give feedback to improve this service'
     }) }}
-
     {% if show_exit_this_page %}
-      {{ govukExitThisPage(_("Exit this page")) }}
+      <div class="govuk-exit-this-page" data-module="govuk-exit-this-page">
+        <a href="https://www.bbc.co.uk/weather" role="button" draggable="false" class="govuk-button govuk-button--warning govuk-exit-this-page__button govuk-js-exit-this-page-button" data-module="govuk-button" rel="nofollow noreferrer">
+          <span class="govuk-visually-hidden">Emergency</span> {% trans %}Exit this page{% endtrans %}
+        </a>
+      </div>
     {% endif %}
 
 {% endblock %}
