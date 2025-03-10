@@ -1713,6 +1713,9 @@ msgstr "Rhowch gyfanswm yr holl eitemau gwerthfawr dros £500"
 msgid "Enter 0 if you have no valuable items worth over £500 each"
 msgstr "Rhowch 0 os nad oes gennych eitemau gwerthfawr sy’n werth dros £500 yr un"
 
+msgid "Exit this page"
+msgstr "Gadael y dudalen hon"
+
 msgid "Staying safe online"
 msgstr "Cadw’n ddiogel ar-lein"
 
