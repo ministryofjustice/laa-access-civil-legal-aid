@@ -1,9 +1,10 @@
 exclude: # exclude matching issues
   - message: Build directories
     paths:
+      - .env
       - build/**
       - dist/**
-      - python3.12/**
+      - python3.*/**
       - package-lock.json
       - README.md
       - app/static/**

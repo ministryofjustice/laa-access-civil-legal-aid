@@ -12,7 +12,6 @@ from app.means_test.validators import (
     ValidateIfType,
 )
 from app.means_test import YES, NO
-
 from dataclasses import dataclass, field
 
 
@@ -121,7 +120,7 @@ class BenefitsForm(BaseMeansTestForm):
 
     @classmethod
     def should_show(cls) -> bool:
-        return session.get("eligibility").on_benefits
+        return session.get_eligibility().on_benefits
 
     def get_payload(self) -> dict:
         """Returns the benefits payload for the user and the partner.
@@ -201,6 +200,7 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
     )
     total_other_benefit = MoneyIntervalField(
         label=_("If Yes, total amount of benefits not listed above"),
+        hint_text=_("For example, £32.18 per week"),
         exclude_intervals=["per_month"],
         widget=MoneyIntervalWidget(),
         validators=[

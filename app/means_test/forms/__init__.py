@@ -1,8 +1,14 @@
 from flask_wtf import FlaskForm
 from govuk_frontend_wtf.wtforms_widgets import GovSubmitInput
 from wtforms.fields.simple import SubmitField
+from wtforms.fields.choices import SelectField, SelectMultipleField
+from wtforms.csrf.core import CSRFTokenField
 from flask_babel import lazy_gettext as _
 from flask import session
+from app.means_test.fields import MoneyIntervalField, MoneyInterval, MoneyField
+import decimal
+from wtforms.fields.core import Field
+from app.means_test.validators import ValidateIf, StopValidation, ValidateIfSession
 
 
 class BaseMeansTestForm(FlaskForm):
@@ -47,3 +53,103 @@ class BaseMeansTestForm(FlaskForm):
         conditional = {"value": conditional_value, "html": sub_field_rendered}
         field.render_kw = {"conditional": conditional}
         return field()
+
+    def filter_summary(self, summary: dict) -> dict:
+        """Override this method to remove items from review page for this given form"""
+        return summary
+
+    def is_unvalidated_conditional_field(self, field: Field):
+        # Return True if field has a ValidateIf or ValidateIfSession validator that raise a StopValidation
+        for validator in field.validators:
+            if isinstance(validator, (ValidateIf, ValidateIfSession)):
+                try:
+                    validator(self, field)
+                except StopValidation:
+                    return True
+                except Exception:
+                    return False
+        return False
+
+    def summary(self) -> dict:
+        """
+        Generates a summary of all fields in this form, including their labels (questions) and formatted values (answers).
+        Monetary fields will have a '£' prefix, and selection fields will display their choice label.
+
+        Fields with no data or empty values will be excluded.
+
+        :return: A dictionary summarizing the form fields.
+        Each entry follows this structure:
+        {
+            "question": field label,
+            "answer": formatted field value (or choice label for selection fields),
+            "id": field ID
+        }
+        """
+        summary = {}
+        for field_name, field_instance in self._fields.items():
+            if isinstance(field_instance, (SubmitField, CSRFTokenField)):
+                continue
+
+            if field_instance.data in [None, "None"]:
+                continue
+
+            # Skip fields that use ValidateIf or ValidateIfSession validator that raise a StopValidation
+            if self.is_unvalidated_conditional_field(field_instance):
+                continue
+
+            question = str(field_instance.label.text)
+            answer = field_instance.data
+
+            if isinstance(field_instance, SelectField):
+                answer = self.get_selected_answer(field_instance)
+            elif isinstance(field_instance, MoneyIntervalField):
+                answer = self.get_money_interval_field_answers(field_instance)
+            elif isinstance(field_instance, MoneyField):
+                answer = self.get_money_field_answers(field_instance)
+
+            # Skip empty answers
+            if answer is None:
+                continue
+
+            summary[field_instance.name] = {
+                "question": question,
+                "answer": answer,
+                "id": field_instance.id,
+            }
+
+        summary = self.filter_summary(summary)
+        return summary
+
+    @staticmethod
+    def get_selected_answer(field_instance):
+        def selected_answers_only(choice):
+            return field_instance.data and choice[0] in field_instance.data
+
+        # Remove any unselected choices
+        selected_choices = list(filter(selected_answers_only, field_instance.choices))
+        # Get the labels of the selected answers
+        answer_labels = [str(choice[1]) for choice in selected_choices]
+        if not isinstance(field_instance, SelectMultipleField):
+            return answer_labels[0]
+        return answer_labels
+
+    @staticmethod
+    def get_money_interval_field_answers(field_instance):
+        if field_instance.data["per_interval_value"] is None:
+            return None
+
+        if field_instance.data["per_interval_value"] == 0:
+            return "£0"
+        amount = decimal.Decimal(int(field_instance.data["per_interval_value"]) / 100)
+        amount = amount.quantize(decimal.Decimal("0.01"))
+        interval = MoneyInterval._intervals[field_instance.data["interval_period"]][
+            "label"
+        ]
+        return f"£{amount} ({interval})"
+
+    @staticmethod
+    def get_money_field_answers(field_instance):
+        if field_instance.data == 0:
+            return "£0"
+
+        return f"£{field_instance._value()}"

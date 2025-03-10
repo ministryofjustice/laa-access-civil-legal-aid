@@ -34,7 +34,6 @@ class MentalCapacityLandingPage(CategoryLandingPage):
                     "category": "mhe",
                 },
             ),
-            # Todo: # This needs to be updated to route to the community care landing page once it has been made
             (MENTAL_CAPACITY.sub.social_care, "categories.community_care.landing"),
         ],
         "more": [],

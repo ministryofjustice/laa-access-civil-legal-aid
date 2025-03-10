@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-02-19 15:50+0000\n"
+"POT-Creation-Date: 2025-03-10 08:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.16.0\n"
+"Generated-By: Babel 2.17.0\n"
 
 msgid "Domestic abuse"
 msgstr ""
@@ -340,7 +340,9 @@ msgstr ""
 msgid "Legal action against police and public organisations"
 msgstr ""
 
-msgid "Includes schools, the police, government, prisons, NHS, the council."
+msgid ""
+"Includes police, government, prisons, NHS, the council, care facilities "
+"and schools."
 msgstr ""
 
 msgid "Asylum and immigration"
@@ -449,6 +451,9 @@ msgstr ""
 msgid "Select if the child is or has been in care"
 msgstr ""
 
+msgid "or"
+msgstr ""
+
 msgid "Where will the appeal be held?"
 msgstr ""
 
@@ -467,6 +472,79 @@ msgstr ""
 msgid "None of these"
 msgstr ""
 
+msgid "Where did the discrimination happen?"
+msgstr ""
+
+msgid "You can select more than one."
+msgstr ""
+
+msgid "Select where the discrimination happened"
+msgstr ""
+
+msgid "Work - including colleagues, employer or employment agency"
+msgstr ""
+
+msgid "School, college, university or other education setting"
+msgstr ""
+
+msgid ""
+"Businesses or services - such as a shop, restaurant, train, hotel, bank, "
+"law firm"
+msgstr ""
+
+msgid "Health or care - such as a hospital or care home"
+msgstr ""
+
+msgid "Housing - such as a landlord or estate agent"
+msgstr ""
+
+msgid ""
+"Public services and authorities - such as the police, social services, "
+"council or local authority, jobcentre, government"
+msgstr ""
+
+msgid "Clubs and associations - such as a sports club"
+msgstr ""
+
+msgid "I’m not sure"
+msgstr ""
+
+msgid "Why were you discriminated against?"
+msgstr ""
+
+msgid "Select why you were discriminated against"
+msgstr ""
+
+msgid "Select why you were discriminated against, or select ‘None of these’"
+msgstr ""
+
+msgid "Race, colour, ethnicity, nationality"
+msgstr ""
+
+msgid "Sex (male or female)"
+msgstr ""
+
+msgid "Disability, health condition, mental health condition"
+msgstr ""
+
+msgid "Religion, belief, lack of religion"
+msgstr ""
+
+msgid "Age"
+msgstr ""
+
+msgid "Pregnancy or being a mother"
+msgstr ""
+
+msgid "Sexual orientation - gay, bisexual, other sexuality"
+msgstr ""
+
+msgid "Gender reassignment, being transgender, non-binary or gender-fluid"
+msgstr ""
+
+msgid "Married status - being married, in a civil partnership"
+msgstr ""
+
 msgid "Is this to do with police, prisons or detention centres?"
 msgstr ""
 
@@ -483,6 +561,33 @@ msgid "Were you accused by a landlord or the council?"
 msgstr ""
 
 msgid "Select ‘Yes’ if you were accused by a landlord or the council"
+msgstr ""
+
+msgid "I will call you"
+msgstr ""
+
+msgid "Call me back"
+msgstr ""
+
+msgid "Call someone else instead of me"
+msgstr ""
+
+msgid "-- Please select --"
+msgstr ""
+
+msgid "Parent or guardian"
+msgstr ""
+
+msgid "Family member or friend"
+msgstr ""
+
+msgid "Professional"
+msgstr ""
+
+msgid "Legal adviser"
+msgstr ""
+
+msgid "Other"
 msgstr ""
 
 msgid "Why do you want to contact Civil Legal Advice?"
@@ -518,10 +623,147 @@ msgstr ""
 msgid "Continue to contact CLA"
 msgstr ""
 
-msgid "There is a problem"
+msgid "Contact Civil Legal Advice"
 msgstr ""
 
-msgid "-- Please select --"
+msgid "Your full name"
+msgstr ""
+
+msgid "Your full name must be 400 characters or less"
+msgstr ""
+
+msgid "Tell us your name"
+msgstr ""
+
+msgid "Select a contact option"
+msgstr ""
+
+msgid "Tell us how we should get in contact"
+msgstr ""
+
+msgid "Phone number"
+msgstr ""
+
+msgid ""
+"Enter the full number, including the area code. For example, 01632 960 "
+"1111."
+msgstr ""
+
+msgid "Tell us what number to ring"
+msgstr ""
+
+msgid "Your telephone number must be 20 characters or less"
+msgstr ""
+
+msgid "Select a time for us to call"
+msgstr ""
+
+msgid "Call today"
+msgstr ""
+
+msgid "Call on another day"
+msgstr ""
+
+msgid "Time"
+msgstr ""
+
+msgid "Select what time you want to be called today"
+msgstr ""
+
+msgid "Day"
+msgstr ""
+
+msgid "Select which day you want to be called"
+msgstr ""
+
+msgid "Select what time you want to be called"
+msgstr ""
+
+msgid "Can we say that we're calling from Civil Legal Advice?"
+msgstr ""
+
+msgid "No - do not say where you are calling from"
+msgstr ""
+
+msgid "Select if we can say that we’re calling from Civil Legal Advice"
+msgstr ""
+
+msgid "Full name of the person to call"
+msgstr ""
+
+msgid "Their full name must be 400 characters or less"
+msgstr ""
+
+msgid "Tell us the name of the person to call"
+msgstr ""
+
+msgid "Relationship to you"
+msgstr ""
+
+msgid "Tell us how you know this person"
+msgstr ""
+
+msgid "Email (optional)"
+msgstr ""
+
+msgid "We will use this to send your reference number."
+msgstr ""
+
+msgid "Your address must be 255 characters or less"
+msgstr ""
+
+msgid "Invalid email address"
+msgstr ""
+
+msgid "Postcode (optional)"
+msgstr ""
+
+msgid "Select an address"
+msgstr ""
+
+msgid "Street address (optional)"
+msgstr ""
+
+msgid "Tell us more about your problem (optional)"
+msgstr ""
+
+msgid "Your notes must be 4000 characters or less"
+msgstr ""
+
+msgid "Do you have any special communication needs? (optional)"
+msgstr ""
+
+msgid "British Sign Language (BSL)"
+msgstr ""
+
+msgid "Text relay"
+msgstr ""
+
+msgid "Welsh"
+msgstr ""
+
+msgid "Other language - need an interpreter"
+msgstr ""
+
+msgid "Any other communication need"
+msgstr ""
+
+msgid "Enter your email address so we can arrange a BSL call"
+msgstr ""
+
+msgid "Choose a language"
+msgstr ""
+
+msgid "Please tell us what you need"
+msgstr ""
+
+msgid "Your other communication needs must be 4000 characters or fewer"
+msgstr ""
+
+msgid "Submit details"
+msgstr ""
+
+msgid "There is a problem"
 msgstr ""
 
 msgid "per week"
@@ -537,6 +779,12 @@ msgid "per month"
 msgstr ""
 
 msgid "per year"
+msgstr ""
+
+msgid "The problem you need help with"
+msgstr ""
+
+msgid "Change"
 msgstr ""
 
 msgid "About you"
@@ -1221,6 +1469,9 @@ msgstr ""
 msgid "You and your partner’s property"
 msgstr ""
 
+msgid "Check your answers and confirm"
+msgstr ""
+
 msgid "Your savings"
 msgstr ""
 
@@ -1259,6 +1510,9 @@ msgid "Enter the total of all valuable items over £500"
 msgstr ""
 
 msgid "Enter 0 if you have no valuable items worth over £500 each"
+msgstr ""
+
+msgid "Exit this page"
 msgstr ""
 
 msgid "Sorry, you’re not likely to get legal aid"
@@ -1382,10 +1636,21 @@ msgstr ""
 msgid "Find problems covered by legal aid"
 msgstr ""
 
+msgid ""
+"These are the problems covered by legal aid. Choose the problem you need "
+"help with."
+msgstr ""
+
 msgid "More problems covered by legal aid"
 msgstr ""
 
 msgid "More problems"
+msgstr ""
+
+msgid "housing"
+msgstr ""
+
+msgid "SEND"
 msgstr ""
 
 msgid "Adopting a child from outside the UK"
@@ -1469,6 +1734,77 @@ msgstr ""
 msgid "Help if you’re a victim of human trafficking or modern slavery."
 msgstr ""
 
+msgid ""
+"These organisations give free, independent advice for problems about "
+"domestic abuse."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems with "
+"police and public organisations."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems about "
+"mental health and mental capacity."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems about "
+"asylum and immigration."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems about "
+"disability and old age (social care)."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems about "
+"benefits."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems about "
+"children, families and relationships."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems about "
+"housing."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems about "
+"discrimination."
+msgstr ""
+
+msgid ""
+"These organisations give free, independent advice for problems about "
+"special educational needs (SEND)."
+msgstr ""
+
+msgid "These organisations give free, independent advice."
+msgstr ""
+
+msgid "Find other free or low-cost legal help"
+msgstr ""
+
+msgid "free or affordable legal help (opens new tab)."
+msgstr ""
+
+msgid "The Citizen’s Advice website explains how to find "
+msgstr ""
+
+msgid "Speak to an advice organisation"
+msgstr ""
+
+msgid "Citizen’s Advice (opens new tab)"
+msgstr ""
+
+msgid "Advicelocal (opens new tab)"
+msgstr ""
+
 msgid "Legal aid doesn’t cover all types of problem"
 msgstr ""
 
@@ -1500,6 +1836,21 @@ msgstr ""
 msgid "Help organisations for problems about %(category_name)s"
 msgstr ""
 
+msgid "Appeal a decision about your benefits"
+msgstr ""
+
+msgid "Legal aid only covers appeals to the:"
+msgstr ""
+
+msgid ""
+"For all other benefits appeals, go to GOV.UK and read <a "
+"href=\"https://www.gov.uk/appeal-benefit-decision\" "
+"target=\"_blank\">Appeal a benefits decision (opens in new tab)</a>."
+msgstr ""
+
+msgid "If you cannot find your problem"
+msgstr ""
+
 msgid "Exceptional cases"
 msgstr ""
 
@@ -1527,21 +1878,6 @@ msgstr ""
 msgid "You can also %(ecf_link)s to the Legal Aid Agency."
 msgstr ""
 
-msgid "Appeal a decision about your benefits"
-msgstr ""
-
-msgid "Legal aid only covers appeals to the:"
-msgstr ""
-
-msgid ""
-"For all other benefits appeals, go to GOV.UK and read <a "
-"href=\"https://www.gov.uk/appeal-benefit-decision\" "
-"target=\"_blank\">Appeal a benefits decision (opens in new tab)</a>."
-msgstr ""
-
-msgid "If you cannot find your problem"
-msgstr ""
-
 #, python-format
 msgid "Show %(count)s more"
 msgstr ""
@@ -1561,6 +1897,9 @@ msgstr ""
 msgid ""
 "Legal help to challenge something done by a public organisation. You "
 "might have been told you need to bring a ‘judicial review’."
+msgstr ""
+
+msgid "This includes organisations like:"
 msgstr ""
 
 msgid "schools or other education settings"
@@ -1593,6 +1932,97 @@ msgid "physically, sexually or emotionally abused"
 msgstr ""
 
 msgid "Back"
+msgstr ""
+
+msgid ""
+"We’ll give you the Civil Legal Advice phone number when you submit your "
+"details."
+msgstr ""
+
+msgid "We’ll call during the time you choose."
+msgstr ""
+
+msgid "The call will come from an unknown or withheld number."
+msgstr ""
+
+msgid "If you miss the call, we will call 2 more times in the next few days."
+msgstr ""
+
+msgid "We will not leave a message."
+msgstr ""
+
+msgid "If you miss all 3 calls, or if you need urgent advice, call us on:"
+msgstr ""
+
+msgid "You must be with the person when we call."
+msgstr ""
+
+msgid "If you’re in an emergency situation, please call the police on 999."
+msgstr ""
+
+msgid "If you’re in immediate danger please call Civil Legal Advice on "
+msgstr ""
+
+msgid "Call charges apply."
+msgstr ""
+
+msgid "You can also ask us to call you back using the form below, which is free."
+msgstr ""
+
+msgid ""
+"Civil Legal Advice will check if you can get legal aid and help you "
+"contact the right legal adviser. If you cannot get legal aid, we’ll tell "
+"you about other help you can get."
+msgstr ""
+
+msgid ""
+"You can call Civil Legal Advice yourself - this is an 0345 number, so <a "
+"class=\"govuk-link\" href=\"https://www.gov.uk/call-charges\">call "
+"charges</a> apply. Or you can ask us to call you back, which is free."
+msgstr ""
+
+msgid ""
+"We’ll ask questions about your legal problem and your financial "
+"situation. You might need to provide evidence of any financial "
+"information you give us."
+msgstr ""
+
+msgid "Address"
+msgstr ""
+
+msgid "Find UK Address"
+msgstr ""
+
+msgid ""
+"Your session will time out after 30 minutes of inactivity. We do this for"
+" your security."
+msgstr ""
+
+msgid "If you're having trouble completing this form, "
+msgstr ""
+
+msgid "get in touch"
+msgstr ""
+
+msgid "In some cases, you may need to pay a contribution towards your legal aid."
+msgstr ""
+
+msgid ""
+"Complete your application by submitting your details\n"
+"        below."
+msgstr ""
+
+msgid "call charges"
+msgstr ""
+
+#, python-format
+msgid ""
+"\n"
+"        You can choose to contact CLA yourself and speak to someone "
+"immediately (this is an 0345 number -\n"
+"        %(call_charges_link)s apply) or ask us to call you back, which is"
+" free.\n"
+"        "
 msgstr ""
 
 #, python-format
@@ -1743,11 +2173,6 @@ msgstr ""
 msgid "Start again"
 msgstr ""
 
-msgid ""
-"Your session will time out after 30 minutes of inactivity. We do this for"
-" your security."
-msgstr ""
-
 #, python-format
 msgid ""
 "If you're having trouble completing this form, <a "
@@ -1771,6 +2196,9 @@ msgid "Remove Property"
 msgstr ""
 
 msgid "Add another property"
+msgstr ""
+
+msgid "About the problem"
 msgstr ""
 
 msgid ""

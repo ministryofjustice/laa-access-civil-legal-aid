@@ -1,7 +1,7 @@
 from playwright.sync_api import Page, expect
 import pytest
 
-contact_us_page_heading = "Contact us page"
+contact_us_page_heading = "Contact Civil Legal Advice"
 in_scope_page_heading = "Legal aid is available for this type of problem"
 
 ROUTING = [
@@ -47,4 +47,6 @@ class TestFamilyLandingPage:
     def test_onward_routing(self, page: Page, routing: dict):
         page.get_by_role("link", name="Children, families, relationships").click()
         page.get_by_role("link", name=routing["link_text"]).click()
-        expect(page.get_by_text(routing["next_page_heading"])).to_be_visible()
+        expect(
+            page.get_by_role("heading", name=routing["next_page_heading"])
+        ).to_be_visible()
