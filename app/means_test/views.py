@@ -4,7 +4,7 @@ from flask import render_template, url_for, redirect, session, request
 from flask_babel import lazy_gettext as _, gettext
 from werkzeug.datastructures import MultiDict
 from app.means_test.api import update_means_test, get_means_test_payload, is_eligible
-from app.means_test.constants import EligibilityResult
+from app.means_test.constants import EligibilityState
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import MultiplePropertiesForm
@@ -66,9 +66,9 @@ class MeansTest(FormsMixin, View):
             reference = update_means_test(payload)["reference"]
 
             eligibility = is_eligible(reference)
-            if eligibility == EligibilityResult.ELIGIBLE:
+            if eligibility == EligibilityState.ELIGIBLE:
                 return redirect(url_for("contact.eligible"))
-            if eligibility == EligibilityResult.INELIGIBLE:
+            if eligibility == EligibilityState.INELIGIBLE:
                 return redirect(url_for("means_test.result.ineligible"))
 
             return redirect(next_page)
@@ -268,7 +268,8 @@ class Ineligible(View):
 
     def dispatch_request(self):
         category = session.category
-        if category.eligible_for_HLPAS:
+        subcategory = session.subcategory
+        if subcategory.eligible_for_HLPAS:
             return redirect(url_for("means_test.result.hlpas"))
         return render_template(self.template, category=category)
 

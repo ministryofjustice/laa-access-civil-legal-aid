@@ -516,3 +516,7 @@ list(map(init_children, ALL_CATEGORIES.values()))
 
 def get_category_from_code(code: str) -> Category:
     return ALL_CATEGORIES[code]
+
+
+def get_subcategory_from_code(parent_code: str, code: str) -> Category:
+    return get_category_from_code(parent_code).children[code]
