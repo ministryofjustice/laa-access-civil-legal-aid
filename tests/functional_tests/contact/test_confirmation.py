@@ -93,12 +93,8 @@ def test_thirdparty_callback(page: Page):
     page.get_by_label("Relationship to you").select_option("family_friend")
     page.get_by_role("textbox", name="Phone number").fill("12345")
     page.get_by_role("radio", name="Call on another day").check()
-    page.get_by_role("group", name="Select a time for us to call").get_by_label(
-        "Day", exact=True
-    ).select_option(index=1)
-    page.get_by_role("group", name="Select a time for us to call").get_by_label(
-        "Time"
-    ).select_option(index=1)
+    page.locator("#thirdparty_call_another_day").select_option(index=1)
+    page.locator("#thirdparty_call_another_time").select_option(index=1)
     page.get_by_role("button", name="Submit details").click()
     expect(
         page.get_by_text(
