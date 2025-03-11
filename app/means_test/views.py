@@ -148,7 +148,7 @@ class MeansTest(FormsMixin, InScopeMixin, View):
         }
 
 
-class CheckYourAnswers(FormsMixin, MethodView):
+class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
     template = "check-your-answers.html"
 
     def get(self):
