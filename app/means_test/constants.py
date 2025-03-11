@@ -15,3 +15,6 @@ class EligibilityState(str, Enum):
             except ValueError:
                 return cls.UNKNOWN
         return None
+
+    def __bool__(self):
+        return self == self.YES

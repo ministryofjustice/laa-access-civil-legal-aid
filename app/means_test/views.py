@@ -66,10 +66,10 @@ class MeansTest(FormsMixin, View):
             reference = update_means_test(payload)["reference"]
 
             eligibility = is_eligible(reference)
-            if eligibility == EligibilityState.ELIGIBLE:
-                return redirect(url_for("contact.eligible"))
-            if eligibility == EligibilityState.INELIGIBLE:
-                return redirect(url_for("means_test.result.ineligible"))
+            # Once we are sure of the user's eligibility we should not ask the user subsequent questions
+            # and instead ask them to confirm their answers before proceeding
+            if eligibility in [EligibilityState.YES, EligibilityState.NO]:
+                next_page = url_for("means_test.review")
 
             return redirect(next_page)
 
@@ -256,7 +256,16 @@ class CheckYourAnswers(FormsMixin, MethodView):
         return summary
 
     def post(self):
-        return self.get()
+        ec_reference = session.get("ec_reference")
+        eligibility = is_eligible(ec_reference)
+
+        # Fail safe, if we are unsure of the eligiblity state at this point send the user to the call centre
+        if eligibility == EligibilityState.YES or EligibilityState.UNKNOWN:
+            return redirect(url_for("means_test.result.eligible"))
+
+        if session.subcategory and session.subcategory.eligible_for_HLPAS:
+            return redirect(url_for("means_test.result.hlpas"))
+        return redirect(url_for("means_test.result.ineligible"))
 
 
 class Ineligible(View):
@@ -268,9 +277,6 @@ class Ineligible(View):
 
     def dispatch_request(self):
         category = session.category
-        subcategory = session.subcategory
-        if subcategory.eligible_for_HLPAS:
-            return redirect(url_for("means_test.result.hlpas"))
         return render_template(self.template, category=category)
 
 
