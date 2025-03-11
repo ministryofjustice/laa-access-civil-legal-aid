@@ -16,61 +16,12 @@
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-8">{{ title }}</h1>
 
-        {{ list_item_small(_("Adopting a child from outside the UK"),
-                _("Adoption processes in the courts."),
-                url_for("categories.index")) }}
-
-        {{ list_item_small(_("Appeal a decision that you cannot work with children or vulnerable adults"),
-                     _("Including if you’re on a ‘barred list’ or disqualified from teaching."),
-                     url_for("categories.index")) }}
-
-        {{ list_item_small(_("Anti-social behaviour and gangs"),
-             _("If you’re accused or taken to court for anti-social behaviour, including being in a gang."),
-             url_for("categories.x_cat.landlord-council")) }}
-
-        {{ list_item_small(_("Clinical negligence in babies"),
-             _("Help if a baby has brain or nerve damage caused during pregnancy, childbirth or up to 8 weeks old."),
-             url_for("find-a-legal-adviser.search", category="med")) }}
-
-        {{ list_item_small(_("Compensation for abuse, assault or neglect"),
-             _("Includes child abuse, sexual assault, abuse of a vulnerable adult. Claims can be against a person or an organisation."),
-             url_for("categories.index")) }}
-
-        {{ list_item_small(_("Domestic abuse - if you have been accused"),
-                _("Legal help if you’ve been accused of domestic abuse or forced marriage. Includes non-molestation orders and other court orders."),
-                url_for("categories.index")) }}
-
-        {{ list_item_small(_("Environmental pollution"),
-             _("Issues about air, water or land pollution that is harming you or the environment."),
-             url_for("categories.index")) }}
-
-        {{ list_item_small(_("Female genital mutilation (FGM)"),
-             _("If you or someone else is at risk of FGM."),
-             url_for("categories.index")) }}
-
-        {{ list_item_small(_("Forced marriage"),
-             _("Help with forced marriage and Forced Marriage Protection Orders."),
-             url_for("categories.index")) }}
-
-        {{ list_item_small(_("Inquests for family members"),
-             _("Advice to prepare for the inquest of a family member."),
-             url_for("categories.index")) }}
-
-        {{ list_item_small(_("Mental health detention"),
-                _("Help if you’re held in hospital (‘sectioned’), mental health tribunals and community treatment orders."),
-                url_for("categories.index"))}}
-
-        {{ list_item_small(_("Proceeds of Crime Act"),
-             _("If you’re facing legal action to take your money or other assets."),
-             url_for("categories.index")) }}
-
-        {{ list_item_small(_("Terrorism"),
-             _("If you’re accused of terrorism or financing terrorist groups."),
-             url_for("categories.index")) }}
-
-        {{ list_item_small(_("Trafficking, modern slavery"),
-             _("Help if you’re a victim of human trafficking or modern slavery."),
-             url_for("categories.index")) }}
+        <div class="govuk-!-margin-top-8">
+          {% for item in listing %}
+              {% set url = url_for(item.next_page, category=item.category if item.category else None, secondary_category=item.secondary_category if item.secondary_category else None) %}
+              {{ list_item_small(item.heading, item.description, url) }}
+          {% endfor %}
+      </div>
 
         <div class="govuk-!-margin-top-9 govuk-!-margin-bottom-9">
             {{ cannot_find_your_problem(None, url_for("categories.results.cannot_find_your_problem"))}}
