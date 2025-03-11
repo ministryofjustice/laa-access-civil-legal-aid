@@ -20,6 +20,7 @@ from app.contact.widgets import (
     ContactRadioInput,
     ContactCheckboxInput,
     ContactSelectField,
+    ContactTextInput,
 )
 from wtforms.fields import SubmitField
 from app.categories.widgets import CategoryCheckboxInput
@@ -560,26 +561,6 @@ class ContactUsForm(FlaskForm):
 
         return None
 
-    @staticmethod
-    def format_callback_time(
-        start_time: datetime, callback_duration: timedelta = timedelta(minutes=30)
-    ) -> str | None:
-        """Helper function to format the callback time string.
-
-        Returns:
-            str | None: formatted callback time string in the form of "Friday, 3 January at 09:00 - 09:30"
-        """
-        if not start_time or not isinstance(start_time, datetime):
-            return None
-        end_time = start_time + callback_duration
-
-        formatted_start_date = start_time.strftime(
-            "%A, %d %B at %H:%M"
-        )  # E.g. Monday, 1 January at 09:00
-        formatted_end_time = end_time.strftime("%H:%M")  # E.g. 09:30
-
-        return f"{formatted_start_date} - {formatted_end_time}"
-
     def get_payload(self) -> dict:
         """Returns the contact payload."""
 
@@ -635,3 +616,19 @@ class ContactUsForm(FlaskForm):
             payload["requires_action_at"] = requires_action_at
 
         return payload
+
+
+class ConfirmationEmailForm(FlaskForm):
+    email = StringField(
+        _("Receive this confirmation by email"),
+        widget=ContactTextInput(
+            heading_class="govuk-fieldset__legend--s",
+            hint_text=_("We will use this to send your reference number."),
+        ),
+        validators=[
+            Length(max=255, message=_("Your address must be 255 characters or less")),
+            Email(message=_("Enter a valid email address")),
+            InputRequired(message=_("Tell us what email address to send to")),
+        ],
+    )
+    submit = SubmitField(_("Send"), widget=GovSubmitInput())

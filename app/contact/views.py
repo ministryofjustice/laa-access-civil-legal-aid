@@ -1,5 +1,9 @@
 from flask.views import View
-from app.contact.forms import ContactUsForm, ReasonsForContactingForm
+from app.contact.forms import (
+    ContactUsForm,
+    ReasonsForContactingForm,
+    ConfirmationEmailForm,
+)
 import logging
 from flask import session, render_template, request, redirect, url_for
 from app.api import cla_backend
@@ -79,10 +83,12 @@ class ContactUs(View):
             case_ref = session.get("case_reference")
             callback_time = session.get("callback_time")
             contact_type = session.get("contact_type")
+            category = session.get("category")
             session.clear()
             session["case_reference"] = case_ref
             session["callback_time"] = callback_time
             session["contact_type"] = contact_type
+            session["category"] = category
             return redirect(url_for("contact.confirmation"))
         return render_template(self.template, form=form, form_progress=form_progress)
 
@@ -100,4 +106,40 @@ class ContactUs(View):
             payload={
                 "case": case_ref,
             },
+        )
+
+
+class ConfirmationPage(View):
+    template = "contact/confirmation.html"
+    methods = ["GET", "POST"]
+
+    @classmethod
+    def get_context(cls):
+        return {
+            "case_reference": session.get("case_reference"),
+            "callback_time": session.get("callback_time"),
+            "contact_type": session.get("contact_type"),
+            "category": session.get("category", {}),
+        }
+
+    def dispatch_request(self):
+        form = ConfirmationEmailForm()
+        context = self.get_context()
+        email_sent = False
+
+        if form.validate_on_submit():
+            notify.create_and_send_confirmation_email(
+                email_address=form.email.data,
+                case_reference=context["case_reference"],
+                callback_time=context["callback_time"],
+                contact_type=context["contact_type"],
+            )
+            email_sent = True
+
+        return render_template(
+            self.template,
+            form=form,
+            confirmation_email=form.email.data if email_sent else None,
+            email_sent=email_sent,
+            **context,
         )

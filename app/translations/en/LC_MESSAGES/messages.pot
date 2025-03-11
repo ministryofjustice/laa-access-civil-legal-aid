@@ -763,6 +763,18 @@ msgstr ""
 msgid "Submit details"
 msgstr ""
 
+msgid "Receive this confirmation by email"
+msgstr ""
+
+msgid "Enter a valid email address"
+msgstr ""
+
+msgid "Tell us what email address to send to"
+msgstr ""
+
+msgid "Send"
+msgstr ""
+
 msgid "There is a problem"
 msgstr ""
 
@@ -1561,9 +1573,10 @@ msgstr ""
 msgid "When you do not need to complete the financial assessment"
 msgstr ""
 
+#, python-format
 msgid ""
-"You should <a class=\"govuk-link\" href=\"/contact\">contact CLA</a> "
-"without completing the financial assessment if you are:"
+"You should %(contact_us_link)s  without completing the financial "
+"assessment if you are:"
 msgstr ""
 
 msgid "under 18"
@@ -1582,9 +1595,10 @@ msgid ""
 "instead ask for a call with a BSL interpreter."
 msgstr ""
 
+#, python-format
 msgid ""
-"Fill in the '<a class=\"govuk-link\" href=\"/contact\">Contact CLA</a>' "
-"page. Select 'BSL' under 'Communication needs'."
+"Fill in the '%(contact_us_link)s' page. Select 'BSL' under 'Communication"
+" needs'."
 msgstr ""
 
 msgid "Check if you qualify financially"
@@ -1934,6 +1948,147 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
+msgid "You can now call CLA on"
+msgstr ""
+
+msgid ""
+"Please quote your reference number when you call. Find out about\n"
+"            <a class=\"govuk-link\" href=\"https://www.gov.uk/call-"
+"charges\" rel=\"external\">call charges</a>."
+msgstr ""
+
+msgid "Print this page"
+msgstr ""
+
+msgid "We will call you back"
+msgstr ""
+
+msgid "Your details have been submitted"
+msgstr ""
+
+msgid "Your reference number was sent to"
+msgstr ""
+
+msgid ""
+"If you have a court hearing date it is important that you get advice as "
+"soon as possible. You may be able to get last-minute help on the day of "
+"the hearing from an adviser in the court building."
+msgstr ""
+
+msgid "What happens next?"
+msgstr ""
+
+msgid ""
+"Your details have been submitted and an operator will call\n"
+"                    the person you nominated at least once during your "
+"chosen time, or as close to the time as possible"
+msgstr ""
+
+msgid ""
+"Your details have been submitted and an operator will call\n"
+"                    you at least once during your chosen time, or as "
+"close to the time as possible"
+msgstr ""
+
+msgid "When a CLA operator calls, the call will come from an anonymous number."
+msgstr ""
+
+msgid ""
+"If you need to urgently protect yourself or your family you should try "
+"and get advice as soon as possible."
+msgstr ""
+
+msgid ""
+"The first person they speak to will be an operator who will ask about "
+"your problem and your financial circumstances."
+msgstr ""
+
+msgid ""
+"The first person you speak to will be an operator who will ask about your"
+" problem and your financial circumstances."
+msgstr ""
+
+msgid ""
+"If it looks like you might qualify for legal aid they’ll\n"
+"                        be put through to a specialist adviser, who will "
+"make the\n"
+"                        final decision on your case."
+msgstr ""
+
+msgid ""
+"If it looks like you might qualify for legal aid you’ll\n"
+"                        be put through to a specialist adviser, who will "
+"make the\n"
+"                        final decision on your case."
+msgstr ""
+
+msgid ""
+"Please be aware that the specialist adviser will need\n"
+"                          evidence of the domestic violence before they "
+"can make a decision\n"
+"                          on your case."
+msgstr ""
+
+msgid "Find out what you can use as evidence"
+msgstr ""
+
+msgid ""
+"If your case involves domestic abuse or violence,\n"
+"                          the specialist adviser will need evidence of "
+"this\n"
+"                          before they can make a decision on your case."
+msgstr ""
+
+msgid ""
+"You will also need to provide evidence of your financial\n"
+"                    circumstances. Your specialist adviser will explain "
+"what is\n"
+"                    needed."
+msgstr ""
+
+msgid ""
+"You will need to provide evidence of your financial circumstances\n"
+"                    and maybe your problem. Your specialist adviser will "
+"explain\n"
+"                    what is needed."
+msgstr ""
+
+msgid ""
+"If your specialist adviser thinks you need to speak to someone in person "
+"or have someone represent you in court, they will organise this."
+msgstr ""
+
+msgid "If CLA can’t help you, we’ll always suggest where else you might get help."
+msgstr ""
+
+msgid ""
+"If we can do anything to make it easier for you to communicate with us, "
+"please tell the operator."
+msgstr ""
+
+#, python-format
+msgid ""
+"\n"
+"                  Protecting your personal data and your privacy is "
+"important to us. Read the full\n"
+"                  <a class=\"govuk-link\" href=\"%(privacy_link)s\">Civil"
+" Legal Advice Privacy Statement</a>.\n"
+"                "
+msgstr ""
+
+msgid "What if I miss the operator’s call?"
+msgstr ""
+
+msgid ""
+"If you miss the call or you need advice urgently, you can call us on\n"
+"              <strong>0345 345 4 345</strong>. Find out about\n"
+"              <a class=\"govuk-link\" href=\"https://www.gov.uk/call-"
+"charges\" rel=\"external\">call charges</a>."
+msgstr ""
+
+msgid "Finish"
+msgstr ""
+
 msgid ""
 "We’ll give you the Civil Legal Advice phone number when you submit your "
 "details."
@@ -2151,6 +2306,134 @@ msgid "Extend time limit"
 msgstr ""
 
 msgid "Exit service"
+msgstr ""
+
+msgid "Stay safe when you use this website"
+msgstr ""
+
+msgid ""
+"If you need to hide what you’re doing on this website, or protect "
+"yourself from someone, it can be safer not to use your home computer or "
+"your own mobile phone."
+msgstr ""
+
+msgid ""
+"For example, use a computer at the library, or borrow a phone from "
+"someone you trust."
+msgstr ""
+
+msgid "What this website saves to your device"
+msgstr ""
+
+msgid ""
+"When you use this website, and every time you use the internet, your "
+"device saves a record of:"
+msgstr ""
+
+msgid ""
+"the pages you’ve looked at and the files you’ve downloaded - this is "
+"called your ‘browsing history’"
+msgstr ""
+
+msgid "small files called ‘cookies’"
+msgstr ""
+
+msgid "How to delete cookies and your browsing history"
+msgstr ""
+
+msgid "Be careful because:"
+msgstr ""
+
+msgid "deleting cookies will also delete stored passwords for online accounts"
+msgstr ""
+
+msgid "clearing your history could make someone more suspicious"
+msgstr ""
+
+msgid ""
+"Try to only remove information about the websites you want to keep "
+"private."
+msgstr ""
+
+msgid "Find out how to do that on:"
+msgstr ""
+
+msgid "Google Chrome"
+msgstr ""
+
+msgid "Internet Explorer"
+msgstr ""
+
+msgid "Mozilla Firefox"
+msgstr ""
+
+msgid "Safari"
+msgstr ""
+
+msgid "Samsung internet"
+msgstr ""
+
+msgid "How the ‘Exit this page’ button works on this website"
+msgstr ""
+
+msgid ""
+"There is an ‘Exit this page’ button on some pages. If you click this "
+"button, all the information you’ve entered will be deleted. This website "
+"will close."
+msgstr ""
+
+msgid "You’ll automatically go to the BBC Weather homepage:"
+msgstr ""
+
+msgid "https://www.bbc.co.uk/weather/"
+msgstr ""
+
+msgid "Cookies and browsing history will still be saved to your device."
+msgstr ""
+
+msgid ""
+"On any page where you see the ‘Exit this page’ button, pressing the "
+"‘Shift’ key 3 times will work the same way."
+msgstr ""
+
+msgid "To find this website again, search ‘Check if you can get legal aid’."
+msgstr ""
+
+msgid "How to use this website without storing cookies and browser history"
+msgstr ""
+
+msgid ""
+"Use the ‘private browsing’ settings. Go to the menu on your browser, "
+"click on ‘File’ and turn on:"
+msgstr ""
+
+msgid "<strong>Incognito</strong> on Google Chrome"
+msgstr ""
+
+msgid "<strong>Private Window</strong> on Safari"
+msgstr ""
+
+msgid "<strong>InPrivate</strong> on Internet Explorer"
+msgstr ""
+
+msgid "<strong>Private Browsing</strong> on Mozilla Firefox"
+msgstr ""
+
+msgid "On Samsung internet, you need to turn on"
+msgstr ""
+
+msgid "Secret mode."
+msgstr ""
+
+msgid "Get help to stay safe online"
+msgstr ""
+
+msgid ""
+"There are other ways someone can track you online, for example by using "
+"spying or tracking programmes. See the Refuge website"
+msgstr ""
+
+msgid "Secure your tech."
 msgstr ""
 
 msgid "Privacy notice"

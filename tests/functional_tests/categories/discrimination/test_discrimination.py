@@ -114,7 +114,7 @@ class TestUnder18Form:
         ).to_be_visible()
 
     @pytest.mark.usefixtures("live_server")
-    def test_are_you_over_18_form_no(self, page: Page):
+    def test_are_you_under_18_form_no(self, page: Page):
         self.navigate_to_form(page)
         page.get_by_label("No").check()
         page.get_by_role("button", name="Continue").click()
