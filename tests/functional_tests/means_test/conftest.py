@@ -12,15 +12,31 @@ def navigate_to_means_test(page: Page):
 
 @pytest.fixture
 def complete_about_you_form(
-    page: Page, about_you_answers: dict, navigate_to_means_test
+    page: Page, navigate_to_means_test, about_you_answers: dict
 ):
-    for question, answer in about_you_answers.items():
+    questions = {
+        "Do you have a partner?": "No",
+        "Do you receive any benefits (including Child Benefit)?": "No",
+        "Do you have any children aged 15 or under?": "No",
+        "Do you have any dependants aged 16 or over?": "No",
+        "Do you own any property?": "No",
+        "Are you employed?": "No",
+        "Are you self-employed?": "No",
+        "Are you or your partner (if you have one) aged 60 or over?": "No",
+        "Do you have any savings or investments?": "No",
+        "Do you have any valuable items worth over £500 each?": "No",
+    }
+
+    questions.update(about_you_answers)
+    for question, answer in questions.items():
         form_group = page.get_by_role("group", name=question)
         if question == "Do you have a partner?":
             locator = "#has_partner" if answer == "Yes" else "#has_partner-2"
             form_group.locator(locator).check()
         elif question == "How many children aged 15 or under?":
             page.locator("#num_children").fill(answer)
+        elif question == "How many dependants aged 16 or over?":
+            page.locator("#num_dependents").fill(answer)
         else:
             form_group.get_by_label(answer).first.check()
 
