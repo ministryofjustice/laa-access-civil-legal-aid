@@ -1,4 +1,4 @@
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 
 def fail_means_test(page: Page):
@@ -51,4 +51,8 @@ def fail_means_test(page: Page):
     page.get_by_role("group", name="Any other income").get_by_label(
         "Frequency"
     ).select_option("per_week")
+    page.get_by_role("button", name="Continue").click()
+    expect(
+        page.get_by_role("heading", name="Check your answers and confirm")
+    ).to_be_visible()
     page.get_by_role("button", name="Continue").click()

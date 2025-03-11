@@ -25,7 +25,19 @@ def test_hlpas_user_journey(page: Page):
     navigate_to_means_test_hlpas(page)
     fail_means_test(page)
     expect(
-        page.get_by_role("heading", name="You might qualify for free")
+        page.get_by_role("heading", name="You might qualify for free legal advice")
     ).to_be_visible()
+    page.get_by_role("button", name="Continue").click()
     expect(page.get_by_role("heading", name="Find a legal adviser")).to_be_visible()
-    expect(page.get_by_text("For the Housing Loss")).to_be_visible()
+    expect(
+        page.get_by_text("For the Housing Loss Prevention Advice Service")
+    ).to_be_visible()
+
+
+@pytest.mark.usefixtures("live_server")
+def test_non_hlpas_user_journey(page: Page):
+    navigate_to_means_test_no_hlpas(page)
+    fail_means_test(page)
+    expect(
+        page.get_by_role("heading", name="Legal aid doesn’t cover all types of problem")
+    ).to_be_visible()
