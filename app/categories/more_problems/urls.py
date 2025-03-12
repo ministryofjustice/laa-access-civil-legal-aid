@@ -33,7 +33,7 @@ class MoreProblemsPage(CategoryPage):
                 url_for("find-a-legal-adviser.search", category="med"),
             ),
             (COMPENSATION, url_for("find-a-legal-adviser.search", category="aap")),
-            (ACCUSED_DA, url_for("categories.results.in_scope")),
+            (ACCUSED_DA, url_for("categories.domestic_abuse.accused_da")),
             (
                 ENVIRONMENTAL_POLLUTION,
                 url_for("find-a-legal-adviser.search", category="pub"),
