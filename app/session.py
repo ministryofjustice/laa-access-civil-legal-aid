@@ -228,8 +228,12 @@ class Session(SecureCookieSession):
 
         if "category_answers" not in self:
             self["category_answers"] = []
-
-        session.category = category_answer.category
+        if category_answer.category.parent_code:
+            session.category = get_category_from_code(
+                category_answer.category.parent_code
+            )
+        else:
+            session.category = category_answer.category
         answers: list[CategoryAnswer] = self.category_answers
 
         # Remove existing entry if present
