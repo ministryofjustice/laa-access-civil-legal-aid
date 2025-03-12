@@ -16,12 +16,12 @@
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-8">{{ title }}</h1>
 
-        <div class="govuk-!-margin-top-8">
-          {% for item in listing %}
-              {% set url = url_for(item.next_page, category=item.category if item.category else None, secondary_category=item.secondary_category if item.secondary_category else None) %}
-              {{ list_item_small(item.heading, item.description, url) }}
-          {% endfor %}
-      </div>
+
+          <div class="govuk-!-margin-top-8">
+               {% for category, next_page in listing %}
+               {{ list_item_small(category.title, category.description, next_page) }}
+               {% endfor %}
+          </div>
 
         <div class="govuk-!-margin-top-9 govuk-!-margin-bottom-9">
             {{ cannot_find_your_problem(None, url_for("categories.results.cannot_find_your_problem"))}}
