@@ -45,7 +45,10 @@ class MeansTestInputField:
                     item["checked"] = True
 
         label_class = self.heading_class
-        params["fieldset"]["legend"]["classes"] = label_class
+        if "fieldset" in params:
+            params["fieldset"]["legend"]["classes"] = label_class
+        else:
+            params["label"]["classes"] = label_class
         return params
 
 

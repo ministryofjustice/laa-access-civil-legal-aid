@@ -1,0 +1,16 @@
+{{- if eq .Values.environment "uat" -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: laa-access-civil-legal-aid-dashboard
+  namespace: {{ .Release.Namespace }}
+  labels:
+    grafana_dashboard: ""
+    app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+  annotations:
+    meta.helm.sh/release-name: {{ .Release.Name | quote }}
+    meta.helm.sh/release-namespace: {{ .Release.Namespace | quote }}
+data:
+  laa-access-civil-legal-aid-dashboard.json: |
+{{ .Files.Get "files/dashboard.json" | indent 4 }}
+{{- end }}

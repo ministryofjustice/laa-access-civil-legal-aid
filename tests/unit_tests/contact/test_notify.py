@@ -266,7 +266,7 @@ def test_generate_confirmation_email_data(
     with (
         patch("app.contact.notify.api.get_locale") as mock_get_locale,
         patch(
-            "app.contact.forms.ContactUsForm.format_callback_time",
+            "app.contact.notify.api.format_callback_time",
             return_value="formatted-time",
         ),
         patch(
