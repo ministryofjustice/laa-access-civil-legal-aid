@@ -1,6 +1,6 @@
 {% macro formatCategoryName(category) %}
     {% if category | upper == 'HLPAS' %}
-        the Housing Loss Prevention Advice Service
+        {% trans %}the Housing Loss Prevention Advice Service{% endtrans %}
     {% else %}
         {{ category | category_name | lower }}
     {% endif %}
