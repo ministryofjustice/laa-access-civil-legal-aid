@@ -8,6 +8,7 @@ from app.categories.views import (
     CategoryAnswer,
 )
 from app.categories.constants import DOMESTIC_ABUSE
+from app.categories.more_problems.constants import ACCUSED_DA
 from app.categories.models import QuestionType
 
 
@@ -45,9 +46,9 @@ class DomesticAbuseLandingPage(CategoryLandingPage):
                 "categories.housing.landing",
             ),
         ],
-        "accused_da": (
-            DOMESTIC_ABUSE.sub.accused_da,
-            "categories.domestic_abuse.accused_da",
+        "accused_of_domestic_abuse": (
+            DOMESTIC_ABUSE.sub.accused_of_domestic_abuse,
+            "categories.domestic_abuse.accused_of_domestic_abuse",
         ),
         "other": "categories.domestic_abuse.cannot_find_your_problem",
     }
@@ -57,12 +58,12 @@ DomesticAbuseLandingPage.register_routes(bp)
 bp.add_url_rule(
     "/domestic-abuse/accused-da",
     view_func=CategoryAnswerPage.as_view(
-        "accused_da",
+        "accused_of_domestic_abuse",
         category_answer=CategoryAnswer(
             question="more_problems",
             answer_value="domestic_abuse",
-            answer_label="Domestic Abuse",
-            category=DOMESTIC_ABUSE,
+            answer_label="Domestic abuse - if you have been accused",
+            category=ACCUSED_DA,
             question_page="categories.more_problems.landing",
             next_page="categories.results.in_scope",
             question_type=QuestionType.SUB_CATEGORY,
