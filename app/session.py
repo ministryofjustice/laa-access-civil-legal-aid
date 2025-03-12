@@ -24,7 +24,10 @@ class Eligibility:
 
     @property
     def category(self):
-        return session.get("category", {}).get("chs_code")
+        category = session.category
+        if category is None:
+            return None
+        return session.category.chs_code
 
     def is_yes(self, form_name, field_name) -> bool | None:
         form = self.forms.get(form_name)

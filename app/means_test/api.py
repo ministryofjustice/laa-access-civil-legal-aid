@@ -6,6 +6,7 @@ from app.means_test.forms.property import MultiplePropertiesForm
 from app.means_test.forms.outgoings import OutgoingsForm
 from app.means_test.money_interval import MoneyInterval
 from app.means_test.constants import EligibilityState
+from app.means_test import YES
 import logging
 
 logger = logging.getLogger(__name__)
@@ -43,9 +44,11 @@ def get_means_test_payload(eligibility_data) -> dict:
     savings_form = eligibility_data.forms.get("savings", {})
     income_form = eligibility_data.forms.get("income", {})
 
-    has_partner = eligibility_data.forms.get("about-you", {}).get(
-        "has_partner", False
-    ) and not eligibility_data.forms.get("about-you", {}).get("in_dispute", False)
+    has_partner = (
+        eligibility_data.forms.get("about-you", {}).get("has_partner", False) == YES
+        and not eligibility_data.forms.get("about-you", {}).get("in_dispute", False)
+        == YES
+    )
     is_employed = about.get("is_employed", None)
     is_self_employed = about.get("is_self_employed", None)
     is_partner_employed = about.get("is_partner_employed", None)
@@ -203,12 +206,5 @@ def get_means_test_payload(eligibility_data) -> dict:
         "specific_benefits": benefits_data["specific_benefits"],
         "disregards": [],
     }
-
-    if not income_form:
-        del payload["you"]["income"]
-        del payload["partner"]["income"]
-
-    if not has_partner:
-        del payload["partner"]
 
     return payload
