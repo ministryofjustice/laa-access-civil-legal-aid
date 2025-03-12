@@ -47,8 +47,9 @@ ACCUSED_DA = Category(
     ),
     article_category_name="Domestic Abuse",
     chs_code="family",
-    code="domestic_abuse",
-    exit_page=True,
+    code="accused_of_domestic_abuse",
+    exit_page=False,
+    parent_code="domestic_abuse",
 )
 ENVIRONMENTAL_POLLUTION = Category(
     title=_("Environmental pollution"),
@@ -59,22 +60,6 @@ ENVIRONMENTAL_POLLUTION = Category(
     chs_code="publiclaw",
     code="public_law",
     exit_page=False,
-)
-FGM = Category(
-    title=_("Female genital mutilation (FGM)"),
-    description=_("If you or someone else is at risk of FGM"),
-    article_category_name="Domestic Abuse",
-    chs_code="family",
-    code="domestic_abuse",
-    exit_page=True,
-)
-FORCED_MARRIAGE = Category(
-    title=_("Forced marriage"),
-    description=_("Help with forced marriage and Forced Marriage Protection Orders."),
-    article_category_name="Domestic Abuse",
-    chs_code="family",
-    code="domestic_abuse",
-    exit_page=True,
 )
 INQUEST = Category(
     title=_("Inquests for family members"),

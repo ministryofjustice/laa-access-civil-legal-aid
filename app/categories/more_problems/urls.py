@@ -10,14 +10,13 @@ from app.categories.more_problems.constants import (
     COMPENSATION,
     ACCUSED_DA,
     ENVIRONMENTAL_POLLUTION,
-    FGM,
-    FORCED_MARRIAGE,
     INQUEST,
     MENTAL_HEALTH,
     CRIME_ACT,
     TERRORISM,
     TRAFFICKING,
 )
+from app.categories.constants import DOMESTIC_ABUSE
 
 
 class MoreProblemsPage(CategoryPage):
@@ -33,13 +32,19 @@ class MoreProblemsPage(CategoryPage):
                 url_for("find-a-legal-adviser.search", category="med"),
             ),
             (COMPENSATION, url_for("find-a-legal-adviser.search", category="aap")),
-            (ACCUSED_DA, url_for("categories.domestic_abuse.accused_da")),
+            (
+                ACCUSED_DA,
+                url_for("categories.domestic_abuse.accused_of_domestic_abuse"),
+            ),
             (
                 ENVIRONMENTAL_POLLUTION,
                 url_for("find-a-legal-adviser.search", category="pub"),
             ),
-            (FGM, url_for("categories.domestic_abuse.fgm")),
-            (FORCED_MARRIAGE, url_for("categories.domestic_abuse.forced_marriage")),
+            (DOMESTIC_ABUSE.sub.fgm, url_for("categories.domestic_abuse.fgm")),
+            (
+                DOMESTIC_ABUSE.sub.forced_marriage,
+                url_for("categories.domestic_abuse.forced_marriage"),
+            ),
             (INQUEST, url_for("find-a-legal-adviser.search")),
             (MENTAL_HEALTH, url_for("find-a-legal-adviser.search", category="mhe")),
             (CRIME_ACT, url_for("find-a-legal-adviser.search", category="crm")),

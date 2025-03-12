@@ -35,8 +35,8 @@ def inject_language_switcher():
 
 @bp.app_context_processor
 def inject_exit_this_page():
-    category = session.category
-
+    category = session.subcategory
+    print(session.subcategory)
     if not category:
         return {"show_exit_this_page": False}
 
