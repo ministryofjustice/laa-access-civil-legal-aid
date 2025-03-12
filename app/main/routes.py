@@ -153,7 +153,12 @@ def cookies():
 
 @bp.route("/privacy", methods=["GET"])
 def privacy():
-    return render_template("privacy.html")
+    return render_template("main/privacy.html")
+
+
+@bp.route("/online-safety")
+def online_safety():
+    return render_template("main/online-safety.html")
 
 
 @bp.route("/session-expired", methods=["GET"])
