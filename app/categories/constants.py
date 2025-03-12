@@ -125,6 +125,13 @@ DOMESTIC_ABUSE = Category(
             description=_("If you or someone else is at risk of FGM."),
             code="fgm",
         ),
+        "accused_da": Category(
+            title=_("Domestic abuse - if you have been accused"),
+            description=_(
+                "Legal help if you’ve been accused of domestic abuse or forced marriage. Includes non-molestation orders and other court orders."
+            ),
+            code="accused_da",
+        ),
     },
 )
 

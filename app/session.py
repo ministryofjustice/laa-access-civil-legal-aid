@@ -257,6 +257,7 @@ class Session(SecureCookieSession):
         else:
             session.category = category_answer.category
 
+        session.category = category_answer.category
         answers: list[CategoryAnswer] = self.category_answers
 
         # Remove existing entry if present
