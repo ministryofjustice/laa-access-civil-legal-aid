@@ -274,5 +274,5 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
 
     def post(self):
         if is_eligible(session.ec_reference) == EligibilityState.YES:
-            return redirect(url_for("app.eligible"))
+            return redirect(url_for("contact.eligible"))
         return redirect(url_for("categories.results.refer"))
