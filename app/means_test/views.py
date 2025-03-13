@@ -3,7 +3,12 @@ from flask.views import View, MethodView
 from flask import render_template, url_for, redirect, session, request
 from flask_babel import lazy_gettext as _, gettext
 from werkzeug.datastructures import MultiDict
-from app.means_test.api import update_means_test, get_means_test_payload
+from app.means_test.api import (
+    update_means_test,
+    get_means_test_payload,
+    is_eligible,
+    EligibilityState,
+)
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import MultiplePropertiesForm
@@ -12,6 +17,7 @@ from app.means_test.forms.savings import SavingsForm
 from app.means_test.forms.outgoings import OutgoingsForm
 from app.means_test.forms.review import ReviewForm, BaseMeansTestForm
 from app.categories.models import CategoryAnswer
+from app.categories.mixins import InScopeMixin
 
 
 class FormsMixin:
@@ -26,7 +32,7 @@ class FormsMixin:
     }
 
 
-class MeansTest(FormsMixin, View):
+class MeansTest(FormsMixin, InScopeMixin, View):
     def __init__(self, current_form_class, current_name):
         self.form_class = current_form_class
         self.current_name = current_name
@@ -49,10 +55,29 @@ class MeansTest(FormsMixin, View):
 
         return None
 
+    def ensure_form_protection(self, current_form):
+        progress = self.get_form_progress(current_form=current_form)
+        # Ensure all forms leading upto the current form(current_form) are completed
+        for form in progress["steps"]:
+            if form["is_current"]:
+                break
+            if not form["is_completed"]:
+                return redirect(url_for("main.session_expired"))
+        return None
+
     def dispatch_request(self):
+        in_scope_redirect = self.ensure_in_scope()
+        if in_scope_redirect:
+            return in_scope_redirect
+
         eligibility = session.get_eligibility()
         form_data = eligibility.forms.get(self.current_name, {})
         form = self.form_class(formdata=request.form or None, data=form_data)
+
+        form_protection_redirect = self.ensure_form_protection(form)
+        if form_protection_redirect:
+            return form_protection_redirect
+
         if isinstance(form, MultiplePropertiesForm):
             response = self.handle_multiple_properties_ajax_request(form)
             if response is not None:
@@ -65,6 +90,10 @@ class MeansTest(FormsMixin, View):
             update_means_test(payload)
 
             return redirect(next_page)
+
+        return self.render_form(form)
+
+    def render_form(self, form):
         return render_template(
             self.form_class.template,
             form=form,
@@ -123,7 +152,7 @@ class MeansTest(FormsMixin, View):
         }
 
 
-class CheckYourAnswers(FormsMixin, MethodView):
+class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
     template = "check-your-answers.html"
 
     def get(self):
@@ -248,4 +277,6 @@ class CheckYourAnswers(FormsMixin, MethodView):
         return summary
 
     def post(self):
-        return self.get()
+        if is_eligible(session.ec_reference) == EligibilityState.YES:
+            return redirect(url_for("contact.eligible"))
+        return redirect(url_for("categories.results.refer"))

@@ -3,4 +3,4 @@ from app.categories.constants import EDUCATION
 
 
 class SendChildInCareQuestionForm(ChildInCareQuestionForm):
-    category = EDUCATION
+    category = EDUCATION.sub.tribunals

@@ -1,6 +1,7 @@
 import pytest
 from flask import url_for
 from playwright.sync_api import Page, expect
+from tests.functional_tests.means_test.conftest import navigate_to_means_test  # noqa: F401
 
 
 @pytest.mark.usefixtures("live_server")
@@ -74,6 +75,7 @@ def test_fala_journey(page: Page):
 
 
 @pytest.mark.usefixtures("live_server")
+@pytest.mark.usefixtures("navigate_to_means_test")
 def test_fallback(page: Page):
     """Test that we go to session expired page if we press back when referred from an external page"""
     page.goto("https://www.gov.uk")

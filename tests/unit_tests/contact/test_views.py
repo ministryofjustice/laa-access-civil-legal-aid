@@ -1,8 +1,9 @@
 from unittest.mock import patch, MagicMock
 from flask import url_for
-
+from app.session import Session
 from app.contact.forms import ReasonsForContactingForm
 from app.contact.views import ContactUs
+from app.contact.urls import EligibleContactUsPage, EligibilityState
 from app.means_test.views import MeansTest
 
 
@@ -180,3 +181,46 @@ class TestContactUsView:
             "1234",  # Value from mock_session.__getitem__
             payload={"case": case_ref},
         )
+
+
+def test_eligible_view_success(app):
+    with app.app_context():
+        with patch("app.contact.urls.is_eligible") as mock_is_eligible:
+            mock_is_eligible.return_value = EligibilityState.YES
+            view = EligibleContactUsPage()
+            with patch.object(
+                Session,
+                "ec_reference",
+                return_value="5ae7d8ba-daf2-471f-a082-7aaec590e83b",
+            ):
+                with patch(
+                    "app.contact.views.ContactUs.dispatch_request"
+                ) as mock_super_dispatch_request:
+                    view.dispatch_request()
+                    assert mock_super_dispatch_request.called is True
+
+
+def test_eligible_view_failure(app):
+    with app.app_context():
+        with patch("app.contact.urls.is_eligible") as mock_is_eligible:
+            mock_is_eligible.return_value = EligibilityState.UNKNOWN
+            view = EligibleContactUsPage()
+            with patch.object(
+                Session,
+                "ec_reference",
+                return_value="5ae7d8ba-daf2-471f-a082-7aaec590e83b",
+            ):
+                response = view.dispatch_request()
+                assert response.status_code == 302
+                assert response.location == url_for("main.session_expired")
+
+
+def test_eligible_view_failure_no_ec_reference(app):
+    with app.app_context():
+        with patch("app.contact.urls.is_eligible") as mock_is_eligible:
+            mock_is_eligible.return_value = EligibilityState.YES
+            view = EligibleContactUsPage()
+            response = view.dispatch_request()
+            assert mock_is_eligible.called is False
+            assert response.status_code == 302
+            assert response.location == url_for("main.session_expired")

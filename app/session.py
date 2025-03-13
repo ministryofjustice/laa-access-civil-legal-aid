@@ -134,6 +134,14 @@ class Session(SecureCookieSession):
         self["eligibility"] = Eligibility(forms={}, _notes={})
 
     @property
+    def ec_reference(self):
+        return self.get("_ec_reference", None)
+
+    @ec_reference.setter
+    def ec_reference(self, ec_reference):
+        self["_ec_reference"] = ec_reference
+
+    @property
     def category(self) -> Category | None:
         """Get the category from the session.
 
@@ -178,6 +186,18 @@ class Session(SecureCookieSession):
     def has_dependants(self):
         # Todo: Needs implementation
         return True
+
+    @property
+    def in_scope(self):
+        category_answers = self.category_answers
+        if not category_answers:
+            return False
+
+        last_answer = category_answers[-1]
+        if not last_answer.category:
+            return False
+
+        return last_answer.category.in_scope
 
     @property
     def category_answers(self) -> list[CategoryAnswer]:
