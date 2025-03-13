@@ -1,6 +1,20 @@
 from dataclasses import dataclass, field
 from typing import Optional
 from flask_babel import lazy_gettext as _, LazyString
+from app.categories.more_problems.constants import (
+    ADOPTING,
+    WORK_WITH_VULNERABLE,
+    ANTI_SOCIAL,
+    CLINICAL_NEGLIGENCE,
+    COMPENSATION,
+    ACCUSED_DA,
+    ENVIRONMENTAL_POLLUTION,
+    INQUEST,
+    MENTAL_HEALTH,
+    CRIME_ACT,
+    TERRORISM,
+    TRAFFICKING,
+)
 
 
 @dataclass
@@ -515,6 +529,18 @@ ALL_CATEGORIES = {
     PUBLIC_LAW.code: PUBLIC_LAW,
     ASYLUM_AND_IMMIGRATION.code: ASYLUM_AND_IMMIGRATION,
     MENTAL_CAPACITY.code: MENTAL_CAPACITY,
+    ADOPTING.code: ADOPTING,
+    WORK_WITH_VULNERABLE.code: WORK_WITH_VULNERABLE,
+    ANTI_SOCIAL.code: ANTI_SOCIAL,
+    CLINICAL_NEGLIGENCE.code: CLINICAL_NEGLIGENCE,
+    COMPENSATION.code: COMPENSATION,
+    ACCUSED_DA.code: ACCUSED_DA,
+    ENVIRONMENTAL_POLLUTION.code: ENVIRONMENTAL_POLLUTION,
+    INQUEST.code: INQUEST,
+    MENTAL_HEALTH.code: MENTAL_HEALTH,
+    CRIME_ACT.code: CRIME_ACT,
+    TERRORISM.code: TERRORISM,
+    TRAFFICKING.code: TRAFFICKING,
 }
 
 list(map(init_children, ALL_CATEGORIES.values()))

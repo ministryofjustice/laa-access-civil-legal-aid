@@ -6,7 +6,7 @@ ADOPTING = Category(
     description=_("Adoption processes in the courts."),
     article_category_name="Family",
     chs_code="family",
-    code="family",
+    code="adopting",
     exit_page=False,
 )
 WORK_WITH_VULNERABLE = Category(
@@ -16,6 +16,7 @@ WORK_WITH_VULNERABLE = Category(
     description=_(
         "Including if you’re on a ‘barred list’ or disqualified from teaching."
     ),
+    code="work_with_vulnerable",
     exit_page=False,
 )
 ANTI_SOCIAL = Category(
@@ -23,6 +24,7 @@ ANTI_SOCIAL = Category(
     description=_(
         "If you’re accused or taken to court for anti-social behaviour, including being in a gang."
     ),
+    code="anti_social",
     exit_page=False,
 )
 CLINICAL_NEGLIGENCE = Category(
@@ -31,6 +33,7 @@ CLINICAL_NEGLIGENCE = Category(
         "Help if a baby has brain or nerve damage caused during pregnancy, childbirth or up to 8 weeks old."
     ),
     article_category_name="Clinical Negligence",
+    code="clinical_negligence",
     exit_page=False,
 )
 COMPENSATION = Category(
@@ -38,6 +41,7 @@ COMPENSATION = Category(
     description=_(
         "Includes child abuse, sexual assault, abuse of a vulnerable adult. Claims can be against a person or an organisation."
     ),
+    code="compensation",
     exit_page=False,
 )
 ACCUSED_DA = Category(
@@ -58,12 +62,13 @@ ENVIRONMENTAL_POLLUTION = Category(
     ),
     article_category_name="Public",
     chs_code="publiclaw",
-    code="public_law",
+    code="environmental_pollution",
     exit_page=False,
 )
 INQUEST = Category(
     title=_("Inquests for family members"),
     description=_("Advice to prepare for the inquest of a family member."),
+    code="inquest",
     exit_page=False,
 )
 MENTAL_HEALTH = Category(
@@ -79,19 +84,20 @@ MENTAL_HEALTH = Category(
 CRIME_ACT = Category(
     title=_("Proceeds of Crime Act"),
     description=_("If you’re facing legal action to take your money or other assets."),
+    code="crime_act",
     exit_page=False,
 )
 TERRORISM = Category(
     title=_("Terrorism"),
     description=_("If you’re accused of terrorism or financing terrorist groups."),
     chs_code="immigration",
-    code="asylum_and_immigration",
+    code="terrorism",
     article_category_name="Terrorism",
 )
 TRAFFICKING = Category(
     title=_("Trafficking, modern slavery"),
     description=_("Help if you’re a victim of human trafficking or modern slavery."),
     chs_code="immigration",
-    code="asylum_and_immigration",
+    code="tracking_modern_slavery",
     article_category_name="Trafficking, Modern Slavery",
 )
