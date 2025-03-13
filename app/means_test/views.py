@@ -90,6 +90,10 @@ class MeansTest(FormsMixin, InScopeMixin, View):
             update_means_test(payload)
 
             return redirect(next_page)
+
+        return self.render_form(form)
+
+    def render_form(self, form):
         return render_template(
             self.form_class.template,
             form=form,
