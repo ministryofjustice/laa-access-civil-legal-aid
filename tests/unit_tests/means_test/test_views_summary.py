@@ -1,4 +1,5 @@
 from unittest import mock
+from flask import url_for
 from flask_babel import lazy_gettext as _
 from app.means_test.views import CheckYourAnswers, ReviewForm
 from app.means_test import YES, NO
@@ -179,7 +180,9 @@ def test_get_category_answers_summary_with_description(app):
             "value": {
                 "markdown": "**Homelessness**\nHelp if you’re homeless, or might be homeless in the next 2 months. This could be because of rent arrears, debt, the end of a relationship, or because you have nowhere to live."
             },
-            "actions": {"items": [{"text": _("Change"), "href": "/housing/"}]},
+            "actions": {
+                "items": [{"text": _("Change"), "href": url_for("categories.index")}]
+            },
         },
         {
             "key": {"text": "Are you under 18?"},
