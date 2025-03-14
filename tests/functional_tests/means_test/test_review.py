@@ -132,7 +132,10 @@ def test_reviews_page_change_benefits_answer(page: Page, complete_benefits_form)
 def test_reviews_page_change_sub_category(page: Page, complete_benefits_form):
     answers = get_answers()
     expect(page).to_have_title("Check your answers and confirm - GOV.UK")
-    page.locator(".govuk-summary-list__actions a[href='/housing/']").click()
+    page.locator(
+        f".govuk-summary-list__actions a[href='{url_for('categories.index')}']"
+    ).click()
+    page.get_by_text("Housing, homelessness, losing your home").click()
     page.get_by_text("Eviction, told to leave your home").click()
     expect(page).to_have_title(
         "Legal aid is available for this type of problem - Access Civil Legal Aid – GOV.UK"

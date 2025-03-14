@@ -174,7 +174,9 @@ class CheckYourAnswers(FormsMixin, MethodView):
                     "key": {"text": _("The problem you need help with")},
                     "value": {"markdown": value},
                     "actions": {
-                        "items": [{"text": _("Change"), "href": first_answer.edit_url}],
+                        "items": [
+                            {"text": _("Change"), "href": url_for("categories.index")}
+                        ],
                     },
                 },
             ]
