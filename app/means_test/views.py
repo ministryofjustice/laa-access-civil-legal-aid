@@ -35,24 +35,19 @@ class MeansTest(FormsMixin, View):
     def handle_multiple_properties_ajax_request(self, form):
         if "add-property" in request.form:
             form.properties.append_entry()
-            form._submitted = False
-            return render_template(
-                self.form_class.template,
-                form=form,
-                form_progress=self.get_form_progress(current_form=form),
-            )
-
         # Handle removing a property
-        elif "remove-property-2" in request.form or "remove-property-3" in request.form:
-            form.properties.pop_entry()
-            form._submitted = False
-            return render_template(
-                self.form_class.template,
-                form=form,
-                form_progress=self.get_form_progress(current_form=form),
-            )
-
-        return None
+        elif "remove-property-2" in request.form:
+            form.properties.entries.pop(1)
+        elif "remove-property-3" in request.form:
+            form.properties.entries.pop(2)
+        else:
+            return None
+        form._submitted = False
+        return render_template(
+            self.form_class.template,
+            form=form,
+            form_progress=self.get_form_progress(current_form=form),
+        )
 
     def dispatch_request(self):
         eligibility = session.get_eligibility()
@@ -154,7 +149,7 @@ class CheckYourAnswers(FormsMixin, MethodView):
 
     @staticmethod
     def get_category_answers_summary():
-        def get_your_problem__no_description(category: Category):
+        def get_your_problem__no_description(category: Category) -> list[dict]:
             return [
                 {
                     "key": {"text": _("The problem you need help with")},
