@@ -77,6 +77,108 @@
             "x": 0,
             "y": 0
             },
+            "id": 23,
+            "options": {
+            "barRadius": 0,
+            "barWidth": 0.97,
+            "fullHighlight": false,
+            "groupWidth": 0.7,
+            "legend": {
+                "calcs": [],
+                "displayMode": "list",
+                "placement": "bottom",
+                "showLegend": true
+            },
+            "orientation": "auto",
+            "showValue": "auto",
+            "stacking": "normal",
+            "tooltip": {
+                "mode": "single",
+                "sort": "none"
+            },
+            "xTickLabelRotation": 0,
+            "xTickLabelSpacing": 100
+            },
+            "pluginVersion": "11.3.0",
+            "targets": [
+            {
+                "editorMode": "code",
+                "expr": "sum by (remote_addr) (rate(container_network_transmit_packets_total{namespace=\"laa-access-civil-legal-aid-production\"}[1m]))",
+                "legendFormat": "Usage of Access",
+                "range": true,
+                "refId": "A"
+            },
+            {
+                "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+                },
+                "editorMode": "code",
+                "expr": "sum by (remote_addr) (rate(container_network_transmit_packets_total{namespace=\"laa-cla-public-production\"}[1m]))\n",
+                "hide": false,
+                "instant": false,
+                "legendFormat": "Usage of Check",
+                "range": true,
+                "refId": "B"
+            }
+            ],
+            "title": "Production DNS Site Usage",
+            "type": "barchart"
+        },
+        {
+            "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+            },
+            "fieldConfig": {
+            "defaults": {
+                "color": {
+                "mode": "palette-classic"
+                },
+                "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "fillOpacity": 80,
+                "gradientMode": "none",
+                "hideFrom": {
+                    "legend": false,
+                    "tooltip": false,
+                    "viz": false
+                },
+                "lineWidth": 1,
+                "scaleDistribution": {
+                    "type": "linear"
+                },
+                "thresholdsStyle": {
+                    "mode": "off"
+                }
+                },
+                "mappings": [],
+                "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                    {
+                    "color": "green",
+                    "value": null
+                    },
+                    {
+                    "color": "red",
+                    "value": 80
+                    }
+                ]
+                }
+            },
+            "overrides": []
+            },
+            "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 8
+            },
             "id": 22,
             "options": {
             "barRadius": 0,
@@ -122,7 +224,7 @@
                 "refId": "B"
             }
             ],
-            "title": "DNS Site Usage DNStest",
+            "title": "DNStest DNS Site Usage",
             "type": "barchart"
         },
         {
@@ -131,7 +233,7 @@
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 8
+            "y": 16
             },
             "id": 16,
             "panels": [],
@@ -169,7 +271,7 @@
             "h": 6,
             "w": 9,
             "x": 0,
-            "y": 9
+            "y": 17
             },
             "id": 15,
             "options": {
@@ -316,7 +418,7 @@
             "h": 6,
             "w": 15,
             "x": 9,
-            "y": 9
+            "y": 17
             },
             "id": 18,
             "options": {
@@ -414,7 +516,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 15
+            "y": 23
             },
             "id": 21,
             "options": {
@@ -490,7 +592,8 @@
                 "mode": "absolute",
                 "steps": [
                     {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                     },
                     {
                     "color": "red",
@@ -505,7 +608,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 23
+            "y": 31
             },
             "id": 17,
             "options": {
@@ -585,7 +688,8 @@
                 "mode": "absolute",
                 "steps": [
                     {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                     },
                     {
                     "color": "red",
@@ -601,7 +705,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 31
+            "y": 39
             },
             "id": 2,
             "options": {
@@ -705,7 +809,8 @@
                 "mode": "absolute",
                 "steps": [
                     {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                     },
                     {
                     "color": "red",
@@ -720,7 +825,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 39
+            "y": 47
             },
             "id": 13,
             "options": {
@@ -822,7 +927,8 @@
                 "mode": "absolute",
                 "steps": [
                     {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                     },
                     {
                     "color": "red",
@@ -838,7 +944,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 47
+            "y": 55
             },
             "id": 14,
             "options": {
@@ -933,6 +1039,6 @@
         "timezone": "browser",
         "title": "LAA Access Civil Legal Aid",
         "uid": "d2w1ev32edfgwc",
-        "version": 1,
+        "version": 2,
         "weekStart": ""
     }
