@@ -34,32 +34,17 @@ class MeansTest(FormsMixin, View):
     def handle_multiple_properties_ajax_request(self, form):
         if "add-property" in request.form:
             form.properties.append_entry()
-            form._submitted = False
-            return render_template(
-                self.form_class.template,
-                form=form,
-                form_progress=self.get_form_progress(current_form=form),
-            )
-
         # Handle removing a property
         elif "remove-property-2" in request.form:
             form.properties.entries.pop(1)
-            form._submitted = False
-            return render_template(
-                self.form_class.template,
-                form=form,
-                form_progress=self.get_form_progress(current_form=form),
-            )
         elif "remove-property-3" in request.form:
             form.properties.entries.pop(2)
-            form._submitted = False
-            return render_template(
-                self.form_class.template,
-                form=form,
-                form_progress=self.get_form_progress(current_form=form),
-            )
-
-        return None
+        form._submitted = False
+        return render_template(
+            self.form_class.template,
+            form=form,
+            form_progress=self.get_form_progress(current_form=form),
+        )
 
     def dispatch_request(self):
         eligibility = session.get_eligibility()
