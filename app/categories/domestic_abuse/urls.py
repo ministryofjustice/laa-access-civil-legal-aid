@@ -8,7 +8,6 @@ from app.categories.views import (
     CategoryAnswer,
 )
 from app.categories.constants import DOMESTIC_ABUSE
-from app.categories.more_problems.constants import ACCUSED_DA
 from app.categories.models import QuestionType
 
 
@@ -61,9 +60,9 @@ bp.add_url_rule(
         "accused_of_domestic_abuse",
         category_answer=CategoryAnswer(
             question="more_problems",
-            answer_value="domestic_abuse",
-            answer_label="Domestic abuse - if you have been accused",
-            category=ACCUSED_DA,
+            answer_value=DOMESTIC_ABUSE.sub.accused_of_domestic_abuse.code,
+            answer_label=DOMESTIC_ABUSE.sub.accused_of_domestic_abuse.title,
+            category=DOMESTIC_ABUSE.sub.accused_of_domestic_abuse,
             question_page="categories.more_problems.landing",
             next_page="categories.results.in_scope",
             question_type=QuestionType.SUB_CATEGORY,
