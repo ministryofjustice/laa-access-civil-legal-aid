@@ -1,4 +1,4 @@
-from flask import url_for, render_template, session
+from flask import url_for, render_template
 from app.categories import bp
 from app.categories.views import CategoryPage
 from app.categories.constants import (
@@ -44,8 +44,3 @@ bp.add_url_rule(
         "more_problems", template="categories/more-problems.html"
     ),
 )
-
-
-@bp.get("/session")
-def session_route():
-    return dict(session)
