@@ -44,17 +44,6 @@ COMPENSATION = Category(
     code="compensation",
     exit_page=False,
 )
-ACCUSED_DA = Category(
-    title=_("Domestic abuse - if you have been accused"),
-    description=_(
-        "Legal help if you’ve been accused of domestic abuse or forced marriage. Includes non-molestation orders and other court orders."
-    ),
-    article_category_name="Domestic Abuse",
-    chs_code="family",
-    code="accused_of_domestic_abuse",
-    exit_page=False,
-    parent_code="domestic_abuse",
-)
 ENVIRONMENTAL_POLLUTION = Category(
     title=_("Environmental pollution"),
     description=_(

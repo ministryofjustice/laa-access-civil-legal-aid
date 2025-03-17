@@ -8,7 +8,6 @@ from app.categories.more_problems.constants import (
     ANTI_SOCIAL,
     CLINICAL_NEGLIGENCE,
     COMPENSATION,
-    ACCUSED_DA,
     ENVIRONMENTAL_POLLUTION,
     INQUEST,
     MENTAL_HEALTH,
@@ -33,7 +32,7 @@ class MoreProblemsPage(CategoryPage):
             ),
             (COMPENSATION, url_for("find-a-legal-adviser.search", category="aap")),
             (
-                ACCUSED_DA,
+                DOMESTIC_ABUSE.sub.accused_of_domestic_abuse,
                 url_for("categories.domestic_abuse.accused_of_domestic_abuse"),
             ),
             (
