@@ -96,3 +96,37 @@ def test_validate_single_main_home_multiple_main_homes():
         validate_single_main_home(form, None)
 
     assert str(errorinfo.value) == _("You can only have 1 main property")
+
+
+def test_property_add():
+    form_data = [{"is_main_home": "True"}]
+    form = MockForm(form_data)
+
+    form.properties.data.append({"is_main_home": "False"})
+
+    assert len(form.properties.data) == 2
+    assert form.properties.data[1]["is_main_home"] == "False"
+
+
+def test_property_remove_second():
+    form_data = [{"is_main_home": "True"}, {"is_main_home": "False"}]
+    form = MockForm(form_data)
+
+    form.properties.data.pop(1)
+
+    assert len(form.properties.data) == 1
+    assert form.properties.data[0]["is_main_home"] == "True"
+
+
+def test_property_remove_third():
+    form_data = [
+        {"is_main_home": "True"},
+        {"is_main_home": "False"},
+        {"is_main_home": "False"},
+    ]
+    form = MockForm(form_data)
+
+    form.properties.data.pop(2)
+
+    assert len(form.properties.data) == 2
+    assert all(isinstance(prop, dict) for prop in form.properties.data)
