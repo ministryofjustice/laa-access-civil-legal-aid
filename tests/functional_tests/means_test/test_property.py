@@ -248,3 +248,47 @@ def test_property_page_errors(page: Page, navigate_to_property):
     expect(
         page.get_by_role("link", name="Tell us whether this property is in dispute")
     ).to_be_visible()
+
+
+@pytest.mark.usefixtures("live_server")
+@pytest.mark.parametrize("answers", about_you_form_routing)
+def test_multiple_properties(page: Page, navigate_to_property):
+    """
+    Test adding and removing all properties
+    """
+    expect(page.get_by_role("heading", name="Your Property")).to_be_visible()
+    expect(
+        page.get_by_text("Property 1")
+    ).not_to_be_visible()  # The "Property 1" heading should only be displayed when there are multiple properties
+    expect(page.get_by_text("Property 2")).not_to_be_visible()
+    expect(page.get_by_text("Property 3")).not_to_be_visible()
+
+    page.get_by_role("button", name="Add another property").click()
+    expect(page.get_by_text("Property 1")).to_be_visible()
+    expect(page.get_by_text("Property 2")).to_be_visible()
+    expect(page.get_by_text("Property 3")).not_to_be_visible()
+
+    page.get_by_role("button", name="Add another property").click()
+    expect(page.get_by_text("Property 1")).to_be_visible()
+    expect(page.get_by_text("Property 2")).to_be_visible()
+    expect(page.get_by_text("Property 3")).to_be_visible()
+
+    page.get_by_role("group", name="Property 3").get_by_label(
+        "How much is the property"
+    ).fill("3000")
+
+    page.locator('button[name="remove-property-2"]').click()
+    expect(page.get_by_text("Property 1")).to_be_visible()
+    expect(page.get_by_text("Property 2")).to_be_visible()
+    expect(page.get_by_text("Property 3")).not_to_be_visible()
+
+    expect(
+        page.get_by_role("group", name="Property 2").get_by_label(
+            "How much is the property"
+        )
+    ).to_have_value("3000")
+
+    page.locator('button[name="remove-property-2"]').click()
+    expect(page.get_by_text("Property 1")).not_to_be_visible()
+    expect(page.get_by_text("Property 2")).not_to_be_visible()
+    expect(page.get_by_text("Property 3")).not_to_be_visible()
