@@ -46,7 +46,11 @@ class MeansTest(FormsMixin, View):
         elif "remove-property-2" in request.form or "remove-property-3" in request.form:
             form.properties.pop_entry()
             form._submitted = False
-            return render_template(self.form_class.template, form=form)
+            return render_template(
+                self.form_class.template,
+                form=form,
+                form_progress=self.get_form_progress(current_form=form),
+            )
 
         return None
 
