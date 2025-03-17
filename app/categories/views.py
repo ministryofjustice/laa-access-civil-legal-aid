@@ -22,10 +22,6 @@ class CategoryPage(View):
         session.set_category_question_answer(category_answer)
 
     def dispatch_request(self):
-        category = getattr(self, "category", None)
-        if category is not None:
-            session.category = category
-
         response = self.process_request()
         if not response:
             response = render_template(self.template)
@@ -52,6 +48,7 @@ class CategoryLandingPage(CategoryPage):
 
     def __init__(self, route_endpoint: str = None, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.route_endpoint = route_endpoint
         if self.routing_map and route_endpoint:
             self.listing["main"] = []
             for category, next_page in self.routing_map["main"]:
@@ -68,6 +65,17 @@ class CategoryLandingPage(CategoryPage):
             self.listing["other"] = f"categories.{route_endpoint}.other"
 
     def process_request(self):
+        self.update_session(
+            CategoryAnswer(
+                question="Choose the problem you need help with.",
+                question_page="categories.index",
+                answer_value=self.category.code,
+                answer_label=self.category.title,
+                category=self.category,
+                question_type=QuestionType.CATEGORY,
+                next_page=f"categories.{self.route_endpoint}.landing",
+            )
+        )
         return render_template(
             self.template, category=self.category, listing=self.listing
         )

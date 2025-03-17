@@ -1,9 +1,13 @@
 from flask.sessions import SecureCookieSession, SecureCookieSessionInterface
-from app.categories.constants import Category, get_category_from_code
+from app.categories.constants import (
+    Category,
+    get_category_from_code,
+    get_subcategory_from_code,
+)
 from flask import session
 from dataclasses import dataclass
 from datetime import timedelta
-from app.categories.models import CategoryAnswer
+from app.categories.models import CategoryAnswer, QuestionType
 from flask_babel import LazyString
 
 
@@ -170,6 +174,29 @@ class Session(SecureCookieSession):
             return get_category_from_code(category_dict["code"])
 
     @property
+    def subcategory(self):
+        """Returns the subcategory based on category answers.
+
+        Returns:
+            Category: The subcategory object if found, None otherwise.
+
+        Raises:
+            ValueError: If multiple SUB_CATEGORY questions are found.
+        """
+        result = None
+
+        for answer in self.category_answers:
+            if answer.question_type == QuestionType.SUB_CATEGORY:
+                if result is not None:
+                    raise ValueError("User has multiple subcategory answers")
+
+                result = get_subcategory_from_code(
+                    answer.category.parent_code, answer.category.code
+                )
+
+        return result
+
+    @property
     def has_children(self):
         # Todo: Needs implementation
         return True
@@ -228,6 +255,12 @@ class Session(SecureCookieSession):
 
         if "category_answers" not in self:
             self["category_answers"] = []
+        if category_answer.category.parent_code:
+            session.category = get_category_from_code(
+                category_answer.category.parent_code
+            )
+        else:
+            session.category = category_answer.category
 
         answers: list[CategoryAnswer] = self.category_answers
 
