@@ -1,5 +1,7 @@
+import pytest
+
 from app.categories.constants import Category, HOUSING
-from app.categories.models import CategoryAnswer
+from app.categories.models import CategoryAnswer, QuestionType
 
 
 def test_set_category_question_answer_new_session(app, client):
@@ -99,3 +101,74 @@ def test_set_category_dataclass(app, client):
         session["category"] = {"code": EDUCATION.code}
         assert session.category == EDUCATION
         assert isinstance(session.category, Category)
+
+
+class TestSessionSubcategory:
+    def test_subcategory_none_when_no_answers(self, app, client):
+        with client.session_transaction() as session:
+            session["category_answers"] = []
+
+        assert session.subcategory is None
+
+    def test_subcategory_returns_category_when_found(self, app, client):
+        with client.session_transaction() as session:
+            session["category_answers"] = [
+                {
+                    "question": "Housing, homelessness, losing your home",
+                    "answer_value": "homelessness",
+                    "answer_label": "Homelessness",
+                    "category": {"code": "homelessness", "parent_code": "housing"},
+                    "question_page": "categories.housing.landing",
+                    "next_page": "categories.results.in_scope_hlpas",
+                    "question_type": QuestionType.SUB_CATEGORY,
+                }
+            ]
+
+        result = session.subcategory
+
+        assert result.code == "homelessness"
+
+    def test_subcategory_ignores_non_subcategory_answers(self, client):
+        with client.session_transaction() as session:
+            session["category_answers"] = [
+                {
+                    "question": "Choose the problem you need help with.",
+                    "question_page": "categories.index",
+                    "answer_value": "housing",
+                    "answer_label": "Housing, homelessness, losing your home",
+                    "category": {"code": "housing"},
+                    "question_type": QuestionType.CATEGORY,
+                    "next_page": "categories.housing.landing",
+                }
+            ]
+
+        result = session.subcategory
+
+        assert result is None
+
+    def test_subcategory_raises_error_for_multiple_subcategories(self, client):
+        with client.session_transaction() as session:
+            session["category_answers"] = [
+                {
+                    "question": "Housing, homelessness, losing your home",
+                    "answer_value": "homelessness",
+                    "answer_label": "Homelessness",
+                    "category": {"code": "homelessness", "parent_code": "housing"},
+                    "question_page": "categories.housing.landing",
+                    "next_page": "categories.results.in_scope_hlpas",
+                    "question_type": QuestionType.SUB_CATEGORY,
+                },
+                {
+                    "question": "Housing, homelessness, losing your home",
+                    "answer_value": "eviction",
+                    "answer_label": "Eviction, told to leave your home",
+                    "category": {"code": "eviction", "parent_code": "housing"},
+                    "question_page": "categories.housing.landing",
+                    "next_page": "categories.results.in_scope_hlpas",
+                    "question_type": QuestionType.SUB_CATEGORY,
+                },
+            ]
+
+        with pytest.raises(ValueError) as e:
+            _ = session.subcategory
+            assert "User has multiple subcategory answers" in str(e.value)
