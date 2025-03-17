@@ -1,4 +1,5 @@
 import pytest
+from flask import url_for
 
 from app.categories.constants import Category, HOUSING
 from app.categories.models import CategoryAnswer, QuestionType
@@ -101,6 +102,27 @@ def test_set_category_dataclass(app, client):
         session["category"] = {"code": EDUCATION.code}
         assert session.category == EDUCATION
         assert isinstance(session.category, Category)
+
+
+class TestPrimaryCategoryAnswer:
+    @pytest.mark.parametrize(
+        "category",
+        [
+            "housing",
+            "discrimination",
+            "family",
+            "send",
+        ],
+    )
+    def test_set_category(self, category, app, client):
+        client.get(url_for(f"categories.{category}.landing"))
+
+        with client.session_transaction() as session:
+            assert len(session.category_answers) == 1
+            category_answer = session.category_answers[0]
+            assert category_answer.question == "Choose the problem you need help with."
+            assert category_answer.answer_value == category
+            assert isinstance(category_answer, CategoryAnswer)
 
 
 class TestSessionSubcategory:

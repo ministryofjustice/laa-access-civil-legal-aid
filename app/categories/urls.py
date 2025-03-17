@@ -1,4 +1,4 @@
-from flask import url_for, render_template
+from flask import url_for, render_template, session
 from app.categories import bp
 from app.categories.views import CategoryPage
 from app.categories.constants import (
@@ -23,7 +23,7 @@ class IndexPage(CategoryPage):
             (FAMILY, url_for("categories.family.landing")),
             (HOUSING, url_for("categories.housing.landing")),
             (DOMESTIC_ABUSE, url_for("categories.domestic_abuse.landing")),
-            (DISCRIMINATION, url_for("categories.discrimination.where")),
+            (DISCRIMINATION, url_for("categories.discrimination.landing")),
             (EDUCATION, url_for("categories.send.landing")),
             (COMMUNITY_CARE, url_for("categories.community_care.landing")),
             (BENEFITS, url_for("categories.benefits.appeal")),
@@ -44,3 +44,8 @@ bp.add_url_rule(
         "more_problems", template="categories/more-problems.html"
     ),
 )
+
+
+@bp.get("/session")
+def session_route():
+    return dict(session)

@@ -64,7 +64,7 @@ class CategoryLandingPage(CategoryPage):
 
             self.listing["other"] = f"categories.{route_endpoint}.other"
 
-    def process_request(self):
+    def set_category_answer(self) -> None:
         self.update_session(
             CategoryAnswer(
                 question="Choose the problem you need help with.",
@@ -76,6 +76,9 @@ class CategoryLandingPage(CategoryPage):
                 next_page=f"categories.{self.route_endpoint}.landing",
             )
         )
+
+    def process_request(self):
+        self.set_category_answer()
         return render_template(
             self.template, category=self.category, listing=self.listing
         )
