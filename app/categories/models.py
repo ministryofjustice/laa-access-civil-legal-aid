@@ -3,7 +3,6 @@ from enum import Enum
 from typing import Optional
 
 from flask import url_for
-from flask_babel import LazyString
 
 from app.categories.constants import Category
 
@@ -18,7 +17,7 @@ class QuestionType(str, Enum):
 class CategoryAnswer:
     question: str
     answer_value: str
-    answer_label: str | LazyString
+    answer_label: str
     category: Category
     question_page: str
     next_page: str

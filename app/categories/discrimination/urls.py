@@ -19,7 +19,7 @@ class DiscriminationCategoryLandingPage(CategoryLandingPage):
         )
 
     def dispatch_request(self):
-        super().set_category_answer()
+        self.set_category_answer()
         return redirect(url_for("categories.discrimination.where"))
 
 
