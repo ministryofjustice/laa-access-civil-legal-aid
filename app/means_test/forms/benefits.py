@@ -13,6 +13,7 @@ from app.means_test.validators import (
 )
 from app.means_test import YES, NO
 from dataclasses import dataclass, field
+from app.means_test.money_interval import MoneyInterval
 
 
 @dataclass
@@ -236,7 +237,7 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
         """
         payload = {
             "on_nass_benefits": False,
-            "benefits": self.get("total_other_benefit"),
+            "benefits": self.get("total_other_benefit", MoneyInterval(0)),
         }
 
         return payload

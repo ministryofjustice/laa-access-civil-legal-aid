@@ -3,7 +3,8 @@ from flask.views import View, MethodView
 from flask import render_template, url_for, redirect, session, request
 from flask_babel import lazy_gettext as _, gettext
 from werkzeug.datastructures import MultiDict
-from app.means_test.api import update_means_test, get_means_test_payload
+from app.means_test.api import update_means_test, get_means_test_payload, is_eligible
+from app.means_test.constants import EligibilityState
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import MultiplePropertiesForm
@@ -61,9 +62,16 @@ class MeansTest(FormsMixin, View):
             session.get_eligibility().add(self.current_name, form.data)
             next_page = url_for(f"means_test.{self.get_next_page(self.current_name)}")
             payload = get_means_test_payload(session.get_eligibility())
-            update_means_test(payload)
+            reference = update_means_test(payload)["reference"]
+
+            eligibility = is_eligible(reference)
+            # Once we are sure of the user's eligibility we should not ask the user subsequent questions
+            # and instead ask them to confirm their answers before proceeding
+            if eligibility in [EligibilityState.YES, EligibilityState.NO]:
+                next_page = url_for("means_test.review")
 
             return redirect(next_page)
+
         return render_template(
             self.form_class.template,
             form=form,
@@ -247,4 +255,32 @@ class CheckYourAnswers(FormsMixin, MethodView):
         return summary
 
     def post(self):
-        return self.get()
+        ec_reference = session.get("ec_reference")
+        eligibility = is_eligible(ec_reference)
+
+        # Failsafe, if we are unsure of the eligibility state at this point send the user to the call centre
+        if (
+            eligibility == EligibilityState.YES
+            or eligibility == EligibilityState.UNKNOWN
+        ):
+            return redirect(url_for("means_test.result.eligible"))
+
+        if session.subcategory and session.subcategory.eligible_for_HLPAS:
+            return redirect(url_for("means_test.result.hlpas"))
+        return redirect(url_for("means_test.result.ineligible"))
+
+
+class Ineligible(View):
+    template = "means_test/refer.html"
+
+    def __init__(self, template: str = None):
+        if template:
+            self.template = template
+
+    def dispatch_request(self):
+        category = session.category
+        return render_template(self.template, category=category)
+
+
+class Eligible(View):
+    template = "categories/results/eligible.html"
