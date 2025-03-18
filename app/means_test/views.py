@@ -259,8 +259,11 @@ class CheckYourAnswers(FormsMixin, MethodView):
         ec_reference = session.get("ec_reference")
         eligibility = is_eligible(ec_reference)
 
-        # Fail safe, if we are unsure of the eligiblity state at this point send the user to the call centre
-        if eligibility == EligibilityState.YES or EligibilityState.UNKNOWN:
+        # Failsafe, if we are unsure of the eligibility state at this point send the user to the call centre
+        if (
+            eligibility == EligibilityState.YES
+            or eligibility == EligibilityState.UNKNOWN
+        ):
             return redirect(url_for("means_test.result.eligible"))
 
         if session.subcategory and session.subcategory.eligible_for_HLPAS:
