@@ -92,7 +92,7 @@ def test_discrimination_why(page: Page, selections: list, expected_heading: str)
 class TestUnder18Form:
     # Page headings used in tests
     ARE_YOU_UNDER_18_HEADING = "Are you under 18?"
-    CONTACT_PAGE_HEADING = "Contact us page"
+    CONTACT_PAGE_HEADING = "Contact Civil Legal Advice"
     LEGALAID_PAGE_HEADING = "Legal aid is available for this type of problem"
 
     def navigate_to_form(self, page: Page):
@@ -109,10 +109,12 @@ class TestUnder18Form:
         self.navigate_to_form(page)
         page.get_by_label("Yes").check()
         page.get_by_role("button", name="Continue").click()
-        expect(page.get_by_text(self.CONTACT_PAGE_HEADING)).to_be_visible()
+        expect(
+            page.get_by_role("heading", name=self.CONTACT_PAGE_HEADING)
+        ).to_be_visible()
 
     @pytest.mark.usefixtures("live_server")
-    def test_are_you_over_18_form_no(self, page: Page):
+    def test_are_you_under_18_form_no(self, page: Page):
         self.navigate_to_form(page)
         page.get_by_label("No").check()
         page.get_by_role("button", name="Continue").click()

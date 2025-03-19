@@ -171,7 +171,10 @@ class MoneyField(BaseIntegerField):
         return re.sub(r"[£\s,]", "", value.strip())
 
     def process_formdata(self, valuelist):
-        if valuelist:
+        if valuelist and isinstance(valuelist[0], int):
+            # The form is being restored from the session where the conversion has already taken place
+            self.data = valuelist[0]
+        elif valuelist:
             self._user_input = valuelist[0]
 
             # Clean the input

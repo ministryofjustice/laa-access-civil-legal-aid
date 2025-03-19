@@ -1,3 +1,8 @@
+from unittest.mock import patch
+
+import pytest
+
+
 def test_set_locale(app, client):
     response = client.get("/locale/cy", headers={"referer": "http://localhost/privacy"})
     assert response.status_code == 302
@@ -21,6 +26,21 @@ def test_service_unavailable_on(app, client):
     assert response.request.path == "/service-unavailable"
 
 
+@pytest.mark.parametrize(
+    "resource_path",
+    ["/assets/styles.css", "/assets/scripts.js", "/assets/images/govuk-crest.png"],
+)
+def test_service_unavailable_static_assets(app, client, resource_path):
+    app.config["SERVICE_UNAVAILABLE"] = True
+    response = client.get(resource_path)
+    assert response.status_code != 503
+    assert response.status_code in [
+        200,
+        404,
+    ]  # Allow 404 as these assets are not served by the test app
+    assert response.request.path == resource_path
+
+
 def test_service_unavailable_off(app, client):
     app.config["SERVICE_UNAVAILABLE"] = False
     response = client.get("/service-unavailable", follow_redirects=True)
@@ -36,3 +56,17 @@ def test_header_link_clears_session(app, client):
 
     with client.session_transaction() as session:
         assert "test" not in session
+
+
+@patch("app.main.routes.render_template")
+def test_privacy_template(mock_render_template, client):
+    response = client.get("/privacy")
+    assert response.status_code == 200
+    mock_render_template.assert_called_once_with("main/privacy.html")
+
+
+@patch("app.main.routes.render_template")
+def test_online_safety_template(mock_render_template, client):
+    response = client.get("/online-safety")
+    assert response.status_code == 200
+    mock_render_template.assert_called_once_with("main/online-safety.html")

@@ -2,7 +2,7 @@ from app.session import Eligibility
 
 
 def test_is_yes():
-    eligibility = Eligibility(forms={"form1": {"field1": "1"}})
+    eligibility = Eligibility(forms={"form1": {"field1": "1"}}, _notes={})
 
     assert eligibility.is_yes("form1", "field1")
 
@@ -12,7 +12,7 @@ def test_is_yes():
 
 
 def test_is_no():
-    eligibility = Eligibility(forms={"form1": {"field1": "0"}})
+    eligibility = Eligibility(forms={"form1": {"field1": "0"}}, _notes={})
 
     assert eligibility.is_no("form1", "field1")
 
@@ -24,12 +24,14 @@ def test_is_no():
 def test_has_partner():
     eligibility = Eligibility(
         forms={"about-you": {"has_partner": True, "are_you_in_a_dispute": False}}
+        _notes={},
     )
 
     assert eligibility.has_partner
 
     eligibility = Eligibility(
         forms={"about-you": {"has_partner": True, "are_you_in_a_dispute": True}}
+        _notes={},
     )
 
     assert not eligibility.has_partner
@@ -38,6 +40,7 @@ def test_has_partner():
 def test_employment_status():
     eligibility = Eligibility(
         forms={"about-you": {"is_employed": True, "is_self_employed": False}}
+        _notes={},
     )
 
     assert eligibility.is_employed
@@ -56,7 +59,8 @@ def test_partner_employment():
                 "partner_is_employed": True,
                 "partner_is_self_employed": False,
             }
-        }
+        },
+        _notes={},
     )
 
     assert eligibility.is_partner_employed
@@ -64,6 +68,7 @@ def test_partner_employment():
     assert not eligibility.is_partner_self_employed
 
     eligibility = Eligibility(forms={"about-you": {"has_partner": False}})
+    _notes={},
 
     assert not eligibility.is_partner_employed
 
