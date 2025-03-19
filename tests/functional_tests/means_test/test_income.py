@@ -101,9 +101,12 @@ def fill_about_form(page: Page, questions: dict) -> None:
                 "fields": [
                     {"name": "Wages before tax", "nth": 0},
                     {"name": "Income tax", "nth": 0},
+                    {"name": "National Insurance", "nth": 0},
                     {"name": "Maintenance received", "nth": 0},
+                    {"name": "Child Tax Credit", "nth": 0},
                     {"name": "Wages before tax", "nth": 1},
                     {"name": "Income tax", "nth": 1},
+                    {"name": "National Insurance", "nth": 1},
                     {"name": "Maintenance received", "nth": 1},
                 ],
             },
