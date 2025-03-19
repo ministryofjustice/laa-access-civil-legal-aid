@@ -170,17 +170,21 @@
           'text': _("Staying safe online")
         },
         {
-          'href': url_for('main.accessibility'),
-          'text': _("Accessibility statement")
+          'href': url_for('main.privacy'),
+          'text': "Privacy Policy"
         },
         {
           'href': url_for('main.cookies'),
           'text': "Cookies"
         },
         {
-            'href': url_for('main.privacy'),
-            'text': "Privacy"
-          }
+          'href': url_for('contact.reasons_for_contacting'),
+          'text': "Contact"
+        },
+        {
+          'href': url_for('main.accessibility'),
+          'text': "Accessibility statement"
+        },
       ],
       'html': 'Built by <a href="' + config['DEPARTMENT_URL'] +'" class="govuk-footer__link">' + config['DEPARTMENT_NAME'] + '</a>'
     }
