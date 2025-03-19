@@ -23,14 +23,14 @@ def test_is_no():
 
 def test_has_partner():
     eligibility = Eligibility(
-        forms={"about-you": {"has_partner": "1", "are_you_in_a_dispute": "0"}},
+        forms={"about-you": {"has_partner": True, "are_you_in_a_dispute": False}}
         _notes={},
     )
 
     assert eligibility.has_partner
 
     eligibility = Eligibility(
-        forms={"about-you": {"has_partner": "1", "are_you_in_a_dispute": "1"}},
+        forms={"about-you": {"has_partner": True, "are_you_in_a_dispute": True}}
         _notes={},
     )
 
@@ -39,7 +39,8 @@ def test_has_partner():
 
 def test_employment_status():
     eligibility = Eligibility(
-        forms={"about-you": {"is_employed": "1", "is_self_employed": "0"}}, _notes={}
+        forms={"about-you": {"is_employed": True, "is_self_employed": False}}
+        _notes={},
     )
 
     assert eligibility.is_employed
@@ -53,10 +54,10 @@ def test_partner_employment():
     eligibility = Eligibility(
         forms={
             "about-you": {
-                "has_partner": "1",
-                "are_you_in_a_dispute": "0",
-                "partner_is_employed": "1",
-                "partner_is_self_employed": "0",
+                "has_partner": True,
+                "are_you_in_a_dispute": False,
+                "partner_is_employed": True,
+                "partner_is_self_employed": False,
             }
         },
         _notes={},
@@ -66,7 +67,8 @@ def test_partner_employment():
 
     assert not eligibility.is_partner_self_employed
 
-    eligibility = Eligibility(forms={"about-you": {"has_partner": "0"}}, _notes={})
+    eligibility = Eligibility(forms={"about-you": {"has_partner": False}})
+    _notes={},
 
     assert not eligibility.is_partner_employed
 
