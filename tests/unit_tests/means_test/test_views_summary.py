@@ -1,7 +1,6 @@
 from unittest import mock
 from flask_babel import lazy_gettext as _
 from app.means_test.views import CheckYourAnswers, ReviewForm
-from app.means_test import YES, NO
 from app.session import Eligibility
 from app.categories.models import CategoryAnswer
 from app.categories.constants import DISCRIMINATION, HOUSING
@@ -16,11 +15,11 @@ def mock_session_get_eligibility():
         **{
             "forms": {
                 "about-you": {
-                    "has_partner": NO,
-                    "on_benefits": YES,
-                    "have_children": NO,
-                    "have_dependents": NO,
-                    "own_property": NO,
+                    "has_partner": False,
+                    "on_benefits": True,
+                    "have_children": False,
+                    "have_dependents": False,
+                    "own_property": False,
                 },
                 "benefits": {"benefits": ["employment_support", "universal_credit"]},
             }
