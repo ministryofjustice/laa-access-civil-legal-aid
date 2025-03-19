@@ -2,8 +2,6 @@
 
 {%- from 'components/back_link.html' import govukBackLink -%}
 
-{% block pageTitle %}Privacy notice – {{config['SERVICE_NAME']}} – GOV.UK{% endblock %}
-
 {% block beforeContent %}
   {{ super() }}
   {{ govukBackLink({
@@ -12,16 +10,14 @@
 {% endblock %}
 
 {% block content %}
+{{ super() }}
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        {{ super() }}
         <h1 class="govuk-heading-l">{{ _('Civil Legal Advice (CLA) &ndash; Legal Aid Agency Privacy Notice') }}</h1>
 
         <h2 class="govuk-heading-m">{{ _('Purpose') }}</h2>
       
-        <p class="govuk-body">
-          {% trans %}This privacy notice sets out the standards that you can expect from the Legal Aid Agency when we request or hold personal information (‘personal data’) about you; how you can get access to a copy of your personal data; and what you can do if you think the standards are not being met.{% endtrans %}
-        </p>
+        <p class="govuk-body">{% trans %}This privacy notice sets out the standards that you can expect from the Legal Aid Agency when we request or hold personal information (‘personal data’) about you; how you can get access to a copy of your personal data; and what you can do if you think the standards are not being met.{% endtrans %}</p>
       
         <p class="govuk-body">{{ _('The Legal Aid Agency is an Executive Agency of the Ministry of Justice (<abbr>MoJ</abbr>). The <abbr>MoJ</abbr> is the data controller for the personal information we hold. The Legal Aid Agency collects and processes personal data for the exercise of its own and associated public functions. Our public function is to provide legal aid.') }}</p>
       
