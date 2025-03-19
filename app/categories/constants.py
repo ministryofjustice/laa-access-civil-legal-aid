@@ -509,5 +509,13 @@ ALL_CATEGORIES = {
 list(map(init_children, ALL_CATEGORIES.values()))
 
 
-def get_category_from_code(code: str) -> Category:
+def get_category_from_code(code: str) -> Category | None:
+    if not code:
+        return None
     return ALL_CATEGORIES[code]
+
+
+def get_subcategory_from_code(parent_code: str, code: str) -> Category | None:
+    if not parent_code or not code:
+        return None
+    return get_category_from_code(parent_code).children[code]
