@@ -99,17 +99,17 @@ class TestValidateIf:
             assert "This field is required." in form.dependent_field.errors, (
                 f"Expected error missing: {form.dependent_field.errors}"
             )
-            
 
-    def test_allows_zero():
+
+class TestNumberRange:
+    def test_allows_zero(self):
         class TestForm(Form):
             amount = IntegerField("Amount", validators=[NumberRangeAllowZero(min=500)])
 
         form = TestForm(amount=0)
         assert form.validate()
 
-
-    def test_respects_minimum():
+    def test_respects_minimum(self):
         class TestForm(Form):
             amount = IntegerField("Amount", validators=[NumberRangeAllowZero(min=500)])
 
@@ -120,8 +120,7 @@ class TestValidateIf:
         form = TestForm(amount=501)
         assert form.validate()
 
-
-    def test_respects_maximum():
+    def test_respects_maximum(self):
         class TestForm(Form):
             amount = IntegerField(
                 "Amount", validators=[NumberRangeAllowZero(min=500, max=1000)]
@@ -140,16 +139,14 @@ class TestValidateIf:
         form = TestForm(amount=1000)
         assert form.validate()
 
-
-    def test_non_numeric_value():
+    def test_non_numeric_value(self):
         class TestForm(Form):
             amount = IntegerField("Amount", validators=[NumberRangeAllowZero(min=500)])
 
         form = TestForm(amount="not_a_number")
         assert form.validate() is False
 
-
-    def test_none_value():
+    def test_none_value(self):
         class TestForm(Form):
             amount = IntegerField("Amount", validators=[NumberRangeAllowZero(min=500)])
 
