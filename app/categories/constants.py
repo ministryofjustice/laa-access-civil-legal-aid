@@ -13,8 +13,13 @@ class Category:
     # Internal code
     code: Optional[str] = None
     children: dict[str, "Category"] | None = field(default_factory=dict)
+    parent_code: Optional[str] = None
     _referrer_text: Optional[LazyString] = None
     exit_page: Optional[bool] = False
+
+    @property
+    def url_friendly_name(self):
+        return self.code.replace("_", "-").lower()
 
     @property
     def display_text(self):
@@ -26,15 +31,23 @@ class Category:
         class Subcategory:
             def __init__(self, category):
                 self.children: dict[str, Category] = category.children
+                self.category: Category = category
 
             def __getattr__(self, item):
+                if item not in self.children:
+                    raise AttributeError(
+                        f"Could not find {item} in category {self.category.title}"
+                    )
                 return self.children.get(item)
 
         return Subcategory(self)
 
     @classmethod
     def from_dict(cls, data: dict) -> "Category":
-        children: dict = data.pop("children", {})
+        data = data.copy()
+        children = {}
+        if "children" in data:
+            children: dict = data.pop("children")
         category = cls(**data)
         if children:
             for name, child in children.items():
@@ -267,7 +280,7 @@ EDUCATION = Category(
     description=_("Help if your child has SEND."),
     article_category_name="Education",
     chs_code="education",
-    code="education",
+    code="send",
     children={
         "child_young_person": Category(
             title=_("Help with a child or young person's SEND"),
@@ -380,7 +393,7 @@ BENEFITS = Category(
 PUBLIC_LAW = Category(
     title=_("Legal action against police and public organisations"),
     description=_(
-        "Includes schools, the police, government, prisons, NHS, the council."
+        "Includes police, government, prisons, NHS, the council, care facilities and schools."
     ),
     article_category_name="Public",
     chs_code="publiclaw",
@@ -394,6 +407,7 @@ ASYLUM_AND_IMMIGRATION = Category(
     ),
     chs_code="immigration",
     code="asylum_and_immigration",
+    article_category_name="Immigration and asylum",
     children={
         "apply": Category(
             title=_("Applying for asylum"),
@@ -473,21 +487,27 @@ MENTAL_CAPACITY = Category(
 def init_children(category: Category) -> None:
     for child in category.children.values():
         child.chs_code = child.chs_code or category.chs_code
+        child.parent_code = category.code
         child.article_category_name = (
             child.article_category_name or category.article_category_name
         )
 
 
-ALL_CATEGORIES = [
-    DOMESTIC_ABUSE,
-    FAMILY,
-    HOUSING,
-    DISCRIMINATION,
-    EDUCATION,
-    COMMUNITY_CARE,
-    BENEFITS,
-    PUBLIC_LAW,
-    ASYLUM_AND_IMMIGRATION,
-    MENTAL_CAPACITY,
-]
-list(map(init_children, ALL_CATEGORIES))
+ALL_CATEGORIES = {
+    DOMESTIC_ABUSE.code: DOMESTIC_ABUSE,
+    FAMILY.code: FAMILY,
+    HOUSING.code: HOUSING,
+    DISCRIMINATION.code: DISCRIMINATION,
+    EDUCATION.code: EDUCATION,
+    COMMUNITY_CARE.code: COMMUNITY_CARE,
+    BENEFITS.code: BENEFITS,
+    PUBLIC_LAW.code: PUBLIC_LAW,
+    ASYLUM_AND_IMMIGRATION.code: ASYLUM_AND_IMMIGRATION,
+    MENTAL_CAPACITY.code: MENTAL_CAPACITY,
+}
+
+list(map(init_children, ALL_CATEGORIES.values()))
+
+
+def get_category_from_code(code: str) -> Category:
+    return ALL_CATEGORIES[code]

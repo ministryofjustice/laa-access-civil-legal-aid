@@ -25,7 +25,7 @@ def test_get_context_with_housing_category(mock_organisations):
         view = ResultPage(template="categories/results/housing.html")
         result = view.get_context(category=HOUSING)
 
-        assert result["category_name"] == "Housing, homelessness, losing your home"
+        assert result["category"].title == "Housing, homelessness, losing your home"
         assert result["organisations"] == mock_organisations
         assert result["fala_category_code"] == "HOU"
 
@@ -46,11 +46,12 @@ def test_get_context_with_immigration_category():
         view = ResultPage(template="")
         result = view.get_context(category=ASYLUM_AND_IMMIGRATION)
 
-        assert result["category_name"] == "Asylum and immigration"
+        assert result["category"].title == "Asylum and immigration"
         assert result["organisations"] == []
         assert result["fala_category_code"] == "IMMAS"
 
-        mock_get_orgs.assert_not_called()
+        # Verify correct article_category_name was used
+        mock_get_orgs.assert_called_once_with("Immigration and asylum")
 
 
 def test_get_context_with_no_category():
@@ -65,7 +66,7 @@ def test_get_context_with_no_category():
         result = view.get_context()
 
         # Assertions
-        assert result["category_name"] is None
+        assert result["category"] is None
         assert result["organisations"] == []
         assert result["fala_category_code"] is None
 
@@ -84,7 +85,7 @@ def test_get_context_with_invalid_category():
         view = ResultPage(template="")
         result = view.get_context(category="not_a_category_object")
 
-        assert result["category_name"] is None
+        assert result["category"] is None
         assert result["organisations"] == []
         assert result["fala_category_code"] is None
 

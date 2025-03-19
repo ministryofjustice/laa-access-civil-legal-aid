@@ -1,7 +1,7 @@
 from playwright.sync_api import Page, expect
 import pytest
 
-contact_us_page_heading = "Contact us page"
+contact_us_page_heading = "Contact Civil Legal Advice"
 in_scope_page_heading = "Legal aid is available for this type of problem"
 
 ROUTING = [
@@ -15,7 +15,7 @@ ROUTING = [
     },
     {
         "link_text": "If there is domestic abuse",
-        "next_page_heading": contact_us_page_heading,
+        "next_page_heading": "Are you worried about someone's safety?",
     },
     {"link_text": "Family mediation", "next_page_heading": in_scope_page_heading},
     {
@@ -24,7 +24,7 @@ ROUTING = [
     },
     {
         "link_text": "Children with special educational needs and disabilities",
-        "next_page_heading": in_scope_page_heading,
+        "next_page_heading": "Special educational needs and disability (SEND)",
     },
     {
         "link_text": "Schools, colleges, other education settings",
@@ -32,11 +32,11 @@ ROUTING = [
     },
     {
         "link_text": "Forced marriage",
-        "next_page_heading": in_scope_page_heading,
+        "next_page_heading": "Are you worried about someone's safety?",
     },
     {
         "link_text": "Next steps to get help",
-        "next_page_heading": "Legal aid doesn’t cover all types of problem",
+        "next_page_heading": "Sorry, you’re not likely to get legal aid",
     },
 ]
 
@@ -47,4 +47,6 @@ class TestFamilyLandingPage:
     def test_onward_routing(self, page: Page, routing: dict):
         page.get_by_role("link", name="Children, families, relationships").click()
         page.get_by_role("link", name=routing["link_text"]).click()
-        expect(page.get_by_text(routing["next_page_heading"])).to_be_visible()
+        expect(
+            page.get_by_role("heading", name=routing["next_page_heading"])
+        ).to_be_visible()

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{%- from 'components/back_link.html' import govukBackLink -%}
+
+{% block page_title %}{{ _('Staying safe online') }} - {{ super() }}{% endblock %}
+
+{% block beforeContent %}
+    {{ super() }}
+    {{ govukBackLink({ 'text': _('Back') }) }}
+{% endblock %}
+
+{% block content %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <h1 class="govuk-heading-xl">{{ _('Stay safe when you use this website') }}</h1>
+
+          <p class="govuk-body">{{ _('If you need to hide what you’re doing on this website, or protect yourself from someone, it can be safer not to use your home computer or your own mobile phone.') }}</p>
+          <p class="govuk-body">{{ _('For example, use a computer at the library, or borrow a phone from someone you trust.') }}</p>
+
+
+          <h2 class="govuk-heading-l">{{ _('What this website saves to your device') }}</h2>
+          <p class="govuk-body">{{ _('When you use this website, and every time you use the internet, your device saves a record of:') }}</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>{{ _('the pages you’ve looked at and the files you’ve downloaded - this is called your ‘browsing history’') }}</li>
+            <li>{{ _('small files called ‘cookies’') }}</li>
+          </ul>
+
+          <h2 class="govuk-heading-l">{{ _('How to delete cookies and your browsing history') }}</h2>
+          <p class="govuk-body">{{ _('Be careful because:') }}</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>{{ _('deleting cookies will also delete stored passwords for online accounts') }}</li>
+            <li>{{ _('clearing your history could make someone more suspicious') }}</li>
+          </ul>
+          <p class="govuk-body">{{ _('Try to only remove information about the websites you want to keep private.') }}</p>
+          <p class="govuk-body">{{ _('Find out how to do that on:') }}</p>
+
+          <ul class="govuk-list govuk-list--bullet">
+            <li><a class="govuk-link" href="https://support.google.com/chrome/answer/95589?hl=en&rd=1" rel="external">{{ _('Google Chrome') }}</a></li>
+            <li><a class="govuk-link" href="https://support.microsoft.com/en-us/windows/view-and-delete-your-browsing-history-in-internet-explorer-098ffe52-5ac9-a449-c296-c735c32c8678" rel="external">{{ _('Internet Explorer') }}</a></li>
+            <li><a class="govuk-link" href="https://support.mozilla.org/en-US/kb/delete-browsing-search-download-history-firefox" rel="external">{{ _('Mozilla Firefox') }}</a></li>
+            <li><a class="govuk-link" href="https://support.apple.com/kb/PH19215?locale=en_US&viewlocale=en_US" rel="external">{{ _('Safari') }}</a></li>
+            <li><a class="govuk-link" href="https://www.samsung.com/uk/support/mobile-devices/using-the-samsung-internet-app/" rel="external">{{ _('Samsung internet') }}</a></li>
+          </ul>
+
+          <h2 class="govuk-heading-l">{{ _('How the ‘Exit this page’ button works on this website') }}</h2>
+          <p class="govuk-body">
+            {{ _('There is an ‘Exit this page’ button on some pages. If you click this button, all the information you’ve entered will be deleted. This website will close.')}}
+          </p>
+          <p class="govuk-body">
+            {{ _('You’ll automatically go to the BBC Weather homepage:') }} <a class="govuk-link" href="https://www.bbc.co.uk/weather/" rel="external">{{ _('https://www.bbc.co.uk/weather/') }}</a>
+          </p>
+
+          <p class="govuk-body">{{ _('Cookies and browsing history will still be saved to your device.') }}</p>
+          <p class="govuk-body">{{ _('On any page where you see the ‘Exit this page’ button, pressing the ‘Shift’ key 3 times will work the same way.') }}</p>
+          <p class="govuk-body">{{ _('To find this website again, search ‘Check if you can get legal aid’.') }}</p>
+
+          <h2 class="govuk-heading-l">{{ _('How to use this website without storing cookies and browser history') }}</h2>
+          <p class="govuk-body">{{ _('Use the ‘private browsing’ settings. Go to the menu on your browser, click on ‘File’ and turn on:') }}</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>{{ _('<strong>Incognito</strong> on Google Chrome') }}</li>
+            <li>{{ _('<strong>Private Window</strong> on Safari') }}</li>
+            <li>{{ _('<strong>InPrivate</strong> on Internet Explorer') }}</li>
+            <li>{{ _('<strong>Private Browsing</strong> on Mozilla Firefox') }}</li>
+          </ul>
+          <p class="govuk-body">{{ _('On Samsung internet, you need to turn on') }}  <a class="govuk-link" href="https://www.samsung.com/uk/support/mobile-devices/using-the-samsung-internet-app/" rel="external">{{ _('Secret mode.') }}</a></p>
+
+          <h2 class="govuk-heading-l">{{ _('Get help to stay safe online') }}</h2>
+          <p class="govuk-body">{{ _('There are other ways someone can track you online, for example by using spying or tracking programmes. See the Refuge website') }} <a class="govuk-link" href="https://refugetechsafety.org/secure-your-tech/" rel="external">{{ _('Secure your tech.') }}</a></p>
+        </div>
+    </div>
+{% endblock %}
