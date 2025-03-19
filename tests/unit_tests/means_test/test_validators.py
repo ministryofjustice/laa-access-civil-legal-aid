@@ -1,7 +1,7 @@
 import pytest
-from wtforms import StringField, SelectField, Form, SelectMultipleField
+from wtforms import StringField, SelectField, Form, SelectMultipleField, IntegerField
 from wtforms.validators import InputRequired
-from app.means_test.validators import ValidateIf, ValidateIfType
+from app.means_test.validators import ValidateIf, ValidateIfType, NumberRangeAllowZero
 
 
 class TestValidateIf:
@@ -99,3 +99,56 @@ class TestValidateIf:
             assert "This field is required." in form.dependent_field.errors, (
                 f"Expected error missing: {form.dependent_field.errors}"
             )
+
+
+class TestNumberRange:
+    def test_allows_zero(self):
+        class TestForm(Form):
+            amount = IntegerField("Amount", validators=[NumberRangeAllowZero(min=500)])
+
+        form = TestForm(amount=0)
+        assert form.validate()
+
+    def test_respects_minimum(self):
+        class TestForm(Form):
+            amount = IntegerField("Amount", validators=[NumberRangeAllowZero(min=500)])
+
+        form = TestForm(amount=499)
+        assert form.validate() is False
+        assert "Number must be at least 500." in form.amount.errors
+
+        form = TestForm(amount=501)
+        assert form.validate()
+
+    def test_respects_maximum(self):
+        class TestForm(Form):
+            amount = IntegerField(
+                "Amount", validators=[NumberRangeAllowZero(min=500, max=1000)]
+            )
+
+        # Test zero (should pass)
+        form = TestForm(amount=0)
+        assert form.validate()
+
+        # Test value above maximum
+        form = TestForm(amount=1001)
+        assert form.validate() is False
+        assert "Number must be between 500 and 1000." in form.amount.errors
+
+        # Test value at maximum
+        form = TestForm(amount=1000)
+        assert form.validate()
+
+    def test_non_numeric_value(self):
+        class TestForm(Form):
+            amount = IntegerField("Amount", validators=[NumberRangeAllowZero(min=500)])
+
+        form = TestForm(amount="not_a_number")
+        assert form.validate() is False
+
+    def test_none_value(self):
+        class TestForm(Form):
+            amount = IntegerField("Amount", validators=[NumberRangeAllowZero(min=500)])
+
+        form = TestForm(amount=None)
+        assert form.validate() is False
