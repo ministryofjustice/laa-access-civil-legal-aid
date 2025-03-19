@@ -203,7 +203,4 @@ def get_means_test_payload(eligibility_data) -> dict:
     if not has_partner:
         del payload["partner"]
 
-    import json
-
-    print(json.dumps(payload))
     return payload
