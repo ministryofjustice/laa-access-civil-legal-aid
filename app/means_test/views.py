@@ -4,7 +4,6 @@ from flask import render_template, url_for, redirect, session, request
 from flask_babel import lazy_gettext as _, gettext
 from werkzeug.datastructures import MultiDict
 from app.categories.constants import Category
-from app.means_test.api import update_means_test, get_means_test_payload
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import MultiplePropertiesForm
@@ -13,6 +12,7 @@ from app.means_test.forms.savings import SavingsForm
 from app.means_test.forms.outgoings import OutgoingsForm
 from app.means_test.forms.review import ReviewForm, BaseMeansTestForm
 from app.categories.models import CategoryAnswer, QuestionType
+from app.means_test.payload import MeansTest as MeansTestPayload
 
 
 class FormsMixin:
@@ -61,8 +61,9 @@ class MeansTest(FormsMixin, View):
         if form.validate_on_submit():
             session.get_eligibility().add(self.current_name, form.data)
             next_page = url_for(f"means_test.{self.get_next_page(self.current_name)}")
-            payload = get_means_test_payload(session.get_eligibility())
-            update_means_test(payload)
+            payload = MeansTestPayload()
+            payload.update_from_session()
+            payload.save()
 
             return redirect(next_page)
         return render_template(

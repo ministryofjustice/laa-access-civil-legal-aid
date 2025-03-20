@@ -33,6 +33,10 @@ class Eligibility:
         ) and not self.forms.get("about-you", {}).get("are_you_in_a_dispute", False)
 
     @property
+    def owns_property(self) -> bool:
+        return self.forms.get("about-you", {}).get("own_property", False)
+
+    @property
     def is_employed(self):
         return self.forms.get("about-you", {}).get("is_employed", False)
 
