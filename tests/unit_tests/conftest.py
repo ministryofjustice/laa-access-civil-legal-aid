@@ -1,5 +1,5 @@
 import pytest
-from app import Config
+from app import Config, SessionInterface
 from app import create_app
 from unittest.mock import patch
 from app.api import BackendAPIClient
@@ -24,7 +24,9 @@ def mock_cache():
 
 @pytest.fixture(scope="session")
 def app():
-    return create_app(TestConfig)
+    app = create_app(TestConfig)
+    app.session_interface = SessionInterface()
+    return app
 
 
 @pytest.fixture()
@@ -36,3 +38,16 @@ def client(app):
 def api_client(app):
     with app.app_context():
         return BackendAPIClient()
+
+
+@pytest.fixture
+def mock_url_for():
+    with patch("app.categories.views.url_for") as mock:
+
+        def side_effect(*args, **kwargs):
+            if kwargs and "endpoint" in kwargs:
+                return f"/mocked/{kwargs['endpoint']}"
+            return f"/mocked/{args[0]}"
+
+        mock.side_effect = side_effect
+        yield mock
