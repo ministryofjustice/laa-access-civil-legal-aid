@@ -499,7 +499,9 @@ def init_children(category: Category) -> None:
         child.article_category_name = (
             child.article_category_name or category.article_category_name
         )
-        child.exit_page = child.exit_page or category.exit_page
+        child.exit_page = (
+            child.exit_page if child.exit_page is not None else category.exit_page
+        )
 
 
 ALL_CATEGORIES = {
