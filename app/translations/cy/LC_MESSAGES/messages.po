@@ -2203,9 +2203,6 @@ msgstr "cael eich cam-drin yn gorfforol, yn rhywiol neu’n emosiynol"
 msgid "Back"
 msgstr "Yn ôl"
 
-msgid "Tell us what you think of this service (opens new tab)"
-msgstr "Rhowch eich barn am y gwasanaeth hwn (yn agor mewn tab newydd)"
-
 msgid "You can now call CLA on"
 msgstr ""
 "Gallwch ffonio <abbr title=\"Cyngor Cyfreithiol Sifil\">CLA</abbr> yn awr"
@@ -2394,6 +2391,9 @@ msgstr ""
 "Os byddwch yn methu’r alwad neu angen cyngor ar frys, gallwch ein ffonio "
 "ar 0345 345 4 345. <a class=\"govuk-link\" href=\"https://www.gov.uk"
 "/costau-galwadau\">Mae gwybodaeth am gostau’r galwadau i’w cael yma.</a>"
+
+msgid "Finish"
+msgstr "Gorffen"
 
 msgid ""
 "We’ll give you the Civil Legal Advice phone number when you submit your "
@@ -3095,14 +3095,11 @@ msgstr ""
 msgid "Secure your tech."
 msgstr "Secure your tech ar wefan Refuge."
 
-msgid "Privacy notice"
-msgstr "Welsh Privacy notice"
+msgid "Civil Legal Advice (CLA) &ndash; Legal Aid Agency Privacy Notice"
+msgstr "Mynd yn ôl i newid atebion"
 
-msgid "Links to other websites"
-msgstr "Dolenni i wefannau eraill"
-
-msgid "This service contains links to other websites."
-msgstr "Mae’r gwasanaeth hwn yn cynnwys dolenni i wefannau eraill."
+msgid "Purpose"
+msgstr "Pwrpas"
 
 msgid ""
 "This privacy notice only applies to this service and does not cover other"
