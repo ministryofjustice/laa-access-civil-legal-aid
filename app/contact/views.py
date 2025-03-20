@@ -8,8 +8,9 @@ import logging
 from flask import session, render_template, request, redirect, url_for
 from app.api import cla_backend
 from app.contact.notify.api import notify
-from app.means_test.api import get_means_test_payload, update_means_test
+from app.means_test.api import update_means_test
 from app.means_test.views import MeansTest
+from app.means_test.payload import MeansTest as MeansTestPayload
 from datetime import datetime
 
 logger = logging.getLogger(__name__)
@@ -96,8 +97,9 @@ class ContactUs(View):
         if not notes_data or len(notes_data) == 0:
             return
         session.get_eligibility().add_note("User problem", notes_data)
-        eligibility_data = get_means_test_payload(session.get_eligibility())
-        update_means_test(eligibility_data)
+        payload = MeansTestPayload()
+        payload.update_from_session()
+        update_means_test(payload)
 
     @staticmethod
     def _attach_rfc_to_case(case_ref: str, rfc_ref: str):

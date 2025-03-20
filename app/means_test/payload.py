@@ -19,6 +19,9 @@ def recursive_update(orig, other):
         elif orig[key] == val:
             continue
 
+        elif key == "notes" and orig[key] != val:
+            orig[key] = "{0}\n\n{1}".format(orig[key], val)
+
         elif isinstance(val, dict):
             if MoneyInterval.is_money_interval(val):
                 orig[key] = MoneyInterval(val)
@@ -86,19 +89,21 @@ class YourBenefitsPayload(dict):
     def __init__(self, form_data={}):
         super(YourBenefitsPayload, self).__init__()
 
-        def is_selected(ben):
-            return ben in form_data["benefits"]
-
         is_passported = session.get_eligibility().has_passported_benefits
 
-        benefits = {
-            "pension_credit": "pension_credit" in form_data.get("benefits", []),
-            "job_seekers_allowance": "job_seekers_allowance"
-            in form_data.get("benefits", []),
-            "employment_support": "employment_support" in form_data.get("benefits", []),
-            "universal_credit": "universal_credit" in form_data.get("benefits", []),
-            "income_support": "income_support" in form_data.get("benefits", []),
-        }
+        benefits = (
+            {
+                "pension_credit": "pension_credit" in form_data.get("benefits", []),
+                "job_seekers_allowance": "job_seekers_allowance"
+                in form_data.get("benefits", []),
+                "employment_support": "employment_support"
+                in form_data.get("benefits", []),
+                "universal_credit": "universal_credit" in form_data.get("benefits", []),
+                "income_support": "income_support" in form_data.get("benefits", []),
+            }
+            if session.get_eligibility().on_benefits
+            else {}
+        )
 
         payload = {
             "specific_benefits": benefits,
@@ -190,7 +195,11 @@ class PropertiesPayload(dict):
     def __init__(self, form_data={}):
         super(PropertiesPayload, self).__init__()
 
-        properties = [PropertyPayload(prop) for prop in form_data.get("properties", [])]
+        properties = [
+            PropertyPayload(prop)
+            for prop in form_data.get("properties", [])
+            if session.get_eligibility().owns_property
+        ]
         if not properties and session.get_eligibility().owns_property:
             properties.append(PropertyPayload())
 
@@ -312,6 +321,10 @@ class IncomePayload(dict):
                 }
             }
 
+            print("Income Payload")
+            print(person)
+            print(self_employed)
+            print(employed)
             if self_employed:
                 payload[person]["income"]["earnings"] = MoneyInterval(0)
                 payload[person]["income"]["self_employment_drawings"] = MoneyInterval(
@@ -362,7 +375,7 @@ class IncomePayload(dict):
 
         if session.get_eligibility().has_partner:
             partner_payload = income(
-                "partner",
+                person="partner",
                 self_employed=partner_self_employed,
                 employed=partner_employed,
             )
@@ -473,10 +486,12 @@ class MeansTest(dict):
         if session.category:
             self["category"] = session.category.chs_code
 
-    def update(self, other={}, **kwargs):
+    def update(self, other=None, **kwargs):
         """
         Recursively merge dicts into self
         """
+        if other is None:
+            other = {}
         other.update(kwargs)
         recursive_update(self, other)
 
@@ -494,5 +509,7 @@ class MeansTest(dict):
         self.update(payload_class(form_data))
 
     def update_from_session(self):
+        print("After func call")
+        print(session)
         for form_name, form_data in session.get_eligibility().forms.items():
             self.update_from_form(form_name, form_data)

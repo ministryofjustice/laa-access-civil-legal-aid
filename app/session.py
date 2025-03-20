@@ -23,10 +23,6 @@ class Eligibility:
         self.forms[form_name] = data
 
     @property
-    def category(self):
-        return session.get("category", {}).get("chs_code")
-
-    @property
     def has_partner(self):
         return self.forms.get("about-you", {}).get(
             "has_partner", False
@@ -76,7 +72,7 @@ class Eligibility:
 
     @property
     def has_dependants(self) -> bool:
-        return self.forms.get("about-you", {}).get("have_dependents", False)
+        return self.forms.get("about-you", {}).get("have_dependants", False)
 
     @property
     def on_benefits(self) -> bool:

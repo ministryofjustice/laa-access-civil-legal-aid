@@ -151,8 +151,8 @@ def test_conditional_fields(page: Page):
     ).check()
     expect(page.locator("#conditional-have_children div")).to_be_visible()
 
-    expect(page.locator("#conditional-have_dependents div")).not_to_be_visible()
+    expect(page.locator("#conditional-have_dependants div")).not_to_be_visible()
     page.get_by_role("group", name="Do you have any dependants").get_by_label(
         "Yes"
     ).check()
-    expect(page.locator("#conditional-have_dependents div")).to_be_visible()
+    expect(page.locator("#conditional-have_dependants div")).to_be_visible()

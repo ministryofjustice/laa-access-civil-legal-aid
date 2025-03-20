@@ -1,5 +1,7 @@
+from unittest.mock import patch
 import pytest
-from app.means_test.api import get_means_test_payload
+from app.categories.constants import get_category_from_code
+from app.means_test.payload import MeansTest as MeansTestPayload
 from .test_cases import (
     ABOUT_YOU_TEST_CASES,
     INCOME_TEST_CASES,
@@ -42,13 +44,30 @@ def assert_partial_dict_match(expected: dict, actual: dict, path: str = "") -> N
     + OUTGOINGS_TEST_CASES,
     ids=lambda t: t["id"],
 )
-def test_get_means_test_payload(test_case: dict, app) -> None:
+def test_get_means_test_payload(test_case: dict, app, client) -> None:
     """
     Test the get_payload method with various input scenarios.
 
     Args:
         test_case: Dictionary containing test input and expected output
     """
-    with app.app_context():
-        result = get_means_test_payload(test_case["input"])
-        assert_partial_dict_match(test_case["expected"], result)
+    # Set up the session data in the client
+    with client.session_transaction() as sess:
+        for form in test_case["input"].forms:
+            sess.get_eligibility().forms[form] = test_case["input"].forms[form]
+        sess.category = get_category_from_code(test_case["input"].category)
+
+    # Create a mock session to use in the test
+    from app.session import Session
+
+    mock_session = Session()
+    for form in test_case["input"].forms:
+        mock_session.get_eligibility().forms[form] = test_case["input"].forms[form]
+    mock_session.category = get_category_from_code(test_case["input"].category)
+
+    # Patch the session in the module that contains update_from_session
+    with patch("app.means_test.payload.session", mock_session):
+        payload = MeansTestPayload()
+        payload.update_from_session()
+        print(payload)
+        assert_partial_dict_match(test_case["expected"], payload)
