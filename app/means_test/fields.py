@@ -2,13 +2,42 @@ import decimal
 from decimal import Decimal, InvalidOperation
 
 from flask import render_template
-from flask_babel import lazy_gettext as _
+from flask_babel import lazy_gettext as _, LazyString
 from wtforms.widgets import TextInput
 from markupsafe import Markup
-from wtforms import Field, IntegerField as BaseIntegerField
+from wtforms import Field, IntegerField as BaseIntegerField, RadioField
 from app.means_test.money_interval import MoneyInterval
 import re
 from app.means_test.validators import CurrencyValidator
+
+
+class YesNoField(RadioField):
+    def __init__(self, label: LazyString = None, validators=None, **kwargs):
+        if "coerce" in kwargs:
+            raise ValueError("The 'coerce' parameter is not allowed in a YesNoField")
+        if "choices" in kwargs:
+            raise ValueError(
+                "Choices in a YesNoField are fixed and cannot be overridden"
+            )
+        choices = [(True, _("Yes")), (False, _("No"))]
+        coerce = self._coerce_to_boolean
+        super(YesNoField, self).__init__(
+            label=label, validators=validators, choices=choices, coerce=coerce, **kwargs
+        )  # noqa
+
+    @staticmethod
+    def _coerce_to_boolean(value):
+        # Converts the string value from the HTML request to a boolean
+        # "Yes" being True, "No" being False
+        if isinstance(value, bool):
+            return value
+        if isinstance(value, str):
+            return value.lower() in ("true", "yes", "y", "1", "t")
+        return bool(value)
+
+    @property
+    def value(self):
+        return _("Yes") if self.data else _("No")
 
 
 class MoneyIntervalWidget(TextInput):
@@ -145,7 +174,10 @@ class MoneyField(BaseIntegerField):
         return re.sub(r"[£\s,]", "", value.strip())
 
     def process_formdata(self, valuelist):
-        if valuelist:
+        if valuelist and isinstance(valuelist[0], int):
+            # The form is being restored from the session where the conversion has already taken place
+            self.data = valuelist[0]
+        elif valuelist:
             self._user_input = valuelist[0]
 
             # Clean the input

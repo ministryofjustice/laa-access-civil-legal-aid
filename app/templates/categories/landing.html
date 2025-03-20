@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {%- from 'components/back_link.html' import govukBackLink -%}
-{%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
 {%- from 'categories/components/list-item.html' import list_item, list_item_small -%}
 {%- from 'categories/components/cannot-find-your-problem.html' import cannot_find_your_problem -%}
 
@@ -10,9 +9,6 @@
 {{ super() }}
 {{ govukBackLink() }}
 
-{% if category.exit_page %}
-    {{ govukExitThisPage("Exit this page")}}
-{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -25,18 +21,18 @@
 
         <br>
 
-        {% for sub_category, route in routing_map.main %}
+        {% for sub_category, route in listing.main %}
             {{ list_item(sub_category.title, sub_category.description, route|category_url_for) }}
         {% endfor %}
 
         <br>
 
-        {% if routing_map.more %}
+        {% if listing.more %}
             <h2 class="govuk-heading-m">{% trans %}More problems{% endtrans %}</h2>
 
             <br>
 
-            {% for sub_category, route in routing_map.more %}
+            {% for sub_category, route in listing.more %}
                 {{ list_item_small(sub_category.title, sub_category.description, route|category_url_for) }}
             {% endfor %}
         {% endif %}
@@ -45,11 +41,11 @@
         {% if category.code in ["community_care","mental_health"] %}
             {% set other_text = "" %}
         {% elif  category.code == "housing" %}
-            {% set other_text = "housing" %}
-        {% elif category.code == "education" %}
-            {% set other_text = "SEND" %}
+            {% set other_text = _("housing") %}
+        {% elif category.code == "send" %}
+            {% set other_text = _("SEND") %}
         {% endif %}
-        {{ cannot_find_your_problem(other_text, routing_map.other|category_url_for)}}
+        {{ cannot_find_your_problem(other_text, listing.other|category_url_for)}}
 
     </div>
 </div>

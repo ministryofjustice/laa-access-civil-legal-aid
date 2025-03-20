@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{%- from 'components/back_link.html' import govukBackLink -%}
+{%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton %}
+{%- from 'categories/components/help-organisations.html' import helpOrganisationsList %}
+{%- from 'categories/components/exceptional-case-funding.html' import exceptionalCaseFundingSidebar %}
+{%- from 'components/survey.html' import satisfaction_survey %}
+
+{% block beforeContent %}
+    {{ super() }}
+    {{ govukBackLink() }}
+{% endblock %}
+
+{% set title = _("Next steps to get help") %}
+{% block pageTitle %}{{ title }} - GOV.UK{% endblock %}
+
+
+{% set alternate_help_intro_text %}
+    {% if category.code == "domestic_abuse" %}
+        {{ _("These organisations give free, independent advice for problems about domestic abuse.") }}
+    {% elif category.code == "public_law" %}
+        {{ _("These organisations give free, independent advice for problems with police and public organisations.") }}
+    {% elif category.code == "mental_health" %}
+        {{ _("These organisations give free, independent advice for problems about mental health and mental capacity.") }}
+    {% elif category.code == "asylum_and_immigration" %}
+        {{ _("These organisations give free, independent advice for problems about asylum and immigration.") }}
+    {% elif category.code == "community_care" %}
+        {{ _("These organisations give free, independent advice for problems about disability and old age (social care).") }}
+    {% elif category.code == "benefits" %}
+        {{ _("These organisations give free, independent advice for problems about benefits.") }}
+    {% elif category.code == "family" %}
+        {{ _("These organisations give free, independent advice for problems about children, families and relationships.") }}
+    {% elif category.code == "housing" %}
+        {{ _("These organisations give free, independent advice for problems about housing.") }}
+    {% elif category.code == "discrimination" %}
+        {{ _("These organisations give free, independent advice for problems about discrimination.") }}
+    {% elif category.code == "send" %}
+        {{ _("These organisations give free, independent advice for problems about special educational needs (SEND).") }}
+    {% else %}
+        {{ _("These organisations give free, independent advice.") }}
+    {% endif %}
+{% endset %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">{{ title }}</h1>
+
+        <h2 class="govuk-heading-l">{% trans %}Find other free or low-cost legal help{% endtrans %}</h2>
+
+        {% set citizens_advice_link %}<a class="govuk-link" href="https://www.citizensadvice.org.uk/law-and-courts/legal-system/finding-free-or-affordable-legal-help/" target="_blank">{% trans %}free or affordable legal help (opens new tab).{% endtrans %}</a>{% endset %}
+        <p class="govuk-body">{% trans %}The Citizen’s Advice website explains how to find {% endtrans %}{{ citizens_advice_link }}</p>
+
+        {{ satisfaction_survey("scope_ineligible_with_alternative_help") }}
+
+        <h2 class="govuk-heading-l">{% trans %}Speak to an advice organisation{% endtrans %}</h2>
+
+        {% if organisations %}
+            {# We use lowercase_category_name rather than lower, to not convert acronyms to lowercase #}
+            <p class="govuk-body">{{ alternate_help_intro_text }}</p>
+            {{ helpOrganisationsList(organisations, truncate=5) }}
+        {% endif %}
+
+
+    </div>
+    <div class="govuk-grid-column-one-third">
+        {{ exceptionalCaseFundingSidebar(category) }}
+    </div>
+</div>
+{% endblock %}

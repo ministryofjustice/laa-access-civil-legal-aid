@@ -1,16 +1,347 @@
 {% extends "base.html" %}
+
 {%- from 'components/back_link.html' import govukBackLink -%}
 {%- from 'categories/components/list-item.html' import list_item, list_item_small -%}
+{%- from 'govuk_frontend_jinja/components/inset-text/macro.html' import govukInsetText %}
+{%- from 'govuk_frontend_jinja/components/warning-text/macro.html' import govukWarningText %}
+
+{% set willCallHtml %}
+    <p class="govuk-body">{% trans %}We’ll give you the Civil Legal Advice phone number when you submit your details.{% endtrans %}</p>
+{% endset -%}
+
+{% set callTodayHtml %}
+    {{ form.call_today_time(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+    }) }}
+{% endset -%}
+
+{% set thirdpartycallTodayHtml %}
+    {{ form.thirdparty_call_today_time(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+    }) }}
+{% endset -%}
+
+{% set callAnotherHtml %}
+    {{ form.call_another_day(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "attributes": {
+            "data-time-slots": {
+                "value": form.time_slots_json
+            }
+        },
+    }) }}
+    {{ form.call_another_time(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+    }) }}
+{% endset -%}
+
+{% set thirdpartycallAnotherHtml %}
+    {{ form.thirdparty_call_another_day(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+        "attributes": {
+            "data-time-slots": {
+                "value": form.thirdparty_time_slots_json
+            }
+        },
+    }) }}
+    {{ form.thirdparty_call_another_time(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+    }) }}
+{% endset -%}
+
+{% set callMeHtml %}
+    <ul class="govuk-list govuk-list--bullet">
+    <li>{% trans %}We’ll call during the time you choose.{% endtrans %}</li>
+    <li>{% trans %}The call will come from an unknown or withheld number.{% endtrans %}</li>
+    <li>{% trans %}If you miss the call, we will call 2 more times in the next few days.{% endtrans %}</li>
+    <li>{% trans %}We will not leave a message.{% endtrans %}</li>
+    <li>{% trans %}If you miss all 3 calls, or if you need urgent advice, call us on:{% endtrans %}
+      <br>
+      <a class="govuk-link" href="tel:0345 345 4345">0345 345 4345</a>.
+    </li>
+    </ul>
+    {{ form.contact_number(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+    }) }}
+    {% set items = [
+        {
+            "conditional": {
+                "html": callTodayHtml
+            }
+        },
+        {
+            "conditional": {
+                "html": callAnotherHtml
+            }
+        }
+    ] %}
+    {% if form.call_today_time.choices|length == 1 %}
+        {% set items = items[1:] %}
+    {% endif %}
+    {% if form.call_another_day.choices|length == 1 %}
+        {% set items = items[:1] %}
+    {% endif %}
+    {{ form.time_to_call(params={
+        "items": items
+    }) }}
+    {{ form.announce_call_from_cla }}
+{% endset -%}
+
+{% set callthirdPartyHtml %}
+<ul class="govuk-list govuk-list--bullet">
+    <li>{% trans %}You must be with the person when we call.{% endtrans %}</li>
+    <li>{% trans %}We’ll call during the time you choose.{% endtrans %}</li>
+    <li>{% trans %}The call will come from an unknown or withheld number.{% endtrans %}</li>
+    <li>{% trans %}If you miss the call, we will call 2 more times in the next few days.{% endtrans %}</li>
+    <li>{% trans %}We will not leave a message.{% endtrans %}</li>
+    <li>{% trans %}If you miss all 3 calls, or if you need urgent advice, call us on:{% endtrans %}
+      <br>
+      <a class="govuk-link" href="tel:0345 345 4345">0345 345 4345</a>.
+    </li>
+    </ul>
+    {{ form.thirdparty_full_name(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+    }) }}
+    {{ form.thirdparty_relationship(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+    }) }}
+    {{ form.thirdparty_contact_number(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+    }) }}
+    {% set items = [
+        {
+            "conditional": {
+                "html": thirdpartycallTodayHtml
+            }
+        },
+        {
+            "conditional": {
+                "html": thirdpartycallAnotherHtml
+            }
+        }
+    ] %}
+    {% if form.thirdparty_call_today_time.choices|length == 1 %}
+        {% set items = items[1:] %}
+    {% endif %}
+    {% if form.thirdparty_call_another_day.choices|length == 1 %}
+        {% set items = items[:1] %}
+    {% endif %}
+    {{ form.thirdparty_time_to_call(params={
+        "items": items
+    }) }}
+{% endset -%}
+
+{% set addressFinderHtml %}
+    {{ form.address_finder }}
+{% endset -%}
+
+{% set bslEmailHtml %}
+    {{ form.bsl_email }}
+{% endset -%}
+
+{% set otherLangHtml %}
+    {{ form.other_language(params={
+        "label": {
+            "classes": "govuk-label--s"
+        },
+    }) }}
+{% endset -%}
+
+{% set otherAdapHtml %}
+    {{ form.other_adaptation(params={
+        "label": {
+            "classes": "govuk-label--s govuk-visually-hidden"
+        },
+    }) }}
+{% endset -%}
+
+{% block pageTitle %}{%- if form.errors %}Error: {% endif -%}{{ form.page_title }} - GOV.UK{% endblock %}
 
 {% block beforeContent%}
 {{ super() }}
 {{ govukBackLink() }}
+
 {% endblock %}
 
 {% block content %}
+
+{{ super() }}
+
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-        <h1 class="govuk-heading-l">Contact us page</h1>
+
+        {% block formHeading %}
+            <h1 class="govuk-heading-xl">{{ form.page_title }}</h1>
+        {% endblock %}
+
+        {% block formDescription %}
+            {% if show_exit_this_page %}
+            {{ govukWarningText({
+                "text": _("If you’re in an emergency situation, please call the police on 999.")
+              }) }}
+            <p class="govuk-body">{% trans %}If you’re in immediate danger please call Civil Legal Advice on {% endtrans %}<strong class="cla-telephone">0345 345 4 345</strong>. <a class="govuk-link" href="https://www.gov.uk/call-charges">{% trans %}Call charges apply.{% endtrans %}</a></p>
+            <p class="govuk-body">{% trans %}You can also ask us to call you back using the form below, which is free.{% endtrans %}</p>
+            {% else %}
+            <p class="govuk-body">{% trans %}Civil Legal Advice will check if you can get legal aid and help you contact the right legal adviser. If you cannot get legal aid, we’ll tell you about other help you can get.{% endtrans %}</p>
+            <p class="govuk-body">{% trans %}You can call Civil Legal Advice yourself - this is an 0345 number, so <a class="govuk-link" href="https://www.gov.uk/call-charges">call charges</a> apply. Or you can ask us to call you back, which is free.{% endtrans %}</p>
+            <p class="govuk-body">{% trans %}We’ll ask questions about your legal problem and your financial situation. You might need to provide evidence of any financial information you give us.{% endtrans %}</p>
+            {% endif %}
+        {% endblock %}
+
+        <form action="" method="post" novalidate>
+
+            {% block form %}
+                {{ form.csrf_token }}
+                {{ form.full_name(params={
+                    "label": {
+                        "classes": "govuk-label--m"
+                    },
+                }) }}
+                {% if form.call_today_time.choices|length == 1 and form.call_another_day.choices|length == 1 %}
+                {{ form.contact_type(params={
+                    'items': [
+                    {
+                        'conditional': {
+                        'html': willCallHtml
+                        }
+                    },
+                    {
+                        'conditional': {
+                        'html': callthirdPartyHtml
+                        }
+                    }
+                    ]
+                }) }}
+                    {% else %}
+                {{ form.contact_type(params={
+                    'items': [
+                    {
+                        'conditional': {
+                        'html': willCallHtml
+                        }
+                    },
+                    {
+                        'conditional': {
+                        'html': callMeHtml
+                        }
+                    },
+                    {
+                        'conditional': {
+                        'html': callthirdPartyHtml
+                        }
+                    }
+                    ]
+                }) }}
+                {% endif %}
+                {{ form.email(params={
+                    "id": "email",
+                    "label": {
+                        "classes": "govuk-label--m"
+                    },
+                }) }}
+
+                <div class="govuk-form-group" id="postcode-search">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">{% trans %}Address{% endtrans %}</legend>
+                <label class="govuk-label govuk-label--s" for="address-post_code" id="field-label-address-post_code">
+                    {% trans %}Postcode (optional){% endtrans %}
+                </label>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-one-third">
+                        {{ form.post_code(params={
+                            "label": {
+                                "classes": "govuk-label govuk-visually-hidden",
+                            },
+                            "classes": "govuk-input govuk-input--width-10 govuk-!-margin-bottom-0 postcode-search",
+                        }) }}
+                    </div>
+                    <div class="govuk-grid-column-two-third">
+                        <button id="show-postcode" class="govuk-button govuk-button--secondary" type="button">
+                            {{ _('Find UK Address') }}
+                        </button>
+                    </div>
+                    <div id="address-information-container" class="govuk-!-display-none govuk-radios__conditional address-container">
+                        {{ form.address_finder(params={
+                            "label": {
+                                "classes": "govuk-label--s"
+                            },
+                        }) }}
+                    </div>
+                </div>
+                </div>
+
+
+                {{ form.street_address(params={
+                    "label": {
+                        "classes": "govuk-label--s",
+                    },
+                }) }}
+                {{ form.extra_notes(params={
+                    "label": {
+                        "classes": "govuk-label--m"
+                    },
+                }) }}
+                {{ form.adaptations(params={
+                    'items': [
+                    {
+                        'id': 'bsl_webcam',
+                        'conditional': {
+                        'html': bslEmailHtml
+                        }
+                    },
+                    {
+                    },
+                    {
+                    },
+                    {
+                        'conditional': {
+                        'html': otherLangHtml
+                        }
+                    },
+                    {
+                        'conditional': {
+                        'html': otherAdapHtml
+                        }
+                    }
+                    ]
+                }) }}
+                {{ form.submit }}
+            {% endblock %}
+        </form>
+            {% block belowForm %}
+                {{ govukInsetText({
+                  "text": _("Your session will time out after 30 minutes of inactivity. We do this for your security.")
+                }) }}
+                <hr class="govuk-section-break--l">
+                {% set contact_url = url_for('contact.reasons_for_contacting') %}
+                <p class="govuk-body">{% trans %}If you're having trouble completing this form, {% endtrans %}<a href="{{ contact_url }}" class="govuk-link">{% trans %}get in touch{% endtrans %}</a>.</p>
+            {% endblock %}
     </div>
+    {% block sidebar %}
+    {% endblock %}
 </div>
+{% endblock %}
+
+{% block bodyEnd %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='contact.js') }}" nonce="{{ csp_nonce() }}"></script>
 {% endblock %}

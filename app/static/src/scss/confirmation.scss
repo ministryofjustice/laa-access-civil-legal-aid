@@ -1,0 +1,27 @@
+.confirmation-inset {
+  background: govuk-colour("white");
+  color: $govuk-text-colour;
+  padding: 20px;
+  margin: 20px 0 0;
+}
+
+@media print {
+  .confirmation-actions,
+  .confirmation-email-form {
+    display: none;
+  }
+}
+
+.confirmation-button-link {
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: govuk-colour("white");
+  text-decoration: underline;
+  &:hover{
+    color: govuk-colour("light-grey");
+    &:focus{
+      color: $govuk-text-colour;
+    }
+  }
+}

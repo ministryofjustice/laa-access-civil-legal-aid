@@ -5,7 +5,7 @@ from ..results.views import CannotFindYourProblemPage, NextStepsPage
 from ..views import QuestionPage
 
 bp.add_url_rule(
-    "/benefits/appeal",
+    "/benefits-appeal",
     view_func=QuestionPage.as_view(
         "appeal",
         form_class=AppealQuestionForm,
@@ -13,7 +13,7 @@ bp.add_url_rule(
     ),
 )
 bp.add_url_rule(
-    "/benefits/cannot-find-your-problem",
+    "/benefits-appeal/cannot-find-your-problem",
     view_func=CannotFindYourProblemPage.as_view(
         "cannot_find_your_problem",
         category=BENEFITS,
@@ -21,7 +21,7 @@ bp.add_url_rule(
     ),
 )
 bp.add_url_rule(
-    "/benefits/next-steps",
+    "/benefits-appeal/next-steps",
     view_func=NextStepsPage.as_view(
         "next_steps",
         category=BENEFITS,

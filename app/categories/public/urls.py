@@ -11,21 +11,21 @@ class PublicLandingPage(CategoryLandingPage):
 
 
 bp.add_url_rule(
-    "/public",
+    "/public-organisations",
     view_func=PublicLandingPage.as_view(
         "landing", template="categories/public/landing.html"
     ),
 )
 
 bp.add_url_rule(
-    "/public/reason",
+    "/public-organisations/reason",
     view_func=QuestionPage.as_view(
         "reason",
         form_class=PolicePrisonOrDetentionCentreForm,
     ),
 )
 bp.add_url_rule(
-    "/public/cannot-find-your-problem",
+    "/public-organisations/cannot-find-your-problem",
     view_func=CannotFindYourProblemPage.as_view(
         "cannot_find_your_problem",
         next_steps_page="categories.public.next_steps",

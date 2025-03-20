@@ -48,7 +48,7 @@ class SafeguardingQuestionForm(QuestionForm):
     title = _("Are you worried about someone's safety?")
 
     next_step_mapping = {
-        "yes": "categories.results.in_scope",
+        "yes": "contact.contact_us",
         "no": "categories.results.in_scope",
     }
 

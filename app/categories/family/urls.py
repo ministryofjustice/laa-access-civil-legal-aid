@@ -34,14 +34,14 @@ class FamilyLandingPage(CategoryLandingPage):
 
 FamilyLandingPage.register_routes(bp, path="children-families-relationships")
 bp.add_url_rule(
-    "/family/cannot-find-your-problem",
+    "/children-families-relationships/cannot-find-your-problem",
     view_func=CannotFindYourProblemPage.as_view(
         "cannot_find_your_problem",
         next_steps_page="categories.family.next_steps",
     ),
 )
 bp.add_url_rule(
-    "/family/next-steps",
+    "/children-families-relationships/next-steps",
     view_func=NextStepsPage.as_view(
         "next_steps",
         category=FAMILY,

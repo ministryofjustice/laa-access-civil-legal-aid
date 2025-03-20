@@ -2,6 +2,8 @@
 {%- from 'components/back_link.html' import govukBackLink -%}
 {%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton -%}
 {%- from 'categories/components/help-organisations.html' import helpOrganisationsList %}
+{%- from 'categories/components/exceptional-case-funding.html' import exceptionalCaseFundingSidebar %}
+{%- from 'components/survey.html' import satisfaction_survey %}
 
 {% set fala_url = url_for("find-a-legal-adviser.search", category=fala_category_code.lower() if fala_category_code else None) %}
 
@@ -29,10 +31,7 @@
           "href": "https://www.gov.uk/find-a-legal-adviser"
         }) }}
 
-        <p class="govuk-body">
-            <a class="govuk-link" href="https://www.gov.uk/done/check-if-civil-legal-advice-can-help-you" aria-labelledby="aria-satisfaction-survey">
-            {% trans %}What did you think of this service?{% endtrans %}</a> {% trans %}(takes 30 seconds){% endtrans %}
-        </p>
+        {{ satisfaction_survey("failed_means") }}
 
         {% if category != 'other' and organisations %}
             <p class="govuk-body">
@@ -45,21 +44,7 @@
         {% endif %}
     </div>
     <div class="govuk-grid-column-one-third">
-        <aside class="sidebar">
-            <h2 class="govuk-heading-m">{% trans %}Exceptional cases{% endtrans %}</h2>
-            {% if category == 'education' %}
-                <p class="govuk-body">{% trans %}In exceptional cases or if your case is going to a judicial review, legal aid may still be available.{% endtrans %}</p>
-            {% else %}
-                <p class="govuk-body">{% trans %}In exceptional cases, legal aid may still be available.{% endtrans %}</p>
-            {% endif %}
-
-            {% set fala_link %}<a class='govuk-link' href={{ fala_url }}>{% trans %}ask a legal adviser{% endtrans %}</a> {% endset %}
-
-            <p class="govuk-body">{% trans fala_link=fala_link %}You can {{fala_link}} if an application might succeed in your case and how to apply.{% endtrans %}</p>
-
-            {% set ecf_link %}<a href='https://www.gov.uk/legal-aid-apply-for-exceptional-case-funding' rel='external' class='govuk-link'>{% trans %}apply directly{% endtrans %}</a>{% endset %}
-            <p class="govuk-body">{% trans ecf_link=ecf_link %}You can also {{ ecf_link }} to the Legal Aid Agency.{% endtrans %}</p>
-        </aside>
+        {{ exceptionalCaseFundingSidebar(category) }}
     </div>
 </div>
 {% endblock %}

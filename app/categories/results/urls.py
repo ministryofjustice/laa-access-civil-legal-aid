@@ -30,6 +30,6 @@ bp.add_url_rule(
     "/next-steps",
     view_func=NextStepsPage.as_view(
         "next_steps",
-        get_help_organisations=True,
+        get_help_organisations=False,
     ),
 )

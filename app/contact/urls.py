@@ -1,26 +1,39 @@
 from app.contact import bp
-from app.categories.views import CategoryPage
-from app.contact.forms import ReasonsForContactingForm
-from app.api import cla_backend
-from flask import request, redirect, url_for, render_template
+from app.contact.address_finder.widgets import FormattedAddressLookup
+from app.contact.views import ContactUs, ReasonForContacting
+from flask import jsonify
 import logging
+from app.contact.views import ConfirmationPage
 
 logger = logging.getLogger(__name__)
 
+
 bp.add_url_rule(
-    "/contact",
-    view_func=CategoryPage.as_view("contact_us", template="contact/contact.html"),
+    "/reasons-for-contacting",
+    view_func=ReasonForContacting.as_view("reasons_for_contacting"),
 )
 
 
-@bp.route("/reasons-for-contacting", methods=["GET", "POST"])
-def reasons_for_contacting():
-    form = ReasonsForContactingForm()
-    if request.method == "GET":
-        form.referrer.data = request.referrer or "Unknown"
-    if form.validate_on_submit():
-        result = cla_backend.post_reasons_for_contacting(form=form)
-        next_step = form.next_step_mapping.get("*")
-        logger.info("API Response: %s", result)
-        return redirect(url_for(next_step))
-    return render_template("contact/rfc.html", form=form)
+@bp.route("/addresses/<postcode>", methods=["GET"])
+def geocode(postcode):
+    """Lookup addresses with the specified postcode"""
+    formatted_addresses = FormattedAddressLookup().by_postcode(postcode)
+    response = [
+        {"formatted_address": address} for address in formatted_addresses if address
+    ]
+    return jsonify(response)
+
+
+bp.add_url_rule(
+    "/contact-us",
+    view_func=ContactUs.as_view("contact_us", attach_eligiblity_data=False),
+)
+
+bp.add_url_rule(
+    "/eligible",
+    view_func=ContactUs.as_view(
+        "eligible", template="contact/eligible.html", attach_eligiblity_data=True
+    ),
+)
+
+bp.add_url_rule("/confirmation", view_func=ConfirmationPage.as_view("confirmation"))

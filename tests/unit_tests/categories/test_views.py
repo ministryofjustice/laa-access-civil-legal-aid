@@ -1,9 +1,6 @@
 import pytest
 from flask import session
-from wtforms.fields.choices import RadioField
 from app.categories.family.urls import FamilyLandingPage
-from app.categories.forms import QuestionForm
-from app.categories.views import QuestionPage
 from unittest.mock import Mock, patch
 from app.categories.constants import FAMILY
 from app.categories.results.views import (
@@ -11,17 +8,23 @@ from app.categories.results.views import (
     CannotFindYourProblemPage,
     NextStepsPage,
 )
+from wtforms import RadioField
+from wtforms.validators import InputRequired
+from app.categories.widgets import CategoryRadioInput
+from app.categories.views import QuestionPage, QuestionForm
 
 
 def test_category_page_dispatch(app):
     with app.app_context():
-        page = FamilyLandingPage(FamilyLandingPage.template)
+        page = FamilyLandingPage(
+            route_endpoint="family", template=FamilyLandingPage.template
+        )
         page.dispatch_request()
         assert session.category == FamilyLandingPage.category
 
 
 class MockQuestionForm(QuestionForm):
-    category = "test_category"
+    category = FAMILY
     title = "test_question"
     next_step_mapping = {
         "yes": "next_page_yes",
@@ -57,7 +60,7 @@ def question_page():
 def test_initialization(question_page):
     assert question_page.form_class == MockQuestionForm
     assert question_page.template == "categories/question-page.html"
-    assert question_page.category == "test_category"
+    assert question_page.category == FAMILY
 
 
 def test_initialization_custom_template():
@@ -71,7 +74,7 @@ def test_get_next_page_single_answer(mock_url_for, app, client, question_page):
     with app.test_request_context():
         next_page = question_page.get_next_page("yes")
         mock_url_for.assert_called_once_with("next_page_yes")
-        assert next_page.location == "/mocked/next_page_yes"
+        assert next_page == "/mocked/next_page_yes"
 
 
 def test_get_next_page_optional_answer(mock_url_for, app, client, question_page):
@@ -79,7 +82,7 @@ def test_get_next_page_optional_answer(mock_url_for, app, client, question_page)
     with app.test_request_context():
         next_page = question_page.get_next_page(["notsure"])
         mock_url_for.assert_called_once_with("next_page_notsure")
-        assert next_page.location == "/mocked/next_page_notsure"
+        assert next_page == "/mocked/next_page_notsure"
 
 
 def test_get_next_page_multiple_answers(mock_url_for, app, client, question_page):
@@ -87,7 +90,7 @@ def test_get_next_page_multiple_answers(mock_url_for, app, client, question_page
     with app.test_request_context():
         next_page = question_page.get_next_page(["yes", "no"])
         mock_url_for.assert_called_once_with("next_page_yes")
-        assert next_page.location == "/mocked/next_page_yes"
+        assert next_page == "/mocked/next_page_yes"
 
 
 def test_get_next_page_dict_route(mock_url_for, app, client, question_page):
@@ -95,7 +98,7 @@ def test_get_next_page_dict_route(mock_url_for, app, client, question_page):
     with app.test_request_context():
         next_page = question_page.get_next_page("dict_route")
         mock_url_for.assert_called_once_with(endpoint="custom_page", param="value")
-        assert next_page.location == "/mocked/custom_page"
+        assert next_page == "/mocked/custom_page"
 
 
 def test_get_next_page_catch_all(mock_url_for, app, client, question_page):
@@ -103,7 +106,7 @@ def test_get_next_page_catch_all(mock_url_for, app, client, question_page):
     with app.test_request_context():
         next_page = question_page.get_next_page(["unknown1", "unknown2"])
         mock_url_for.assert_called_once_with("catch_all_page")
-        assert next_page.location == "/mocked/catch_all_page"
+        assert next_page == "/mocked/catch_all_page"
 
 
 def test_get_next_page_invalid_answer(app, client, question_page):
@@ -132,8 +135,9 @@ class TestProcessRequest:
             ):
                 question_page.process_request()
                 mock_get_next_page.assert_called_once_with("yes")
-                mock_update_session.assert_called_once_with(
-                    question="test_question", answer="yes", category="test_category"
+                mock_update_session.assert_called_once()
+                assert isinstance(
+                    mock_update_session.mock_calls[0].args[0], MockQuestionForm
                 )
 
     def test_clear_session_if_called_with_errors(self, app, client, question_page):
@@ -190,9 +194,58 @@ class TestCannotFindYourProblemPage:
 class TestNextStepsPage:
     def test_init(self):
         page = NextStepsPage()
-        assert page.template == "categories/next-steps.html"
+        assert page.template == "categories/next-steps-alternate-help.html"
 
     def test_init_with_category(self):
         page = NextStepsPage(category=FAMILY)
-        assert page.template == "categories/next-steps.html"
+        assert page.template == "categories/next-steps-alternate-help.html"
         assert page.category == FAMILY
+
+    def test_init_with_no_help_organisations(self):
+        page = NextStepsPage(get_help_organisations=False)
+        assert page.template == "categories/next-steps.html"
+
+
+def test_question_page_next_page(app):
+    class TestQuestionForm(QuestionForm):
+        next_step_mapping = {
+            "yes": "categories.results.in_scope",
+            "no": "categories.results.refer",
+            "notsure": "categories.index",
+            "fala": {
+                "endpoint": "find-a-legal-adviser.search",
+                "category": "mhe",
+                "secondary_category": "com",
+            },
+        }
+        question = RadioField(
+            "This is a test question?",
+            widget=CategoryRadioInput(
+                show_divider=False
+            ),  # Uses our override class to support setting custom CSS on the label title
+            validators=[InputRequired(message="Validation failed message")],
+            choices=[
+                ("yes", "Yes"),
+                ("no", "No"),
+            ],
+        )
+
+    with app.app_context():
+        form = TestQuestionForm(category=FAMILY, question="yes")
+        view = QuestionPage(form_class=form)
+        assert "/legal-aid-available" == view.get_next_page("yes")
+
+        form = TestQuestionForm(category=FAMILY, question="no")
+        view = QuestionPage(form_class=form)
+        assert "/refer" == view.get_next_page("no")
+
+        form = TestQuestionForm(category=FAMILY, question="notsure")
+        view = QuestionPage(form_class=form)
+        assert "/find-your-problem" == view.get_next_page("notsure")
+
+        form = TestQuestionForm(category=FAMILY, question="notsure")
+        view = QuestionPage(form_class=form)
+        assert (
+            "/find-a-legal-adviser?category=mhe&secondary_category=com"
+            == view.get_next_page("fala")
+        )

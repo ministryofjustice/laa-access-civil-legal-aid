@@ -369,7 +369,13 @@ class IncomeForm(BaseMeansTestForm):
             or session.get_eligibility().is_self_employed
         ):
             fields["self"].extend(
-                [self.earnings, self.income_tax, self.working_tax_credit]
+                [
+                    self.earnings,
+                    self.income_tax,
+                    self.national_insurance,
+                    self.working_tax_credit,
+                    self.child_tax_credit,
+                ]
             )
 
         fields["self"].extend(
@@ -385,6 +391,7 @@ class IncomeForm(BaseMeansTestForm):
                     [
                         self.partner_earnings,
                         self.partner_income_tax,
+                        self.partner_national_insurance,
                         self.partner_working_tax_credit,
                     ]
                 )
@@ -431,7 +438,7 @@ class IncomeForm(BaseMeansTestForm):
                     ),
                     "pension": MoneyInterval(self.data.get("pension", 0)),
                     "other_income": MoneyInterval(self.data.get("other_income", 0)),
-                    "self_employed": self_employed,
+                    "self_employed": self_employed if self_employed else False,
                 },
                 "deductions": {
                     "income_tax": MoneyInterval(self.data.get("income_tax", 0)),
@@ -461,7 +468,9 @@ class IncomeForm(BaseMeansTestForm):
                     "other_income": MoneyInterval(
                         self.data.get("partner_other_income", 0)
                     ),  # TODO: Add income from rent here?
-                    "self_employed": partner_self_employed,
+                    "self_employed": partner_self_employed
+                    if partner_self_employed
+                    else False,
                 },
                 "deductions": {
                     "income_tax": MoneyInterval(self.data.get("partner_income_tax", 0)),

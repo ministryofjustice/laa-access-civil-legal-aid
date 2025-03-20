@@ -1,14 +1,18 @@
 from flask import session
 from wtforms import ValidationError
-from wtforms.fields import RadioField, FieldList, FormField
+from wtforms.fields import FieldList, FormField
 from wtforms.fields.core import Label
 from govuk_frontend_wtf.wtforms_widgets import GovTextInput
 from wtforms.validators import InputRequired, NumberRange
 from app.means_test.widgets import MeansTestRadioInput
 from flask_babel import lazy_gettext as _
-from app.means_test import YES, NO
 from app.means_test.forms import BaseMeansTestForm
-from app.means_test.fields import MoneyIntervalField, MoneyIntervalWidget, MoneyField
+from app.means_test.fields import (
+    MoneyIntervalField,
+    MoneyIntervalWidget,
+    MoneyField,
+    YesNoField,
+)
 from app.means_test.validators import MoneyIntervalAmountRequired
 from app.means_test.validators import ValidateIf
 from app.means_test.money_interval import MoneyInterval, to_amount
@@ -21,20 +25,14 @@ class PropertyPayload(dict):
         def val(field):
             return form_data.get(field)
 
-        def yes(field):
-            return form_data.get(field) == YES
-
-        def no(field):
-            return form_data.get(field) == NO
-
         self.update(
             {
                 "value": to_amount(val("property_value") * 100),
                 "mortgage_left": to_amount(val("mortgage_remaining") * 100),
-                "share": 100 if no("other_shareholders") else None,
+                "share": 100 if not form_data.get("other_shareholders") else None,
                 "disputed": val("in_dispute"),
                 "rent": MoneyInterval(val("rent_amount"))
-                if yes("is_rented")
+                if form_data.get("is_rented")
                 else MoneyInterval(0),
                 "main": val("is_main_home"),
             }
@@ -84,14 +82,14 @@ def validate_single_main_home(form, field):
     properties = form.properties.data
     main_home_count = 0
     for property_data in properties:
-        if property_data.get("is_main_home") == "True":
+        if property_data.get("is_main_home"):
             main_home_count += 1
 
     if main_home_count > 1:
         raise ValidationError(_("You can only have 1 main property"))
 
 
-class PartnerRadioField(RadioField):
+class PartnerRadioField(YesNoField):
     def __init__(self, label, partner_label, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._label = label
@@ -116,9 +114,8 @@ class PropertyForm(BaseMeansTestForm):
     def has_partner(self):
         return session.get_eligibility().has_partner
 
-    is_main_home = RadioField(
+    is_main_home = YesNoField(
         _("Is this property your main home?"),
-        choices=[(True, _("Yes")), (False, _("No"))],
         widget=MeansTestRadioInput(),
         description=_(
             "If you’re temporarily living away from the property, select ‘Yes’"
@@ -131,7 +128,6 @@ class PropertyForm(BaseMeansTestForm):
             "Does anyone else (other than you or your partner) own a share of the property?"
         ),
         label=_("Does anyone else own a share of the property?"),
-        choices=[(YES, _("Yes")), (NO, _("No"))],
         widget=MeansTestRadioInput(),
         description=_(
             "Select ‘Yes’ if you share ownership with a friend, relative or ex-partner"
@@ -182,9 +178,8 @@ class PropertyForm(BaseMeansTestForm):
         ],
     )
 
-    is_rented = RadioField(
+    is_rented = YesNoField(
         _("Do you rent out any part of this property?"),
-        choices=[(YES, _("Yes")), (NO, _("No"))],
         widget=MeansTestRadioInput(),
         validators=[
             InputRequired(
@@ -199,7 +194,7 @@ class PropertyForm(BaseMeansTestForm):
         exclude_intervals=["per_4week"],
         widget=MoneyIntervalWidget(),
         validators=[
-            ValidateIf("is_rented", YES),
+            ValidateIf("is_rented", True),
             MoneyIntervalAmountRequired(
                 message=_("Tell us how much rent you receive from this property"),
                 freq_message=_("Tell us how often you receive this rent"),
@@ -208,9 +203,8 @@ class PropertyForm(BaseMeansTestForm):
         ],
     )
 
-    in_dispute = RadioField(
+    in_dispute = YesNoField(
         _("Is your share of the property in dispute?"),
-        choices=[(True, _("Yes")), (False, _("No"))],
         widget=MeansTestRadioInput(),
         description=_("For example, as part of the financial settlement of a divorce"),
         validators=[
@@ -226,8 +220,9 @@ class MultiplePropertiesForm(BaseMeansTestForm):
     @classmethod
     def should_show(cls) -> bool:
         return (
-            session.get_eligibility().forms.get("about-you", {}).get("own_property")
-            == YES
+            session.get_eligibility()
+            .forms.get("about-you", {})
+            .get("own_property", False)
         )
 
     properties = FieldList(

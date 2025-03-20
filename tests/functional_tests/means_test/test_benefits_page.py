@@ -1,10 +1,9 @@
 import pytest
 from flask import url_for
 from playwright.sync_api import Page, expect
-from app.means_test import YES, NO
 
 
-next_page_heading = "Review your answers"
+next_page_heading = "Check your answers and confirm"
 rfc_form_routing = [
     pytest.param(
         ["Universal Credit"],
@@ -105,7 +104,7 @@ def test_child_benefits_available_have_children(page: Page, client):
     with client.session_transaction() as session:
         # update the session
         session.get_eligibility().add(
-            "about-you", {"have_children": YES, "have_dependents": NO}
+            "about-you", {"have_children": True, "have_dependents": False}
         )
 
     url = url_for("means_test.benefits", _external=True)
@@ -123,7 +122,7 @@ def test_child_benefits_available_have_dependents(page: Page, client):
     with client.session_transaction() as session:
         # update the session
         session.get_eligibility().add(
-            "about-you", {"have_children": NO, "have_dependents": YES}
+            "about-you", {"have_children": False, "have_dependents": True}
         )
 
     url = url_for("means_test.benefits", _external=True)
