@@ -7,18 +7,18 @@ from app.means_test.forms.property import PropertyPayload, validate_single_main_
 def test_property_payload_with_valid_data():
     form_data = {
         "submit": False,
-        "is_main_home": "True",
-        "other_shareholders": "0",
+        "is_main_home": True,
+        "other_shareholders": False,
         "property_value": 230000,
         "mortgage_remaining": 100000,
         "mortgage_payments": 500,
-        "is_rented": "1",
+        "is_rented": True,
         "rent_amount": {
             "per_interval_value": 500,
             "per_interval_value_pounds": 50.0,
             "interval_period": "per_week",
         },
-        "in_dispute": "False",
+        "in_dispute": False,
         "csrf_token": None,
     }
     expected_property_value = 23000000
@@ -31,8 +31,8 @@ def test_property_payload_with_valid_data():
     assert payload["value"] == expected_property_value
     assert payload["mortgage_left"] == expected_mortgage_remaining
     assert payload["share"] == expected_share
-    assert payload["disputed"] == "False"
-    assert payload["main"] == "True"
+    assert payload["disputed"] is False
+    assert payload["main"]
 
     rent = payload["rent"]["per_interval_value"]
     assert rent == expected_rent
@@ -41,18 +41,18 @@ def test_property_payload_with_valid_data():
 def test_property_payload_with_missing_rent():
     form_data = {
         "submit": False,
-        "is_main_home": "True",
-        "other_shareholders": "0",
+        "is_main_home": True,
+        "other_shareholders": False,
         "property_value": 230000,
         "mortgage_remaining": 100000,
         "mortgage_payments": 500,
-        "is_rented": "1",
+        "is_rented": True,
         "rent_amount": {
             "per_interval_value": None,
             "per_interval_value_pounds": None,
             "interval_period": None,
         },
-        "in_dispute": "False",
+        "in_dispute": False,
         "csrf_token": None,
     }
 
@@ -66,8 +66,8 @@ def test_property_payload_with_missing_rent():
     assert payload["value"] == expected_property_value
     assert payload["mortgage_left"] == expected_mortgage_remaining
     assert payload["share"] == expected_share
-    assert payload["disputed"] == "False"
-    assert payload["main"] == "True"
+    assert payload["disputed"] is False
+    assert payload["main"]
 
     rent = payload["rent"]
     assert rent == expected_rent
@@ -86,8 +86,8 @@ class MockField:
 def test_validate_single_main_home_multiple_main_homes():
     """Test with multiple main homes."""
     form_data = [
-        {"is_main_home": "True"},
-        {"is_main_home": "True"},
+        {"is_main_home": True},
+        {"is_main_home": True},
     ]
     form = MockForm(form_data)
 
@@ -99,30 +99,30 @@ def test_validate_single_main_home_multiple_main_homes():
 
 
 def test_property_add():
-    form_data = [{"is_main_home": "True"}]
+    form_data = [{"is_main_home": True}]
     form = MockForm(form_data)
 
-    form.properties.data.append({"is_main_home": "False"})
+    form.properties.data.append({"is_main_home": False})
 
     assert len(form.properties.data) == 2
-    assert form.properties.data[1]["is_main_home"] == "False"
+    assert form.properties.data[1]["is_main_home"] is False
 
 
 def test_property_remove_second():
-    form_data = [{"is_main_home": "True"}, {"is_main_home": "False"}]
+    form_data = [{"is_main_home": True}, {"is_main_home": False}]
     form = MockForm(form_data)
 
     form.properties.data.pop(1)
 
     assert len(form.properties.data) == 1
-    assert form.properties.data[0]["is_main_home"] == "True"
+    assert form.properties.data[0]["is_main_home"]
 
 
 def test_property_remove_third():
     form_data = [
-        {"is_main_home": "True"},
-        {"is_main_home": "False"},
-        {"is_main_home": "False"},
+        {"is_main_home": True},
+        {"is_main_home": False},
+        {"is_main_home": False},
     ]
     form = MockForm(form_data)
 

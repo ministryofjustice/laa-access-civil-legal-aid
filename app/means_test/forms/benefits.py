@@ -11,7 +11,6 @@ from app.means_test.validators import (
     ValidateIf,
     ValidateIfType,
 )
-from app.means_test import YES, NO
 from dataclasses import dataclass, field
 
 
@@ -193,7 +192,6 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
             "Allowance"
         ),
         widget=MeansTestRadioInput(),
-        choices=[(YES, _("Yes")), (NO, _("No"))],
         validators=[
             InputRequired(message=_("Tell us whether you receive any other benefits"))
         ],
@@ -204,7 +202,7 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
         exclude_intervals=["per_month"],
         widget=MoneyIntervalWidget(),
         validators=[
-            ValidateIf("other_benefits", YES),
+            ValidateIf("other_benefits", True),
             MoneyIntervalAmountRequired(
                 message=_("Tell us how much you receive in other benefits"),
                 freq_message=_("Tell us how often you receive these other benefits"),

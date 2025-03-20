@@ -3,6 +3,7 @@
 {%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton %}
 {%- from 'categories/components/help-organisations.html' import helpOrganisationsList %}
 {%- from 'categories/components/exceptional-case-funding.html' import exceptionalCaseFundingSidebar %}
+{%- from 'components/survey.html' import satisfaction_survey %}
 
 {% block beforeContent %}
     {{ super() }}
@@ -49,9 +50,7 @@
         {% set citizens_advice_link %}<a class="govuk-link" href="https://www.citizensadvice.org.uk/law-and-courts/legal-system/finding-free-or-affordable-legal-help/" target="_blank">{% trans %}free or affordable legal help (opens new tab).{% endtrans %}</a>{% endset %}
         <p class="govuk-body">{% trans %}The Citizen’s Advice website explains how to find {% endtrans %}{{ citizens_advice_link }}</p>
 
-
-        {% set survey_link %}<a class="govuk-link" href="https://www.gov.uk/done/check-if-civil-legal-advice-can-help-you" target="_blank">What did you think of this service?</a>{% endset %}
-        <p class="govuk-body">{{ survey_link }} (takes 30 seconds)</p>
+        {{ satisfaction_survey("scope_ineligible_with_alternative_help") }}
 
         <h2 class="govuk-heading-l">{% trans %}Speak to an advice organisation{% endtrans %}</h2>
 

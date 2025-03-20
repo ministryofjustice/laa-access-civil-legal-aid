@@ -8,14 +8,14 @@
  *  {{ form.partner_is_employed(params={
  *         "attributes": {
  *             "data-controlled-by": "has_partner",
- *             "data-show-value": "yes"
+ *             "data-show-value": "True"
  *         }
  *     }) }}
  *
- *   The second question will only display when has_partner has a value of "yes" .
+ *   The second question will only display when has_partner has a value of "True" .
  *
  *   Note: This only controls whether the element should be displayed on the page, to skip the validation for this field
- *   add the ValidateIf("has_partner", "yes") validator to the start of the validation list for the field.
+ *   add the ValidateIf("has_partner", True) validator to the start of the validation list for the field.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
