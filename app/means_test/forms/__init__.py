@@ -5,7 +5,12 @@ from wtforms.fields.choices import SelectField, SelectMultipleField
 from wtforms.csrf.core import CSRFTokenField
 from flask_babel import lazy_gettext as _
 from flask import session
-from app.means_test.fields import MoneyIntervalField, MoneyInterval, MoneyField
+from app.means_test.fields import (
+    MoneyIntervalField,
+    MoneyInterval,
+    MoneyField,
+    YesNoField,
+)
 import decimal
 from wtforms.fields.core import Field
 from app.means_test.validators import ValidateIf, StopValidation, ValidateIfSession
@@ -100,7 +105,9 @@ class BaseMeansTestForm(FlaskForm):
             question = str(field_instance.label.text)
             answer = field_instance.data
 
-            if isinstance(field_instance, SelectField):
+            if isinstance(field_instance, YesNoField):
+                answer = field_instance.value
+            elif isinstance(field_instance, SelectField):
                 answer = self.get_selected_answer(field_instance)
             elif isinstance(field_instance, MoneyIntervalField):
                 answer = self.get_money_interval_field_answers(field_instance)
