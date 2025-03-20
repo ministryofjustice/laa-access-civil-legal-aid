@@ -9,7 +9,6 @@ from dataclasses import dataclass
 from datetime import timedelta
 from app.categories.models import CategoryAnswer, QuestionType
 from flask_babel import LazyString
-from app.categories.models import QuestionType
 
 
 @dataclass
@@ -152,37 +151,6 @@ class Session(SecureCookieSession):
         if current_category and current_category.code != category.code:
             self["category_answers"] = []
         self["category"] = self._category_to_dict_for_session_storage(category)
-
-    @property
-    def subcategory(self) -> Category | None:
-        """
-        Returns the subcategory based on category answers.
-
-        Returns:
-            Category: The subcategory object if found, None otherwise.
-        """
-        for answer in self.category_answers:
-            if answer.question_type == QuestionType.SUB_CATEGORY:
-                return get_subcategory_from_code(
-                    answer.category.parent_code, answer.category.code
-                )
-        return None
-
-    @staticmethod
-    def _category_to_dict_for_session_storage(category: Category):
-        data = {"code": category.code}
-        if category.parent_code:
-            data["parent_code"] = category.parent_code
-        return data
-
-    @staticmethod
-    def _category_from_dict_from_session_storage(category_dict: dict):
-        parent_code = category_dict.get("parent_code", None)
-        if parent_code:
-            category = get_category_from_code(parent_code)
-            return category.children[category_dict["code"]]
-        else:
-            return get_category_from_code(category_dict["code"])
 
     @property
     def subcategory(self):
