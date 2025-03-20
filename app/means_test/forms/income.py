@@ -2,7 +2,6 @@ from app.means_test.fields import MoneyIntervalField, MoneyIntervalWidget
 from app.means_test.forms import BaseMeansTestForm
 from flask_babel import lazy_gettext as _
 from flask import session
-from app.means_test.money_interval import MoneyInterval
 from app.means_test.validators import MoneyIntervalAmountRequired, ValidateIfSession
 
 
@@ -404,97 +403,3 @@ class IncomeForm(BaseMeansTestForm):
             )
 
         return fields
-
-    def get_payload(
-        self,
-        employed: bool | None = False,
-        self_employed: bool | None = False,
-        partner_employed: bool | None = False,
-        partner_self_employed: bool | None = False,
-    ) -> dict:
-        """Returns the income and deductions payload for the user and the partner.
-        If a field can not be found the default of MoneyField(0) will be used.
-        """
-
-        # Child tax credit only applies to the client and not their partner
-        child_tax_credits = MoneyInterval(self.data.get("child_tax_credit", 0))
-        payload = {
-            "you": {
-                "income": {
-                    "earnings": MoneyInterval(self.data.get("earnings", 0))
-                    if not self_employed
-                    else MoneyInterval(
-                        0
-                    ),  # If the person is self_employed their earnings are counted towards their self_employment_drawings instead
-                    "self_employment_drawings": MoneyInterval(
-                        self.data.get("earnings", 0)
-                    )
-                    if self_employed
-                    else MoneyInterval(0),
-                    "tax_credits": MoneyInterval(self.data.get("working_tax_credit", 0))
-                    + child_tax_credits,
-                    "maintenance_received": MoneyInterval(
-                        self.data.get("maintenance_received", 0)
-                    ),
-                    "pension": MoneyInterval(self.data.get("pension", 0)),
-                    "other_income": MoneyInterval(self.data.get("other_income", 0)),
-                    "self_employed": self_employed if self_employed else False,
-                },
-                "deductions": {
-                    "income_tax": MoneyInterval(self.data.get("income_tax", 0)),
-                    "national_insurance": MoneyInterval(
-                        self.data.get("national_insurance", 0)
-                    ),
-                },
-            },
-            "partner": {
-                "income": {
-                    "earnings": MoneyInterval(self.data.get("partner_earnings", 0))
-                    if not partner_self_employed
-                    else MoneyInterval(0),
-                    # If the person is self_employed their earnings are counted towards their self_employment_drawings instead
-                    "self_employment_drawings": MoneyInterval(
-                        self.data.get("partner_earnings", 0)
-                    )
-                    if partner_self_employed
-                    else MoneyInterval(0),
-                    "tax_credits": MoneyInterval(
-                        self.data.get("partner_working_tax_credit", 0)
-                    ),
-                    "maintenance_received": MoneyInterval(
-                        self.data.get("partner_maintenance_received", 0)
-                    ),
-                    "pension": MoneyInterval(self.data.get("partner_pension", 0)),
-                    "other_income": MoneyInterval(
-                        self.data.get("partner_other_income", 0)
-                    ),  # TODO: Add income from rent here?
-                    "self_employed": partner_self_employed
-                    if partner_self_employed
-                    else False,
-                },
-                "deductions": {
-                    "income_tax": MoneyInterval(self.data.get("partner_income_tax", 0)),
-                    "national_insurance": MoneyInterval(
-                        self.data.get("partner_national_insurance", 0)
-                    ),
-                },
-            },
-        }
-
-        if not employed and not self_employed:
-            # If the person is not employed these fields should be set to 0
-            payload["you"]["income"]["earnings"] = MoneyInterval(0)
-            payload["you"]["income"]["self_employment_drawings"] = MoneyInterval(0)
-            payload["you"]["income"]["tax_credits"] = MoneyInterval(0)
-            payload["you"]["deductions"]["income_tax"] = MoneyInterval(0)
-            payload["you"]["deductions"]["national_insurance"] = MoneyInterval(0)
-
-        if not partner_employed and not partner_self_employed:
-            # If the partner is not employed these fields should be set to 0
-            payload["partner"]["income"]["earnings"] = MoneyInterval(0)
-            payload["partner"]["income"]["self_employment_drawings"] = MoneyInterval(0)
-            payload["partner"]["income"]["tax_credits"] = MoneyInterval(0)
-            payload["partner"]["deductions"]["income_tax"] = MoneyInterval(0)
-            payload["partner"]["deductions"]["national_insurance"] = MoneyInterval(0)
-
-        return payload
