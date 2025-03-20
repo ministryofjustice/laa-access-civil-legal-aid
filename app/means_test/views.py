@@ -4,6 +4,7 @@ from flask import render_template, url_for, redirect, session, request
 from flask_babel import lazy_gettext as _, gettext
 from werkzeug.datastructures import MultiDict
 from app.categories.constants import Category
+from app.means_test.api import update_means_test
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import MultiplePropertiesForm
@@ -63,7 +64,7 @@ class MeansTest(FormsMixin, View):
             next_page = url_for(f"means_test.{self.get_next_page(self.current_name)}")
             payload = MeansTestPayload()
             payload.update_from_session()
-            payload.save()
+            update_means_test(payload)
 
             return redirect(next_page)
         return render_template(

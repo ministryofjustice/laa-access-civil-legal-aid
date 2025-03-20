@@ -4,7 +4,6 @@ import logging
 from flask import session
 
 from app.means_test.money_interval import MoneyInterval, to_amount
-from app.means_test.api import update_means_test, is_eligible
 
 log = logging.getLogger(__name__)
 
@@ -497,9 +496,3 @@ class MeansTest(dict):
     def update_from_session(self):
         for form_name, form_data in session.get_eligibility().forms.items():
             self.update_from_form(form_name, form_data)
-
-    def save(self):
-        return update_means_test(self)
-
-    def is_eligible(self):
-        return is_eligible(self.reference)
