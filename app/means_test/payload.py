@@ -9,12 +9,6 @@ from app.means_test.api import update_means_test, is_eligible
 log = logging.getLogger(__name__)
 
 
-def mi(field, val):
-    amount = "%s-per_interval_value" % field
-    period = "%s-interval_period" % field
-    return {"per_interval_value": val(amount), "interval_period": val(period)}
-
-
 def recursive_update(orig, other):
     for key, val in other.items():
         if key not in orig:
@@ -121,7 +115,7 @@ class YourBenefitsPayload(dict):
                 return form_data.get(field)
 
             payload["you"] = {
-                "income": {"child_benefits": MoneyInterval(mi("child_benefit", val))}
+                "income": {"child_benefits": MoneyInterval(val("child_benefit"))}
             }
 
         self.update(payload)
@@ -143,7 +137,7 @@ class AdditionalBenefitsPayload(dict):
             "on_nass_benefits": False,
             "you": {
                 "income": {
-                    "benefits": MoneyInterval(mi("total_other_benefit", val))
+                    "benefits": MoneyInterval(val("total_other_benefit"))
                     if yes("other_benefits")
                     else MoneyInterval(0)
                 }
@@ -175,7 +169,7 @@ class PropertyPayload(dict):
                 "mortgage_left": to_amount(val("mortgage_remaining")),
                 "share": 100 if no("other_shareholders") else None,
                 "disputed": val("in_dispute"),
-                "rent": MoneyInterval(mi("rent_amount", val))
+                "rent": MoneyInterval(val("rent_amount"))
                 if yes("is_rented")
                 else MoneyInterval(0),
                 "main": val("is_main_home"),
@@ -197,20 +191,8 @@ class PropertiesPayload(dict):
     def __init__(self, form_data={}):
         super(PropertiesPayload, self).__init__()
 
-        def prop(index):
-            if "properties-%d-is_main_home" % index not in form_data:
-                return None
-            prop_data = dict(
-                [
-                    (key[13:], val)
-                    for key, val in form_data.items()
-                    if key.startswith("properties-%d-" % index)
-                ]
-            )
-            return PropertyPayload(prop_data)
-
-        properties = filter(None, map(prop, range(3)))
-        if not properties and session.owns_property:
+        properties = [PropertyPayload(prop) for prop in form_data.get("properties", [])]
+        if not properties and session.get_eligibility().owns_property:
             properties.append(PropertyPayload())
 
         def mortgage(index):
@@ -300,34 +282,33 @@ class IncomePayload(dict):
     def __init__(self, form_data={}):
         super(IncomePayload, self).__init__()
 
-        def income(person, prefix_, self_employed=False, employed=False):
-            def prefix(field):
-                return "{0}_{1}".format(prefix_, field)
-
+        def income(person: str, self_employed=False, employed=False):
             def val(field):
-                return form_data.get(prefix(field))
+                if person == "partner":
+                    return form_data.get(f"partner_{field}")
+                return form_data.get(field)
 
             child_tax_credit = (
-                MoneyInterval(mi("child_tax_credit", val))
+                MoneyInterval(val("child_tax_credit"))
                 if person == "you"
                 else MoneyInterval(0)
             )
             payload = {
                 person: {
                     "income": {
-                        "earnings": MoneyInterval(mi("earnings", val)),
+                        "earnings": MoneyInterval(val("earnings")),
                         "self_employment_drawings": MoneyInterval(0),
-                        "tax_credits": MoneyInterval(mi("working_tax_credit", val))
+                        "tax_credits": MoneyInterval(val("working_tax_credit"))
                         + child_tax_credit,
-                        "maintenance_received": MoneyInterval(mi("maintenance", val)),
-                        "pension": MoneyInterval(mi("pension", val)),
-                        "other_income": MoneyInterval(mi("other_income", val)),
+                        "maintenance_received": MoneyInterval(
+                            val("maintenance_received")
+                        ),
+                        "pension": MoneyInterval(val("pension")),
+                        "other_income": MoneyInterval(val("other_income")),
                     },
                     "deductions": {
-                        "income_tax": MoneyInterval(mi("income_tax", val)),
-                        "national_insurance": MoneyInterval(
-                            mi("national_insurance", val)
-                        ),
+                        "income_tax": MoneyInterval(val("income_tax")),
+                        "national_insurance": MoneyInterval(val("national_insurance")),
                     },
                 }
             }
@@ -335,7 +316,7 @@ class IncomePayload(dict):
             if self_employed:
                 payload[person]["income"]["earnings"] = MoneyInterval(0)
                 payload[person]["income"]["self_employment_drawings"] = MoneyInterval(
-                    mi("earnings", val)
+                    val("earnings")
                 )
 
             if not employed:
@@ -347,19 +328,33 @@ class IncomePayload(dict):
 
             return payload
 
+        self_employed = (
+            session.get_eligibility().is_self_employed
+            and not session.get_eligibility().is_employed
+        )
+        employed = (
+            session.get_eligibility().is_self_employed
+            or session.get_eligibility().is_employed
+        )
+        partner_self_employed = (
+            session.get_eligibility().is_partner_self_employed
+            and not session.get_eligibility().is_partner_employed
+        )
+        partner_employed = (
+            session.get_eligibility().is_partner_self_employed
+            or session.get_eligibility().is_partner_employed
+        )
+
         payload = income(
-            "you",
-            "",
-            session.get_eligibility().is_self_employed
-            and not session.get_eligibility().is_employed,
-            session.get_eligibility().is_self_employed
-            or session.get_eligibility().is_employed,
+            person="you",
+            self_employed=self_employed,
+            employed=employed,
         )
 
         if session.get_eligibility().owns_property:
             rents = [
                 MoneyInterval(p["rent_amount"])
-                for p in session.get_eligiblilty()
+                for p in session.get_eligibility()
                 .forms.get("property", {})
                 .get("properties", [])
             ]
@@ -369,11 +364,8 @@ class IncomePayload(dict):
         if session.get_eligibility().has_partner:
             partner_payload = income(
                 "partner",
-                "partner",
-                session.get_eligibility().is_partner_self_employed
-                and not session.get_eligibility().is_partner_employed,
-                session.get_eligibility().is_partner_self_employed
-                or session.get_eligibility().is_partner_employed,
+                self_employed=partner_self_employed,
+                employed=partner_employed,
             )
             payload = recursive_update(payload, partner_payload)
 
@@ -404,12 +396,12 @@ class OutgoingsPayload(dict):
             {
                 "you": {
                     "deductions": {
-                        "rent": MoneyInterval(mi("rent", val)),
-                        "maintenance": MoneyInterval(mi("maintenance", val)),
+                        "rent": MoneyInterval(val("rent")),
+                        "maintenance": MoneyInterval(val("maintenance")),
                         "criminal_legalaid_contributions": to_amount(
                             val("income_contribution")
                         ),
-                        "childcare": MoneyInterval(mi("childcare", val)),
+                        "childcare": MoneyInterval(val("childcare")),
                     }
                 }
             }
