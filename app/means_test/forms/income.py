@@ -369,7 +369,13 @@ class IncomeForm(BaseMeansTestForm):
             or session.get_eligibility().is_self_employed
         ):
             fields["self"].extend(
-                [self.earnings, self.income_tax, self.working_tax_credit]
+                [
+                    self.earnings,
+                    self.income_tax,
+                    self.national_insurance,
+                    self.working_tax_credit,
+                    self.child_tax_credit,
+                ]
             )
 
         fields["self"].extend(
@@ -385,6 +391,7 @@ class IncomeForm(BaseMeansTestForm):
                     [
                         self.partner_earnings,
                         self.partner_income_tax,
+                        self.partner_national_insurance,
                         self.partner_working_tax_credit,
                     ]
                 )
