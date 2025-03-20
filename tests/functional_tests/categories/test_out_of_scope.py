@@ -58,7 +58,7 @@ onward_links = [
     "Citizen’s Advice (opens new tab)",
     "Advicelocal (opens new tab)",
     "exceptional case funding",
-    "What did you think of this service?",
+    "Tell us what you think of this service (opens new tab)",
 ]
 
 

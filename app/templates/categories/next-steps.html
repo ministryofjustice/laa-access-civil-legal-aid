@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {%- from 'components/back_link.html' import govukBackLink -%}
 {%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton %}
+{%- from 'components/survey.html' import satisfaction_survey %}
 
 {% block beforeContent %}
     {{ super() }}
@@ -44,8 +45,7 @@
 
         <br>
 
-        {% set survey_link %}<a class="govuk-link" href="https://www.gov.uk/done/check-if-civil-legal-advice-can-help-you" target="_blank">What did you think of this service?</a>{% endset %}
-        <p class="govuk-body">{{ survey_link }} (takes 30 seconds)</p>
+        {{ satisfaction_survey("scope_ineligible_without_alternative_help") }}
 
     </div>
 </div>
