@@ -212,6 +212,9 @@ class PropertyForm(BaseMeansTestForm):
         ],
     )
 
+    def should_show(cls) -> bool:
+        return session.get_eligibility().owns_property
+
 
 class MultiplePropertiesForm(BaseMeansTestForm):
     title = _("Your property")
