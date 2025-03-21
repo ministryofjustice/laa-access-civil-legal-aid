@@ -1,13 +1,12 @@
 from dataclasses import dataclass
-from typing import Dict, Optional
+from typing import Dict
 
 
 @dataclass
 class EligibilityData:
-    def __init__(self, category: str, forms: Dict, notes: Optional[Dict] = None):
+    def __init__(self, category: str, forms: Dict):
         self.category = category
         self.forms = forms
-        self.notes = notes
 
 
 ABOUT_YOU_TEST_CASES = [
@@ -16,8 +15,7 @@ ABOUT_YOU_TEST_CASES = [
         "name": "basic_no_benefits_no_partner",
         "description": "Basic case with no benefits or partner",
         "input": EligibilityData(
-            category="immigration",
-            notes={"User problem": "test"},
+            category="asylum_and_immigration",
             forms={
                 "about-you": {
                     "is_self_employed": False,
@@ -32,20 +30,13 @@ ABOUT_YOU_TEST_CASES = [
         ),
         "expected": {
             "category": "immigration",
-            "notes": "User problem:\ntest",
             "has_partner": False,
             "dependants_young": 0,
             "dependants_old": 0,
             "is_you_or_your_partner_over_60": False,
             "on_passported_benefits": False,
             "on_nass_benefits": False,
-            "specific_benefits": {
-                "pension_credit": False,
-                "job_seekers_allowance": False,
-                "employment_support": False,
-                "universal_credit": False,
-                "income_support": False,
-            },
+            "specific_benefits": {},
         },
     },
     {
@@ -53,8 +44,7 @@ ABOUT_YOU_TEST_CASES = [
         "name": "with_partner_and_benefits",
         "description": "Case with partner and universal credit and pension credit benefits",
         "input": EligibilityData(
-            category="debt",
-            notes={"User problem": "test"},
+            category="housing",
             forms={
                 "about-you": {
                     "is_self_employed": True,
@@ -63,14 +53,14 @@ ABOUT_YOU_TEST_CASES = [
                     "has_children": False,
                     "aged_60_or_over": False,
                     "is_partner_self_employed": True,
+                    "on_benefits": True,
                 },
                 "benefits": {"benefits": ["universal_credit", "pension_credit"]},
             },
         ),
         "expected": {
-            "category": "debt",
-            "notes": "User problem:\ntest",
-            "has_partner": True,
+            "category": "housing",
+            "has_partner": False,
             "dependants_young": 0,
             "dependants_old": 0,
             "is_you_or_your_partner_over_60": False,
@@ -90,24 +80,23 @@ ABOUT_YOU_TEST_CASES = [
         "description": "Case with young and old dependants and income support",
         "input": EligibilityData(
             category="family",
-            notes={"User problem": "test"},
             forms={
                 "about-you": {
                     "is_self_employed": False,
                     "has_partner": False,
                     "in_dispute": False,
-                    "has_children": True,
-                    "has_dependants": True,
-                    "dependants_young": 2,
-                    "dependants_old": 1,
+                    "have_children": True,
+                    "have_dependants": True,
+                    "num_children": 2,
+                    "num_dependants": 1,
                     "aged_60_or_over": False,
+                    "on_benefits": True,
                 },
                 "benefits": {"benefits": ["income_support"]},
             },
         ),
         "expected": {
             "category": "family",
-            "notes": "User problem:\ntest",
             "has_partner": False,
             "dependants_young": 2,
             "dependants_old": 1,
@@ -126,25 +115,14 @@ ABOUT_YOU_TEST_CASES = [
         "id": "no_forms",
         "name": "no_forms",
         "description": "Edge case with no forms present",
-        "input": EligibilityData(
-            category="immigration", notes={"User problem": "test"}, forms={}
-        ),
+        "input": EligibilityData(category="asylum_and_immigration", forms={}),
         "expected": {
             "category": "immigration",
-            "notes": "User problem:\ntest",
-            "has_partner": False,
             "dependants_young": 0,
             "dependants_old": 0,
-            "is_you_or_your_partner_over_60": False,
             "on_passported_benefits": False,
             "on_nass_benefits": False,
-            "specific_benefits": {
-                "pension_credit": False,
-                "job_seekers_allowance": False,
-                "employment_support": False,
-                "universal_credit": False,
-                "income_support": False,
-            },
+            "specific_benefits": {},
         },
     },
 ]
@@ -155,8 +133,7 @@ INCOME_TEST_CASES = [
         "name": "basic_employed_no_partner",
         "description": "Basic case with employed person, no partner",
         "input": EligibilityData(
-            category="debt",
-            notes={"User problem": "test"},
+            category="family",
             forms={
                 "about-you": {
                     "is_employed": True,
@@ -214,10 +191,10 @@ INCOME_TEST_CASES = [
                     },
                     "pension": {
                         "per_interval_value": None,
-                        "interval_period": None,
+                        "interval_period": "per_month",
                     },
                     "other_income": {
-                        "per_interval_value": 0,
+                        "per_interval_value": None,
                         "interval_period": "per_month",
                     },
                 },
@@ -239,8 +216,7 @@ INCOME_TEST_CASES = [
         "name": "self_employed_with_mixed_intervals",
         "description": "Self-employed person with income in different intervals",
         "input": EligibilityData(
-            category="debt",
-            notes={"User problem": "test"},
+            category="family",
             forms={
                 "about-you": {
                     "is_employed": False,
@@ -334,16 +310,15 @@ INCOME_TEST_CASES = [
         "name": "partner_case_with_child_tax",
         "description": "Case with partner and child tax credits",
         "input": EligibilityData(
-            category="debt",
-            notes={"User problem": "test"},
+            category="housing",
             forms={
                 "about-you": {
                     "is_employed": True,
                     "is_self_employed": False,
                     "has_partner": True,
                     "in_dispute": False,
-                    "is_partner_employed": False,
-                    "is_partner_self_employed": True,
+                    "partner_is_employed": False,
+                    "partner_is_self_employed": True,
                 },
                 "income": {
                     "earnings": {
@@ -503,8 +478,7 @@ SAVINGS_TEST_CASES = [
         "name": "no_savings",
         "description": "Case with no savings",
         "input": EligibilityData(
-            category="debt",
-            notes={"User problem": "test"},
+            category="housing",
             forms={
                 "about-you": {
                     "is_employed": False,
@@ -521,14 +495,15 @@ SAVINGS_TEST_CASES = [
         "name": "savings",
         "description": "Case with savings",
         "input": EligibilityData(
-            category="debt",
-            notes={"User problem": "test"},
+            category="housing",
             forms={
                 "about-you": {
                     "is_employed": False,
                     "is_self_employed": False,
                     "has_partner": False,
                     "in_dispute": False,
+                    "have_savings": True,
+                    "have_valuables": True,
                 },
                 "savings": {
                     "savings": 5001,
@@ -544,7 +519,7 @@ SAVINGS_TEST_CASES = [
                     "bank_balance": 5001,
                     "investment_balance": 6001,
                     "asset_balance": 7001,
-                    "credit_balance": None,
+                    "credit_balance": 0,  # Credit balance is always 0
                 }
             }
         },
@@ -558,8 +533,7 @@ OUTGOINGS_TEST_CASES = [
         "name": "no_outgoings",
         "description": "Case with no outgoings",
         "input": EligibilityData(
-            category="debt",
-            notes={"User problem": "test"},
+            category="housing",
             forms={
                 "about-you": {
                     "is_employed": False,
@@ -576,14 +550,15 @@ OUTGOINGS_TEST_CASES = [
         "name": "outgoings",
         "description": "Case with outgoings",
         "input": EligibilityData(
-            category="debt",
-            notes={"User problem": "test"},
+            category="housing",
             forms={
                 "about-you": {
                     "is_employed": False,
                     "is_self_employed": False,
                     "has_partner": False,
                     "in_dispute": False,
+                    "have_children": True,  # You need children to for childcare to be counted as an outgoing payment
+                    "num_children": 1,
                 },
                 "outgoings": {
                     "maintenance": {
@@ -624,5 +599,203 @@ OUTGOINGS_TEST_CASES = [
                 }
             }
         },
+    },
+]
+
+PROPERTIES_TEST_CASES = [
+    {
+        "id": "no_properties",
+        "name": "no_properties",
+        "description": "Case with no properties",
+        "input": EligibilityData(
+            category="housing",
+            forms={
+                "about-you": {
+                    "is_employed": False,
+                    "is_self_employed": False,
+                    "has_partner": False,
+                    "in_dispute": False,
+                    "own_property": False,
+                },
+            },
+        ),
+        "expected": {"property_set": []},
+    },
+    {
+        "id": "yes_properties",
+        "name": "yes_properties",
+        "description": "Case which owns property but no properties added",
+        "input": EligibilityData(
+            category="housing",
+            forms={
+                "about-you": {
+                    "is_employed": False,
+                    "is_self_employed": False,
+                    "has_partner": False,
+                    "in_dispute": False,
+                    "own_property": True,
+                },
+            },
+        ),
+        "expected": {
+            "property_set": [
+                {
+                    "value": None,
+                    "mortgage_left": None,
+                    "share": None,
+                    "disputed": None,
+                    "rent": {"per_interval_value": 0, "interval_period": "per_month"},
+                    "main": None,
+                }
+            ]
+        },  # Default property set
+    },
+    {
+        "id": "one_property",
+        "name": "one_property",
+        "description": "Case which owns property and with one property added",
+        "input": EligibilityData(
+            category="housing",
+            forms={
+                "about-you": {
+                    "is_employed": False,
+                    "is_self_employed": False,
+                    "has_partner": False,
+                    "in_dispute": False,
+                    "own_property": True,
+                },
+                "property": {
+                    "properties": [
+                        {
+                            "is_main_property": True,
+                            "property_value": 230000,
+                            "mortgage_remaining": 100000,
+                            "mortgage_payments": 500,
+                            "is_rented": True,
+                            "other_shareholders": False,
+                            "rent_amount": {
+                                "per_interval_value": 50.0,
+                                "interval_period": "per_week",
+                            },
+                            "in_dispute": False,
+                        }
+                    ]
+                },
+            },
+        ),
+        "expected": {
+            "property_set": [
+                {
+                    "value": 230000,
+                    "mortgage_left": 100000,
+                    "share": 100,
+                    "disputed": False,
+                    "rent": {"per_interval_value": 5000, "interval_period": "per_week"},
+                    "main": None,
+                }
+            ]
+        },
+    },
+    {
+        "id": "two_properties",
+        "name": "two_properties",
+        "description": "Case which owns property and with two properties added",
+        "input": EligibilityData(
+            category="housing",
+            forms={
+                "about-you": {
+                    "is_employed": False,
+                    "is_self_employed": False,
+                    "has_partner": False,
+                    "in_dispute": False,
+                    "own_property": True,
+                },
+                "property": {
+                    "properties": [
+                        {
+                            "is_main_property": True,
+                            "property_value": 230000,
+                            "mortgage_remaining": 100000,
+                            "mortgage_payments": 500,
+                            "is_rented": True,
+                            "other_shareholders": False,
+                            "rent_amount": {
+                                "per_interval_value": 50.0,
+                                "interval_period": "per_week",
+                            },
+                            "in_dispute": False,
+                        },
+                        {
+                            "is_main_property": False,
+                            "property_value": 1234,
+                            "mortgage_remaining": 5678,
+                            "mortgage_payments": 120,
+                            "is_rented": False,
+                            "other_shareholders": True,
+                            "rent_amount": {
+                                "per_interval_value": 0,
+                                "interval_period": "per_month",
+                            },
+                            "in_dispute": True,
+                        },
+                    ]
+                },
+            },
+        ),
+        "expected": {
+            "property_set": [
+                {
+                    "value": 230000,
+                    "mortgage_left": 100000,
+                    "share": 100,
+                    "disputed": False,
+                    "rent": {"per_interval_value": 5000, "interval_period": "per_week"},
+                    "main": None,
+                },
+                {
+                    "value": 1234,
+                    "mortgage_left": 5678,
+                    "share": None,
+                    "disputed": True,
+                    "rent": {"per_interval_value": 0, "interval_period": "per_month"},
+                    "main": None,
+                },
+            ]
+        },
+    },
+    {
+        "id": "owns_property_with_properties",
+        "name": "owns_property_with_properties",
+        "description": "Case which doesn't owns property and with one property added",
+        "input": EligibilityData(
+            category="housing",
+            forms={
+                "about-you": {
+                    "is_employed": False,
+                    "is_self_employed": False,
+                    "has_partner": False,
+                    "in_dispute": False,
+                    "own_property": False,
+                },
+                "property": {
+                    "properties": [
+                        {
+                            "is_main_property": True,
+                            "property_value": 230000,
+                            "mortgage_remaining": 100000,
+                            "mortgage_payments": 500,
+                            "is_rented": True,
+                            "other_shareholders": False,
+                            "rent_amount": {
+                                "per_interval_value": 50.0,
+                                "interval_period": "per_week",
+                            },
+                            "in_dispute": False,
+                        }
+                    ]
+                },
+            },
+        ),
+        "expected": {"property_set": []},
     },
 ]

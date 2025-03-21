@@ -65,7 +65,7 @@ class AboutYouForm(BaseMeansTestForm):
         ],
     )
 
-    have_dependents = YesNoField(
+    have_dependants = YesNoField(
         _("Do you have any dependants aged 16 or over?"),
         widget=MeansTestRadioInput(),
         description=_(
@@ -78,11 +78,11 @@ class AboutYouForm(BaseMeansTestForm):
         ],
     )
 
-    num_dependents = IntegerField(
+    num_dependants = IntegerField(
         _("How many?"),
         widget=GovTextInput(),
         validators=[
-            ValidateIf("have_dependents", True),
+            ValidateIf("have_dependants", True),
             InputRequired(_("Tell us how many dependants you have aged 16 or over")),
             NumberRange(min=1, max=50, message=_("Enter a number between 1 and 50")),
         ],

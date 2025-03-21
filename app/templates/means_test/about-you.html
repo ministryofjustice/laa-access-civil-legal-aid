@@ -16,8 +16,8 @@
     }) }}
 {% endset %}
 
-{% set howManyDependentsOver16Html %}
-    {{ form.num_dependents(params={
+{% set howManyDependantsOver16Html %}
+    {{ form.num_dependants(params={
         "label": {
             "classes": "govuk-label--s"
         },
@@ -56,11 +56,11 @@
         ]
     }) }}
 
-    {{ form.have_dependents(params={
+    {{ form.have_dependants(params={
         'items': [
             {
                 'conditional': {
-                    'html': howManyDependentsOver16Html
+                    'html': howManyDependantsOver16Html
                 }
             },
             {

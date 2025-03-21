@@ -147,22 +147,19 @@ class TestContactUsView:
         assert "notes" in eligibility_check
         assert eligibility_check["notes"] == "User problem:\nUser notes"
 
-    @patch("app.contact.views.get_means_test_payload")
     @patch("app.contact.views.update_means_test")
     def test_append_notes_to_eligibility_check_with_empty_notes(
-        self, mock_update_means_test, mock_get_payload, app, client
+        self, mock_update_means_test, app, client
     ):
         # Test with empty string
         view = ContactUs()
         view._append_notes_to_eligibility_check("")
 
-        mock_get_payload.assert_not_called()
         mock_update_means_test.assert_not_called()
 
         # Test with None
         view._append_notes_to_eligibility_check(None)
 
-        mock_get_payload.assert_not_called()
         mock_update_means_test.assert_not_called()
 
     @patch("app.contact.views.cla_backend.update_reasons_for_contacting")

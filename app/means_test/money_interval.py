@@ -144,5 +144,9 @@ class MoneyInterval(dict):
     def is_money_interval(cls, other):
         if hasattr(other, "keys") and callable(other.keys):
             keys = set(other.keys())
-            return keys == set(["per_interval_value", "interval_period"])
+            return keys == {"per_interval_value", "interval_period"} or keys == {
+                "per_interval_value",
+                "per_interval_value_pence",
+                "interval_period",
+            }
         return False
