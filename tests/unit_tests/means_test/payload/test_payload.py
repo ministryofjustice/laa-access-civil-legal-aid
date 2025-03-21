@@ -1,5 +1,6 @@
 from unittest.mock import patch
 import pytest
+from app.session import Session
 from app.categories.constants import get_category_from_code
 from app.means_test.payload import MeansTestPayload
 from .test_cases import (
@@ -53,21 +54,11 @@ def test_get_means_test_payload(test_case: dict, app, client) -> None:
     Args:
         test_case: Dictionary containing test input and expected output
     """
-    # Set up the session data in the client
-    with client.session_transaction() as sess:
-        for form in test_case["input"].forms:
-            sess.get_eligibility().forms[form] = test_case["input"].forms[form]
-        sess.category = get_category_from_code(test_case["input"].category)
-
-    # Create a mock session to use in the test
-    from app.session import Session
-
     mock_session = Session()
     for form in test_case["input"].forms:
         mock_session.get_eligibility().forms[form] = test_case["input"].forms[form]
     mock_session.category = get_category_from_code(test_case["input"].category)
 
-    # Patch the session in the module that contains update_from_session
     with patch("app.means_test.payload.session", mock_session):
         payload = MeansTestPayload()
         payload.update_from_session()
