@@ -1,11 +1,6 @@
 from copy import deepcopy
-import logging
-
 from flask import session
-
 from app.means_test.money_interval import MoneyInterval, to_amount
-
-log = logging.getLogger(__name__)
 
 
 def recursive_update(orig, other):
@@ -36,8 +31,11 @@ def recursive_update(orig, other):
 
 
 class AboutYouPayload(dict):
-    def __init__(self, form_data={}):
+    def __init__(self, form_data=None):
         super(AboutYouPayload, self).__init__()
+
+        if form_data is None:
+            form_data = {}
 
         def yes(field):
             return form_data.get(field, False) is True
@@ -86,8 +84,11 @@ class YourBenefitsPayload(dict):
     def default(cls):
         return {"specific_benefits": {}, "on_passported_benefits": False}
 
-    def __init__(self, form_data={}):
+    def __init__(self, form_data=None):
         super(YourBenefitsPayload, self).__init__()
+
+        if form_data is None:
+            form_data = {}
 
         is_passported = session.get_eligibility().has_passported_benefits
 
@@ -125,8 +126,11 @@ class YourBenefitsPayload(dict):
 
 
 class AdditionalBenefitsPayload(dict):
-    def __init__(self, form_data={}):
+    def __init__(self, form_data=None):
         super(AdditionalBenefitsPayload, self).__init__()
+
+        if form_data is None:
+            form_data = {}
 
         def val(field):
             return form_data.get(field)
@@ -191,8 +195,11 @@ class PropertiesPayload(dict):
             },
         }
 
-    def __init__(self, form_data={}):
+    def __init__(self, form_data=None):
         super(PropertiesPayload, self).__init__()
+
+        if form_data is None:
+            form_data = {}
 
         properties = []
 
@@ -236,8 +243,11 @@ class SavingsPayload(dict):
             }
         }
 
-    def __init__(self, form_data={}):
+    def __init__(self, form_data=None):
         super(SavingsPayload, self).__init__()
+
+        if form_data is None:
+            form_data = {}
 
         def val(field):
             return form_data.get(field)
@@ -287,8 +297,11 @@ class IncomePayload(dict):
     def default(self):
         return {"you": self.income(), "partner": self.income()}
 
-    def __init__(self, form_data={}):
+    def __init__(self, form_data=None):
         super(IncomePayload, self).__init__()
+
+        if form_data is None:
+            form_data = {}
 
         def income(person: str, self_employed=False, employed=False):
             def val(field):
@@ -394,8 +407,11 @@ class OutgoingsPayload(dict):
             }
         }
 
-    def __init__(self, form_data={}):
+    def __init__(self, form_data=None):
         super(OutgoingsPayload, self).__init__()
+
+        if form_data is None:
+            form_data = {}
 
         def val(field):
             return form_data.get(field)
