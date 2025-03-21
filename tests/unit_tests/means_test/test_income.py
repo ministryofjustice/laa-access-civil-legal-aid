@@ -17,7 +17,9 @@ TEST_CASES = {
             "self": [
                 "earnings",
                 "income_tax",
+                "national_insurance",
                 "working_tax_credit",
+                "child_tax_credit",
                 "maintenance_received",
                 "pension",
                 "other_income",
@@ -25,6 +27,7 @@ TEST_CASES = {
             "partner": [
                 "partner_earnings",
                 "partner_income_tax",
+                "partner_national_insurance",
                 "partner_working_tax_credit",
                 "partner_maintenance_received",
                 "partner_pension",
@@ -47,7 +50,9 @@ TEST_CASES = {
             "self": [
                 "earnings",
                 "income_tax",
+                "national_insurance",
                 "working_tax_credit",
+                "child_tax_credit",
                 "maintenance_received",
                 "pension",
                 "other_income",
@@ -71,6 +76,7 @@ TEST_CASES = {
             "partner": [
                 "partner_earnings",
                 "partner_income_tax",
+                "partner_national_insurance",
                 "partner_working_tax_credit",
                 "partner_maintenance_received",
                 "partner_pension",

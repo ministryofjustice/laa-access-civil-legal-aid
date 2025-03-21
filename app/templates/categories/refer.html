@@ -3,6 +3,7 @@
 {%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton -%}
 {%- from 'categories/components/help-organisations.html' import helpOrganisationsList %}
 {%- from 'categories/components/exceptional-case-funding.html' import exceptionalCaseFundingSidebar %}
+{%- from 'components/survey.html' import satisfaction_survey %}
 
 {% set fala_url = url_for("find-a-legal-adviser.search", category=fala_category_code.lower() if fala_category_code else None) %}
 
@@ -30,10 +31,7 @@
           "href": "https://www.gov.uk/find-a-legal-adviser"
         }) }}
 
-        <p class="govuk-body">
-            <a class="govuk-link" href="https://www.gov.uk/done/check-if-civil-legal-advice-can-help-you" aria-labelledby="aria-satisfaction-survey">
-            {% trans %}What did you think of this service?{% endtrans %}</a> {% trans %}(takes 30 seconds){% endtrans %}
-        </p>
+        {{ satisfaction_survey("failed_means") }}
 
         {% if category != 'other' and organisations %}
             <p class="govuk-body">

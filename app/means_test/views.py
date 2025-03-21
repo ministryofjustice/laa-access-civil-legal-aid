@@ -9,6 +9,7 @@ from app.means_test.api import (
     is_eligible,
     EligibilityState,
 )
+from app.categories.constants import Category
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import MultiplePropertiesForm
@@ -17,7 +18,7 @@ from app.means_test.forms.savings import SavingsForm
 from app.means_test.forms.outgoings import OutgoingsForm
 from app.means_test.forms.review import ReviewForm, BaseMeansTestForm
 from app.categories.models import CategoryAnswer
-from app.categories.mixins import InScopeMixin
+from app.categories.models import CategoryAnswer, QuestionType
 
 
 class FormsMixin:
@@ -40,20 +41,19 @@ class MeansTest(FormsMixin, InScopeMixin, View):
     def handle_multiple_properties_ajax_request(self, form):
         if "add-property" in request.form:
             form.properties.append_entry()
-            form._submitted = False
-            return render_template(
-                self.form_class.template,
-                form=form,
-                form_progress=self.get_form_progress(current_form=form),
-            )
-
         # Handle removing a property
-        elif "remove-property-2" in request.form or "remove-property-3" in request.form:
-            form.properties.pop_entry()
-            form._submitted = False
-            return render_template(self.form_class.template, form=form)
-
-        return None
+        elif "remove-property-2" in request.form:
+            form.properties.entries.pop(1)
+        elif "remove-property-3" in request.form:
+            form.properties.entries.pop(2)
+        else:
+            return None
+        form._submitted = False
+        return render_template(
+            self.form_class.template,
+            form=form,
+            form_progress=self.get_form_progress(current_form=form),
+        )
 
     def ensure_form_protection(self, current_form):
         progress = self.get_form_progress(current_form=current_form)
@@ -178,11 +178,11 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
 
     @staticmethod
     def get_category_answers_summary():
-        def get_your_problem__no_description():
+        def get_your_problem__no_description(category: Category) -> list[dict]:
             return [
                 {
                     "key": {"text": _("The problem you need help with")},
-                    "value": {"text": session.category.title},
+                    "value": {"text": category.title},
                     "actions": {
                         "items": [
                             {"text": _("Change"), "href": url_for("categories.index")}
@@ -191,11 +191,11 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
                 },
             ]
 
-        def get_your_problem__with_description(first_answer):
+        def get_your_problem__with_description(category: Category) -> list[dict]:
             value = "\n".join(
                 [
-                    f"**{str(first_answer.category.title)}**",
-                    str(first_answer.category.description),
+                    f"**{str(category.title)}**",
+                    str(category.description),
                 ]
             )
             return [
@@ -203,7 +203,9 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
                     "key": {"text": _("The problem you need help with")},
                     "value": {"markdown": value},
                     "actions": {
-                        "items": [{"text": _("Change"), "href": first_answer.edit_url}],
+                        "items": [
+                            {"text": _("Change"), "href": url_for("categories.index")}
+                        ],
                     },
                 },
             ]
@@ -213,29 +215,19 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
             return []
 
         category = session.category
+        subcategory = session.subcategory if session.subcategory else category
         category_has_children = bool(getattr(category, "children"))
         if category_has_children:
-            if answers[0].question_type_is_sub_category:
-                results = get_your_problem__with_description(answers.pop(0))
-            else:
-                # Sometimes there is only one answer and it was an onward question.
-                # However we still need to show 2 items: 'The problem you need help with' and the onward question
-                # Example journey:
-                #   -> Children, families, relationships
-                #   -> If there is domestic abuse in your family
-                #   -> Are you worried about someone's safety?
-                #
-                # Then the two items need be shown in `About the problem` section:
-                #   The `The problem you need help with` should be Domestic abuse with its description
-                #   And the `Are you worried about someone's safety` onward question
-                first_answer = CategoryAnswer(**answers[0].__dict__)
-                first_answer.question_page = "categories.index"
-                results = get_your_problem__with_description(first_answer)
+            results = get_your_problem__with_description(subcategory)
         else:
             # if a category doesn't have children then it does not have subpages so we don't show the category description
-            results = get_your_problem__no_description()
+            results = get_your_problem__no_description(subcategory)
 
-        for answer in answers:
+        onward_questions = filter(
+            lambda answer: answer.question_type == QuestionType.ONWARD, answers
+        )
+
+        for answer in onward_questions:
             answer_key = "text"
             answer_label = answer.answer_label
             if isinstance(answer_label, list):

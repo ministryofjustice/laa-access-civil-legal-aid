@@ -1,9 +1,8 @@
 from unittest import mock
 from flask_babel import lazy_gettext as _
 from app.means_test.views import CheckYourAnswers, ReviewForm
-from app.means_test import YES, NO
 from app.session import Eligibility
-from app.categories.models import CategoryAnswer
+from app.categories.models import CategoryAnswer, QuestionType
 from app.categories.constants import DISCRIMINATION, HOUSING
 from app.means_test.api import EligibilityState
 
@@ -17,11 +16,11 @@ def mock_session_get_eligibility():
         **{
             "forms": {
                 "about-you": {
-                    "has_partner": NO,
-                    "on_benefits": YES,
-                    "have_children": NO,
-                    "have_dependents": NO,
-                    "own_property": NO,
+                    "has_partner": False,
+                    "on_benefits": True,
+                    "have_children": False,
+                    "have_dependents": False,
+                    "own_property": False,
                 },
                 "benefits": {"benefits": ["employment_support", "universal_credit"]},
             }
@@ -143,6 +142,7 @@ def test_get_category_answers_summary_no_description(app):
             answer_value="work",
             next_page="categories.discrimination.why",
             question_page="categories.discrimination.where",
+            question_type=QuestionType.ONWARD,
         ),
         CategoryAnswer(
             question="Why were you discriminated against?",
@@ -151,6 +151,7 @@ def test_get_category_answers_summary_no_description(app):
             answer_value="disability",
             next_page="categories.discrimination.age",
             question_page="categories.discrimination.why",
+            question_type=QuestionType.ONWARD,
         ),
         CategoryAnswer(
             question="Are you under 18?",
@@ -159,6 +160,7 @@ def test_get_category_answers_summary_no_description(app):
             answer_value="no",
             next_page="categories.index",
             question_page="categories.discrimination.age",
+            question_type=QuestionType.ONWARD,
         ),
     ]
 
@@ -180,7 +182,7 @@ def test_get_category_answers_summary_with_description(app):
             "value": {
                 "markdown": "**Homelessness**\nHelp if you’re homeless, or might be homeless in the next 2 months. This could be because of rent arrears, debt, the end of a relationship, or because you have nowhere to live."
             },
-            "actions": {"items": [{"text": _("Change"), "href": "/housing/"}]},
+            "actions": {"items": [{"text": _("Change"), "href": "/find-your-problem"}]},
         },
         {
             "key": {"text": "Are you under 18?"},
@@ -199,6 +201,7 @@ def test_get_category_answers_summary_with_description(app):
             answer_value="homelessness",
             next_page="categories.discrimination.age",
             question_page="categories.housing.landing",
+            question_type=QuestionType.SUB_CATEGORY,
         ),
         CategoryAnswer(
             question="Are you under 18?",
@@ -207,6 +210,7 @@ def test_get_category_answers_summary_with_description(app):
             answer_value="no",
             next_page="categories.index",
             question_page="categories.discrimination.age",
+            question_type=QuestionType.ONWARD,
         ),
     ]
 

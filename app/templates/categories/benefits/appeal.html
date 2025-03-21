@@ -25,7 +25,9 @@
         </ul>
         <p class="govuk-body">{% trans %}For all other benefits appeals, go to GOV.UK and read <a href="https://www.gov.uk/appeal-benefit-decision" target="_blank">Appeal a benefits decision (opens in new tab)</a>.{% endtrans %}</p>
 
-        <form class="govuk-!-margin-top-6" action="" method="get" novalidate>
+        <form class="govuk-!-margin-top-6" action="" method="post" novalidate>
+
+            {{ form.csrf_token() }}
 
             {{ form.question() }}
 

@@ -1,9 +1,13 @@
 from flask.sessions import SecureCookieSession, SecureCookieSessionInterface
-from app.categories.constants import Category, get_category_from_code
+from app.categories.constants import (
+    Category,
+    get_category_from_code,
+    get_subcategory_from_code,
+)
 from flask import session
 from dataclasses import dataclass
 from datetime import timedelta
-from app.categories.models import CategoryAnswer
+from app.categories.models import CategoryAnswer, QuestionType
 from flask_babel import LazyString
 
 
@@ -22,69 +26,57 @@ class Eligibility:
     def category(self):
         return session.get("category", {}).get("chs_code")
 
-    def is_yes(self, form_name, field_name) -> bool | None:
-        form = self.forms.get(form_name)
-        if not form:
-            return False
-        return form.get(field_name) == "1"
-
-    def is_no(self, form_name, field_name) -> bool | None:
-        form = self.forms.get(form_name)
-        if not form:
-            return False
-        return form.get(field_name) == "0"
-
     @property
     def has_partner(self):
-        return self.is_yes("about-you", "has_partner") and not self.is_yes(
-            "about-you", "are_you_in_a_dispute"
-        )
+        return self.forms.get("about-you", {}).get(
+            "has_partner", False
+        ) and not self.forms.get("about-you", {}).get("are_you_in_a_dispute", False)
 
     @property
     def is_employed(self):
-        return self.is_yes("about-you", "is_employed")
+        return self.forms.get("about-you", {}).get("is_employed", False)
 
     @property
     def is_self_employed(self):
-        return self.is_yes("about-you", "is_self_employed")
+        return self.forms.get("about-you", {}).get("is_self_employed", False)
 
     @property
     def is_employed_or_self_employed(self):
-        return self.is_yes("about-you", "is_employed") or self.is_yes(
-            "about-you", "is_self_employed"
-        )
+        return self.forms.get("about-you", {}).get("is_employed") or self.forms.get(
+            "about-you", {}
+        ).get("is_self_employed", False)
 
     @property
     def is_partner_employed(self):
         if not self.has_partner:
             return False
-        return self.is_yes("about-you", "partner_is_employed")
+        return self.forms.get("about-you", {}).get("partner_is_employed")
 
     @property
     def is_partner_self_employed(self):
         if not self.has_partner:
             return False
-        return self.is_yes("about-you", "partner_is_self_employed")
+        return self.forms.get("about-you", {}).get("partner_is_self_employed")
 
     @property
     def has_savings(self):
-        return self.is_yes("about-you", "have_savings")
+        return self.forms.get("about-you", {}).get("have_savings", False)
 
     @property
     def has_valuables(self):
-        return self.is_yes("about-you", "have_valuables")
+        return self.forms.get("about-you", {}).get("have_valuables", False)
 
     @property
     def has_children(self) -> bool:
-        return self.is_yes("about-you", "have_children")
+        return self.forms.get("about-you", {}).get("have_children", False)
 
     @property
     def has_dependants(self) -> bool:
-        return self.is_yes("about-you", "have_dependents")
+        return self.forms.get("about-you", {}).get("have_dependents", False)
 
     @property
     def on_benefits(self) -> bool:
-        return self.is_yes("about-you", "on_benefits")
+        return self.forms.get("about-you", {}).get("on_benefits", False)
 
     @property
     def is_eligible_for_child_benefits(self) -> bool:
@@ -178,6 +170,29 @@ class Session(SecureCookieSession):
             return get_category_from_code(category_dict["code"])
 
     @property
+    def subcategory(self):
+        """Returns the subcategory based on category answers.
+
+        Returns:
+            Category: The subcategory object if found, None otherwise.
+
+        Raises:
+            ValueError: If multiple SUB_CATEGORY questions are found.
+        """
+        result = None
+
+        for answer in self.category_answers:
+            if answer.question_type == QuestionType.SUB_CATEGORY:
+                if result is not None:
+                    raise ValueError("User has multiple subcategory answers")
+
+                result = get_subcategory_from_code(
+                    answer.category.parent_code, answer.category.code
+                )
+
+        return result
+
+    @property
     def has_children(self):
         # Todo: Needs implementation
         return True
@@ -248,6 +263,12 @@ class Session(SecureCookieSession):
 
         if "category_answers" not in self:
             self["category_answers"] = []
+        if category_answer.category.parent_code:
+            session.category = get_category_from_code(
+                category_answer.category.parent_code
+            )
+        else:
+            session.category = category_answer.category
 
         answers: list[CategoryAnswer] = self.category_answers
 
@@ -282,6 +303,23 @@ class Session(SecureCookieSession):
                 return answer.answer_value
 
         return None
+
+    def remove_category_question_answer(self, question_title: str) -> None:
+        """Remove a question-answer pair from the session.
+
+        Args:
+            question_title: The title of the question to remove
+
+        """
+        if "category_answers" not in self:
+            return
+
+        answers: list[dict[str, str]] = self["category_answers"]
+
+        # Remove existing entry if present
+        answers = [entry for entry in answers if entry["question"] != question_title]
+
+        self["category_answers"] = answers
 
 
 class SessionInterface(SecureCookieSessionInterface):
