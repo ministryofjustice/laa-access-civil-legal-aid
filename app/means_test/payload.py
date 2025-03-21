@@ -91,8 +91,10 @@ class YourBenefitsPayload(dict):
 
         is_passported = session.get_eligibility().has_passported_benefits
 
-        benefits = (
-            {
+        benefits = {}
+
+        if session.get_eligibility().on_benefits:
+            benefits = {
                 "pension_credit": "pension_credit" in form_data.get("benefits", []),
                 "job_seekers_allowance": "job_seekers_allowance"
                 in form_data.get("benefits", []),
@@ -101,9 +103,6 @@ class YourBenefitsPayload(dict):
                 "universal_credit": "universal_credit" in form_data.get("benefits", []),
                 "income_support": "income_support" in form_data.get("benefits", []),
             }
-            if session.get_eligibility().on_benefits
-            else {}
-        )
 
         payload = {
             "specific_benefits": benefits,
@@ -195,12 +194,13 @@ class PropertiesPayload(dict):
     def __init__(self, form_data={}):
         super(PropertiesPayload, self).__init__()
 
-        properties = [
-            PropertyPayload(prop)
-            for prop in form_data.get("properties", [])
-            if session.get_eligibility().owns_property
-        ]
-        if not properties and session.get_eligibility().owns_property:
+        properties = []
+
+        if session.get_eligibility().owns_property:
+            for property in form_data.get("properties", []):
+                properties.append(PropertyPayload(property))
+
+        if len(properties) == 0 and session.get_eligibility().owns_property:
             properties.append(PropertyPayload())
 
         def mortgage(index):
@@ -321,10 +321,6 @@ class IncomePayload(dict):
                 }
             }
 
-            print("Income Payload")
-            print(person)
-            print(self_employed)
-            print(employed)
             if self_employed:
                 payload[person]["income"]["earnings"] = MoneyInterval(0)
                 payload[person]["income"]["self_employment_drawings"] = MoneyInterval(
@@ -425,17 +421,13 @@ class OutgoingsPayload(dict):
             self["you"]["deductions"]["childcare"] = MoneyInterval(0)
 
 
-class MeansTestError(Exception):
-    pass
-
-
-class MeansTest(dict):
+class MeansTestPayload(dict):
     """
     Encapsulates the means test data and saving to and querying the API
     """
 
     def __init__(self, *args, **kwargs):
-        super(MeansTest, self).__init__(*args, **kwargs)
+        super(MeansTestPayload, self).__init__(*args, **kwargs)
 
         self.reference = session.get("ec_reference", None)
 

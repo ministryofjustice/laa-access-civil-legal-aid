@@ -13,7 +13,7 @@ from app.means_test.forms.savings import SavingsForm
 from app.means_test.forms.outgoings import OutgoingsForm
 from app.means_test.forms.review import ReviewForm, BaseMeansTestForm
 from app.categories.models import CategoryAnswer, QuestionType
-from app.means_test.payload import MeansTest as MeansTestPayload
+from app.means_test.payload import MeansTestPayload
 
 
 class FormsMixin:

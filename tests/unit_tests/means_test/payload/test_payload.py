@@ -1,7 +1,7 @@
 from unittest.mock import patch
 import pytest
 from app.categories.constants import get_category_from_code
-from app.means_test.payload import MeansTest as MeansTestPayload
+from app.means_test.payload import MeansTestPayload
 from .test_cases import (
     ABOUT_YOU_TEST_CASES,
     INCOME_TEST_CASES,
