@@ -127,6 +127,7 @@ def test_in_scope(client):
         session.set_category_question_answer(out_scope_answer)
         assert session.in_scope is False
 
+
 class TestPrimaryCategoryAnswer:
     @pytest.mark.parametrize(
         "category",

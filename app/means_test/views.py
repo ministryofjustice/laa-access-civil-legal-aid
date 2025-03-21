@@ -17,8 +17,8 @@ from app.means_test.forms.income import IncomeForm
 from app.means_test.forms.savings import SavingsForm
 from app.means_test.forms.outgoings import OutgoingsForm
 from app.means_test.forms.review import ReviewForm, BaseMeansTestForm
-from app.categories.models import CategoryAnswer
 from app.categories.models import CategoryAnswer, QuestionType
+from app.categories.mixins import InScopeMixin
 
 
 class FormsMixin:
