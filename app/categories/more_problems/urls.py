@@ -1,4 +1,4 @@
-from flask import render_template, url_for, session, make_response
+from flask import render_template, url_for, session
 from app.categories.more_problems import bp
 from app.categories.views import CategoryPage
 from app.categories.results.views import CannotFindYourProblemPage, NextStepsPage
@@ -62,12 +62,8 @@ class MoreProblemsPage(CategoryPage):
         multiple subcategories
         """
         session.clear()
-        response = make_response(render_template(self.template, listing=listing))
-        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-        response.headers["Pragma"] = "no-cache"
-        response.headers["Expires"] = "0"
 
-        return response
+        return render_template(self.template, listing=listing)
 
 
 bp.add_url_rule(
