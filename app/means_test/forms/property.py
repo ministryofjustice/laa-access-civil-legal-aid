@@ -39,45 +39,6 @@ class PropertyPayload(dict):
         )
 
 
-class PropertiesPayload(dict):
-    def __init__(self, form_data={}):
-        super(PropertiesPayload, self).__init__()
-
-        # Extract the list of properties from the form data
-        property_list = form_data.get("properties", [])
-
-        # Convert each property dictionary to a PropertyPayload
-        properties = [PropertyPayload(property_data) for property_data in property_list]
-
-        # Calculate total mortgage payments and rent amounts
-        total_mortgage = sum(
-            float(property_data.get("mortgage_payments", 0))
-            for property_data in property_list
-        )
-        total_rent = (
-            sum(
-                float(
-                    MoneyInterval(property_data.get("rent_amount", {}))
-                    .per_month()
-                    .get("per_interval_value", 0)
-                )
-                for property_data in property_list
-            )
-            / 100
-        )
-
-        # Update the payload with the calculated data
-        self.update(
-            {
-                "property_set": properties,
-                "you": {
-                    "income": {"other_income": MoneyInterval(total_rent, "per_month")}
-                },
-                "deductions": {"mortgage": MoneyInterval(total_mortgage, "per_month")},
-            },
-        )
-
-
 def validate_single_main_home(form, field):
     properties = form.properties.data
     main_home_count = 0
@@ -236,14 +197,3 @@ class MultiplePropertiesForm(BaseMeansTestForm):
     )
 
     template = "means_test/property.html"
-
-    def get_payload(
-        self,
-        has_property: bool | None = False,
-    ) -> dict:
-        """Returns the property payload for the user and the partner.
-        If a field can not be found the default of MoneyField(0) will be used.
-        """
-        payload = PropertiesPayload(self)
-
-        return payload

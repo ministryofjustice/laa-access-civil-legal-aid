@@ -19,7 +19,7 @@ def mock_session_get_eligibility():
                     "has_partner": False,
                     "on_benefits": True,
                     "have_children": False,
-                    "have_dependents": False,
+                    "have_dependants": False,
                     "own_property": False,
                 },
                 "benefits": {"benefits": ["employment_support", "universal_credit"]},
@@ -63,7 +63,7 @@ def test_views_summary(app):
                 "value": {"text": "No"},
                 "actions": {
                     "items": [
-                        {"href": "/about-you#have_dependents", "text": _("Change")}
+                        {"href": "/about-you#have_dependants", "text": _("Change")}
                     ]
                 },
             },

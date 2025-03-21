@@ -10,6 +10,7 @@ from app.means_test.api import (
     EligibilityState,
 )
 from app.categories.constants import Category
+from app.means_test.api import update_means_test
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import MultiplePropertiesForm
@@ -19,6 +20,7 @@ from app.means_test.forms.outgoings import OutgoingsForm
 from app.means_test.forms.review import ReviewForm, BaseMeansTestForm
 from app.categories.models import CategoryAnswer, QuestionType
 from app.categories.mixins import InScopeMixin
+from app.means_test.payload import MeansTestPayload
 
 
 class FormsMixin:
@@ -86,7 +88,8 @@ class MeansTest(FormsMixin, InScopeMixin, View):
         if form.validate_on_submit():
             session.get_eligibility().add(self.current_name, form.data)
             next_page = url_for(f"means_test.{self.get_next_page(self.current_name)}")
-            payload = get_means_test_payload(session.get_eligibility())
+            payload = MeansTestPayload()
+            payload.update_from_session()
             update_means_test(payload)
 
             return redirect(next_page)

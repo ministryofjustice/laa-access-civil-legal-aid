@@ -23,14 +23,14 @@ class Eligibility:
         self.forms[form_name] = data
 
     @property
-    def category(self):
-        return session.get("category", {}).get("chs_code")
-
-    @property
     def has_partner(self):
         return self.forms.get("about-you", {}).get(
             "has_partner", False
         ) and not self.forms.get("about-you", {}).get("are_you_in_a_dispute", False)
+
+    @property
+    def owns_property(self) -> bool:
+        return self.forms.get("about-you", {}).get("own_property", False)
 
     @property
     def is_employed(self):
@@ -72,7 +72,7 @@ class Eligibility:
 
     @property
     def has_dependants(self) -> bool:
-        return self.forms.get("about-you", {}).get("have_dependents", False)
+        return self.forms.get("about-you", {}).get("have_dependants", False)
 
     @property
     def on_benefits(self) -> bool:
@@ -105,6 +105,13 @@ class Eligibility:
     @property
     def notes(self):
         return self._notes
+
+    @property
+    def formatted_notes(self):
+        def format_note(note_item):
+            return "{key}:\n{note}".format(key=note_item[0], note=note_item[1])
+
+        return {"notes": "\n\n".join(map(format_note, self.notes.items()))}
 
     def add_note(self, key: str, note: str):
         self._notes[key] = note

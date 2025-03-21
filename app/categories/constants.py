@@ -533,10 +533,16 @@ list(map(init_children, ALL_CATEGORIES.values()))
 def get_category_from_code(code: str) -> Category | None:
     if not code:
         return None
-    return ALL_CATEGORIES[code]
+    try:
+        return ALL_CATEGORIES[code]
+    except KeyError:
+        raise ValueError(f"{code} is an invalid category code.")
 
 
 def get_subcategory_from_code(parent_code: str, code: str) -> Category | None:
     if not parent_code or not code:
         return None
-    return get_category_from_code(parent_code).children[code]
+    try:
+        return get_category_from_code(parent_code).children[code]
+    except KeyError:
+        raise ValueError(f"{code} is an invalid subcategory code for {parent_code}.")
