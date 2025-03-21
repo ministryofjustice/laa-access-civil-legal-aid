@@ -8,7 +8,7 @@ from app.categories.results.views import (
     CannotFindYourProblemPage,
     NextStepsPage,
 )
-from wtforms import RadioField
+from wtforms import RadioField, StringField, IntegerField
 from wtforms.validators import InputRequired
 from app.categories.widgets import CategoryRadioInput
 from app.categories.views import QuestionPage, QuestionForm
@@ -249,3 +249,34 @@ def test_question_page_next_page(app):
             "/find-a-legal-adviser?category=mhe&secondary_category=com"
             == view.get_next_page("fala")
         )
+
+
+def test_question_page_enforce_dependency(app):
+    class TestQuestion1(QuestionForm):
+        category = FAMILY
+        title = "What is your name?"
+        name = StringField("")
+
+    class TestQuestion2(QuestionForm):
+        category = FAMILY
+        depends_on = TestQuestion1
+        title = "How old are you?"
+        age = IntegerField()
+
+    values = {}
+
+    def mock_session_get_category_question_answer(question_title):
+        return values.get(question_title, None)
+
+    view = QuestionPage(form_class=TestQuestion2)
+    with app.app_context():
+        with patch.object(
+            session,
+            "get_category_question_answer",
+            side_effect=mock_session_get_category_question_answer,
+        ):
+            response = view.ensure_form_dependency(view.form_class())
+            assert response.status_code == 302
+            values[TestQuestion1.title] = "John Doe"
+            response = view.ensure_form_dependency(view.form_class())
+            assert response is None

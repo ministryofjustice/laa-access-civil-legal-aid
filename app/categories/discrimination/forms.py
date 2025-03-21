@@ -53,6 +53,7 @@ class DiscriminationWhereForm(DiscriminationQuestionForm):
 
 
 class DiscriminationWhyForm(DiscriminationQuestionForm):
+    depends_on = DiscriminationWhereForm
     title = _("Why were you discriminated against?")
 
     next_step_mapping = {
@@ -102,6 +103,7 @@ class DiscriminationWhyForm(DiscriminationQuestionForm):
 
 
 class DiscriminationAreYouUnder18Form(AreYouUnder18Form):
+    depends_on = DiscriminationWhyForm
     category = DISCRIMINATION
 
     next_step_mapping = {

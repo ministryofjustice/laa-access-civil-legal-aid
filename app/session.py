@@ -99,6 +99,10 @@ class Eligibility:
         )
 
     @property
+    def owns_property(self):
+        return self.forms.get("about-you", {}).get("own_property", False)
+
+    @property
     def notes(self):
         return self._notes
 
@@ -131,6 +135,14 @@ class Session(SecureCookieSession):
 
     def clear_eligibility(self):
         self["eligibility"] = Eligibility(forms={}, _notes={})
+
+    @property
+    def ec_reference(self):
+        return self.get("_ec_reference", None)
+
+    @ec_reference.setter
+    def ec_reference(self, ec_reference):
+        self["_ec_reference"] = ec_reference
 
     @property
     def category(self) -> Category | None:
@@ -200,6 +212,16 @@ class Session(SecureCookieSession):
     def has_dependants(self):
         # Todo: Needs implementation
         return True
+
+    @property
+    def in_scope(self):
+        if self.subcategory and self.subcategory.in_scope is not None:
+            return self.subcategory.in_scope
+
+        if self.category and self.category.in_scope is not None:
+            return self.category.in_scope
+
+        return False
 
     @property
     def category_answers(self) -> list[CategoryAnswer]:
