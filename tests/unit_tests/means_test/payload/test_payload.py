@@ -73,6 +73,4 @@ def test_get_means_test_payload(test_case: dict, app, client) -> None:
     with patch("app.means_test.payload.session", mock_session):
         payload = MeansTestPayload()
         payload.update_from_session()
-        print(payload)
-        assert False
         assert_partial_dict_match(test_case["expected"], payload)
