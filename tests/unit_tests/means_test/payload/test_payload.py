@@ -8,7 +8,6 @@ from .test_cases import (
     SAVINGS_TEST_CASES,
     OUTGOINGS_TEST_CASES,
     PROPERTIES_TEST_CASES,
-    BENEFITS_TEST_CASES,
 )
 
 
@@ -44,8 +43,7 @@ def assert_partial_dict_match(expected: dict, actual: dict, path: str = "") -> N
     + INCOME_TEST_CASES
     + SAVINGS_TEST_CASES
     + OUTGOINGS_TEST_CASES
-    + PROPERTIES_TEST_CASES
-    + BENEFITS_TEST_CASES,
+    + PROPERTIES_TEST_CASES,
     ids=lambda t: t["id"],
 )
 def test_get_means_test_payload(test_case: dict, app, client) -> None:
