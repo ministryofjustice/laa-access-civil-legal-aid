@@ -18,5 +18,8 @@ def add_no_cache_headers(response):
         )
         response.headers["Pragma"] = "no-cache"
         response.headers["Expires"] = "0"
+    else:
+        response.headers["Cache-Control"] = "public, max-age=604800"
+        response.headers["Pragma"] = "cache"
 
     return response
