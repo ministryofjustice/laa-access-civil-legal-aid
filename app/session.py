@@ -208,15 +208,13 @@ class Session(SecureCookieSession):
 
     @property
     def in_scope(self):
-        category_answers = self.category_answers
-        if not category_answers:
-            return False
+        if self.subcategory and self.subcategory.in_scope is not None:
+            return self.subcategory.in_scope
 
-        last_answer = category_answers[-1]
-        if not last_answer.category:
-            return False
+        if self.category and self.category.in_scope is not None:
+            return self.category.in_scope
 
-        return last_answer.category.in_scope
+        return False
 
     @property
     def category_answers(self) -> list[CategoryAnswer]:

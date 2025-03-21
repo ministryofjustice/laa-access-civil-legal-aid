@@ -12,7 +12,7 @@ class Category:
     chs_code: Optional[str] = None
     # Internal code
     code: Optional[str] = None
-    in_scope: Optional[bool] = False
+    in_scope: Optional[bool] = None
     children: dict[str, "Category"] | None = field(default_factory=dict)
     parent_code: Optional[str] = None
     _referrer_text: Optional[LazyString] = None
