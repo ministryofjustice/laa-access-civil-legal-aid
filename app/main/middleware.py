@@ -1,3 +1,4 @@
+from flask import request
 from app.main import bp
 
 
@@ -8,10 +9,14 @@ def add_noindex_header(response):
     return response
 
 
-# Prevents the webbrowser from caching
 @bp.after_app_request
 def add_no_cache_headers(response):
-    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "0"
+    """Prevents the webbrowser from caching webpages"""
+    if not request.path.startswith("/assets"):
+        response.headers["Cache-Control"] = (
+            "no-store, no-cache, must-revalidate, max-age=0"
+        )
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+
     return response
