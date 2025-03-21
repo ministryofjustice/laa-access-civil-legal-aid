@@ -291,6 +291,23 @@ class Session(SecureCookieSession):
 
         return None
 
+    def remove_category_question_answer(self, question_title: str) -> None:
+        """Remove a question-answer pair from the session.
+
+        Args:
+            question_title: The title of the question to remove
+
+        """
+        if "category_answers" not in self:
+            return
+
+        answers: list[dict[str, str]] = self["category_answers"]
+
+        # Remove existing entry if present
+        answers = [entry for entry in answers if entry["question"] != question_title]
+
+        self["category_answers"] = answers
+
 
 class SessionInterface(SecureCookieSessionInterface):
     session_class = Session

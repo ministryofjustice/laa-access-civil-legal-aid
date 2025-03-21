@@ -7,7 +7,7 @@ from app.categories.models import CategoryAnswer, QuestionType
 
 
 class CategoryPage(View):
-    template: str = None
+    template: str = ""
     question_title: str = ""
     category: Category
 
@@ -159,6 +159,7 @@ class QuestionPage(CategoryPage):
     """
 
     template: str = "categories/question-page.html"
+    methods = ["GET", "POST"]
     form_class: type[QuestionForm] | None = None
 
     def __init__(self, form_class: type[QuestionForm], template=None):
@@ -235,12 +236,17 @@ class QuestionPage(CategoryPage):
         Returns:
             Either a redirect to the next page or the rendered template
         """
-        form = self.form_class(request.args)
+        form = self.form_class()
         session.category = form.category
 
-        if form.submit.data and form.validate():
+        if form.validate_on_submit():
             self.update_session(form)
             return redirect(self.get_next_page(form.question.data))
+
+        # Clear session data if form has errors, this prevents ghost answers from re-appearing from previously
+        # valid form submissions.
+        if form.question.errors:
+            session.remove_category_question_answer(question_title=form.title)
 
         # Pre-populate form with previous answer if it exists
         previous_answer = session.get_category_question_answer(form.title)
