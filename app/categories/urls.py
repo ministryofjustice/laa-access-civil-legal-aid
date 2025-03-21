@@ -38,9 +38,3 @@ bp.add_url_rule(
     "/find-your-problem",
     view_func=IndexPage.as_view("index", template="categories/index.html"),
 )
-bp.add_url_rule(
-    "/more-problems",
-    view_func=CategoryPage.as_view(
-        "more_problems", template="categories/more-problems.html"
-    ),
-)
