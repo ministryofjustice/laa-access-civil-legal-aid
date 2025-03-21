@@ -102,6 +102,13 @@ class Eligibility:
     def notes(self):
         return self._notes
 
+    @property
+    def formatted_notes(self):
+        def format_note(note_item):
+            return "{key}:\n{note}".format(key=note_item[0], note=note_item[1])
+
+        return {"notes": "\n\n".join(map(format_note, self.notes.items()))}
+
     def add_note(self, key: str, note: str):
         self._notes[key] = note
 

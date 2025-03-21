@@ -10,7 +10,6 @@ from app.api import cla_backend
 from app.contact.notify.api import notify
 from app.means_test.api import update_means_test
 from app.means_test.views import MeansTest
-from app.means_test.payload import MeansTest as MeansTestPayload
 from datetime import datetime
 
 logger = logging.getLogger(__name__)
@@ -97,9 +96,7 @@ class ContactUs(View):
         if not notes_data or len(notes_data) == 0:
             return
         session.get_eligibility().add_note("User problem", notes_data)
-        payload = MeansTestPayload()
-        payload.update_from_session()
-        update_means_test(payload)
+        update_means_test(session.get_eligibility().formatted_notes)
 
     @staticmethod
     def _attach_rfc_to_case(case_ref: str, rfc_ref: str):
