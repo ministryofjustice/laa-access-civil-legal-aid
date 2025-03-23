@@ -65,7 +65,11 @@ class MeansTest(FormsMixin, View):
             next_page = url_for(f"means_test.{self.get_next_page(self.current_name)}")
             payload = MeansTestPayload()
             payload.update_from_session()
-            ec_reference = update_means_test(payload)
+
+            response = update_means_test(payload)
+            if "reference" not in response:
+                raise ValueError("Eligibility reference not found in response")
+            ec_reference = update_means_test(payload)["reference"]
 
             eligibility = is_eligible(ec_reference)
             # Once we are sure of the user's eligibility we should not ask the user subsequent questions
