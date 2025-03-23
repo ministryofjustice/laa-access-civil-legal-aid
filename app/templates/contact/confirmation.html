@@ -3,6 +3,7 @@
 {%- from 'govuk_frontend_jinja/components/panel/macro.html' import govukPanel %}
 {%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton %}
 {%- from 'govuk_frontend_jinja/components/warning-text/macro.html' import govukWarningText %}
+{%- from 'components/survey.html' import satisfaction_survey %}
 
 {% block pageTitle %}Confirmation - {{ super() }}{% endblock %}
 
@@ -159,10 +160,7 @@
             </p>
           {% endif %}
 
-            {{ govukButton({
-                "text": _("Finish"),
-                "href": "https://www.gov.uk/done/check-if-civil-legal-advice-can-help-you",
-            }) }}
+          {{ satisfaction_survey("confirmation") }}
 
         </div>
     </div>

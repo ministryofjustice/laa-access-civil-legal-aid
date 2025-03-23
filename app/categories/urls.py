@@ -23,7 +23,7 @@ class IndexPage(CategoryPage):
             (FAMILY, url_for("categories.family.landing")),
             (HOUSING, url_for("categories.housing.landing")),
             (DOMESTIC_ABUSE, url_for("categories.domestic_abuse.landing")),
-            (DISCRIMINATION, url_for("categories.discrimination.where")),
+            (DISCRIMINATION, url_for("categories.discrimination.landing")),
             (EDUCATION, url_for("categories.send.landing")),
             (COMMUNITY_CARE, url_for("categories.community_care.landing")),
             (BENEFITS, url_for("categories.benefits.appeal")),

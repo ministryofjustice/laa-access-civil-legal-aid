@@ -11,9 +11,7 @@ from app.means_test.validators import (
     ValidateIf,
     ValidateIfType,
 )
-from app.means_test import YES, NO
 from dataclasses import dataclass, field
-from app.means_test.money_interval import MoneyInterval
 
 
 @dataclass
@@ -123,27 +121,6 @@ class BenefitsForm(BaseMeansTestForm):
     def should_show(cls) -> bool:
         return session.get_eligibility().on_benefits
 
-    def get_payload(self) -> dict:
-        """Returns the benefits payload for the user and the partner.
-        If a field can not be found the default of MoneyField(0) will be used.
-        """
-        payload = {
-            "specific_benefits": {
-                "pension_credit": "pension_credit" in self.get("benefits", []),
-                "job_seekers_allowance": "job_seekers_allowance"
-                in self.get("benefits", []),
-                "employment_support": "employment_support" in self.get("benefits", []),
-                "universal_credit": "universal_credit" in self.get("benefits", []),
-                "income_support": "income_support" in self.get("benefits", []),
-            },
-            "on_passported_benefits": session.get(
-                "eligibility"
-            ).has_passported_benefits,
-            "child_benefits": self.get("child_benefits", {}),
-        }
-
-        return payload
-
 
 class AdditionalBenefitsForm(BaseMeansTestForm):
     title = _("Your additional benefits")
@@ -194,7 +171,6 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
             "Allowance"
         ),
         widget=MeansTestRadioInput(),
-        choices=[(YES, _("Yes")), (NO, _("No"))],
         validators=[
             InputRequired(message=_("Tell us whether you receive any other benefits"))
         ],
@@ -205,7 +181,7 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
         exclude_intervals=["per_month"],
         widget=MoneyIntervalWidget(),
         validators=[
-            ValidateIf("other_benefits", YES),
+            ValidateIf("other_benefits", True),
             MoneyIntervalAmountRequired(
                 message=_("Tell us how much you receive in other benefits"),
                 freq_message=_("Tell us how often you receive these other benefits"),
@@ -228,16 +204,3 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
     def should_show(cls) -> bool:
         data = session.get("eligibility").forms.get("benefits")
         return data and "other-benefit" in data["benefits"]
-
-    def get_payload(
-        self,
-    ) -> dict:
-        """Returns the additional benefits payload for the user and the partner.
-        If a field can not be found the default of MoneyField(0) will be used.
-        """
-        payload = {
-            "on_nass_benefits": False,
-            "benefits": self.get("total_other_benefit", MoneyInterval(0)),
-        }
-
-        return payload

@@ -3,10 +3,12 @@ from enum import Enum
 from typing import Optional
 
 from flask import url_for
+
 from app.categories.constants import Category
 
 
 class QuestionType(str, Enum):
+    CATEGORY = "category"
     SUB_CATEGORY = "sub_category"
     ONWARD = "onward_question"
 
