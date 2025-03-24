@@ -1,23 +1,7 @@
-import inspect
-
 import pytest
 from unittest.mock import patch, Mock, PropertyMock
 from app.means_test.api import EligibilityState
 from app.means_test.views import MeansTest
-
-
-def test_inspect_is_eligible_function(app):
-    """Test to inspect the is_eligible function."""
-    with app.app_context():
-        # Import the function directly to inspect it
-        from app.means_test.views import is_eligible
-
-        # Print information about the function
-        print(f"is_eligible type: {type(is_eligible)}")
-        print(f"is_eligible is coroutine: {inspect.iscoroutinefunction(is_eligible)}")
-        print(f"is_eligible is generator: {inspect.isgeneratorfunction(is_eligible)}")
-        print(f"is_eligible is async: {inspect.isasyncgenfunction(is_eligible)}")
-        assert False
 
 
 @pytest.fixture
