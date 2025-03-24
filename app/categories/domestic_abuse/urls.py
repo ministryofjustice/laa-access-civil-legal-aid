@@ -45,10 +45,6 @@ class DomesticAbuseLandingPage(CategoryLandingPage):
                 "categories.housing.landing",
             ),
         ],
-        "accused_of_domestic_abuse": (
-            DOMESTIC_ABUSE.sub.accused_of_domestic_abuse,
-            "categories.domestic_abuse.accused_of_domestic_abuse",
-        ),
         "other": "categories.domestic_abuse.cannot_find_your_problem",
     }
 
