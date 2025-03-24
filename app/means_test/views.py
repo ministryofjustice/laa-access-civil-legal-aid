@@ -4,7 +4,6 @@ from flask import render_template, url_for, redirect, session, request
 from flask_babel import lazy_gettext as _, gettext
 from werkzeug.datastructures import MultiDict
 from app.categories.constants import Category
-from app.categories.results.views import ResultPage
 from app.means_test.api import update_means_test, is_eligible
 from app.means_test.constants import EligibilityState
 from app.means_test.forms.about_you import AboutYouForm
@@ -270,7 +269,3 @@ class CheckYourAnswers(FormsMixin, MethodView):
         if session.subcategory and session.subcategory.eligible_for_HLPAS:
             return redirect(url_for("means_test.result.hlpas"))
         return redirect(url_for("means_test.result.ineligible"))
-
-
-class Ineligible(ResultPage):
-    template = "means_test/refer.html"
