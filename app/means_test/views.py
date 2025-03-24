@@ -1,6 +1,6 @@
 from typing import List
 from flask.views import View, MethodView
-from flask import render_template, url_for, redirect, session, request, flash
+from flask import render_template, url_for, redirect, session, request
 from flask_babel import lazy_gettext as _, gettext
 from werkzeug.datastructures import MultiDict
 from app.categories.constants import Category
@@ -264,7 +264,7 @@ class CheckYourAnswers(FormsMixin, MethodView):
             eligibility == EligibilityState.YES
             or eligibility == EligibilityState.UNKNOWN
         ):
-            return redirect(url_for("means_test.result.eligible"))
+            return redirect(url_for("contact.eligible"))
 
         if session.subcategory and session.subcategory.eligible_for_HLPAS:
             return redirect(url_for("means_test.result.hlpas"))
@@ -281,12 +281,3 @@ class Ineligible(View):
     def dispatch_request(self):
         category = session.category
         return render_template(self.template, category=category)
-
-
-class Eligible(View):
-    template = "categories/results/eligible.html"
-
-    def dispatch_request(self):
-        # TODO: Implement the actual eligible route
-        flash("You are eligible for legal aid", "success")
-        return redirect(url_for("means_test.review"))
