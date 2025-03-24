@@ -4,6 +4,7 @@ from flask import render_template, url_for, redirect, session, request
 from flask_babel import lazy_gettext as _, gettext
 from werkzeug.datastructures import MultiDict
 from app.categories.constants import Category
+from app.categories.results.views import ResultPage
 from app.means_test.api import update_means_test, is_eligible
 from app.means_test.constants import EligibilityState
 from app.means_test.forms.about_you import AboutYouForm
@@ -255,9 +256,9 @@ class CheckYourAnswers(FormsMixin, MethodView):
             )
         return summary
 
-    def post(self):
-        ec_reference = session.get("ec_reference")
-        eligibility = is_eligible(ec_reference)
+    @staticmethod
+    def post():
+        eligibility = is_eligible(session.get("ec_reference"))
 
         # Failsafe, if we are unsure of the eligibility state at this point send the user to the call centre
         if (
@@ -271,13 +272,5 @@ class CheckYourAnswers(FormsMixin, MethodView):
         return redirect(url_for("means_test.result.ineligible"))
 
 
-class Ineligible(View):
+class Ineligible(ResultPage):
     template = "means_test/refer.html"
-
-    def __init__(self, template: str = None):
-        if template:
-            self.template = template
-
-    def dispatch_request(self):
-        category = session.category
-        return render_template(self.template, category=category)
