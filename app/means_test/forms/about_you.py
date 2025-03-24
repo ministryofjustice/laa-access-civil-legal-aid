@@ -21,7 +21,7 @@ class AboutYouForm(BaseMeansTestForm):
         validators=[InputRequired(message=_("Tell us whether you have a partner"))],
     )
 
-    are_you_in_a_dispute = YesNoField(
+    in_dispute = YesNoField(
         _("Are you in a dispute with your partner?"),
         description=_(
             "This means your partner is the opponent in the dispute you need help with, for example a dispute over money or property"
@@ -42,7 +42,7 @@ class AboutYouForm(BaseMeansTestForm):
         validators=[InputRequired(message=_("Tell us whether you receive benefits"))],
     )
 
-    have_children = YesNoField(
+    has_children = YesNoField(
         _("Do you have any children aged 15 or under?"),
         widget=MeansTestRadioInput(),
         description=_("Don't include any children who don't live with you"),
@@ -57,7 +57,7 @@ class AboutYouForm(BaseMeansTestForm):
         _("How many?"),
         widget=GovTextInput(),
         validators=[
-            ValidateIf("have_children", True),
+            ValidateIf("has_children", True),
             InputRequired(
                 message=_("Tell us how many children you have aged 15 or under")
             ),
@@ -65,7 +65,7 @@ class AboutYouForm(BaseMeansTestForm):
         ],
     )
 
-    have_dependants = YesNoField(
+    has_dependants = YesNoField(
         _("Do you have any dependants aged 16 or over?"),
         widget=MeansTestRadioInput(),
         description=_(
@@ -82,7 +82,7 @@ class AboutYouForm(BaseMeansTestForm):
         _("How many?"),
         widget=GovTextInput(),
         validators=[
-            ValidateIf("have_dependants", True),
+            ValidateIf("has_dependants", True),
             InputRequired(_("Tell us how many dependants you have aged 16 or over")),
             NumberRange(min=1, max=50, message=_("Enter a number between 1 and 50")),
         ],
@@ -110,7 +110,7 @@ class AboutYouForm(BaseMeansTestForm):
             "This means working as an employee - your partner may be both employed and self-employed"
         ),
         validators=[
-            ValidateIf("are_you_in_a_dispute", False),
+            ValidateIf("in_dispute", False),
             InputRequired(message=_("Tell us whether your partner is employed")),
         ],
         widget=MeansTestRadioInput(),
@@ -131,7 +131,7 @@ class AboutYouForm(BaseMeansTestForm):
             "This means working for yourself - your partner may be both employed and self-employed"
         ),
         validators=[
-            ValidateIf("are_you_in_a_dispute", False),
+            ValidateIf("in_dispute", False),
             InputRequired(message=_("Tell us whether your partner is self-employed")),
         ],
         widget=MeansTestRadioInput(),
@@ -147,7 +147,7 @@ class AboutYouForm(BaseMeansTestForm):
         ],
     )
 
-    have_savings = YesNoField(
+    has_savings = YesNoField(
         _("Do you have any savings or investments?"),
         widget=MeansTestRadioInput(),
         validators=[
@@ -155,7 +155,7 @@ class AboutYouForm(BaseMeansTestForm):
         ],
     )
 
-    have_valuables = YesNoField(
+    has_valuables = YesNoField(
         _("Do you have any valuable items worth over £500 each?"),
         widget=MeansTestRadioInput(),
         validators=[

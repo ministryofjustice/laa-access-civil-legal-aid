@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{%- from 'components/back_link.html' import govukBackLink -%}
+{%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton -%}
+
+{% set title = _('You might qualify for free legal advice') %}
+{% block pageTitle %}{{ title }} - {{ super() }}{% endblock %}
+
+{% block beforeContent%}
+{{ super() }}
+{{ govukBackLink() }}
+
+{% endblock %}
+
+{% block content %}
+
+{{ super() }}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">{{ title }}</h1>
+        <p class="govuk-body">{% trans %}You might be able to get free legal advice through the Housing Loss Prevention Advice Scheme.{% endtrans %}</p>
+        <p class="govuk-body">{% trans %}This advice is free to anyone who can show their home is at risk. It does not depend on what you earn or your financial situation.{% endtrans %}</p>
+        <h2 class="govuk-heading-m">{% trans %}Next steps{% endtrans %}</h2>
+        <p class="govuk-body">
+          <ol class="govuk-list govuk-list--number">
+            <li>{% trans %}We’ll show you a list of legal advisors.{% endtrans %}</li>
+            <li>{% trans %}You need to contact the legal adviser.{% endtrans %}</li>
+            <li>{% trans %}Explain that you could lose your home.{% endtrans %}</li>
+            <li>{% trans %}Tell them if you have any letters or documents about your situation.{% endtrans %}</li>
+          </ol>
+        </p>
+        {{ govukButton({
+            "text": _("Continue"),
+            "href": url_for('find-a-legal-adviser.search', category="hlpas"),
+        }) }}
+    </div>
+</div>
+{% endblock %}}

@@ -4,7 +4,8 @@ from flask import render_template, url_for, redirect, session, request
 from flask_babel import lazy_gettext as _, gettext
 from werkzeug.datastructures import MultiDict
 from app.categories.constants import Category
-from app.means_test.api import update_means_test
+from app.means_test.api import update_means_test, is_eligible
+from app.means_test.constants import EligibilityState
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
 from app.means_test.forms.property import MultiplePropertiesForm
@@ -64,9 +65,22 @@ class MeansTest(FormsMixin, View):
             next_page = url_for(f"means_test.{self.get_next_page(self.current_name)}")
             payload = MeansTestPayload()
             payload.update_from_session()
-            update_means_test(payload)
+            response = update_means_test(payload)
+            if "reference" not in response:
+                raise ValueError("Eligibility reference not found in response")
+
+            eligibility_result = is_eligible(response["reference"])
+            # Once we are sure of the user's eligibility we should not ask the user subsequent questions
+            # and instead ask them to confirm their answers before proceeding.
+            # We skip this check on the about-you page to match existing behaviour from CLA Public.
+            if (
+                eligibility_result != EligibilityState.UNKNOWN
+                and self.current_name not in ["about-you", "benefits"]
+            ):
+                return redirect(url_for("means_test.review"))
 
             return redirect(next_page)
+
         return render_template(
             self.form_class.template,
             form=form,
@@ -241,5 +255,17 @@ class CheckYourAnswers(FormsMixin, MethodView):
             )
         return summary
 
-    def post(self):
-        return self.get()
+    @staticmethod
+    def post():
+        eligibility = is_eligible(session.get("ec_reference"))
+
+        # Failsafe, if we are unsure of the eligibility state at this point send the user to the call centre
+        if (
+            eligibility == EligibilityState.YES
+            or eligibility == EligibilityState.UNKNOWN
+        ):
+            return redirect(url_for("contact.eligible"))
+
+        if session.subcategory and session.subcategory.eligible_for_HLPAS:
+            return redirect(url_for("means_test.result.hlpas"))
+        return redirect(url_for("means_test.result.ineligible"))

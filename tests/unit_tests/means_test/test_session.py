@@ -3,14 +3,14 @@ from app.session import Eligibility
 
 def test_has_partner():
     eligibility = Eligibility(
-        forms={"about-you": {"has_partner": True, "are_you_in_a_dispute": False}},
+        forms={"about-you": {"has_partner": True, "in_dispute": False}},
         _notes={},
     )
 
     assert eligibility.has_partner
 
     eligibility = Eligibility(
-        forms={"about-you": {"has_partner": True, "are_you_in_a_dispute": True}},
+        forms={"about-you": {"has_partner": True, "in_dispute": True}},
         _notes={},
     )
 
@@ -34,7 +34,7 @@ def test_partner_employment():
         forms={
             "about-you": {
                 "has_partner": True,
-                "are_you_in_a_dispute": False,
+                "in_dispute": False,
                 "partner_is_employed": True,
                 "partner_is_self_employed": False,
             }

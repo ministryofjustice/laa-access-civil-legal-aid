@@ -99,12 +99,12 @@ def test_child_benefits_not_available(page: Page, client):
 
 
 @pytest.mark.usefixtures("live_server")
-def test_child_benefits_available_have_children(page: Page, client):
+def test_child_benefits_available_has_children(page: Page, client):
     #
     with client.session_transaction() as session:
         # update the session
         session.get_eligibility().add(
-            "about-you", {"have_children": True, "have_dependants": False}
+            "about-you", {"has_children": True, "has_dependants": False}
         )
 
     url = url_for("means_test.benefits", _external=True)
@@ -122,7 +122,7 @@ def test_child_benefits_available_have_dependants(page: Page, client):
     with client.session_transaction() as session:
         # update the session
         session.get_eligibility().add(
-            "about-you", {"have_children": False, "have_dependants": True}
+            "about-you", {"has_children": False, "has_dependants": True}
         )
 
     url = url_for("means_test.benefits", _external=True)

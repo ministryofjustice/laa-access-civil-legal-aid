@@ -210,7 +210,7 @@ def test_question_page_next_page(app):
     class TestQuestionForm(QuestionForm):
         next_step_mapping = {
             "yes": "categories.results.in_scope",
-            "no": "categories.results.refer",
+            "no": "categories.results.cannot_find_your_problem",
             "notsure": "categories.index",
             "fala": {
                 "endpoint": "find-a-legal-adviser.search",
@@ -237,7 +237,7 @@ def test_question_page_next_page(app):
 
         form = TestQuestionForm(category=FAMILY, question="no")
         view = QuestionPage(form_class=form)
-        assert "/refer" == view.get_next_page("no")
+        assert "/cannot-find-your-problem" == view.get_next_page("no")
 
         form = TestQuestionForm(category=FAMILY, question="notsure")
         view = QuestionPage(form_class=form)
