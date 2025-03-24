@@ -66,6 +66,10 @@ class MeansTest(FormsMixin, View):
             payload = MeansTestPayload()
             payload.update_from_session()
 
+            response = update_means_test(payload)
+            if "reference" not in response:
+                raise ValueError("Eligibility reference not found in response")
+
             ec_reference = session.get("ec_reference")
             if request.method == "GET" and ec_reference and "edit" not in request.args:
                 eligibility_result = is_eligible(ec_reference)
@@ -73,10 +77,6 @@ class MeansTest(FormsMixin, View):
                 # and instead ask them to confirm their answers before proceeding
                 if eligibility_result in [EligibilityState.YES, EligibilityState.NO]:
                     return redirect(url_for("means_test.review"))
-
-            response = update_means_test(payload)
-            if "reference" not in response:
-                raise ValueError("Eligibility reference not found in response")
 
             return redirect(next_page)
 
