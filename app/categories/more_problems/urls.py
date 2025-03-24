@@ -63,10 +63,7 @@ class MoreProblemsPage(CategoryPage):
         Used to ensure that the exit page does not persist and user cannot select
         multiple subcategories
         """
-        if session.get("category", {}):
-            session.pop("category")
-        if session.get("category_answers", {}):
-            session["category_answers"] = []
+        session.clear_category()
 
         return render_template(self.template, listing=listing)
 
