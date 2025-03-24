@@ -19,14 +19,6 @@ WORK_WITH_VULNERABLE = Category(
     code="work_with_vulnerable",
     exit_page=False,
 )
-ANTI_SOCIAL = Category(
-    title=_("Anti-social behaviour and gangs"),
-    description=_(
-        "If you’re accused or taken to court for anti-social behaviour, including being in a gang."
-    ),
-    code="anti_social",
-    exit_page=False,
-)
 CLINICAL_NEGLIGENCE = Category(
     title=_("Clinical negligence in babies"),
     description=_(

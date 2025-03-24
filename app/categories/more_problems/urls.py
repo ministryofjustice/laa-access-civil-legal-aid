@@ -5,7 +5,6 @@ from app.categories.results.views import CannotFindYourProblemPage, NextStepsPag
 from app.categories.more_problems.constants import (
     ADOPTING,
     WORK_WITH_VULNERABLE,
-    ANTI_SOCIAL,
     CLINICAL_NEGLIGENCE,
     COMPENSATION,
     ENVIRONMENTAL_POLLUTION,
@@ -15,7 +14,7 @@ from app.categories.more_problems.constants import (
     TERRORISM,
     TRAFFICKING,
 )
-from app.categories.constants import DOMESTIC_ABUSE
+from app.categories.constants import DOMESTIC_ABUSE, HOUSING
 
 
 class MoreProblemsPage(CategoryPage):
@@ -25,7 +24,10 @@ class MoreProblemsPage(CategoryPage):
         listing = [
             (ADOPTING, url_for("find-a-legal-adviser.search", category="mat")),
             (WORK_WITH_VULNERABLE, url_for("find-a-legal-adviser.search")),
-            (ANTI_SOCIAL, url_for("categories.x_cat.landlord-council")),
+            (
+                HOUSING.sub.antisocial_behaviour,
+                url_for("categories.housing.accused_of_anti_social_behaviour"),
+            ),
             (
                 CLINICAL_NEGLIGENCE,
                 url_for("find-a-legal-adviser.search", category="med"),
