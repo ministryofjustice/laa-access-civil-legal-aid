@@ -130,6 +130,7 @@
         },
         'html': '<a class="govuk-link" href="' + url_for('contact.reasons_for_contacting') + '">Contact us</a> if you need help or would like to give feedback to improve this service'
     }) }}
+    
     {% if show_exit_this_page %}
       {{ govukExitThisPage({
         "text": _("Exit this page")
@@ -137,6 +138,7 @@
     {% endif %}
 
 {% endblock %}
+
 
 {% block content %}
 

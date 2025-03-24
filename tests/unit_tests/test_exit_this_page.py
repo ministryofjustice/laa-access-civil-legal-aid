@@ -14,9 +14,12 @@ class Category(dict):
     "session_data, expected_output",
     [
         ({}, {"show_exit_this_page": False}),
-        ({"category": None}, {"show_exit_this_page": False}),
+        ({"subcategory": None}, {"show_exit_this_page": False}),
         ({"category": Category(True, "domestic_abuse")}, {"show_exit_this_page": True}),
-        ({"category": Category(False, "housing")}, {"show_exit_this_page": False}),
+        (
+            {"category": Category(False, "discrimination")},
+            {"show_exit_this_page": None},
+        ),
     ],
 )
 def test_inject_exit_this_page(session_data, expected_output, app):

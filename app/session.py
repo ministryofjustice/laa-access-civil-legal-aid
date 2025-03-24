@@ -123,6 +123,12 @@ class Session(SecureCookieSession):
             eligibility = args[0].get("eligibility", {})
         self["eligibility"] = Eligibility(forms=eligibility.get("forms", {}), _notes={})
 
+    def clear_category(self):
+        if self.category:
+            self.pop("category")
+        if self.get("category_answers"):
+            self["category_answers"] = []
+
     def update_eligibility(self, form_name, form_data):
         self["eligibility"].add(form_name, form_data)
 

@@ -15,8 +15,8 @@ class Category:
     children: dict[str, "Category"] | None = field(default_factory=dict)
     parent_code: Optional[str] = None
     _referrer_text: Optional[LazyString] = None
-    exit_page: Optional[bool] = False
     eligible_for_HLPAS: bool = False
+    exit_page: Optional[bool] = None
 
     @property
     def url_friendly_name(self):
@@ -125,6 +125,14 @@ DOMESTIC_ABUSE = Category(
             title=_("Female genital mutilation (FGM)"),
             description=_("If you or someone else is at risk of FGM."),
             code="fgm",
+        ),
+        "accused_of_domestic_abuse": Category(
+            title=_("Domestic abuse - if you have been accused"),
+            description=_(
+                "Legal help if you’ve been accused of domestic abuse or forced marriage. Includes non-molestation orders and other court orders."
+            ),
+            code="accused_of_domestic_abuse",
+            exit_page=False,
         ),
     },
 )
@@ -265,6 +273,13 @@ HOUSING = Category(
                 "Accused of anti-social behaviour by the landlord, council or housing association."
             ),
             code="antisocial_behaviour",
+        ),
+        "antisocial_behaviour_gangs": Category(
+            title=_("Anti-social behaviour and gangs"),
+            description=_(
+                "If you’re accused or taken to court for anti-social behaviour, including being in a gang."
+            ),
+            code="antisocial_behaviour_gangs",
         ),
     },
 )
@@ -495,6 +510,9 @@ def init_children(category: Category) -> None:
         child.parent_code = category.code
         child.article_category_name = (
             child.article_category_name or category.article_category_name
+        )
+        child.exit_page = (
+            child.exit_page if child.exit_page is not None else category.exit_page
         )
 
 
