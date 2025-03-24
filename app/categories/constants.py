@@ -138,6 +138,7 @@ DOMESTIC_ABUSE = Category(
             ),
             code="accused_of_domestic_abuse",
             exit_page=False,
+            in_scope=True,
         ),
     },
 )
@@ -292,6 +293,7 @@ HOUSING = Category(
                 "If you’re accused or taken to court for anti-social behaviour, including being in a gang."
             ),
             code="antisocial_behaviour_gangs",
+            in_scope=True,
         ),
     },
 )

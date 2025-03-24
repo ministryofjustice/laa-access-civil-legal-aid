@@ -36,7 +36,7 @@ def complete_about_you_form(
         elif question == "How many children aged 15 or under?":
             page.locator("#num_children").fill(answer)
         elif question == "How many dependants aged 16 or over?":
-            page.locator("#num_dependents").fill(answer)
+            page.locator("#num_dependants").fill(answer)
         else:
             form_group.get_by_label(answer).first.check()
 

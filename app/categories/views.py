@@ -256,8 +256,6 @@ class QuestionPage(CategoryPage):
         if form_protection_redirect:
             return form_protection_redirect
 
-        session.category = form.category
-
         if form.validate_on_submit():
             self.update_session(form)
             return redirect(self.get_next_page(form.question.data))
