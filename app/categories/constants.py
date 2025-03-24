@@ -275,7 +275,7 @@ HOUSING = Category(
             description=_(
                 "If you’re accused or taken to court for anti-social behaviour, including being in a gang."
             ),
-            code="antisocial_behaviour",
+            code="antisocial_behaviour_gangs",
         ),
     },
 )
