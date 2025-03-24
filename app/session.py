@@ -99,10 +99,6 @@ class Eligibility:
         )
 
     @property
-    def owns_property(self):
-        return self.forms.get("about-you", {}).get("own_property", False)
-
-    @property
     def notes(self):
         return self._notes
 
