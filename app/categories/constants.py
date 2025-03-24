@@ -270,6 +270,13 @@ HOUSING = Category(
             ),
             code="antisocial_behaviour",
         ),
+        "antisocial_behaviour_gangs": Category(
+            title=_("Anti-social behaviour and gangs"),
+            description=_(
+                "If you’re accused or taken to court for anti-social behaviour, including being in a gang."
+            ),
+            code="antisocial_behaviour",
+        ),
     },
 )
 

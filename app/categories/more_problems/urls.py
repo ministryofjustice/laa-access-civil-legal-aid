@@ -25,7 +25,7 @@ class MoreProblemsPage(CategoryPage):
             (ADOPTING, url_for("find-a-legal-adviser.search", category="mat")),
             (WORK_WITH_VULNERABLE, url_for("find-a-legal-adviser.search")),
             (
-                HOUSING.sub.antisocial_behaviour,
+                HOUSING.sub.antisocial_behaviour_gangs,
                 url_for("categories.housing.accused_of_anti_social_behaviour"),
             ),
             (

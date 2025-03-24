@@ -35,9 +35,9 @@ bp.add_url_rule(
         "accused_of_anti_social_behaviour",
         category_answer=CategoryAnswer(
             question="more_problems",
-            answer_value=HOUSING.sub.antisocial_behaviour.code,
-            answer_label=HOUSING.sub.antisocial_behaviour.title,
-            category=HOUSING.sub.antisocial_behaviour,
+            answer_value=HOUSING.sub.antisocial_behaviour_gangs.code,
+            answer_label=HOUSING.sub.antisocial_behaviour_gangs.title,
+            category=HOUSING.sub.antisocial_behaviour_gangs,
             question_page="categories.more_problems.landing",
             next_page="categories.x_cat.landlord-council",
             question_type=QuestionType.SUB_CATEGORY,
