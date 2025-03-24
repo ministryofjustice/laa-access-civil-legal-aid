@@ -66,16 +66,17 @@ class MeansTest(FormsMixin, View):
             payload = MeansTestPayload()
             payload.update_from_session()
 
+            ec_reference = session.get("ec_reference")
+            if request.method == "GET" and ec_reference and "edit" not in request.args:
+                eligibility_result = is_eligible(ec_reference)
+                # Once we are sure of the user's eligibility we should not ask the user subsequent questions
+                # and instead ask them to confirm their answers before proceeding
+                if eligibility_result in [EligibilityState.YES, EligibilityState.NO]:
+                    return redirect(url_for("means_test.review"))
+
             response = update_means_test(payload)
             if "reference" not in response:
                 raise ValueError("Eligibility reference not found in response")
-            ec_reference = update_means_test(payload)["reference"]
-
-            eligibility = is_eligible(ec_reference)
-            # Once we are sure of the user's eligibility we should not ask the user subsequent questions
-            # and instead ask them to confirm their answers before proceeding
-            if eligibility in [EligibilityState.YES, EligibilityState.NO]:
-                next_page = url_for("means_test.review")
 
             return redirect(next_page)
 
@@ -243,7 +244,9 @@ class CheckYourAnswers(FormsMixin, MethodView):
                 answer_key = "markdown"
                 item["answer"] = "\n".join(item["answer"])
 
-            change_link = url_for(f"means_test.{form_name}", _anchor=item["id"])
+            change_link = url_for(
+                f"means_test.{form_name}", _anchor=item["id"], edit=True
+            )
             summary.append(
                 {
                     "key": {"text": item["question"]},

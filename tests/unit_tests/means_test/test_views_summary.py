@@ -17,8 +17,8 @@ def mock_session_get_eligibility():
                 "about-you": {
                     "has_partner": False,
                     "on_benefits": True,
-                    "have_children": False,
-                    "have_dependants": False,
+                    "has_children": False,
+                    "has_dependants": False,
                     "own_property": False,
                 },
                 "benefits": {"benefits": ["employment_support", "universal_credit"]},
@@ -54,7 +54,7 @@ def test_views_summary(app):
                 "key": {"text": "Do you have any children aged 15 or under?"},
                 "value": {"text": "No"},
                 "actions": {
-                    "items": [{"href": "/about-you#have_children", "text": _("Change")}]
+                    "items": [{"href": "/about-you#has_children", "text": _("Change")}]
                 },
             },
             {
@@ -62,7 +62,7 @@ def test_views_summary(app):
                 "value": {"text": "No"},
                 "actions": {
                     "items": [
-                        {"href": "/about-you#have_dependants", "text": _("Change")}
+                        {"href": "/about-you#has_dependants", "text": _("Change")}
                     ]
                 },
             },

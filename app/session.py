@@ -26,7 +26,7 @@ class Eligibility:
     def has_partner(self):
         return self.forms.get("about-you", {}).get(
             "has_partner", False
-        ) and not self.forms.get("about-you", {}).get("are_you_in_a_dispute", False)
+        ) and not self.forms.get("about-you", {}).get("in_dispute", False)
 
     @property
     def owns_property(self) -> bool:
@@ -60,19 +60,19 @@ class Eligibility:
 
     @property
     def has_savings(self):
-        return self.forms.get("about-you", {}).get("have_savings", False)
+        return self.forms.get("about-you", {}).get("has_savings", False)
 
     @property
     def has_valuables(self):
-        return self.forms.get("about-you", {}).get("have_valuables", False)
+        return self.forms.get("about-you", {}).get("has_valuables", False)
 
     @property
     def has_children(self) -> bool:
-        return self.forms.get("about-you", {}).get("have_children", False)
+        return self.forms.get("about-you", {}).get("has_children", False)
 
     @property
     def has_dependants(self) -> bool:
-        return self.forms.get("about-you", {}).get("have_dependants", False)
+        return self.forms.get("about-you", {}).get("has_dependants", False)
 
     @property
     def on_benefits(self) -> bool:

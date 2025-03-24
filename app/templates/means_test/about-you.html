@@ -1,8 +1,8 @@
 {% extends "means_test/form-page.html" %}
 {%- from 'govuk_frontend_jinja/components/details/macro.html' import govukDetails %}
 
-{% set areYouInADisputeHtml %}
-    {{ form.are_you_in_a_dispute() }}
+{% set inDisputeHtml %}
+    {{ form.in_dispute() }}
 {% endset %}
 
 {% set howManyChildrenUnder16Html %}
@@ -44,7 +44,7 @@
 
     {{ form.on_benefits() }}
 
-    {{ form.have_children(params={
+    {{ form.has_children(params={
         'items': [
             {
                 'conditional': {
@@ -56,7 +56,7 @@
         ]
     }) }}
 
-    {{ form.have_dependants(params={
+    {{ form.has_dependants(params={
         'items': [
             {
                 'conditional': {
@@ -74,7 +74,7 @@
 
     {{ form.partner_is_employed(params={
         "attributes": {
-            "data-controlled-by": "are_you_in_a_dispute",
+            "data-controlled-by": "in_dispute",
             "data-show-value": "False"
         }
     }) }}
@@ -83,16 +83,16 @@
 
     {{ form.partner_is_self_employed(params={
         "attributes": {
-            "data-controlled-by": "are_you_in_a_dispute",
+            "data-controlled-by": "in_dispute",
             "data-show-value": "False"
         }
     }) }}
 
     {{ form.aged_60_or_over() }}
 
-    {{ form.have_savings() }}
+    {{ form.has_savings() }}
 
-    {{ form.have_valuables() }}
+    {{ form.has_valuables() }}
 
     {% include "means_test/components/valuable-info.html" %}
 
