@@ -517,7 +517,5 @@ class MeansTestPayload(dict):
         self.update(payload_class(form_data))
 
     def update_from_session(self):
-        print("After func call")
-        print(session)
         for form_name, form_data in session.get_eligibility().forms.items():
             self.update_from_form(form_name, form_data)

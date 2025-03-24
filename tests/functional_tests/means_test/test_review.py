@@ -237,7 +237,7 @@ def test_change_answer_nolonger_passported(page: Page, complete_benefits_form):
             "prefix": "pension",
         },
         "Any other income": {
-            "Amount": "100.50",
+            "Amount": "2000.00",
             "Frequency": "per month",
             "prefix": "other_income",
         },

@@ -41,6 +41,7 @@ def check_accessibility(page: Page):
         if len(wcag_violations) == 0:
             assert "No WCAG accessibility issues found"
         else:
+            assert False, print(f"WCAG accessibility issues found on {page.url}")
             # Cleans the URL to remove any invalid characters and replace with _
             invalid_filename_chars = r'[\/:*?"<>|]'
             sanitized_title = re.sub(invalid_filename_chars, "_", page.title())

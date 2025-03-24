@@ -1,6 +1,6 @@
 from typing import List
 from flask.views import View, MethodView
-from flask import render_template, url_for, redirect, session, request
+from flask import render_template, url_for, redirect, session, request, flash
 from flask_babel import lazy_gettext as _, gettext
 from werkzeug.datastructures import MultiDict
 from app.categories.constants import Category
@@ -70,13 +70,15 @@ class MeansTest(FormsMixin, View):
             if "reference" not in response:
                 raise ValueError("Eligibility reference not found in response")
 
-            ec_reference = session.get("ec_reference")
-            if request.method == "GET" and ec_reference:
-                eligibility_result = is_eligible(ec_reference)
-                # Once we are sure of the user's eligibility we should not ask the user subsequent questions
-                # and instead ask them to confirm their answers before proceeding
-                if eligibility_result in [EligibilityState.YES, EligibilityState.NO]:
-                    return redirect(url_for("means_test.review"))
+            eligibility_result = is_eligible(response["reference"])
+            # Once we are sure of the user's eligibility we should not ask the user subsequent questions
+            # and instead ask them to confirm their answers before proceeding.
+            # We skip this check on the about-you page to match existing behaviour from CLA Public.
+            if (
+                eligibility_result != EligibilityState.UNKNOWN
+                and self.current_name not in ["about-you", "benefits"]
+            ):
+                return redirect(url_for("means_test.review"))
 
             return redirect(next_page)
 
@@ -284,3 +286,8 @@ class Ineligible(View):
 
 class Eligible(View):
     template = "categories/results/eligible.html"
+
+    def dispatch_request(self):
+        # TODO: Implement the actual eligible route
+        flash("You are eligible for legal aid", "success")
+        return redirect(url_for("means_test.review"))
