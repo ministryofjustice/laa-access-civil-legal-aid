@@ -10,10 +10,11 @@ class EligibilityState(str, Enum):
     def _missing_(cls, value):
         """Handle missing values by trying their lowercase equivalent or returning UNKNOWN if there is no match."""
         if isinstance(value, str):
-            try:
-                return cls(value.lower())
-            except ValueError:
-                return cls.UNKNOWN
+            lower_value = value.lower()
+            for member in cls:
+                if member.value == lower_value:
+                    return member
+            return cls.UNKNOWN
         return None
 
     def __bool__(self):

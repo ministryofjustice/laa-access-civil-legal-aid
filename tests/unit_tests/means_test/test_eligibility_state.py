@@ -14,7 +14,7 @@ class TestEligibilityState:
             ("unKNOWN", EligibilityState.UNKNOWN),
         ],
     )
-    def test_case_insensitivity(value, expected):
+    def test_case_insensitivity(self, value, expected):
         assert EligibilityState(value) == expected
 
     @pytest.mark.parametrize(
@@ -25,11 +25,11 @@ class TestEligibilityState:
             ("", EligibilityState.UNKNOWN),
         ],
     )
-    def test_invalid_values(value, expected):
+    def test_invalid_values(self, value, expected):
         assert EligibilityState(value) == expected
 
     @pytest.mark.parametrize("value", [123, None, True])
-    def test_non_string_values(value):
+    def test_non_string_values(self, value):
         assert EligibilityState._missing_(value) is None
 
     @pytest.mark.parametrize(
@@ -40,7 +40,7 @@ class TestEligibilityState:
             (EligibilityState.UNKNOWN, False),
         ],
     )
-    def test_bool_conversion(value, expected):
+    def test_bool_conversion(self, value, expected):
         if value:
             assert expected
         else:
