@@ -1,7 +1,36 @@
+import inspect
+
 import pytest
-from unittest.mock import patch, Mock
+from unittest.mock import patch, Mock, PropertyMock
 from app.means_test.api import EligibilityState
 from app.means_test.views import MeansTest
+
+
+def test_inspect_is_eligible_function(app):
+    """Test to inspect the is_eligible function."""
+    with app.app_context():
+        # Import the function directly to inspect it
+        from app.means_test.views import is_eligible
+
+        # Print information about the function
+        print(f"is_eligible type: {type(is_eligible)}")
+        print(f"is_eligible is coroutine: {inspect.iscoroutinefunction(is_eligible)}")
+        print(f"is_eligible is generator: {inspect.isgeneratorfunction(is_eligible)}")
+        print(f"is_eligible is async: {inspect.isasyncgenfunction(is_eligible)}")
+        assert False
+
+
+@pytest.fixture
+def mock_url_for():
+    with patch("app.means_test.views.url_for") as mock:
+
+        def side_effect(*args, **kwargs):
+            if kwargs and "endpoint" in kwargs:
+                return f"/mocked/{kwargs['endpoint']}"
+            return f"/mocked/{args[0]}"
+
+        mock.side_effect = side_effect
+        yield mock
 
 
 class TestDispatchRequest:
@@ -24,18 +53,6 @@ class TestDispatchRequest:
         mock.validate_on_submit.return_value = False
         mock.data = {}
         return mock
-
-    @pytest.fixture
-    def mock_url_for(self):
-        with patch("app.means_test.views.url_for") as mock:
-
-            def side_effect(*args, **kwargs):
-                if kwargs and "endpoint" in kwargs:
-                    return f"/mocked/{kwargs['endpoint']}"
-                return f"/mocked/{args[0]}"
-
-            mock.side_effect = side_effect
-            yield mock
 
     def test_get_request_displays_form(self, app, client, mock_eligibility):
         """Test that a GET request displays the form."""
@@ -157,3 +174,75 @@ class TestDispatchRequest:
                 view()
 
             mock_update_means_test.assert_called_once()
+
+
+class TestCheckYourAnswersSubmission:
+    @pytest.mark.parametrize(
+        "eligibility", [EligibilityState.YES, EligibilityState.UNKNOWN]
+    )
+    def test_post_eligible(self, app, client, mock_url_for, eligibility):
+        """Test post method when eligibility state is YES/ UNKNOWN."""
+        with client.session_transaction() as session:
+            session["ec_reference"] = "test-reference"
+
+        with (
+            patch(
+                "app.means_test.views.is_eligible", return_value=eligibility
+            ) as mock_is_eligible,
+            patch("app.means_test.views.redirect") as mock_redirect,
+        ):
+            client.post("/review")
+
+            mock_is_eligible.assert_called_once()
+
+            mock_url_for.assert_called_once_with("means_test.result.eligible")
+            mock_redirect.assert_called_once_with("/mocked/means_test.result.eligible")
+
+    def test_post_ineligible_with_hlpas(self, app, client, mock_url_for):
+        """Test post method when ineligible but eligible for HLPAS."""
+        with client.session_transaction() as sess:
+            sess["ec_reference"] = "test-reference"
+
+        with (
+            patch(
+                "app.means_test.views.is_eligible", return_value=EligibilityState.NO
+            ) as mock_is_eligible,
+            patch("app.means_test.views.redirect") as mock_redirect,
+            patch("app.means_test.views.session") as mock_session,
+        ):
+            mock_subcategory = Mock()
+            mock_subcategory.eligible_for_HLPAS = True
+
+            type(mock_session).subcategory = PropertyMock(return_value=mock_subcategory)
+
+            client.post("/review")
+
+            mock_is_eligible.assert_called_once()
+
+            mock_url_for.assert_called_once_with("means_test.result.hlpas")
+            mock_redirect.assert_called_once_with("/mocked/means_test.result.hlpas")
+
+    def test_post_ineligible_subcategory_no_hlpas(self, app, client, mock_url_for):
+        """Test post method when ineligible with subcategory but not eligible for HLPAS."""
+        with client.session_transaction() as sess:
+            sess["ec_reference"] = "test-reference"
+
+        with (
+            patch(
+                "app.means_test.views.is_eligible", return_value=EligibilityState.NO
+            ) as mock_is_eligible,
+            patch("app.means_test.views.redirect") as mock_redirect,
+            patch("app.means_test.views.session") as mock_session,
+        ):
+            mock_subcategory = Mock()
+            mock_subcategory.eligible_for_HLPAS = False
+            type(mock_session).subcategory = PropertyMock(return_value=mock_subcategory)
+
+            client.post("/review")
+
+            mock_is_eligible.assert_called_once()
+
+            mock_url_for.assert_called_once_with("means_test.result.ineligible")
+            mock_redirect.assert_called_once_with(
+                "/mocked/means_test.result.ineligible"
+            )
