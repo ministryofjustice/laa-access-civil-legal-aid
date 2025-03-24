@@ -75,6 +75,17 @@ msgstr "Anffurfio Organau Cenhedlu Benywod (FGM)"
 msgid "If you or someone else is at risk of FGM."
 msgstr "Os ydych chi neu rywun arall mewn perygl o FGM."
 
+msgid "Domestic abuse - if you have been accused"
+msgstr "Os ydych chi wedi cael eich cyhuddo o gam-drin domestig"
+
+msgid ""
+"Legal help if you’ve been accused of domestic abuse or forced marriage. "
+"Includes non-molestation orders and other court orders."
+msgstr ""
+"Cymorth cyfreithiol os ydych chi wedi cael eich cyhuddo o gam-drin "
+"domestig neu briodas dan orfod. Mae hyn yn cynnwys gorchmynion rhag "
+"molestu, a gorchmynion llys eraill."
+
 msgid "Children, families, relationships"
 msgstr "Plant, teuluoedd, perthnasoedd"
 
@@ -251,6 +262,16 @@ msgid ""
 msgstr ""
 "Wedi cael eich cyhuddo o ymddygiad gwrthgymdeithasol gan y landlord, y "
 "cyngor neu'r gymdeithas dai."
+
+msgid "Anti-social behaviour and gangs"
+msgstr "Ymddygiad gwrthgymdeithasol a gangiau"
+
+msgid ""
+"If you’re accused or taken to court for anti-social behaviour, including "
+"being in a gang."
+msgstr ""
+"Os ydych chi wedi cael eich cyhuddo neu wedi ymddangos yn y llys am "
+"ymddwyn yn wrthgymdeithasol, gan gynnwys bod yn aelod o gang."
 
 msgid ""
 "Treated unfairly because of things like your disability or health "
@@ -642,6 +663,85 @@ msgstr "Ailbennu rhywedd, bod yn drawsryweddol, yn anneuaidd neu’n rhyweddhyli
 
 msgid "Married status - being married, in a civil partnership"
 msgstr "Statws priodasol – wedi priodi, mewn partneriaeth sifil"
+
+msgid "Adopting a child from outside the UK"
+msgstr "Mabwysiadu plentyn o'r tu allan i’r Deyrnas Unedig"
+
+msgid "Adoption processes in the courts."
+msgstr "Y broses fabwysiadu yn y llysoedd."
+
+msgid "Appeal a decision that you cannot work with children or vulnerable adults"
+msgstr ""
+"Apelio penderfyniad sy’n nodi nad ydych chi’n cael gweithio gyda phlant "
+"ac oedolion bregus"
+
+msgid "Including if you’re on a ‘barred list’ or disqualified from teaching."
+msgstr ""
+"Mae hyn yn cynnwys bod ar ‘restr gwahardd’ neu gael eich gwahardd rhag "
+"addysgu."
+
+msgid "Clinical negligence in babies"
+msgstr "Esgeulustra clinigol mewn babanod"
+
+msgid ""
+"Help if a baby has brain or nerve damage caused during pregnancy, "
+"childbirth or up to 8 weeks old."
+msgstr ""
+"Cymorth os yw babi wedi profi niwed i’r ymennydd neu'r system nerfol yn "
+"ystod beichiogrwydd, genedigaeth, neu cyn cyrraedd 8 wythnos oed"
+
+msgid "Compensation for abuse, assault or neglect"
+msgstr "Iawndal am gamdriniaeth, ymosodiad neu esgeulustod"
+
+msgid ""
+"Includes child abuse, sexual assault, abuse of a vulnerable adult. Claims"
+" can be against a person or an organisation."
+msgstr ""
+"Mae hyn yn cynnwys cam-drin plant, ymosod yn rhywiol, cam-drin oedolyn "
+"bregus. Gallwch chi hawlio iawndal gan berson neu sefydliad."
+
+msgid "Environmental pollution"
+msgstr "Llygredd amgylcheddol"
+
+msgid ""
+"Issues about air, water or land pollution that is harming you or the "
+"environment."
+msgstr ""
+"Materion am lygredd aer, dŵr a thir sy’n achosi niwed i chi neu'r "
+"amgylchedd."
+
+msgid "Inquests for family members"
+msgstr "Cwestau aelodau o’r teulu"
+
+msgid "Advice to prepare for the inquest of a family member."
+msgstr "Cyngor ar sut i baratoi ar gyfer cwest aelod o’r teulu."
+
+msgid "Mental health detention"
+msgstr "Cadw dan glo oherwydd iechyd meddwl"
+
+msgid ""
+"Help if you’re held in hospital (‘sectioned’), mental health tribunals "
+"and community treatment orders."
+msgstr ""
+"Cymorth os ydych chi’n cael eich cadw yn yr ysbyty, tribiwnlysoedd iechyd"
+" meddwl, a gorchmynion triniaeth gymunedol."
+
+msgid "Proceeds of Crime Act"
+msgstr "Deddf Enillion Troseddau"
+
+msgid "If you’re facing legal action to take your money or other assets."
+msgstr "Os oes camau cyfreithiol ar waith i gymryd eich arian neu asedau eraill."
+
+msgid "Terrorism"
+msgstr "Terfysgaeth"
+
+msgid "If you’re accused of terrorism or financing terrorist groups."
+msgstr ""
+"Os ydych chi’n cael eich cyhuddo o derfysgaeth neu o ariannu grwpiau "
+"terfysgol."
+
+msgid "Help if you’re a victim of human trafficking or modern slavery."
+msgstr "Cymorth os ydych chi’n ddioddefwr masnachu pobl neu gaethwasiaeth fodern."
 
 msgid "Is this to do with police, prisons or detention centres?"
 msgstr "A yw hyn yn ymwneud â’r heddlu, carchardai neu ganolfannau cadw?"
@@ -1896,106 +1996,6 @@ msgstr "tai"
 msgid "SEND"
 msgstr ""
 
-msgid "Adopting a child from outside the UK"
-msgstr "Mabwysiadu plentyn o'r tu allan i’r Deyrnas Unedig"
-
-msgid "Adoption processes in the courts."
-msgstr "Y broses fabwysiadu yn y llysoedd."
-
-msgid "Appeal a decision that you cannot work with children or vulnerable adults"
-msgstr ""
-"Apelio penderfyniad sy’n nodi nad ydych chi’n cael gweithio gyda phlant "
-"ac oedolion bregus"
-
-msgid "Including if you’re on a ‘barred list’ or disqualified from teaching."
-msgstr ""
-"Mae hyn yn cynnwys bod ar ‘restr gwahardd’ neu gael eich gwahardd rhag "
-"addysgu."
-
-msgid "Anti-social behaviour and gangs"
-msgstr "Ymddygiad gwrthgymdeithasol a gangiau"
-
-msgid ""
-"If you’re accused or taken to court for anti-social behaviour, including "
-"being in a gang."
-msgstr ""
-"Os ydych chi wedi cael eich cyhuddo neu wedi ymddangos yn y llys am "
-"ymddwyn yn wrthgymdeithasol, gan gynnwys bod yn aelod o gang."
-
-msgid "Clinical negligence in babies"
-msgstr "Esgeulustra clinigol mewn babanod"
-
-msgid ""
-"Help if a baby has brain or nerve damage caused during pregnancy, "
-"childbirth or up to 8 weeks old."
-msgstr ""
-"Cymorth os yw babi wedi profi niwed i’r ymennydd neu'r system nerfol yn "
-"ystod beichiogrwydd, genedigaeth, neu cyn cyrraedd 8 wythnos oed"
-
-msgid "Compensation for abuse, assault or neglect"
-msgstr "Iawndal am gamdriniaeth, ymosodiad neu esgeulustod"
-
-msgid ""
-"Includes child abuse, sexual assault, abuse of a vulnerable adult. Claims"
-" can be against a person or an organisation."
-msgstr ""
-"Mae hyn yn cynnwys cam-drin plant, ymosod yn rhywiol, cam-drin oedolyn "
-"bregus. Gallwch chi hawlio iawndal gan berson neu sefydliad."
-
-msgid "Domestic abuse - if you have been accused"
-msgstr "Os ydych chi wedi cael eich cyhuddo o gam-drin domestig"
-
-msgid ""
-"Legal help if you’ve been accused of domestic abuse or forced marriage. "
-"Includes non-molestation orders and other court orders."
-msgstr ""
-"Cymorth cyfreithiol os ydych chi wedi cael eich cyhuddo o gam-drin "
-"domestig neu briodas dan orfod. Mae hyn yn cynnwys gorchmynion rhag "
-"molestu, a gorchmynion llys eraill."
-
-msgid "Environmental pollution"
-msgstr "Llygredd amgylcheddol"
-
-msgid ""
-"Issues about air, water or land pollution that is harming you or the "
-"environment."
-msgstr ""
-"Materion am lygredd aer, dŵr a thir sy’n achosi niwed i chi neu'r "
-"amgylchedd."
-
-msgid "Inquests for family members"
-msgstr "Cwestau aelodau o’r teulu"
-
-msgid "Advice to prepare for the inquest of a family member."
-msgstr "Cyngor ar sut i baratoi ar gyfer cwest aelod o’r teulu."
-
-msgid "Mental health detention"
-msgstr "Cadw dan glo oherwydd iechyd meddwl"
-
-msgid ""
-"Help if you’re held in hospital (‘sectioned’), mental health tribunals "
-"and community treatment orders."
-msgstr ""
-"Cymorth os ydych chi’n cael eich cadw yn yr ysbyty, tribiwnlysoedd iechyd"
-" meddwl, a gorchmynion triniaeth gymunedol."
-
-msgid "Proceeds of Crime Act"
-msgstr "Deddf Enillion Troseddau"
-
-msgid "If you’re facing legal action to take your money or other assets."
-msgstr "Os oes camau cyfreithiol ar waith i gymryd eich arian neu asedau eraill."
-
-msgid "Terrorism"
-msgstr "Terfysgaeth"
-
-msgid "If you’re accused of terrorism or financing terrorist groups."
-msgstr ""
-"Os ydych chi’n cael eich cyhuddo o derfysgaeth neu o ariannu grwpiau "
-"terfysgol."
-
-msgid "Help if you’re a victim of human trafficking or modern slavery."
-msgstr "Cymorth os ydych chi’n ddioddefwr masnachu pobl neu gaethwasiaeth fodern."
-
 msgid ""
 "These organisations give free, independent advice for problems about "
 "domestic abuse."
@@ -2066,38 +2066,6 @@ msgstr ""
 
 msgid "Advicelocal (opens new tab)"
 msgstr "Cymorth os ydych chi’n ddioddefwr masnachu pobl neu gaethwasiaeth fodern."
-
-msgid "Legal aid doesn’t cover all types of problem"
-msgstr "Nid yw cymorth cyfreithiol yn gallu delio â phob math o broblem"
-
-msgid ""
-"You can still ask a solicitor for help – you will have to pay for their "
-"advice."
-msgstr ""
-"Gallwch dal ofyn i gyfreithiwr eich helpu - bydd rhaid ichi dalu am eu "
-"cyngor."
-
-msgid ""
-"You can still ask a solicitor for help - you will have to pay for their "
-"advice."
-msgstr ""
-"Gallwch dal ofyn i gyfreithiwr eich helpu - bydd rhaid ichi dalu am eu "
-"cyngor."
-
-msgid "Find a solicitor"
-msgstr "Dod o hyd i gyfreithiwr"
-
-msgid ""
-"You may still get help and advice from the organisations listed below. "
-"You don’t have to qualify for legal aid."
-msgstr ""
-"Efallai y byddwch chi’n dal yn gallu cael help a chyngor gan y "
-"sefydliadau sydd wedi’u rhestru isod. Nid oes rhaid i chi fod yn gymwys i"
-" gael cymorth cyfreithiol."
-
-#, python-format
-msgid "Help organisations for problems about %(category_name)s"
-msgstr "Sefydliadau cymorth ar gyfer problemau ynghylch %(category_name)s"
 
 msgid "Appeal a decision about your benefits"
 msgstr "Apelio yn erbyn penderfyniad am eich budd-daliadau"
@@ -2588,6 +2556,9 @@ msgstr ""
 msgid "Legal Aid is different in Guernsey. Visit %(link)s for more information."
 msgstr ""
 
+msgid "the Housing Loss Prevention Advice Service"
+msgstr ""
+
 msgid "Sorry, the service is unavailable"
 msgstr "Yn anffodus, dydy'r gwasanaeth hwn ddim ar gael"
 
@@ -2814,12 +2785,17 @@ msgstr "Mae’r gwasanaeth hwn yn cynnwys dolenni i wefannau eraill."
 msgid ""
 "This privacy notice only applies to this service and does not cover other"
 " government services and transactions that we link to."
-msgstr "Dim ond i’r gwasanaeth hwn y mae’r hysbysiad preifatrwydd hwn yn berthnasol ac nid yw’n berthnasol i wasanaethau a thrafodion eraill y llywodraeth yr ydym darparu dolenni atynt."
+msgstr ""
+"Dim ond i’r gwasanaeth hwn y mae’r hysbysiad preifatrwydd hwn yn "
+"berthnasol ac nid yw’n berthnasol i wasanaethau a thrafodion eraill y "
+"llywodraeth yr ydym darparu dolenni atynt."
 
 msgid ""
 "If you follow a link to a service provided by another government "
 "department or agency, that organisation will:"
-msgstr "Os byddwch yn dilyn dolen i wasanaeth a ddarperir gan un o adrannau neu asiantaethau eraill y llywodraeth, y sefydliad hwnnw:"
+msgstr ""
+"Os byddwch yn dilyn dolen i wasanaeth a ddarperir gan un o adrannau neu "
+"asiantaethau eraill y llywodraeth, y sefydliad hwnnw:"
 
 msgid "be the data controller"
 msgstr "fydd yn rheolydd data"
@@ -2830,7 +2806,9 @@ msgstr "fydd yn gyfrifol am brosesu unrhyw ddata rydych chi’n ei rannu gyda nh
 msgid ""
 "publish and manage their own privacy notice with details of how to "
 "contact them"
-msgstr "a bydd yn cyhoeddi ac yn rheoli ei hysbysiad preifatrwydd ei hun gyda manylion am sut i gysylltu â nhw"
+msgstr ""
+"a bydd yn cyhoeddi ac yn rheoli ei hysbysiad preifatrwydd ei hun gyda "
+"manylion am sut i gysylltu â nhw"
 
 msgid "You’ve reached the end of this service"
 msgstr "Rydych wedi cyrraedd diwedd y gwasanaeth hwn"
@@ -2854,6 +2832,30 @@ msgid ""
 "href=\"%(contact_url)s\" class=\"govuk-link\">get in touch</a>."
 msgstr ""
 
+msgid "You might qualify for free legal advice"
+msgstr "Efallai byddwch yn gymwys am gyngor cyfreithiol am ddim"
+
+msgid "You might be able to get free legal advice through the Housing Loss Prevention Advice Scheme."
+msgstr "Efallai byddwch yn gallu cael cyngor cyfreithiol am ddim trwy’r Cynllun Cyngor Atal Colli Tai."
+
+msgid "This advice is free to anyone who can show their home is at risk. It does not depend on what you earn or your financial situation."
+msgstr "Mae’r cyngor am ddim i unrhyw un sy’n gallu dangos fod eu tŷ mewn perygl. Dydy hi ddim yn dibynnu ar faint rydych yn ennill neu eich sefyllfa ariannol."
+
+msgid "Next steps"
+msgstr "Camau nesaf"
+
+msgid "We’ll show you a list of legal advisors."
+msgstr "Byddwn yn dangos rhestr o gynghorwyr cyfreithiol i chi."
+
+msgid "You need to contact the legal adviser."
+msgstr "Bydd yn rhaid i chi gysylltu â'r cynghorydd cyfreithiol."
+
+msgid "Explain that you could lose your home."
+msgstr "Eglurwch fod yna risg y byddwch yn colli eich cartref."
+
+msgid "Tell them if you have any letters or documents about your situation."
+msgstr "Dywedwch wrthynt os oes gennych unrhyw lythyrau neu ddogfennau yn ymwneud â'ch sefyllfa."
+
 msgid ""
 "We only need to know about any money you received last month, even if "
 "this varies from month to month."
@@ -2874,6 +2876,38 @@ msgstr "Dileu eiddo"
 
 msgid "Add another property"
 msgstr "Ychwanegu eiddo arall"
+
+msgid "Legal aid doesn’t cover all types of problem"
+msgstr "Nid yw cymorth cyfreithiol yn gallu delio â phob math o broblem"
+
+msgid ""
+"You can still ask a solicitor for help – you will have to pay for their "
+"advice."
+msgstr ""
+"Gallwch dal ofyn i gyfreithiwr eich helpu - bydd rhaid ichi dalu am eu "
+"cyngor."
+
+msgid ""
+"You can still ask a solicitor for help - you will have to pay for their "
+"advice."
+msgstr ""
+"Gallwch dal ofyn i gyfreithiwr eich helpu - bydd rhaid ichi dalu am eu "
+"cyngor."
+
+msgid "Find a solicitor"
+msgstr "Dod o hyd i gyfreithiwr"
+
+msgid ""
+"You may still get help and advice from the organisations listed below. "
+"You don’t have to qualify for legal aid."
+msgstr ""
+"Efallai y byddwch chi’n dal yn gallu cael help a chyngor gan y "
+"sefydliadau sydd wedi’u rhestru isod. Nid oes rhaid i chi fod yn gymwys i"
+" gael cymorth cyfreithiol."
+
+#, python-format
+msgid "Help organisations for problems about %(category_name)s"
+msgstr "Sefydliadau cymorth ar gyfer problemau ynghylch %(category_name)s"
 
 msgid "About the problem"
 msgstr "Am y broblem"
