@@ -1835,7 +1835,10 @@ msgid "Accessibility statement"
 msgstr "Datganiad hygyrchedd"
 
 msgid "Sorry, you’re not likely to get legal aid"
-msgstr ""
+msgstr "Yn anffodus, dydych chi ddim yn debygol o gael cymorth cyfreithiol"
+
+msgid "If you cannot find your problem, it’s probably not covered by legal aid."
+msgstr "Os na allwch ddod o hyd i’ch problem, mae’n debyg nad oes cymorth cyfreithiol ar gael ar ei chyfer."
 
 msgid "Next steps to get help"
 msgstr "Camau nesaf i gael cymorth"
