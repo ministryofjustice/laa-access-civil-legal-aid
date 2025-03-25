@@ -8,7 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2025-03-31 10:39+0100\n"
+=======
+"POT-Creation-Date: 2025-03-25 14:41+0000\n"
+>>>>>>> ff936808 (Add welsh translations)
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1822,10 +1826,25 @@ msgstr ""
 msgid "Speak to an advice organisation"
 msgstr ""
 
+msgid "You can get free, independent advice from:"
+msgstr ""
+
 msgid "Citizen’s Advice (opens new tab)"
 msgstr ""
 
 msgid "Advicelocal (opens new tab)"
+msgstr ""
+
+msgid "exceptional case funding (opens new tab)"
+msgstr ""
+
+msgid "Exceptional case funding"
+msgstr ""
+
+#, python-format
+msgid ""
+"In rare cases, you can still get government-funded legal help. Go to "
+"GOV.UK to find out about %(ecf_link)s."
 msgstr ""
 
 msgid "Legal aid doesn’t cover all types of problem"
