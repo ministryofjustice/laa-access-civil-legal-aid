@@ -6,3 +6,7 @@ dynamic = ["dependencies", "optional-dependencies"]
 [tool.setuptools.dynamic]
 dependencies = { file = ["requirements/requirements-production.in"] }
 optional-dependencies = { file = ["requirements-development.in"] }
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
