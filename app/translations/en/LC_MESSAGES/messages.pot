@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-18 23:03+0000\n"
+"POT-Creation-Date: 2025-03-25 14:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,6 +76,14 @@ msgid "Female genital mutilation (FGM)"
 msgstr ""
 
 msgid "If you or someone else is at risk of FGM."
+msgstr ""
+
+msgid "Domestic abuse - if you have been accused"
+msgstr ""
+
+msgid ""
+"Legal help if you’ve been accused of domestic abuse or forced marriage. "
+"Includes non-molestation orders and other court orders."
 msgstr ""
 
 msgid "Children, families, relationships"
@@ -216,6 +224,14 @@ msgstr ""
 msgid ""
 "Accused of anti-social behaviour by the landlord, council or housing "
 "association."
+msgstr ""
+
+msgid "Anti-social behaviour and gangs"
+msgstr ""
+
+msgid ""
+"If you’re accused or taken to court for anti-social behaviour, including "
+"being in a gang."
 msgstr ""
 
 msgid ""
@@ -543,6 +559,71 @@ msgid "Gender reassignment, being transgender, non-binary or gender-fluid"
 msgstr ""
 
 msgid "Married status - being married, in a civil partnership"
+msgstr ""
+
+msgid "Adopting a child from outside the UK"
+msgstr ""
+
+msgid "Adoption processes in the courts."
+msgstr ""
+
+msgid "Appeal a decision that you cannot work with children or vulnerable adults"
+msgstr ""
+
+msgid "Including if you’re on a ‘barred list’ or disqualified from teaching."
+msgstr ""
+
+msgid "Clinical negligence in babies"
+msgstr ""
+
+msgid ""
+"Help if a baby has brain or nerve damage caused during pregnancy, "
+"childbirth or up to 8 weeks old."
+msgstr ""
+
+msgid "Compensation for abuse, assault or neglect"
+msgstr ""
+
+msgid ""
+"Includes child abuse, sexual assault, abuse of a vulnerable adult. Claims"
+" can be against a person or an organisation."
+msgstr ""
+
+msgid "Environmental pollution"
+msgstr ""
+
+msgid ""
+"Issues about air, water or land pollution that is harming you or the "
+"environment."
+msgstr ""
+
+msgid "Inquests for family members"
+msgstr ""
+
+msgid "Advice to prepare for the inquest of a family member."
+msgstr ""
+
+msgid "Mental health detention"
+msgstr ""
+
+msgid ""
+"Help if you’re held in hospital (‘sectioned’), mental health tribunals "
+"and community treatment orders."
+msgstr ""
+
+msgid "Proceeds of Crime Act"
+msgstr ""
+
+msgid "If you’re facing legal action to take your money or other assets."
+msgstr ""
+
+msgid "Terrorism"
+msgstr ""
+
+msgid "If you’re accused of terrorism or financing terrorist groups."
+msgstr ""
+
+msgid "Help if you’re a victim of human trafficking or modern slavery."
 msgstr ""
 
 msgid "Is this to do with police, prisons or detention centres?"
@@ -1670,87 +1751,6 @@ msgstr ""
 msgid "SEND"
 msgstr ""
 
-msgid "Adopting a child from outside the UK"
-msgstr ""
-
-msgid "Adoption processes in the courts."
-msgstr ""
-
-msgid "Appeal a decision that you cannot work with children or vulnerable adults"
-msgstr ""
-
-msgid "Including if you’re on a ‘barred list’ or disqualified from teaching."
-msgstr ""
-
-msgid "Anti-social behaviour and gangs"
-msgstr ""
-
-msgid ""
-"If you’re accused or taken to court for anti-social behaviour, including "
-"being in a gang."
-msgstr ""
-
-msgid "Clinical negligence in babies"
-msgstr ""
-
-msgid ""
-"Help if a baby has brain or nerve damage caused during pregnancy, "
-"childbirth or up to 8 weeks old."
-msgstr ""
-
-msgid "Compensation for abuse, assault or neglect"
-msgstr ""
-
-msgid ""
-"Includes child abuse, sexual assault, abuse of a vulnerable adult. Claims"
-" can be against a person or an organisation."
-msgstr ""
-
-msgid "Domestic abuse - if you have been accused"
-msgstr ""
-
-msgid ""
-"Legal help if you’ve been accused of domestic abuse or forced marriage. "
-"Includes non-molestation orders and other court orders."
-msgstr ""
-
-msgid "Environmental pollution"
-msgstr ""
-
-msgid ""
-"Issues about air, water or land pollution that is harming you or the "
-"environment."
-msgstr ""
-
-msgid "Inquests for family members"
-msgstr ""
-
-msgid "Advice to prepare for the inquest of a family member."
-msgstr ""
-
-msgid "Mental health detention"
-msgstr ""
-
-msgid ""
-"Help if you’re held in hospital (‘sectioned’), mental health tribunals "
-"and community treatment orders."
-msgstr ""
-
-msgid "Proceeds of Crime Act"
-msgstr ""
-
-msgid "If you’re facing legal action to take your money or other assets."
-msgstr ""
-
-msgid "Terrorism"
-msgstr ""
-
-msgid "If you’re accused of terrorism or financing terrorist groups."
-msgstr ""
-
-msgid "Help if you’re a victim of human trafficking or modern slavery."
-msgstr ""
-
 msgid ""
 "These organisations give free, independent advice for problems about "
 "domestic abuse."
@@ -1816,10 +1816,25 @@ msgstr ""
 msgid "Speak to an advice organisation"
 msgstr ""
 
+msgid "You can get free, independent advice from:"
+msgstr ""
+
 msgid "Citizen’s Advice (opens new tab)"
 msgstr ""
 
 msgid "Advicelocal (opens new tab)"
+msgstr ""
+
+msgid "exceptional case funding (opens new tab)"
+msgstr ""
+
+msgid "Exceptional case funding"
+msgstr ""
+
+#, python-format
+msgid ""
+"In rare cases, you can still get government-funded legal help. Go to "
+"GOV.UK to find out about %(ecf_link)s."
 msgstr ""
 
 msgid "Legal aid doesn’t cover all types of problem"
