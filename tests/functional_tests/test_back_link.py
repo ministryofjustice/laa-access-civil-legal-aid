@@ -8,17 +8,11 @@ def test_contact_us_journey(page: Page):
     """Test the reverse flow through a contact us journey"""
     page.get_by_role("link", name="Children, families,").click()
     page.get_by_role("link", name="Children and social services").click()
-    expect(
-        page.get_by_role("heading", name="Contact Civil Legal Advice")
-    ).to_be_visible()
+    expect(page.get_by_role("heading", name="Contact Civil Legal Advice")).to_be_visible()
     page.get_by_role("button", name="Back").click()
-    expect(
-        page.get_by_role("heading", name="Children, families, relationships")
-    ).to_be_visible()
+    expect(page.get_by_role("heading", name="Children, families, relationships")).to_be_visible()
     page.get_by_role("button", name="Back").click()
-    expect(
-        page.get_by_role("heading", name="Find problems covered by legal aid")
-    ).to_be_visible()
+    expect(page.get_by_role("heading", name="Find problems covered by legal aid")).to_be_visible()
 
 
 @pytest.mark.usefixtures("live_server")
@@ -29,13 +23,9 @@ def test_in_scope_journey(page: Page):
     page.get_by_role("button", name="Check if you qualify").click()
     expect(page.get_by_role("heading", name="About you")).to_be_visible()
     page.get_by_role("button", name="Back").click()
-    expect(
-        page.get_by_role("heading", name="Legal aid is available for")
-    ).to_be_visible()
+    expect(page.get_by_role("heading", name="Legal aid is available for")).to_be_visible()
     page.get_by_role("button", name="Back").click()
-    expect(
-        page.get_by_role("heading", name="Housing, homelessness, losing")
-    ).to_be_visible()
+    expect(page.get_by_role("heading", name="Housing, homelessness, losing")).to_be_visible()
     page.get_by_role("button", name="Back").click()
     expect(page.get_by_role("heading", name="Find problems covered by")).to_be_visible()
 
@@ -46,13 +36,9 @@ def test_out_of_scope_journey(page: Page):
     page.get_by_role("link", name="Benefits").click()
     page.get_by_role("radio", name="None of these").check()
     page.get_by_role("button", name="Continue").click()
-    expect(
-        page.get_by_role("heading", name="Sorry, you’re not likely to get legal aid")
-    ).to_be_visible()
+    expect(page.get_by_role("heading", name="Sorry, you’re not likely to get legal aid")).to_be_visible()
     page.get_by_role("button", name="Back").click()
-    expect(
-        page.get_by_role("heading", name="Appeal a decision about your")
-    ).to_be_visible()
+    expect(page.get_by_role("heading", name="Appeal a decision about your")).to_be_visible()
     page.get_by_role("button", name="Back").click()
     expect(page.get_by_role("heading", name="Find problems covered by")).to_be_visible()
 
@@ -79,6 +65,4 @@ def test_fallback(page: Page):
     page.goto("https://www.gov.uk")
     page.goto(url_for("means_test.about-you", _external=True))
     page.get_by_role("button", name="Back").click()
-    expect(
-        page.get_by_role("heading", name="You’ve reached the end of this service")
-    ).to_be_visible()
+    expect(page.get_by_role("heading", name="You’ve reached the end of this service")).to_be_visible()

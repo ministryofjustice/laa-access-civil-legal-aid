@@ -24,9 +24,9 @@ class Eligibility:
 
     @property
     def has_partner(self):
-        return self.forms.get("about-you", {}).get(
-            "has_partner", False
-        ) and not self.forms.get("about-you", {}).get("are_you_in_a_dispute", False)
+        return self.forms.get("about-you", {}).get("has_partner", False) and not self.forms.get("about-you", {}).get(
+            "are_you_in_a_dispute", False
+        )
 
     @property
     def owns_property(self) -> bool:
@@ -42,9 +42,9 @@ class Eligibility:
 
     @property
     def is_employed_or_self_employed(self):
-        return self.forms.get("about-you", {}).get("is_employed") or self.forms.get(
-            "about-you", {}
-        ).get("is_self_employed", False)
+        return self.forms.get("about-you", {}).get("is_employed") or self.forms.get("about-you", {}).get(
+            "is_self_employed", False
+        )
 
     @property
     def is_partner_employed(self):
@@ -93,9 +93,7 @@ class Eligibility:
         ]
         return self.on_benefits and any(
             benefit in passported_benefits
-            for benefit in session.get_eligibility()
-            .forms.get("benefits", {})
-            .get("benefits", [])
+            for benefit in session.get_eligibility().forms.get("benefits", {}).get("benefits", [])
         )
 
     @property
@@ -191,9 +189,7 @@ class Session(SecureCookieSession):
                 if result is not None:
                     raise ValueError("User has multiple subcategory answers")
 
-                result = get_subcategory_from_code(
-                    answer.category.parent_code, answer.category.code
-                )
+                result = get_subcategory_from_code(answer.category.parent_code, answer.category.code)
 
         return result
 
@@ -213,9 +209,7 @@ class Session(SecureCookieSession):
         category_answers = []
         for item in items:
             answer = item.copy()
-            answer["category"] = self._category_from_dict_from_session_storage(
-                answer["category"]
-            )
+            answer["category"] = self._category_from_dict_from_session_storage(answer["category"])
             category_answers.append(CategoryAnswer(**answer))
 
         return category_answers
@@ -257,26 +251,20 @@ class Session(SecureCookieSession):
         if "category_answers" not in self:
             self["category_answers"] = []
         if category_answer.category.parent_code:
-            session.category = get_category_from_code(
-                category_answer.category.parent_code
-            )
+            session.category = get_category_from_code(category_answer.category.parent_code)
         else:
             session.category = category_answer.category
 
         answers: list[CategoryAnswer] = self.category_answers
 
         # Remove existing entry if present
-        answers = [
-            entry for entry in answers if entry.question != category_answer.question
-        ]
+        answers = [entry for entry in answers if entry.question != category_answer.question]
         answers.append(category_answer)
 
         category_answers = []
         for answer in answers:
             answer_dict = answer.__dict__
-            answer_dict["category"] = self._category_to_dict_for_session_storage(
-                answer.category
-            )
+            answer_dict["category"] = self._category_to_dict_for_session_storage(answer.category)
             category_answers.append(answer_dict)
 
         self["category_answers"] = category_answers

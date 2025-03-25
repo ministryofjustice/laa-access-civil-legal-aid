@@ -56,9 +56,7 @@ class SafeguardingQuestionForm(QuestionForm):
         title,
         description=_("This could be you, a child or someone else."),
         widget=CategoryRadioInput(show_divider=False, is_inline=True),
-        validators=[
-            InputRequired(message=_("Select if you’re worried about someone’s safety"))
-        ],
+        validators=[InputRequired(message=_("Select if you’re worried about someone’s safety"))],
         choices=[
             ("yes", _("Yes")),
             ("no", _("No")),
@@ -79,9 +77,7 @@ class ChildInCareQuestionForm(QuestionForm):
     question = RadioField(
         title,
         widget=CategoryRadioInput(show_divider=False, is_inline=True),
-        validators=[
-            InputRequired(message=_("Select if the child is or has been in care"))
-        ],
+        validators=[InputRequired(message=_("Select if the child is or has been in care"))],
         choices=[
             ("yes", _("Yes")),
             ("no", _("No")),

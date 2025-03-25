@@ -34,9 +34,7 @@ class MoneyInterval(dict):
     }
 
     def __init__(self, *args, **kwargs):
-        super(MoneyInterval, self).__init__(
-            {"per_interval_value": None, "interval_period": None}
-        )
+        super(MoneyInterval, self).__init__({"per_interval_value": None, "interval_period": None})
 
         if len(args) > 0:
             value = args[0]
@@ -83,9 +81,7 @@ class MoneyInterval(dict):
             self["per_interval_value"] = to_amount(value)
 
         except (InvalidOperation, ValueError):
-            raise ValueError(
-                "Invalid value for amount {0} ({1})".format(value, type(value))
-            )
+            raise ValueError("Invalid value for amount {0} ({1})".format(value, type(value)))
 
     def amount_to_pounds(self):
         if not self["per_interval_value"]:

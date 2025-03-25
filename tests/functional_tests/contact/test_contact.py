@@ -165,9 +165,7 @@ def test_contact_page_routing(page: Page, contact_answers: dict):
 
     page.get_by_role("button", name="Continue").click()
 
-    expect(
-        page.get_by_role("heading", name="Contact Civil Legal Advice")
-    ).to_be_visible()
+    expect(page.get_by_role("heading", name="Contact Civil Legal Advice")).to_be_visible()
 
     for question, answer in contact_answers.items():
         if answer[1] == "radio":
@@ -192,25 +190,19 @@ def test_contact_page_routing(page: Page, contact_answers: dict):
     expect(page.get_by_role("heading", name=expected_heading)).to_be_visible()
 
     if "I will call you" in contact_answers["Select a contact option"]:
-        expect(
-            page.get_by_text("You can now call CLA on 0345 345 4 345.")
-        ).to_be_visible()
+        expect(page.get_by_text("You can now call CLA on 0345 345 4 345.")).to_be_visible()
         expect(
             page.get_by_text(
                 "Your details have been submitted and an operator will call you at least once during your chosen time"
             )
         ).not_to_be_visible()
     if "Call me back" in contact_answers["Select a contact option"]:
-        expect(
-            page.get_by_text("You can now call CLA on 0345 345 4 345.")
-        ).not_to_be_visible()
+        expect(page.get_by_text("You can now call CLA on 0345 345 4 345.")).not_to_be_visible()
         expect(
             page.get_by_text(
                 "Your details have been submitted and an operator will call you at least once during your chosen time"
             )
         ).to_be_visible()
         expect(
-            page.get_by_text(
-                "When a CLA operator calls, the call will come from an anonymous number."
-            )
+            page.get_by_text("When a CLA operator calls, the call will come from an anonymous number.")
         ).to_be_visible()

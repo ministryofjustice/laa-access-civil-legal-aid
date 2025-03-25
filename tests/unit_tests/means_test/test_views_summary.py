@@ -28,61 +28,41 @@ def mock_session_get_eligibility():
 
 
 @mock.patch("app.means_test.views.render_template", mock_render_template)
-@mock.patch(
-    "app.means_test.views.session.get_eligibility", mock_session_get_eligibility
-)
+@mock.patch("app.means_test.views.session.get_eligibility", mock_session_get_eligibility)
 def test_views_summary(app):
     expected_summary = {
         "About you": [
             {
                 "key": {"text": "Do you have a partner?"},
                 "value": {"text": "No"},
-                "actions": {
-                    "items": [{"href": "/about-you#has_partner", "text": _("Change")}]
-                },
+                "actions": {"items": [{"href": "/about-you#has_partner", "text": _("Change")}]},
             },
             {
-                "key": {
-                    "text": "Do you receive any benefits (including Child Benefit)?"
-                },
+                "key": {"text": "Do you receive any benefits (including Child Benefit)?"},
                 "value": {"text": "Yes"},
-                "actions": {
-                    "items": [{"href": "/about-you#on_benefits", "text": _("Change")}]
-                },
+                "actions": {"items": [{"href": "/about-you#on_benefits", "text": _("Change")}]},
             },
             {
                 "key": {"text": "Do you have any children aged 15 or under?"},
                 "value": {"text": "No"},
-                "actions": {
-                    "items": [{"href": "/about-you#have_children", "text": _("Change")}]
-                },
+                "actions": {"items": [{"href": "/about-you#have_children", "text": _("Change")}]},
             },
             {
                 "key": {"text": "Do you have any dependants aged 16 or over?"},
                 "value": {"text": "No"},
-                "actions": {
-                    "items": [
-                        {"href": "/about-you#have_dependants", "text": _("Change")}
-                    ]
-                },
+                "actions": {"items": [{"href": "/about-you#have_dependants", "text": _("Change")}]},
             },
             {
                 "key": {"text": "Do you own any property?"},
                 "value": {"text": "No"},
-                "actions": {
-                    "items": [{"href": "/about-you#own_property", "text": _("Change")}]
-                },
+                "actions": {"items": [{"href": "/about-you#own_property", "text": _("Change")}]},
             },
         ],
         "Which benefits do you receive?": [
             {
                 "key": {"text": "Which benefits do you receive?"},
-                "value": {
-                    "markdown": "Income-related Employment and Support Allowance\nUniversal Credit"
-                },
-                "actions": {
-                    "items": [{"href": "/benefits#benefits", "text": _("Change")}]
-                },
+                "value": {"markdown": "Income-related Employment and Support Allowance\nUniversal Credit"},
+                "actions": {"items": [{"href": "/benefits#benefits", "text": _("Change")}]},
             }
         ],
     }
@@ -103,26 +83,18 @@ def test_get_category_answers_summary_no_description(app):
         },
         {
             "key": {"text": "Where did the discrimination happen?"},
-            "value": {
-                "text": "Work - including colleagues, employer or employment agency"
-            },
-            "actions": {
-                "items": [{"text": _("Change"), "href": "/discrimination/where"}]
-            },
+            "value": {"text": "Work - including colleagues, employer or employment agency"},
+            "actions": {"items": [{"text": _("Change"), "href": "/discrimination/where"}]},
         },
         {
             "key": {"text": "Why were you discriminated against?"},
             "value": {"text": "Disability, health condition, mental health condition"},
-            "actions": {
-                "items": [{"text": _("Change"), "href": "/discrimination/why"}]
-            },
+            "actions": {"items": [{"text": _("Change"), "href": "/discrimination/why"}]},
         },
         {
             "key": {"text": "Are you under 18?"},
             "value": {"text": "No"},
-            "actions": {
-                "items": [{"text": _("Change"), "href": "/discrimination/age"}]
-            },
+            "actions": {"items": [{"text": _("Change"), "href": "/discrimination/age"}]},
         },
     ]
 
@@ -164,9 +136,7 @@ def test_get_category_answers_summary_no_description(app):
     ]
 
     with app.app_context():
-        with mock.patch(
-            "app.session.Session.category_answers", new_callable=mock.PropertyMock
-        ) as mocker:
+        with mock.patch("app.session.Session.category_answers", new_callable=mock.PropertyMock) as mocker:
             mocker.return_value = mock_category_answers
             summary = CheckYourAnswers().get_category_answers_summary()
         assert summary == expected_summary
@@ -186,9 +156,7 @@ def test_get_category_answers_summary_with_description(app):
         {
             "key": {"text": "Are you under 18?"},
             "value": {"text": "No"},
-            "actions": {
-                "items": [{"text": _("Change"), "href": "/discrimination/age"}]
-            },
+            "actions": {"items": [{"text": _("Change"), "href": "/discrimination/age"}]},
         },
     ]
 
@@ -213,16 +181,12 @@ def test_get_category_answers_summary_with_description(app):
         ),
     ]
 
-    category_mocker = mock.patch(
-        "app.session.Session.category", new_callable=mock.PropertyMock
-    )
+    category_mocker = mock.patch("app.session.Session.category", new_callable=mock.PropertyMock)
     category_mocker.return_value = HOUSING
     category_mocker.start()
 
     with app.app_context():
-        with mock.patch(
-            "app.session.Session.category_answers", new_callable=mock.PropertyMock
-        ) as mocker:
+        with mock.patch("app.session.Session.category_answers", new_callable=mock.PropertyMock) as mocker:
             mocker.return_value = mock_category_answers
             summary = CheckYourAnswers().get_category_answers_summary()
         assert summary == expected_summary

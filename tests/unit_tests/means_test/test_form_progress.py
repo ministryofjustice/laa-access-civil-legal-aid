@@ -65,17 +65,13 @@ class TestGetFormProgress:
             ),  # 6/8 * 100
         ],
     )
-    def test_completion_percentage(
-        self, view, current_form, completed_forms, expected_percentage
-    ):
+    def test_completion_percentage(self, view, current_form, completed_forms, expected_percentage):
         test_view, forms = view
         test_view.form_class = forms[current_form]
         test_view.current_name = current_form
 
         # Patch is_form_completed to use our test's completed_forms set instead of the session
-        with patch.object(
-            MeansTest, "is_form_completed", side_effect=lambda x: x in completed_forms
-        ):
+        with patch.object(MeansTest, "is_form_completed", side_effect=lambda x: x in completed_forms):
             result = test_view.get_form_progress(forms[current_form]())
             assert result["completion_percentage"] == expected_percentage
 
@@ -117,9 +113,7 @@ class TestGetFormProgress:
             result = test_view.get_form_progress(forms["about-you"]())
             assert len(result["steps"]) == expected_steps
 
-    @pytest.mark.parametrize(
-        "form_name", ["about-you", "benefits", "property", "income"]
-    )
+    @pytest.mark.parametrize("form_name", ["about-you", "benefits", "property", "income"])
     def test_current_step_identification(self, view, form_name):
         test_view, forms = view
         test_view.form_class = forms[form_name]

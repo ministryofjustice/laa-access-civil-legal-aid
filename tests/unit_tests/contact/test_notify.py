@@ -54,9 +54,7 @@ class TestNotifyEmailOrchestrator:
         mock_post.return_value = mock_response
 
         orchestrator = NotifyEmailOrchestrator()
-        result = orchestrator.send_email(
-            "test@example.com", "template123", {"name": "Test"}
-        )
+        result = orchestrator.send_email("test@example.com", "template123", {"name": "Test"})
 
         mock_post.assert_called_once()
         assert result is True
@@ -251,9 +249,7 @@ confirmation_email_test_scenarios = [
     "input_data,expected_template_id,expected_personalisation,locale",
     confirmation_email_test_scenarios,
 )
-def test_generate_confirmation_email_data(
-    input_data, expected_template_id, expected_personalisation, locale
-):
+def test_generate_confirmation_email_data(input_data, expected_template_id, expected_personalisation, locale):
     """
     Test the generate_confirmation_email_data function with various scenarios.
 
@@ -269,15 +265,11 @@ def test_generate_confirmation_email_data(
             "app.contact.notify.api.format_callback_time",
             return_value="formatted-time",
         ),
-        patch(
-            "app.contact.notify.api.GOVUK_NOTIFY_TEMPLATES", MOCK_GOVUK_NOTIFY_TEMPLATES
-        ),
+        patch("app.contact.notify.api.GOVUK_NOTIFY_TEMPLATES", MOCK_GOVUK_NOTIFY_TEMPLATES),
     ):
         mock_get_locale.return_value = locale
 
-        template_id, personalisation = notify.generate_confirmation_email_data(
-            **input_data
-        )
+        template_id, personalisation = notify.generate_confirmation_email_data(**input_data)
 
         assert template_id == expected_template_id
         assert personalisation == expected_personalisation

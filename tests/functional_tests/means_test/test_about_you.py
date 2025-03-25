@@ -95,42 +95,16 @@ def test_error_messages(page: Page):
     page.get_by_role("button", name="Continue").click()
 
     # Check that all error messages are visible
-    expect(
-        page.get_by_role("link", name="Tell us whether you have a partner")
-    ).to_be_visible()
-    expect(
-        page.get_by_role("link", name="Tell us whether you receive benefits")
-    ).to_be_visible()
-    expect(
-        page.get_by_role(
-            "link", name="Tell us whether you have any children aged 15 or under"
-        )
-    ).to_be_visible()
-    expect(
-        page.get_by_role(
-            "link", name="Tell us whether you have any dependants aged 16 or over"
-        )
-    ).to_be_visible()
-    expect(
-        page.get_by_role("link", name="Tell us if you own any properties")
-    ).to_be_visible()
+    expect(page.get_by_role("link", name="Tell us whether you have a partner")).to_be_visible()
+    expect(page.get_by_role("link", name="Tell us whether you receive benefits")).to_be_visible()
+    expect(page.get_by_role("link", name="Tell us whether you have any children aged 15 or under")).to_be_visible()
+    expect(page.get_by_role("link", name="Tell us whether you have any dependants aged 16 or over")).to_be_visible()
+    expect(page.get_by_role("link", name="Tell us if you own any properties")).to_be_visible()
     expect(page.get_by_role("link", name="Tell us if you are employed")).to_be_visible()
-    expect(
-        page.get_by_role("link", name="Tell us if you are self-employed")
-    ).to_be_visible()
-    expect(
-        page.get_by_role(
-            "link", name="Tell us if you or your partner are aged 60 or over"
-        )
-    ).to_be_visible()
-    expect(
-        page.get_by_role("link", name="Tell us whether you have savings or investments")
-    ).to_be_visible()
-    expect(
-        page.get_by_role(
-            "link", name="Tell us if you have any valuable items worth over £500 each"
-        )
-    ).to_be_visible()
+    expect(page.get_by_role("link", name="Tell us if you are self-employed")).to_be_visible()
+    expect(page.get_by_role("link", name="Tell us if you or your partner are aged 60 or over")).to_be_visible()
+    expect(page.get_by_role("link", name="Tell us whether you have savings or investments")).to_be_visible()
+    expect(page.get_by_role("link", name="Tell us if you have any valuable items worth over £500 each")).to_be_visible()
 
 
 @pytest.mark.usefixtures("live_server")
@@ -139,20 +113,14 @@ def test_conditional_fields(page: Page):
     page.get_by_role("link", name="Homelessness").click()
     page.get_by_role("button", name="Check if you qualify").click()
 
-    expect(
-        page.get_by_role("group", name="Are you in a dispute with")
-    ).not_to_be_visible()
+    expect(page.get_by_role("group", name="Are you in a dispute with")).not_to_be_visible()
     page.locator("#has_partner").check()
     expect(page.get_by_role("group", name="Are you in a dispute with")).to_be_visible()
 
     expect(page.locator("#conditional-have_children div")).not_to_be_visible()
-    page.get_by_role("group", name="Do you have any children aged").get_by_label(
-        "Yes"
-    ).check()
+    page.get_by_role("group", name="Do you have any children aged").get_by_label("Yes").check()
     expect(page.locator("#conditional-have_children div")).to_be_visible()
 
     expect(page.locator("#conditional-have_dependants div")).not_to_be_visible()
-    page.get_by_role("group", name="Do you have any dependants").get_by_label(
-        "Yes"
-    ).check()
+    page.get_by_role("group", name="Do you have any dependants").get_by_label("Yes").check()
     expect(page.locator("#conditional-have_dependants div")).to_be_visible()

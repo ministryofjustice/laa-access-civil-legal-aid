@@ -117,9 +117,7 @@ def fill_about_form(page: Page, questions: dict) -> None:
 def test_about_form(page: Page, scenario: str, form_inputs: dict, expected: dict):
     page.goto(url_for("means_test.about-you", _external=True))
 
-    page.locator(
-        "#has_partner" if form_inputs["has_partner"] == "Yes" else "#has_partner-2"
-    ).check()
+    page.locator("#has_partner" if form_inputs["has_partner"] == "Yes" else "#has_partner-2").check()
     del form_inputs["has_partner"]
 
     fill_about_form(page, form_inputs)

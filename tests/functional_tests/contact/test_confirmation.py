@@ -8,9 +8,7 @@ def test_confirmation_page_email(page: Page):
 
     page.get_by_role("button", name="Continue to contact CLA").click()
 
-    expect(
-        page.get_by_role("heading", name="Contact Civil Legal Advice")
-    ).to_be_visible()
+    expect(page.get_by_role("heading", name="Contact Civil Legal Advice")).to_be_visible()
 
     page.get_by_role("textbox", name="Your full name").fill("Test")
 
@@ -18,9 +16,7 @@ def test_confirmation_page_email(page: Page):
 
     page.get_by_role("button", name="Submit details").click()
 
-    expect(
-        page.get_by_role("heading", name="Your details have been submitted")
-    ).to_be_visible()
+    expect(page.get_by_role("heading", name="Your details have been submitted")).to_be_visible()
 
     # This email address is provided by GOV.UK Notify for testing purposes
     page.get_by_role("textbox", name="Receive this confirmation by").fill(
@@ -30,9 +26,7 @@ def test_confirmation_page_email(page: Page):
     page.get_by_role("button", name="Send").click()
 
     expect(
-        page.get_by_text(
-            "Your reference number was sent to simulate-delivered@notifications.service.gov.uk."
-        )
+        page.get_by_text("Your reference number was sent to simulate-delivered@notifications.service.gov.uk.")
     ).to_be_visible()
 
 
@@ -60,9 +54,7 @@ def test_domestic_abuse_category(page: Page):
     page.get_by_role("radio", name="I will call you").check()
     page.get_by_role("button", name="Submit details").click()
     expect(
-        page.get_by_text(
-            "Please be aware that the specialist adviser will need evidence of the domestic violence"
-        )
+        page.get_by_text("Please be aware that the specialist adviser will need evidence of the domestic violence")
     ).to_be_visible()
 
 
@@ -70,9 +62,7 @@ def test_domestic_abuse_category(page: Page):
 def test_housing_category(page: Page):
     page.get_by_role("link", name="Housing, homelessness, losing").click()
     page.get_by_role("link", name="Homelessness").click()
-    page.get_by_role("paragraph").filter(
-        has_text="Fill in the ' contact CLA '"
-    ).get_by_role("link").click()
+    page.get_by_role("paragraph").filter(has_text="Fill in the ' contact CLA '").get_by_role("link").click()
     page.get_by_role("textbox", name="Your full name").fill("John Doe")
     page.get_by_role("radio", name="I will call you").check()
     page.get_by_role("button", name="Submit details").click()
@@ -101,9 +91,7 @@ def test_thirdparty_callback(page: Page):
             "Your details have been submitted and an operator will call the person you nominated at least once during your chosen time, or as close to the time as possible"
         )
     ).to_be_visible()
-    expect(
-        page.get_by_text("The first person they speak to will be an operator")
-    ).to_be_visible()
+    expect(page.get_by_text("The first person they speak to will be an operator")).to_be_visible()
     expect(
         page.get_by_text(
             "If it looks like you might qualify for legal aid they’ll be put through to a specialist adviser, who will make the final decision on your case."

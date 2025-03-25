@@ -16,6 +16,4 @@ class FindLegalAdviserForm(Form):
 
     def __init__(self, formdata=None, **kwargs):
         super().__init__(formdata, **kwargs)
-        self.postcode_region = (
-            None  # Initialize the storage for the postcode lookup result
-        )
+        self.postcode_region = None  # Initialize the storage for the postcode lookup result

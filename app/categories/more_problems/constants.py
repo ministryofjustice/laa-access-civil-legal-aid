@@ -10,20 +10,14 @@ ADOPTING = Category(
     exit_page=False,
 )
 WORK_WITH_VULNERABLE = Category(
-    title=_(
-        "Appeal a decision that you cannot work with children or vulnerable adults"
-    ),
-    description=_(
-        "Including if you’re on a ‘barred list’ or disqualified from teaching."
-    ),
+    title=_("Appeal a decision that you cannot work with children or vulnerable adults"),
+    description=_("Including if you’re on a ‘barred list’ or disqualified from teaching."),
     code="work_with_vulnerable",
     exit_page=False,
 )
 CLINICAL_NEGLIGENCE = Category(
     title=_("Clinical negligence in babies"),
-    description=_(
-        "Help if a baby has brain or nerve damage caused during pregnancy, childbirth or up to 8 weeks old."
-    ),
+    description=_("Help if a baby has brain or nerve damage caused during pregnancy, childbirth or up to 8 weeks old."),
     article_category_name="Clinical Negligence",
     code="clinical_negligence",
     exit_page=False,
@@ -38,9 +32,7 @@ COMPENSATION = Category(
 )
 ENVIRONMENTAL_POLLUTION = Category(
     title=_("Environmental pollution"),
-    description=_(
-        "Issues about air, water or land pollution that is harming you or the environment."
-    ),
+    description=_("Issues about air, water or land pollution that is harming you or the environment."),
     article_category_name="Public",
     chs_code="publiclaw",
     code="environmental_pollution",

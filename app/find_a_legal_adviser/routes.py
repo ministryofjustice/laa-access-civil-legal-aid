@@ -10,9 +10,7 @@ def search():
     form = FindLegalAdviserForm(request.args)
 
     category: str | None = request.args.get("category", default=None, type=str)
-    secondary_category: str | None = request.args.get(
-        "secondary_category", default=None, type=str
-    )
+    secondary_category: str | None = request.args.get("secondary_category", default=None, type=str)
 
     if not is_valid_category_code(category):
         category = None
@@ -24,13 +22,9 @@ def search():
         postcode: str | None = form.postcode.data
         page_num: int = request.args.get("page", 1, type=int)
         postcode_region: str = form.postcode_region
-        return result_page(
-            postcode, category, secondary_category, page_num, postcode_region
-        )
+        return result_page(postcode, category, secondary_category, page_num, postcode_region)
 
-    return render_template(
-        "find_a_legal_adviser/search.html", form=form, category=category
-    )
+    return render_template("find_a_legal_adviser/search.html", form=form, category=category)
 
 
 def result_page(
@@ -40,9 +34,7 @@ def result_page(
     page_num: int = 1,
     postcode_region: str = None,
 ):
-    results = laalaa_search(
-        postcode=postcode, categories=[category, secondary_category], page=page_num
-    )
+    results = laalaa_search(postcode=postcode, categories=[category, secondary_category], page=page_num)
 
     pagination_data = get_pagination_data(
         results,

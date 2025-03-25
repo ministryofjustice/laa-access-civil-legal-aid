@@ -120,9 +120,7 @@ class CurrencyValidator:
             raise ValueError("Enter a number")
 
         # Check that the value has no more than 2 decimal places
-        if decimal_value != decimal_value.quantize(
-            Decimal(".01"), rounding=decimal.ROUND_DOWN
-        ):
+        if decimal_value != decimal_value.quantize(Decimal(".01"), rounding=decimal.ROUND_DOWN):
             raise ValueError("Enter a valid amount (maximum 2 decimal places)")
 
         return decimal_value

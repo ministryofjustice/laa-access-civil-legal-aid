@@ -40,9 +40,7 @@ def get_category_name(category_code: str):
         bp,
     )  # We import this here as the blueprint needs to be initialised to contain category information
 
-    category_code = (
-        category_code.upper()
-    )  # Convert to uppercase to make search case-insensitive
+    category_code = category_code.upper()  # Convert to uppercase to make search case-insensitive
     for category in bp.categories:
         if category["code"] == category_code:
             return category["name"]
@@ -55,9 +53,7 @@ def is_valid_category_code(category_code: str | None):
     if not isinstance(category_code, str):
         return False
 
-    category_code = (
-        category_code.upper()
-    )  # Convert to uppercase to make search case-insensitive
+    category_code = category_code.upper()  # Convert to uppercase to make search case-insensitive
     for category in bp.categories:
         if category["code"] == category_code:
             return True
@@ -83,9 +79,7 @@ def get_category_code(category_name: str):
 
     category_name = category_name.lower()
 
-    if (
-        category_name == "domestic abuse"
-    ):  # Domestic abuse falls under the family category of law in FALA
+    if category_name == "domestic abuse":  # Domestic abuse falls under the family category of law in FALA
         category_name = "family"
 
     for category in bp.categories:
