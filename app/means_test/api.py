@@ -30,4 +30,3 @@ def is_eligible(reference) -> EligibilityState:
     response = cla_backend.post(f"{means_test_endpoint}{reference}/is_eligible/", {})
     state = response["is_eligible"]
     return getattr(EligibilityState, state.upper(), EligibilityState.UNKNOWN)
-  
