@@ -1,4 +1,7 @@
+import logging
 from flask import session, redirect, url_for
+
+logger = logging.getLogger(__name__)
 
 
 class InScopeMixin:
@@ -11,5 +14,7 @@ class InScopeMixin:
 
     def ensure_in_scope(self):
         if not session.in_scope:
+            logger.info("FAILED ensuring in scope check")
             return redirect(url_for("main.session_expired"))
+
         return None

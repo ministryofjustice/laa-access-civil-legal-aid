@@ -1,3 +1,4 @@
+import logging
 from typing import List
 from flask.views import View, MethodView
 from flask import render_template, url_for, redirect, session, request
@@ -19,6 +20,9 @@ from app.means_test.forms.review import ReviewForm, BaseMeansTestForm
 from app.categories.models import CategoryAnswer, QuestionType
 from app.categories.mixins import InScopeMixin
 from app.means_test.payload import MeansTestPayload
+
+
+logger = logging.getLogger(__name__)
 
 
 class FormsMixin:
@@ -62,6 +66,9 @@ class MeansTest(FormsMixin, InScopeMixin, View):
             if form["is_current"]:
                 break
             if not form["is_completed"]:
+                logger.info(
+                    "FAILED ensuring form protection for %s", current_form.title
+                )
                 return redirect(url_for("main.session_expired"))
         return None
 

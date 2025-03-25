@@ -1,3 +1,4 @@
+import logging
 from flask.sansio.blueprints import Blueprint
 from flask.views import View
 from flask import render_template, redirect, url_for, session, request
@@ -5,6 +6,9 @@ from flask_babel import LazyString
 from app.categories.forms import QuestionForm
 from app.categories.constants import Category
 from app.categories.models import CategoryAnswer, QuestionType
+
+
+logger = logging.getLogger(__name__)
 
 
 class CategoryPage(View):
@@ -236,6 +240,7 @@ class QuestionPage(CategoryPage):
                 title = title._args[0]
             answer = session.get_category_question_answer(title)
             if answer is None:
+                logger.info("FAILED ensuring form dependency for %s", form.title)
                 return redirect(url_for("main.session_expired"))
 
         return None
