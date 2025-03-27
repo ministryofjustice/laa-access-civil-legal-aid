@@ -1,7 +1,19 @@
+import pytest
 from unittest import mock
 from flask import url_for
 from app.session import Session
 from app.means_test.views import MeansTest, FormsMixin
+from app.session import Eligibility
+
+
+@pytest.fixture
+def mock_benefits_should_show():
+    """Mock the session's get_eligibility method properly."""
+    with mock.patch("app.means_test.forms.benefits.session") as benefits_session:
+        benefits_session.get_eligibility = mock.Mock(
+            return_value=Eligibility(forms={"about-you": {"on_benefits": True}})
+        )
+        yield benefits_session
 
 
 def test_form_protection_in_scope(app, client):
@@ -52,7 +64,7 @@ def test_form_protection_sequence_failed(app, client):
                 assert response.location == url_for("main.session_expired")
 
 
-def test_form_protection_sequence_success(app, client):
+def test_form_protection_sequence_success(app, client, mock_benefits_should_show):
     """User needs to complete about-you before going to benefits"""
     with app.app_context():
         with mock.patch.object(

@@ -1,9 +1,11 @@
-from playwright.sync_api import Page, expect
 import pytest
+from playwright.sync_api import Page, expect
+from flask import url_for
 
 
 @pytest.fixture
 def navigate_to_means_test(page: Page):
+    page.goto(url_for("categories.index", _external=True))
     page.get_by_role("link", name="Housing, homelessness, losing your home").click()
     page.get_by_role("link", name="Homelessness").click()
     page.get_by_role("button", name="Check if you qualify financially").click()
