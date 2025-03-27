@@ -36,6 +36,45 @@ class FormsMixin:
         "outgoings": OutgoingsForm,
     }
 
+    def get_form_progress(self, current_form: BaseMeansTestForm) -> dict:
+        """Gets the users progress through the means test. This is used to populate the progress bar."""
+
+        forms = []
+        current_form_key = ""
+
+        for key, form in self.forms.items():
+            form = form()
+            if form.should_show():
+                is_current = form.page_title == current_form.page_title
+                if is_current:
+                    current_form_key = key
+                forms.append(
+                    {
+                        "key": key,
+                        "title": form.page_title,
+                        "url": url_for(f"means_test.{key}"),
+                        "is_current": is_current,
+                        "is_completed": self.is_form_completed(key),
+                    }
+                )
+
+        num_completed_forms = (
+            len([form for form in forms if form["is_completed"]]) + 1
+        )  # Add 1 to account for the current form
+        total_forms = len(forms) + 2  # Add 2 to count for the review & contact pages
+        completion_percentage = num_completed_forms / total_forms * 100
+
+        return {
+            "steps": forms,
+            "current_step": current_form_key,
+            "completion_percentage": completion_percentage,
+        }
+
+    @staticmethod
+    def is_form_completed(form_key: str):
+        """Checks if the form has been completed by the user."""
+        return form_key in session.get_eligibility().forms
+
 
 class MeansTest(FormsMixin, InScopeMixin, View):
     def __init__(self, current_form_class, current_name):
@@ -125,48 +164,23 @@ class MeansTest(FormsMixin, InScopeMixin, View):
         except ValueError:  # current_key not found
             return "review"
 
-    @staticmethod
-    def is_form_completed(form_key: str):
-        """Checks if the form has been completed by the user."""
-        return form_key in session.get_eligibility().forms
-
-    def get_form_progress(self, current_form: BaseMeansTestForm) -> dict:
-        """Gets the users progress through the means test. This is used to populate the progress bar."""
-
-        forms = []
-        current_form_key = ""
-
-        for key, form in self.forms.items():
-            form = form()
-            if form.should_show():
-                is_current = form.page_title == current_form.page_title
-                if is_current:
-                    current_form_key = key
-                forms.append(
-                    {
-                        "key": key,
-                        "title": form.page_title,
-                        "url": url_for(f"means_test.{key}"),
-                        "is_current": is_current,
-                        "is_completed": self.is_form_completed(key),
-                    }
-                )
-
-        num_completed_forms = (
-            len([form for form in forms if form["is_completed"]]) + 1
-        )  # Add 1 to account for the current form
-        total_forms = len(forms) + 2  # Add 2 to count for the review & contact pages
-        completion_percentage = num_completed_forms / total_forms * 100
-
-        return {
-            "steps": forms,
-            "current_step": current_form_key,
-            "completion_percentage": completion_percentage,
-        }
-
 
 class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
     template = "check-your-answers.html"
+
+    def __init__(self, *args, **kwargs):
+        self.form = ReviewForm()
+        super().__init__(*args, **kwargs)
+
+    def dispatch_request(self):
+        progress = self.get_form_progress(current_form=self.form)
+        for form in progress["steps"]:
+            if not form["is_completed"]:
+                logger.info(
+                    "FAILED ensuring all forms are completed before the review page"
+                )
+                return redirect(url_for("main.session_expired"))
+        return super().dispatch_request()
 
     def get(self):
         eligibility = session.get_eligibility()
@@ -183,7 +197,7 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
 
         params = {
             "means_test_summary": means_test_summary,
-            "form": ReviewForm(),
+            "form": self.form,
             "category": session.category,
             "category_answers": self.get_category_answers_summary(),
         }
