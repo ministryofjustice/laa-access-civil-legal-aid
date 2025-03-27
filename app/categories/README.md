@@ -54,7 +54,7 @@ For example:
 routing_map = {
         "community_care": {"endpoint": "find-a-legal-adviser.search", 
                            "category": "mhe",
-                           "secondary-cateogry": "com"}
+                           "secondary-category": "com"}
 }
 ```
 
