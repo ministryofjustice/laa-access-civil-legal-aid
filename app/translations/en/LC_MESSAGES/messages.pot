@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-26 13:44+0000\n"
+"POT-Creation-Date: 2025-03-27 08:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1611,6 +1611,9 @@ msgstr ""
 msgid "Staying safe online"
 msgstr ""
 
+msgid "Accessibility statement"
+msgstr ""
+
 msgid "Sorry, you’re not likely to get legal aid"
 msgstr ""
 
@@ -2311,9 +2314,6 @@ msgstr ""
 msgid "Web Content Accessibility Guidelines version 2.1"
 msgstr ""
 
-msgid "Accessibility statement"
-msgstr ""
-
 msgid "Using this service"
 msgstr ""
 
@@ -2406,7 +2406,7 @@ msgstr ""
 msgid "Non-compliance with the accessibility regulations"
 msgstr ""
 
-msgid "text"
+msgid "Text"
 msgstr ""
 
 msgid ""

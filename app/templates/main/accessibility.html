@@ -83,7 +83,7 @@
   
     <h3 class="govuk-heading-m">{{ _('Non-compliance with the accessibility regulations') }}</h3>
   
-    <h4 class="govuk-heading-s">{{ _('text') }}</h4>
+    <h4 class="govuk-heading-s">{% trans %}Text{% endtrans %}</h4>
   
     <p class="govuk-body">
       {% trans %}Some link text is ambiguous which might result in some users not understanding the link destination. This fails WCAG 2.2. success criterion 2.4.4 Link Purpose (In Context). We plan to ensure all link text is clear and able to be understood by all by the end of December 2025.{% endtrans %}
@@ -167,7 +167,7 @@
       {% trans %}The <abbr title='Digital Accessibility Centre'>DAC</abbr> tested the service available at <a class='govuk-link' href='https://checklegalaid.service.gov.uk/'>https://checklegalaid.service.gov.uk/</a>.{% endtrans %}
     </p>
     {{ govukInsetText({
-      'text': "Your session will time out after 30 minutes of inactivity. We do this for your security."
+      'text': _("Your session will time out after 30 minutes of inactivity. We do this for your security.")
     }) }}
   </div>
 </div>
