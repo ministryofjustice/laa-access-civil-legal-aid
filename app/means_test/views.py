@@ -172,7 +172,7 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
         self.form = ReviewForm()
         super().__init__(*args, **kwargs)
 
-    def dispatch_request(self):
+    def ensure_all_forms_are_complete(self):
         progress = self.get_form_progress(current_form=self.form)
         for form in progress["steps"]:
             if not form["is_completed"]:
@@ -180,6 +180,11 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
                     "FAILED ensuring all forms are completed before the review page"
                 )
                 return redirect(url_for("main.session_expired"))
+
+    def dispatch_request(self):
+        form_protection_redirect = self.ensure_all_forms_are_complete()
+        if form_protection_redirect:
+            return form_protection_redirect
         return super().dispatch_request()
 
     def get(self):

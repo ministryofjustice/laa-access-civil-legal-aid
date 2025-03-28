@@ -2,7 +2,7 @@ import pytest
 from unittest import mock
 from flask import url_for
 from app.session import Session
-from app.means_test.views import MeansTest, FormsMixin
+from app.means_test.views import MeansTest, FormsMixin, CheckYourAnswers
 from app.session import Eligibility
 
 
@@ -106,3 +106,58 @@ def test_form_protection_sequence_success(app, client, mock_benefits_should_show
                         view.dispatch_request()
                         assert mock_ensure_form_protection.called is True
                         assert mock_render_form.called is True
+
+
+def test_check_your_answers_ensure_all_forms_are_complete_failure(app, client):
+    with app.app_context():
+        view = CheckYourAnswers()
+        with mock.patch.object(
+            view,
+            "get_form_progress",
+        ) as mock_get_form_progress:
+            mock_get_form_progress.return_value = {
+                "steps": [
+                    {
+                        "key": "about-you",
+                        "title": "About you",
+                        "is_current": False,
+                        "is_completed": True,
+                    },
+                    {
+                        "key": "benefits",
+                        "title": "Benefits",
+                        "is_current": False,
+                        "is_completed": False,
+                    },
+                ]
+            }
+            response = view.ensure_all_forms_are_complete()
+            assert response.status_code == 302
+            assert response.location == url_for("main.session_expired")
+
+
+def test_check_your_answers_ensure_all_forms_are_complete_success(app, client):
+    with app.app_context():
+        view = CheckYourAnswers()
+        with mock.patch.object(
+            view,
+            "get_form_progress",
+        ) as mock_get_form_progress:
+            mock_get_form_progress.return_value = {
+                "steps": [
+                    {
+                        "key": "about-you",
+                        "title": "About you",
+                        "is_current": False,
+                        "is_completed": True,
+                    },
+                    {
+                        "key": "benefits",
+                        "title": "Benefits",
+                        "is_current": False,
+                        "is_completed": True,
+                    },
+                ]
+            }
+            response = view.ensure_all_forms_are_complete()
+            assert response is None
