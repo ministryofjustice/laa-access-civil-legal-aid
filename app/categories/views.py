@@ -1,9 +1,14 @@
+import logging
 from flask.sansio.blueprints import Blueprint
 from flask.views import View
 from flask import render_template, redirect, url_for, session, request
+from flask_babel import LazyString
 from app.categories.forms import QuestionForm
 from app.categories.constants import Category
 from app.categories.models import CategoryAnswer, QuestionType
+
+
+logger = logging.getLogger(__name__)
 
 
 class CategoryPage(View):
@@ -226,6 +231,20 @@ class QuestionPage(CategoryPage):
         )
         super().update_session(category_answer)
 
+    def ensure_form_dependency(self, form):
+        """Ensure dependant forms have been completed"""
+        depends_on = getattr(form, "depends_on", None)
+        if depends_on and issubclass(depends_on, QuestionForm):
+            title = depends_on.title
+            if isinstance(title, LazyString):
+                title = title._args[0]
+            answer = session.get_category_question_answer(title)
+            if answer is None:
+                logger.info("FAILED ensuring form dependency for %s", form.title)
+                return redirect(url_for("main.session_expired"))
+
+        return None
+
     def process_request(self):
         """Handle requests for the question page, including form submissions.
 
@@ -237,6 +256,10 @@ class QuestionPage(CategoryPage):
             Either a redirect to the next page or the rendered template
         """
         form = self.form_class()
+        # Make sure previous forms have been completed
+        form_protection_redirect = self.ensure_form_dependency(form)
+        if form_protection_redirect:
+            return form_protection_redirect
 
         if form.validate_on_submit():
             self.update_session(form)

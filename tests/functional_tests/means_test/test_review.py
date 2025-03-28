@@ -276,3 +276,56 @@ def test_change_answer_nolonger_passported(page: Page, complete_benefits_form):
     assert_answers(page, answers)
 
     expect(page.get_by_text("Which benefits do you receive?")).not_to_be_visible()
+
+
+@pytest.mark.usefixtures("live_server")
+def test_review_page_failed_access_without_completing_means(page: Page, request):
+    """Attempt to access review page after completing the scope answers only but not the means test forms.."""
+    page.goto(url_for("means_test.review", _external=True))
+    assert page.title() == "You’ve reached the end of this service"
+
+    request.getfixturevalue("navigate_to_means_test")
+    page.goto(url_for("means_test.review", _external=True))
+    assert page.title() == "You’ve reached the end of this service"
+
+
+@pytest.mark.usefixtures("live_server")
+@pytest.mark.parametrize(
+    "about_you_answers",
+    [
+        {
+            "Do you receive any benefits (including Child Benefit)?": "Yes",
+        }
+    ],
+)
+def test_review_page_failed_access_incomplete_means(
+    page: Page, complete_about_you_form
+):
+    """Attempt to access review page without completing all means forms."""
+    page.goto(url_for("means_test.review", _external=True))
+    assert page.title() == "You’ve reached the end of this service"
+
+
+@pytest.mark.usefixtures("live_server")
+@pytest.mark.parametrize(
+    "benefits_answers",
+    [
+        {
+            "Which benefits do you receive?": [
+                "Universal Credit",
+            ],
+        }
+    ],
+)
+@pytest.mark.parametrize(
+    "about_you_answers",
+    [
+        {
+            "Do you receive any benefits (including Child Benefit)?": "Yes",
+        }
+    ],
+)
+def test_review_page_success_access_completed_means(page: Page, complete_benefits_form):
+    """Attempt to access review page without completing all means forms."""
+    page.goto(url_for("means_test.review", _external=True))
+    assert page.title() == "Check your answers and confirm - GOV.UK"

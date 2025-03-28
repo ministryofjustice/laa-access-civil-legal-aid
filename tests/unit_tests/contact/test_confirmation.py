@@ -1,6 +1,7 @@
 import pytest
 from unittest.mock import patch, ANY
 from datetime import datetime, timezone
+from flask import url_for
 from app.contact.views import ConfirmationPage
 
 
@@ -92,3 +93,17 @@ class TestConfirmationPage:
         )
 
         mock_notify.create_and_send_confirmation_email.assert_not_called()
+
+
+def test_confirmation_page_access_failure(app, client):
+    response = client.get("/confirmation")
+    assert response.status_code == 302
+    assert response.location == url_for("main.session_expired")
+
+
+def test_confirmation_page_access_success(app, client):
+    with client.session_transaction() as session:
+        session.update({"case_reference": "AB-1234-5678"})
+
+    response = client.get("/confirmation")
+    assert response.status_code == 200

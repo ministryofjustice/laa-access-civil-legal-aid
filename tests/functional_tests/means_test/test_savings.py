@@ -81,6 +81,7 @@ def fill_about_form(page: Page, questions: dict) -> None:
     ],
 )
 @pytest.mark.usefixtures("live_server")
+@pytest.mark.usefixtures("navigate_to_means_test")
 def test_savings_form(page: Page, scenario: str, form_inputs: dict, expected: dict):
     page.goto(url_for("means_test.about-you", _external=True))
 
@@ -196,6 +197,7 @@ def test_savings_form(page: Page, scenario: str, form_inputs: dict, expected: di
     ],
 )
 @pytest.mark.usefixtures("live_server")
+@pytest.mark.usefixtures("navigate_to_means_test")
 def test_savings_form_validators(
     page: Page,
     scenario: str,
