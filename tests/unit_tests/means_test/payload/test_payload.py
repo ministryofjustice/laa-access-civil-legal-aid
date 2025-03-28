@@ -33,18 +33,13 @@ def assert_partial_dict_match(expected: dict, actual: dict, path: str = "") -> N
             assert_partial_dict_match(expected_value, actual[key], current_path)
         else:
             assert actual[key] == expected_value, (
-                f"Mismatch in {current_path}. "
-                f"Expected {expected_value}, got {actual[key]}"
+                f"Mismatch in {current_path}. Expected {expected_value}, got {actual[key]}"
             )
 
 
 @pytest.mark.parametrize(
     "test_case",
-    ABOUT_YOU_TEST_CASES
-    + INCOME_TEST_CASES
-    + SAVINGS_TEST_CASES
-    + OUTGOINGS_TEST_CASES
-    + PROPERTIES_TEST_CASES,
+    ABOUT_YOU_TEST_CASES + INCOME_TEST_CASES + SAVINGS_TEST_CASES + OUTGOINGS_TEST_CASES + PROPERTIES_TEST_CASES,
     ids=lambda t: t["id"],
 )
 def test_get_means_test_payload(test_case: dict, app, client) -> None:

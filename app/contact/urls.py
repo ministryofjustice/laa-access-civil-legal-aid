@@ -18,9 +18,7 @@ bp.add_url_rule(
 def geocode(postcode):
     """Lookup addresses with the specified postcode"""
     formatted_addresses = FormattedAddressLookup().by_postcode(postcode)
-    response = [
-        {"formatted_address": address} for address in formatted_addresses if address
-    ]
+    response = [{"formatted_address": address} for address in formatted_addresses if address]
     return jsonify(response)
 
 
@@ -31,9 +29,7 @@ bp.add_url_rule(
 
 bp.add_url_rule(
     "/eligible",
-    view_func=ContactUs.as_view(
-        "eligible", template="contact/eligible.html", attach_eligiblity_data=True
-    ),
+    view_func=ContactUs.as_view("eligible", template="contact/eligible.html", attach_eligiblity_data=True),
 )
 
 bp.add_url_rule("/confirmation", view_func=ConfirmationPage.as_view("confirmation"))

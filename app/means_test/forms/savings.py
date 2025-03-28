@@ -16,9 +16,7 @@ class SavingsForm(BaseMeansTestForm):
     savings = MoneyField(
         label=_("Savings"),
         widget=MoneyInput(),
-        description=_(
-            "The total amount of savings in cash, bank or building society; or enter 0 if you have none"
-        ),
+        description=_("The total amount of savings in cash, bank or building society; or enter 0 if you have none"),
         validators=[
             ValidateIfSession("has_savings", True),
             InputRequired(message=_("Enter your total savings, or 0 if you have none")),
@@ -28,14 +26,10 @@ class SavingsForm(BaseMeansTestForm):
     investments = MoneyField(
         label=_("Investments"),
         widget=MoneyInput(),
-        description=_(
-            "This includes stocks, shares, bonds (but not property); enter 0 if you have none"
-        ),
+        description=_("This includes stocks, shares, bonds (but not property); enter 0 if you have none"),
         validators=[
             ValidateIfSession("has_savings", True),
-            InputRequired(
-                message=_("Enter your total investments, or 0 if you have none")
-            ),
+            InputRequired(message=_("Enter your total investments, or 0 if you have none")),
         ],
     )
 
@@ -55,10 +49,7 @@ class SavingsForm(BaseMeansTestForm):
 
     @classmethod
     def should_show(cls) -> bool:
-        return (
-            session.get_eligibility().has_savings
-            or session.get_eligibility().has_valuables
-        )
+        return session.get_eligibility().has_savings or session.get_eligibility().has_valuables
 
     @property
     def shown_fields(self):

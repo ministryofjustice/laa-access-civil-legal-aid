@@ -16,9 +16,7 @@ from app.categories.views import QuestionPage, QuestionForm
 
 def test_category_page_dispatch(app):
     with app.app_context():
-        page = FamilyLandingPage(
-            route_endpoint="family", template=FamilyLandingPage.template
-        )
+        page = FamilyLandingPage(route_endpoint="family", template=FamilyLandingPage.template)
         page.dispatch_request()
         assert session.category == FamilyLandingPage.category
 
@@ -121,14 +119,10 @@ class TestProcessRequest:
     def test_process_request_form(self, app, client, question_page):
         with patch("app.categories.views.render_template") as mock_render_template:
             question_page.process_request()
-            assert isinstance(
-                mock_render_template.mock_calls[0].kwargs["form"], MockQuestionForm
-            )
+            assert isinstance(mock_render_template.mock_calls[0].kwargs["form"], MockQuestionForm)
 
     def test_process_request_on_valid_submit(self, app, client, question_page):
-        with app.test_request_context(
-            "/fake-url", method="POST", data={"question": "yes", "submit": "y"}
-        ):
+        with app.test_request_context("/fake-url", method="POST", data={"question": "yes", "submit": "y"}):
             with (
                 patch.object(question_page, "get_next_page") as mock_get_next_page,
                 patch.object(question_page, "update_session") as mock_update_session,
@@ -136,9 +130,7 @@ class TestProcessRequest:
                 question_page.process_request()
                 mock_get_next_page.assert_called_once_with("yes")
                 mock_update_session.assert_called_once()
-                assert isinstance(
-                    mock_update_session.mock_calls[0].args[0], MockQuestionForm
-                )
+                assert isinstance(mock_update_session.mock_calls[0].args[0], MockQuestionForm)
 
     def test_clear_session_if_called_with_errors(self, app, client, question_page):
         with app.test_request_context(
@@ -245,7 +237,4 @@ def test_question_page_next_page(app):
 
         form = TestQuestionForm(category=FAMILY, question="notsure")
         view = QuestionPage(form_class=form)
-        assert (
-            "/find-a-legal-adviser?category=mhe&secondary_category=com"
-            == view.get_next_page("fala")
-        )
+        assert "/find-a-legal-adviser?category=mhe&secondary_category=com" == view.get_next_page("fala")

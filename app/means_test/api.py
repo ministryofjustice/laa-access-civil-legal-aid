@@ -8,9 +8,7 @@ def update_means_test(payload):
     ec_reference = session.get("ec_reference")
 
     if ec_reference:
-        response = cla_backend.patch(
-            f"{means_test_endpoint}{ec_reference}", json=payload
-        )
+        response = cla_backend.patch(f"{means_test_endpoint}{ec_reference}", json=payload)
         return response
     else:
         response = cla_backend.post(means_test_endpoint, json=payload)

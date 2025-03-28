@@ -28,9 +28,7 @@ def test_money_interval_addition_per_week():
         "interval_period": "per_month",
     }
     factor = 52.0 / 12.0
-    expected_monthly_amount = (
-        int(int(first_amount_pence) * factor) + second_amount_pence
-    )
+    expected_monthly_amount = int(int(first_amount_pence) * factor) + second_amount_pence
     assert instance.amount == expected_monthly_amount
 
 

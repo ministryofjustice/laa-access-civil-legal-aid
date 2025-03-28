@@ -87,16 +87,12 @@ class ContactUsForm(FlaskForm):
     def __init__(self, *args, **kwargs):
         super(ContactUsForm, self).__init__(*args, **kwargs)
 
-        if (
-            self.adaptations.data is None
-        ):  # Data defaults to None when form is first loaded
+        if self.adaptations.data is None:  # Data defaults to None when form is first loaded
             self.adaptations.data = ["welsh"] if get_locale().startswith("cy") else []
 
         # Get the valid timeslots once from backend and cache them
         self.time_slots = cla_backend.get_time_slots(num_days=8)
-        self.thirdparty_time_slots = cla_backend.get_time_slots(
-            num_days=8, is_third_party_callback=True
-        )
+        self.thirdparty_time_slots = cla_backend.get_time_slots(num_days=8, is_third_party_callback=True)
 
         self._setup_callback_time_choices()
 
@@ -104,12 +100,8 @@ class ContactUsForm(FlaskForm):
         """Setup callback day time select field choices based on the available slots"""
         today: str = datetime.today().strftime("%Y-%m-%d")
 
-        self.time_slots = self._format_slots_by_day(
-            self.time_slots, locale=get_locale()
-        )
-        self.thirdparty_time_slots = self._format_slots_by_day(
-            self.thirdparty_time_slots
-        )
+        self.time_slots = self._format_slots_by_day(self.time_slots, locale=get_locale())
+        self.thirdparty_time_slots = self._format_slots_by_day(self.thirdparty_time_slots)
 
         # Setup today's time choices
         self._setup_today_choices(today)
@@ -163,9 +155,7 @@ class ContactUsForm(FlaskForm):
     def _setup_other_days_choices(self, today: str):
         """Setup choices for days other than today"""
         # Regular callback setup
-        regular_upcoming_days = sorted(
-            [day for day in self.time_slots.keys() if day != today]
-        )
+        regular_upcoming_days = sorted([day for day in self.time_slots.keys() if day != today])
         regular_day_choices = [
             (
                 day,
@@ -183,9 +173,7 @@ class ContactUsForm(FlaskForm):
             self.time_to_call.choices = ["Call today"]
 
         # Third-party callback setup
-        thirdparty_upcoming_days = sorted(
-            [day for day in self.thirdparty_time_slots.keys() if day != today]
-        )
+        thirdparty_upcoming_days = sorted([day for day in self.thirdparty_time_slots.keys() if day != today])
         thirdparty_day_choices = [
             (
                 day,
@@ -207,9 +195,7 @@ class ContactUsForm(FlaskForm):
 
         # Regular callback
         if self.call_another_day.data:
-            self.call_another_time.choices = self.time_slots.get(
-                self.call_another_day.data, []
-            )
+            self.call_another_time.choices = self.time_slots.get(self.call_another_day.data, [])
         else:
             self.call_another_time.choices.extend(self._get_all_unique_time_slots())
 
@@ -219,28 +205,17 @@ class ContactUsForm(FlaskForm):
                 self.thirdparty_call_another_day.data, []
             )
         else:
-            self.thirdparty_call_another_time.choices.extend(
-                self._get_all_unique_time_slots(thirdparty_callback=True)
-            )
+            self.thirdparty_call_another_time.choices.extend(self._get_all_unique_time_slots(thirdparty_callback=True))
 
     def _adjust_contact_options_for_availability(self):
         """Remove callback option if no slots are available"""
-        if (
-            len(self.call_today_time.choices) <= 1
-            and len(self.call_another_day.choices) <= 1
-        ):
+        if len(self.call_today_time.choices) <= 1 and len(self.call_another_day.choices) <= 1:
             self.contact_type.choices = NO_SLOT_CONTACT_PREFERENCE
 
     def _get_all_unique_time_slots(self, thirdparty_callback=False):
         """Get all unique time slots sorted by time"""
-        all_time_slots = (
-            self.time_slots.values()
-            if not thirdparty_callback
-            else self.thirdparty_time_slots.values()
-        )
-        valid_time_slots = {
-            (time[0], time[1]) for times in all_time_slots for time in times
-        }
+        all_time_slots = self.time_slots.values() if not thirdparty_callback else self.thirdparty_time_slots.values()
+        valid_time_slots = {(time[0], time[1]) for times in all_time_slots for time in times}
         return sorted(valid_time_slots)
 
     @property
@@ -264,9 +239,7 @@ class ContactUsForm(FlaskForm):
 
     contact_type = RadioField(
         _("Select a contact option"),
-        widget=ContactRadioInput(
-            is_inline=False, heading_class="govuk-fieldset__legend--m"
-        ),
+        widget=ContactRadioInput(is_inline=False, heading_class="govuk-fieldset__legend--m"),
         choices=CONTACT_PREFERENCE,
         validators=[InputRequired(message=_("Tell us how we should get in contact"))],
     )
@@ -274,23 +247,17 @@ class ContactUsForm(FlaskForm):
     contact_number = StringField(
         _("Phone number"),
         widget=GovTextInput(),
-        description=_(
-            "Enter the full number, including the area code. For example, 01632 960 1111."
-        ),
+        description=_("Enter the full number, including the area code. For example, 01632 960 1111."),
         validators=[
             ValidateIf("contact_type", "callback"),
             InputRequired(message=_("Tell us what number to ring")),
-            Length(
-                max=20, message=_("Your telephone number must be 20 characters or less")
-            ),
+            Length(max=20, message=_("Your telephone number must be 20 characters or less")),
         ],
     )
 
     time_to_call = RadioField(
         _("Select a time for us to call"),
-        widget=ContactRadioInput(
-            is_inline=False, heading_class="govuk-fieldset__legend--s"
-        ),
+        widget=ContactRadioInput(is_inline=False, heading_class="govuk-fieldset__legend--s"),
         validators=[
             ValidateIf("contact_type", "callback"),
             InputRequired(message=_("Select a time for us to call")),
@@ -334,20 +301,14 @@ class ContactUsForm(FlaskForm):
 
     announce_call_from_cla = RadioField(
         _("Can we say that we're calling from Civil Legal Advice?"),
-        widget=ContactRadioInput(
-            is_inline=False, heading_class="govuk-fieldset__legend--s"
-        ),
+        widget=ContactRadioInput(is_inline=False, heading_class="govuk-fieldset__legend--s"),
         choices=[
             (True, _("Yes")),
             (False, _("No - do not say where you are calling from")),
         ],
         validators=[
             ValidateIf("contact_type", "callback"),
-            InputRequired(
-                message=_(
-                    "Select if we can say that we’re calling from Civil Legal Advice"
-                )
-            ),
+            InputRequired(message=_("Select if we can say that we’re calling from Civil Legal Advice")),
         ],
     )
 
@@ -356,9 +317,7 @@ class ContactUsForm(FlaskForm):
         widget=GovTextInput(),
         validators=[
             ValidateIf("contact_type", "thirdparty"),
-            Length(
-                max=400, message=_("Their full name must be 400 characters or less")
-            ),
+            Length(max=400, message=_("Their full name must be 400 characters or less")),
             InputRequired(message=_("Tell us the name of the person to call")),
         ],
     )
@@ -376,23 +335,17 @@ class ContactUsForm(FlaskForm):
     thirdparty_contact_number = StringField(
         _("Phone number"),
         widget=GovTextInput(),
-        description=_(
-            "Enter the full number, including the area code. For example, 01632 960 1111."
-        ),
+        description=_("Enter the full number, including the area code. For example, 01632 960 1111."),
         validators=[
             ValidateIf("contact_type", "thirdparty"),
             InputRequired(message=_("Tell us what number to ring")),
-            Length(
-                max=20, message=_("Your telephone number must be 20 characters or less")
-            ),
+            Length(max=20, message=_("Your telephone number must be 20 characters or less")),
         ],
     )
 
     thirdparty_time_to_call = RadioField(
         _("Select a time for us to call"),
-        widget=ContactRadioInput(
-            is_inline=False, heading_class="govuk-fieldset__legend--s"
-        ),
+        widget=ContactRadioInput(is_inline=False, heading_class="govuk-fieldset__legend--s"),
         validators=[
             ValidateIf("contact_type", "thirdparty"),
             InputRequired(message=_("Select a time for us to call")),
@@ -458,9 +411,7 @@ class ContactUsForm(FlaskForm):
         _("Postcode (optional)"),
         widget=GovTextInput(),
     )
-    address_finder = SelectField(
-        _("Select an address"), choices=[""], widget=GovSelect()
-    )
+    address_finder = SelectField(_("Select an address"), choices=[""], widget=GovSelect())
     street_address = TextAreaField(
         _("Street address (optional)"),
         widget=GovTextArea(),
@@ -481,9 +432,7 @@ class ContactUsForm(FlaskForm):
 
     adaptations = SelectMultipleField(
         _("Do you have any special communication needs? (optional)"),
-        widget=ContactCheckboxInput(
-            is_inline=False, heading_class="govuk-fieldset__legend--m"
-        ),
+        widget=ContactCheckboxInput(is_inline=False, heading_class="govuk-fieldset__legend--m"),
         choices=[
             ("bsl_webcam", _("British Sign Language (BSL)")),
             ("text_relay", _("Text relay")),
@@ -509,9 +458,7 @@ class ContactUsForm(FlaskForm):
         choices=LANG_CHOICES,
         widget=GovSelect(),
         validators=[
-            ValidateIf(
-                "adaptations", "is_other_language", condition_type=ValidateIfType.IN
-            ),
+            ValidateIf("adaptations", "is_other_language", condition_type=ValidateIfType.IN),
             InputRequired(message=_("Choose a language")),
         ],
     )
@@ -521,9 +468,7 @@ class ContactUsForm(FlaskForm):
         validators=[
             Length(
                 max=4000,
-                message=_(
-                    "Your other communication needs must be 4000 characters or fewer"
-                ),
+                message=_("Your other communication needs must be 4000 characters or fewer"),
             ),
         ],
     )
@@ -548,9 +493,7 @@ class ContactUsForm(FlaskForm):
 
         if time_to_call == "Call today":
             time_str = self.data.get(f"{prefix}call_today_time")
-            return datetime.combine(
-                date=datetime.today(), time=datetime.strptime(time_str, "%H%M").time()
-            )
+            return datetime.combine(date=datetime.today(), time=datetime.strptime(time_str, "%H%M").time())
         elif time_to_call == "Call on another day":
             day_str = self.data.get(f"{prefix}call_another_day")
             time_str = self.data.get(f"{prefix}call_another_time")
@@ -566,9 +509,7 @@ class ContactUsForm(FlaskForm):
 
         callback_time: datetime = self.get_callback_time()
 
-        requires_action_at: str | None = (
-            callback_time.isoformat() if callback_time else None
-        )
+        requires_action_at: str | None = callback_time.isoformat() if callback_time else None
 
         safe_to_contact = "SAFE" if self.data.get("contact_type") == "callback" else ""
         payload = {
@@ -593,25 +534,17 @@ class ContactUsForm(FlaskForm):
         }
         if self.data.get("contact_type") == "callback":
             payload["requires_action_at"] = requires_action_at
-            payload["personal_details"]["announce_call"] = self.data.get(
-                "announce_call_from_cla"
-            )
+            payload["personal_details"]["announce_call"] = self.data.get("announce_call_from_cla")
             payload["callback_type"] = "web_form_self"
 
         if self.contact_type.data == "thirdparty":
             payload["thirdparty_details"] = {"personal_details": {}}
-            payload["thirdparty_details"]["personal_details"]["full_name"] = (
-                self.data.get("thirdparty_full_name")
+            payload["thirdparty_details"]["personal_details"]["full_name"] = self.data.get("thirdparty_full_name")
+            payload["thirdparty_details"]["personal_details"]["mobile_phone"] = self.data.get(
+                "thirdparty_contact_number"
             )
-            payload["thirdparty_details"]["personal_details"]["mobile_phone"] = (
-                self.data.get("thirdparty_contact_number")
-            )
-            payload["thirdparty_details"]["personal_details"]["safe_to_contact"] = (
-                "SAFE"
-            )
-            payload["thirdparty_details"]["personal_relationship"] = self.data.get(
-                "thirdparty_relationship"
-            ).upper()
+            payload["thirdparty_details"]["personal_details"]["safe_to_contact"] = "SAFE"
+            payload["thirdparty_details"]["personal_relationship"] = self.data.get("thirdparty_relationship").upper()
             payload["callback_type"] = "web_form_third_party"
             payload["requires_action_at"] = requires_action_at
 

@@ -16,14 +16,10 @@ class YesNoField(RadioField):
         if "coerce" in kwargs:
             raise ValueError("The 'coerce' parameter is not allowed in a YesNoField")
         if "choices" in kwargs:
-            raise ValueError(
-                "Choices in a YesNoField are fixed and cannot be overridden"
-            )
+            raise ValueError("Choices in a YesNoField are fixed and cannot be overridden")
         choices = [(True, _("Yes")), (False, _("No"))]
         coerce = self._coerce_to_boolean
-        super(YesNoField, self).__init__(
-            label=label, validators=validators, choices=choices, coerce=coerce, **kwargs
-        )  # noqa
+        super(YesNoField, self).__init__(label=label, validators=validators, choices=choices, coerce=coerce, **kwargs)  # noqa
 
     @staticmethod
     def _coerce_to_boolean(value):
@@ -80,9 +76,7 @@ class MoneyIntervalField(Field):
     def value(self):
         value = self.data["per_interval_value_pounds"]
         if value is None:
-            raw_value = (
-                self.raw_data[0] if self.raw_data and len(self.raw_data) > 0 else None
-            )
+            raw_value = self.raw_data[0] if self.raw_data and len(self.raw_data) > 0 else None
             value = raw_value
         return value
 
@@ -99,7 +93,9 @@ class MoneyIntervalField(Field):
         super().__init__(label, validators, **kwargs)
         self.title = label
         self.hint_text = hint_text
-        self.field_with_error = set()  # Contains a set of fields with errors so each field can be highlighted when required
+        self.field_with_error = (
+            set()
+        )  # Contains a set of fields with errors so each field can be highlighted when required
         self._intervals = MoneyInterval._intervals.copy()
         self.min_val = min_val
         self.max_val = max_val
@@ -128,29 +124,16 @@ class MoneyIntervalField(Field):
             valuelist[0] = CurrencyValidator.clean_input(valuelist[0])
             self.data = valuelist
 
-            if (
-                "per_interval_value" not in self.data
-                or self.data["per_interval_value"] is None
-            ):
+            if "per_interval_value" not in self.data or self.data["per_interval_value"] is None:
                 return
 
             # Validate min/max
-            if (
-                self.min_val is not None
-                and self.data["per_interval_value"] < self.min_val
-            ):
+            if self.min_val is not None and self.data["per_interval_value"] < self.min_val:
                 self.field_with_error.add("value")
-                raise ValueError(
-                    f"Enter a value of more than £{self.min_val / 100:,.2f}"
-                )
-            if (
-                self.max_val is not None
-                and self.data["per_interval_value"] > self.max_val
-            ):
+                raise ValueError(f"Enter a value of more than £{self.min_val / 100:,.2f}")
+            if self.max_val is not None and self.data["per_interval_value"] > self.max_val:
                 self.field_with_error.add("value")
-                raise ValueError(
-                    f"Enter a value of less than £{self.max_val / 100:,.2f}"
-                )
+                raise ValueError(f"Enter a value of less than £{self.max_val / 100:,.2f}")
 
         elif valuelist and len(valuelist) == 1 and isinstance(valuelist[0], dict):
             # Data being restored from the session
@@ -158,9 +141,7 @@ class MoneyIntervalField(Field):
 
 
 class MoneyField(BaseIntegerField):
-    def __init__(
-        self, label=None, validators=None, min_val=0, max_val=9999999999, **kwargs
-    ):
+    def __init__(self, label=None, validators=None, min_val=0, max_val=9999999999, **kwargs):
         self._user_input = None
         self.data = None
         self.min_val = min_val
@@ -189,23 +170,17 @@ class MoneyField(BaseIntegerField):
                 raise ValueError("Enter a valid amount")
 
             # Check if value has more than 2 decimal places
-            if decimal_value != decimal_value.quantize(
-                Decimal(".01"), rounding=decimal.ROUND_DOWN
-            ):
+            if decimal_value != decimal_value.quantize(Decimal(".01"), rounding=decimal.ROUND_DOWN):
                 raise ValueError("Enter a valid amount (maximum 2 decimal places)")
 
             self.data = int(decimal_value * 100)
 
             # Validate min/max
             if self.min_val is not None and self.data < self.min_val:
-                raise ValueError(
-                    f"Enter a value of more than £{self.min_val / 100:,.2f}"
-                )
+                raise ValueError(f"Enter a value of more than £{self.min_val / 100:,.2f}")
 
             if self.max_val is not None and self.data > self.max_val:
-                raise ValueError(
-                    f"Enter a value of less than £{self.max_val / 100:,.2f}"
-                )
+                raise ValueError(f"Enter a value of less than £{self.max_val / 100:,.2f}")
 
     def process_data(self, value):
         """Handle data coming from the database/code (in pence)"""

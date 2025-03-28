@@ -22,20 +22,14 @@ class DiscriminationWhereForm(DiscriminationQuestionForm):
 
     question = SelectMultipleField(
         title,
-        widget=CategoryCheckboxInput(
-            show_divider=True, hint_text=_("You can select more than one.")
-        ),
-        validators=[
-            InputRequired(message=_("Select where the discrimination happened"))
-        ],
+        widget=CategoryCheckboxInput(show_divider=True, hint_text=_("You can select more than one.")),
+        validators=[InputRequired(message=_("Select where the discrimination happened"))],
         choices=[
             ("work", _("Work - including colleagues, employer or employment agency")),
             ("school", _("School, college, university or other education setting")),
             (
                 "business",
-                _(
-                    "Businesses or services - such as a shop, restaurant, train, hotel, bank, law firm"
-                ),
+                _("Businesses or services - such as a shop, restaurant, train, hotel, bank, law firm"),
             ),
             ("healthcare", _("Health or care - such as a hospital or care home")),
             ("housing", _("Housing - such as a landlord or estate agent")),
@@ -71,9 +65,7 @@ class DiscriminationWhyForm(DiscriminationQuestionForm):
             InputRequired(message=_("Select why you were discriminated against")),
             ExclusiveValue(
                 exclusive_value="none",
-                message=_(
-                    "Select why you were discriminated against, or select ‘None of these’"
-                ),
+                message=_("Select why you were discriminated against, or select ‘None of these’"),
             ),
         ],
         choices=[

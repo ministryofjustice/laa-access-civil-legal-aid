@@ -6,9 +6,7 @@ from app.means_test.fields import YesNoField
 class PartnerMixin(object):
     def __init__(self, *args, **kwargs):
         partner_label = kwargs.pop("partner_label", kwargs.get("label"))
-        partner_description = kwargs.pop(
-            "partner_description", kwargs.get("description")
-        )
+        partner_description = kwargs.pop("partner_description", kwargs.get("description"))
         if session.get_eligibility().has_partner:
             kwargs["label"] = partner_label
             kwargs["description"] = partner_description

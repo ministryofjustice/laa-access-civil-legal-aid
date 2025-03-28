@@ -3,9 +3,7 @@ from app.contact import bp
 
 
 @bp.app_template_filter("format_callback_time")
-def format_callback_time(
-    start_time: datetime, callback_duration: timedelta = timedelta(minutes=30)
-) -> str | None:
+def format_callback_time(start_time: datetime, callback_duration: timedelta = timedelta(minutes=30)) -> str | None:
     """Helper function to format the callback time string.
 
     Returns:
@@ -15,9 +13,7 @@ def format_callback_time(
         return None
     end_time = start_time + callback_duration
 
-    formatted_start_date = start_time.strftime(
-        "%A, %-d %B at %H:%M"
-    )  # E.g. Monday, 1 January at 09:00
+    formatted_start_date = start_time.strftime("%A, %-d %B at %H:%M")  # E.g. Monday, 1 January at 09:00
     formatted_end_time = end_time.strftime("%H:%M")  # E.g. 09:30
 
     return f"{formatted_start_date} - {formatted_end_time}"

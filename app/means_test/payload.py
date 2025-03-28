@@ -51,14 +51,8 @@ class AboutYouPayload(dict):
             "you": {"income": {"self_employed": yes("is_self_employed")}},
         }
 
-        if (
-            yes("have_partner")
-            and not yes("in_dispute")
-            and yes("partner_is_self_employed")
-        ):
-            payload["partner"] = {
-                "income": {"self_employed": yes("partner_is_self_employed")}
-            }
+        if yes("have_partner") and not yes("in_dispute") and yes("partner_is_self_employed"):
+            payload["partner"] = {"income": {"self_employed": yes("partner_is_self_employed")}}
 
         if yes("own_property"):
             payload = recursive_update(payload, PropertiesPayload())
@@ -97,10 +91,8 @@ class YourBenefitsPayload(dict):
         if session.get_eligibility().on_benefits:
             benefits = {
                 "pension_credit": "pension_credit" in form_data.get("benefits", []),
-                "job_seekers_allowance": "job_seekers_allowance"
-                in form_data.get("benefits", []),
-                "employment_support": "employment_support"
-                in form_data.get("benefits", []),
+                "job_seekers_allowance": "job_seekers_allowance" in form_data.get("benefits", []),
+                "employment_support": "employment_support" in form_data.get("benefits", []),
                 "universal_credit": "universal_credit" in form_data.get("benefits", []),
                 "income_support": "income_support" in form_data.get("benefits", []),
             }
@@ -118,9 +110,7 @@ class YourBenefitsPayload(dict):
             def val(field):
                 return form_data.get(field)
 
-            payload["you"] = {
-                "income": {"child_benefits": MoneyInterval(val("child_benefit"))}
-            }
+            payload["you"] = {"income": {"child_benefits": MoneyInterval(val("child_benefit"))}}
 
         self.update(payload)
 
@@ -144,9 +134,7 @@ class AdditionalBenefitsPayload(dict):
             "on_nass_benefits": False,
             "you": {
                 "income": {
-                    "benefits": MoneyInterval(val("total_other_benefit"))
-                    if yes("other_benefits")
-                    else MoneyInterval(0)
+                    "benefits": MoneyInterval(val("total_other_benefit")) if yes("other_benefits") else MoneyInterval(0)
                 }
             },
         }
@@ -176,9 +164,7 @@ class PropertyPayload(dict):
                 "mortgage_left": to_amount(val("mortgage_remaining")),
                 "share": 100 if no("other_shareholders") else None,
                 "disputed": val("in_dispute"),
-                "rent": MoneyInterval(val("rent_amount"))
-                if yes("is_rented")
-                else MoneyInterval(0),
+                "rent": MoneyInterval(val("rent_amount")) if yes("is_rented") else MoneyInterval(0),
                 "main": val("is_main_home"),
             }
         )
@@ -211,9 +197,7 @@ class PropertiesPayload(dict):
             properties.append(PropertyPayload())
 
         def mortgage(index):
-            return MoneyInterval(
-                form_data.get("properties-%d-mortgage_payments" % index, 0)
-            )
+            return MoneyInterval(form_data.get("properties-%d-mortgage_payments" % index, 0))
 
         total_mortgage = sum(map(mortgage, range(len(properties))))
 
@@ -309,21 +293,14 @@ class IncomePayload(dict):
                     return form_data.get(f"partner_{field}")
                 return form_data.get(field)
 
-            child_tax_credit = (
-                MoneyInterval(val("child_tax_credit"))
-                if person == "you"
-                else MoneyInterval(0)
-            )
+            child_tax_credit = MoneyInterval(val("child_tax_credit")) if person == "you" else MoneyInterval(0)
             payload = {
                 person: {
                     "income": {
                         "earnings": MoneyInterval(val("earnings")),
                         "self_employment_drawings": MoneyInterval(0),
-                        "tax_credits": MoneyInterval(val("working_tax_credit"))
-                        + child_tax_credit,
-                        "maintenance_received": MoneyInterval(
-                            val("maintenance_received")
-                        ),
+                        "tax_credits": MoneyInterval(val("working_tax_credit")) + child_tax_credit,
+                        "maintenance_received": MoneyInterval(val("maintenance_received")),
                         "pension": MoneyInterval(val("pension")),
                         "other_income": MoneyInterval(val("other_income")),
                     },
@@ -336,9 +313,7 @@ class IncomePayload(dict):
 
             if self_employed:
                 payload[person]["income"]["earnings"] = MoneyInterval(0)
-                payload[person]["income"]["self_employment_drawings"] = MoneyInterval(
-                    val("earnings")
-                )
+                payload[person]["income"]["self_employment_drawings"] = MoneyInterval(val("earnings"))
 
             if not employed:
                 payload[person]["income"]["earnings"] = MoneyInterval(0)
@@ -349,21 +324,13 @@ class IncomePayload(dict):
 
             return payload
 
-        self_employed = (
-            session.get_eligibility().is_self_employed
-            and not session.get_eligibility().is_employed
-        )
-        employed = (
-            session.get_eligibility().is_self_employed
-            or session.get_eligibility().is_employed
-        )
+        self_employed = session.get_eligibility().is_self_employed and not session.get_eligibility().is_employed
+        employed = session.get_eligibility().is_self_employed or session.get_eligibility().is_employed
         partner_self_employed = (
-            session.get_eligibility().is_partner_self_employed
-            and not session.get_eligibility().is_partner_employed
+            session.get_eligibility().is_partner_self_employed and not session.get_eligibility().is_partner_employed
         )
         partner_employed = (
-            session.get_eligibility().is_partner_self_employed
-            or session.get_eligibility().is_partner_employed
+            session.get_eligibility().is_partner_self_employed or session.get_eligibility().is_partner_employed
         )
 
         payload = income(
@@ -375,9 +342,7 @@ class IncomePayload(dict):
         if session.get_eligibility().owns_property:
             rents = [
                 MoneyInterval(p["rent_amount"])
-                for p in session.get_eligibility()
-                .forms.get("property", {})
-                .get("properties", [])
+                for p in session.get_eligibility().forms.get("property", {}).get("properties", [])
             ]
             total_rent = sum(rents)
             payload["you"]["income"]["other_income"] += total_rent
@@ -422,18 +387,13 @@ class OutgoingsPayload(dict):
                     "deductions": {
                         "rent": MoneyInterval(val("rent")),
                         "maintenance": MoneyInterval(val("maintenance")),
-                        "criminal_legalaid_contributions": to_amount(
-                            val("income_contribution")
-                        ),
+                        "criminal_legalaid_contributions": to_amount(val("income_contribution")),
                         "childcare": MoneyInterval(val("childcare")),
                     }
                 }
             }
         )
-        if (
-            not session.get_eligibility().has_children
-            and not session.get_eligibility().has_dependants
-        ):
+        if not session.get_eligibility().has_children and not session.get_eligibility().has_dependants:
             self["you"]["deductions"]["childcare"] = MoneyInterval(0)
 
 
