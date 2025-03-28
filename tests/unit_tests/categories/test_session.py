@@ -249,3 +249,20 @@ class TestRemoveCategoryQuestionAnswer:
                 {"question": "Q1", "answer": "A1", "category": "C1"},
                 {"question": "Q3", "answer": "A1", "category": "C3"},
             ]
+
+
+def test_clear_category(app, client):
+    with client.session_transaction() as session:
+        session["category"] = {"code": "housing"}
+        session["category_answers"] = [
+            {"question": "Q1", "answer": "A1", "category": "C1"}
+        ]
+
+    assert session["category"] == {"code": "housing"}
+    assert session["category_answers"] == [
+        {"question": "Q1", "answer": "A1", "category": "C1"}
+    ]
+
+    session.clear_category()
+    assert "category" not in session
+    assert session["category_answers"] == []
