@@ -8,6 +8,8 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
+  annotations:
+    allowed-duplicate-ns: "laa-cla-public-staging,laa-access-civil-legal-aid-uat"
 
 # Lists don't deep merge, so this list of envVars overrides anything defined in an earlier values file
 envVars:
