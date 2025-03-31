@@ -8,11 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-<<<<<<< HEAD
-"POT-Creation-Date: 2025-03-27 17:48+0000\n"
-=======
-"POT-Creation-Date: 2025-03-25 13:10+0000\n"
->>>>>>> ef1a3ca9 (Add in welsh translations)
+"POT-Creation-Date: 2025-03-31 10:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
