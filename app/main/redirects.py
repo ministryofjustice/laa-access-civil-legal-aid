@@ -1,4 +1,4 @@
-from flask import redirect, url_for, abort, request
+from flask import redirect, url_for, request
 from app.main import bp
 
 REDIRECT_MAP = {
@@ -27,30 +27,45 @@ FALA_REDIRECT_MAP = {
 }
 
 
-@bp.route("/<path:path>")
-def handle_redirects(path):
-    """Redirects from old check URL to new access URL, else returns 404"""
-    requested_path = f"/{path}"
+def create_redirect_handler(destination):
+    """Returns a function that redirects to the given destination."""
 
-    # Handle FALA redirects
-    if path.startswith("scope/refer/legal-adviser"):
-        category = request.args.get("category")
-        if category in FALA_REDIRECT_MAP:
-            return redirect(
-                url_for(
-                    "find-a-legal-adviser.search",
-                    category=FALA_REDIRECT_MAP[category].get("category"),
-                    secondary_category=FALA_REDIRECT_MAP[category].get(
-                        "secondary_category"
-                    ),
+    def redirect_view():
+        return redirect(url_for(destination), code=301)
+
+    return redirect_view
+
+
+# Create endpoints for the old service
+for old_path, new_destination in REDIRECT_MAP.items():
+    endpoint_name = f"redirect_{old_path.strip('/').replace('/', '_')}"
+    bp.add_url_rule(
+        old_path,
+        endpoint=endpoint_name,
+        view_func=create_redirect_handler(new_destination),
+    )
+
+
+@bp.get("/scope/diagnosis/<path:path>")
+def handle_scope_diagnosis_redirect(path):
+    """Redirects any /scope/diagnosis* path to categories.index"""
+    return redirect(url_for("main.session_expired"), code=301)
+
+
+@bp.route("/scope/refer/legal-adviser")
+def handle_fala_redirect():
+    """Handles FALA redirects dynamically based on query parameters."""
+    category = request.args.get("category")
+    if category in FALA_REDIRECT_MAP:
+        return redirect(
+            url_for(
+                "find-a-legal-adviser.search",
+                category=FALA_REDIRECT_MAP[category].get("category"),
+                secondary_category=FALA_REDIRECT_MAP[category].get(
+                    "secondary_category"
                 ),
-                code=301,
-            )
+            ),
+            code=301,
+        )
 
-    # Handle other redirects
-    if requested_path in REDIRECT_MAP:
-        return redirect(url_for(REDIRECT_MAP[requested_path]), code=301)
-    elif requested_path.startswith("/scope/diagnosis"):
-        return redirect(url_for("categories.index"), code=301)
-
-    return abort(404)
+    return redirect(url_for("find-a-legal-adviser.search"), code=301)

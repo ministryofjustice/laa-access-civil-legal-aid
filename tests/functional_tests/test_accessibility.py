@@ -61,6 +61,7 @@ def test_all_page_accessibility(app, page: Page):
         "main.set_locale",
         "contact.geocode",
         "main.handle_redirects",
+        "main.handle_scope_diagnosis_redirect",
     ]
     shutil.rmtree("tests/functional_tests/accessibility_output", ignore_errors=True)
     routes = app.view_functions

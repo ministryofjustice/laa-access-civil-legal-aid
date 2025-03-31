@@ -29,6 +29,7 @@ def test_redirect_map(client, path, expected_endpoint):
         ("commcare", "com", None),
         ("traffickingandslavery", "immas", None),
         ("mentalhealth", "mhe", "com"),
+        ("unknown", None, None),
     ],
 )
 def test_fala_redirect(client, category, expected_category, expected_secondary):
@@ -38,22 +39,25 @@ def test_fala_redirect(client, category, expected_category, expected_secondary):
     )
     assert response.status_code == 301
 
-    expected_url = url_for(
-        "find-a-legal-adviser.search",
-        category=expected_category,
-        secondary_category=expected_secondary,
-        _external=False,
-    ).rstrip("&")  # Strip extra "&" if no secondary_category
+    if expected_category:
+        expected_url = url_for(
+            "find-a-legal-adviser.search",
+            category=expected_category,
+            secondary_category=expected_secondary,
+            _external=False,
+        ).rstrip("&")
+    else:
+        expected_url = url_for("find-a-legal-adviser.search", _external=False)
 
     assert response.headers["Location"] == expected_url
 
 
 def test_scope_diagnosis_redirect(client):
-    """Tests that any /scope/diagnosis/* path redirects to categories.index."""
+    """Tests that any /scope/diagnosis/* path redirects to main.session_expired."""
     response = client.get("/scope/diagnosis/n223", follow_redirects=False)
     assert response.status_code == 301
 
-    expected_url = url_for("categories.index", _external=False)
+    expected_url = url_for("main.session_expired", _external=False)
     assert response.headers["Location"] == expected_url
 
 
