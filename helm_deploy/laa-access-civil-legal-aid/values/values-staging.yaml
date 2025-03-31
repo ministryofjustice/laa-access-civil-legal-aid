@@ -8,6 +8,8 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
+  annotations:
+    allowed-duplicate-ns: "laa-cla-public-staging,laa-access-civil-legal-aid-staging"
 
 whitelist:
   enabled: true

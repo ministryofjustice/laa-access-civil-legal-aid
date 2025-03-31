@@ -8,6 +8,9 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
+  annotations:
+    allowed-duplicate-ns: "laa-cla-public-production,laa-access-civil-legal-aid-production"
+    nginx.ingress.kubernetes.io/canary: "false"
 
 whitelist:
   enabled: true
