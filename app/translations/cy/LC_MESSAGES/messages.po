@@ -2058,22 +2058,39 @@ msgid "These organisations give free, independent advice."
 msgstr ""
 
 msgid "Find other free or low-cost legal help"
-msgstr ""
+msgstr "Dod o hyd i gymorth cyfreithiol arall fforddiadwy neu am ddim"
 
 msgid "free or affordable legal help (opens new tab)."
-msgstr ""
+msgstr "i gymorth cyfreithiol fforddiadwy neu am ddim (yn agor tab newydd)."
 
 msgid "The Citizen’s Advice website explains how to find "
-msgstr ""
+msgstr "Mae gwefan Cyngor ar Bopeth yn esbonio sut mae dod o hyd "
 
 msgid "Speak to an advice organisation"
-msgstr ""
+msgstr "Siarad â sefydliad cynghori"
+
+msgid "You can get free, independent advice from:"
+msgstr "Gallwch gael cymorth annibynnol am ddim gan y canlynol:"
 
 msgid "Citizen’s Advice (opens new tab)"
-msgstr ""
+msgstr "Cyngor ar Bopeth (yn agor tab newydd)"
 
 msgid "Advicelocal (opens new tab)"
-msgstr "Cymorth os ydych chi’n ddioddefwr masnachu pobl neu gaethwasiaeth fodern."
+msgstr "Advicelocal (yn agor tab newydd)"
+
+msgid "exceptional case funding (opens new tab)"
+msgstr "gyllid ar gyfer achosion eithriadol (yn agor tab newydd)"
+
+msgid "Exceptional case funding"
+msgstr "Cyllid ar gyfer achosion eithriadol"
+
+#, python-format
+msgid ""
+"In rare cases, you can still get government-funded legal help. Go to "
+"GOV.UK to find out about %(ecf_link)s."
+msgstr ""
+"Mewn achosion prin, mae’n dal yn bosibl i chi gael cymorth cyfreithiol a "
+"ariennir gan y llywodraeth. Ewch i GOV.UK i gael gwybod am %(ecf_link)s."
 
 msgid "Legal aid doesn’t cover all types of problem"
 msgstr "Nid yw cymorth cyfreithiol yn gallu delio â phob math o broblem"
