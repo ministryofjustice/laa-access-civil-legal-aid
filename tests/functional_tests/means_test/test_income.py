@@ -2,6 +2,24 @@ import pytest
 from flask import url_for
 from playwright.sync_api import Page, expect
 
+about_you_form_routing = [
+    pytest.param(
+        {
+            "Do you have a partner?": "No",
+            "Do you receive any benefits (including Child Benefit)?": "No",
+            "Do you have any children aged 15 or under?": "No",
+            "Do you have any dependants aged 16 or over?": "No",
+            "Do you own any property?": "No",
+            "Are you employed?": "No",
+            "Are you self-employed?": "No",
+            "Are you or your partner (if you have one) aged 60 or over?": "No",
+            "Do you have any savings or investments?": "No",
+            "Do you have any valuable items worth over £500 each?": "No",
+        },
+        id="about_you",
+    )
+]
+
 
 def fill_about_form(page: Page, questions: dict) -> None:
     for question, answer in questions.items():
@@ -132,3 +150,17 @@ def test_about_form(page: Page, scenario: str, form_inputs: dict, expected: dict
         if "nth" in field:
             locator = locator.nth(field["nth"])
         expect(locator).to_be_visible()
+
+
+@pytest.mark.usefixtures("live_server")
+@pytest.mark.parametrize("about_you_answers", about_you_form_routing)
+def test_string_validation_error(page: Page, complete_about_you_form):
+    page.get_by_role("button", name="Continue").click()
+    expect(page.get_by_role("heading", name="Your money coming in")).to_be_visible()
+    page.locator('role=group[name="Maintenance received"]').locator(
+        'label:has-text("Amount")'
+    ).fill("test")
+    page.get_by_role("button", name="Continue").click()
+    assert page.locator(
+        "text=Error: Tell us how much maintenance you receive"
+    ).is_visible()
