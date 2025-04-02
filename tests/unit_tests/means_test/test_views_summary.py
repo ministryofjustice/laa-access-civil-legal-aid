@@ -240,7 +240,7 @@ def test_post_ineligible(app, client):
     with app.app_context():
         response = CheckYourAnswers().post()
         assert response.status_code == 302
-        assert response.location == url_for("categories.results.refer")
+        assert response.location == url_for("means_test.result.ineligible")
 
 
 @mock.patch(

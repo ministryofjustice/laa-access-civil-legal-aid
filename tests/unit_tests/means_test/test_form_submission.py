@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch, Mock, PropertyMock
 from app.means_test.api import EligibilityState
-from app.means_test.views import MeansTest
+from app.means_test.views import MeansTest, InScopeMixin, CheckYourAnswers
 
 
 @pytest.fixture
@@ -17,6 +17,7 @@ def mock_url_for():
         yield mock
 
 
+@patch.object(InScopeMixin, "ensure_in_scope", return_value=None)
 class TestDispatchRequest:
     @pytest.fixture
     def mock_eligibility(self):
@@ -160,6 +161,7 @@ class TestDispatchRequest:
             mock_update_means_test.assert_called_once()
 
 
+@patch.object(InScopeMixin, "ensure_in_scope", return_value=None)
 class TestCheckYourAnswersSubmission:
     @pytest.mark.parametrize(
         "eligibility", [EligibilityState.YES, EligibilityState.UNKNOWN]
@@ -174,11 +176,13 @@ class TestCheckYourAnswersSubmission:
                 "app.means_test.views.is_eligible", return_value=eligibility
             ) as mock_is_eligible,
             patch("app.means_test.views.redirect") as mock_redirect,
+            patch.object(
+                CheckYourAnswers, "ensure_all_forms_are_complete", return_value=None
+            ),
         ):
             client.post("/review")
 
             mock_is_eligible.assert_called_once()
-
             mock_url_for.assert_called_once_with("contact.eligible")
             mock_redirect.assert_called_once_with("/mocked/contact.eligible")
 
@@ -193,6 +197,9 @@ class TestCheckYourAnswersSubmission:
             ) as mock_is_eligible,
             patch("app.means_test.views.redirect") as mock_redirect,
             patch("app.means_test.views.session") as mock_session,
+            patch.object(
+                CheckYourAnswers, "ensure_all_forms_are_complete", return_value=None
+            ),
         ):
             mock_subcategory = Mock()
             mock_subcategory.eligible_for_HLPAS = True
@@ -217,6 +224,9 @@ class TestCheckYourAnswersSubmission:
             ) as mock_is_eligible,
             patch("app.means_test.views.redirect") as mock_redirect,
             patch("app.means_test.views.session") as mock_session,
+            patch.object(
+                CheckYourAnswers, "ensure_all_forms_are_complete", return_value=None
+            ),
         ):
             mock_subcategory = Mock()
             mock_subcategory.eligible_for_HLPAS = False

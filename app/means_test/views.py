@@ -314,7 +314,9 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
 
     @staticmethod
     def post():
+        print("HERE 123")
         eligibility = is_eligible(session.get("ec_reference"))
+        print("HERE 456")
 
         # Failsafe, if we are unsure of the eligibility state at this point send the user to the call centre
         if (
