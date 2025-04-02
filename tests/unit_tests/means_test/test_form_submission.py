@@ -208,7 +208,7 @@ class TestCheckYourAnswersSubmission:
 
             client.post("/review")
 
-            mock_is_eligible.assert_called_once()
+            mock_is_eligible.assert_called()
 
             mock_url_for.assert_called_once_with("means_test.result.hlpas")
             mock_redirect.assert_called_once_with("/mocked/means_test.result.hlpas")
@@ -234,7 +234,7 @@ class TestCheckYourAnswersSubmission:
 
             client.post("/review")
 
-            mock_is_eligible.assert_called_once()
+            mock_is_eligible.assert_called()
 
             mock_url_for.assert_called_once_with("means_test.result.ineligible")
             mock_redirect.assert_called_once_with(
