@@ -16,6 +16,7 @@ class Category:
     children: dict[str, "Category"] | None = field(default_factory=dict)
     parent_code: Optional[str] = None
     _referrer_text: Optional[LazyString] = None
+    eligible_for_HLPAS: bool = False
     exit_page: Optional[bool] = None
 
     @property
@@ -227,6 +228,7 @@ HOUSING = Category(
             ),
             code="homelessness",
             in_scope=True,
+            eligible_for_HLPAS=True,
         ),
         "eviction": Category(
             title=_("Eviction, told to leave your home"),
@@ -235,6 +237,7 @@ HOUSING = Category(
             ),
             code="eviction",
             in_scope=True,
+            eligible_for_HLPAS=True,
         ),
         "forced_to_sell": Category(
             title=_("Forced to sell or losing the home you own"),
@@ -243,6 +246,7 @@ HOUSING = Category(
             ),
             code="forced_to_sell",
             in_scope=True,
+            eligible_for_HLPAS=True,
         ),
         "repairs": Category(
             title=_("Repairs, health and safety"),
@@ -460,6 +464,7 @@ ASYLUM_AND_IMMIGRATION = Category(
             ),
             code="housing",
             in_scope=True,
+            eligible_for_HLPAS=True,
         ),
         "domestic_abuse": Category(
             title=_("Stay in the UK if you experienced domestic abuse"),

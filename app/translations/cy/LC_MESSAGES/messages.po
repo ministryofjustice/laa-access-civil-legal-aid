@@ -2092,38 +2092,6 @@ msgstr ""
 "Mewn achosion prin, mae’n dal yn bosibl i chi gael cymorth cyfreithiol a "
 "ariennir gan y llywodraeth. Ewch i GOV.UK i gael gwybod am %(ecf_link)s."
 
-msgid "Legal aid doesn’t cover all types of problem"
-msgstr "Nid yw cymorth cyfreithiol yn gallu delio â phob math o broblem"
-
-msgid ""
-"You can still ask a solicitor for help – you will have to pay for their "
-"advice."
-msgstr ""
-"Gallwch dal ofyn i gyfreithiwr eich helpu - bydd rhaid ichi dalu am eu "
-"cyngor."
-
-msgid ""
-"You can still ask a solicitor for help - you will have to pay for their "
-"advice."
-msgstr ""
-"Gallwch dal ofyn i gyfreithiwr eich helpu - bydd rhaid ichi dalu am eu "
-"cyngor."
-
-msgid "Find a solicitor"
-msgstr "Dod o hyd i gyfreithiwr"
-
-msgid ""
-"You may still get help and advice from the organisations listed below. "
-"You don’t have to qualify for legal aid."
-msgstr ""
-"Efallai y byddwch chi’n dal yn gallu cael help a chyngor gan y "
-"sefydliadau sydd wedi’u rhestru isod. Nid oes rhaid i chi fod yn gymwys i"
-" gael cymorth cyfreithiol."
-
-#, python-format
-msgid "Help organisations for problems about %(category_name)s"
-msgstr "Sefydliadau cymorth ar gyfer problemau ynghylch %(category_name)s"
-
 msgid "Appeal a decision about your benefits"
 msgstr "Apelio yn erbyn penderfyniad am eich budd-daliadau"
 
@@ -2611,6 +2579,9 @@ msgstr ""
 
 #, python-format
 msgid "Legal Aid is different in Guernsey. Visit %(link)s for more information."
+msgstr ""
+
+msgid "the Housing Loss Prevention Advice Service"
 msgstr ""
 
 msgid "Sorry, the service is unavailable"
@@ -3180,6 +3151,30 @@ msgid ""
 "href=\"%(contact_url)s\" class=\"govuk-link\">get in touch</a>."
 msgstr ""
 
+msgid "You might qualify for free legal advice"
+msgstr "Efallai byddwch yn gymwys am gyngor cyfreithiol am ddim"
+
+msgid "You might be able to get free legal advice through the Housing Loss Prevention Advice Scheme."
+msgstr "Efallai byddwch yn gallu cael cyngor cyfreithiol am ddim trwy’r Cynllun Cyngor Atal Colli Tai."
+
+msgid "This advice is free to anyone who can show their home is at risk. It does not depend on what you earn or your financial situation."
+msgstr "Mae’r cyngor am ddim i unrhyw un sy’n gallu dangos fod eu tŷ mewn perygl. Dydy hi ddim yn dibynnu ar faint rydych yn ennill neu eich sefyllfa ariannol."
+
+msgid "Next steps"
+msgstr "Camau nesaf"
+
+msgid "We’ll show you a list of legal advisors."
+msgstr "Byddwn yn dangos rhestr o gynghorwyr cyfreithiol i chi."
+
+msgid "You need to contact the legal adviser."
+msgstr "Bydd yn rhaid i chi gysylltu â'r cynghorydd cyfreithiol."
+
+msgid "Explain that you could lose your home."
+msgstr "Eglurwch fod yna risg y byddwch yn colli eich cartref."
+
+msgid "Tell them if you have any letters or documents about your situation."
+msgstr "Dywedwch wrthynt os oes gennych unrhyw lythyrau neu ddogfennau yn ymwneud â'ch sefyllfa."
+
 msgid ""
 "We only need to know about any money you received last month, even if "
 "this varies from month to month."
@@ -3200,6 +3195,38 @@ msgstr "Dileu eiddo"
 
 msgid "Add another property"
 msgstr "Ychwanegu eiddo arall"
+
+msgid "Legal aid doesn’t cover all types of problem"
+msgstr "Nid yw cymorth cyfreithiol yn gallu delio â phob math o broblem"
+
+msgid ""
+"You can still ask a solicitor for help – you will have to pay for their "
+"advice."
+msgstr ""
+"Gallwch dal ofyn i gyfreithiwr eich helpu - bydd rhaid ichi dalu am eu "
+"cyngor."
+
+msgid ""
+"You can still ask a solicitor for help - you will have to pay for their "
+"advice."
+msgstr ""
+"Gallwch dal ofyn i gyfreithiwr eich helpu - bydd rhaid ichi dalu am eu "
+"cyngor."
+
+msgid "Find a solicitor"
+msgstr "Dod o hyd i gyfreithiwr"
+
+msgid ""
+"You may still get help and advice from the organisations listed below. "
+"You don’t have to qualify for legal aid."
+msgstr ""
+"Efallai y byddwch chi’n dal yn gallu cael help a chyngor gan y "
+"sefydliadau sydd wedi’u rhestru isod. Nid oes rhaid i chi fod yn gymwys i"
+" gael cymorth cyfreithiol."
+
+#, python-format
+msgid "Help organisations for problems about %(category_name)s"
+msgstr "Sefydliadau cymorth ar gyfer problemau ynghylch %(category_name)s"
 
 msgid "About the problem"
 msgstr "Am y broblem"

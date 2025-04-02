@@ -44,15 +44,15 @@ class AboutYouPayload(dict):
             return form_data.get(field)
 
         payload = {
-            "dependants_young": val("num_children") if yes("have_children") else 0,
-            "dependants_old": val("num_dependants") if yes("have_dependants") else 0,
+            "dependants_young": val("num_children") if yes("has_children") else 0,
+            "dependants_old": val("num_dependants") if yes("has_dependants") else 0,
             "is_you_or_your_partner_over_60": yes("aged_60_or_over"),
-            "has_partner": yes("have_partner") and not yes("in_dispute"),
+            "has_partner": yes("has_partner") and not yes("in_dispute"),
             "you": {"income": {"self_employed": yes("is_self_employed")}},
         }
 
         if (
-            yes("have_partner")
+            yes("has_partner")
             and not yes("in_dispute")
             and yes("partner_is_self_employed")
         ):
@@ -65,7 +65,7 @@ class AboutYouPayload(dict):
         else:
             payload = recursive_update(payload, PropertiesPayload.default())
 
-        if yes("have_savings") or yes("have_valuables"):
+        if yes("has_savings") or yes("has_valuables"):
             payload = recursive_update(payload, SavingsPayload())
         else:
             payload = recursive_update(payload, SavingsPayload.default())
