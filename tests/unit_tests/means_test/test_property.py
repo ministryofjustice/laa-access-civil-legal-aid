@@ -1,7 +1,13 @@
 import pytest
+from unittest import mock
 from wtforms.validators import ValidationError
 from flask_babel import gettext as _
-from app.means_test.forms.property import PropertyPayload, validate_single_main_home
+from app.means_test.forms.property import (
+    PropertyPayload,
+    validate_single_main_home,
+    PropertyForm,
+)
+from app.session import Eligibility
 
 
 def test_property_payload_with_valid_data():
@@ -130,3 +136,23 @@ def test_property_remove_third():
 
     assert len(form.properties.data) == 2
     assert all(isinstance(prop, dict) for prop in form.properties.data)
+
+
+def test_property_should_show_success(app):
+    with app.app_context():
+        with mock.patch("app.means_test.forms.property.session") as benefits_session:
+            benefits_session.get_eligibility = mock.Mock(
+                return_value=Eligibility(forms={"about-you": {"own_property": True}})
+            )
+            form = PropertyForm()
+            assert form.should_show() is True
+
+
+def test_property_should_show_failure(app):
+    with app.app_context():
+        with mock.patch("app.means_test.forms.benefits.session") as benefits_session:
+            benefits_session.get_eligibility = mock.Mock(
+                return_value=Eligibility(forms={"about-you": {"own_property": False}})
+            )
+            form = PropertyForm()
+            assert form.should_show() is False

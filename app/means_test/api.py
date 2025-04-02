@@ -9,7 +9,7 @@ logger = getLogger(__name__)
 def update_means_test(payload):
     means_test_endpoint = "checker/api/v1/eligibility_check/"
 
-    ec_reference = session.get("ec_reference")
+    ec_reference = session.ec_reference
 
     if ec_reference:
         response = cla_backend.patch(
@@ -19,7 +19,7 @@ def update_means_test(payload):
         return response
     else:
         response = cla_backend.post(means_test_endpoint, json=payload)
-        session["ec_reference"] = response["reference"]
+        session.ec_reference = response["reference"]
         logger.info(
             f"Created new eligibility check with reference {response['reference']}."
         )
@@ -34,4 +34,4 @@ def is_eligible(reference) -> EligibilityState:
     response = cla_backend.post(f"{means_test_endpoint}{reference}/is_eligible/", {})
     state = response["is_eligible"]
     logger.info(f"Eligibility check {reference}, has eligibility state: {state}.")
-    return EligibilityState(state)
+    return getattr(EligibilityState, state.upper(), EligibilityState.UNKNOWN)

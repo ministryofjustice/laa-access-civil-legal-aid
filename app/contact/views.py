@@ -122,6 +122,9 @@ class ConfirmationPage(View):
         }
 
     def dispatch_request(self):
+        if not session.get("case_reference", None):
+            logger.info("FAILED confirmation page due to invalid session")
+            return redirect(url_for("main.session_expired"))
         form = ConfirmationEmailForm()
         context = self.get_context()
         email_sent = False

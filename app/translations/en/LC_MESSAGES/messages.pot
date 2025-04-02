@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-24 17:04+0000\n"
+"POT-Creation-Date: 2025-03-18 23:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,6 +76,14 @@ msgid "Female genital mutilation (FGM)"
 msgstr ""
 
 msgid "If you or someone else is at risk of FGM."
+msgstr ""
+
+msgid "Domestic abuse - if you have been accused"
+msgstr ""
+
+msgid ""
+"Legal help if you’ve been accused of domestic abuse or forced marriage. "
+"Includes non-molestation orders and other court orders."
 msgstr ""
 
 msgid "Domestic abuse - if you have been accused"
@@ -1611,7 +1619,13 @@ msgstr ""
 msgid "Staying safe online"
 msgstr ""
 
+msgid "Accessibility statement"
+msgstr ""
+
 msgid "Sorry, you’re not likely to get legal aid"
+msgstr ""
+
+msgid "If you cannot find your problem, it’s probably not covered by legal aid."
 msgstr ""
 
 msgid "Next steps to get help"
@@ -1816,10 +1830,25 @@ msgstr ""
 msgid "Speak to an advice organisation"
 msgstr ""
 
+msgid "You can get free, independent advice from:"
+msgstr ""
+
 msgid "Citizen’s Advice (opens new tab)"
 msgstr ""
 
 msgid "Advicelocal (opens new tab)"
+msgstr ""
+
+msgid "exceptional case funding (opens new tab)"
+msgstr ""
+
+msgid "Exceptional case funding"
+msgstr ""
+
+#, python-format
+msgid ""
+"In rare cases, you can still get government-funded legal help. Go to "
+"GOV.UK to find out about %(ecf_link)s."
 msgstr ""
 
 msgid "Appeal a decision about your benefits"
@@ -2281,6 +2310,228 @@ msgid "Extend time limit"
 msgstr ""
 
 msgid "Exit service"
+msgstr ""
+
+msgid "civil-legal-advice@digital.justice.gov.uk"
+msgstr ""
+
+msgid "Web Content Accessibility Guidelines version 2.1 (opens in new tab)"
+msgstr ""
+
+msgid "Using this service"
+msgstr ""
+
+msgid ""
+"This accessibility statement applies to <a class=\"govuk-link\" "
+"href=\"https://checklegalaid.service.gov.uk/\">https://checklegalaid.service.gov.uk/</a>."
+" "
+msgstr ""
+
+msgid ""
+"The Legal Aid Agency (<abbr>LAA</abbr>) is responsible for the Civil "
+"Legal Advice (<abbr>CLA</abbr>) service."
+msgstr ""
+
+msgid ""
+"We want as many people as possible to be able to use this service. For "
+"example, that means you should be able to:"
+msgstr ""
+
+msgid "change colours, contrast levels and fonts"
+msgstr ""
+
+msgid "zoom in up to 300&#37; without the text spilling off the screen"
+msgstr ""
+
+msgid "navigate the service using just a keyboard"
+msgstr ""
+
+msgid ""
+"AbilityNet has advice on making your device easier to use if you have a "
+"disability (opens in new tab)"
+msgstr ""
+
+msgid "Feedback and contact information"
+msgstr ""
+
+#, python-format
+msgid ""
+"If you need information on this service in a different format, you can "
+"contact us at %(email_link)s."
+msgstr ""
+
+msgid "Reporting accessibility problems"
+msgstr ""
+
+#, python-format
+msgid ""
+"We’re always looking to improve the accessibility of this service. If you"
+" find any problems that aren’t listed on this page or think we’re not "
+"meeting the requirements of the accessibility regulations, contact "
+"%(email_link)s giving details of the issue and any assistive technology "
+"you are using."
+msgstr ""
+
+msgid "Enforcement procedure"
+msgstr ""
+
+msgid ""
+"The Equality and Human Rights Commission (<abbr>EHRC</abbr>) is "
+"responsible for enforcing the accessibility regulations. If you’re not "
+"happy with how we respond to your complaint, contact the <a class"
+"=\"govuk-link\" href=\"https://www.equalityadvisoryservice.com/\" "
+"is_external=True target=\"_blank\" rel=\"noopener noreferrer\">Equality "
+"Advisory and Support Service (<abbr>EASS</abbr>) (opens in new tab)</a>."
+msgstr ""
+
+msgid "Technical information about this service’s accessibility"
+msgstr ""
+
+msgid ""
+"The Legal Aid Agency is committed to making its service accessible, in "
+"accordance with the Public Sector Bodies (Websites and Mobile "
+"Applications) (&#8470; 2) Accessibility Regulations 2018."
+msgstr ""
+
+msgid "Compliance status"
+msgstr ""
+
+#, python-format
+msgid ""
+"This service is partially compliant with the %(wcag_link)s AA standard, "
+"due to the non-compliance issues listed below."
+msgstr ""
+
+msgid "Non-accessible content"
+msgstr ""
+
+msgid "The content listed below is non-accessible for the following reasons."
+msgstr ""
+
+msgid "Non-compliance with the accessibility regulations"
+msgstr ""
+
+msgid ""
+"Some link text is ambiguous which might result in some users not "
+"understanding the link destination. This fails WCAG 2.2. success "
+"criterion 2.4.4 Link Purpose (In Context). We plan to ensure all link "
+"text is clear and able to be understood by all by the end of December "
+"2025."
+msgstr ""
+
+msgid ""
+"Some page elements have incorrect aria attributes. This might cause some "
+"assistive technology users to have difficulty identifying form elements. "
+"This fails WCAG 2.2. success criterion 4.1.2 Name, Role, Value. We plan "
+"to ensure that all aria is correct by the end of December 2025."
+msgstr ""
+
+msgid ""
+"When a page is about to time out, a dialog box lets the user extend the "
+"time to complete the page and gives a countdown until the page will time "
+"out. The time left is read out every second to screen reader users which "
+"will be distracting. This fails WCAG 2.2. success criterion 4.1.3 Status "
+"messages. We plan to ensure that the timeout dialog does not announce the"
+" time remaining every second by the end of December 2025."
+msgstr ""
+
+msgid "Time-out"
+msgstr ""
+
+msgid ""
+"Users are not able to turn off, adjust or extend the time in which "
+"inactivity will result in a loss of data. This fails WCAG 2.1 2.2.1 A "
+"(Timing Adjustable)."
+msgstr ""
+
+msgid ""
+"We are experiencing intermittent problems with the time-out feature where"
+" users are unexpectedly timed-out without the time-out warning appearing."
+" We are currently investigating the source of this issue."
+msgstr ""
+
+msgid "Hide this page"
+msgstr ""
+
+msgid ""
+"The ‘Hide this page’ button does not accurately describe the link "
+"destination. This fails WCAG 2.1 1.3.1 A (Info and relationships) and "
+"2.4.6 AA (Headings and Labels)."
+msgstr ""
+
+msgid ""
+"We understand that ‘Hide this page’ does not describe the link "
+"destination. We have purposely designed the feature to protect vulnerable"
+" users and provide a quick exit from the service rather than take users "
+"to a specific destination."
+msgstr ""
+
+msgid "Disproportionate burden"
+msgstr ""
+
+msgid "Not applicable"
+msgstr ""
+
+msgid "Content that’s not within the scope of the accessibility regulations"
+msgstr ""
+
+msgid "What we’re doing to improve accessibility"
+msgstr ""
+
+msgid "We are working to fix the time-out issue listed in this statement."
+msgstr ""
+
+msgid ""
+"We will monitor the accessibility of this service on an ongoing basis and"
+" fix any accessibility issues reported to us."
+msgstr ""
+
+msgid "Preparation of this accessibility statement"
+msgstr ""
+
+#, python-format
+msgid "This statement was prepared on %(day)s %(month)s %(year)s."
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "March"
+msgstr ""
+
+#, python-format
+msgid ""
+"This statement was last reviewed in an internal review by Justice "
+"Digital’s Digital Accessibility Team in %(month)s %(year)s."
+msgstr ""
+
+#, python-format
+msgid ""
+"This service was tested on %(day1)s %(month1)s %(year1)s and issues were "
+"re-tested on %(day2)s %(month2)s %(year2)s."
+msgstr ""
+
+msgid "July"
+msgstr ""
+
+msgid "October"
+msgstr ""
+
+msgid ""
+"The tests were carried out by the Digital Accessibility Centre "
+"(<abbr>DAC</abbr>)."
+msgstr ""
+
+msgid ""
+"The <abbr title='Digital Accessibility Centre'>DAC</abbr> tested core "
+"journeys, key functionality and interactive features that reflect the "
+"content that the average user may encounter."
+msgstr ""
+
+msgid ""
+"The <abbr title='Digital Accessibility Centre'>DAC</abbr> tested the "
+"service available at <a class='govuk-link' "
+"href='https://checklegalaid.service.gov.uk/'>https://checklegalaid.service.gov.uk/</a>."
 msgstr ""
 
 msgid "Stay safe when you use this website"

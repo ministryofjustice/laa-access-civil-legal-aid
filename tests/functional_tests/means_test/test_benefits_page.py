@@ -99,36 +99,32 @@ def test_child_benefits_not_available(page: Page, client):
 
 
 @pytest.mark.usefixtures("live_server")
-def test_child_benefits_available_has_children(page: Page, client):
-    #
-    with client.session_transaction() as session:
-        # update the session
-        session.get_eligibility().add(
-            "about-you", {"has_children": True, "has_dependants": False}
-        )
-
-    url = url_for("means_test.benefits", _external=True)
-    response = client.get(url)
-    assert response.status_code == 200  # Ensure the response is valid
-
-    # Load the response HTML into the Playwright page
-    page.set_content(response.data.decode("utf-8"))
+@pytest.mark.parametrize(
+    "about_you_answers",
+    [
+        {
+            "Do you receive any benefits (including Child Benefit)?": "Yes",
+            "Do you have any children aged 15 or under?": "Yes",
+            "How many children aged 15 or under?": "1",
+        }
+    ],
+)
+def test_child_benefits_available_have_children(page: Page, complete_about_you_form):
+    assert page.title() == "Which benefits do you receive? - GOV.UK"
     expect(page.get_by_label("Child Benefit")).to_have_count(1)
 
 
 @pytest.mark.usefixtures("live_server")
-def test_child_benefits_available_have_dependants(page: Page, client):
-    #
-    with client.session_transaction() as session:
-        # update the session
-        session.get_eligibility().add(
-            "about-you", {"has_children": False, "has_dependants": True}
-        )
-
-    url = url_for("means_test.benefits", _external=True)
-    response = client.get(url)
-    assert response.status_code == 200  # Ensure the response is valid
-
-    # Load the response HTML into the Playwright page
-    page.set_content(response.data.decode("utf-8"))
+@pytest.mark.parametrize(
+    "about_you_answers",
+    [
+        {
+            "Do you receive any benefits (including Child Benefit)?": "Yes",
+            "Do you have any dependants aged 16 or over?": "Yes",
+            "How many dependants aged 16 or over?": "1",
+        }
+    ],
+)
+def test_child_benefits_available_have_dependents(page: Page, complete_about_you_form):
+    assert page.title() == "Which benefits do you receive? - GOV.UK"
     expect(page.get_by_label("Child Benefit")).to_have_count(1)

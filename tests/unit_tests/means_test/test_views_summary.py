@@ -4,6 +4,7 @@ from app.means_test.views import CheckYourAnswers, ReviewForm
 from app.session import Eligibility
 from app.categories.models import CategoryAnswer, QuestionType
 from app.categories.constants import DISCRIMINATION, HOUSING
+from app.means_test.api import EligibilityState
 
 
 def mock_render_template(template_name, **kwargs):
@@ -228,3 +229,27 @@ def test_get_category_answers_summary_with_description(app):
         assert summary == expected_summary
 
     category_mocker.stop()
+
+
+@mock.patch(
+    "app.means_test.views.is_eligible", side_effect=lambda x: EligibilityState.NO
+)
+def test_post_ineligible(app, client):
+    from flask import url_for
+
+    with app.app_context():
+        response = CheckYourAnswers().post()
+        assert response.status_code == 302
+        assert response.location == url_for("categories.results.refer")
+
+
+@mock.patch(
+    "app.means_test.views.is_eligible", side_effect=lambda x: EligibilityState.YES
+)
+def test_post_eligible(app, client):
+    from flask import url_for
+
+    with app.app_context():
+        response = CheckYourAnswers().post()
+        assert response.status_code == 302
+        assert response.location == url_for("contact.eligible")

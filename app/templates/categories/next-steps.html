@@ -28,7 +28,7 @@
 
         <h2 class="govuk-heading-m">{% trans %}Speak to an advice organisation{% endtrans %}</h2>
 
-        <p class="govuk-body">You can get free, independent advice from:</p>
+        <p class="govuk-body">{% trans %}You can get free, independent advice from:{% endtrans %}</p>
 
         {% set citizens_advice_contact_link %}<a class="govuk-link" href="https://www.citizensadvice.org.uk/about-us/contact-us/" target="_blank">{% trans %}Citizen’s Advice (opens new tab){% endtrans %}</a>{% endset %}
         {% set advicelocal_link %}<a class="govuk-link" href="https://advicelocal.uk/find-an-adviser" target="_blank">{% trans %}Advicelocal (opens new tab){% endtrans %}</a>{% endset %}
@@ -39,9 +39,9 @@
 
         <br>
 
-        {% set ecf_link %}<a class="govuk-link" href="https://www.gov.uk/legal-aid/funding-for-exceptional-cases" target="_blank">exceptional case funding (opens new tab)</a>{% endset %}
-        <h2 class="govuk-heading-m">Exceptional case funding</h2>
-        <p class="govuk-body">In rare cases, you can still get government-funded legal help. Go to GOV.UK to find out about {{ ecf_link }}.</p>
+        {% set ecf_link %}<a class="govuk-link" href="https://www.gov.uk/legal-aid/funding-for-exceptional-cases" target="_blank">{% trans %}exceptional case funding (opens new tab){% endtrans %}</a>{% endset %}
+        <h2 class="govuk-heading-m">{% trans %}Exceptional case funding{% endtrans %}</h2>
+        <p class="govuk-body">{% trans %}In rare cases, you can still get government-funded legal help. Go to GOV.UK to find out about {{ ecf_link }}.{% endtrans %}</p>
 
         <br>
 
