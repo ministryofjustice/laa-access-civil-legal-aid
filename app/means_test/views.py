@@ -194,6 +194,12 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
                 return redirect(url_for("main.session_expired"))
 
     def dispatch_request(self):
+        # TODO: Store eligiblity in the session to prevent frequently requesting this.
+        if session.ec_reference and is_eligible(session.ec_reference) in [
+            EligibilityState.YES,
+            EligibilityState.NO,
+        ]:
+            return super().dispatch_request()
         form_protection_redirect = self.ensure_all_forms_are_complete()
         if form_protection_redirect:
             return form_protection_redirect
@@ -314,9 +320,7 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
 
     @staticmethod
     def post():
-        print("HERE 123")
-        eligibility = is_eligible(session.get("ec_reference"))
-        print("HERE 456")
+        eligibility = is_eligible(session.ec_reference)
 
         # Failsafe, if we are unsure of the eligibility state at this point send the user to the call centre
         if (
