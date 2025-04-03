@@ -8,9 +8,14 @@ import logging
 from flask import session, render_template, request, redirect, url_for
 from app.api import cla_backend
 from app.contact.notify.api import notify
-from app.means_test.api import update_means_test
+from app.means_test.api import update_means_test, is_eligible
 from app.means_test.views import MeansTest
 from datetime import datetime
+from app.categories.constants import (
+    FastTrackCondition,
+    FinancialAssessmentReason,
+    FinancialAssessmentStatus,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -42,11 +47,36 @@ class ContactUs(View):
             self.template = template
         self.attach_eligiblity_data = attach_eligiblity_data
 
+    def get_payload_from_form(self, eligibility_data, form):
+        payload = form.get_payload()
+        if not self.attach_eligiblity_data:
+            # Clicked the contact-us link
+            payload["financial_assessment_status"] = FinancialAssessmentStatus.SKIPPED
+            payload["financial_assessment_reason"] = FinancialAssessmentReason.OTHER
+        else:
+            # When through the means test
+            eligibility_result = is_eligible(session.ec_reference)
+            if eligibility_result.YES:
+                payload["financial_assessment_status"] = (
+                    FinancialAssessmentStatus.PASSED
+                )
+                payload["financial_assessment_reason"] = (
+                    FinancialAssessmentReason.MORE_INFO_REQUIRED
+                )
+            elif eligibility_result.NO:
+                payload["financial_assessment_status"] = (
+                    FinancialAssessmentStatus.FAILED
+                )
+                payload["financial_assessment_reason"] = (
+                    FinancialAssessmentReason.MORE_INFO_REQUIRED
+                )
+
     def dispatch_request(self):
         form = ContactUsForm()
         form_progress = MeansTest(ContactUsForm, "Contact us").get_form_progress(form)
+        eligibility = session.get_eligibility()
         if form.validate_on_submit():
-            payload = form.get_payload()
+            payload = self.get_payload_from_form(eligibility, form)
             # Add the extra notes to the eligibility object
             if not self.attach_eligiblity_data:
                 session.clear_eligibility()
@@ -106,6 +136,44 @@ class ContactUs(View):
                 "case": case_ref,
             },
         )
+
+
+class FastTrackedContactUs(ContactUs):
+    @staticmethod
+    def fast_tracked() -> tuple:
+        fast_track = None
+        fast_track_reason = None
+        category = session.subcategory or session.category
+        if category:
+            fast_track = getattr(category, "fast_tracked", None)
+
+        if isinstance(fast_track, FastTrackCondition):
+            answer = session.get_category_question_answer(fast_track.question)
+            fast_track = fast_track.evaluate(answer)
+        if fast_track:
+            fast_track_reason = category.fast_track_reason
+
+        return bool(fast_track), fast_track_reason
+
+    def get_payload_from_form(self, eligibility_data, form):
+        payload = super().get_payload_from_form(eligibility_data, form)
+        is_fast_tracked, fast_track_reason = self.fast_tracked()
+        if is_fast_tracked:
+            # Was fast tracked through means
+            payload["financial_assessment_reason"] = fast_track_reason
+            payload["financial_assessment_status"] = (
+                FinancialAssessmentStatus.FAST_TRACKING
+            )
+
+        return payload
+
+    def dispatch_request(self):
+        is_fast_tracked, fast_track_reason = self.fast_tracked()
+        if not is_fast_tracked:
+            logger.info("FAILED fast track contact us page")
+            return redirect(url_for("main.session_expired"))
+
+        return super().dispatch_request()
 
 
 class ConfirmationPage(View):
