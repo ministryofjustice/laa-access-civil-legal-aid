@@ -10,7 +10,7 @@ class AreYouUnder18Form(QuestionForm):
     title = _("Are you under 18?")
 
     next_step_mapping = {
-        "yes": "contact.contact_us",
+        "yes": "contact.contact_us_fast_tracked",
         "no": "categories.results.in_scope",
     }
 

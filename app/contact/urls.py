@@ -1,10 +1,14 @@
+import logging
+from flask import jsonify, session, redirect, url_for
 from app.contact import bp
 from app.contact.address_finder.widgets import FormattedAddressLookup
-from app.contact.views import ContactUs, ReasonForContacting
+from app.contact.views import (
+    ContactUs,
+    ReasonForContacting,
+    ConfirmationPage,
+    FastTrackedContactUs,
+)
 from app.means_test.api import EligibilityState, is_eligible
-from flask import jsonify, session, redirect, url_for
-import logging
-from app.contact.views import ConfirmationPage
 
 
 logger = logging.getLogger(__name__)
@@ -50,5 +54,10 @@ bp.add_url_rule(
     "/contact-us",
     view_func=ContactUs.as_view("contact_us", attach_eligiblity_data=False),
 )
-
+bp.add_url_rule(
+    "/contact-us/fast-tracked",
+    view_func=FastTrackedContactUs.as_view(
+        "contact_us_fast_tracked", attach_eligiblity_data=False
+    ),
+)
 bp.add_url_rule("/confirmation", view_func=ConfirmationPage.as_view("confirmation"))
