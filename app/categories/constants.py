@@ -79,6 +79,7 @@ DOMESTIC_ABUSE = Category(
     chs_code="family",
     code="domestic_abuse",
     exit_page=True,
+    in_scope=True,
     children={
         "protect_you_and_your_children": Category(
             title=_("Help to keep yourself safe and protect children"),

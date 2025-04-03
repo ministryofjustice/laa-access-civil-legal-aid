@@ -25,7 +25,7 @@ class FamilyLandingPage(CategoryLandingPage):
             (FAMILY.sub.education, "categories.results.in_scope"),
             (
                 FAMILY.sub.forced_marriage,
-                "categories.domestic_abuse.are_you_at_risk_of_harm",
+                "categories.domestic_abuse.forced_marriage",
             ),
         ],
         "other": "categories.family.cannot_find_your_problem",
@@ -33,6 +33,7 @@ class FamilyLandingPage(CategoryLandingPage):
 
 
 FamilyLandingPage.register_routes(bp, path="children-families-relationships")
+
 bp.add_url_rule(
     "/children-families-relationships/cannot-find-your-problem",
     view_func=CannotFindYourProblemPage.as_view(
