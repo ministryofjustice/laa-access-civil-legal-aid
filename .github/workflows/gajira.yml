@@ -2,13 +2,13 @@ name: Raise Jira Issue
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, reopened]
 
 jobs:
   gajira:
     name: Raise Jira Issue
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.pull_request.labels, 'snyk') }}
+    if: ${{ contains(github.event.pull_request.title, 'snyk') }}
     steps:
     - name: Login
       uses: atlassian/gajira-login@master
@@ -20,10 +20,10 @@ jobs:
     - name: Process PR data
       id: process_pr_data
       run: |
-        repo_name=$(echo "$GITHUB_REPOSITORY" | cut -d'/' -f2 | sed 's/ *(.*)//')
+        repo_name=$(basename ${{ github.repository }})
 
-        pr_body="${{ github.event.pull_request.body }}"
-        stripped_body=$(echo "$pr_body" | sed 's/<[^>]*>//g')
+        pr_body=$(jq -r '.pull_request.body' <<< '${{ toJson(github.event) }}')
+        stripped_body=$(echo "$pr_body" | sed 's/<[^>]*>//g' | tr '\n' ' ' | tr -s ' ')
 
         echo "repo_name=$repo_name" >> $GITHUB_ENV
         echo "stripped_body=$stripped_body" >> $GITHUB_ENV
