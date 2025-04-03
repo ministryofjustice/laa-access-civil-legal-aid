@@ -75,8 +75,9 @@ class MoneyIntervalAmountRequired(object):
 
         try:
             CurrencyValidator.validate_currency(amount)
-        except ValueError as e:
-            field.errors.append(str(e))
+        except ValueError:
+            message = messages["amount_message"]
+            field.errors.append(message)
             field.field_with_error.add("value")
 
         if (amount == "0") and not interval:
