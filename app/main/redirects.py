@@ -13,7 +13,7 @@ REDIRECT_MAP = {
     "/scope/refer/immigration-and-asylum": "categories.asylum_immigration.cannot_find_your_problem",
     "/scope/refer/debt": "find-a-legal-adviser.search",
     "/scope/refer/welfare-benefits": "find-a-legal-adviser.search",
-    "/scope/refer/any-other-problem": "categories.results.refer",
+    "/scope/refer/any-other-problem": "categories.results.cannot_find_your_problem",
 }
 
 FALA_REDIRECT_MAP = {
