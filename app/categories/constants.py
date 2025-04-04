@@ -1,6 +1,29 @@
 from dataclasses import dataclass, field
 from typing import Optional
+from enum import Enum
 from flask_babel import lazy_gettext as _, LazyString
+
+
+class FinancialAssessmentStatus(str, Enum):
+    PASSED: str = "PASSED"
+    FAILED: str = "FAILED"
+    FAST_TRACKING: str = "FAST_TRACK"
+    SKIPPED: str = "SKIPPED"
+
+
+class FinancialAssessmentReason(str, Enum):
+    HARM: str = "HARM"
+    MORE_INFO_REQUIRED: str = "MORE_INFO_REQUIRED"
+    OTHER: str = "OTHER"
+
+
+@dataclass()
+class FastTrackCondition:
+    question: str
+    answer: str | bool
+
+    def evaluate(self, value: str) -> bool:
+        return self.answer == value
 
 
 @dataclass
@@ -18,6 +41,8 @@ class Category:
     _referrer_text: Optional[LazyString] = None
     eligible_for_HLPAS: bool = False
     exit_page: Optional[bool] = None
+    fast_tracked: Optional[bool | FastTrackCondition] = None
+    fast_track_reason: Optional[FinancialAssessmentReason] = None
 
     @property
     def url_friendly_name(self):
@@ -87,6 +112,10 @@ DOMESTIC_ABUSE = Category(
             ),
             code="protect_you_and_your_children",
             in_scope=True,
+            fast_tracked=FastTrackCondition(
+                question="Are you worried about someone's safety?", answer="yes"
+            ),
+            fast_track_reason=FinancialAssessmentReason.HARM,
         ),
         "leaving_an_abusive_relationship": Category(
             title=_("Leaving an abusive relationship"),
@@ -95,6 +124,10 @@ DOMESTIC_ABUSE = Category(
             ),
             code="leaving_an_abusive_relationship",
             in_scope=True,
+            fast_tracked=FastTrackCondition(
+                question="Are you worried about someone's safety?", answer="yes"
+            ),
+            fast_track_reason=FinancialAssessmentReason.HARM,
         ),
         "problems_with_ex_partner": Category(
             title=_("Problems with an ex-partner: children or money"),
@@ -103,6 +136,10 @@ DOMESTIC_ABUSE = Category(
             ),
             code="problems_with_ex_partner",
             in_scope=True,
+            fast_tracked=FastTrackCondition(
+                question="Are you worried about someone's safety?", answer="yes"
+            ),
+            fast_track_reason=FinancialAssessmentReason.HARM,
         ),
         "problems_with_neighbours": Category(
             title=_("Problems with neighbours, landlords or other people"),
@@ -110,6 +147,8 @@ DOMESTIC_ABUSE = Category(
                 "Threats, abuse or harassment by someone who is not a family member."
             ),
             code="problems_with_neighbours",
+            fast_tracked=True,
+            fast_track_reason=FinancialAssessmentReason.MORE_INFO_REQUIRED,
         ),
         "housing_homelessness_losing_home": Category(
             title=_("Housing, homelessness, losing your home"),
@@ -125,12 +164,20 @@ DOMESTIC_ABUSE = Category(
             ),
             code="forced_marriage",
             in_scope=True,
+            fast_tracked=FastTrackCondition(
+                question="Are you worried about someone's safety?", answer="yes"
+            ),
+            fast_track_reason=FinancialAssessmentReason.HARM,
         ),
         "fgm": Category(
             title=_("Female genital mutilation (FGM)"),
             description=_("If you or someone else is at risk of FGM."),
             code="fgm",
             in_scope=True,
+            fast_tracked=FastTrackCondition(
+                question="Are you worried about someone's safety?", answer="yes"
+            ),
+            fast_track_reason=FinancialAssessmentReason.HARM,
         ),
         "accused_of_domestic_abuse": Category(
             title=_("Domestic abuse - if you have been accused"),
@@ -159,6 +206,7 @@ FAMILY = Category(
                 "Help for any problem if social services are involved with a child. Includes children in care, or being adopted. Also special guardianship."
             ),
             code="social_services",
+            fast_tracked=True,
         ),
         "divorce": Category(
             title=_("Problems with an ex-partner, divorce, when a relationship ends"),
@@ -166,6 +214,8 @@ FAMILY = Category(
                 "If you cannot agree about money, finances and property. Includes contact with children, where children live, and other child arrangements. If an ex-partner is not doing what they agreed. If you’re worried about a child."
             ),
             code="divorce",
+            fast_tracked=True,
+            fast_track_reason=FinancialAssessmentReason.MORE_INFO_REQUIRED,
         ),
         "domestic_abuse": Category(
             title=_("If there is domestic abuse in your family"),
@@ -188,6 +238,7 @@ FAMILY = Category(
                 "If a child has been abducted (taken without your permission), including outside the UK."
             ),
             code="child_abducted",
+            fast_tracked=True,
         ),
         "send": Category(
             title=_("Children with special educational needs and disabilities (SEND)"),
@@ -536,6 +587,16 @@ def init_children(category: Category) -> None:
         )
         child.exit_page = (
             child.exit_page if child.exit_page is not None else category.exit_page
+        )
+        child.fast_tracked = (
+            child.fast_tracked
+            if child.fast_tracked is not None
+            else category.fast_tracked
+        )
+        child.fast_track_reason = (
+            child.fast_track_reason
+            if child.fast_track_reason is not None
+            else category.fast_track_reason
         )
 
 

@@ -48,7 +48,7 @@ class SafeguardingQuestionForm(QuestionForm):
     title = _("Are you worried about someone's safety?")
 
     next_step_mapping = {
-        "yes": "contact.contact_us",
+        "yes": "contact.contact_us_fast_tracked",
         "no": "categories.results.in_scope",
     }
 
@@ -72,7 +72,7 @@ class ChildInCareQuestionForm(QuestionForm):
     title = _("Is this about a child who is or has been in care?")
 
     next_step_mapping = {
-        "yes": "contact.contact_us",
+        "yes": "contact.contact_us_fast_tracked",
         "no": "categories.results.in_scope",
     }
 

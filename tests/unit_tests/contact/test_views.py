@@ -27,7 +27,7 @@ class TestContactUsView:
     @patch("app.contact.views.ContactUsForm")
     @patch("app.contact.views.MeansTest")
     @patch("app.contact.views.render_template")
-    def test_get_request(self, mock_render_template, mock_means_test, mock_form):
+    def test_get_request(self, mock_render_template, mock_means_test, mock_form, app):
         mock_form_instance = MagicMock()
         mock_form.return_value = mock_form_instance
         mock_form_instance.validate_on_submit.return_value = False
@@ -37,14 +37,15 @@ class TestContactUsView:
         mock_form_progress = {"step": "Review", "percentage_complete": 100}
         mock_means_test_instance.get_form_progress.return_value = mock_form_progress
 
-        view = ContactUs()
-        view.dispatch_request()
+        with app.app_context():
+            view = ContactUs()
+            view.dispatch_request()
 
-        mock_render_template.assert_called_once_with(
-            "contact/contact.html",
-            form=mock_form_instance,
-            form_progress=mock_form_progress,
-        )
+            mock_render_template.assert_called_once_with(
+                "contact/contact.html",
+                form=mock_form_instance,
+                form_progress=mock_form_progress,
+            )
 
     @patch("app.contact.views.ContactUsForm")
     @patch("app.contact.views.redirect")
@@ -89,7 +90,7 @@ class TestContactUsView:
     @patch("app.contact.views.render_template")
     @patch.object(MeansTest, "get_form_progress")
     def test_post_request_validation_failure(
-        self, mock_means_test, mock_render_template, mock_form
+        self, mock_means_test, mock_render_template, mock_form, app
     ):
         mock_form_instance = MagicMock()
         mock_form.return_value = mock_form_instance
@@ -97,15 +98,16 @@ class TestContactUsView:
 
         mock_means_test.return_value = {"step": "Review", "percentage_complete": 100}
 
-        # Call the view
-        view = ContactUs()
-        view.dispatch_request()
+        with app.app_context():
+            # Call the view
+            view = ContactUs()
+            view.dispatch_request()
 
-        mock_render_template.assert_called_once_with(
-            "contact/contact.html",
-            form=mock_form_instance,
-            form_progress={"step": "Review", "percentage_complete": 100},
-        )
+            mock_render_template.assert_called_once_with(
+                "contact/contact.html",
+                form=mock_form_instance,
+                form_progress={"step": "Review", "percentage_complete": 100},
+            )
 
     @patch("app.contact.views.render_template")
     @patch.object(MeansTest, "get_form_progress")
