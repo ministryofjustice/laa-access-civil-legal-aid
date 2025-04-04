@@ -12,7 +12,7 @@ class FamilyLandingPage(CategoryLandingPage):
     routing_map = {
         "main": [
             (FAMILY.sub.social_services, "contact.contact_us"),
-            (FAMILY.sub.divorce, "contact.contact_us"),
+            (FAMILY.sub.divorce, "contact.contact_us_fast_tracked"),
             (
                 FAMILY.sub.domestic_abuse,
                 "categories.domestic_abuse.are_you_at_risk_of_harm",
