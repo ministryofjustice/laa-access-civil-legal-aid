@@ -11,14 +11,14 @@ class FamilyLandingPage(CategoryLandingPage):
 
     routing_map = {
         "main": [
-            (FAMILY.sub.social_services, "contact.contact_us"),
+            (FAMILY.sub.social_services, "contact.contact_us_fast_tracked"),
             (FAMILY.sub.divorce, "contact.contact_us_fast_tracked"),
             (
                 FAMILY.sub.domestic_abuse,
                 "categories.domestic_abuse.are_you_at_risk_of_harm",
             ),
             (FAMILY.sub.family_mediation, "categories.results.in_scope"),
-            (FAMILY.sub.child_abducted, "contact.contact_us"),
+            (FAMILY.sub.child_abducted, "contact.contact_us_fast_tracked"),
         ],
         "more": [
             (FAMILY.sub.send, "categories.send.landing"),
