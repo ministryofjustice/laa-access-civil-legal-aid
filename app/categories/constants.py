@@ -207,6 +207,7 @@ FAMILY = Category(
                 "Help for any problem if social services are involved with a child. Includes children in care, or being adopted. Also special guardianship."
             ),
             code="social_services",
+            fast_tracked=True,
         ),
         "divorce": Category(
             title=_("Problems with an ex-partner, divorce, when a relationship ends"),
@@ -238,6 +239,7 @@ FAMILY = Category(
                 "If a child has been abducted (taken without your permission), including outside the UK."
             ),
             code="child_abducted",
+            fast_tracked=True,
         ),
         "send": Category(
             title=_("Children with special educational needs and disabilities (SEND)"),
