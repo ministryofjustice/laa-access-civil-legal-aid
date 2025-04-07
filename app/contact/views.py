@@ -70,6 +70,7 @@ class ContactUs(View):
                 payload["financial_assessment_reason"] = (
                     FinancialAssessmentReason.MORE_INFO_REQUIRED
                 )
+        return payload
 
     def dispatch_request(self):
         form = ContactUsForm()

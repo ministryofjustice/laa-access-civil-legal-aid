@@ -116,7 +116,7 @@ def test_post_case(mock_post, api_client, app):
     payload = {"test": "data"}
 
     with app.test_request_context():
-        session["ec_reference"] = "elig123"
+        session.ec_reference = "elig123"
         api_client.post_case(payload=payload)
 
         expected_payload = {
