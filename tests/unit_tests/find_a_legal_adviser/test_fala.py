@@ -128,3 +128,28 @@ class TestFindALegalAdviser:
                 categories=["MHE"],
                 page=1,
             )
+
+    @patch("app.find_a_legal_adviser.routes.render_template")
+    def test_result_page_with_invalid_categories(self, app, client):
+        postcode = "SW1A 1AA"
+        category = "invalid"
+        secondary_category = "category"
+
+        with patch(
+            "app.find_a_legal_adviser.routes.laalaa_search",
+            return_value=MOCK_LAALAA_RESULTS,
+        ) as mock_laalaa_search:
+            client.get(
+                "/find-a-legal-adviser",
+                query_string={
+                    "postcode": postcode,
+                    "category": category,
+                    "secondary_category": secondary_category,
+                },
+            )
+
+            mock_laalaa_search.assert_called_with(
+                postcode=postcode,
+                categories=[],
+                page=1,
+            )
