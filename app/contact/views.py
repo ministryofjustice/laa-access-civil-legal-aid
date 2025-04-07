@@ -47,7 +47,7 @@ class ContactUs(View):
             self.template = template
         self.attach_eligiblity_data = attach_eligiblity_data
 
-    def get_payload_from_form(self, eligibility_data, form):
+    def get_payload_from_form(self, form):
         payload = form.get_payload()
         if not self.attach_eligiblity_data:
             # Clicked the contact-us link
@@ -75,9 +75,8 @@ class ContactUs(View):
     def dispatch_request(self):
         form = ContactUsForm()
         form_progress = MeansTest(ContactUsForm, "Contact us").get_form_progress(form)
-        eligibility = session.get_eligibility()
         if form.validate_on_submit():
-            payload = self.get_payload_from_form(eligibility, form)
+            payload = self.get_payload_from_form(form)
             # Add the extra notes to the eligibility object
             if not self.attach_eligiblity_data:
                 session.clear_eligibility()
@@ -142,7 +141,7 @@ class ContactUs(View):
 class FastTrackedContactUs(ContactUs):
     @staticmethod
     def fast_tracked() -> tuple:
-        fast_track = None
+        fast_track = False
         fast_track_reason = None
         category = session.subcategory or session.category
         if category:
@@ -156,8 +155,8 @@ class FastTrackedContactUs(ContactUs):
 
         return bool(fast_track), fast_track_reason
 
-    def get_payload_from_form(self, eligibility_data, form):
-        payload = super().get_payload_from_form(eligibility_data, form)
+    def get_payload_from_form(self, form):
+        payload = super().get_payload_from_form(form)
         is_fast_tracked, fast_track_reason = self.fast_tracked()
         if is_fast_tracked:
             # Was fast tracked through means
