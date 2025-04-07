@@ -40,9 +40,10 @@ def result_page(
     page_num: int = 1,
     postcode_region: str = None,
 ):
-    results = laalaa_search(
-        postcode=postcode, categories=[category, secondary_category], page=page_num
-    )
+    # Filter out None values from categories
+    categories = [cat for cat in [category, secondary_category] if cat is not None]
+
+    results = laalaa_search(postcode=postcode, categories=categories, page=page_num)
 
     pagination_data = get_pagination_data(
         results,
