@@ -1,6 +1,7 @@
 ARG BASE_IMAGE=python:3.13-slim
 
 FROM node:lts-iron as node_build
+RUN apt-get --only-upgrade install liblzma5 -y
 WORKDIR /home/node
 COPY esbuild.config.js package.json package-lock.json ./
 COPY app/static/src app/static/src
@@ -10,7 +11,8 @@ RUN npm run build
 
 FROM $BASE_IMAGE AS base
 ARG REQUIREMENTS_FILE=requirements-production.txt
-
+RUN apt-get update
+RUN apt-get --only-upgrade install liblzma5 -y
 # Set environment variables
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=${FLASK_RUN_PORT:-8000}
