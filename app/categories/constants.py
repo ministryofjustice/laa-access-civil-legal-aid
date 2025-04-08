@@ -105,6 +105,10 @@ DOMESTIC_ABUSE = Category(
     code="domestic_abuse",
     exit_page=True,
     in_scope=True,
+    fast_tracked=FastTrackCondition(
+        question="Are you worried about someone's safety?", answer="yes"
+    ),
+    fast_track_reason=FinancialAssessmentReason.HARM,
     children={
         "protect_you_and_your_children": Category(
             title=_("Help to keep yourself safe and protect children"),
@@ -113,10 +117,6 @@ DOMESTIC_ABUSE = Category(
             ),
             code="protect_you_and_your_children",
             in_scope=True,
-            fast_tracked=FastTrackCondition(
-                question="Are you worried about someone's safety?", answer="yes"
-            ),
-            fast_track_reason=FinancialAssessmentReason.HARM,
         ),
         "leaving_an_abusive_relationship": Category(
             title=_("Leaving an abusive relationship"),
@@ -125,9 +125,6 @@ DOMESTIC_ABUSE = Category(
             ),
             code="leaving_an_abusive_relationship",
             in_scope=True,
-            fast_tracked=FastTrackCondition(
-                question="Are you worried about someone's safety?", answer="yes"
-            ),
             fast_track_reason=FinancialAssessmentReason.HARM,
         ),
         "problems_with_ex_partner": Category(
@@ -137,10 +134,6 @@ DOMESTIC_ABUSE = Category(
             ),
             code="problems_with_ex_partner",
             in_scope=True,
-            fast_tracked=FastTrackCondition(
-                question="Are you worried about someone's safety?", answer="yes"
-            ),
-            fast_track_reason=FinancialAssessmentReason.HARM,
         ),
         "problems_with_neighbours": Category(
             title=_("Problems with neighbours, landlords or other people"),
@@ -165,20 +158,12 @@ DOMESTIC_ABUSE = Category(
             ),
             code="forced_marriage",
             in_scope=True,
-            fast_tracked=FastTrackCondition(
-                question="Are you worried about someone's safety?", answer="yes"
-            ),
-            fast_track_reason=FinancialAssessmentReason.HARM,
         ),
         "fgm": Category(
             title=_("Female genital mutilation (FGM)"),
             description=_("If you or someone else is at risk of FGM."),
             code="fgm",
             in_scope=True,
-            fast_tracked=FastTrackCondition(
-                question="Are you worried about someone's safety?", answer="yes"
-            ),
-            fast_track_reason=FinancialAssessmentReason.HARM,
         ),
         "accused_of_domestic_abuse": Category(
             title=_("Domestic abuse - if you have been accused"),
@@ -188,6 +173,7 @@ DOMESTIC_ABUSE = Category(
             code="accused_of_domestic_abuse",
             exit_page=False,
             in_scope=True,
+            fast_tracked=False,
         ),
     },
 )
@@ -224,6 +210,10 @@ FAMILY = Category(
                 "Making arrangements for children and finances. Also, keeping yourself safe, protecting children and legal help to leave the relationship."
             ),
             code="domestic_abuse",
+            fast_tracked=FastTrackCondition(
+                question="Are you worried about someone's safety?", answer="yes"
+            ),
+            fast_track_reason=FinancialAssessmentReason.HARM,
         ),
         "family_mediation": Category(
             title=_("Family mediation"),

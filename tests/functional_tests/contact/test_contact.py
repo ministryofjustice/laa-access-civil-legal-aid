@@ -155,31 +155,31 @@ def test_contact_page_eligible_routing(page: Page, answers: dict, route_to: str)
 '''
 
 fast_track_routing = [
-    # pytest.param([
-    #     "Domestic abuse",
-    #     "Help to keep yourself safe and protect children",
-    #     {"type": "form", "selector": "Yes"}
-    # ]),
-    # pytest.param([
-    #     "Domestic abuse",
-    #     "Forced Marriage",
-    #     {"type": "form", "selector": "Yes"}
-    # ]),
-    # pytest.param([
-    #     "Domestic abuse",
-    #     "FGM",
-    #     {"type": "form", "selector": "Yes"}
-    # ]),
-    # pytest.param([
-    #     "Domestic abuse",
-    #     "Leaving an abusive relationship",
-    #     {"type": "form", "selector": "Yes"}
-    # ]),
-    # pytest.param([
-    #     "Domestic abuse",
-    #     "Problems with an ex-partner: children or money",
-    #     {"type": "form", "selector": "Yes"}
-    # ]),
+    pytest.param(
+        [
+            "Domestic abuse",
+            "Help to keep yourself safe and protect children",
+            {"type": "form", "selector": "Yes"},
+        ]
+    ),
+    pytest.param(
+        ["Domestic abuse", "Forced Marriage", {"type": "form", "selector": "Yes"}]
+    ),
+    pytest.param(["Domestic abuse", "FGM", {"type": "form", "selector": "Yes"}]),
+    pytest.param(
+        [
+            "Domestic abuse",
+            "Leaving an abusive relationship",
+            {"type": "form", "selector": "Yes"},
+        ]
+    ),
+    pytest.param(
+        [
+            "Domestic abuse",
+            "Problems with an ex-partner: children or money",
+            {"type": "form", "selector": "Yes"},
+        ]
+    ),
     pytest.param(
         [
             "Domestic abuse",
@@ -211,16 +211,20 @@ fast_track_routing = [
             "Children and social services, children in care",
         ]
     ),
-    # pytest.param([
-    #     "Special educational needs and disability (SEND)",
-    #     "Help with a child or young person's SEND",
-    #     {"type": "form", "selector": "Yes"}
-    # ]),
-    # pytest.param([
-    #     "Special educational needs and disability (SEND)",
-    #     "SEND tribunals",
-    #     {"type": "form", "selector": "Yes"}
-    # ]),
+    pytest.param(
+        [
+            "Special educational needs and disability (SEND)",
+            "Help with a child or young person's SEND",
+            {"type": "form", "selector": "Yes"},
+        ]
+    ),
+    pytest.param(
+        [
+            "Special educational needs and disability (SEND)",
+            "SEND tribunals",
+            {"type": "form", "selector": "Yes"},
+        ]
+    ),
 ]
 
 
