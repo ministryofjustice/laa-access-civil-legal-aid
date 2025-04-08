@@ -327,6 +327,7 @@ EDUCATION = Category(
                 "Help with schools, other education settings and local authorities. Includes help with education, health and care plans (EHCP) or if a child’s needs are not being met."
             ),
             code="child_young_person",
+            in_scope=True,
         ),
         "tribunals": Category(
             title=_("SEND tribunals"),
