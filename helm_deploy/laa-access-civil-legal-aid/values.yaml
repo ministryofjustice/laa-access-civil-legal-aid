@@ -44,6 +44,9 @@ ingress:
     weight: '100'
   tls: []
 
+whitelist:
+  enabled: true
+
 resources: {}
 
 autoscaling:

@@ -9,6 +9,9 @@ ingress:
         - path: /
           pathType: ImplementationSpecific
 
+whitelist:
+  enabled: true
+
 envVars:
   CLA_BACKEND_URL:
     value: "http://cla-backend-app.laa-cla-backend-production.svc.cluster.local"
