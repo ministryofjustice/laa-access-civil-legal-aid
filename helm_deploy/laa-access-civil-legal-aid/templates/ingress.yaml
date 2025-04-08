@@ -1,4 +1,4 @@
-{{- if .Values.ingress.enabled -}}
+{{- if .Values.ingress.enabled }}
 {{- $fullName := include "laa-access-civil-legal-aid.fullname" . -}}
 {{- $svcPort := .Values.service.port -}}
 {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
@@ -17,7 +17,7 @@ metadata:
     {{- if .Values.ingress.cluster.name }}
     external-dns.alpha.kubernetes.io/set-identifier: "{{ $fullName }}-{{ .Release.Namespace }}-{{- .Values.ingress.cluster.name -}}"
     external-dns.alpha.kubernetes.io/aws-weight: "{{- .Values.ingress.cluster.weight -}}"
-    {{- if .Values.whitelist.enabled -}}
+    {{- if .Values.whitelist.enabled }}
     nginx.ingress.kubernetes.io/whitelist-source-range: "{{ include "laa-access-civil-legal-aid.whitelist" . }}"
     {{- end }}
     {{- end }}
