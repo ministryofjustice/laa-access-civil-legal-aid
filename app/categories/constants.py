@@ -363,6 +363,8 @@ DISCRIMINATION = Category(
     chs_code="discrimination",
     code="discrimination",
     in_scope=True,
+    fast_tracked=FastTrackCondition(question="Are you under 18?", answer="yes"),
+    fast_track_reason=FinancialAssessmentReason.MORE_INFO_REQUIRED,
 )
 
 EDUCATION = Category(
@@ -378,6 +380,11 @@ EDUCATION = Category(
                 "Help with schools, other education settings and local authorities. Includes help with education, health and care plans (EHCP) or if a child’s needs are not being met."
             ),
             code="child_young_person",
+            fast_tracked=FastTrackCondition(
+                question="Is this about a child who is or has been in care?",
+                answer="yes",
+            ),
+            fast_track_reason=FinancialAssessmentReason.MORE_INFO_REQUIRED,
         ),
         "tribunals": Category(
             title=_("SEND tribunals"),
@@ -386,6 +393,11 @@ EDUCATION = Category(
             ),
             code="tribunals",
             in_scope=True,
+            fast_tracked=FastTrackCondition(
+                question="Is this about a child who is or has been in care?",
+                answer="yes",
+            ),
+            fast_track_reason=FinancialAssessmentReason.MORE_INFO_REQUIRED,
         ),
         "discrimination": Category(
             title=_("Child treated unfairly at school, discrimination"),
