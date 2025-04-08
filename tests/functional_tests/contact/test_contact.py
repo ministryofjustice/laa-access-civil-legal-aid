@@ -214,3 +214,36 @@ def test_contact_page_routing(page: Page, contact_answers: dict):
                 "When a CLA operator calls, the call will come from an anonymous number."
             )
         ).to_be_visible()
+
+
+@pytest.mark.usefixtures("live_server")
+@pytest.mark.parametrize("contact_answers", contact_form_routing)
+def test_postcode_field(page: Page, contact_answers: dict):
+    """
+    Test the contact page.
+    """
+    page.get_by_role("link", name="Contact us").click()
+
+    page.get_by_label("I’d prefer to speak to someone").check()
+
+    page.get_by_role("button", name="Continue").click()
+
+    expect(
+        page.get_by_role("heading", name="Contact Civil Legal Advice")
+    ).to_be_visible()
+
+    page.get_by_role("textbox", name="Your full name").fill("Test")
+
+    page.get_by_role("radio", name="I will call you").click()
+
+    page.get_by_role("textbox", name="Postcode (optional)").fill("SW1")
+
+    page.get_by_role("button", name="Find UK Address").click()
+
+    page.get_by_role("combobox", name="Select an address").select_option(index=1)
+
+    page.get_by_role("button", name="Submit details").click()
+
+    expect(
+        page.get_by_role("heading", name="Your details have been submitted")
+    ).to_be_visible()
