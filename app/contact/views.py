@@ -37,21 +37,20 @@ class ContactUs(View):
     methods = ["GET", "POST"]
     template = "contact/contact.html"
 
-    def __init__(self, template: str = None, attach_eligiblity_data: bool = False):
+    def __init__(self, template: str = None, attach_eligibility_data: bool = False):
         if template:
             self.template = template
-        self.attach_eligiblity_data = attach_eligiblity_data
+        self.attach_eligibility_data = attach_eligibility_data
 
     def dispatch_request(self):
         form = ContactUsForm()
         form_progress = MeansTest(ContactUsForm, "Contact us").get_form_progress(form)
         if form.validate_on_submit():
             payload = form.get_payload()
-            # Add the extra notes to the eligibility object
-            if not self.attach_eligiblity_data:
+            if not self.attach_eligibility_data:
                 session.clear_eligibility()
 
-            self._append_notes_to_eligibility_check(form.data.get("extra_notes"))
+            payload["scope_traversal"] = session.get_scope_traversal()
 
             session["case_reference"] = cla_backend.post_case(payload=payload)[
                 "reference"
