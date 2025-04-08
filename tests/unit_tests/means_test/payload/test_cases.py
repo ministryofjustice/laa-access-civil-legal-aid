@@ -60,7 +60,7 @@ ABOUT_YOU_TEST_CASES = [
         ),
         "expected": {
             "category": "housing",
-            "has_partner": False,
+            "has_partner": True,
             "dependants_young": 0,
             "dependants_old": 0,
             "is_you_or_your_partner_over_60": False,
@@ -85,8 +85,8 @@ ABOUT_YOU_TEST_CASES = [
                     "is_self_employed": False,
                     "has_partner": False,
                     "in_dispute": False,
-                    "have_children": True,
-                    "have_dependants": True,
+                    "has_children": True,
+                    "has_dependants": True,
                     "num_children": 2,
                     "num_dependants": 1,
                     "aged_60_or_over": False,
@@ -392,6 +392,7 @@ INCOME_TEST_CASES = [
             },
         ),
         "expected": {
+            "has_partner": True,
             "you": {
                 "income": {
                     "earnings": {
@@ -502,8 +503,8 @@ SAVINGS_TEST_CASES = [
                     "is_self_employed": False,
                     "has_partner": False,
                     "in_dispute": False,
-                    "have_savings": True,
-                    "have_valuables": True,
+                    "has_savings": True,
+                    "has_valuables": True,
                 },
                 "savings": {
                     "savings": 5001,
@@ -557,7 +558,7 @@ OUTGOINGS_TEST_CASES = [
                     "is_self_employed": False,
                     "has_partner": False,
                     "in_dispute": False,
-                    "have_children": True,  # You need children to for childcare to be counted as an outgoing payment
+                    "has_children": True,  # You need children to for childcare to be counted as an outgoing payment
                     "num_children": 1,
                 },
                 "outgoings": {

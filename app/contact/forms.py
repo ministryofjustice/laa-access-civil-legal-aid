@@ -459,7 +459,7 @@ class ContactUsForm(FlaskForm):
         widget=GovTextInput(),
     )
     address_finder = SelectField(
-        _("Select an address"), choices=[""], widget=GovSelect()
+        _("Select an address"), choices=[""], widget=GovSelect(), validate_choice=False
     )
     street_address = TextAreaField(
         _("Street address (optional)"),

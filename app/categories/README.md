@@ -25,9 +25,9 @@ class HousingLandingPage(CategoryLandingPage):
     category = "Housing"
 
     routing_map = {
-        "homelessness": "categories.results.in_scope_hlpas",
+        "homelessness": "categories.results.in_scope",
         "eviction": "contact.contact_us",
-        "other": "categories.results.refer",
+        "other": "categories.results.cannot_find_your_problem",
     }
 
 
@@ -54,7 +54,7 @@ For example:
 routing_map = {
         "community_care": {"endpoint": "find-a-legal-adviser.search", 
                            "category": "mhe",
-                           "secondary-cateogry": "com"}
+                           "secondary-category": "com"}
 }
 ```
 

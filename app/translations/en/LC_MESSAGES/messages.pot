@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-31 14:04+0100\n"
+"POT-Creation-Date: 2025-03-18 23:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -76,6 +76,14 @@ msgid "Female genital mutilation (FGM)"
 msgstr ""
 
 msgid "If you or someone else is at risk of FGM."
+msgstr ""
+
+msgid "Domestic abuse - if you have been accused"
+msgstr ""
+
+msgid ""
+"Legal help if you’ve been accused of domestic abuse or forced marriage. "
+"Includes non-molestation orders and other court orders."
 msgstr ""
 
 msgid "Domestic abuse - if you have been accused"
@@ -1843,31 +1851,6 @@ msgid ""
 "GOV.UK to find out about %(ecf_link)s."
 msgstr ""
 
-msgid "Legal aid doesn’t cover all types of problem"
-msgstr ""
-
-msgid ""
-"You can still ask a solicitor for help – you will have to pay for their "
-"advice."
-msgstr ""
-
-msgid ""
-"You can still ask a solicitor for help - you will have to pay for their "
-"advice."
-msgstr ""
-
-msgid "Find a solicitor"
-msgstr ""
-
-msgid ""
-"You may still get help and advice from the organisations listed below. "
-"You don’t have to qualify for legal aid."
-msgstr ""
-
-#, python-format
-msgid "Help organisations for problems about %(category_name)s"
-msgstr ""
-
 msgid "Appeal a decision about your benefits"
 msgstr ""
 
@@ -2268,6 +2251,9 @@ msgstr ""
 
 #, python-format
 msgid "Legal Aid is different in Guernsey. Visit %(link)s for more information."
+msgstr ""
+
+msgid "the Housing Loss Prevention Advice Service"
 msgstr ""
 
 msgid "Sorry, the service is unavailable"
@@ -2726,6 +2712,34 @@ msgid ""
 "href=\"%(contact_url)s\" class=\"govuk-link\">get in touch</a>."
 msgstr ""
 
+msgid "You might qualify for free legal advice"
+msgstr ""
+
+msgid ""
+"You might be able to get free legal advice through the Housing Loss "
+"Prevention Advice Scheme."
+msgstr ""
+
+msgid ""
+"This advice is free to anyone who can show their home is at risk. It does"
+" not depend on what you earn or your financial situation."
+msgstr ""
+
+msgid "Next steps"
+msgstr ""
+
+msgid "We’ll show you a list of legal advisors."
+msgstr ""
+
+msgid "You need to contact the legal adviser."
+msgstr ""
+
+msgid "Explain that you could lose your home."
+msgstr ""
+
+msgid "Tell them if you have any letters or documents about your situation."
+msgstr ""
+
 msgid ""
 "We only need to know about any money you received last month, even if "
 "this varies from month to month."
@@ -2743,6 +2757,31 @@ msgid "Remove Property"
 msgstr ""
 
 msgid "Add another property"
+msgstr ""
+
+msgid "Legal aid doesn’t cover all types of problem"
+msgstr ""
+
+msgid ""
+"You can still ask a solicitor for help – you will have to pay for their "
+"advice."
+msgstr ""
+
+msgid ""
+"You can still ask a solicitor for help - you will have to pay for their "
+"advice."
+msgstr ""
+
+msgid "Find a solicitor"
+msgstr ""
+
+msgid ""
+"You may still get help and advice from the organisations listed below. "
+"You don’t have to qualify for legal aid."
+msgstr ""
+
+#, python-format
+msgid "Help organisations for problems about %(category_name)s"
 msgstr ""
 
 msgid "About the problem"
