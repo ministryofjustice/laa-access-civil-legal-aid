@@ -40,8 +40,9 @@ def result_page(
     page_num: int = 1,
     postcode_region: str = None,
 ):
-    # Only allow valid categories
-    categories = [cat for cat in [category, secondary_category] if cat in bp.categories]
+    categories = [
+        cat for cat in [category, secondary_category] if is_valid_category_code(cat)
+    ]
 
     results = laalaa_search(postcode=postcode, categories=categories, page=page_num)
 
