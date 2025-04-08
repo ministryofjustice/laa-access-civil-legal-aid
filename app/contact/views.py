@@ -8,7 +8,6 @@ import logging
 from flask import session, render_template, request, redirect, url_for
 from app.api import cla_backend
 from app.contact.notify.api import notify
-from app.means_test.api import update_means_test
 from app.means_test.views import MeansTest
 from datetime import datetime
 
@@ -50,7 +49,15 @@ class ContactUs(View):
             if not self.attach_eligibility_data:
                 session.clear_eligibility()
 
-            payload["scope_traversal"] = session.get_scope_traversal()
+            # If the user used the "Contact Us" journey rather than completing scope diagnosis then their previous answers should not be attached to their case
+            payload["scope_traversal"] = (
+                session.get_scope_traversal()
+                if ReasonsForContactingForm.MODEL_REF_SESSION_KEY not in session
+                else {}
+            )
+            payload["scope_traversal"]["financial_eligiblity_status"] = (
+                self.get_financial_eligibility_status()
+            )
 
             session["case_reference"] = cla_backend.post_case(payload=payload)[
                 "reference"
@@ -62,7 +69,7 @@ class ContactUs(View):
                     session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY],
                 )
 
-            # Set callback time
+                # Set callback time
             session["callback_time"]: datetime | None = form.get_callback_time()
             session["contact_type"] = form.data.get("contact_type")
 
@@ -91,12 +98,6 @@ class ContactUs(View):
             return redirect(url_for("contact.confirmation"))
         return render_template(self.template, form=form, form_progress=form_progress)
 
-    def _append_notes_to_eligibility_check(self, notes_data: str):
-        if not notes_data or len(notes_data) == 0:
-            return
-        session.get_eligibility().add_note("User problem", notes_data)
-        update_means_test(session.get_eligibility().formatted_notes)
-
     @staticmethod
     def _attach_rfc_to_case(case_ref: str, rfc_ref: str):
         cla_backend.update_reasons_for_contacting(
@@ -105,6 +106,16 @@ class ContactUs(View):
                 "case": case_ref,
             },
         )
+
+    def get_financial_eligibility_status(self):
+        # User has passed the means test and is on the "/eligible" page
+        if self.attach_eligibility_data and session.ec_reference:
+            return "PASSED"
+        # User has used the "Contact Us" journey rather than completing scope diagnosis
+        if ReasonsForContactingForm.MODEL_REF_SESSION_KEY in session:
+            return "SKIPPED"
+        # The user has either clicked "Contact CLA" on an in-scope page or has been operationally fast tracked to the "Contact Us" page.
+        return "FAST_TRACK"
 
 
 class ConfirmationPage(View):
