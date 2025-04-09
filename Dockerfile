@@ -10,6 +10,7 @@ RUN npm run build
 
 FROM $BASE_IMAGE AS base
 ARG REQUIREMENTS_FILE=requirements-production.txt
+
 # Set environment variables
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=${FLASK_RUN_PORT:-8000}
