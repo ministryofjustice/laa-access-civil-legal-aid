@@ -1,4 +1,4 @@
-from app.categories.constants import Category, HOUSING, EDUCATION
+from app.categories.constants import Category, HOUSING, EDUCATION, COMMUNITY_CARE
 import pytest
 from flask import url_for
 from app.categories.models import CategoryAnswer, QuestionType
@@ -93,8 +93,6 @@ def test_get_category_question_answer_not_found(app, client):
 
 
 def test_set_category_dataclass(app, client):
-    from app.categories.constants import EDUCATION
-
     assert isinstance(EDUCATION, Category)
 
     with client.session_transaction() as session:
@@ -118,7 +116,7 @@ def test_in_scope(client):
         answer_label="Car",
         next_page="categories.index",
         question_page="categories.housing.homelessness",
-        category=EDUCATION.sub.child_young_person,
+        category=COMMUNITY_CARE.sub.care_from_council,
     )
     with client.session_transaction() as session:
         assert session.in_scope is False
