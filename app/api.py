@@ -147,7 +147,7 @@ class BackendAPIClient:
 
     def post_case(self, payload=None):
         contact_endpoint = "checker/api/v1/case"
-        payload["eligibility_check"] = session.get("ec_reference")
+        payload["eligibility_check"] = session.ec_reference
 
         response = self.post(contact_endpoint, json=payload)
         return response
