@@ -83,8 +83,15 @@ class MoneyIntervalField(Field):
             raw_value = (
                 self.raw_data[0] if self.raw_data and len(self.raw_data) > 0 else None
             )
-            value = raw_value
-        return value
+            return raw_value
+
+        else:
+            try:
+                # Convert to Decimal and quantize to 2 decimal places
+                decimal_value = Decimal(str(value)).quantize(Decimal("0.01"))
+                return str(decimal_value)
+            except InvalidOperation:
+                return value
 
     def __init__(
         self,
@@ -127,7 +134,6 @@ class MoneyIntervalField(Field):
             # Handle the data coming from the form fields named field.id[value] and field.id[interval]
             valuelist[0] = CurrencyValidator.clean_input(valuelist[0])
             self.data = valuelist
-
             if (
                 "per_interval_value" not in self.data
                 or self.data["per_interval_value"] is None
