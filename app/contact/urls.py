@@ -45,7 +45,7 @@ bp.add_url_rule(
 bp.add_url_rule(
     "/contact-us/fast-tracked",
     view_func=FastTrackedContactUs.as_view(
-        "contact_us_fast_tracked", attach_eligiblity_data=False
+        "contact_us_fast_tracked", attach_eligibility_data=False
     ),
 )
 bp.add_url_rule("/confirmation", view_func=ConfirmationPage.as_view("confirmation"))
