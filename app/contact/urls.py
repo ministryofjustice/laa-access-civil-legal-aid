@@ -1,5 +1,5 @@
 import logging
-from flask import jsonify, session, redirect, url_for
+from flask import jsonify
 from app.contact import bp
 from app.contact.address_finder.widgets import FormattedAddressLookup
 from app.contact.views import (
@@ -7,23 +7,11 @@ from app.contact.views import (
     ReasonForContacting,
     ConfirmationPage,
     FastTrackedContactUs,
+    EligibleContactUsPage,
 )
-from app.means_test.api import EligibilityState, is_eligible
 
 
 logger = logging.getLogger(__name__)
-
-
-class EligibleContactUsPage(ContactUs):
-    def dispatch_request(self):
-        if not session.ec_reference:
-            return redirect(url_for("main.session_expired"))
-
-        state = is_eligible(session.ec_reference)
-        if state != EligibilityState.YES:
-            return redirect(url_for("main.session_expired"))
-
-        return super().dispatch_request()
 
 
 bp.add_url_rule(

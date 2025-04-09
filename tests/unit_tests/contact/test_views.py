@@ -1,5 +1,5 @@
-from unittest.mock import patch, MagicMock, PropertyMock
-from flask import url_for
+from unittest.mock import patch, MagicMock
+from flask import url_for, redirect
 from flask_wtf import FlaskForm
 from app.contact.forms import ReasonsForContactingForm
 from app.contact.views import (
@@ -10,8 +10,6 @@ from app.contact.views import (
 )
 from app.contact.urls import EligibleContactUsPage
 from app.means_test.views import MeansTest
-from app.categories.constants import DOMESTIC_ABUSE
-from app.categories.models import CategoryAnswer
 from app.session import Session
 from app.means_test.api import EligibilityState
 
@@ -193,26 +191,25 @@ class TestContactUsView:
 
 class TestFastTrackedContactUsView:
     @patch("app.contact.views.ContactUs.dispatch_request", return_value=None)
-    @patch(
-        "app.contact.views.FastTrackedContactUs.fast_tracked",
-        return_value=(False, None),
-    )
+    @patch("app.contact.views.FastTrackedContactUs.ensure_in_scope")
     def test_dispatch_request_failure(
-        self, mock_fast_tracked, mock_dispatch_request, app
+        self, mock_ensure_in_scope, mock_dispatch_request, app
     ):
         with app.app_context():
+            mock_ensure_in_scope.return_value = redirect(
+                url_for("main.session_expired")
+            )
             view = FastTrackedContactUs()
             response = view.dispatch_request()
             assert response.status_code == 302
             assert response.location == url_for("main.session_expired")
+            assert mock_ensure_in_scope.called is True
             assert mock_dispatch_request.called is False
 
     @patch("app.contact.views.ContactUs.dispatch_request", return_value=None)
-    @patch(
-        "app.contact.views.FastTrackedContactUs.fast_tracked", return_value=(True, None)
-    )
+    @patch("app.contact.views.FastTrackedContactUs.ensure_in_scope", return_value=None)
     def test_dispatch_request_success(
-        self, mock_fast_tracked, mock_dispatch_request, app
+        self, mock_ensure_in_scope, mock_dispatch_request, app
     ):
         with app.app_context():
             view = FastTrackedContactUs()
@@ -220,16 +217,15 @@ class TestFastTrackedContactUsView:
             assert mock_dispatch_request.called is True
 
     @patch("app.contact.views.ContactUs.get_payload_from_form", return_value={})
-    @patch(
-        "app.contact.views.FastTrackedContactUs.fast_tracked",
-        return_value=(True, FinancialAssessmentReason.HARM),
-    )
-    def test_get_payload_from_form_success(
-        self, mock_fast_tracked, mock_super_get_payload_from_form, app
-    ):
+    def test_get_payload_from_form(self, mock_super_get_payload_from_form, app):
+        class TestRequest:
+            args = {"reason": "harm"}
+
         with app.app_context():
             view = FastTrackedContactUs()
-            payload = view.get_payload_from_form(FlaskForm())
+            payload = view.get_payload_from_form(
+                request=TestRequest(), form=FlaskForm()
+            )
             assert (
                 payload["financial_assessment_reason"] == FinancialAssessmentReason.HARM
             )
@@ -237,89 +233,6 @@ class TestFastTrackedContactUsView:
                 payload["financial_assessment_status"]
                 == FinancialAssessmentStatus.FAST_TRACKING
             )
-
-    @patch("app.contact.views.ContactUs.get_payload_from_form", return_value={})
-    @patch(
-        "app.contact.views.FastTrackedContactUs.fast_tracked",
-        return_value=(False, None),
-    )
-    def test_get_payload_from_form_failure(
-        self, mock_fast_tracked, mock_super_get_payload_from_form, app
-    ):
-        with app.app_context():
-            view = FastTrackedContactUs()
-            payload = view.get_payload_from_form(FlaskForm())
-            assert "financial_assessment_reason" not in payload
-            assert "financial_assessment_status" not in payload
-
-    def test_fast_tracked_no_condition(self, app, client):
-        with app.app_context():
-            with patch.object(
-                Session, "category", new_callable=PropertyMock
-            ) as mock_category:
-                mock_category.return_value = DOMESTIC_ABUSE.sub.problems_with_neighbours
-                view = FastTrackedContactUs()
-                is_fast_tracked, fast_track_reason = view.fast_tracked()
-                assert is_fast_tracked is True
-                assert fast_track_reason == FinancialAssessmentReason.MORE_INFO_REQUIRED
-
-    def test_fast_tracked_condition_failure(self, app, client):
-        with app.app_context():
-            with patch.object(
-                Session, "category_answers", new_callable=PropertyMock
-            ) as mock_category_answers:
-                mock_category_answers.return_value = [
-                    CategoryAnswer(
-                        question="Find problems covered by legal aid",
-                        answer_value=DOMESTIC_ABUSE.code,
-                        answer_label=DOMESTIC_ABUSE.title,
-                        next_page="categories.index",
-                        question_page="categories.domestic_abuse.landing",
-                        category=DOMESTIC_ABUSE,
-                    ),
-                    CategoryAnswer(
-                        question="Are you worried about someone's safety?",
-                        answer_value="no",
-                        answer_label="No",
-                        next_page="categories.index",
-                        question_page="categories.domestic_abuse.landing",
-                        category=DOMESTIC_ABUSE.sub.problems_with_ex_partner,
-                    ),
-                ]
-
-                view = FastTrackedContactUs()
-                is_fast_tracked, fast_track_reason = view.fast_tracked()
-                assert is_fast_tracked is False
-                assert fast_track_reason is None
-
-    def test_fast_tracked_condition_success(self, app, client):
-        with app.app_context():
-            with patch.object(
-                Session, "category_answers", new_callable=PropertyMock
-            ) as mock_category_answers:
-                mock_category_answers.return_value = [
-                    CategoryAnswer(
-                        question="Find problems covered by legal aid",
-                        answer_value=DOMESTIC_ABUSE.code,
-                        answer_label=DOMESTIC_ABUSE.title,
-                        next_page="categories.index",
-                        question_page="categories.domestic_abuse.landing",
-                        category=DOMESTIC_ABUSE,
-                    ),
-                    CategoryAnswer(
-                        question="Are you worried about someone's safety?",
-                        answer_value="yes",
-                        answer_label="Yes",
-                        next_page="categories.index",
-                        question_page="categories.domestic_abuse.landing",
-                        category=DOMESTIC_ABUSE.sub.problems_with_ex_partner,
-                    ),
-                ]
-
-                view = FastTrackedContactUs()
-                is_fast_tracked, fast_track_reason = view.fast_tracked()
-                assert is_fast_tracked is True
-                assert fast_track_reason == FinancialAssessmentReason.HARM
 
 
 def test_eligible_view_success(app):

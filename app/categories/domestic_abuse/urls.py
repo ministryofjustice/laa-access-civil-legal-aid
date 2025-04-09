@@ -41,7 +41,10 @@ class DomesticAbuseLandingPage(CategoryLandingPage):
             ),
             (
                 DOMESTIC_ABUSE.sub.problems_with_neighbours,
-                "contact.contact_us_fast_tracked",
+                {
+                    "endpoint": "contact.contact_us_fast_tracked",
+                    "reason": "more-info-required",
+                },
             ),
             (
                 DOMESTIC_ABUSE.sub.housing_homelessness_losing_home,
