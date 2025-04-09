@@ -196,4 +196,13 @@ class MultiplePropertiesForm(BaseMeansTestForm):
         validators=[validate_single_main_home],
     )
 
+    def summary(self):
+        return {
+            "properties": {
+                "question": "Not implemented yet",
+                "answer": "Not implemented yet",
+                "id": "None",
+            }
+        }
+
     template = "means_test/property.html"
