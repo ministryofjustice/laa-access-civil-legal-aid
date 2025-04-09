@@ -1,28 +1,29 @@
 from unittest.mock import patch, MagicMock
 from flask import url_for
-from app.session import Session
 from app.contact.forms import ReasonsForContactingForm
+from app.contact.urls import EligibleContactUsPage
 from app.contact.views import ContactUs
-from app.contact.urls import EligibleContactUsPage, EligibilityState
+from app.means_test.constants import EligibilityState
 from app.means_test.views import MeansTest
+from app.session import Session
 
 
 class TestContactUsView:
     def test_init_with_default_template(self):
         view = ContactUs()
         assert view.template == "contact/contact.html"
-        assert view.attach_eligiblity_data is False
+        assert view.attach_eligibility_data is False
 
     def test_init_with_custom_template(self):
         custom_template = "custom/template.html"
         view = ContactUs(template=custom_template)
         assert view.template == custom_template
-        assert view.attach_eligiblity_data is False
+        assert view.attach_eligibility_data is False
 
     def test_init_with_attach_eligibility_data(self):
-        view = ContactUs(attach_eligiblity_data=True)
+        view = ContactUs(attach_eligibility_data=True)
         assert view.template == "contact/contact.html"
-        assert view.attach_eligiblity_data is True
+        assert view.attach_eligibility_data is True
 
     @patch("app.contact.views.ContactUsForm")
     @patch("app.contact.views.MeansTest")
@@ -50,10 +51,8 @@ class TestContactUsView:
     @patch("app.contact.views.redirect")
     @patch("app.contact.views.cla_backend")
     @patch("app.contact.views.notify")
-    @patch.object(ContactUs, "_append_notes_to_eligibility_check")
     def test_post_request_success(
         self,
-        mock_append_notes,
         mock_notify,
         mock_cla_backend,
         mock_redirect,
@@ -81,7 +80,6 @@ class TestContactUsView:
         view.dispatch_request()
 
         mock_cla_backend.post_case.assert_called_once()
-        mock_append_notes.assert_called_once_with("Some notes")
         mock_notify.create_and_send_confirmation_email.assert_called_once()
         mock_redirect.assert_called_once_with(url_for("contact.confirmation"))
 
@@ -133,35 +131,6 @@ class TestContactUsView:
             client.post("/contact-us", data=form_data)
 
             mock_attach_rfc_to_case.assert_called_once_with("AB-1234-5678", "1234")
-
-    @patch("app.contact.views.update_means_test")
-    def test_append_notes_to_eligibility_check_with_valid_notes(
-        self, mock_update_means_test, app, client
-    ):
-        notes_data = "User notes"
-
-        view = ContactUs()
-        view._append_notes_to_eligibility_check(notes_data)
-
-        mock_update_means_test.assert_called_once()
-        eligibility_check = mock_update_means_test.mock_calls[0][1][0]
-        assert "notes" in eligibility_check
-        assert eligibility_check["notes"] == "User problem:\nUser notes"
-
-    @patch("app.contact.views.update_means_test")
-    def test_append_notes_to_eligibility_check_with_empty_notes(
-        self, mock_update_means_test, app, client
-    ):
-        # Test with empty string
-        view = ContactUs()
-        view._append_notes_to_eligibility_check("")
-
-        mock_update_means_test.assert_not_called()
-
-        # Test with None
-        view._append_notes_to_eligibility_check(None)
-
-        mock_update_means_test.assert_not_called()
 
     @patch("app.contact.views.cla_backend.update_reasons_for_contacting")
     def test_attaching_rfc_to_case(self, mock_update_rfc, app, client):

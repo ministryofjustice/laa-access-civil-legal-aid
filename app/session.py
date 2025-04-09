@@ -332,6 +332,43 @@ class Session(SecureCookieSession):
 
         self["category_answers"] = answers
 
+    def get_scope_traversal(self):
+        """Used to populate the users' case data with their answers from this service."""
+
+        def get_users_answers(answers: list[CategoryAnswer]) -> list[dict]:
+            """Only get the fields that we need to store in the backend."""
+            return [
+                {
+                    "question": answer.question,
+                    "answer": answer.answer_label,
+                    "type": answer.question_type,
+                }
+                for answer in answers
+            ]
+
+        category_information = (
+            {"name": self.category.title._args[0], "code": self.category.chs_code}
+            if self.category
+            else None
+        )
+
+        subcategory_information = (
+            {
+                "name": self.subcategory.title._args[
+                    0
+                ],  # Get the non-translated string
+                "description": self.subcategory.description._args[0],
+            }
+            if self.subcategory
+            else None
+        )
+
+        return {
+            "scope_answers": get_users_answers(self.category_answers),
+            "category": category_information,
+            "subcategory": subcategory_information,
+        }
+
 
 class SessionInterface(SecureCookieSessionInterface):
     session_class = Session
