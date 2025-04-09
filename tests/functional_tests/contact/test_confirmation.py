@@ -71,7 +71,7 @@ def test_housing_category(page: Page):
     page.get_by_role("link", name="Housing, homelessness, losing").click()
     page.get_by_role("link", name="Homelessness").click()
     page.get_by_role("paragraph").filter(
-        has_text="Fill in the ' contact CLA '"
+        has_text="Fill in the 'contact CLA'"
     ).get_by_role("link").click()
     page.get_by_role("textbox", name="Your full name").fill("John Doe")
     page.get_by_role("radio", name="I will call you").check()
