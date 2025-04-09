@@ -136,7 +136,7 @@ def test_reviews_page_change_sub_category(page: Page, complete_benefits_form):
     page.get_by_text("Housing, homelessness, losing your home").click()
     page.get_by_text("Eviction, told to leave your home").click()
     expect(page).to_have_title(
-        "Legal aid is available for this type of problem - Access Civil Legal Aid – GOV.UK"
+        "Legal aid is available for this type of problem - Check if you can get legal aid – GOV.UK"
     )
 
     page.locator("a[href='/about-you']").click()
@@ -172,7 +172,7 @@ def test_reviews_page_change_category(page: Page, complete_benefits_form):
     page.get_by_label("No").check()
     page.get_by_role("button", name="Continue").click()
     expect(page).to_have_title(
-        "Legal aid is available for this type of problem - Access Civil Legal Aid – GOV.UK"
+        "Legal aid is available for this type of problem - Check if you can get legal aid – GOV.UK"
     )
     page.goto(url_for("means_test.review", _external=True))
     answers = get_answers()

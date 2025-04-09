@@ -7,7 +7,7 @@ from flask_babel import lazy_gettext as _, LazyString
 class FinancialAssessmentStatus(str, Enum):
     PASSED: str = "PASSED"
     FAILED: str = "FAILED"
-    FAST_TRACKING: str = "FAST_TRACK"
+    FAST_TRACK: str = "FAST_TRACK"
     SKIPPED: str = "SKIPPED"
 
 

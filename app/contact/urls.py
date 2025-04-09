@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 bp.add_url_rule(
     "/eligible",
     view_func=EligibleContactUsPage.as_view(
-        "eligible", template="contact/eligible.html", attach_eligiblity_data=True
+        "eligible", template="contact/eligible.html", attach_eligibility_data=True
     ),
 )
 
@@ -40,7 +40,7 @@ def geocode(postcode):
 
 bp.add_url_rule(
     "/contact-us",
-    view_func=ContactUs.as_view("contact_us", attach_eligiblity_data=False),
+    view_func=ContactUs.as_view("contact_us", attach_eligibility_data=False),
 )
 bp.add_url_rule(
     "/contact-us/fast-tracked",

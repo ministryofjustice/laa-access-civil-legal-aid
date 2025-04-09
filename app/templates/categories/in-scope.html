@@ -37,10 +37,8 @@
 
         <h2 class="govuk-heading-m">{% trans %}When you do not need to complete the financial assessment{% endtrans %}</h2>
 
-        {% set contact_us_link %}
-            <a class="govuk-link" href={{ url_for('contact.contact_us_fast_tracked', reason="more-info-required") }}>contact CLA</a>
-        {% endset %}
-        <p class="govuk-body">{% trans %}You should {{ contact_us_link }}  without completing the financial assessment if you are:{% endtrans %}</p>
+        {% set contact_us_link %}<a class="govuk-link" href={{ url_for('contact.contact_us_fast_tracked', reason="more-info-required") }}>contact CLA</a>{% endset %}
+        <p class="govuk-body">{% trans %}You should {{ contact_us_link }} without completing the financial assessment if you are:{% endtrans %}</p>
 
         <ul class="govuk-list govuk-list--bullet">
             <li>{% trans %}under 18{% endtrans %}</li>

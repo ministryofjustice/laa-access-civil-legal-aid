@@ -2480,11 +2480,14 @@ msgstr ""
 "Bydd eich sesiwn yn dod i ben os yw wedi bod yn anweithredol am hanner "
 "awr. Rydym yn gwneud hyn er mwyn eich cadw’n ddiogel."
 
-msgid "If you're having trouble completing this form, "
-msgstr "Os ydych yn cael problemau wrth lenwi’r ffurflen hon, gofynnwch i ni, "
+msgid "Civil Legal Advice Privacy Statement"
+msgstr "Datganiad Preifatrwydd Cyngor Cyfreithiol Sifil"
 
-msgid "get in touch"
-msgstr "cysylltwch â ni"
+#, python-format
+msgid "Protecting your personal data and your privacy is "
+"important to us. Read the full %(privacy_link)s."
+msgstr "Mae diogelu’ch data personol a phreifatrwydd yn bwysig i ni. Darllennwch "
+"y %(privacy_link)s."
 
 msgid "In some cases, you may need to pay a contribution towards your legal aid."
 msgstr ""

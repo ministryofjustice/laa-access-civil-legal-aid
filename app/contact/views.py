@@ -8,7 +8,7 @@ import logging
 from flask import session, render_template, request, redirect, url_for
 from app.api import cla_backend
 from app.contact.notify.api import notify
-from app.means_test.api import update_means_test, is_eligible, EligibilityState
+from app.means_test.api import is_eligible, EligibilityState
 from app.means_test.views import MeansTest
 from datetime import datetime
 from app.categories.constants import (
@@ -43,29 +43,29 @@ class ContactUs(View):
     methods = ["GET", "POST"]
     template = "contact/contact.html"
 
-    def __init__(self, template: str = None, attach_eligiblity_data: bool = False):
+    def __init__(self, template: str = None, attach_eligibility_data: bool = False):
         if template:
             self.template = template
-        self.attach_eligiblity_data = attach_eligiblity_data
-
-    def get_payload_from_form(self, request, form):
-        payload = form.get_payload()
-        if not self.attach_eligiblity_data:
-            # Clicked the contact-us link
-            payload["financial_assessment_status"] = FinancialAssessmentStatus.SKIPPED
-            payload["financial_assessment_reason"] = FinancialAssessmentReason.OTHER
-        return payload
+        self.attach_eligibility_data = attach_eligibility_data
 
     def dispatch_request(self):
         form = ContactUsForm()
         form_progress = MeansTest(ContactUsForm, "Contact us").get_form_progress(form)
         if form.validate_on_submit():
-            payload = self.get_payload_from_form(request, form)
-            # Add the extra notes to the eligibility object
-            if not self.attach_eligiblity_data:
+            payload = form.get_payload()
+            if not self.attach_eligibility_data:
                 session.clear_eligibility()
 
-            self._append_notes_to_eligibility_check(form.data.get("extra_notes"))
+            # If the user used the "Contact Us" journey rather than completing scope diagnosis then their
+            # previous answers should not be attached to their case
+            payload["scope_traversal"] = (
+                session.get_scope_traversal()
+                if ReasonsForContactingForm.MODEL_REF_SESSION_KEY not in session
+                else {}
+            )
+            financial_status, financial_reason = self.get_financial_eligibility_status()
+            payload["scope_traversal"]["financial_eligiblity_status"] = financial_status
+            payload["scope_traversal"]["financial_eligiblity_reason"] = financial_reason
 
             session["case_reference"] = cla_backend.post_case(payload=payload)[
                 "reference"
@@ -77,7 +77,7 @@ class ContactUs(View):
                     session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY],
                 )
 
-            # Set callback time
+                # Set callback time
             session["callback_time"]: datetime | None = form.get_callback_time()
             session["contact_type"] = form.data.get("contact_type")
 
@@ -106,12 +106,6 @@ class ContactUs(View):
             return redirect(url_for("contact.confirmation"))
         return render_template(self.template, form=form, form_progress=form_progress)
 
-    def _append_notes_to_eligibility_check(self, notes_data: str):
-        if not notes_data or len(notes_data) == 0:
-            return
-        session.get_eligibility().add_note("User problem", notes_data)
-        update_means_test(session.get_eligibility().formatted_notes)
-
     @staticmethod
     def _attach_rfc_to_case(case_ref: str, rfc_ref: str):
         cla_backend.update_reasons_for_contacting(
@@ -121,16 +115,18 @@ class ContactUs(View):
             },
         )
 
+    def get_financial_eligibility_status(self):
+        return (
+            FinancialAssessmentStatus.SKIPPED,
+            FinancialAssessmentReason.MORE_INFO_REQUIRED,
+        )
+
 
 class FastTrackedContactUs(InScopeMixin, ContactUs):
-    def get_payload_from_form(self, request, form):
-        payload = super().get_payload_from_form(request, form)
+    def get_financial_eligibility_status(self):
         reason_str = request.args.get("reason", "other")
         reason = FinancialAssessmentReason.get_reason_from_str(reason_str)
-        payload["financial_assessment_reason"] = reason
-        payload["financial_assessment_status"] = FinancialAssessmentStatus.FAST_TRACKING
-
-        return payload
+        return FinancialAssessmentStatus.FAST_TRACK, reason
 
     def dispatch_request(self):
         scope_check_redirect = self.ensure_in_scope()
@@ -141,20 +137,18 @@ class FastTrackedContactUs(InScopeMixin, ContactUs):
 
 
 class EligibleContactUsPage(ContactUs):
-    def get_payload_from_form(self, request, form):
-        payload = super().get_payload_from_form(request, form)
+    def get_financial_eligibility_status(self):
         eligibility_result = is_eligible(session.ec_reference)
         if eligibility_result.YES:
-            payload["financial_assessment_status"] = FinancialAssessmentStatus.PASSED
-            payload["financial_assessment_reason"] = (
-                FinancialAssessmentReason.MORE_INFO_REQUIRED
+            return (
+                FinancialAssessmentStatus.PASSED,
+                FinancialAssessmentReason.MORE_INFO_REQUIRED,
             )
         elif eligibility_result.NO:
-            payload["financial_assessment_status"] = FinancialAssessmentStatus.FAILED
-            payload["financial_assessment_reason"] = (
-                FinancialAssessmentReason.MORE_INFO_REQUIRED
+            return (
+                FinancialAssessmentStatus.FAILED,
+                FinancialAssessmentReason.MORE_INFO_REQUIRED,
             )
-        return payload
 
     def dispatch_request(self):
         if not session.ec_reference:

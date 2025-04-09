@@ -590,6 +590,7 @@ class ContactUsForm(FlaskForm):
                 else self.data.get("other_language").upper(),
                 "notes": self.data.get("other_adaptation"),
             },
+            "client_notes": self.data.get("extra_notes"),
         }
         if self.data.get("contact_type") == "callback":
             payload["requires_action_at"] = requires_action_at
