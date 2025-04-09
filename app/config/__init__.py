@@ -20,7 +20,7 @@ class Config(object):
     RATELIMIT_HEADERS_ENABLED = RATELIMIT_ENABLED
     RATELIMIT_STORAGE_URI = os.environ.get("REDIS_URL")
     SECRET_KEY = os.environ["SECRET_KEY"]
-    SERVICE_NAME = "Access Civil Legal Aid"
+    SERVICE_NAME = "Check if you can get legal aid"
     SERVICE_PHASE = os.environ.get("SERVICE_PHASE", "Beta")
     SERVICE_URL = os.environ.get("SERVICE_URL", "")
     SESSION_COOKIE_HTTP_ONLY = ENVIRONMENT != "local"
