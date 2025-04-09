@@ -70,3 +70,27 @@ class TestSendLandingPage:
         expect(
             page.get_by_role("heading", name=legalaid_available_page)
         ).to_be_visible()
+
+    def test_help_with_a_child_in_care_form_yes(self, page: Page):
+        page.get_by_role(
+            "link", name="Special educational needs and disability (SEND)"
+        ).click()
+        page.get_by_role(
+            "link", name="Help with a child or young person's SEND"
+        ).click()
+        page.get_by_label("Yes").check()
+        page.get_by_role("button", name="Continue").click()
+        expect(page.get_by_role("heading", name=contact_page_heading)).to_be_visible()
+
+    def test_help_with_a_child_in_care_form_no(self, page: Page):
+        page.get_by_role(
+            "link", name="Special educational needs and disability (SEND)"
+        ).click()
+        page.get_by_role(
+            "link", name="Help with a child or young person's SEND"
+        ).click()
+        page.get_by_label("No").check()
+        page.get_by_role("button", name="Continue").click()
+        expect(
+            page.get_by_role("heading", name=legalaid_available_page)
+        ).to_be_visible()

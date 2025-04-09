@@ -1,4 +1,4 @@
-from app.categories.constants import Category, HOUSING, EDUCATION
+from app.categories.constants import Category, HOUSING, COMMUNITY_CARE
 import pytest
 from flask import url_for
 from app.categories.models import CategoryAnswer, QuestionType
@@ -118,7 +118,7 @@ def test_in_scope(client):
         answer_label="Car",
         next_page="categories.index",
         question_page="categories.housing.homelessness",
-        category=EDUCATION.sub.child_young_person,
+        category=COMMUNITY_CARE.sub.problems_with_quality_of_care,
     )
     with client.session_transaction() as session:
         assert session.in_scope is False
