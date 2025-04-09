@@ -64,8 +64,8 @@ class ContactUs(View):
                 else {}
             )
             financial_status, financial_reason = self.get_financial_eligibility_status()
-            payload["scope_traversal"]["financial_eligiblity_status"] = financial_status
-            payload["scope_traversal"]["financial_eligiblity_reason"] = financial_reason
+            payload["scope_traversal"]["financial_assessment_status"] = financial_status
+            payload["scope_traversal"]["fast_track_reason"] = financial_reason
 
             session["case_reference"] = cla_backend.post_case(payload=payload)[
                 "reference"
