@@ -1831,6 +1831,18 @@ msgstr "Gadael y dudalen hon"
 msgid "Staying safe online"
 msgstr "Cadw’n ddiogel ar-lein"
 
+msgid "Privacy Policy"
+msgstr "Polisi preifatrwydd"
+
+msgid "Cookies"
+msgstr "Cwcis"
+
+msgid "Contact"
+msgstr "Cysylltu"
+
+msgid "Accessibility statement"
+msgstr "Datganiad hygyrchedd"
+
 msgid "Sorry, you’re not likely to get legal aid"
 msgstr "Yn anffodus, dydych chi ddim yn debygol o gael cymorth cyfreithiol"
 
@@ -2654,9 +2666,6 @@ msgstr ""
 msgid "Web Content Accessibility Guidelines version 2.1 (opens in new tab)"
 msgstr "Canllawiau Hygyrchedd Cynnwys y We fersiwn 2.1 (yn agor mewn tab newydd)"
 
-msgid "Accessibility statement"
-msgstr "Datganiad hygyrchedd"
-
 msgid "Using this service"
 msgstr "Defnyddio’r gwasanaeth hwn"
 
@@ -2944,9 +2953,6 @@ msgstr ""
 "gwasanaeth sydd ar gael yn <a class='govuk-link' href='https://www.gov.uk"
 "/gwirio-os-ydych-yn-gymwys-i-gael-cymorth-"
 "cyfreithiol'>https://checklegalaid.service.gov.uk/</a>."
-
-msgid "Cookies"
-msgstr ""
 
 msgid ""
 "Cookies are small files saved on your phone, tablet or computer when you "

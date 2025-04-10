@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-04-10 12:36+0100\n"
+"POT-Creation-Date: 2025-04-10 13:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1611,6 +1611,18 @@ msgstr ""
 msgid "Staying safe online"
 msgstr ""
 
+msgid "Privacy Policy"
+msgstr ""
+
+msgid "Cookies"
+msgstr ""
+
+msgid "Contact"
+msgstr ""
+
+msgid "Accessibility statement"
+msgstr ""
+
 msgid "Sorry, you’re not likely to get legal aid"
 msgstr ""
 
@@ -2310,9 +2322,6 @@ msgstr ""
 msgid "Web Content Accessibility Guidelines version 2.1 (opens in new tab)"
 msgstr ""
 
-msgid "Accessibility statement"
-msgstr ""
-
 msgid "Using this service"
 msgstr ""
 
@@ -2527,9 +2536,6 @@ msgid ""
 "The <abbr title='Digital Accessibility Centre'>DAC</abbr> tested the "
 "service available at <a class='govuk-link' "
 "href='https://checklegalaid.service.gov.uk/'>https://checklegalaid.service.gov.uk/</a>."
-msgstr ""
-
-msgid "Cookies"
 msgstr ""
 
 msgid ""
