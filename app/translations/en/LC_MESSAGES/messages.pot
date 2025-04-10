@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-04-09 00:50+0100\n"
+"POT-Creation-Date: 2025-04-10 09:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1611,9 +1611,6 @@ msgstr ""
 msgid "Staying safe online"
 msgstr ""
 
-msgid "Accessibility statement"
-msgstr ""
-
 msgid "Sorry, you’re not likely to get legal aid"
 msgstr ""
 
@@ -1665,7 +1662,7 @@ msgstr ""
 
 #, python-format
 msgid ""
-"You should %(contact_us_link)s  without completing the financial "
+"You should %(contact_us_link)s without completing the financial "
 "assessment if you are:"
 msgstr ""
 
@@ -1941,6 +1938,9 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
+msgid "Tell us what you think of this service (opens new tab)"
+msgstr ""
+
 msgid "You can now call CLA on"
 msgstr ""
 
@@ -2079,9 +2079,6 @@ msgid ""
 "charges\" rel=\"external\">call charges</a>."
 msgstr ""
 
-msgid "Finish"
-msgstr ""
-
 msgid ""
 "We’ll give you the Civil Legal Advice phone number when you submit your "
 "details."
@@ -2151,11 +2148,8 @@ msgstr ""
 
 #, python-format
 msgid ""
-"\n"
-"                    Protecting your personal data and your privacy is "
-"important to us.\n"
-"                    Read the full %(privacy_link)s.\n"
-"                  "
+"Protecting your personal data and your privacy is important to us. Read "
+"the full %(privacy_link)s."
 msgstr ""
 
 msgid "In some cases, you may need to pay a contribution towards your legal aid."
@@ -2314,6 +2308,9 @@ msgid "civil-legal-advice@digital.justice.gov.uk"
 msgstr ""
 
 msgid "Web Content Accessibility Guidelines version 2.1 (opens in new tab)"
+msgstr ""
+
+msgid "Accessibility statement"
 msgstr ""
 
 msgid "Using this service"
