@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-04-10 09:27+0100\n"
+"POT-Creation-Date: 2025-04-10 12:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2529,6 +2529,93 @@ msgid ""
 "href='https://checklegalaid.service.gov.uk/'>https://checklegalaid.service.gov.uk/</a>."
 msgstr ""
 
+msgid "Cookies"
+msgstr ""
+
+msgid ""
+"Cookies are small files saved on your phone, tablet or computer when you "
+"visit a website."
+msgstr ""
+
+msgid ""
+"We use cookies to make this service work and to collect information about"
+" how you use our service."
+msgstr ""
+
+msgid "Cookies will not collect any information that can identify you."
+msgstr ""
+
+msgid "Essential cookies"
+msgstr ""
+
+msgid ""
+"Essential cookies keep your information secure while you use this "
+"service. We do not need to ask permission to use them."
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Purpose"
+msgstr ""
+
+msgid "Expires"
+msgstr ""
+
+msgid "Saves your cookie consent settings"
+msgstr ""
+
+msgid "1 year"
+msgstr ""
+
+msgid ""
+"Saves your current progress on this computer and tracks how long you are "
+"inactive for."
+msgstr ""
+
+msgid "When you stop using the website"
+msgstr ""
+
+msgid "Functional cookies"
+msgstr ""
+
+msgid ""
+"We only use one functional cookie, and that is to remember if you chose "
+"to use the service in Welsh. The service will still work if you do not "
+"choose this cookie."
+msgstr ""
+
+msgid "Remembers which language you chose"
+msgstr ""
+
+msgid "30 Days"
+msgstr ""
+
+msgid "Analytics cookies"
+msgstr ""
+
+msgid ""
+"With your permission, we use Google Analytics to collect data about how "
+"you use this service. This information helps us to improve our service."
+msgstr ""
+
+msgid "Google is not allowed to use or share our analytics data with anyone."
+msgstr ""
+
+msgid "None of this information can be used to identify you in any way."
+msgstr ""
+
+msgid ""
+"Helps us count how many people visit this website and what they do on the"
+" website. Your data is anonymised."
+msgstr ""
+
+msgid "2 years"
+msgstr ""
+
+msgid "Change which cookies we can use"
+msgstr ""
+
 msgid "Stay safe when you use this website"
 msgstr ""
 
@@ -2658,9 +2745,6 @@ msgid "Secure your tech."
 msgstr ""
 
 msgid "Civil Legal Advice (CLA) &ndash; Legal Aid Agency Privacy Notice"
-msgstr ""
-
-msgid "Purpose"
 msgstr ""
 
 msgid ""

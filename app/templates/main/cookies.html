@@ -13,52 +13,53 @@
 {% endblock %}
 
 {% block content %}
+{{ super() }}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     {{ super() }}
-    <h1 class="govuk-heading-l">Cookies</h1>
-    <p class="govuk-body">Cookies are small files saved on your phone, tablet or computer when you visit a website.
+    <h1 class="govuk-heading-l">{% trans %}Cookies{% endtrans %}</h1>
+    <p class="govuk-body">{% trans %}Cookies are small files saved on your phone, tablet or computer when you visit a website.{% endtrans %}
     </p>
-    <p class="govuk-body">We use cookies to make this service work and to collect information about how you use our service.</p>
-    <p class="govuk-body">Cookies will not collect any information that can identify you.</p>
+    <p class="govuk-body">{% trans %}We use cookies to make this service work and to collect information about how you use our service.{% endtrans %}</p>
+    <p class="govuk-body">{% trans %}Cookies will not collect any information that can identify you.{% endtrans %}</p>
 
-    <h2 class="govuk-heading-m">Essential cookies</h2>
-    <p class="govuk-body">Essential cookies keep your information secure while you use this service. We do not need to ask permission to use them.</p>
+    <h2 class="govuk-heading-m">{% trans %}Essential cookies{% endtrans %}</h2>
+    <p class="govuk-body">{% trans %}Essential cookies keep your information secure while you use this service. We do not need to ask permission to use them.{% endtrans %}</p>
     {{ govukTable(
       {
-        'head': [{'text': 'Name'}, {'text': 'Purpose'}, {'text': 'Expires'}],
+        'head': [{'text': _('Name')}, {'text': _('Purpose')}, {'text': _('Expires')}],
         'rows': [
-          [{'text': 'cookie_policy'}, {'text': 'Saves your cookie consent settings'}, {'text': '1 year'}],
-          [{'text': 'session'}, {'text': 'Saves your current progress on this computer and tracks how long you are inactive for.'}, {'text': 'When you stop using the website'}]
+          [{'text': 'cookie_policy'}, {'text': _('Saves your cookie consent settings')}, {'text': _('1 year')}],
+          [{'text': 'session'}, {'text': _('Saves your current progress on this computer and tracks how long you are inactive for.')}, {'text': _('When you stop using the website')}]
         ]
       }
     )}}
 
-    <h2 class="govuk-heading-m">Functional cookies</h2>
-    <p class="govuk-body">We only use one functional cookie, and that is to remember if you chose to use the service in Welsh. The service will still work if you do not choose this cookie.</p>
+    <h2 class="govuk-heading-m">{% trans %}Functional cookies{% endtrans %}</h2>
+    <p class="govuk-body">{% trans %}We only use one functional cookie, and that is to remember if you chose to use the service in Welsh. The service will still work if you do not choose this cookie.{% endtrans %}</p>
     {{ govukTable(
       {
-        'head': [{'text': 'Name'}, {'text': 'Purpose'}, {'text': 'Expires'}],
+        'head': [{'text': _('Name')}, {'text': _('Purpose')}, {'text': _('Expires')}],
         'rows': [
-          [{'text': 'locale'}, {'text': 'Remembers which language you chose'}, {'text': '30 Days'}]
+          [{'text': 'locale'}, {'text': _('Remembers which language you chose')}, {'text': _('30 Days')}]
         ]
       }
     )}}
 
-    <h2 class="govuk-heading-m">Analytics cookies</h2>
-    <p class="govuk-body">With your permission, we use Google Analytics to collect data about how you use this service. This information helps us to improve our service.</p>
-    <p class="govuk-body">Google is not allowed to use or share our analytics data with anyone.</p>
-    <p class="govuk-body">None of this information can be used to identify you in any way.</p>
+    <h2 class="govuk-heading-m">{% trans %}Analytics cookies{% endtrans %}</h2>
+    <p class="govuk-body">{% trans %}With your permission, we use Google Analytics to collect data about how you use this service. This information helps us to improve our service.{% endtrans %}</p>
+    <p class="govuk-body">{% trans %}Google is not allowed to use or share our analytics data with anyone.{% endtrans %}</p>
+    <p class="govuk-body">{% trans %}None of this information can be used to identify you in any way.{% endtrans %}</p>
     {{ govukTable(
       {
-        'head': [{'text': 'Name'}, {'text': 'Purpose'}, {'text': 'Expires'}],
+        'head': [{'text': _('Name')}, {'text': _('Purpose')}, {'text': _('Expires')}],
         'rows': [
-          [{'text': '_ga_[ID]'}, {'text': 'Helps us count how many people visit this website and what they do on the website. Your data is anonymised.'}, {'text': '2 years'}]
+          [{'text': '_ga_[ID]'}, {'text': _('Helps us count how many people visit this website and what they do on the website. Your data is anonymised.')}, {'text': _('2 years')}]
         ]
       }
     )}}
 
-    <h2 class="govuk-heading-m">Change which cookies we can use</h2>
+    <h2 class="govuk-heading-m">{% trans %}Change which cookies we can use{% endtrans %}</h2>
     <form action="" method="post" novalidate>
       {{ form.csrf_token }}
       {{ form.functional }}
