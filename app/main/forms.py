@@ -6,7 +6,7 @@ from wtforms.validators import InputRequired
 
 class CookiesForm(FlaskForm):
     functional = RadioField(
-        "Do you want to accept functional cookies?",
+        "Can we use functional cookies?",
         widget=GovRadioInput(),
         validators=[
             InputRequired(message="Select yes if you want to accept functional cookies")
@@ -15,7 +15,7 @@ class CookiesForm(FlaskForm):
         default="no",
     )
     analytics = RadioField(
-        "Do you want to accept analytics cookies?",
+        "Can we use analytics cookies?",
         widget=GovRadioInput(),
         validators=[
             InputRequired(message="Select yes if you want to accept analytics cookies")

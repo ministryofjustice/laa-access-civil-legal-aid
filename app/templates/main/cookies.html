@@ -19,25 +19,23 @@
     <h1 class="govuk-heading-l">Cookies</h1>
     <p class="govuk-body">Cookies are small files saved on your phone, tablet or computer when you visit a website.
     </p>
-    <p class="govuk-body">We use cookies to make {{config['SERVICE_NAME']}} work and collect information about how you use our
-      service.</p>
+    <p class="govuk-body">We use cookies to make this service work and to collect information about how you use our service.</p>
+    <p class="govuk-body">Cookies will not collect any information that can identify you.</p>
 
     <h2 class="govuk-heading-m">Essential cookies</h2>
-    <p class="govuk-body">Essential cookies keep your information secure while you use {{config['SERVICE_NAME']}}. We do not need
-      to ask permission to use them.</p>
+    <p class="govuk-body">Essential cookies keep your information secure while you use this service. We do not need to ask permission to use them.</p>
     {{ govukTable(
       {
         'head': [{'text': 'Name'}, {'text': 'Purpose'}, {'text': 'Expires'}],
         'rows': [
-          [{'text': 'cookie_policy'}, {'text': 'Saves your cookie consent settings'}, {'text': '1 Year'}],
+          [{'text': 'cookie_policy'}, {'text': 'Saves your cookie consent settings'}, {'text': '1 year'}],
           [{'text': 'session'}, {'text': 'Saves your current progress on this computer and tracks how long you are inactive for.'}, {'text': 'When you stop using the website'}]
         ]
       }
     )}}
 
     <h2 class="govuk-heading-m">Functional cookies</h2>
-    <p class="govuk-body">Functional cookies allow you to take advantage of some functionality, for example remembering
-      settings between visits. The service will work without them.</p>
+    <p class="govuk-body">We only use one functional cookie, and that is to remember if you chose to use the service in Welsh. The service will still work if you do not choose this cookie.</p>
     {{ govukTable(
       {
         'head': [{'text': 'Name'}, {'text': 'Purpose'}, {'text': 'Expires'}],
@@ -48,25 +46,19 @@
     )}}
 
     <h2 class="govuk-heading-m">Analytics cookies</h2>
-    <p class="govuk-body">With your permission, we use Google Analytics to collect data about how you use {{config['SERVICE_NAME']}}. This
-      information helps us to improve our service.</p>
+    <p class="govuk-body">With your permission, we use Google Analytics to collect data about how you use this service. This information helps us to improve our service.</p>
     <p class="govuk-body">Google is not allowed to use or share our analytics data with anyone.</p>
-    <p class="govuk-body">Google Analytics stores anonymised information about:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>how you got to {{config['SERVICE_NAME']}}</li>
-      <li>the pages you visit on {{config['SERVICE_NAME']}} and how long you spend on them</li>
-      <li>any errors you see while using {{config['SERVICE_NAME']}}</li>
-    </ul>
+    <p class="govuk-body">None of this information can be used to identify you in any way.</p>
     {{ govukTable(
       {
         'head': [{'text': 'Name'}, {'text': 'Purpose'}, {'text': 'Expires'}],
         'rows': [
-          [{'text': '_ga_[ID]'}, {'text': 'Helps us count how many people visit this website and what they do on the website. Your data is anonymised.'}, {'text': '2 Years'}]
+          [{'text': '_ga_[ID]'}, {'text': 'Helps us count how many people visit this website and what they do on the website. Your data is anonymised.'}, {'text': '2 years'}]
         ]
       }
     )}}
 
-    <h2 class="govuk-heading-m">Change your cookie settings</h2>
+    <h2 class="govuk-heading-m">Change which cookies we can use</h2>
     <form action="" method="post" novalidate>
       {{ form.csrf_token }}
       {{ form.functional }}
