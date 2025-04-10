@@ -93,6 +93,30 @@ def test_means_test_benefits_page(
 
 
 @pytest.mark.usefixtures("live_server")
+@pytest.mark.parametrize("answers", about_you_form_routing)
+def test_additional_benefits_routing(page: Page, navigate_to_benefits):
+    """
+    Test the means test benefits page with different combinations of selections.
+
+    Args:
+        page: Playwright page fixture
+        selections: List of labels to check
+        expected_heading: Text expected to be visible after submission
+    """
+    page.get_by_role("checkbox", name="Any other benefits").click()
+
+    page.get_by_role("button", name="Continue").click()
+    expect(page.get_by_role("heading", name="Your additional benefits")).to_be_visible()
+    page.get_by_role("link", name="Completed page: About you").click()
+    expect(page.get_by_role("heading", name="About you")).to_be_visible()
+    page.get_by_role(
+        "group", name="Do you receive any benefits (including Child Benefit)?"
+    ).get_by_label("No").click()
+    page.get_by_role("button", name="Continue").click()
+    expect(page.get_by_role("heading", name="Your money coming in")).to_be_visible()
+
+
+@pytest.mark.usefixtures("live_server")
 def test_child_benefits_not_available(page: Page, client):
     page.goto(url=url_for("means_test.benefits", _external=True))
     expect(page.get_by_label("Child Benefit")).to_have_count(0)
