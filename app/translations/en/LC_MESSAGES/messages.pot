@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-04-10 13:20+0100\n"
+"POT-Creation-Date: 2025-04-10 15:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -857,6 +857,21 @@ msgid "Send"
 msgstr ""
 
 msgid "There is a problem"
+msgstr ""
+
+msgid "Can we use functional cookies?"
+msgstr ""
+
+msgid "Select yes if you want to accept functional cookies"
+msgstr ""
+
+msgid "Can we use analytics cookies?"
+msgstr ""
+
+msgid "Select yes if you want to accept analytics cookies"
+msgstr ""
+
+msgid "Save cookie settings"
 msgstr ""
 
 msgid "per week"
