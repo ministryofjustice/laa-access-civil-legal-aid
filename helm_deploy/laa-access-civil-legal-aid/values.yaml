@@ -40,7 +40,8 @@ ingress:
   className: "modsec"
   annotations:
     allow-duplicate-host: "true"
-    nginx.ingress.kubernetes.io/canary: "true"
+    # Toggle this to true  ready
+    nginx.ingress.kubernetes.io/canary: "false"
     nginx.ingress.kubernetes.io/canary-weight: "0"
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/canary-by-cookie: "canary"
