@@ -78,19 +78,3 @@ jobs:
       KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
       KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
       KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
-
-  deploy-staging:
-    name: Staging
-    uses: ./.github/workflows/deploy.yml
-    needs: [build-and-push, static-analysis, test]
-    with:
-      environment: staging
-      ACCESS_ECR_REGION: ${{vars.ACCESS_ECR_REGION}}
-      ACCESS_ECR_REPOSITORY: ${{vars.ACCESS_ECR_REPOSITORY}}
-    secrets:
-      ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-      ACCESS_ECR_ROLE_TO_ASSUME: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
-      KUBE_CERT: ${{ secrets.KUBE_CERT }}
-      KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
-      KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
-      KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
