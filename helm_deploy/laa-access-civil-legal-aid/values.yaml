@@ -42,7 +42,6 @@ ingress:
   cluster:
     name: green
     weight: '100'
-  tls: false
 
 whitelist:
   enabled: true
