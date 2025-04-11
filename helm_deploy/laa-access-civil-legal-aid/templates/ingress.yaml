@@ -39,11 +39,13 @@ spec:
   ingressClassName: {{ .Values.ingress.className }}
   {{- if .Values.ingress.tls }}
   tls:
+    {{- range .Values.ingress.tls }}
     - hosts:
-    {{- range .Values.ingress.hosts }}
-      - {{ .host | quote }}
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
     {{- end }}
-    secretName: {{ .Values.ingress.tls.secretName }}
   {{- end }}
   rules:
     {{- range .Values.ingress.hosts }}
