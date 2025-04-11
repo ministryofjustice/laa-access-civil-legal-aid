@@ -43,8 +43,7 @@ spec:
     {{- range .Values.ingress.tls.hosts }}
       - {{ . | quote }}
     {{- end }}
-      secretName: {{ .secretName }}
-    {{- end }}
+    secretName: {{ .secretName }}
   {{- end }}
   rules:
     {{- range .Values.ingress.hosts }}
