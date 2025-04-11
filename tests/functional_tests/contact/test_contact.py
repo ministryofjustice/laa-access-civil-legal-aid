@@ -250,3 +250,20 @@ def test_postcode_field(page: Page, contact_answers: dict):
     expect(
         page.get_by_role("heading", name="Your details have been submitted")
     ).to_be_visible()
+
+
+@pytest.mark.usefixtures("live_server")
+def test_existing_case_ref_leads_to_session_expired(page: Page):
+    """Test that going back after creating a case leads to the session expired page."""
+    page.get_by_role("link", name="Contact us").click()
+    page.get_by_role("button", name="Continue to contact CLA").click()
+    page.get_by_role("textbox", name="Your full name").fill("John Doe")
+    page.get_by_role("radio", name="I will call you").check()
+    page.get_by_role("button", name="Submit details").click()
+    expect(
+        page.get_by_role("heading", name="Your details have been submitted")
+    ).to_be_visible()
+    page.go_back()
+    expect(
+        page.get_by_role("heading", name="You’ve reached the end of this service")
+    ).to_be_visible()
