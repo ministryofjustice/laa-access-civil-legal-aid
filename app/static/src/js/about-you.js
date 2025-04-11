@@ -6,7 +6,7 @@ document.getElementById("has_partner-2").addEventListener("change", function() {
     noRadio.checked = false;
 
     // Trigger change event so data-controlled-by logic responds
-    const event = new Event("change", { bubbles: false });
+    const event = new Event("change");
     yesRadio.dispatchEvent(event);
     noRadio.dispatchEvent(event);
 });
