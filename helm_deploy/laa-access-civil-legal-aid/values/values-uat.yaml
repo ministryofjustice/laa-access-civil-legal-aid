@@ -9,7 +9,6 @@ ingress:
         - path: /
           pathType: ImplementationSpecific
   tls:
-    host: "uat.checklegalaid.service.gov.uk"
     secretName: "tls-certificate"
 whitelist:
   enabled: true
