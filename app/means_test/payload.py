@@ -119,7 +119,7 @@ class YourBenefitsPayload(dict):
                 return form_data.get(field)
 
             payload["you"] = {
-                "income": {"child_benefits": MoneyInterval(val("child_benefit"))}
+                "income": {"child_benefits": MoneyInterval(val("child_benefits"))}
             }
 
         self.update(payload)
