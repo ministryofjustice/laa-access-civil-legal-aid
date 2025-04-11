@@ -203,4 +203,8 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
     @classmethod
     def should_show(cls) -> bool:
         data = session.get("eligibility").forms.get("benefits")
-        return data and "other-benefit" in data["benefits"]
+        return (
+            session.get_eligibility().on_benefits
+            and data
+            and "other-benefit" in data["benefits"]
+        )
