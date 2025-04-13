@@ -111,6 +111,7 @@ DOMESTIC_ABUSE = Category(
                 "Threats, abuse or harassment by someone who is not a family member."
             ),
             code="problems_with_neighbours",
+            exit_page=False,
         ),
         "housing_homelessness_losing_home": Category(
             title=_("Housing, homelessness, losing your home"),
