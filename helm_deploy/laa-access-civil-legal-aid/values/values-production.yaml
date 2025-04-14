@@ -6,7 +6,10 @@ ingress:
   host: "checklegalaid.service.gov.uk"
   tls:
     secretName: "tls-certificate"
-
+  annotations:
+    allow-duplicate-host: "true"
+    nginx.ingress.kubernetes.io/canary: "true"
+    allowed-duplicate-ns: "laa-cla-public-production,laa-access-civil-legal-aid-production"
 whitelist:
   enabled: true
 

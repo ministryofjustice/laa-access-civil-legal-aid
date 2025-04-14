@@ -39,7 +39,7 @@ ingress:
   enabled: true
   className: "modsec"
   annotations:
-    allow-duplicate-host: "true"
+    allow-duplicate-host: "false"
     # Toggle this to true  ready
     nginx.ingress.kubernetes.io/canary: "false"
     nginx.ingress.kubernetes.io/canary-weight: "0"

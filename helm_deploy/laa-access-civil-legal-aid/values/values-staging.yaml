@@ -6,6 +6,9 @@ ingress:
   host: "staging.checklegalaid.service.gov.uk"
   tls:
     secretName: "tls-certificate"
+    allow-duplicate-host: "true"
+    nginx.ingress.kubernetes.io/canary: "true"
+    allowed-duplicate-ns: "laa-cla-public-staging,laa-access-civil-legal-aid-staging"
 
 whitelist:
   enabled: true
