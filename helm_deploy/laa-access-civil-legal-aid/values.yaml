@@ -37,7 +37,7 @@ service:
 
 ingress:
   enabled: true
-  className: "modsec"
+  className: "modsec-non-prod"
   annotations: {}
   cluster:
     name: green
