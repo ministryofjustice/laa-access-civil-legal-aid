@@ -3,7 +3,7 @@ environment: "staging"
 
 ingress:
   enabled: true
-  host: "access-civil-legal-aid-staging.cloud-platform.service.justice.gov.uk"
+  host: "staging.checklegalaid.service.gov.uk"
   tls:
     secretName: "tls-certificate"
 

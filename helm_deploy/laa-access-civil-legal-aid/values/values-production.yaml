@@ -3,7 +3,7 @@ environment: "production"
 
 ingress:
   enabled: true
-  host: "access-civil-legal-aid.cloud-platform.service.justice.gov.uk"
+  host: "checklegalaid.service.gov.uk"
   tls:
     secretName: "tls-certificate"
 
