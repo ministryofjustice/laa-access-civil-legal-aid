@@ -7,7 +7,7 @@ from app.categories.views import (
     CategoryAnswerPage,
     CategoryAnswer,
 )
-from app.categories.constants import DOMESTIC_ABUSE
+from app.categories.constants import DOMESTIC_ABUSE, HOUSING
 from app.categories.models import QuestionType
 
 
@@ -39,7 +39,13 @@ class DomesticAbuseLandingPage(CategoryLandingPage):
                 DOMESTIC_ABUSE.sub.fgm,
                 "categories.domestic_abuse.are_you_at_risk_of_harm",
             ),
-            (DOMESTIC_ABUSE.sub.problems_with_neighbours, "contact.contact_us"),
+            (
+                HOUSING.sub.problems_with_neighbours,
+                {
+                    "endpoint": "contact.contact_us_fast_tracked",
+                    "reason": "more-info-required",
+                },
+            ),
             (
                 DOMESTIC_ABUSE.sub.housing_homelessness_losing_home,
                 "categories.housing.landing",

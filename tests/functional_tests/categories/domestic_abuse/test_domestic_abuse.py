@@ -10,40 +10,48 @@ ROUTING = [
     {
         "link_text": "Help to keep yourself safe and protect children",
         "next_page_heading": risk_of_harm_page_heading,
+        "exit_page_button": True,
     },
     {
         "link_text": "Leaving an abusive relationship",
         "next_page_heading": risk_of_harm_page_heading,
+        "exit_page_button": True,
     },
     {
         "link_text": "Problems with an ex-partner: children or money",
         "next_page_heading": risk_of_harm_page_heading,
+        "exit_page_button": True,
     },
     {
         "link_text": "Problems with neighbours, landlords or other people",
         "next_page_heading": contact_us_page_heading,
+        "exit_page_button": False,
     },
     {
         "link_text": "Housing, homelessness, losing your home",
         "next_page_heading": housing_page_heading,
+        "exit_page_button": False,
     },
     {
         "link_text": "Forced marriage",
         "next_page_heading": risk_of_harm_page_heading,
+        "exit_page_button": True,
     },
     {
         "link_text": "Female genital mutilation (FGM)",
         "next_page_heading": risk_of_harm_page_heading,
+        "exit_page_button": True,
     },
     {
         "link_text": "Next steps to get help",
         "next_page_heading": "Sorry, you’re not likely to get legal aid",
+        "exit_page_button": True,
     },
 ]
 
 
 @pytest.mark.usefixtures("live_server")
-class TestFamilyLandingPage:
+class TestDomesticAbuseLandingPage:
     @pytest.mark.parametrize("routing", ROUTING)
     def test_onward_routing(self, page: Page, routing: dict):
         page.get_by_role("link", name="Domestic abuse").click()
@@ -67,8 +75,9 @@ class TestFamilyLandingPage:
         expect(
             page.get_by_role("heading", name=routing["next_page_heading"])
         ).to_be_visible()
-        if (
-            page.get_by_role("heading", name=routing["next_page_heading"])
-            == risk_of_harm_page_heading
-        ):
+        if routing["exit_page_button"]:
             expect(page.get_by_role("button", name="Exit this page")).to_be_visible()
+        elif not routing["exit_page_button"]:
+            expect(
+                page.get_by_role("button", name="Exit this page")
+            ).not_to_be_visible()
