@@ -5,11 +5,7 @@ environment: "dev"
 
 ingress:
   enabled: true
-  hosts:
-    - host: "access-civil-legal-aid-dev.cloud-platform.service.justice.gov.uk"
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
+  host: "access-civil-legal-aid-dev.cloud-platform.service.justice.gov.uk"
 
 whitelist:
   enabled: true

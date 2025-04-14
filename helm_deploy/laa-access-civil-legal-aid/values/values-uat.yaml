@@ -3,15 +3,10 @@ environment: "uat"
 
 ingress:
   enabled: true
-  hosts:
-    - host: "uat.checklegalaid.service.gov.uk"
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
+  host: "uat.checklegalaid.service.gov.uk"
   tls:
-    hosts:
-      - "uat.checklegalaid.service.gov.uk"
     secretName: "tls-certificate"
+
 whitelist:
   enabled: true
 

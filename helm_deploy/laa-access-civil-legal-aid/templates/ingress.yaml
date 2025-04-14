@@ -40,24 +40,18 @@ spec:
   {{- if .Values.ingress.tls }}
   tls:
     - hosts:
-    {{- range .Values.ingress.tls.hosts }}
-      - {{ . | quote }}
-    {{- end }}
-    secretName: {{ .secretName }}
+       - "{{ .Values.ingress.host }}"
+      secretName: {{ .Values.ingress.tls.secretName }}
   {{- end }}
   rules:
-    {{- range .Values.ingress.hosts }}
-    - host: {{ .host | quote }}
+    - host: "{{ .Values.host }}"
       http:
         paths:
-          {{- range .paths }}
-          - path: {{ .path }}
-            pathType: {{ .pathType }}
+          - path: "/"
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: {{ $fullName }}
                 port:
                   number: {{ $svcPort }}
-          {{- end }}
-    {{- end }}
 {{- end }}
