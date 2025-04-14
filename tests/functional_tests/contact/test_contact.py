@@ -1,6 +1,8 @@
 from playwright.sync_api import Page, expect
 import pytest
 import re
+from flask import url_for
+
 
 rfc_form_routing = [
     pytest.param(
@@ -152,6 +154,113 @@ def test_contact_page_eligible_routing(page: Page, answers: dict, route_to: str)
     expect(page).to_have_url(re.compile(".*/eligible"))
 '''
 
+fast_track_routing = [
+    pytest.param(
+        [
+            "Domestic abuse",
+            "Help to keep yourself safe and protect children",
+            {"type": "form", "selector": "Yes"},
+            {"endpoint": "contact.contact_us_fast_tracked", "reason": "harm"},
+        ]
+    ),
+    pytest.param(
+        [
+            "Domestic abuse",
+            "Forced Marriage",
+            {"type": "form", "selector": "Yes"},
+            {"endpoint": "contact.contact_us_fast_tracked", "reason": "harm"},
+        ]
+    ),
+    pytest.param(
+        [
+            "Domestic abuse",
+            "FGM",
+            {"type": "form", "selector": "Yes"},
+            {"endpoint": "contact.contact_us_fast_tracked", "reason": "harm"},
+        ]
+    ),
+    pytest.param(
+        [
+            "Domestic abuse",
+            "Leaving an abusive relationship",
+            {"type": "form", "selector": "Yes"},
+            {"endpoint": "contact.contact_us_fast_tracked", "reason": "harm"},
+        ]
+    ),
+    pytest.param(
+        [
+            "Domestic abuse",
+            "Problems with an ex-partner: children or money",
+            {"type": "form", "selector": "Yes"},
+            {"endpoint": "contact.contact_us_fast_tracked", "reason": "harm"},
+        ]
+    ),
+    pytest.param(
+        [
+            "Domestic abuse",
+            "Problems with neighbours, landlords or other people",
+            {
+                "endpoint": "contact.contact_us_fast_tracked",
+                "reason": "more-info-required",
+            },
+        ]
+    ),
+    pytest.param(
+        [
+            "Children, families, relationships",
+            "If there is domestic abuse in your family",
+            {"type": "form", "selector": "Yes"},
+            {"endpoint": "contact.contact_us_fast_tracked", "reason": "harm"},
+        ]
+    ),
+    pytest.param(
+        [
+            "Children, families, relationships",
+            "Problems with an ex-partner, divorce, when a relationship ends",
+            {
+                "endpoint": "contact.contact_us_fast_tracked",
+                "reason": "more-info-required",
+            },
+        ]
+    ),
+    pytest.param(
+        [
+            "Children, families, relationships",
+            "Child taken without your consent",
+            {
+                "endpoint": "contact.contact_us_fast_tracked",
+                "reason": "more-info-required",
+            },
+        ]
+    ),
+    pytest.param(
+        [
+            "Children, families, relationships",
+            "Children and social services, children in care",
+            {
+                "endpoint": "contact.contact_us_fast_tracked",
+                "reason": "more-info-required",
+            },
+        ]
+    ),
+    pytest.param(
+        [
+            "Special educational needs and disability (SEND)",
+            "Help with a child or young person's SEND",
+            {"type": "form", "selector": "Yes"},
+            {"endpoint": "contact.contact_us_fast_tracked", "reason": "harm"},
+        ]
+    ),
+    pytest.param(
+        [
+            "Special educational needs and disability (SEND)",
+            "SEND tribunals",
+            {"type": "form", "selector": "Yes"},
+            {"endpoint": "contact.contact_us_fast_tracked", "reason": "harm"},
+        ]
+    ),
+]
+
 
 @pytest.mark.usefixtures("live_server")
 @pytest.mark.parametrize("contact_answers", contact_form_routing)
@@ -250,3 +359,22 @@ def test_postcode_field(page: Page, contact_answers: dict):
     expect(
         page.get_by_role("heading", name="Your details have been submitted")
     ).to_be_visible()
+
+
+@pytest.mark.usefixtures("live_server")
+@pytest.mark.parametrize("routes", fast_track_routing)
+def test_fast_track_routing(page: Page, routes):
+    expected_url = routes.pop()
+    endpoint = expected_url["endpoint"]
+    del expected_url["endpoint"]
+    expected_url = url_for(endpoint, **expected_url, _external=True)
+
+    page.goto(url_for("categories.index", _external=True))
+    for route in routes:
+        if isinstance(route, str):
+            page.get_by_role("link", name=route).click()
+        elif isinstance(route, dict):
+            page.get_by_label(route["selector"]).click()
+            page.get_by_role("button", name="Continue").click()
+
+    assert page.url == expected_url
