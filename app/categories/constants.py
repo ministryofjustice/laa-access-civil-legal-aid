@@ -105,13 +105,6 @@ DOMESTIC_ABUSE = Category(
             code="problems_with_ex_partner",
             in_scope=True,
         ),
-        "problems_with_neighbours": Category(
-            title=_("Problems with neighbours, landlords or other people"),
-            description=_(
-                "Threats, abuse or harassment by someone who is not a family member."
-            ),
-            code="problems_with_neighbours",
-        ),
         "housing_homelessness_losing_home": Category(
             title=_("Housing, homelessness, losing your home"),
             description=_(
@@ -299,6 +292,13 @@ HOUSING = Category(
             ),
             code="antisocial_behaviour_gangs",
             in_scope=True,
+        ),
+        "problems_with_neighbours": Category(
+            title=_("Problems with neighbours, landlords or other people"),
+            description=_(
+                "Threats, abuse or harassment by someone who is not a family member."
+            ),
+            code="problems_with_neighbours",
         ),
     },
 )
