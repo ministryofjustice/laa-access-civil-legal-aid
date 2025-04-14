@@ -45,6 +45,21 @@ bp.add_url_rule(
     ),
 )
 bp.add_url_rule(
+    "/housing/problems-with-neighbours",
+    view_func=CategoryAnswerPage.as_view(
+        "problems_with_neighbours",
+        category_answer=CategoryAnswer(
+            question="more_problems",
+            answer_value=HOUSING.sub.problems_with_neighbours.code,
+            answer_label=HOUSING.sub.problems_with_neighbours.title,
+            category=HOUSING.sub.problems_with_neighbours,
+            question_page="categories.housing.landing",
+            next_page="contact.contact_us",
+            question_type=QuestionType.SUB_CATEGORY,
+        ),
+    ),
+)
+bp.add_url_rule(
     "/housing/cannot-find-your-problem",
     view_func=CannotFindYourProblemPage.as_view(
         "cannot_find_your_problem",
