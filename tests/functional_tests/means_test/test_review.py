@@ -227,7 +227,7 @@ def test_change_answer_nolonger_passported(page: Page, complete_benefits_form):
     expect(page).to_have_title("Your money coming in - GOV.UK")
     answers["Your money coming in"] = {
         "Maintenance received": {
-            "Amount": "120.56",
+            "Amount": "1420.56",
             "Frequency": "per month",
             "prefix": "maintenance_received",
         },
@@ -237,7 +237,7 @@ def test_change_answer_nolonger_passported(page: Page, complete_benefits_form):
             "prefix": "pension",
         },
         "Any other income": {
-            "Amount": "2000.00",
+            "Amount": "10.00",
             "Frequency": "per month",
             "prefix": "other_income",
         },
