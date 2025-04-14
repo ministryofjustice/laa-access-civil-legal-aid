@@ -36,7 +36,7 @@ metadata:
       SecRuleRemoveById 930120
       SecRuleRemoveById 933210
 spec:
-  ingressClassName: {{ .Values.ingress.className }}
+  ingressClassName: modsec-non-prod
   {{- if .Values.ingress.tls }}
   tls:
     {{- range .Values.ingress.tls }}
