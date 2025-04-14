@@ -326,6 +326,7 @@ HOUSING = Category(
                 "Threats, abuse or harassment by someone who is not a family member."
             ),
             code="problems_with_neighbours",
+            in_scope=True,
         ),
     },
 )
