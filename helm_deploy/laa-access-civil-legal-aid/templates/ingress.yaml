@@ -44,7 +44,7 @@ spec:
       secretName: {{ .Values.ingress.tls.secretName }}
   {{- end }}
   rules:
-    - host: "{{ .Values.host }}"
+    - host: "{{ .Values.ingress.host }}"
       http:
         paths:
           - path: "/"
