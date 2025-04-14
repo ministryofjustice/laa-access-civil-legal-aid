@@ -10,6 +10,14 @@ ingress:
     allow-duplicate-host: "true"
     nginx.ingress.kubernetes.io/canary: "true"
     allowed-duplicate-ns: "laa-cla-public-production,laa-access-civil-legal-aid-production"
+    nginx.ingress.kubernetes.io/canary-weight: "0"
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/canary-by-cookie: "canary"
+    nginx.ingress.kubernetes.io/session-cookie-name: "ROUTE"
+    nginx.ingress.kubernetes.io/session-cookie-path: "/"
+    nginx.ingress.kubernetes.io/session-cookie-refresh: "true"
+    nginx.ingress.kubernetes.io/session-cookie-expires: "300"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "300"
 whitelist:
   enabled: true
 

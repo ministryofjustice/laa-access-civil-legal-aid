@@ -38,18 +38,6 @@ service:
 ingress:
   enabled: true
   className: "modsec"
-  annotations:
-    allow-duplicate-host: "false"
-    # Toggle this to true  ready
-    nginx.ingress.kubernetes.io/canary: "false"
-    nginx.ingress.kubernetes.io/canary-weight: "0"
-    nginx.ingress.kubernetes.io/affinity: "cookie"
-    nginx.ingress.kubernetes.io/canary-by-cookie: "canary"
-    nginx.ingress.kubernetes.io/session-cookie-name: "ROUTE"
-    nginx.ingress.kubernetes.io/session-cookie-path: "/"
-    nginx.ingress.kubernetes.io/session-cookie-refresh: "true"
-    nginx.ingress.kubernetes.io/session-cookie-expires: "300"
-    nginx.ingress.kubernetes.io/session-cookie-max-age: "300"
   cluster:
     name: green
     weight: '100'
