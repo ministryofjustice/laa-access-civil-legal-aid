@@ -1,6 +1,29 @@
 from dataclasses import dataclass, field
 from typing import Optional
+from enum import Enum
 from flask_babel import lazy_gettext as _, LazyString
+
+
+class FinancialAssessmentStatus(str, Enum):
+    PASSED: str = "PASSED"
+    FAILED: str = "FAILED"
+    FAST_TRACK: str = "FAST_TRACK"
+    SKIPPED: str = "SKIPPED"
+
+
+class FinancialAssessmentReason(str, Enum):
+    HARM: str = "HARM"
+    MORE_INFO_REQUIRED: str = "MORE_INFO_REQUIRED"
+    OTHER: str = "OTHER"
+
+    @classmethod
+    def get_reason_from_str(cls, reason: str) -> str:
+        reasons = {
+            "HARM": cls.HARM,
+            "MORE-INFO-REQUIRED": cls.MORE_INFO_REQUIRED,
+            "OTHER": cls.OTHER,
+        }
+        return reasons.get(reason.upper(), cls.OTHER)
 
 
 @dataclass
@@ -153,6 +176,7 @@ FAMILY = Category(
                 "Help for any problem if social services are involved with a child. Includes children in care, or being adopted. Also special guardianship."
             ),
             code="social_services",
+            in_scope=True,
         ),
         "divorce": Category(
             title=_("Problems with an ex-partner, divorce, when a relationship ends"),
@@ -160,6 +184,7 @@ FAMILY = Category(
                 "If you cannot agree about money, finances and property. Includes contact with children, where children live, and other child arrangements. If an ex-partner is not doing what they agreed. If you’re worried about a child."
             ),
             code="divorce",
+            in_scope=True,
         ),
         "domestic_abuse": Category(
             title=_("If there is domestic abuse in your family"),
@@ -167,6 +192,7 @@ FAMILY = Category(
                 "Making arrangements for children and finances. Also, keeping yourself safe, protecting children and legal help to leave the relationship."
             ),
             code="domestic_abuse",
+            in_scope=True,
         ),
         "family_mediation": Category(
             title=_("Family mediation"),
@@ -182,6 +208,7 @@ FAMILY = Category(
                 "If a child has been abducted (taken without your permission), including outside the UK."
             ),
             code="child_abducted",
+            in_scope=True,
         ),
         "send": Category(
             title=_("Children with special educational needs and disabilities (SEND)"),
@@ -299,6 +326,7 @@ HOUSING = Category(
                 "Threats, abuse or harassment by someone who is not a family member."
             ),
             code="problems_with_neighbours",
+            in_scope=True,
         ),
     },
 )

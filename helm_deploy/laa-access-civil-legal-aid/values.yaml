@@ -38,11 +38,10 @@ service:
 ingress:
   enabled: true
   className: "modsec"
-  annotations: {}
   cluster:
     name: green
     weight: '100'
-  tls: []
+  tls: {}
 
 whitelist:
   enabled: true
