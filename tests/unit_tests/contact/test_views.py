@@ -33,7 +33,9 @@ class TestContactUsView:
     @patch("app.contact.views.ContactUsForm")
     @patch("app.contact.views.MeansTest")
     @patch("app.contact.views.render_template")
-    def test_get_request(self, mock_render_template, mock_means_test, mock_form, app):
+    def test_get_request(
+        self, mock_render_template, mock_means_test, mock_form, app, client
+    ):
         mock_form_instance = MagicMock()
         mock_form.return_value = mock_form_instance
         mock_form_instance.validate_on_submit.return_value = False
@@ -93,7 +95,7 @@ class TestContactUsView:
     @patch("app.contact.views.render_template")
     @patch.object(MeansTest, "get_form_progress")
     def test_post_request_validation_failure(
-        self, mock_means_test, mock_render_template, mock_form, app
+        self, mock_means_test, mock_render_template, mock_form, app, client
     ):
         mock_form_instance = MagicMock()
         mock_form.return_value = mock_form_instance
@@ -227,3 +229,12 @@ def test_eligible_view_failure_no_ec_reference(mock_is_eligible, app):
         assert mock_is_eligible.called is False
         assert response.status_code == 302
         assert response.location == url_for("main.session_expired")
+
+
+def test_existing_case_ref_leads_to_session_expired(app, client):
+    with client.session_transaction() as session:
+        session["case_reference"] = "AB-1234-5678"
+
+    response = client.get("/contact-us")
+    assert response.status_code == 302
+    assert response.location == url_for("main.session_expired")
