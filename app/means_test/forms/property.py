@@ -17,6 +17,9 @@ from app.means_test.validators import MoneyIntervalAmountRequired
 from app.means_test.validators import ValidateIf
 from app.means_test.money_interval import MoneyInterval, to_amount
 
+from wtforms.csrf.core import CSRFTokenField
+from wtforms.fields.simple import SubmitField
+
 
 class PropertyPayload(dict):
     def __init__(self, form_data={}):
@@ -197,34 +200,38 @@ class MultiplePropertiesForm(BaseMeansTestForm):
     )
 
     def summary(self):
-        form = PropertyForm()
         properties = []
 
         form_data = session.get_eligibility().forms.get("property")
+
         if not form_data:
             return None
 
-        for property in form_data["properties"]:
+        for index, property in enumerate(form_data["properties"], start=0):
+            property_form = PropertyForm(data=property)
             property_dict = {}
-            for key in property.keys():
-                if key in ("csrf_token", "submit"):
+
+            for field_name, field_instance in property_form._fields.items():
+                if isinstance(field_instance, (SubmitField, CSRFTokenField)):
                     continue
-                question = str(form[key].label.text)
-                answer = property[key]
 
-                if isinstance(form[key], YesNoField):
-                    answer = _("Yes") if property[key] else _("No")
-                elif isinstance(form[key], MoneyIntervalField):
-                    answer = BaseMeansTestForm.get_money_interval_field_answers(
-                        property[key]
-                    )
-                elif isinstance(form[key], MoneyField):
-                    answer = BaseMeansTestForm.get_money_field_answers(property[key])
+                question = str(field_instance.label.text)
+                answer = field_instance.data
 
-                property_dict[key] = {
+                if isinstance(field_instance, YesNoField):
+                    answer = field_instance.value
+                elif isinstance(field_instance, MoneyIntervalField):
+                    answer = self.get_money_interval_field_answers(field_instance)
+                elif isinstance(field_instance, MoneyField):
+                    answer = self.get_money_field_answers(field_instance)
+
+                if answer is None:
+                    continue
+
+                property_dict[question] = {
                     "question": question,
                     "answer": answer,
-                    "id": key,
+                    "id": f"properties-{index}-{field_instance.id}",
                 }
 
             properties.append(property_dict)

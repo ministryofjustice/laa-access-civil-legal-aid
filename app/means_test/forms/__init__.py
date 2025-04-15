@@ -142,35 +142,20 @@ class BaseMeansTestForm(FlaskForm):
 
     @staticmethod
     def get_money_interval_field_answers(field_instance):
-        # Handle the property interval dictionary
-        if isinstance(field_instance, dict):
-            if field_instance.get("per_interval_value") is None:
-                return None
-            if field_instance.get("per_interval_value") == 0:
-                return "£0"
-            per_interval = field_instance.get("per_interval_value")
-            interval_period = field_instance.get("interval_period")
-        else:
-            per_interval = field_instance.data["per_interval_value"]
-            interval_period = field_instance.data["interval_period"]
+        if field_instance.data["per_interval_value"] is None:
+            return None
 
-            if field_instance.data["per_interval_value"] is None:
-                return None
-
-            if field_instance.data["per_interval_value"] == 0:
-                return "£0"
-
-        amount = decimal.Decimal(int(per_interval) / 100)
+        if field_instance.data["per_interval_value"] == 0:
+            return "£0"
+        amount = decimal.Decimal(int(field_instance.data["per_interval_value"]) / 100)
         amount = amount.quantize(decimal.Decimal("0.01"))
-        interval = MoneyInterval._intervals[interval_period]["label"]
+        interval = MoneyInterval._intervals[field_instance.data["interval_period"]][
+            "label"
+        ]
         return f"£{amount} ({interval})"
 
     @staticmethod
     def get_money_field_answers(field_instance):
-        if isinstance(field_instance, int):
-            if field_instance == 0:
-                return "£0"
-            return f"£{field_instance / 100:.2f}"
         if field_instance.data == 0:
             return "£0"
 
