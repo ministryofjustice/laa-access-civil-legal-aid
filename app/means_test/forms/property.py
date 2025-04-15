@@ -198,14 +198,14 @@ class MultiplePropertiesForm(BaseMeansTestForm):
 
     def summary(self):
         form = PropertyForm()
-        property_dict = {}
         properties = []
 
         form_data = session.get_eligibility().forms.get("property")
         if not form_data:
             return None
 
-        for property in form_data.get("properties"):
+        for property in form_data["properties"]:
+            property_dict = {}
             for key in property.keys():
                 if key in ("csrf_token", "submit"):
                     continue
@@ -226,9 +226,9 @@ class MultiplePropertiesForm(BaseMeansTestForm):
                     "answer": answer,
                     "id": key,
                 }
-            properties.append(property_dict)
-        print(properties)
 
-        return property_dict
+            properties.append(property_dict)
+
+        return properties
 
     template = "means_test/property.html"
