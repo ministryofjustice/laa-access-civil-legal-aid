@@ -296,11 +296,14 @@ class Session(SecureCookieSession):
 
         answers: list[CategoryAnswer] = self.category_answers
 
-        # Remove existing entry if present
-        answers = [
-            entry for entry in answers if entry.question != category_answer.question
-        ]
-        answers.append(category_answer)
+        # Update existing entry if present
+        question_exists = False
+        for i in range(len(answers)):
+            if answers[i].question == category_answer.question:
+                answers[i] = category_answer
+                question_exists = True
+        if not question_exists:
+            answers.append(category_answer)
 
         category_answers = []
         for answer in answers:
