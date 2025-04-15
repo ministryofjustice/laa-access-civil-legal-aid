@@ -144,6 +144,10 @@ class BaseMeansTestForm(FlaskForm):
     def get_money_interval_field_answers(field_instance):
         # Handle the property interval dictionary
         if isinstance(field_instance, dict):
+            if field_instance.get("per_interval_value") is None:
+                return None
+            if field_instance.get("per_interval_value") == 0:
+                return "£0"
             per_interval = field_instance.get("per_interval_value")
             interval_period = field_instance.get("interval_period")
         else:
