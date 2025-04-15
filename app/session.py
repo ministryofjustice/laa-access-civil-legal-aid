@@ -269,6 +269,19 @@ class Session(SecureCookieSession):
             Updates session['category_answers'] list
         """
 
+        # If the user changes subcategory we should reset their onward question answers.
+        if (
+            category_answer.question_type == QuestionType.SUB_CATEGORY
+            and self.subcategory
+        ):
+            is_changing_sub_cat = category_answer.answer_value != self.subcategory.code
+            if is_changing_sub_cat:
+                self["category_answers"] = [
+                    ans
+                    for ans in self["category_answers"]
+                    if ans.get("question_type") != QuestionType.ONWARD
+                ]
+
         # Remove translation from the category_answer object before saving
         category_answer = self._untranslate_category_answer(category_answer)
 

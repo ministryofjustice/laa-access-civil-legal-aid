@@ -70,8 +70,6 @@ class CategoryLandingPage(CategoryPage):
             self.listing["other"] = f"categories.{route_endpoint}.other"
 
     def set_category_answer(self) -> None:
-        if session.get("category_answers"):
-            session["category_answers"].pop()
         self.update_session(
             CategoryAnswer(
                 question="Choose the problem you need help with.",
