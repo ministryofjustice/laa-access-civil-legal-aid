@@ -1,16 +1,11 @@
 {% extends "base.html" %}
 {%- from 'components/back_link.html' import govukBackLink -%}
-{%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
 
 {% block pageTitle %}{%- if form.errors %}Error: {% endif -%}{{ form.title }} - GOV.UK{% endblock %}
 
 {% block beforeContent%}
 {{ super() }}
 {{ govukBackLink() }}
-
-{% if form.category == "Domestic Abuse" %}
-    {{ govukExitThisPage("Exit this page")}}
-{% endif %}
 
 {% endblock %}
 
@@ -30,7 +25,9 @@
         </ul>
         <p class="govuk-body">{% trans %}For all other benefits appeals, go to GOV.UK and read <a href="https://www.gov.uk/appeal-benefit-decision" target="_blank">Appeal a benefits decision (opens in new tab)</a>.{% endtrans %}</p>
 
-        <form class="govuk-!-margin-top-6" action="" method="get" novalidate>
+        <form class="govuk-!-margin-top-6" action="" method="post" novalidate>
+
+            {{ form.csrf_token() }}
 
             {{ form.question() }}
 

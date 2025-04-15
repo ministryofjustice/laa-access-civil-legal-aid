@@ -4,6 +4,7 @@
 
 {%- from 'govuk_frontend_jinja/components/cookie-banner/macro.html' import govukCookieBanner-%}
 {%- from 'govuk_frontend_jinja/components/error-summary/macro.html' import govukErrorSummary-%}
+{%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
 {%- from 'govuk_frontend_jinja/components/notification-banner/macro.html' import govukNotificationBanner -%}
 {%- from 'govuk_frontend_jinja/components/phase-banner/macro.html' import govukPhaseBanner -%}
 {%- from 'main/_modal-dialog.html' import timeout_dialog %}
@@ -129,8 +130,15 @@
         },
         'html': '<a class="govuk-link" href="' + url_for('contact.reasons_for_contacting') + '">Contact us</a> if you need help or would like to give feedback to improve this service'
     }) }}
+    
+    {% if show_exit_this_page %}
+      {{ govukExitThisPage({
+        "text": _("Exit this page")
+      }) }}
+    {% endif %}
 
 {% endblock %}
+
 
 {% block content %}
 
@@ -157,18 +165,26 @@
            'text': language.switch.text,
            'attributes': {'x-data': 'language-switcher'},
         },
+         {
+          'href': url_for('main.online_safety'),
+          'text': _("Staying safe online")
+        },
         {
-          'href': url_for('main.accessibility'),
-          'text': "Accessibility"
+          'href': url_for('main.privacy'),
+          'text': _("Privacy Policy")
         },
         {
           'href': url_for('main.cookies'),
-          'text': "Cookies"
+          'text': _("Cookies")
         },
         {
-            'href': url_for('main.privacy'),
-            'text': "Privacy"
-          }
+          'href': url_for('contact.reasons_for_contacting'),
+          'text': _("Contact")
+        },
+        {
+          'href': url_for('main.accessibility'),
+          'text': _("Accessibility statement")
+        },
       ],
       'html': 'Built by <a href="' + config['DEPARTMENT_URL'] +'" class="govuk-footer__link">' + config['DEPARTMENT_NAME'] + '</a>'
     }

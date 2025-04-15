@@ -1,6 +1,29 @@
 from dataclasses import dataclass, field
 from typing import Optional
+from enum import Enum
 from flask_babel import lazy_gettext as _, LazyString
+
+
+class FinancialAssessmentStatus(str, Enum):
+    PASSED: str = "PASSED"
+    FAILED: str = "FAILED"
+    FAST_TRACK: str = "FAST_TRACK"
+    SKIPPED: str = "SKIPPED"
+
+
+class FinancialAssessmentReason(str, Enum):
+    HARM: str = "HARM"
+    MORE_INFO_REQUIRED: str = "MORE_INFO_REQUIRED"
+    OTHER: str = "OTHER"
+
+    @classmethod
+    def get_reason_from_str(cls, reason: str) -> str:
+        reasons = {
+            "HARM": cls.HARM,
+            "MORE-INFO-REQUIRED": cls.MORE_INFO_REQUIRED,
+            "OTHER": cls.OTHER,
+        }
+        return reasons.get(reason.upper(), cls.OTHER)
 
 
 @dataclass
@@ -12,9 +35,16 @@ class Category:
     chs_code: Optional[str] = None
     # Internal code
     code: Optional[str] = None
+    in_scope: Optional[bool] = None
     children: dict[str, "Category"] | None = field(default_factory=dict)
+    parent_code: Optional[str] = None
     _referrer_text: Optional[LazyString] = None
-    exit_page: Optional[bool] = False
+    eligible_for_HLPAS: bool = False
+    exit_page: Optional[bool] = None
+
+    @property
+    def url_friendly_name(self):
+        return self.code.replace("_", "-").lower()
 
     @property
     def display_text(self):
@@ -26,15 +56,23 @@ class Category:
         class Subcategory:
             def __init__(self, category):
                 self.children: dict[str, Category] = category.children
+                self.category: Category = category
 
             def __getattr__(self, item):
+                if item not in self.children:
+                    raise AttributeError(
+                        f"Could not find {item} in category {self.category.title}"
+                    )
                 return self.children.get(item)
 
         return Subcategory(self)
 
     @classmethod
     def from_dict(cls, data: dict) -> "Category":
-        children: dict = data.pop("children", {})
+        data = data.copy()
+        children = {}
+        if "children" in data:
+            children: dict = data.pop("children")
         category = cls(**data)
         if children:
             for name, child in children.items():
@@ -64,6 +102,7 @@ DOMESTIC_ABUSE = Category(
     chs_code="family",
     code="domestic_abuse",
     exit_page=True,
+    in_scope=True,
     children={
         "protect_you_and_your_children": Category(
             title=_("Help to keep yourself safe and protect children"),
@@ -71,6 +110,7 @@ DOMESTIC_ABUSE = Category(
                 "Includes keeping you or your family safe, getting court orders and help if someone is ignoring a court order. Also, if you’re being stalked, threatened or harassed."
             ),
             code="protect_you_and_your_children",
+            in_scope=True,
         ),
         "leaving_an_abusive_relationship": Category(
             title=_("Leaving an abusive relationship"),
@@ -78,6 +118,7 @@ DOMESTIC_ABUSE = Category(
                 "Help with divorce, separation, or leaving your partner. Includes legal arrangements for children, money and housing."
             ),
             code="leaving_an_abusive_relationship",
+            in_scope=True,
         ),
         "problems_with_ex_partner": Category(
             title=_("Problems with an ex-partner: children or money"),
@@ -85,13 +126,7 @@ DOMESTIC_ABUSE = Category(
                 "Includes arrangements for children and money. If an ex-partner is not following agreements or court orders. If you’re worried about a child, or if a child is taken or kept without your permission."
             ),
             code="problems_with_ex_partner",
-        ),
-        "problems_with_neighbours": Category(
-            title=_("Problems with neighbours, landlords or other people"),
-            description=_(
-                "Threats, abuse or harassment by someone who is not a family member."
-            ),
-            code="problems_with_neighbours",
+            in_scope=True,
         ),
         "housing_homelessness_losing_home": Category(
             title=_("Housing, homelessness, losing your home"),
@@ -106,11 +141,22 @@ DOMESTIC_ABUSE = Category(
                 "Help with forced marriage and Forced Marriage Protection Orders."
             ),
             code="forced_marriage",
+            in_scope=True,
         ),
         "fgm": Category(
             title=_("Female genital mutilation (FGM)"),
             description=_("If you or someone else is at risk of FGM."),
             code="fgm",
+            in_scope=True,
+        ),
+        "accused_of_domestic_abuse": Category(
+            title=_("Domestic abuse - if you have been accused"),
+            description=_(
+                "Legal help if you’ve been accused of domestic abuse or forced marriage. Includes non-molestation orders and other court orders."
+            ),
+            code="accused_of_domestic_abuse",
+            exit_page=False,
+            in_scope=True,
         ),
     },
 )
@@ -130,6 +176,7 @@ FAMILY = Category(
                 "Help for any problem if social services are involved with a child. Includes children in care, or being adopted. Also special guardianship."
             ),
             code="social_services",
+            in_scope=True,
         ),
         "divorce": Category(
             title=_("Problems with an ex-partner, divorce, when a relationship ends"),
@@ -137,6 +184,7 @@ FAMILY = Category(
                 "If you cannot agree about money, finances and property. Includes contact with children, where children live, and other child arrangements. If an ex-partner is not doing what they agreed. If you’re worried about a child."
             ),
             code="divorce",
+            in_scope=True,
         ),
         "domestic_abuse": Category(
             title=_("If there is domestic abuse in your family"),
@@ -144,6 +192,7 @@ FAMILY = Category(
                 "Making arrangements for children and finances. Also, keeping yourself safe, protecting children and legal help to leave the relationship."
             ),
             code="domestic_abuse",
+            in_scope=True,
         ),
         "family_mediation": Category(
             title=_("Family mediation"),
@@ -151,6 +200,7 @@ FAMILY = Category(
                 "Help to cover the costs of family mediation (solve problems about money and children before you go to court)."
             ),
             code="family_mediation",
+            in_scope=True,
         ),
         "child_abducted": Category(
             title=_("Child taken without your consent"),
@@ -158,6 +208,7 @@ FAMILY = Category(
                 "If a child has been abducted (taken without your permission), including outside the UK."
             ),
             code="child_abducted",
+            in_scope=True,
         ),
         "send": Category(
             title=_("Children with special educational needs and disabilities (SEND)"),
@@ -170,6 +221,7 @@ FAMILY = Category(
                 "Advice about legal action against a school. Includes if a child is out of school, exclusions, transport to school, judicial reviews."
             ),
             code="education",
+            in_scope=True,
         ),
         "forced_marriage": Category(
             title=_("Forced marriage"),
@@ -196,6 +248,8 @@ HOUSING = Category(
                 "Help if you’re homeless, or might be homeless in the next 2 months. This could be because of rent arrears, debt, the end of a relationship, or because you have nowhere to live."
             ),
             code="homelessness",
+            in_scope=True,
+            eligible_for_HLPAS=True,
         ),
         "eviction": Category(
             title=_("Eviction, told to leave your home"),
@@ -203,6 +257,8 @@ HOUSING = Category(
                 "Landlord has told you to leave or is trying to force you to leave. Includes if you’ve got a Section 21 or a possession order."
             ),
             code="eviction",
+            in_scope=True,
+            eligible_for_HLPAS=True,
         ),
         "forced_to_sell": Category(
             title=_("Forced to sell or losing the home you own"),
@@ -210,6 +266,8 @@ HOUSING = Category(
                 "Repossession by your mortgage company; bankruptcy or other debt that means you will lose the home you own."
             ),
             code="forced_to_sell",
+            in_scope=True,
+            eligible_for_HLPAS=True,
         ),
         "repairs": Category(
             title=_("Repairs, health and safety"),
@@ -217,6 +275,7 @@ HOUSING = Category(
                 "If your house is not safe to live in, or needs repairs, and this is causing health or safety problems."
             ),
             code="repairs",
+            in_scope=True,
         ),
         "council_housing": Category(
             title=_("Problems with council housing"),
@@ -224,16 +283,19 @@ HOUSING = Category(
                 "Help to challenge the council’s decision about giving you housing. It includes if the council has offered a house that is not right for you, or that needs repairs or adaptations."
             ),
             code="council_housing",
+            in_scope=True,
         ),
         "threatened": Category(
             title=_("Being threatened or harassed where you live"),
             description=_("By a landlord, neighbour or someone else."),
             code="threatened",
+            in_scope=True,
         ),
         "asylum_seeker": Category(
             title=_("If you’re an asylum-seeker"),
             description=_("Applying for housing, losing your housing or homelessness."),
             code="asylum_seeker",
+            in_scope=True,
         ),
         "discrimination": Category(
             title=_("Discrimination"),
@@ -248,6 +310,23 @@ HOUSING = Category(
                 "Accused of anti-social behaviour by the landlord, council or housing association."
             ),
             code="antisocial_behaviour",
+            in_scope=True,
+        ),
+        "antisocial_behaviour_gangs": Category(
+            title=_("Anti-social behaviour and gangs"),
+            description=_(
+                "If you’re accused or taken to court for anti-social behaviour, including being in a gang."
+            ),
+            code="antisocial_behaviour_gangs",
+            in_scope=True,
+        ),
+        "problems_with_neighbours": Category(
+            title=_("Problems with neighbours, landlords or other people"),
+            description=_(
+                "Threats, abuse or harassment by someone who is not a family member."
+            ),
+            code="problems_with_neighbours",
+            in_scope=True,
         ),
     },
 )
@@ -260,6 +339,7 @@ DISCRIMINATION = Category(
     article_category_name="Discrimination",
     chs_code="discrimination",
     code="discrimination",
+    in_scope=True,
 )
 
 EDUCATION = Category(
@@ -267,7 +347,7 @@ EDUCATION = Category(
     description=_("Help if your child has SEND."),
     article_category_name="Education",
     chs_code="education",
-    code="education",
+    code="send",
     children={
         "child_young_person": Category(
             title=_("Help with a child or young person's SEND"),
@@ -275,6 +355,7 @@ EDUCATION = Category(
                 "Help with schools, other education settings and local authorities. Includes help with education, health and care plans (EHCP) or if a child’s needs are not being met."
             ),
             code="child_young_person",
+            in_scope=True,
         ),
         "tribunals": Category(
             title=_("SEND tribunals"),
@@ -282,6 +363,7 @@ EDUCATION = Category(
                 "Applying for or going to a SEND tribunal, appealing a decision by a tribunal."
             ),
             code="tribunals",
+            in_scope=True,
         ),
         "discrimination": Category(
             title=_("Child treated unfairly at school, discrimination"),
@@ -289,6 +371,7 @@ EDUCATION = Category(
                 "If a child is treated unfairly at school because of their disability. Or if you were treated badly for complaining about this."
             ),
             code="discrimination",
+            in_scope=True,
         ),
         "schools": Category(
             title=_("Other problems with schools"),
@@ -296,6 +379,7 @@ EDUCATION = Category(
                 "Advice about legal action against a school. Includes if a child is out of school, exclusions, transport to school, judicial reviews."
             ),
             code="schools",
+            in_scope=True,
         ),
         "care": Category(
             title=_("Care needs for disability (social care)"),
@@ -380,7 +464,7 @@ BENEFITS = Category(
 PUBLIC_LAW = Category(
     title=_("Legal action against police and public organisations"),
     description=_(
-        "Includes schools, the police, government, prisons, NHS, the council."
+        "Includes police, government, prisons, NHS, the council, care facilities and schools."
     ),
     article_category_name="Public",
     chs_code="publiclaw",
@@ -394,6 +478,7 @@ ASYLUM_AND_IMMIGRATION = Category(
     ),
     chs_code="immigration",
     code="asylum_and_immigration",
+    article_category_name="Immigration and asylum",
     children={
         "apply": Category(
             title=_("Applying for asylum"),
@@ -408,6 +493,8 @@ ASYLUM_AND_IMMIGRATION = Category(
                 "Help to apply for housing, problems with housing or if you are homeless."
             ),
             code="housing",
+            in_scope=True,
+            eligible_for_HLPAS=True,
         ),
         "domestic_abuse": Category(
             title=_("Stay in the UK if you experienced domestic abuse"),
@@ -473,21 +560,44 @@ MENTAL_CAPACITY = Category(
 def init_children(category: Category) -> None:
     for child in category.children.values():
         child.chs_code = child.chs_code or category.chs_code
+        child.parent_code = category.code
         child.article_category_name = (
             child.article_category_name or category.article_category_name
         )
+        child.exit_page = (
+            child.exit_page if child.exit_page is not None else category.exit_page
+        )
 
 
-ALL_CATEGORIES = [
-    DOMESTIC_ABUSE,
-    FAMILY,
-    HOUSING,
-    DISCRIMINATION,
-    EDUCATION,
-    COMMUNITY_CARE,
-    BENEFITS,
-    PUBLIC_LAW,
-    ASYLUM_AND_IMMIGRATION,
-    MENTAL_CAPACITY,
-]
-list(map(init_children, ALL_CATEGORIES))
+ALL_CATEGORIES = {
+    DOMESTIC_ABUSE.code: DOMESTIC_ABUSE,
+    FAMILY.code: FAMILY,
+    HOUSING.code: HOUSING,
+    DISCRIMINATION.code: DISCRIMINATION,
+    EDUCATION.code: EDUCATION,
+    COMMUNITY_CARE.code: COMMUNITY_CARE,
+    BENEFITS.code: BENEFITS,
+    PUBLIC_LAW.code: PUBLIC_LAW,
+    ASYLUM_AND_IMMIGRATION.code: ASYLUM_AND_IMMIGRATION,
+    MENTAL_CAPACITY.code: MENTAL_CAPACITY,
+}
+
+list(map(init_children, ALL_CATEGORIES.values()))
+
+
+def get_category_from_code(code: str) -> Category | None:
+    if not code:
+        return None
+    try:
+        return ALL_CATEGORIES[code]
+    except KeyError:
+        raise ValueError(f"{code} is an invalid category code.")
+
+
+def get_subcategory_from_code(parent_code: str, code: str) -> Category | None:
+    if not parent_code or not code:
+        return None
+    try:
+        return get_category_from_code(parent_code).children[code]
+    except KeyError:
+        raise ValueError(f"{code} is an invalid subcategory code for {parent_code}.")

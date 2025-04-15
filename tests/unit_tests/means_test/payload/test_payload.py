@@ -1,10 +1,14 @@
+from unittest.mock import patch
 import pytest
-from app.means_test.api import get_means_test_payload
+from app.session import Session
+from app.categories.constants import get_category_from_code
+from app.means_test.payload import MeansTestPayload
 from .test_cases import (
     ABOUT_YOU_TEST_CASES,
     INCOME_TEST_CASES,
     SAVINGS_TEST_CASES,
     OUTGOINGS_TEST_CASES,
+    PROPERTIES_TEST_CASES,
 )
 
 
@@ -39,17 +43,23 @@ def assert_partial_dict_match(expected: dict, actual: dict, path: str = "") -> N
     ABOUT_YOU_TEST_CASES
     + INCOME_TEST_CASES
     + SAVINGS_TEST_CASES
-    + OUTGOINGS_TEST_CASES,
+    + OUTGOINGS_TEST_CASES
+    + PROPERTIES_TEST_CASES,
     ids=lambda t: t["id"],
 )
-def test_get_means_test_payload(test_case: dict, app) -> None:
+def test_get_means_test_payload(test_case: dict, app, client) -> None:
     """
     Test the get_payload method with various input scenarios.
 
     Args:
         test_case: Dictionary containing test input and expected output
     """
-    with app.app_context():
-        result = get_means_test_payload(test_case["input"])
-        print(test_case)
-        assert_partial_dict_match(test_case["expected"], result)
+    mock_session = Session()
+    for form in test_case["input"].forms:
+        mock_session.get_eligibility().forms[form] = test_case["input"].forms[form]
+    mock_session.category = get_category_from_code(test_case["input"].category)
+
+    with patch("app.means_test.payload.session", mock_session):
+        payload = MeansTestPayload()
+        payload.update_from_session()
+        assert_partial_dict_match(test_case["expected"], payload)

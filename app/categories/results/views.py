@@ -1,14 +1,8 @@
 from app.categories.constants import Category
 from app.categories.views import CategoryPage
-from flask import session, redirect, url_for, render_template
+from flask import session, render_template
 from app.find_a_legal_adviser.laalaa import get_category_code as get_fala_category_code
 from app.api import cla_backend
-
-
-class HlpasInScopePage(CategoryPage):
-    def dispatch_request(self):
-        session["hlpas_eligible"] = True
-        return redirect(url_for("categories.results.in_scope"))
 
 
 class ResultPage(CategoryPage):
@@ -28,9 +22,7 @@ class ResultPage(CategoryPage):
             else []
         )
         return {
-            "category_name": category.referrer_text
-            if isinstance(category, Category)
-            else None,
+            "category": category if isinstance(category, Category) else None,
             "organisations": organisations,
             "fala_category_code": get_fala_category_code(article_category_name),
         }
@@ -79,5 +71,7 @@ class CannotFindYourProblemPage(OutOfScopePage):
 class NextStepsPage(OutOfScopePage):
     template: str = "categories/next-steps.html"
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, get_help_organisations: bool = True, **kwargs):
+        if get_help_organisations:
+            self.template = "categories/next-steps-alternate-help.html"
         super().__init__(*args, self.template, **kwargs)

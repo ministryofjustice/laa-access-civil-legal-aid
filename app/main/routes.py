@@ -153,7 +153,12 @@ def cookies():
 
 @bp.route("/privacy", methods=["GET"])
 def privacy():
-    return render_template("privacy.html")
+    return render_template("main/privacy.html")
+
+
+@bp.route("/online-safety")
+def online_safety():
+    return render_template("main/online-safety.html")
 
 
 @bp.route("/session-expired", methods=["GET"])
@@ -175,6 +180,10 @@ def csrf_error(error):
 @bp.before_app_request
 def service_unavailable_middleware():
     if not current_app.config["SERVICE_UNAVAILABLE"]:
+        return
+
+    # Allow requests for static assets, this is required for the service unavailable page to render correctly
+    if request.path.startswith("/assets/"):
         return
 
     service_unavailable_url = url_for("main.service_unavailable_page")

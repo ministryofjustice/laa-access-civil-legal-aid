@@ -41,6 +41,7 @@ def check_accessibility(page: Page):
         if len(wcag_violations) == 0:
             assert "No WCAG accessibility issues found"
         else:
+            assert False, print(f"WCAG accessibility issues found on {page.url}")
             # Cleans the URL to remove any invalid characters and replace with _
             invalid_filename_chars = r'[\/:*?"<>|]'
             sanitized_title = re.sub(invalid_filename_chars, "_", page.title())
@@ -54,7 +55,15 @@ def check_accessibility(page: Page):
 
 @pytest.mark.usefixtures("live_server")
 def test_all_page_accessibility(app, page: Page):
-    ignored_routes = ["static", "/", "main.status", "main.set_locale"]
+    ignored_routes = [
+        "static",
+        "/",
+        "main.status",
+        "main.set_locale",
+        "contact.geocode",
+        "main.handle_redirects",
+        "main.handle_scope_diagnosis_redirect",
+    ]
     shutil.rmtree("tests/functional_tests/accessibility_output", ignore_errors=True)
     routes = app.view_functions
     for route in routes:

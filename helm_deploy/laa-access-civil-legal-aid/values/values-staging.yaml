@@ -3,11 +3,23 @@ environment: "staging"
 
 ingress:
   enabled: true
-  hosts:
-    - host: "access-civil-legal-aid-staging.cloud-platform.service.justice.gov.uk"
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
+  host: "staging.checklegalaid.service.gov.uk"
+  tls:
+    secretName: "tls-certificate"
+  annotations:
+    allow-duplicate-host: "true"
+    nginx.ingress.kubernetes.io/canary: "true"
+    allowed-duplicate-ns: "laa-cla-public-staging,laa-access-civil-legal-aid-staging"
+    nginx.ingress.kubernetes.io/canary-weight: "0"
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/canary-by-cookie: "canary"
+    nginx.ingress.kubernetes.io/session-cookie-name: "ROUTE"
+    nginx.ingress.kubernetes.io/session-cookie-path: "/"
+    nginx.ingress.kubernetes.io/session-cookie-refresh: "true"
+    nginx.ingress.kubernetes.io/session-cookie-expires: "300"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "300"
+whitelist:
+  enabled: true
 
 envVars:
   CLA_BACKEND_URL:

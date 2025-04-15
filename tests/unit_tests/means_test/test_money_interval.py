@@ -47,3 +47,10 @@ def test_money_interval_addition_per_month():
     factor = 1.0
     expected_monthly_amount = int(first_amount_pence * factor) + second_amount_pence
     assert instance.amount == expected_monthly_amount
+
+
+def test_money_interval_incorrect_field():
+    instance = MoneyInterval(["test", "per_week"])
+    assert instance.amount is None
+
+    assert instance.per_month()["per_interval_value"] == 0

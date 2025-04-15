@@ -15,7 +15,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.12'
+        python-version: '3.13'
 
     - name: Run pip-compile pre-commit
       id: pip_compile
@@ -64,7 +64,7 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@master
         with:
           args: >
-            -Dsonar.python.version=3.12
+            -Dsonar.python.version=3.13
             -Dsonar.sources=app
             -Dsonar.python.coverage.reportPaths=coverage/coverage.xml
         env:
@@ -82,7 +82,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.12'
+        python-version: '3.13'
         cache: 'pip' # caching pip dependencies
 
     - name: Install dependencies

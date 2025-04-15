@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import patch, AsyncMock
+from unittest.mock import patch, Mock
 from flask import Flask
 from wtforms import Form
 from app.means_test.forms.outgoings import PartnerMoneyField, PartnerMoneyIntervalField
@@ -21,10 +21,10 @@ def test_request_context(test_app):
 def mock_session(test_request_context):
     """Mock the session's get_eligibility method properly."""
     with patch("app.means_test.forms.outgoings.session") as mock_session:
-        eligibility_mock = AsyncMock()
+        eligibility_mock = Mock()
         eligibility_mock.has_partner = False  # Default to no partner
 
-        mock_session.get_eligibility = AsyncMock(return_value=eligibility_mock)
+        mock_session.get_eligibility = Mock(return_value=eligibility_mock)
 
         yield mock_session
 
@@ -40,15 +40,13 @@ class TestForm(Form):
     )
 
 
-@pytest.mark.asyncio
-async def test_description_no_partner(mock_session):
+def test_description_no_partner(mock_session):
     mock_session.get_eligibility.return_value.has_partner = False
     form = TestForm()
     assert form.money_field.description == "Single description"
 
 
-@pytest.mark.asyncio
-async def test_description_with_partner(mock_session):
+def test_description_with_partner(mock_session):
     mock_session.get_eligibility.return_value.has_partner = True
     form = TestForm()
     assert form.money_field.description == "Partner description"
