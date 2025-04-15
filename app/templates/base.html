@@ -1,5 +1,6 @@
 {%  set htmlLang = language.current %}
 {%  set cspNonce = csp_nonce() %}
+{% set htmlClasses = "govuk-environment-" + config["ENVIRONMENT"] %}
 {% extends 'govuk_frontend_jinja/template.html' %}
 
 {%- from 'govuk_frontend_jinja/components/cookie-banner/macro.html' import govukCookieBanner-%}
@@ -126,7 +127,7 @@
 {% block beforeContent %}
     {{ govukPhaseBanner({
         'tag': {
-          'text': config['SERVICE_PHASE'],
+          'text': config['ENVIRONMENT'],
         },
         'html': '<a class="govuk-link" href="' + url_for('contact.reasons_for_contacting') + '">Contact us</a> if you need help or would like to give feedback to improve this service'
     }) }}
