@@ -98,3 +98,8 @@
 
     {{ form.submit }}
 {% endblock %}
+
+{% block bodyEnd %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='about-you.js') }}" nonce="{{ csp_nonce() }}"></script>
+{% endblock %}

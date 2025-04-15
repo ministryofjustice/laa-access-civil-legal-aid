@@ -30,6 +30,9 @@ class ReasonForContacting(View):
         if request.method == "GET":
             form.referrer.data = request.referrer or "Unknown"
         if form.validate_on_submit():
+            # If the user has already raised a case we want to ensure their information is not included in multiple cases.
+            if session.get("case_reference"):
+                session.clear()
             result = cla_backend.post_reasons_for_contacting(form=form)
             next_step = form.next_step_mapping.get("*")
             logger.info("RFC Created Reference: %s", result.get("reference"))
@@ -49,6 +52,9 @@ class ContactUs(View):
         self.attach_eligibility_data = attach_eligibility_data
 
     def dispatch_request(self):
+        if session.get("case_reference", None):
+            logger.info("FAILED contact page due to invalid session")
+            return redirect(url_for("main.session_expired"))
         form = ContactUsForm()
         form_progress = MeansTest(ContactUsForm, "Contact us").get_form_progress(form)
         if form.validate_on_submit():
