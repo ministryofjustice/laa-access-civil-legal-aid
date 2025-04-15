@@ -169,6 +169,19 @@ def test_multi_property_routing(
     page.get_by_role("button", name="Continue").click()
     expect(page.get_by_role("heading", name="Your money coming in")).to_be_visible()
 
+    page.get_by_role("group", name="Maintenance received").get_by_label("Amount").fill(
+        "0"
+    )
+    page.get_by_role("group", name="Pension received").get_by_label("Amount").fill("0")
+    page.get_by_role("group", name="Any other income").get_by_label("Amount").fill("0")
+    page.get_by_role("button", name="Continue").click()
+    expect(
+        page.get_by_role("heading", name="Check your answers and confirm")
+    ).to_be_visible()
+
+    expect(page.get_by_text("Property 1")).to_be_visible()
+    expect(page.get_by_text("Property 2")).to_be_visible()
+
 
 @pytest.mark.usefixtures("live_server")
 @pytest.mark.parametrize("answers", about_you_form_routing)

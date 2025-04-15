@@ -301,6 +301,73 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
     @staticmethod
     def get_form_summary(form: BaseMeansTestForm, form_name: str) -> list:
         summary = []
+        if isinstance(form.summary(), list):
+            # Check if there's more than one property
+            if len(form.summary()) > 1:
+                for i, items in enumerate(form.summary(), start=1):
+                    # Only add "Property {i}" heading if there are multiple properties
+                    summary.append(
+                        {
+                            "key": {
+                                "text": f"Property {i}",
+                                "classes": "govuk-heading-m",
+                            },
+                            "value": {"text": ""},
+                            "actions": {},
+                        }
+                    )
+
+                    for key in items:
+                        answer_key = "text"
+
+                        if isinstance(items.get(key)["answer"], list):
+                            answer_key = "markdown"
+                            items.get(key)["answer"] = "\n".join(
+                                items.get(key)["answer"]
+                            )
+
+                        change_link = url_for(
+                            f"means_test.{form_name}", _anchor=items.get(key)["id"]
+                        )
+                        summary.append(
+                            {
+                                "key": {"text": items.get(key)["question"]},
+                                "value": {answer_key: items.get(key)["answer"]},
+                                "actions": {
+                                    "items": [
+                                        {"href": change_link, "text": _("Change")}
+                                    ]
+                                },
+                            }
+                        )
+            else:
+                # If there's only one property, don't add the heading, just display the questions and answers
+                for items in form.summary():
+                    for key in items:
+                        answer_key = "text"
+
+                        if isinstance(items.get(key)["answer"], list):
+                            answer_key = "markdown"
+                            items.get(key)["answer"] = "\n".join(
+                                items.get(key)["answer"]
+                            )
+
+                        change_link = url_for(
+                            f"means_test.{form_name}", _anchor=items.get(key)["id"]
+                        )
+                        summary.append(
+                            {
+                                "key": {"text": items.get(key)["question"]},
+                                "value": {answer_key: items.get(key)["answer"]},
+                                "actions": {
+                                    "items": [
+                                        {"href": change_link, "text": _("Change")}
+                                    ]
+                                },
+                            }
+                        )
+            return summary
+
         for item in form.summary().values():
             answer_key = "text"
             if isinstance(item["answer"], list):
