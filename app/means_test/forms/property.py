@@ -197,12 +197,38 @@ class MultiplePropertiesForm(BaseMeansTestForm):
     )
 
     def summary(self):
-        return {
-            "properties": {
-                "question": "Not implemented yet",
-                "answer": "Not implemented yet",
-                "id": "None",
-            }
-        }
+        form = PropertyForm()
+        property_dict = {}
+        properties = []
+
+        form_data = session.get_eligibility().forms.get("property")
+        if not form_data:
+            return None
+
+        for property in form_data.get("properties"):
+            for key in property.keys():
+                if key in ("csrf_token", "submit"):
+                    continue
+                question = str(form[key].label.text)
+                answer = property[key]
+
+                if isinstance(form[key], YesNoField):
+                    answer = _("Yes") if property[key] else _("No")
+                elif isinstance(form[key], MoneyIntervalField):
+                    answer = BaseMeansTestForm.get_money_interval_field_answers(
+                        property[key]
+                    )
+                elif isinstance(form[key], MoneyField):
+                    answer = BaseMeansTestForm.get_money_field_answers(property[key])
+
+                property_dict[key] = {
+                    "question": question,
+                    "answer": answer,
+                    "id": key,
+                }
+            properties.append(property_dict)
+        print(properties)
+
+        return property_dict
 
     template = "means_test/property.html"
