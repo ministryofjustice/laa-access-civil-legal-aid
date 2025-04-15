@@ -33,7 +33,9 @@ class TestContactUsView:
     @patch("app.contact.views.ContactUsForm")
     @patch("app.contact.views.MeansTest")
     @patch("app.contact.views.render_template")
-    def test_get_request(self, mock_render_template, mock_means_test, mock_form, app, client):
+    def test_get_request(
+        self, mock_render_template, mock_means_test, mock_form, app, client
+    ):
         mock_form_instance = MagicMock()
         mock_form.return_value = mock_form_instance
         mock_form_instance.validate_on_submit.return_value = False
@@ -170,7 +172,9 @@ class TestFastTrackedContactUsView:
             response = view.dispatch_request()
             assert response.status_code == 302
             assert response.location == url_for("main.session_expired")
-            
+            assert mock_ensure_in_scope.called is True
+            assert mock_dispatch_request.called is False
+
     @patch("app.contact.views.ContactUs.dispatch_request", return_value=None)
     @patch("app.contact.views.FastTrackedContactUs.ensure_in_scope", return_value=None)
     def test_dispatch_request_success(
@@ -189,9 +193,7 @@ class TestFastTrackedContactUsView:
             financial_status, financial_reason = view.get_financial_eligibility_status()
             assert financial_status == FinancialAssessmentStatus.FAST_TRACK
             assert financial_reason == FinancialAssessmentReason.HARM
-            assert mock_ensure_in_scope.called is True
-            assert mock_dispatch_request.called is False
-               
+
 
 @patch("app.contact.views.is_eligible", return_value=EligibilityState.YES)
 @patch("app.contact.views.ContactUs.dispatch_request")
@@ -227,7 +229,8 @@ def test_eligible_view_failure_no_ec_reference(mock_is_eligible, app):
         assert mock_is_eligible.called is False
         assert response.status_code == 302
         assert response.location == url_for("main.session_expired")
-        
+
+
 def test_existing_case_ref_leads_to_session_expired(app, client):
     with client.session_transaction() as session:
         session["case_reference"] = "AB-1234-5678"
