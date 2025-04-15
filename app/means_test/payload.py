@@ -82,7 +82,11 @@ class AboutYouPayload(dict):
 class YourBenefitsPayload(dict):
     @classmethod
     def default(cls):
-        return {"specific_benefits": {}, "on_passported_benefits": False}
+        return {
+            "specific_benefits": {},
+            "on_passported_benefits": False,
+            "you": {"income": {"child_benefits": MoneyInterval(0)}},
+        }
 
     def __init__(self, form_data=None):
         super(YourBenefitsPayload, self).__init__()
@@ -119,7 +123,7 @@ class YourBenefitsPayload(dict):
                 return form_data.get(field)
 
             payload["you"] = {
-                "income": {"child_benefits": MoneyInterval(val("child_benefit"))}
+                "income": {"child_benefits": MoneyInterval(val("child_benefits"))}
             }
 
         self.update(payload)

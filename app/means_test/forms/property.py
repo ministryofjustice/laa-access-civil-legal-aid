@@ -109,7 +109,7 @@ class PropertyForm(BaseMeansTestForm):
         validators=[
             InputRequired(message=_("Tell us the approximate value of this property")),
             NumberRange(
-                min=0, max=999999999, message=_("Enter a value of more than £0")
+                min=0, max=99999999999, message=_("Enter a value of more than £0")
             ),
         ],
     )
@@ -123,7 +123,7 @@ class PropertyForm(BaseMeansTestForm):
         validators=[
             InputRequired(message=_("Tell us how much is left to pay on the mortgage")),
             NumberRange(
-                min=0, max=999999999, message=_("Enter a value of more than £0")
+                min=0, max=99999999999, message=_("Enter a value of more than £0")
             ),
         ],
     )
@@ -134,7 +134,7 @@ class PropertyForm(BaseMeansTestForm):
         validators=[
             InputRequired(message=_("Enter your mortgage repayment for last month")),
             NumberRange(
-                min=0, max=999999999, message=_("Enter a value of more than £0")
+                min=0, max=99999999999, message=_("Enter a value of more than £0")
             ),
         ],
     )
