@@ -8,8 +8,15 @@ import logging
 from flask import session, render_template, request, redirect, url_for
 from app.api import cla_backend
 from app.contact.notify.api import notify
+from app.means_test.api import is_eligible, EligibilityState
 from app.means_test.views import MeansTest
 from datetime import datetime
+from app.categories.constants import (
+    FinancialAssessmentReason,
+    FinancialAssessmentStatus,
+)
+from app.categories.mixins import InScopeMixin
+
 
 logger = logging.getLogger(__name__)
 
@@ -23,6 +30,9 @@ class ReasonForContacting(View):
         if request.method == "GET":
             form.referrer.data = request.referrer or "Unknown"
         if form.validate_on_submit():
+            # If the user has already raised a case we want to ensure their information is not included in multiple cases.
+            if session.get("case_reference"):
+                session.clear()
             result = cla_backend.post_reasons_for_contacting(form=form)
             next_step = form.next_step_mapping.get("*")
             logger.info("RFC Created Reference: %s", result.get("reference"))
@@ -42,6 +52,9 @@ class ContactUs(View):
         self.attach_eligibility_data = attach_eligibility_data
 
     def dispatch_request(self):
+        if session.get("case_reference", None):
+            logger.info("FAILED contact page due to invalid session")
+            return redirect(url_for("main.session_expired"))
         form = ContactUsForm()
         form_progress = MeansTest(ContactUsForm, "Contact us").get_form_progress(form)
         if form.validate_on_submit():
@@ -49,15 +62,16 @@ class ContactUs(View):
             if not self.attach_eligibility_data:
                 session.clear_eligibility()
 
-            # If the user used the "Contact Us" journey rather than completing scope diagnosis then their previous answers should not be attached to their case
+            # If the user used the "Contact Us" journey rather than completing scope diagnosis then their
+            # previous answers should not be attached to their case
             payload["scope_traversal"] = (
                 session.get_scope_traversal()
                 if ReasonsForContactingForm.MODEL_REF_SESSION_KEY not in session
                 else {}
             )
-            payload["scope_traversal"]["financial_eligiblity_status"] = (
-                self.get_financial_eligibility_status()
-            )
+            financial_status, financial_reason = self.get_financial_eligibility_status()
+            payload["scope_traversal"]["financial_assessment_status"] = financial_status
+            payload["scope_traversal"]["fast_track_reason"] = financial_reason
 
             session["case_reference"] = cla_backend.post_case(payload=payload)[
                 "reference"
@@ -108,14 +122,49 @@ class ContactUs(View):
         )
 
     def get_financial_eligibility_status(self):
-        # User has passed the means test and is on the "/eligible" page
-        if self.attach_eligibility_data and session.ec_reference:
-            return "PASSED"
-        # User has used the "Contact Us" journey rather than completing scope diagnosis
-        if ReasonsForContactingForm.MODEL_REF_SESSION_KEY in session:
-            return "SKIPPED"
-        # The user has either clicked "Contact CLA" on an in-scope page or has been operationally fast tracked to the "Contact Us" page.
-        return "FAST_TRACK"
+        return (
+            FinancialAssessmentStatus.SKIPPED,
+            FinancialAssessmentReason.MORE_INFO_REQUIRED,
+        )
+
+
+class FastTrackedContactUs(InScopeMixin, ContactUs):
+    def get_financial_eligibility_status(self):
+        reason_str = request.args.get("reason", "other")
+        reason = FinancialAssessmentReason.get_reason_from_str(reason_str)
+        return FinancialAssessmentStatus.FAST_TRACK, reason
+
+    def dispatch_request(self):
+        scope_check_redirect = self.ensure_in_scope()
+        if scope_check_redirect:
+            return scope_check_redirect
+
+        return super().dispatch_request()
+
+
+class EligibleContactUsPage(ContactUs):
+    def get_financial_eligibility_status(self):
+        eligibility_result = is_eligible(session.ec_reference)
+        if eligibility_result.YES:
+            return (
+                FinancialAssessmentStatus.PASSED,
+                FinancialAssessmentReason.MORE_INFO_REQUIRED,
+            )
+        elif eligibility_result.NO:
+            return (
+                FinancialAssessmentStatus.FAILED,
+                FinancialAssessmentReason.MORE_INFO_REQUIRED,
+            )
+
+    def dispatch_request(self):
+        if not session.ec_reference:
+            return redirect(url_for("main.session_expired"))
+
+        state = is_eligible(session.ec_reference)
+        if state != EligibilityState.YES:
+            return redirect(url_for("main.session_expired"))
+
+        return super().dispatch_request()
 
 
 class ConfirmationPage(View):
