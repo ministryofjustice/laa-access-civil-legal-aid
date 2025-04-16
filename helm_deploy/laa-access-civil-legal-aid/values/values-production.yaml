@@ -1,6 +1,6 @@
 # Default values for cla-backend in the production environment.
 environment: "production"
-
+replicaCount: 4
 ingress:
   enabled: true
   host: "checklegalaid.service.gov.uk"
