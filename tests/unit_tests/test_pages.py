@@ -70,3 +70,21 @@ def test_online_safety_template(mock_render_template, client):
     response = client.get("/online-safety")
     assert response.status_code == 200
     mock_render_template.assert_called_once_with("main/online-safety.html")
+
+
+def test_index_redirects_to_govuk(app, client):
+    app.config["ENVIRONMENT"] = "production"
+    response = client.get("/")
+    assert response.status_code == 302
+    assert response.headers["location"] == "https://www.gov.uk/check-legal-aid"
+
+
+def test_index_redirects_to_welsh_govuk(app, client):
+    client.set_cookie("locale", "cy")
+    app.config["ENVIRONMENT"] = "production"
+    response = client.get("/")
+    assert response.status_code == 302
+    assert (
+        response.headers["location"]
+        == "https://www.gov.uk/gwirio-os-ydych-yn-gymwys-i-gael-cymorth-cyfreithiol"
+    )
