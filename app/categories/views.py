@@ -240,7 +240,9 @@ class QuestionPage(CategoryPage):
                 title = title._args[0]
             answer = session.get_category_question_answer(title)
             if answer is None:
-                logger.info("FAILED ensuring form dependency for %s", form.title)
+                logger.error(
+                    "FAILED ensuring form dependency for %s", form.title, exc_info=True
+                )
                 return redirect(url_for("main.session_expired"))
 
         return None

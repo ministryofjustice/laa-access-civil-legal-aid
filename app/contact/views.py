@@ -53,7 +53,7 @@ class ContactUs(View):
 
     def dispatch_request(self):
         if session.get("case_reference", None):
-            logger.info("FAILED contact page due to invalid session")
+            logger.error("FAILED contact page due to invalid session", exc_info=True)
             return redirect(url_for("main.session_expired"))
         form = ContactUsForm()
         form_progress = MeansTest(ContactUsForm, "Contact us").get_form_progress(form)
@@ -182,7 +182,9 @@ class ConfirmationPage(View):
 
     def dispatch_request(self):
         if not session.get("case_reference", None):
-            logger.info("FAILED confirmation page due to invalid session")
+            logger.error(
+                "FAILED confirmation page due to invalid session", exc_info=True
+            )
             return redirect(url_for("main.session_expired"))
         form = ConfirmationEmailForm()
         context = self.get_context()
