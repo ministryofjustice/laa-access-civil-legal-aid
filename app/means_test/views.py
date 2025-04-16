@@ -100,7 +100,11 @@ class MeansTest(FormsMixin, InScopeMixin, View):
 
     def ensure_form_protection(self, current_form):
         if not current_form.should_show():
-            logger.info("FAILED ensuring form should show for %s", current_form.title)
+            logger.error(
+                "FAILED ensuring form should show for %s",
+                current_form.title,
+                exc_info=True,
+            )
             return redirect(url_for("main.session_expired"))
 
         progress = self.get_form_progress(current_form=current_form)
@@ -110,8 +114,10 @@ class MeansTest(FormsMixin, InScopeMixin, View):
             if form["is_current"]:
                 break
             if not form["is_completed"]:
-                logger.info(
-                    "FAILED ensuring form protection for %s", current_form.title
+                logger.error(
+                    "FAILED ensuring form protection for %s",
+                    current_form.title,
+                    exc_info=True,
                 )
                 return redirect(url_for("main.session_expired"))
         return None
@@ -188,8 +194,9 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
         progress = self.get_form_progress(current_form=self.form)
         for form in progress["steps"]:
             if not form["is_completed"]:
-                logger.info(
-                    "FAILED ensuring all forms are completed before the review page"
+                logger.error(
+                    "FAILED ensuring all forms are completed before the review page",
+                    exc_info=True,
                 )
                 return redirect(url_for("main.session_expired"))
 

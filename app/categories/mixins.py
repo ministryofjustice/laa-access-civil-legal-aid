@@ -14,7 +14,7 @@ class InScopeMixin:
 
     def ensure_in_scope(self):
         if not session.in_scope:
-            logger.info("FAILED ensuring in scope check")
+            logger.error("FAILED ensuring in scope check", exc_info=True)
             return redirect(url_for("main.session_expired"))
 
         return None
