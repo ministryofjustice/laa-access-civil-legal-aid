@@ -11,6 +11,10 @@ class Config(object):
     GOV_UK_START_PAGE = os.environ.get(
         "GOV_UK_START_PAGE", "https://www.gov.uk/check-legal-aid"
     )
+    WELSH_GOV_UK_START_PAGE = os.environ.get(
+        "WELSH_GOV_UK_START_PAGE",
+        "https://www.gov.uk/gwirio-os-ydych-yn-gymwys-i-gael-cymorth-cyfreithiol",
+    )
     CONTACT_EMAIL = os.environ.get("CONTACT_EMAIL", "")
     CONTACT_PHONE = os.environ.get("CONTACT_PHONE", "")
     DEPARTMENT_NAME = os.environ.get("DEPARTMENT_NAME", "MOJ Digital")
