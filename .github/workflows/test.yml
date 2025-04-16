@@ -38,8 +38,8 @@ jobs:
 
     - name: Unit test with pytest
       run: |
-        pip install pytest pytest-cov
-        coverage run -m pytest tests/unit_tests
+        pip install pytest pytest-cov pytest-xdist
+        coverage run -m pytest -n 4 tests/unit_tests
         coverage xml
 
     - name: Upload coverage report
@@ -113,11 +113,11 @@ jobs:
   
       - name: Functional test with pytest
         run: |
-          pip install pytest pytest-cov
+          pip install pytest pytest-cov pytest-xdist
           npm install
           npm run build
           playwright install
-          pytest tests/functional_tests --doctest-modules --junitxml=junit/functional-test-results.xml --cov=com --cov-report=xml --cov-report=html
+          pytest -n 4 tests/functional_tests --doctest-modules --junitxml=junit/functional-test-results.xml --cov=com --cov-report=xml --cov-report=html
 
       - name: Upload pytest test results
         uses: actions/upload-artifact@v4

@@ -3,6 +3,7 @@ isort
 pytest-flask
 pytest-playwright
 pytest-mock
+pytest-xdist
 axe-core-python
 trufflehog3==3.0.10
 freezegun
