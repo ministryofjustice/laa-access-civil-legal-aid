@@ -25,9 +25,17 @@ def start_page():
     This is the endpoint directed to from the header text, clicking this link will reset the users' session.
     """
     session.clear()
-    if current_app.config.get("CLA_ENVIRONMENT") != "production":
+    if current_app.config.get("ENVIRONMENT") != "production":
         return redirect(url_for("categories.index"))
-    return redirect(current_app.config.get("GOV_UK_START_PAGE"))
+
+    from app.main import get_locale
+
+    GOVUK_url = (
+        current_app.config.get("WELSH_GOV_UK_START_PAGE")
+        if get_locale() == "cy"
+        else current_app.config.get("GOV_UK_START_PAGE")
+    )
+    return redirect(GOVUK_url)
 
 
 @bp.get("/start")
