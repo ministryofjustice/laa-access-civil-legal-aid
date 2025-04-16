@@ -10,7 +10,7 @@ ingress:
     allow-duplicate-host: "true"
     nginx.ingress.kubernetes.io/canary: "true"
     allowed-duplicate-ns: "laa-cla-public-staging,laa-access-civil-legal-aid-staging"
-    nginx.ingress.kubernetes.io/canary-weight: "0"
+    nginx.ingress.kubernetes.io/canary-weight: "100"
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/canary-by-cookie: "canary"
     nginx.ingress.kubernetes.io/session-cookie-name: "ROUTE"
