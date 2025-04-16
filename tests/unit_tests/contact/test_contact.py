@@ -224,7 +224,7 @@ def test_by_postcode_formatted(mock_by_postcode, formatted_address_lookup):
             ValidationError,
             "Can not schedule a callback at the requested time",
         ),
-        ("", "1000", None, None),
+        ("", "1000", StopValidation, None),
     ],
 )
 def test_validate_day_time(day, time, expected_exception, expected_message):

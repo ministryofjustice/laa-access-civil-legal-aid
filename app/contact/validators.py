@@ -17,7 +17,7 @@ class ValidateDayTime:
 
         if not selected_day:
             #  Do not attempt to validate further, let this be handled by the selected day InputRequired validator.
-            return
+            raise StopValidation()
 
         if selected_day not in form.time_slots:
             raise ValidationError(self.message)
