@@ -95,9 +95,9 @@ class ContactUs(View):
                     session["callback_time"],
                     session["contact_type"],
                     form.data.get("full_name"),
-                    form.data.get("third_party_full_name"),
+                    form.data.get("thirdparty_full_name"),
                     form.data.get("contact_number"),
-                    form.data.get("third_party_contact_number"),
+                    form.data.get("thirdparty_contact_number"),
                 )
             # Clears session data once form is submitted
             case_ref = session.get("case_reference")
