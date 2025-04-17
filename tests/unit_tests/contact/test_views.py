@@ -76,9 +76,9 @@ class TestContactUsView:
         mock_form_instance.data = {
             "contact_type": "callback",
             "full_name": "John Doe",
-            "third_party_full_name": None,
+            "thirdparty_full_name": None,
             "contact_number": "07777777777",
-            "third_party_contact_number": None,
+            "thirdparty_contact_number": None,
             "extra_notes": "Some notes",
         }
 
