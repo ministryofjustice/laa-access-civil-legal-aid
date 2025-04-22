@@ -14,8 +14,9 @@ function add_GTM() {
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({ user_id: gtm_anon_id });
       window.dataLayer.push({
-        category_code: window.sessionData.category_code,
-        category_name: window.sessionData.category_name,
+        "category_code": window.sessionData.category_code,
+        "category_name": window.sessionData.category_name,
+        scope: 'yes',
     });
     }
 
