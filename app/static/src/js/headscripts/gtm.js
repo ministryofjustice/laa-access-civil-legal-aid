@@ -14,8 +14,8 @@ function add_GTM() {
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({ user_id: gtm_anon_id });
       window.dataLayer.push({
-        "category_code": window.sessionData.category_code,
-        "category_name": window.sessionData.category_name,
+        'category_code': window.sessionData.category_code,
+        'category_name': window.sessionData.category_name,
         scope: 'yes',
     });
     }
@@ -27,6 +27,14 @@ function add_GTM() {
 
     GTM_Loaded = true;
 }
+
+if(window.location.pathname !== '/scope/refer/legal-adviser' ||
+    typeof CATEGORY !=='string')return;
+
+    window.dataLayer.push({
+    'event': 'fala_search',
+    'category_name': CATEGORY.substring(0,50),
+});
 
 // If user consents from banner then allow GTM to load
 window.addEventListener("cookies_approved", function(event){
