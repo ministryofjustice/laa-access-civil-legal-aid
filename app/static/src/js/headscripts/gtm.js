@@ -22,10 +22,11 @@ function add_GTM() {
 
     GTM_Loaded = true;
 }
-
+window.dataLayer = window.dataLayer || [];
 if (window.location.pathname.startsWith('/find-a-legal-adviser')) {
     window.dataLayer.push({
     'event': 'fala_search',
+    'category_name': 'test',
     });
 }
 // If user consents from banner then allow GTM to load
