@@ -28,27 +28,11 @@ function add_GTM() {
     GTM_Loaded = true;
 }
 
-if(window.location.pathname !== '/scope/refer/legal-adviser' ||
-    typeof CATEGORY !=='string')return;
-
+if (!window.location.pathname.startsWith('/find-a-legal-adviser') || typeof CATEGORY !== 'string') return;
     window.dataLayer.push({
     'event': 'fala_search',
-    'category_name': CATEGORY.substring(0,50),
+    'category_name': window.location.pathname.slice(-3),
 });
-
-function push_GTM_anon_id() {
-    if(typeof gtm_anon_id === 'string' && gtm_anon_id.length === 36) {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({ user_id: gtm_anon_id });
-    }
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    if (GTM_Loaded) {
-        push_GTM_anon_id();
-    }
-});
-
 // If user consents from banner then allow GTM to load
 window.addEventListener("cookies_approved", function(event){
     if (!GTM_Loaded) {
