@@ -28,14 +28,11 @@ function add_GTM() {
     GTM_Loaded = true;
 }
 
-if(window.location.pathname !== '/scope/refer/legal-adviser' ||
-    typeof CATEGORY !=='string')return;
-
+if (!window.location.pathname.startsWith('/find-a-legal-adviser') || typeof CATEGORY !== 'string') return;
     window.dataLayer.push({
     'event': 'fala_search',
-    'category_name': CATEGORY.substring(0,50),
+    'category_name': window.location.pathname.slice(-3),
 });
-
 // If user consents from banner then allow GTM to load
 window.addEventListener("cookies_approved", function(event){
     if (!GTM_Loaded) {
