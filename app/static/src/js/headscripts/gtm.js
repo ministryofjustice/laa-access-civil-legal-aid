@@ -23,10 +23,10 @@ function add_GTM() {
     GTM_Loaded = true;
 }
 
-if (!window.location.pathname.startsWith('/find-a-legal-adviser')) return;
-    window.dataLayer.push({
-    'event': 'fala_search',
-    'category_name': window.location.pathname.slice(-3),
+window.dataLayer = window.dataLayer || [];
+window.dataLayer.push({
+ 'event': 'new_subscriber',
+ 'formLocation': 'footer'
 });
 // If user consents from banner then allow GTM to load
 window.addEventListener("cookies_approved", function(event){
