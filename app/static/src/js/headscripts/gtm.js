@@ -23,7 +23,7 @@ function add_GTM() {
     GTM_Loaded = true;
 }
 
-if (!window.location.pathname.startsWith('/find-a-legal-adviser') || typeof CATEGORY !== 'string') return;
+if (!window.location.pathname.startsWith('/find-a-legal-adviser')) return;
     window.dataLayer.push({
     'event': 'fala_search',
     'category_name': window.location.pathname.slice(-3),
