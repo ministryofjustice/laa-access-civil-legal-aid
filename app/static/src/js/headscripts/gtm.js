@@ -31,8 +31,7 @@ window.addEventListener("cookies_approved", function(event){
 })
 
 // If user had consented already then allow GTM to load
-if (document.cookie) {
+window.addEventListener("DOMContentLoaded", function() {
     console.log('here');
-    console.log(document.cookie)
     add_GTM();
-}
+})
