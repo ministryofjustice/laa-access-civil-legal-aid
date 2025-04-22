@@ -13,13 +13,10 @@ function add_GTM() {
     if(typeof gtm_anon_id !== 'undefined' && gtm_anon_id.length === 36) {
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({ user_id: gtm_anon_id });
-      if (window.sessionData) {
-        window.dataLayer.push({
-                category_name: window.sessionData.category_name,
-                category_code: window.sessionData.category_code
-            });
-        }
-    }
+      window.dataLayer.push({
+        category_code: window.sessionData.category_code,
+        category_name: window.sessionData.category_name,
+    });
     }
 
     // Continue standard GTM code
