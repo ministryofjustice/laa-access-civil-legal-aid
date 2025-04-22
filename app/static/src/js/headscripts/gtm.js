@@ -23,11 +23,11 @@ function add_GTM() {
     GTM_Loaded = true;
 }
 
-window.dataLayer = window.dataLayer || [];
-window.dataLayer.push({
- 'event': 'new_subscriber',
- 'formLocation': 'footer'
-});
+if (window.location.pathname.startsWith('/find-a-legal-adviser')) {
+    window.dataLayer.push({
+    'event': 'fala_search',
+    });
+}
 // If user consents from banner then allow GTM to load
 window.addEventListener("cookies_approved", function(event){
     if (!GTM_Loaded) {
