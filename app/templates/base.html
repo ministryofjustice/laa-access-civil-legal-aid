@@ -20,6 +20,14 @@
     <script nonce="{{ csp_nonce() }}">
         gtm_anon_id = '{{ gtm_anon_id }}';
     </script>
+
+    <script nonce="{{ csp_nonce() }}">
+      window.sessionData = {{ {
+          "category_name": session.get('category_answers', []) | map(attribute='answer_label') | list,
+          "category_code": session.get('category', {}).get('code')
+      } | tojson | safe }};
+    </script>
+    
     <meta name="description" content="{{config['SERVICE_NAME']}}">
     <meta name="author" content="{{config['DEPARTMENT_NAME']}}">
 {% endblock %}
