@@ -31,7 +31,11 @@ window.addEventListener("cookies_approved", function(event){
 })
 
 // If user had consented already then allow GTM to load
-if (document.cookie && document.cookie.indexOf('cookies_policy={"analytics": "yes", "functional": "yes"}') > -1 && !GTM_Loaded) {
+if (
+    document.cookie &&
+    document.cookie.indexOf('cookies_policy={"analytics": "yes"\\054 "functional": "yes"}') > -1 &&
+    !GTM_Loaded
+  ) {
     console.log('here');
     add_GTM();
-}
+  }
