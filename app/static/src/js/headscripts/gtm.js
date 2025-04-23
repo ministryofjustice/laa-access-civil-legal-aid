@@ -25,7 +25,7 @@ function add_GTM() {
 
 // Diagnosed
 document.addEventListener('DOMContentLoaded', function () {
-    if (window.location.pathname.endsWith('/legal-aid-available')) {
+    if (window.location.pathname.endsWith('/legal-aid-available') || window.location.pathname.includes('fast-tracked')) {
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
             event: 'diagnosed',
