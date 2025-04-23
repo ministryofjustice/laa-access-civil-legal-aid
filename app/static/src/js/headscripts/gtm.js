@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
             diagnosis_result: "INSCOPE",
         });
     }
-    else if (window.location.pathname.endsWith('/cannot-find-your-problem') {
+    else if (window.location.pathname.endsWith('/cannot-find-your-problem')) {
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
             event: 'diagnosed',
