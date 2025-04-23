@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
             category_code: window.sessionData?.category_code,
             category_name: window.sessionData?.category_name,
             category_traversal: window.sessionData?.category_traversal,
+            diagnosis_result: "INSCOPE",
         });
     }
 })
@@ -43,7 +44,8 @@ document.addEventListener('click', function (e) {
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
             event: 'diagnosed',
-            category_name: link.textContent.trim().slice(0, 50)
+            category_name: link.textContent.trim().slice(0, 50),
+            diagnosis_result: "OUTOFSCOPE",
     });
     }
 });
