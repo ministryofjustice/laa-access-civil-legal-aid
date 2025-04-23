@@ -25,11 +25,8 @@ function add_GTM() {
 
 // Diagnosed
 document.addEventListener('DOMContentLoaded', function () {
-    console.log("sessionData?", window.sessionData);  
     if (window.location.pathname.endsWith('/legal-aid-available')) {
         window.dataLayer = window.dataLayer || [];
-        console.log(window)
-        console.log(window.sessionData?.category_name)
         window.dataLayer.push({
             event: 'diagnosed',
             category_code: window.sessionData?.category_code,
