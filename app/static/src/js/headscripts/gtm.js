@@ -30,9 +30,9 @@ if (window.location.pathname.endsWith('/legal-aid-available')) {
         event: 'diagnosed',
         category_code: window.sessionData?.category_code,
         category_name: window.sessionData?.category_name,
+        category_traversal: window.sessionData?.category_traversal,
     });
 }
-
 
 // Record mini FALA search
 document.addEventListener('click', function (e) {
@@ -40,8 +40,7 @@ document.addEventListener('click', function (e) {
     if (link && link.href.includes('/find-a-legal-adviser')) {
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
-            event: 'fala_search',
-            clicked_url: link.href,
+            event: 'diagnosed',
             category_name: link.textContent.trim().slice(0, 50)
     });
     }
