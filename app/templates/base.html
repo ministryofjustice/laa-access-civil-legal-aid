@@ -24,7 +24,8 @@
     <script nonce="{{ csp_nonce() }}">
       window.sessionData = {{ {
         "category_code": session.get('category', {}).get('code'),
-        "category_name": session.get('category_answers', []) | map(attribute='answer_label') | list
+        "category_name": session.get('category', {}),
+        "category_traversal": session.get('category_answers', []) | map(attribute='answer_label') | list
       } | tojson | safe }};
     </script>
     
