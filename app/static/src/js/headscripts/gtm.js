@@ -23,13 +23,20 @@ function add_GTM() {
     GTM_Loaded = true;
 }
 
+// Record mini FALA search
 window.dataLayer = window.dataLayer || [];
-if (window.location.pathname.startsWith('/find-a-legal-adviser')) {
-    window.dataLayer.push({
-    'event': 'fala_search',
-    'category_name': window.location.pathname.slice(-3),
+document.addEventListener('click', function (e) {
+    const link = e.target.closest('a'); // Get the nearest anchor tag if clicked element is inside one
+    if (link && link.href.includes('/find-a-legal-adviser')) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            event: 'fala_search',
+            clicked_url: link.href,
+            category_name: link.textContent.trim().slice(0, 50)
     });
-}
+    }
+});
+
 // If user consents from banner then allow GTM to load
 window.addEventListener("cookies_approved", function(event){
     if (!GTM_Loaded) {
