@@ -28,11 +28,10 @@ if (window.location.pathname.endsWith('/legal-aid-available')) {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
         event: 'diagnosed',
-        category_code: window.sessionData?.category_code || 'unknown',
-        category_name: window.sessionData?.category_name || []
+        category_code: window.sessionData.category_code,
+        category_name: window.sessionData.category_name
     });
 }
-
 
 // Record mini FALA search
 document.addEventListener('click', function (e) {
