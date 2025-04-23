@@ -24,7 +24,6 @@ function add_GTM() {
 }
 
 // Record mini FALA search
-window.dataLayer = window.dataLayer || [];
 document.addEventListener('click', function (e) {
     const link = e.target.closest('a'); // Get the nearest anchor tag if clicked element is inside one
     if (link && link.href.includes('/find-a-legal-adviser')) {
