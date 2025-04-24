@@ -8,8 +8,7 @@ function add_GTM() {
 
     // Standard GTM code
     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
-    console.log('here')
-    console.log(gtm_anon_id)
+
     // Insert our variable into data layer
     if(gtm_anon_id.length === 36) {
       window.dataLayer = window.dataLayer || [];
