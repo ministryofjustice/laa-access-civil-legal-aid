@@ -48,21 +48,26 @@ function diagnosed(){
     }
 }
 
-// Diagnosed
-document.addEventListener('DOMContentLoaded', diagnosed);
-
-// Record mini FALA search
-document.addEventListener('click', function (e) {
-    const link = e.target.closest('a'); // Get the nearest anchor tag if clicked element is inside one
-    if (link && link.href.includes('/find-a-legal-adviser')) {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-            event: 'diagnosed',
-            category_name: link.textContent.trim().slice(0, 50),
-            diagnosis_result: "OUTOFSCOPE",
+function diagnosed_fala() {
+    document.addEventListener('click', function (e) {
+        const link = e.target.closest('a');
+        if (link && link.href.includes('/find-a-legal-adviser')) {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                event: 'diagnosed',
+                category_name: link.textContent.trim().slice(0, 50),
+                diagnosis_result: "OUTOFSCOPE",
+            });
+        }
     });
-    }
+}
+
+// Diagnosed Events
+document.addEventListener('DOMContentLoaded', function () {
+    diagnosed();
+    diagnosed_fala();
 });
+
 
 // If user consents from banner then allow GTM to load
 window.addEventListener("cookies_approved", function(event){
