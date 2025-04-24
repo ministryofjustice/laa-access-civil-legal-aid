@@ -10,7 +10,7 @@ function add_GTM() {
     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
 
     // Insert our variable into data layer
-    if(typeof gtm_anon_id !== 'undefined' && gtm_anon_id.length === 36) {
+    if(gtm_anon_id.length === 36) {
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({ user_id: gtm_anon_id });
     }
