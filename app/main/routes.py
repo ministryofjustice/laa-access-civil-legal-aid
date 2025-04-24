@@ -16,7 +16,6 @@ from flask import (
 from flask_wtf.csrf import CSRFError
 from werkzeug.exceptions import HTTPException
 from app.main import bp
-from app.main.gtm import get_gtm_anon_id_from_cookie
 from app.main.forms import CookiesForm
 
 
@@ -172,8 +171,6 @@ def online_safety():
 
 @bp.route("/session-expired", methods=["GET"])
 def session_expired():
-    session.clear()
-    session["GTM_ANON_ID"] = get_gtm_anon_id_from_cookie()
     return render_template("session_expired.html")
 
 
