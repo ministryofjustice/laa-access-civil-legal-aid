@@ -19,16 +19,13 @@
     <script src="{{ url_for('static', filename='headscripts.js') }}" nonce="{{ csp_nonce() }}" ></script>
     <script nonce="{{ csp_nonce() }}">
         gtm_anon_id = '{{ gtm_anon_id }}';
+        window.sessionData = {{ {
+          "category_code": session.get('category', {}).get('code') | string,
+          "category_name": (session.get('category_answers', []) | first).get('answer_label') | string if session.get('category_answers') else None,
+          "category_traversal": session.get('category_answers', []) | map(attribute='answer_label') | list
+        } | tojson | safe }};
     </script>
 
-    <script nonce="{{ csp_nonce() }}">
-      window.sessionData = {{ {
-        "category_code": session.get('category', {}).get('code'),
-        "category_name": (session.get('category_answers', []) | first).get('answer_label') if session.get('category_answers') else None,
-        "category_traversal": session.get('category_answers', []) | map(attribute='answer_label') | list
-      } | tojson | safe }};
-    </script>
-    
     <meta name="description" content="{{config['SERVICE_NAME']}}">
     <meta name="author" content="{{config['DEPARTMENT_NAME']}}">
 {% endblock %}
