@@ -23,29 +23,33 @@ function add_GTM() {
     GTM_Loaded = true;
 }
 
-// Diagnosed
-document.addEventListener('DOMContentLoaded', function () {
-    if (window.location.pathname.endsWith('/legal-aid-available') || window.location.pathname.includes('fast-tracked')) {
-        window.dataLayer = window.dataLayer || [];
+function diagnosed(){
+    if (!window.sessionData) return; // If no session data available exit
+    window.dataLayer = window.dataLayer || [];
+
+    const path = window.location.pathname;
+
+    if (path.endsWith('/legal-aid-available') || path.includes('fast-tracked')) {
         window.dataLayer.push({
             event: 'diagnosed',
-            category_code: window.sessionData?.category_code,
-            category_name: window.sessionData?.category_name,
-            category_traversal: window.sessionData?.category_traversal,
+            category_code: window.sessionData.category_code,
+            category_name: window.sessionData.category_name,
+            category_traversal: window.sessionData.category_traversal,
             diagnosis_result: "INSCOPE",
         });
-    }
-    else if (window.location.pathname.endsWith('/cannot-find-your-problem')) {
-        window.dataLayer = window.dataLayer || [];
+    } else if (path.endsWith('/cannot-find-your-problem')) {
         window.dataLayer.push({
             event: 'diagnosed',
-            category_code: window.sessionData?.category_code,
-            category_name: window.sessionData?.category_name,
-            category_traversal: window.sessionData?.category_traversal,
+            category_code: window.sessionData.category_code,
+            category_name: window.sessionData.category_name,
+            category_traversal: window.sessionData.category_traversal,
             diagnosis_result: "OUTOFSCOPE",
         });
     }
-})
+}
+
+// Diagnosed
+document.addEventListener('DOMContentLoaded', diagnosed);
 
 // Record mini FALA search
 document.addEventListener('click', function (e) {
