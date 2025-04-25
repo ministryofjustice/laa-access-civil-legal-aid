@@ -24,9 +24,6 @@ function add_GTM() {
 }
 
 function diagnosed(){
-    if (!window.sessionData) return; // If no session data available exit
-    window.dataLayer = window.dataLayer || [];
-
     const path = window.location.pathname;
 
     if (path.endsWith('/legal-aid-available') || path.includes('fast-tracked')) {
@@ -52,7 +49,6 @@ function diagnosed_fala() {
     document.addEventListener('click', function (e) {
         const link = e.target.closest('a');
         if (link && link.href.includes('/find-a-legal-adviser')) {
-            window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
                 event: 'diagnosed',
                 category_name: link.textContent.trim().slice(0, 50),
@@ -64,6 +60,8 @@ function diagnosed_fala() {
 
 // Diagnosed Events
 document.addEventListener('DOMContentLoaded', function () {
+    if (!window.sessionData) return; // If no session data available exit
+    window.dataLayer = window.dataLayer || [];
     diagnosed();
     diagnosed_fala();
 });
