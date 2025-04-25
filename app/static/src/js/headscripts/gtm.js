@@ -23,25 +23,24 @@ function add_GTM() {
     GTM_Loaded = true;
 }
 
+function push_to_datalayer(event, category_code = null, category_name = null, category_traversal = null, diagnosis_result = null) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+        event: event,
+        category_code: category_code,
+        category_name: category_name,
+        category_traversal: category_traversal,
+        diagnosis_result: diagnosis_result,
+    });
+}
+
 function diagnosed(){
     const path = window.location.pathname;
 
     if (path.endsWith('/legal-aid-available') || path.includes('fast-tracked')) {
-        window.dataLayer.push({
-            event: 'diagnosed',
-            category_code: window.sessionData.category_code,
-            category_name: window.sessionData.category_name,
-            category_traversal: window.sessionData.category_traversal,
-            diagnosis_result: "INSCOPE",
-        });
+        push_to_datalayer('diagnosed', window.sessionData.category_code, window.sessionData.category_name, window.sessionData.category_traversal, "INSCOPE")
     } else if (path.endsWith('/cannot-find-your-problem')) {
-        window.dataLayer.push({
-            event: 'diagnosed',
-            category_code: window.sessionData.category_code,
-            category_name: window.sessionData.category_name,
-            category_traversal: window.sessionData.category_traversal,
-            diagnosis_result: "OUTOFSCOPE",
-        });
+        push_to_datalayer('diagnosed', window.sessionData.category_code, window.sessionData.category_name, window.sessionData.category_traversal, "OUTOFSCOPE")
     }
 }
 
@@ -49,11 +48,7 @@ function diagnosed_fala() {
     document.addEventListener('click', function (e) {
         const link = e.target.closest('a');
         if (link && link.href.includes('/find-a-legal-adviser')) {
-            window.dataLayer.push({
-                event: 'diagnosed',
-                category_name: link.textContent.trim().slice(0, 50),
-                diagnosis_result: "OUTOFSCOPE",
-            });
+            push_to_datalayer('diagnosed',category_name=link.textContent.trim().slice(0, 50), diagnosis_result="OUTOFSCOPE")
         }
     });
 }
@@ -61,7 +56,6 @@ function diagnosed_fala() {
 // Diagnosed Events
 document.addEventListener('DOMContentLoaded', function () {
     if (!window.sessionData) return; // If no session data available exit
-    window.dataLayer = window.dataLayer || [];
     diagnosed();
     diagnosed_fala();
 });
