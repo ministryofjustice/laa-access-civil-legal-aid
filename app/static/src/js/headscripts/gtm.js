@@ -23,7 +23,7 @@ function add_GTM() {
     GTM_Loaded = true;
 }
 
-function push_to_datalayer(event=null, category_code = null, category_name = null, category_traversal = null, diagnosis_result = null) {
+function push_to_datalayer(event, category_code, category_name, category_traversal, diagnosis_result) {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
         event: event,
@@ -45,29 +45,21 @@ function diagnosed(){
     else if (path.endsWith('/cannot-find-your-problem')) {
         push_to_datalayer('diagnosed', window.sessionData.category_code, window.sessionData.category_name, window.sessionData.category_traversal, "OUTOFSCOPE")
     }
-}
-
-function diagnosed_fala() {
-    // Covers the redirect to mini FALA
-    document.addEventListener('click', function (e) {
-        const link = e.target.closest('a');
-        if (link && link.href.includes('/find-a-legal-adviser')) {
-            const searchParams = new URLSearchParams(window.location.search)
-            let code = searchParams.get('category')
-            let secondary = searchParams.get('secondary_category')
-            if (secondary !== null) {
-                code = code + ' and ' + secondary
-            }
-            push_to_datalayer('diagnosed',category_code=code ,category_name=link.textContent.trim().slice(0, 50), null, diagnosis_result="OUTOFSCOPE")
+    // Cover mini FALA search
+    else if (path.includes('/find-a-legal-adviser')) {
+        const searchParams = new URLSearchParams(window.location.search)
+        let code = searchParams.get('category')
+        let secondary = searchParams.get('secondary_category')
+        if (secondary !== null) {
+            code = code + ' and ' + secondary
         }
-    });
+        push_to_datalayer('diagnosed',category_code=code, window.sessionData.category_name, window.sessionData.category_traversal, diagnosis_result="OUTOFSCOPE")
+    }
 }
 
 // Diagnosed Events
 document.addEventListener('DOMContentLoaded', function () {
-    if (!window.sessionData) return; // If no session data available exit
     diagnosed();
-    diagnosed_fala();
 });
 
 
