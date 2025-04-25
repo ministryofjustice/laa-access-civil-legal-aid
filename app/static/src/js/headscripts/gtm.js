@@ -23,7 +23,7 @@ function add_GTM() {
     GTM_Loaded = true;
 }
 
-function push_to_datalayer(event, category_code = null, category_name = null, category_traversal = null, diagnosis_result = null) {
+function push_to_datalayer(event=null, category_code = null, category_name = null, category_traversal = null, diagnosis_result = null) {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
         event: event,
@@ -37,18 +37,28 @@ function push_to_datalayer(event, category_code = null, category_name = null, ca
 function diagnosed(){
     const path = window.location.pathname;
 
+    // Covers the in scope legal aid available page, the fast tracked contact
     if (path.endsWith('/legal-aid-available') || path.includes('fast-tracked')) {
         push_to_datalayer('diagnosed', window.sessionData.category_code, window.sessionData.category_name, window.sessionData.category_traversal, "INSCOPE")
-    } else if (path.endsWith('/cannot-find-your-problem')) {
+    }
+    // Covers the refer page
+    else if (path.endsWith('/cannot-find-your-problem')) {
         push_to_datalayer('diagnosed', window.sessionData.category_code, window.sessionData.category_name, window.sessionData.category_traversal, "OUTOFSCOPE")
     }
 }
 
 function diagnosed_fala() {
+    // Covers the redirect to mini FALA
     document.addEventListener('click', function (e) {
         const link = e.target.closest('a');
         if (link && link.href.includes('/find-a-legal-adviser')) {
-            push_to_datalayer('diagnosed',null ,category_name=link.textContent.trim().slice(0, 50), null, diagnosis_result="OUTOFSCOPE")
+            const searchParams = new URLSearchParams(window.location.search)
+            let code = searchParams.get('category')
+            let secondary = searchParams.get('secondary_category')
+            if (secondary !== null) {
+                code = code + ' and ' + secondary
+            }
+            push_to_datalayer('diagnosed',category_code=code ,category_name=link.textContent.trim().slice(0, 50), null, diagnosis_result="OUTOFSCOPE")
         }
     });
 }
