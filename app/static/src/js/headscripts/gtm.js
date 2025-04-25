@@ -48,7 +48,7 @@ function diagnosed_fala() {
     document.addEventListener('click', function (e) {
         const link = e.target.closest('a');
         if (link && link.href.includes('/find-a-legal-adviser')) {
-            push_to_datalayer('diagnosed',category_name=link.textContent.trim().slice(0, 50), diagnosis_result="OUTOFSCOPE")
+            push_to_datalayer('diagnosed',null ,category_name=link.textContent.trim().slice(0, 50), null, diagnosis_result="OUTOFSCOPE")
         }
     });
 }
