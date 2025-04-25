@@ -34,7 +34,6 @@ def detect_gtm_anon_id():
     def remember_gtm_anon_id(response):
         session["gtm_anon_id"] = str(uuid.uuid4())
         expiration_date = datetime.now(timezone.utc) + timedelta(days=180)
-        print(expiration_date)
         response.set_cookie(
             "gtm_anon_id",
             session.get("gtm_anon_id"),
