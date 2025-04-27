@@ -53,9 +53,17 @@ function diagnosed(){
         if (secondary !== null) {
             code = code + ' and ' + secondary
         }
-        push_to_datalayer('diagnosed',category_code=code, window.sessionData.category_name, window.sessionData.category_traversal, diagnosis_result="OUTOFSCOPE")
+        push_to_datalayer('diagnosed',category_code=code, window.sessionStorage.lastClickedLink, window.sessionData.category_traversal, diagnosis_result="OUTOFSCOPE")
     }
 }
+
+// Records last clicked value as session item
+document.addEventListener('click', function (e) {
+    const link = e.target.closest('a');
+    if (link) {
+        sessionStorage.setItem('lastClickedLink', link.textContent.trim());
+    }
+});
 
 // Diagnosed Events
 document.addEventListener('DOMContentLoaded', function () {
