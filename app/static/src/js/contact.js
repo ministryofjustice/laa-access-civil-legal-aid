@@ -127,4 +127,5 @@ document.addEventListener("DOMContentLoaded", function () {
     toggleEmailFields();
     // Run on change event
     document.getElementById("bsl_webcam").addEventListener("change", toggleEmailFields);
+    document.getElementById("email").addEventListener("change", toggleEmailFields);
 });
