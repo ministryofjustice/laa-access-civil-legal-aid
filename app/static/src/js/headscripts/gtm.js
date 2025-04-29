@@ -30,34 +30,31 @@ function push_to_datalayer(params) {
 
 function diagnosed(){
     const path = window.location.pathname;
+    const categoryData = {
+        event: 'diagnosed',
+        category_code: window.sessionData?.category_code || '',
+        category_name: window.sessionData?.category_name || '',
+        category_traversal: window.sessionData?.category_traversal || [],
+    };
+
+    let diagnosis_result = null;
 
     // Covers the in scope legal aid available page, the fast tracked contact
     if (path.endsWith('/legal-aid-available') || path.includes('fast-tracked')) {
-        push_to_datalayer({event: 'diagnosed', category_code: window.sessionData.category_code, category_name: window.sessionData.category_name, category_traversal: window.sessionData.category_traversal, diagnosis_result: "INSCOPE"})
+        diagnosis_result = "INSCOPE";
     }
-    // Covers the refer page
-    else if (path.endsWith('/cannot-find-your-problem')) {
-        push_to_datalayer({event: 'diagnosed', category_code: window.sessionData.category_code, category_name: window.sessionData.category_name, category_traversal: window.sessionData.category_traversal, diagnosis_result: "OUTOFSCOPE"})
+    // Covers the refer page and FALA search
+    else if (path.endsWith('/cannot-find-your-problem') || path.includes('/find-a-legal-adviser')) {
+        diagnosis_result = "OUTOFSCOPE";
     }
-    // Cover mini FALA search
-    else if (path.includes('/find-a-legal-adviser')) {
-        const searchParams = new URLSearchParams(window.location.search)
-        let code = searchParams.get('category')
-        let secondary = searchParams.get('secondary_category')
-        if (secondary !== null) {
-            code = code + ' and ' + secondary
-        }
-        push_to_datalayer({event: 'diagnosed',category_code: code, category_name: window.sessionStorage.lastClickedLink, category_traversal: window.sessionData.category_traversal, diagnosis_result: "OUTOFSCOPE"})
+
+    if (diagnosis_result !== null) {
+        push_to_datalayer({
+            ...categoryData,
+            diagnosis_result
+        });
     }
 }
-
-// Records last clicked value as session item
-document.addEventListener('click', function (e) {
-    const link = e.target.closest('a');
-    if (link) {
-        sessionStorage.setItem('lastClickedLink', link.textContent.trim());
-    }
-});
 
 // Diagnosed Events
 document.addEventListener('DOMContentLoaded', function () {
