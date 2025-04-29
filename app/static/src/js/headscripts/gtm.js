@@ -23,15 +23,9 @@ function add_GTM() {
     GTM_Loaded = true;
 }
 
-function push_to_datalayer(event, category_code, category_name, category_traversal, diagnosis_result) {
+function push_to_datalayer(params) {
     window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-        event: event,
-        category_code: category_code,
-        category_name: category_name,
-        category_traversal: category_traversal,
-        diagnosis_result: diagnosis_result,
-    });
+    window.dataLayer.push({ ...params });
 }
 
 function diagnosed(){
@@ -39,11 +33,11 @@ function diagnosed(){
 
     // Covers the in scope legal aid available page, the fast tracked contact
     if (path.endsWith('/legal-aid-available') || path.includes('fast-tracked')) {
-        push_to_datalayer('diagnosed', window.sessionData.category_code, window.sessionData.category_name, window.sessionData.category_traversal, "INSCOPE")
+        push_to_datalayer({event: 'diagnosed', category_code: window.sessionData.category_code, category_name: window.sessionData.category_name, category_traversal: window.sessionData.category_traversal, diagnosis_result: "INSCOPE"})
     }
     // Covers the refer page
     else if (path.endsWith('/cannot-find-your-problem')) {
-        push_to_datalayer('diagnosed', window.sessionData.category_code, window.sessionData.category_name, window.sessionData.category_traversal, "OUTOFSCOPE")
+        push_to_datalayer({event: 'diagnosed', category_code: window.sessionData.category_code, category_name: window.sessionData.category_name, category_traversal: window.sessionData.category_traversal, diagnosis_result: "OUTOFSCOPE"})
     }
     // Cover mini FALA search
     else if (path.includes('/find-a-legal-adviser')) {
@@ -53,7 +47,7 @@ function diagnosed(){
         if (secondary !== null) {
             code = code + ' and ' + secondary
         }
-        push_to_datalayer('diagnosed',category_code=code, window.sessionStorage.lastClickedLink, window.sessionData.category_traversal, diagnosis_result="OUTOFSCOPE")
+        push_to_datalayer({event: 'diagnosed',category_code: code, category_name: window.sessionStorage.lastClickedLink, category_traversal: window.sessionData.category_traversal, diagnosis_result: "OUTOFSCOPE"})
     }
 }
 
