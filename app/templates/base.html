@@ -20,9 +20,9 @@
     <script nonce="{{ csp_nonce() }}">
         gtm_anon_id = '{{ gtm_anon_id }}';
         window.sessionData = {{ {
-          "category_code": (session.get('category', {}).get('code') | string) | default(""),
-          "category_name": ((session.get('category_answers', []) | first).get('answer_label') | string) | default(""),
-          "category_traversal": session.get('category_answers', []) | map(attribute='answer_label') | list | default([""]),
+          "category_code": session.get('category', {}).get('code', "") | string,
+          "category_name": (session.get('category_answers') and session.get('category_answers')[0].get('answer_label')) or "",
+          "category_traversal": session.get('category_answers', []) | map(attribute='answer_label') | list,
         } | tojson | safe }};
     </script>
 
