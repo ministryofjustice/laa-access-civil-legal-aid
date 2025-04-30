@@ -134,7 +134,7 @@ def cookies():
             json.dumps(cookies_policy),
             max_age=31557600,
             secure=True,
-            httponly=True,
+            httponly=False,  # This needs to be read by the client so we set HTTPOnly to false.
             samesite="Strict",
         )
         return response
