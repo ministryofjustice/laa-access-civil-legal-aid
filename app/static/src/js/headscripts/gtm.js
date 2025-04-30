@@ -32,9 +32,9 @@ function diagnosed(){
     const path = window.location.pathname;
     const categoryData = {
         event: 'diagnosed',
-        category_code: window.sessionData?.category_code || '',
-        category_name: window.sessionData?.category_name || '',
-        category_traversal: window.sessionData?.category_traversal || [],
+        category_code: window.sessionData.category_code || '',
+        category_name: window.sessionData.category_name || '',
+        category_traversal: window.sessionData.category_traversal || [],
     };
 
     let diagnosis_result = null;
@@ -58,7 +58,9 @@ function diagnosed(){
 
 // Diagnosed Events
 document.addEventListener('DOMContentLoaded', function () {
-    diagnosed();
+    if (!GTM_Loaded) {
+        diagnosed();
+    }
 });
 
 
