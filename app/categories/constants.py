@@ -606,14 +606,14 @@ INQUEST = Category(
     code="inquest",
     exit_page=False,
 )
-MENTAL_HEALTH = Category(
+MENTAL_HEALTH_DETENTION = Category(
     title=_("Mental health detention"),
     description=_(
         "Help if you’re held in hospital (‘sectioned’), mental health tribunals and community treatment orders."
     ),
     article_category_name="Mental health",
     chs_code="mentalhealth",
-    code="mental_health",
+    code="mental_health_detention",
     exit_page=False,
 )
 CRIME_ACT = Category(
@@ -667,7 +667,7 @@ ALL_CATEGORIES = {
     COMPENSATION.code: COMPENSATION,
     ENVIRONMENTAL_POLLUTION.code: ENVIRONMENTAL_POLLUTION,
     INQUEST.code: INQUEST,
-    MENTAL_HEALTH.code: MENTAL_HEALTH,
+    MENTAL_HEALTH_DETENTION.code: MENTAL_HEALTH_DETENTION,
     CRIME_ACT.code: CRIME_ACT,
     TERRORISM.code: TERRORISM,
     TRAFFICKING.code: TRAFFICKING,

@@ -17,11 +17,12 @@
 {% block head %}
     <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet" nonce="{{ csp_nonce() }}" />
     <script src="{{ url_for('static', filename='headscripts.js') }}" nonce="{{ csp_nonce() }}" ></script>
+    {% set category = session.get('category', {}).get('code', None) | get_category_from_code %}
     <script nonce="{{ csp_nonce() }}">
         gtm_anon_id = '{{ gtm_anon_id }}';
         window.sessionData = {{ {
-          "category_code": session.get('category', {}).get('code', "") | string,
-          "category_name": (session.get('category_answers') and session.get('category_answers')[0].get('answer_label')) or "",
+          "category_code": category.code if category else "",
+          "category_name": category.title if category else "" ,
           "category_traversal": session.get('category_answers', []) | map(attribute='answer_label') | list,
         } | tojson | safe }};
     </script>

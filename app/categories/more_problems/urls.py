@@ -11,7 +11,7 @@ from app.categories.constants import (
     COMPENSATION,
     ENVIRONMENTAL_POLLUTION,
     INQUEST,
-    MENTAL_HEALTH,
+    MENTAL_HEALTH_DETENTION,
     CRIME_ACT,
     TERRORISM,
     TRAFFICKING,
@@ -66,8 +66,8 @@ class MoreProblemsPage(CategoryPage):
         ),
         (INQUEST, "categories.more_problems.inquest", "find-a-legal-adviser.search"),
         (
-            MENTAL_HEALTH,
-            "categories.more_problems.mental_health",
+            MENTAL_HEALTH_DETENTION,
+            "categories.more_problems.mental_health_detention",
             {"endpoint": "find-a-legal-adviser.search", "category": "mhe"},
         ),
         (
