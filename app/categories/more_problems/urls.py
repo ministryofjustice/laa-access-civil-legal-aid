@@ -205,7 +205,7 @@ bp.add_url_rule(
             next_page={
                 "endpoint": "find-a-legal-adviser.search",
                 "category": "immas",
-                "secondary_catgory": "pub",
+                "secondary_category": "pub",
             },
             question_type=QuestionType.SUB_CATEGORY,
         ),
