@@ -1,9 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-  if (window.location.pathname === "/session-expired") {
+  const dialog = document.getElementById("timeout-dialog");
+  if (!dialog) {
+      console.log("This page does not have a timeout dailog");
       return;
   }
 
-  const dialog = document.getElementById("timeout-dialog");
+
   const idleTimeout = parseInt(dialog.dataset.idleTimeout, 10) * 60 * 1000;
   const visibleTime = parseInt(dialog.dataset.visibleTime, 10) * 60 * 1000;
   const redirectUrl = dialog.dataset.redirectUrl;
