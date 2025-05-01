@@ -17,7 +17,7 @@ function add_GTM() {
     GTM_Loaded = true;
 }
 
-function add_GTM_anon_id() {
+function push_GTM_anon_id() {
     if(typeof gtm_anon_id === 'string' && gtm_anon_id.length === 36) {
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({ user_id: gtm_anon_id });
@@ -26,7 +26,7 @@ function add_GTM_anon_id() {
 
 document.addEventListener('DOMContentLoaded', function () {
     if (GTM_Loaded) {
-        add_GTM_anon_id();
+        push_GTM_anon_id();
     }
 });
 
