@@ -24,7 +24,6 @@ function add_GTM() {
 }
 
 function push_to_datalayer(params) {
-    window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ ...params });
 }
 
