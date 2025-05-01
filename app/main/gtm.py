@@ -35,6 +35,11 @@ def detect_gtm_anon_id():
     if "gtm_anon_id" in session:
         return
 
+    anon_id_cookie = get_gtm_anon_id_from_cookie()
+    if anon_id_cookie:
+        session["gtm_anon_id"] = anon_id_cookie
+        return
+
     session["gtm_anon_id"] = str(uuid.uuid4())
 
     @after_this_request
