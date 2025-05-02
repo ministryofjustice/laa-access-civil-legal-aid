@@ -9,12 +9,6 @@ function add_GTM() {
     // Standard GTM code
     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
 
-    // Insert our variable into data layer
-    if(typeof gtm_anon_id !== 'undefined' && gtm_anon_id.length === 36) {
-      window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({ user_id: gtm_anon_id });
-    }
-
     // Continue standard GTM code
     var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
     j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
@@ -24,7 +18,14 @@ function add_GTM() {
 }
 
 function push_to_datalayer(params) {
+    window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ ...params });
+}
+
+function push_GTM_anon_id() {
+    if(typeof gtm_anon_id === 'string' && gtm_anon_id.length === 36) {
+        push_to_datalayer({ user_id: gtm_anon_id });
+    }
 }
 
 function diagnosed(){
@@ -59,6 +60,7 @@ function diagnosed(){
 document.addEventListener('DOMContentLoaded', function () {
     if (GTM_Loaded) {
         diagnosed();
+        push_GTM_anon_id();
     }
 });
 
