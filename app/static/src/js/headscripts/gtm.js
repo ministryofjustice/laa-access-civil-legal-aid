@@ -56,7 +56,7 @@ function diagnosed(){
     }
 }
 
-// Diagnosed Events
+// GTM Dom Push Events
 document.addEventListener('DOMContentLoaded', function () {
     if (GTM_Loaded) {
         diagnosed();
