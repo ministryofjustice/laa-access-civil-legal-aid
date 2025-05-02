@@ -18,7 +18,7 @@ def check_accessibility(page: Page):
     the page defined in the function.
     """
     if page.title() != "localhost":
-        directory = "tests/functional_tests/accessibility_output"
+        directory = "tests/accessibility_tests/accessibility_output"
         if not os.path.exists(directory):
             os.makedirs(directory, exist_ok=True)
 
@@ -64,7 +64,7 @@ def test_all_page_accessibility(app, page: Page):
         "main.handle_redirects",
         "main.handle_scope_diagnosis_redirect",
     ]
-    shutil.rmtree("tests/functional_tests/accessibility_output", ignore_errors=True)
+    shutil.rmtree("tests/accessibility_tests/accessibility_output", ignore_errors=True)
     routes = app.view_functions
     for route in routes:
         if route not in ignored_routes:
@@ -74,7 +74,7 @@ def test_all_page_accessibility(app, page: Page):
 
 
 def test_accessibility_folder():
-    path = "tests/functional_tests/accessibility_output"
+    path = "tests/accessibility_tests/accessibility_output"
     if not any(os.scandir(path)):
         assert True
     else:
