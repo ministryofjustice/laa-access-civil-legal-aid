@@ -22,6 +22,7 @@ def get_gtm_anon_id_from_cookie():
 
 @bp.before_app_request
 def detect_gtm_anon_id():
+    # gtm_anon_id is used to track user anonymously across services for Google Tag Manager.
     cookies_policy = request.cookies.get("cookies_policy", "{}")
 
     try:
