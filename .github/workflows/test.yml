@@ -196,7 +196,7 @@ jobs:
           npm install
           npm run build
           playwright install
-          pytest -n 4 tests/accessibility_tests
+          pytest tests/accessibility_tests
   
       - name: Upload axe results
         uses: actions/upload-artifact@v4
