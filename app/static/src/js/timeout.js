@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const dialog = document.getElementById("timeout-dialog");
   if (!dialog) {
-      console.log("This page does not have a timeout dailog");
       return;
   }
 
