@@ -17,9 +17,21 @@
 {% block head %}
     <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet" nonce="{{ csp_nonce() }}" />
     <script src="{{ url_for('static', filename='headscripts.js') }}" nonce="{{ csp_nonce() }}" ></script>
+    {% set session_category = session.get('category') %}
+    {% if session_category and session_category.get('code') %}
+      {% set session_category = session_category.get('code') | get_category_from_code %}
+    {% else %}
+      {% set session_category = None %}
+    {% endif %}
     <script nonce="{{ csp_nonce() }}">
         gtm_anon_id = '{{ gtm_anon_id }}';
+        window.sessionData = {{ {
+          "category_code": session_category.code if session_category else "",
+          "category_name": session_category.title if session_category else "" ,
+          "category_traversal": session.get('category_answers', []) | map(attribute='answer_label') | list,
+        } | tojson | safe }};
     </script>
+
     <meta name="description" content="{{config['SERVICE_NAME']}}">
     <meta name="author" content="{{config['DEPARTMENT_NAME']}}">
 {% endblock %}
