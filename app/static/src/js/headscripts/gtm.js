@@ -57,7 +57,8 @@ function diagnosed(){
 }
 
 function mini_fala_search(){
-    if(window.location.pathname.includes('/find-a-legal-adviser?postcode') ){
+    const url = new URL(window.location.href)
+    if(url.pathname.includes('/find-a-legal-adviser') && url.searchParams.has('postcode')){
         const falaData = {
             'event': 'mini_fala_search',
             'district': window.falaData.district,
