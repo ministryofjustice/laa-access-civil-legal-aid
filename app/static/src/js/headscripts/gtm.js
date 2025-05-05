@@ -68,6 +68,41 @@ function mini_fala_search(){
     }
 }
 
+function trackPageLoadTime() {
+    const labels = {
+        excellent: 'Under 1 second (Excellent)',
+        veryGood: '1 to 2 seconds (Very good)',
+        acceptable: '2 to 3 seconds (Acceptable)',
+        improve: '3 to 5 seconds (Try improving)',
+        fix: 'More than 5 seconds (Needs fixing)',
+    };
+
+    const getLoadTimeInSeconds = () => {
+        const navEntries = performance?.getEntriesByType?.('navigation');
+        if (!navEntries || !navEntries.length) return null;
+        return navEntries[0].duration / 1000;
+    };
+
+    const getLabel = (seconds) => {
+        if (seconds < 1) return labels.excellent;
+        if (seconds < 2) return labels.veryGood;
+        if (seconds < 3) return labels.acceptable;
+        if (seconds < 5) return labels.improve;
+        return labels.fix;
+    };
+
+    const loadTime = getLoadTimeInSeconds();
+    if (!loadTime || isNaN(loadTime)) return;
+
+    const label = getLabel(loadTime);
+
+    push_to_datalayer({
+        event: 'page_load_time',
+        variable_label: label,
+        variable_number: loadTime.toFixed(2),
+    });
+}
+
 // GTM Dom Push Events
 document.addEventListener('DOMContentLoaded', function () {
     if (GTM_Loaded) {
@@ -76,6 +111,13 @@ document.addEventListener('DOMContentLoaded', function () {
         mini_fala_search();
     }
 });
+
+// GTM Page Load Events
+window.addEventListener('load', () => {
+    if (GTM_Loaded) {
+        trackPageLoadTime();
+    }
+  });
 
 
 // If user consents from banner then allow GTM to load
