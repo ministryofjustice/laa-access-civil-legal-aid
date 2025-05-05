@@ -60,10 +60,10 @@ function mini_fala_search(){
     const url = new URL(window.location.href)
     if(url.pathname.includes('/find-a-legal-adviser') && url.searchParams.has('postcode')){
         const falaData = {
-            'event': 'mini_fala_search',
-            'district': window.falaData.district,
-            'category_name': window.falaData.category_name,
-            'closest_provider_mileage': window.falaData.closest_provider_mileage,
+            event: 'mini_fala_search',
+            district: window.falaData.district,
+            category_name: window.falaData.category_name,
+            closest_provider_mileage: window.falaData.closest_provider_mileage,
         }
         push_to_datalayer({ falaData })
     }
