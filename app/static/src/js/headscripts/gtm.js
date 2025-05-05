@@ -56,6 +56,20 @@ function diagnosed(){
     }
 }
 
+function mini_fala_search(){
+
+    const falaData = {
+        'event': 'fala_search',
+        'district': window.falaData.district,
+        'category_name': window.falaData.category_name,
+        'closest_provider_mileage': window.falaData.closest_provider_mileage,
+    }
+
+    if(window.location.pathname.includes('/find-a-legal-adviser')){
+        push_to_datalayer({ falaData })
+    }
+}
+
 // GTM Dom Push Events
 document.addEventListener('DOMContentLoaded', function () {
     if (GTM_Loaded) {
