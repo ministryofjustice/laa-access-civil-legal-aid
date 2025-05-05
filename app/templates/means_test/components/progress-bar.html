@@ -26,7 +26,7 @@
 
 {% macro progress(steps, current_step, completion_percentage) %}
 
-    {% set is_about_you_complete = (steps|selectattr('key', 'equalto', 'about-you')|list)[0].is_completed   %}
+    {% set show_collapsed_steps = (steps|selectattr('key', 'equalto', 'about-you')|list)[0].is_current and steps|length < 6 %}
     {% set has_remaining_forms = steps|rejectattr('is_completed')|list|length > 0 %}
     {% set is_contact_page = request.path.startswith('/result/') %}
 
@@ -37,7 +37,7 @@
             {# Steps to do #}
             {% for step in steps %}
                 {# Optional collapsed steps #}
-                {% if not is_about_you_complete and step.key == "review" %}
+                {% if show_collapsed_steps and step.key == "review" %}
                   <li class="progress-step m-collapsed">
                     {% for n in range(3) %}
                       <div class="step-name"></div>
