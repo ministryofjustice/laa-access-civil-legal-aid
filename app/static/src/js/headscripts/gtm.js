@@ -114,9 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // GTM Page Load Events
 window.addEventListener('load', () => {
-    if (GTM_Loaded) {
         trackPageLoadTime();
-    }
   });
 
 
