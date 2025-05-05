@@ -58,6 +58,10 @@ function diagnosed(){
 
 function mini_fala_search(){
 
+    if (!window.falaData.district || window.falaData.category_name || window.falaData.closest_provider_mileage){
+        return;
+    }
+
     const falaData = {
         'event': 'fala_search',
         'district': window.falaData.district,
@@ -65,7 +69,7 @@ function mini_fala_search(){
         'closest_provider_mileage': window.falaData.closest_provider_mileage,
     }
 
-    if(window.location.pathname.includes('/find-a-legal-adviser')){
+    if(window.location.pathname.includes('/find-a-legal-adviser') ){
         push_to_datalayer({ falaData })
     }
 }
@@ -75,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (GTM_Loaded) {
         diagnosed();
         push_GTM_anon_id();
+        mini_fala_search();
     }
 });
 
