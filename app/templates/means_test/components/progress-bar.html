@@ -37,7 +37,7 @@
             {# Steps to do #}
             {% for step in steps %}
                 {# Optional collapsed steps #}
-                {% if not is_about_you_complete and step.title == "Check your answer and confirm" %}
+                {% if not is_about_you_complete and step.key == "review" %}
                   <li class="progress-step m-collapsed">
                     {% for n in range(3) %}
                       <div class="step-name"></div>
