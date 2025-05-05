@@ -58,12 +58,12 @@ function diagnosed(){
 
 function mini_fala_search(){
 
-    if (!window.falaData.district || window.falaData.category_name || window.falaData.closest_provider_mileage){
+    if (!window.falaData.district || !window.falaData.category_name || !window.falaData.closest_provider_mileage){
         return;
     }
 
     const falaData = {
-        'event': 'fala_search',
+        'event': 'mini_fala_search',
         'district': window.falaData.district,
         'category_name': window.falaData.category_name,
         'closest_provider_mileage': window.falaData.closest_provider_mileage,
