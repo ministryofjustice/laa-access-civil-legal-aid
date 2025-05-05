@@ -77,19 +77,32 @@ function trackPageLoadTime() {
         fix: 'More than 5 seconds (Needs fixing)',
     };
 
-    const getLoadTimeInSeconds = () => {
-        const navEntries = performance?.getEntriesByType?.('navigation');
-        if (!navEntries || !navEntries.length) return null;
-        return navEntries[0].duration / 1000;
-    };
+    function getLoadTimeInSeconds() {
+        if (performance?.getEntriesByType) {
+            const navEntries = performance.getEntriesByType('navigation');
+            if (navEntries && navEntries.length > 0) {
+                return navEntries[0].duration / 1000;
+            }
+        }
 
-    const getLabel = (seconds) => {
+        // Fallback for older browsers
+        if (performance?.timing) {
+            const { navigationStart, loadEventEnd } = performance.timing;
+            if (loadEventEnd > 0) {
+                return (loadEventEnd - navigationStart) / 1000;
+            }
+        }
+
+        return null;
+    }
+
+    function getLabel(seconds) {
         if (seconds < 1) return labels.excellent;
         if (seconds < 2) return labels.veryGood;
         if (seconds < 3) return labels.acceptable;
         if (seconds < 5) return labels.improve;
         return labels.fix;
-    };
+    }
 
     const loadTime = getLoadTimeInSeconds();
     if (!loadTime || isNaN(loadTime)) return;
@@ -115,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // GTM Page Load Events
 window.addEventListener('load', () => {
         trackPageLoadTime();
-  });
+});
 
 
 // If user consents from banner then allow GTM to load
