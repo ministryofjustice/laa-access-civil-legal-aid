@@ -44,7 +44,7 @@ function diagnosed(){
         diagnosis_result = "INSCOPE";
     }
     // Covers the refer page and FALA search
-    else if (path.endsWith('/cannot-find-your-problem') || path.includes('/find-a-legal-adviser')) {
+    else if (path.endsWith('/cannot-find-your-problem') || path.endsWith('/find-a-legal-adviser')) {
         diagnosis_result = "OUTOFSCOPE";
     }
 
@@ -59,13 +59,12 @@ function diagnosed(){
 function mini_fala_search(){
     const url = new URL(window.location.href)
     if(url.pathname.includes('/find-a-legal-adviser') && url.searchParams.has('postcode')){
-        const falaData = {
+        push_to_datalayer({
             event: 'mini_fala_search',
             district: window.falaData.district,
             category_name: window.falaData.category_name,
             closest_provider_mileage: window.falaData.closest_provider_mileage,
-        }
-        push_to_datalayer({ falaData })
+        })
     }
 }
 
