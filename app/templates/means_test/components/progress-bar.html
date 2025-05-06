@@ -1,9 +1,9 @@
-{% macro progress_bar(completed, offset=-2) %}
+{% macro progress_bar(completed) %}
   {% if completed is number %}
     {# This is a workaround to avoid using inline styles, as nonces can only be applied to script/ style tags #}
     <style nonce="{{ csp_nonce() }}">
       .progress-value {
-        width: {{ completed + offset }}%;
+        width: {{ completed }}%;
       }
     </style>
     <div class="progress-bar">
