@@ -46,17 +46,4 @@
     </div>
 </div>
 
-<script nonce="{{ csp_nonce() }}">
-    const postcode = new URLSearchParams(window.location.search).get("postcode")?.replace(/\s/g, "");
-    const district = postcode ? postcode.slice(0, -3) : "";
-    const mileageText = document.querySelector("span.govuk-caption-m")?.innerHTML || "";
-    const mileage = mileageText.match(/(\d+(\.\d+)?)/)?.[0] || "";
-    const category_name = window.sessionData?.category_name || "";
-
-    window.falaData = {
-        "closest_provider_mileage": mileage,
-        "district": district,
-        "category_name": category_name,
-    };
-</script>
 {% endblock %}

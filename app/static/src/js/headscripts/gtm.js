@@ -56,18 +56,6 @@ function diagnosed(){
     }
 }
 
-function mini_fala_search(){
-    const url = new URL(window.location.href)
-    if(url.pathname.includes('/find-a-legal-adviser') && url.searchParams.has('postcode')){
-        push_to_datalayer({
-            event: 'mini_fala_search',
-            district: window.falaData.district,
-            category_name: window.falaData.category_name,
-            closest_provider_mileage: window.falaData.closest_provider_mileage,
-        })
-    }
-}
-
 function trackPageLoadTime() {
     const labels = {
         excellent: 'Under 1 second (Excellent)',
@@ -107,13 +95,12 @@ document.addEventListener('DOMContentLoaded', function () {
     if (GTM_Loaded) {
         diagnosed();
         push_GTM_anon_id();
-        mini_fala_search();
     }
 });
 
 // GTM Page Load Events
 window.addEventListener('load', () => {
-    trackPageLoadTime();
+    setTimeout(trackPageLoadTime, 1000);
 });
 
 
