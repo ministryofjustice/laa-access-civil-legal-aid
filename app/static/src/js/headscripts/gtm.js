@@ -74,46 +74,32 @@ function trackPageLoadTime() {
         veryGood: '1 to 2 seconds (Very good)',
         acceptable: '2 to 3 seconds (Acceptable)',
         improve: '3 to 5 seconds (Try improving)',
-        fix: 'More than 5 seconds (Needs fixing)',
+        fix: 'More than 5 seconds (Needs fixing)'
     };
 
-    function getLoadTimeInSeconds() {
-        if (performance?.getEntriesByType) {
-            const navEntries = performance.getEntriesByType('navigation');
-            if (navEntries && navEntries.length > 0) {
-                return navEntries[0].duration / 1000;
-            }
-        }
+    const getLoadTimeSeconds = () => {
+        const navEntry = performance?.getEntriesByType?.('navigation')?.[0];
+        if (!navEntry) return null;
+        return navEntry.duration / 1000;
+    };
 
-        // Fallback for older browsers
-        if (performance?.timing) {
-            const { navigationStart, loadEventEnd } = performance.timing;
-            if (loadEventEnd > 0) {
-                return (loadEventEnd - navigationStart) / 1000;
-            }
-        }
-
-        return null;
-    }
-
-    function getLabel(seconds) {
-        if (seconds < 1) return labels.excellent;
-        if (seconds < 2) return labels.veryGood;
-        if (seconds < 3) return labels.acceptable;
-        if (seconds < 5) return labels.improve;
+    const getLabel = (time) => {
+        if (time < 1) return labels.excellent;
+        if (time < 2) return labels.veryGood;
+        if (time < 3) return labels.acceptable;
+        if (time < 5) return labels.improve;
         return labels.fix;
-    }
+    };
 
-    const loadTime = getLoadTimeInSeconds();
-    if (!loadTime || isNaN(loadTime)) return;
-
+    const loadTime = getLoadTimeSeconds();
     const label = getLabel(loadTime);
 
     push_to_datalayer({
-        event: 'page_load_time',
-        variable_label: label,
-        variable_number: loadTime.toFixed(2),
-    });
+        'event': 'page_load_time',
+        'variable_label': label,
+        'variable_number': parseFloat(loadTime).toFixed(2).toString()
+      });
+
 }
 
 // GTM Dom Push Events
@@ -127,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // GTM Page Load Events
 window.addEventListener('load', () => {
-        trackPageLoadTime();
+    trackPageLoadTime();
 });
 
 
