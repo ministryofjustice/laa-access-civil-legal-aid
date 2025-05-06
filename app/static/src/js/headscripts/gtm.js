@@ -79,9 +79,11 @@ function trackPageLoadTime() {
         return labels.fix;
     };
 
-    const loadTime = getLoadTimeSeconds();
-    const label = getLabel(loadTime);
 
+    const loadTime = getLoadTimeSeconds();
+    if (loadTime === null || isNaN(loadTime)) return;
+    const label = getLabel(loadTime);
+    
     push_to_datalayer({
         'event': 'page_load_time',
         'variable_label': label,
