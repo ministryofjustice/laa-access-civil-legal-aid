@@ -116,7 +116,7 @@ jobs:
           pip install pytest pytest-cov pytest-xdist
           npm install
           npm run build
-          playwright  install
+          playwright install
           pytest -n 4 tests/functional_tests --doctest-modules --junitxml=junit/functional-test-results.xml --cov=com --cov-report=xml --cov-report=html
 
       - name: Upload pytest test results
@@ -126,81 +126,9 @@ jobs:
           path: junit/functional-test-results.xml
         if: ${{ always() }}
   
-
-  accessibility_test:
-    name: Accessibility Test
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write # This is required for requesting the JWT
-      contents: read  # This is required for actions/checkout
-    steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v4
-
-      - name: Assume role in Cloud Platform
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.ECR_ROLE_TO_ASSUME }}
-          aws-region: ${{ inputs.ACCESS_ECR_REGION }}
-
-      - name: Login to container repository
-        uses: aws-actions/amazon-ecr-login@v2
-        id: login-ecr
-        with:
-          mask-password: true
-
-      - name: Docker login
-        run: |
-          aws ecr get-login-password --region $REGION | docker login --username AWS --password-stdin $REGISTRY
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: ${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
-          REGION: ${{ inputs.ACCESS_ECR_REGION }}
-
-      - name: Run CLA Backend with Docker Compose
-        run: |
-            echo "CLA_BACKEND_IMAGE=$REGISTRY/$REPOSITORY:latest" >> .env
-            
-            docker compose -f tests/backend-compose.yml up -d --wait --wait-timeout 30
-          
-            sleep 5
-          
-            docker compose -f tests/backend-compose.yml exec cla_backend bin/create_db.sh
-        env:
-            REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-            REPOSITORY: ${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
-
-      - name: Test connection
-        run: |
-            curl --retry-connrefused --retry 30 --retry-delay 1 --max-time 30 -v http://127.0.0.1:8010/status
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
-          cache: 'pip' # caching pip dependencies
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20.x'
-          cache: 'npm'
-  
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install -r requirements/generated/requirements-development.txt
-  
-      - name: Functional test with pytest
-        run: |
-          pip install pytest
-          npm install
-          npm run build
-          playwright install
-          pytest tests/accessibility_tests
-  
       - name: Upload axe results
         uses: actions/upload-artifact@v4
         with:
           name: axe-results
-          path: tests/accessibility_tests/accessibility_output/*.json
+          path: tests/functional_tests/accessibility_output/*.json
         if: ${{ always() }}

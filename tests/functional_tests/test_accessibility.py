@@ -71,9 +71,6 @@ def test_all_page_accessibility(app, page: Page):
             full_url = url_for(route, _external=True)
             page.goto(full_url)
             check_accessibility(page)
-
-
-def test_accessibility_folder():
     path = "tests/accessibility_tests/accessibility_output"
     if not any(os.scandir(path)):
         assert True
