@@ -113,7 +113,22 @@ window.addEventListener("cookies_approved", function(event){
     }
 })
 
+function getCookie(name) {
+  let value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) {
+    value = parts.pop().split(';').shift();
+    return value.replaceAll('\\"', '"').replaceAll('\\054', ',');
+  }
+  return null;
+}
+
 // If user had consented already then allow GTM to load
-if (document.cookie && document.cookie.indexOf('cookies_policy={"analytics": "yes", "functional": "yes"}') > -1 && !GTM_Loaded) {
+let cookie_policy = getCookie("cookies_policy");
+if(cookie_policy) {
+    cookie_policy = JSON.parse(cookie_policy.replace('"{', '{').replace('}"', '}'));
+}
+
+if (cookie_policy && cookie_policy["analytics"] == "yes" && cookie_policy["functional"] == "yes" && !GTM_Loaded) {
     add_GTM();
 }
