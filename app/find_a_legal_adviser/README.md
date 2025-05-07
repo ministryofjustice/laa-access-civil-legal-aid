@@ -8,6 +8,8 @@ mini FALA search page with the category pre-populated in the query string.
 The user will then enter their postcode, or a section of a postcode, and be shown a sorted list of legal aid providers near to them
 who can provide the service they need.
 
+**Mini FALA is being replaced with a link to the single category view of find a legal adviser service found at https://find-legal-advice.justice.gov.uk/.**
+
 
 ## Query strings
 `category` - The category of law the user is looking for help with.
