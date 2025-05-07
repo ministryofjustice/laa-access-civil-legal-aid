@@ -149,13 +149,14 @@
         "text": _("Exit this page")
       }) }}
     {% endif %}
-
+    {% block timeoutDialog %}
+        {{ timeout_dialog() }}
+    {% endblock %}
 {% endblock %}
 
 
 {% block content %}
 
-    {{ timeout_dialog() }}
     {% if form and form.errors %}
         {{ govukErrorSummary(wtforms_errors(form)) }}
     {% endif %}
