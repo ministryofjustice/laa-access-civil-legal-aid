@@ -18,7 +18,6 @@ def kwargs_to_urlparams(**kwargs: str) -> str:
 
 
 def create_fala_url(
-    endpoint: str = "check",
     category: str | None = None,
     secondary_category: str | None = None,
 ) -> str:
@@ -26,7 +25,6 @@ def create_fala_url(
     Create a URL for the single page Find a Legal Adviser view with optional category parameters.
 
     Args:
-        endpoint: The API endpoint (default: "check").
         category: Primary category (optional).
         secondary_category: Secondary category (optional, only used if category is provided).
 
@@ -41,7 +39,8 @@ def create_fala_url(
     except KeyError:
         raise KeyError("FALA_URL not configured")
 
-    base_url = urljoin(fala_host, endpoint)
+    check_endpoint = "check"
+    base_url = urljoin(fala_host, check_endpoint)
 
     params: dict[str, str] = {}
     if category:
