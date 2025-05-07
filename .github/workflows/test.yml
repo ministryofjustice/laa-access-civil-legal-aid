@@ -84,9 +84,6 @@ jobs:
             
             docker compose -f tests/backend-compose.yml up -d --wait --wait-timeout 30
           
-            sleep 5
-          
-            docker compose -f tests/backend-compose.yml exec cla_backend bin/create_db.sh
         env:
             REGISTRY: ${{ steps.login-ecr.outputs.registry }}
             REPOSITORY: ${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
