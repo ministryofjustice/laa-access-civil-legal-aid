@@ -24,11 +24,7 @@ services:
       POSTGRES_DB: cla_backend
 
   cla_backend: &cla_backend
-    image: ${CLA_BACKEND_IMAGE:-}  # If not set, will use build
-    build:
-      context: .
-      target: ${ENVIRONMENT:-development}
-    command: ${BACKEND_COMMAND:-docker/run.sh}  # Default to script for local dev
+    image: ${CLA_BACKEND_IMAGE:-}
     ports:
       - '8010:8000'
     stdin_open: true
