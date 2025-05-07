@@ -44,7 +44,7 @@ function diagnosed(){
         diagnosis_result = "INSCOPE";
     }
     // Covers the refer page and FALA search
-    else if (path.endsWith('/cannot-find-your-problem') || path.includes('/find-a-legal-adviser')) {
+    else if (path.endsWith('/cannot-find-your-problem') || path.endsWith('/find-a-legal-adviser')) {
         diagnosis_result = "OUTOFSCOPE";
     }
 
@@ -56,12 +56,53 @@ function diagnosed(){
     }
 }
 
+function trackPageLoadTime() {
+    const labels = {
+        excellent: 'Under 1 second (Excellent)',
+        veryGood: '1 to 2 seconds (Very good)',
+        acceptable: '2 to 3 seconds (Acceptable)',
+        improve: '3 to 5 seconds (Try improving)',
+        fix: 'More than 5 seconds (Needs fixing)'
+    };
+
+    const getLoadTimeSeconds = () => {
+        const navEntry = performance?.getEntriesByType?.('navigation')?.[0];
+        if (!navEntry) return null;
+        return navEntry.duration / 1000;
+    };
+
+    const getLabel = (time) => {
+        if (time < 1) return labels.excellent;
+        if (time < 2) return labels.veryGood;
+        if (time < 3) return labels.acceptable;
+        if (time < 5) return labels.improve;
+        return labels.fix;
+    };
+
+
+    const loadTime = getLoadTimeSeconds();
+    if (loadTime === null || isNaN(loadTime)) return;
+    const label = getLabel(loadTime);
+    
+    push_to_datalayer({
+        'event': 'page_load_time',
+        'variable_label': label,
+        'variable_number': parseFloat(loadTime).toFixed(2).toString()
+      });
+
+}
+
 // GTM Dom Push Events
 document.addEventListener('DOMContentLoaded', function () {
     if (GTM_Loaded) {
         diagnosed();
         push_GTM_anon_id();
     }
+});
+
+// GTM Page Load Events
+window.addEventListener('load', () => {
+    setTimeout(trackPageLoadTime, 1000);
 });
 
 
