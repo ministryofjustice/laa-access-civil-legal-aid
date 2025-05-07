@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   start_applications:
     image: jwilder/dockerize
