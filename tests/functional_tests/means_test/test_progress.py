@@ -40,6 +40,34 @@ def fill_in_full_about_you_form(page: Page):
     page.get_by_role("button", name="Continue").click()
 
 
+def fill_in_minimal_about_you_form(page: Page):
+    page.locator("#has_partner-2").check()
+    page.get_by_role("group", name="Do you receive any benefits (").get_by_label(
+        "No"
+    ).check()
+    page.get_by_role("group", name="Do you have any children aged").get_by_label(
+        "No"
+    ).check()
+    page.get_by_role("group", name="Do you have any dependants").get_by_label(
+        "No"
+    ).check()
+    page.get_by_role("group", name="Do you own any property?").get_by_label(
+        "No"
+    ).check()
+    page.get_by_role("group", name="Are you employed?").get_by_label("No").check()
+    page.get_by_role("group", name="Are you self-employed?").get_by_label("No").check()
+    page.get_by_role("group", name="Are you or your partner (if").get_by_label(
+        "No"
+    ).check()
+    page.get_by_role("group", name="Do you have any savings or").get_by_label(
+        "No"
+    ).check()
+    page.get_by_role("group", name="Do you have any valuable").get_by_label(
+        "No"
+    ).check()
+    page.get_by_role("button", name="Continue").click()
+
+
 @pytest.mark.usefixtures("live_server")
 @pytest.mark.usefixtures("navigate_to_means_test")
 def test_progress_component_full(page: Page):
@@ -132,3 +160,18 @@ def test_progress_component_collapsed_steps(page: Page):
         .locator("div")
         .nth(2)
     ).not_to_be_visible()
+
+
+@pytest.mark.usefixtures("live_server")
+@pytest.mark.usefixtures("navigate_to_means_test")
+def test_progress_bar_review_answers_and_contact(page: Page):
+    fill_in_minimal_about_you_form(page)
+    page.get_by_role("group", name="Maintenance received").get_by_label("Amount").fill(
+        "0"
+    )
+    page.get_by_role("group", name="Pension received").get_by_label("Amount").fill("0")
+    page.get_by_role("group", name="Any other income").get_by_label("Amount").fill("0")
+    page.get_by_role("button", name="Continue").click()
+    expect(page.get_by_text("Current page: Check your answers")).to_be_visible()
+    page.get_by_role("button", name="Continue").click()
+    expect(page.get_by_text("Current page: Contact information")).to_be_visible()
