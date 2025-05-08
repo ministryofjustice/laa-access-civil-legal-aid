@@ -2,6 +2,7 @@
 {%- from 'components/back_link.html' import govukBackLink -%}
 {%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
 {%- from 'govuk_frontend_jinja/components/summary-list/macro.html' import govukSummaryList -%}
+{%- from 'means_test/components/progress-bar.html' import progress as means_test_progress %}
 {% set title = _("Check your answers and confirm") %}
 {% block pageTitle %}{{ title }} - GOV.UK{% endblock %}
 
@@ -73,6 +74,11 @@
             </form>
         {% endblock %}
 
+    </div>
+    <div class="govuk-grid-column-one-third">
+        <aside class="sidebar">
+            {{ means_test_progress(form_progress["steps"], form_progress["current_step"], form_progress["completion_percentage"]) }}
+        </aside>
     </div>
 </div>
 {% endblock %}
