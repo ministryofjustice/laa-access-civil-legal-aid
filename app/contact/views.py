@@ -199,7 +199,6 @@ class ConfirmationPage(View):
             )
             email_sent = True
 
-        # If AJAX, return a minimal success message instead of full page
         if request.headers.get("X-Requested-With") == "XMLHttpRequest":
             return jsonify(
                 {
@@ -209,7 +208,6 @@ class ConfirmationPage(View):
                 }
             )
 
-        # Handle form errors during AJAX
         if (
             request.method == "POST"
             and request.headers.get("X-Requested-With") == "XMLHttpRequest"
