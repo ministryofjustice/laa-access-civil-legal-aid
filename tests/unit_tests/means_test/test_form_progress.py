@@ -59,8 +59,8 @@ class TestGetFormProgress:
             ("about-you", set(), 12.5),  # 1/8 * 100
             ("benefits", {"about-you"}, 25),  # 2/8 * 100
             (
-                "savings",
-                {"about-you", "benefits", "additional-benefits", "property", "income"},
+                "income",
+                {"about-you", "benefits", "additional-benefits", "property", "savings"},
                 75,
             ),  # 6/8 * 100
         ],
@@ -82,7 +82,7 @@ class TestGetFormProgress:
     @pytest.mark.parametrize(
         "visible_forms,expected_steps",
         [
-            # Test different combinations of visible forms
+            # Test different combinations of visible forms, the review and contact page are included by default.
             (
                 {
                     "about-you",
@@ -92,11 +92,11 @@ class TestGetFormProgress:
                     "savings",
                     "income",
                 },
-                6,
+                8,
             ),
-            ({"about-you", "property", "savings", "income", "additional-benefits"}, 5),
-            ({"about-you", "property", "savings", "income"}, 4),
-            ({"about-you"}, 1),
+            ({"about-you", "property", "savings", "income", "additional-benefits"}, 7),
+            ({"about-you", "property", "savings", "income"}, 6),
+            ({"about-you"}, 3),
         ],
     )
     def test_visible_steps(self, view, visible_forms, expected_steps):
@@ -135,4 +135,7 @@ class TestGetFormProgress:
         with patch.object(MeansTest, "is_form_completed", return_value=False):
             result = test_view.get_form_progress(forms["about-you"]())
             for step in result["steps"]:
-                assert step["url"] == url_for(f"means_test.{step['key']}")
+                expected_route = f"means_test.{step['key']}"
+                if step["key"] == "contact-us":
+                    expected_route = "contact.contact_us"
+                assert step["url"] == url_for(expected_route)

@@ -38,9 +38,12 @@ class FormsMixin:
 
     def get_form_progress(self, current_form: BaseMeansTestForm) -> dict:
         """Gets the users progress through the means test. This is used to populate the progress bar."""
+        from app.contact.forms import ContactUsForm
 
         forms = []
         current_form_key = ""
+
+        is_means_test_complete = isinstance(current_form, (ReviewForm, ContactUsForm))
 
         for key, form in self.forms.items():
             form = form()
@@ -48,20 +51,46 @@ class FormsMixin:
                 is_current = form.page_title == current_form.page_title
                 if is_current:
                     current_form_key = key
+                if not self.is_form_completed(key) and is_means_test_complete:
+                    # Do not append incomplete means test forms if we are sure of the users eligibility
+                    continue
                 forms.append(
                     {
                         "key": key,
                         "title": form.page_title,
                         "url": url_for(f"means_test.{key}"),
                         "is_current": is_current,
-                        "is_completed": self.is_form_completed(key),
+                        "is_completed": self.is_form_completed(key)
+                        and not current_form_key,  # Forms after the current form should not be marked as complete as prior answers can change subsequent questions
                     }
                 )
 
+        forms.append(
+            {
+                "key": "review",
+                "title": ReviewForm.title,
+                "url": url_for("means_test.review"),
+                "is_current": current_form.page_title == ReviewForm.title,
+                "is_completed": current_form.page_title == ContactUsForm.page_title,
+            }
+        )
+
+        forms.append(
+            {
+                "key": "contact-us",
+                "title": _(
+                    "Contact information"
+                ),  # This is intentionally different from the page title
+                "url": url_for("contact.contact_us"),
+                "is_current": current_form.page_title == ContactUsForm.page_title,
+                "is_completed": False,  # This can always be false as we don't show the progress bar after the contact us form
+            }
+        )
+
         num_completed_forms = (
-            len([form for form in forms if form["is_completed"]]) + 1
-        )  # Add 1 to account for the current form
-        total_forms = len(forms) + 2  # Add 2 to count for the review & contact pages
+            len([form for form in forms if form["is_completed"]])
+        ) + 1  # Add 1 to account for the current form
+        total_forms = len(forms)
         completion_percentage = num_completed_forms / total_forms * 100
 
         return {
@@ -230,6 +259,7 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
             "form": self.form,
             "category": session.category,
             "category_answers": self.get_category_answers_summary(),
+            "form_progress": self.get_form_progress(current_form=self.form),
         }
         return render_template("means_test/review.html", **params)
 
