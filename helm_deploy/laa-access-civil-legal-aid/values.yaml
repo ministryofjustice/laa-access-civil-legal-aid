@@ -80,7 +80,6 @@ envVars:
       name: ratelimit
       key: enabled
       optional: true
-
   OS_PLACES_API_KEY:
     secret:
       name: os-places
@@ -89,4 +88,14 @@ envVars:
     configmap:
       name: notify-orchestrator
       key: url
+      optional: true
+  FALA_URL:
+    configmap:
+      name: fala-url
+      key: url
+      optional: true
+  REDIRECT_FALA_REQUESTS:
+    configmap:
+      name: feature-flags
+      key: redirect-fala-requests
       optional: true
