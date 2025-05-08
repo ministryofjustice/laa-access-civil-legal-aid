@@ -14,6 +14,13 @@
 
 {% block pageTitle %}{{config['SERVICE_NAME']}} – GOV.UK{% endblock %}
 
+{% block skipLink %}
+    {{ super() }}
+    {% if show_exit_this_page %}
+        <a href="https://bbc.co.uk/weather/" class="govuk-skip-link govuk-js-exit-this-page-skiplink" rel="nofollow noreferrer" data-module="govuk-skip-link">{% trans %}Exit this page{% endtrans %}</a>
+    {% endif %}
+{% endblock %}
+
 {% block head %}
     <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet" nonce="{{ csp_nonce() }}" />
     <script src="{{ url_for('static', filename='headscripts.js') }}" nonce="{{ csp_nonce() }}" ></script>
