@@ -80,14 +80,13 @@ jobs:
 
       - name: Run CLA Backend with Docker Compose
         run: |
-            echo "CLA_BACKEND_IMAGE=$REGISTRY/$REPOSITORY:latest" >> .env
-            
             docker compose -f tests/backend-compose.yml up -d --wait --wait-timeout 30
           
             sleep 5
           
             docker compose -f tests/backend-compose.yml exec cla_backend bin/create_db.sh
         env:
+            CLA_BACKEND_IMAGE: ${{ steps.login-ecr.outputs.registry }}/${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}:latest
             REGISTRY: ${{ steps.login-ecr.outputs.registry }}
             REPOSITORY: ${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
 

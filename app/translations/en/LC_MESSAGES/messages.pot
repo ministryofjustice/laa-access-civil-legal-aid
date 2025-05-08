@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-05-07 16:04+0100\n"
+"POT-Creation-Date: 2025-05-07 11:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,12 +50,6 @@ msgid ""
 "Includes arrangements for children and money. If an ex-partner is not "
 "following agreements or court orders. If you’re worried about a child, or"
 " if a child is taken or kept without your permission."
-msgstr ""
-
-msgid "Problems with neighbours, landlords or other people"
-msgstr ""
-
-msgid "Threats, abuse or harassment by someone who is not a family member."
 msgstr ""
 
 msgid "Housing, homelessness, losing your home"
@@ -232,6 +226,12 @@ msgstr ""
 msgid ""
 "If you’re accused or taken to court for anti-social behaviour, including "
 "being in a gang."
+msgstr ""
+
+msgid "Problems with neighbours, landlords or other people"
+msgstr ""
+
+msgid "Threats, abuse or harassment by someone who is not a family member."
 msgstr ""
 
 msgid ""
@@ -437,6 +437,71 @@ msgid ""
 " is under a community treatment order. Help with mental health tribunals."
 msgstr ""
 
+msgid "Adopting a child from outside the UK"
+msgstr ""
+
+msgid "Adoption processes in the courts."
+msgstr ""
+
+msgid "Appeal a decision that you cannot work with children or vulnerable adults"
+msgstr ""
+
+msgid "Including if you’re on a ‘barred list’ or disqualified from teaching."
+msgstr ""
+
+msgid "Clinical negligence in babies"
+msgstr ""
+
+msgid ""
+"Help if a baby has brain or nerve damage caused during pregnancy, "
+"childbirth or up to 8 weeks old."
+msgstr ""
+
+msgid "Compensation for abuse, assault or neglect"
+msgstr ""
+
+msgid ""
+"Includes child abuse, sexual assault, abuse of a vulnerable adult. Claims"
+" can be against a person or an organisation."
+msgstr ""
+
+msgid "Environmental pollution"
+msgstr ""
+
+msgid ""
+"Issues about air, water or land pollution that is harming you or the "
+"environment."
+msgstr ""
+
+msgid "Inquests for family members"
+msgstr ""
+
+msgid "Advice to prepare for the inquest of a family member."
+msgstr ""
+
+msgid "Mental health detention"
+msgstr ""
+
+msgid ""
+"Help if you’re held in hospital (‘sectioned’), mental health tribunals "
+"and community treatment orders."
+msgstr ""
+
+msgid "Proceeds of Crime Act"
+msgstr ""
+
+msgid "If you’re facing legal action to take your money or other assets."
+msgstr ""
+
+msgid "Terrorism"
+msgstr ""
+
+msgid "If you’re accused of terrorism or financing terrorist groups."
+msgstr ""
+
+msgid "Help if you’re a victim of human trafficking or modern slavery."
+msgstr ""
+
 msgid "special educational needs and disability (SEND)"
 msgstr ""
 
@@ -559,71 +624,6 @@ msgid "Gender reassignment, being transgender, non-binary or gender-fluid"
 msgstr ""
 
 msgid "Married status - being married, in a civil partnership"
-msgstr ""
-
-msgid "Adopting a child from outside the UK"
-msgstr ""
-
-msgid "Adoption processes in the courts."
-msgstr ""
-
-msgid "Appeal a decision that you cannot work with children or vulnerable adults"
-msgstr ""
-
-msgid "Including if you’re on a ‘barred list’ or disqualified from teaching."
-msgstr ""
-
-msgid "Clinical negligence in babies"
-msgstr ""
-
-msgid ""
-"Help if a baby has brain or nerve damage caused during pregnancy, "
-"childbirth or up to 8 weeks old."
-msgstr ""
-
-msgid "Compensation for abuse, assault or neglect"
-msgstr ""
-
-msgid ""
-"Includes child abuse, sexual assault, abuse of a vulnerable adult. Claims"
-" can be against a person or an organisation."
-msgstr ""
-
-msgid "Environmental pollution"
-msgstr ""
-
-msgid ""
-"Issues about air, water or land pollution that is harming you or the "
-"environment."
-msgstr ""
-
-msgid "Inquests for family members"
-msgstr ""
-
-msgid "Advice to prepare for the inquest of a family member."
-msgstr ""
-
-msgid "Mental health detention"
-msgstr ""
-
-msgid ""
-"Help if you’re held in hospital (‘sectioned’), mental health tribunals "
-"and community treatment orders."
-msgstr ""
-
-msgid "Proceeds of Crime Act"
-msgstr ""
-
-msgid "If you’re facing legal action to take your money or other assets."
-msgstr ""
-
-msgid "Terrorism"
-msgstr ""
-
-msgid "If you’re accused of terrorism or financing terrorist groups."
-msgstr ""
-
-msgid "Help if you’re a victim of human trafficking or modern slavery."
 msgstr ""
 
 msgid "Is this to do with police, prisons or detention centres?"
@@ -2968,7 +2968,7 @@ msgstr ""
 
 msgid ""
 "Non-public authorities such as: Credit reference agencies Equifax and "
-"Transunion and our debt collection partners Marston Holdings;"
+"Transunion and our debt collection partners Advantis Credit Ltd;"
 msgstr ""
 
 msgid "Hinduja Global Solutions UK Ltd and"
@@ -2983,7 +2983,7 @@ msgstr ""
 msgid ""
 "Where a debt is owed to the Legal Aid Agency, we may share your data with"
 " public authorities such as HMRC and DWP and with debt collection "
-"partners such as Marston Holdings for the purposes of tracing, debt "
+"partners such as Advantis Credit Ltd for the purposes of tracing, debt "
 "collection and enforcement."
 msgstr ""
 
@@ -3003,10 +3003,10 @@ msgid ""
 msgstr ""
 
 msgid ""
-"We contract with Marston Holdings as a data processor for the collection "
-"and enforcement of criminal legal aid contributions. Any personal data "
-"shared with the data processor for this purpose is governed by model "
-"contract clauses under data protection law."
+"We contract with Advantis Credit Ltd as a data processor for the "
+"collection and enforcement of criminal legal aid contributions. Any "
+"personal data shared with the data processor for this purpose is governed"
+" by model contract clauses under data protection law."
 msgstr ""
 
 msgid "Automated decision making"

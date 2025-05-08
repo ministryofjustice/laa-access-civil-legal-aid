@@ -44,12 +44,6 @@ msgstr ""
 " dilyn cytundebau neu orchmynion llys. Os ydych chi'n poeni am blentyn, "
 "neu os yw plentyn yn cael ei gymryd neu ei gadw heb eich caniatâd."
 
-msgid "Problems with neighbours, landlords or other people"
-msgstr "Problemau gyda chymdogion, landlordiaid neu bobl eraill"
-
-msgid "Threats, abuse or harassment by someone who is not a family member."
-msgstr "Bygythiadau, cam-drin neu aflonyddu gan rywun nad yw’n aelod o’r teulu."
-
 msgid "Housing, homelessness, losing your home"
 msgstr "Tai, digartrefedd, colli eich cartref"
 
@@ -272,6 +266,12 @@ msgid ""
 msgstr ""
 "Os ydych chi wedi cael eich cyhuddo neu wedi ymddangos yn y llys am "
 "ymddwyn yn wrthgymdeithasol, gan gynnwys bod yn aelod o gang."
+
+msgid "Problems with neighbours, landlords or other people"
+msgstr "Problemau gyda chymdogion, landlordiaid neu bobl eraill"
+
+msgid "Threats, abuse or harassment by someone who is not a family member."
+msgstr "Bygythiadau, cam-drin neu aflonyddu gan rywun nad yw’n aelod o’r teulu."
 
 msgid ""
 "Treated unfairly because of things like your disability or health "
@@ -531,6 +531,85 @@ msgstr ""
 "os yw o dan orchymyn triniaeth gymunedol. Help gyda thribiwnlysoedd "
 "iechyd meddwl."
 
+msgid "Adopting a child from outside the UK"
+msgstr "Mabwysiadu plentyn o'r tu allan i’r Deyrnas Unedig"
+
+msgid "Adoption processes in the courts."
+msgstr "Y broses fabwysiadu yn y llysoedd."
+
+msgid "Appeal a decision that you cannot work with children or vulnerable adults"
+msgstr ""
+"Apelio penderfyniad sy’n nodi nad ydych chi’n cael gweithio gyda phlant "
+"ac oedolion bregus"
+
+msgid "Including if you’re on a ‘barred list’ or disqualified from teaching."
+msgstr ""
+"Mae hyn yn cynnwys bod ar ‘restr gwahardd’ neu gael eich gwahardd rhag "
+"addysgu."
+
+msgid "Clinical negligence in babies"
+msgstr "Esgeulustra clinigol mewn babanod"
+
+msgid ""
+"Help if a baby has brain or nerve damage caused during pregnancy, "
+"childbirth or up to 8 weeks old."
+msgstr ""
+"Cymorth os yw babi wedi profi niwed i’r ymennydd neu'r system nerfol yn "
+"ystod beichiogrwydd, genedigaeth, neu cyn cyrraedd 8 wythnos oed"
+
+msgid "Compensation for abuse, assault or neglect"
+msgstr "Iawndal am gamdriniaeth, ymosodiad neu esgeulustod"
+
+msgid ""
+"Includes child abuse, sexual assault, abuse of a vulnerable adult. Claims"
+" can be against a person or an organisation."
+msgstr ""
+"Mae hyn yn cynnwys cam-drin plant, ymosod yn rhywiol, cam-drin oedolyn "
+"bregus. Gallwch chi hawlio iawndal gan berson neu sefydliad."
+
+msgid "Environmental pollution"
+msgstr "Llygredd amgylcheddol"
+
+msgid ""
+"Issues about air, water or land pollution that is harming you or the "
+"environment."
+msgstr ""
+"Materion am lygredd aer, dŵr a thir sy’n achosi niwed i chi neu'r "
+"amgylchedd."
+
+msgid "Inquests for family members"
+msgstr "Cwestau aelodau o’r teulu"
+
+msgid "Advice to prepare for the inquest of a family member."
+msgstr "Cyngor ar sut i baratoi ar gyfer cwest aelod o’r teulu."
+
+msgid "Mental health detention"
+msgstr "Cadw dan glo oherwydd iechyd meddwl"
+
+msgid ""
+"Help if you’re held in hospital (‘sectioned’), mental health tribunals "
+"and community treatment orders."
+msgstr ""
+"Cymorth os ydych chi’n cael eich cadw yn yr ysbyty, tribiwnlysoedd iechyd"
+" meddwl, a gorchmynion triniaeth gymunedol."
+
+msgid "Proceeds of Crime Act"
+msgstr "Deddf Enillion Troseddau"
+
+msgid "If you’re facing legal action to take your money or other assets."
+msgstr "Os oes camau cyfreithiol ar waith i gymryd eich arian neu asedau eraill."
+
+msgid "Terrorism"
+msgstr "Terfysgaeth"
+
+msgid "If you’re accused of terrorism or financing terrorist groups."
+msgstr ""
+"Os ydych chi’n cael eich cyhuddo o derfysgaeth neu o ariannu grwpiau "
+"terfysgol."
+
+msgid "Help if you’re a victim of human trafficking or modern slavery."
+msgstr "Cymorth os ydych chi’n ddioddefwr masnachu pobl neu gaethwasiaeth fodern."
+
 msgid "special educational needs and disability (SEND)"
 msgstr "plant ag anghenion addysgol arbennig ac anableddau (SEND)"
 
@@ -663,85 +742,6 @@ msgstr "Ailbennu rhywedd, bod yn drawsryweddol, yn anneuaidd neu’n rhyweddhyli
 
 msgid "Married status - being married, in a civil partnership"
 msgstr "Statws priodasol – wedi priodi, mewn partneriaeth sifil"
-
-msgid "Adopting a child from outside the UK"
-msgstr "Mabwysiadu plentyn o'r tu allan i’r Deyrnas Unedig"
-
-msgid "Adoption processes in the courts."
-msgstr "Y broses fabwysiadu yn y llysoedd."
-
-msgid "Appeal a decision that you cannot work with children or vulnerable adults"
-msgstr ""
-"Apelio penderfyniad sy’n nodi nad ydych chi’n cael gweithio gyda phlant "
-"ac oedolion bregus"
-
-msgid "Including if you’re on a ‘barred list’ or disqualified from teaching."
-msgstr ""
-"Mae hyn yn cynnwys bod ar ‘restr gwahardd’ neu gael eich gwahardd rhag "
-"addysgu."
-
-msgid "Clinical negligence in babies"
-msgstr "Esgeulustra clinigol mewn babanod"
-
-msgid ""
-"Help if a baby has brain or nerve damage caused during pregnancy, "
-"childbirth or up to 8 weeks old."
-msgstr ""
-"Cymorth os yw babi wedi profi niwed i’r ymennydd neu'r system nerfol yn "
-"ystod beichiogrwydd, genedigaeth, neu cyn cyrraedd 8 wythnos oed"
-
-msgid "Compensation for abuse, assault or neglect"
-msgstr "Iawndal am gamdriniaeth, ymosodiad neu esgeulustod"
-
-msgid ""
-"Includes child abuse, sexual assault, abuse of a vulnerable adult. Claims"
-" can be against a person or an organisation."
-msgstr ""
-"Mae hyn yn cynnwys cam-drin plant, ymosod yn rhywiol, cam-drin oedolyn "
-"bregus. Gallwch chi hawlio iawndal gan berson neu sefydliad."
-
-msgid "Environmental pollution"
-msgstr "Llygredd amgylcheddol"
-
-msgid ""
-"Issues about air, water or land pollution that is harming you or the "
-"environment."
-msgstr ""
-"Materion am lygredd aer, dŵr a thir sy’n achosi niwed i chi neu'r "
-"amgylchedd."
-
-msgid "Inquests for family members"
-msgstr "Cwestau aelodau o’r teulu"
-
-msgid "Advice to prepare for the inquest of a family member."
-msgstr "Cyngor ar sut i baratoi ar gyfer cwest aelod o’r teulu."
-
-msgid "Mental health detention"
-msgstr "Cadw dan glo oherwydd iechyd meddwl"
-
-msgid ""
-"Help if you’re held in hospital (‘sectioned’), mental health tribunals "
-"and community treatment orders."
-msgstr ""
-"Cymorth os ydych chi’n cael eich cadw yn yr ysbyty, tribiwnlysoedd iechyd"
-" meddwl, a gorchmynion triniaeth gymunedol."
-
-msgid "Proceeds of Crime Act"
-msgstr "Deddf Enillion Troseddau"
-
-msgid "If you’re facing legal action to take your money or other assets."
-msgstr "Os oes camau cyfreithiol ar waith i gymryd eich arian neu asedau eraill."
-
-msgid "Terrorism"
-msgstr "Terfysgaeth"
-
-msgid "If you’re accused of terrorism or financing terrorist groups."
-msgstr ""
-"Os ydych chi’n cael eich cyhuddo o derfysgaeth neu o ariannu grwpiau "
-"terfysgol."
-
-msgid "Help if you’re a victim of human trafficking or modern slavery."
-msgstr "Cymorth os ydych chi’n ddioddefwr masnachu pobl neu gaethwasiaeth fodern."
 
 msgid "Is this to do with police, prisons or detention centres?"
 msgstr "A yw hyn yn ymwneud â’r heddlu, carchardai neu ganolfannau cadw?"
@@ -2009,7 +2009,10 @@ msgstr "Ffynonellau cymorth eraill"
 msgid ""
 "You can also get advice from alternative help organisations for issues "
 "related to %(category_name)s. You don’t have to qualify for legal aid."
-msgstr "Gallwch hefyd gael cyngor gan sefydliadau cymorth amgen ar gyfer materion sy’n ymwneud â %(category_name)s. Nid oes rhaid i chi fod yn gymwys i gael cymorth cyfreithiol."
+msgstr ""
+"Gallwch hefyd gael cyngor gan sefydliadau cymorth amgen ar gyfer materion"
+" sy’n ymwneud â %(category_name)s. Nid oes rhaid i chi fod yn gymwys i "
+"gael cymorth cyfreithiol."
 
 msgid "To qualify for legal aid:"
 msgstr "I fod yn gymwys i gael cymorth cyfreithiol:"
@@ -3487,10 +3490,10 @@ msgstr ""
 
 msgid ""
 "Non-public authorities such as: Credit reference agencies Equifax and "
-"Transunion and our debt collection partners Marston Holdings;"
+"Transunion and our debt collection partners Advantis Credit Ltd;"
 msgstr ""
 "Awdurdodau nad ydynt yn gyhoeddus megis: Asiantaethau gwirio credyd "
-"Equifax a Transunion a'n partneriaid casglu dyledion Marston Holdings;"
+"Equifax a Transunion a'n partneriaid casglu dyledion Advantis Credit Ltd;"
 
 msgid "Hinduja Global Solutions UK Ltd and"
 msgstr "Hinduja Global Solutions UK Cyf a"
@@ -3508,12 +3511,12 @@ msgstr ""
 msgid ""
 "Where a debt is owed to the Legal Aid Agency, we may share your data with"
 " public authorities such as HMRC and DWP and with debt collection "
-"partners such as Marston Holdings for the purposes of tracing, debt "
+"partners such as Advantis Credit Ltd for the purposes of tracing, debt "
 "collection and enforcement."
 msgstr ""
 "Lle mae dyled tuag at yr Asiantaeth Cymorth Cyfreithiol, mae’n bosibl y "
 "byddwn ni’n rhannu eich data gydag awdurdodau cyhoeddus fel CThEM a’r "
-"AGPh a phartneriaid casglu dyledion fel Marston Holdings at ddibenion "
+"AGPh a phartneriaid casglu dyledion fel Advantis Credit Ltd at ddibenion "
 "olrhain, casglu dyledion a gorfodi."
 
 msgid ""
@@ -3539,12 +3542,12 @@ msgstr ""
 "contract enghreifftiol o dan gyfraith diogelu data."
 
 msgid ""
-"We contract with Marston Holdings as a data processor for the collection "
-"and enforcement of criminal legal aid contributions. Any personal data "
-"shared with the data processor for this purpose is governed by model "
-"contract clauses under data protection law."
+"We contract with Advantis Credit Ltd as a data processor for the "
+"collection and enforcement of criminal legal aid contributions. Any "
+"personal data shared with the data processor for this purpose is governed"
+" by model contract clauses under data protection law."
 msgstr ""
-"Rydym yn contractio â Marston Holdings fel prosesydd data ar gyfer casglu"
+"Rydym yn contractio â Advantis Credit Ltd fel prosesydd data ar gyfer casglu"
 " a gorfodi cyfraniadau cymorth cyfreithiol troseddol. Mae unrhyw ddata "
 "personol a rennir gyda’r prosesydd data at y diben hwn yn cael ei "
 "lywodraethu gan gymalau contract enghreifftiol o dan gyfraith ddiogelu "
