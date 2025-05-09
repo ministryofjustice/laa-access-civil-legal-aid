@@ -50,12 +50,13 @@
         const content = await response.json();
 
         if (response.ok && content.success) {
-          form.innerHTML = `
+          const messageWrapper = document.createElement("div");
+          messageWrapper.innerHTML = `
             <p class="govuk-body">
-              {{ _('Your reference number was sent to') }}
-              <strong>${content.email}</strong>.
+              Your reference number was sent to <strong>${content.email}</strong>.
             </p>
           `;
+          form.replaceWith(messageWrapper);
         } else {
           // Error handling
           const emailInput = document.querySelector("#email");
