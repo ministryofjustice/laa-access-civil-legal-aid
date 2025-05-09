@@ -94,8 +94,3 @@ envVars:
       name: fala-url
       key: url
       optional: true
-  REDIRECT_FALA_REQUESTS:
-    configmap:
-      name: feature-flags
-      key: redirect-fala-requests
-      optional: true

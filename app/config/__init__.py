@@ -31,17 +31,9 @@ class Config(object):
     SENTRY_DSN = os.environ.get("SENTRY_DSN")
     LANGUAGES = {"en": "English", "cy": "Welsh"}
     SERVICE_UNAVAILABLE = os.environ.get("MAINTENANCE_MODE", "False").lower() == "true"
-    LAALAA_URL = os.environ.get(
-        "LAALAA_URL",
-        "https://laa-legal-adviser-api-production.cloud-platform.service.justice.gov.uk",
-    )
     FALA_URL = os.environ.get("FALA_URL", "https://find-legal-advice.justice.gov.uk")
-    POSTCODES_IO_URL = os.environ.get("POSTCODES_IO_URL", "https://api.postcodes.io")
     CLA_BACKEND_URL = os.environ.get("CLA_BACKEND_URL", "http://localhost:8010")
     SESSION_TIMEOUT = timedelta(minutes=30)
     SESSION_COOKIE_SECURE = True
     OS_PLACES_API_KEY = os.environ.get("OS_PLACES_API_KEY")
     EMAIL_ORCHESTRATOR_URL = os.environ.get("EMAIL_ORCHESTRATOR_URL")
-    REDIRECT_FALA_REQUESTS = (
-        os.environ.get("REDIRECT_FALA_REQUESTS", "False").lower() == "true"
-    )

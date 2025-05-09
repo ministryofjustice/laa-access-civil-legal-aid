@@ -1,4 +1,4 @@
-from app.categories.results.views import ResultPage
+from app.categories.results.views import ResultPage, HLPASResultPage
 from app.means_test.views import MeansTest, CheckYourAnswers
 from app.means_test import bp, result
 
@@ -15,5 +15,6 @@ result.add_url_rule(
     "/refer", view_func=ResultPage.as_view("ineligible", "means_test/refer.html")
 )
 result.add_url_rule(
-    "/hlpas", view_func=ResultPage.as_view("hlpas", template="means_test/hlpas.html")
+    "/hlpas",
+    view_func=HLPASResultPage.as_view("hlpas", template="means_test/hlpas.html"),
 )

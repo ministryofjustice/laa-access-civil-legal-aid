@@ -20,15 +20,6 @@ class TestSurveyLinks:
             page.get_by_role("link", name="Tell us what you think of this service")
         ).to_have_attribute("href", value="https://www.smartsurvey.co.uk/s/legalaid3/")
 
-    def test_find_a_legal_adviser(self, page: Page):
-        page.get_by_role("link", name="Asylum and immigration").click()
-        page.get_by_role("link", name="Applying for asylum").click()
-        page.get_by_role("textbox", name="Postcode").fill("SW1a")
-        page.get_by_role("button", name="Search").click()
-        expect(
-            page.get_by_role("link", name="Tell us what you think of this service")
-        ).to_have_attribute("href", value="https://www.smartsurvey.co.uk/s/legalaid4/")
-
     def test_confirmation_page(self, page: Page):
         page.get_by_role("link", name="Contact us").click()
         page.get_by_role("button", name="Continue to contact CLA").click()

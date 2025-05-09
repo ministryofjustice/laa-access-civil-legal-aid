@@ -1,17 +1,19 @@
 from playwright.sync_api import Page, expect
 import pytest
 
+find_a_legal_adviser_heading = "Legal aid covers this problem"
+
 
 @pytest.mark.usefixtures("live_server")
 @pytest.mark.parametrize(
     "category_name, expected_heading, category",
     [
         pytest.param(
-            "Adopting a child from outside the UK", "Find a legal adviser", "mat"
+            "Adopting a child from outside the UK", find_a_legal_adviser_heading, "mat"
         ),
         pytest.param(
             "Appeal a decision that you cannot work with children or vulnerable adults",
-            "Find a legal adviser",
+            find_a_legal_adviser_heading,
             "",
         ),
         pytest.param(
@@ -21,12 +23,12 @@ import pytest
         ),
         pytest.param(
             "Clinical negligence in babies",
-            "Find a legal adviser",
+            find_a_legal_adviser_heading,
             "med",
         ),
         pytest.param(
             "Compensation for abuse, assault or neglect",
-            "Find a legal adviser",
+            find_a_legal_adviser_heading,
             "aap",
         ),
         pytest.param(
@@ -36,7 +38,7 @@ import pytest
         ),
         pytest.param(
             "Environmental pollution",
-            "Find a legal adviser",
+            find_a_legal_adviser_heading,
             "pub",
         ),
         pytest.param(
@@ -51,27 +53,27 @@ import pytest
         ),
         pytest.param(
             "Inquests for family members",
-            "Find a legal adviser",
+            find_a_legal_adviser_heading,
             "",
         ),
         pytest.param(
             "Mental health detention",
-            "Find a legal adviser",
+            find_a_legal_adviser_heading,
             "mhe",
         ),
         pytest.param(
             "Proceeds of Crime Act",
-            "Find a legal adviser",
+            find_a_legal_adviser_heading,
             "crm",
         ),
         pytest.param(
             "Terrorism",
-            "Find a legal adviser",
+            find_a_legal_adviser_heading,
             "immas",
         ),
         pytest.param(
             "Trafficking, modern slavery",
-            "Find a legal adviser",
+            find_a_legal_adviser_heading,
             "immas",
         ),
         pytest.param(

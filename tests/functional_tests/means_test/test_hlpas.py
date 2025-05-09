@@ -27,11 +27,9 @@ def test_hlpas_user_journey(page: Page):
     expect(
         page.get_by_role("heading", name="You might qualify for free legal advice")
     ).to_be_visible()
-    page.get_by_role("button", name="Continue").click()
-    expect(page.get_by_role("heading", name="Find a legal adviser")).to_be_visible()
-    expect(
-        page.get_by_text("For the Housing Loss Prevention Advice Service")
-    ).to_be_visible()
+    expect(page.get_by_role("button", name="Continue")).to_have_attribute(
+        "href", "https://find-legal-advice.justice.gov.uk/check?categories=hlpas"
+    )
 
 
 @pytest.mark.usefixtures("live_server")

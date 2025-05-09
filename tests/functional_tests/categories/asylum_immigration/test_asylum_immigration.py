@@ -2,7 +2,7 @@ from playwright.sync_api import Page, expect
 import pytest
 
 in_scope_page_heading = "Legal aid is available for this type of problem"
-fala_page_heading = "Find a legal adviser"
+fala_page_heading = "Legal aid covers this problem"
 
 ROUTING = [
     {"link_text": "Applying for asylum", "next_page_heading": fala_page_heading},

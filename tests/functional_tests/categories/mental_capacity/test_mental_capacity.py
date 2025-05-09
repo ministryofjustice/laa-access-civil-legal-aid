@@ -3,7 +3,7 @@ import pytest
 import re
 
 in_scope_page_heading = "Legal aid is available for this type of problem"
-find_a_legal_adviser_heading = "Find a legal adviser"
+find_a_legal_adviser_heading = "Legal aid covers this problem"
 social_care_heading = "Care needs for disability and old age (social care)"
 
 ROUTING = [

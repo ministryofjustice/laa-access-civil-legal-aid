@@ -2,21 +2,6 @@ from flask import current_app
 from urllib.parse import urlencode, urljoin
 
 
-def kwargs_to_urlparams(**kwargs: str) -> str:
-    """
-    Convert keyword arguments to URL parameters, filtering out None values.
-
-    Args:
-        **kwargs: Keyword arguments to convert to URL parameters.
-
-    Returns:
-        str: URL-encoded parameter string.
-    """
-    # Filter out None values
-    filtered_kwargs = {k: v for k, v in kwargs.items() if v is not None}
-    return urlencode(filtered_kwargs, doseq=True)
-
-
 def create_fala_url(
     category: str | None = None,
     secondary_category: str | None = None,
@@ -44,10 +29,10 @@ def create_fala_url(
 
     params: dict[str, str] = {}
     if category:
-        params["categories"] = category
+        params["categories"] = category.lower()
         if secondary_category:
-            params["sub-category"] = secondary_category
+            params["sub-category"] = secondary_category.lower()
 
     if params:
-        return f"{base_url}?{urlencode(params)}"
+        return f"{base_url}?{urlencode(params, doseq=True)}"
     return base_url

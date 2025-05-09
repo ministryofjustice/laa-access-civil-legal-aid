@@ -1,7 +1,8 @@
 from app.categories.constants import Category
 from app.categories.views import CategoryPage
 from flask import session, render_template
-from app.find_a_legal_adviser.laalaa import get_category_code as get_fala_category_code
+from app.find_a_legal_adviser.fala import create_fala_url
+from app.find_a_legal_adviser.categories import FALACategory
 from app.api import cla_backend
 
 
@@ -21,10 +22,11 @@ class ResultPage(CategoryPage):
             if article_category_name and self.get_help_organisations
             else []
         )
+        fala_category_code = FALACategory.get_category_code(article_category_name)
         return {
             "category": category if isinstance(category, Category) else None,
             "organisations": organisations,
-            "fala_category_code": get_fala_category_code(article_category_name),
+            "fala_url": create_fala_url(fala_category_code),
         }
 
     def dispatch_request(self):
@@ -75,3 +77,12 @@ class NextStepsPage(OutOfScopePage):
         if get_help_organisations:
             self.template = "categories/next-steps-alternate-help.html"
         super().__init__(*args, self.template, **kwargs)
+
+
+class HLPASResultPage(ResultPage):
+    template = "categories/hlpas.html"
+
+    def get_context(self, category: Category = None):
+        context = super().get_context(category)
+        context["fala_url"] = create_fala_url("HLPAS")
+        return context
