@@ -137,6 +137,11 @@ def cookies():
         # Create the response so we can set the cookie before returning
         response = make_response(render_template("cookies.html", form=form))
 
+        if cookies_policy["analytics"].lower() == "no":
+            for name, value in request.cookies.items():
+                if name.startswith("_ga") or name.startswith("gtm_anon_id"):
+                    response.delete_cookie(name)
+
         # Set cookies policy for one year
         response.set_cookie(
             "cookies_policy",

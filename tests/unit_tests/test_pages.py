@@ -1,6 +1,7 @@
 from unittest.mock import patch
-
+from flask import url_for
 import pytest
+import json
 
 
 def test_set_locale(app, client):
@@ -88,3 +89,53 @@ def test_index_redirects_to_welsh_govuk(app, client):
         response.headers["location"]
         == "https://www.gov.uk/gwirio-os-ydych-yn-gymwys-i-gael-cymorth-cyfreithiol"
     )
+
+
+def get_cookies_policy(headers: list) -> dict:
+    cookies_policy = {}
+    for header in headers:
+        if "cookies_policy" in header:
+            cookie: str = (
+                header.split("cookies_policy=")
+                .pop()
+                .split(";")[0]
+                .replace('"{', "{")
+                .replace('}"', "}")
+            )
+            cookie = cookie.replace('\\"', '"').replace("\\054", ",")
+            cookies_policy = json.loads(cookie)
+            break
+    return cookies_policy
+
+
+def test_cookies_page(app, client):
+    with app.test_request_context():
+        cookie_policy = {"functional": "yes", "analytics": "yes"}
+        response = client.post(
+            url_for("main.cookies", _external=True), data=cookie_policy
+        )
+        assert response.status_code == 200
+        assert cookie_policy == get_cookies_policy(
+            response.headers.getlist("Set-Cookie")
+        )
+
+
+def test_cookies_page_remove_ga_cookies(app, client):
+    with app.test_request_context():
+        cookie_policy = {"functional": "no", "analytics": "no"}
+        client.set_cookie("_ga", "test_value")
+        client.set_cookie("_ga_27837237374", "test_value2")
+        client.set_cookie("gtm_anon_id", "test_value3")
+        response = client.post(
+            url_for("main.cookies", _external=True), data=cookie_policy
+        )
+        assert response.status_code == 200
+        assert cookie_policy == get_cookies_policy(
+            response.headers.getlist("Set-Cookie")
+        )
+        assert "_ga=; Expires=Thu, 01 Jan 1970 00:00:00" in str(
+            response.headers.getlist("Set-Cookie")
+        )
+        assert "_ga_27837237374=; Expires=Thu, 01 Jan 1970 00:00:00" in str(
+            response.headers.getlist("Set-Cookie")
+        )
