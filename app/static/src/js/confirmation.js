@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (response.ok && content.success) {
         // Hide the form after successful submission
-        form.style.display = "none";
+        form.classList.remove('confirmation-body');
         // Show the confirmation message
         confirmedEmail.textContent = content.email;
         confirmationMessage.style.display = "block";
