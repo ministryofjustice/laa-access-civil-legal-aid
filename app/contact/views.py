@@ -181,7 +181,7 @@ class ConfirmationPage(View):
         }
 
     def dispatch_request(self):
-        if not session.get("case_reference"):
+        if not session.get("case_reference", None):
             logger.error(
                 "FAILED confirmation page due to invalid session", exc_info=True
             )
