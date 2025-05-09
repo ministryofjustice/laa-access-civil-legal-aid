@@ -5,7 +5,7 @@ from app.contact.forms import (
     ConfirmationEmailForm,
 )
 import logging
-from flask import session, render_template, request, redirect, url_for, jsonify
+from flask import session, render_template, request, redirect, url_for
 from app.api import cla_backend
 from app.contact.notify.api import notify
 from app.means_test.api import is_eligible, EligibilityState
@@ -198,21 +198,7 @@ class ConfirmationPage(View):
                 contact_type=context["contact_type"],
             )
             email_sent = True
-
-        if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-            return jsonify(
-                {
-                    "success": True,
-                    "message": "Confirmation email sent successfully.",
-                    "email": form.email.data,
-                }
-            )
-
-        if (
-            request.method == "POST"
-            and request.headers.get("X-Requested-With") == "XMLHttpRequest"
-        ):
-            return jsonify({"success": False, "errors": form.errors}), 400
+            form._submitted = False
 
         return render_template(
             self.template,
