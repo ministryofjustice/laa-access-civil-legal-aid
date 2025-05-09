@@ -30,6 +30,11 @@
 
 
 {% block content %}
+  <script nonce="{{ csp_nonce() }}">
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+    });
+  </script>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             {% set panelTitle =  _('We will call you back') if callback_time else _("Your details have been submitted") %}

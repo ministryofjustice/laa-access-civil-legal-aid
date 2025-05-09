@@ -5,7 +5,7 @@ from app.contact.forms import (
     ConfirmationEmailForm,
 )
 import logging
-from flask import session, render_template, request, redirect, url_for, jsonify
+from flask import session, render_template, request, redirect, url_for
 from app.api import cla_backend
 from app.contact.notify.api import notify
 from app.means_test.api import is_eligible, EligibilityState
@@ -181,42 +181,24 @@ class ConfirmationPage(View):
         }
 
     def dispatch_request(self):
-        if not session.get("case_reference"):
+        if not session.get("case_reference", None):
             logger.error(
                 "FAILED confirmation page due to invalid session", exc_info=True
             )
             return redirect(url_for("main.session_expired"))
-
         form = ConfirmationEmailForm()
         context = self.get_context()
         email_sent = False
 
-        if request.method == "POST":
-            if form.validate_on_submit():
-                # Send email
-                notify.create_and_send_confirmation_email(
-                    email_address=form.email.data,
-                    case_reference=context["case_reference"],
-                    callback_time=context["callback_time"],
-                    contact_type=context["contact_type"],
-                )
-                email_sent = True
+        if form.validate_on_submit():
+            notify.create_and_send_confirmation_email(
+                email_address=form.email.data,
+                case_reference=context["case_reference"],
+                callback_time=context["callback_time"],
+                contact_type=context["contact_type"],
+            )
+            email_sent = True
 
-                # Handle AJAX success
-                if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-                    return jsonify(
-                        {
-                            "success": True,
-                            "email": form.email.data,
-                            "message": "Confirmation email sent successfully.",
-                        }
-                    )
-
-            # Handle AJAX errors
-            if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-                return jsonify({"success": False, "errors": form.errors}), 400
-
-        # Standard GET or failed POST (non-AJAX)
         return render_template(
             self.template,
             form=form,
