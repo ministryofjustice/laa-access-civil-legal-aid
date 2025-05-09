@@ -40,24 +40,22 @@
                 "html": panelHtml
             }) }}
 
-            {% if confirmation_email and not form.errors %}
-                <p class="govuk-body">
-                  {{ _('Your reference number was sent to') }}
-                  <strong>{{ confirmation_email }}</strong>.
-                </p>
-            {% else %}
-                <form class="confirmation-email-form" method="POST" novalidate>
-                    {{ form.csrf_token }}
-                    <div class="govuk-form-group" id="email-form-group">
-                        {{ form.email }}
-                        <span class="govuk-error-message" id="email-error" style="display: none;">
-                          <span class="govuk-visually-hidden">Error:</span>
-                          <span class="error-text"></span>
-                        </span>
-                    </div>
-                    {{ form.submit }}
-                </form>
-            {% endif %}
+              <form class="confirmation-email-form" method="POST" novalidate>
+                {{ form.csrf_token }}
+                <div class="govuk-form-group" id="email-form-group">
+                    {{ form.email }}
+                    <span class="govuk-error-message" id="email-error" style="display: none;">
+                      <span class="govuk-visually-hidden">Error:</span>
+                      <span class="error-text"></span>
+                    </span>
+                </div>
+                {{ form.submit }}
+            </form>
+            
+            <!-- Success message, initially hidden -->
+            <div id="confirmation-message" class="govuk-body" style="display: none;">
+              {{ _('Your reference number was sent to') }} <strong id="confirmed-email"></strong>.
+            </div>
 
             {% if category.code in ['debt', 'housing'] %}
                 {{ govukWarningText({
