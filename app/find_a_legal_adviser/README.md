@@ -1,14 +1,11 @@
 # Find a legal aid adviser (FALA)
-When users are eligible for Civil Legal Aid but out of scope for Civil Legal Advice they are signposted to
-find a legal aid adviser, a service which allows users to search for nearby legal aid providers that provide services for their category of law.
+When users are eligible for Civil Legal Aid but out of scope for Civil Legal Advice they are signposted to  find a legal aid adviser, a service which allows users to search for nearby legal aid providers that provide services for their category of law.
 
-As check if you can get legal aid is responsible for diagnosing users' category of law we direct users to a version of 
-find a legal aid adviser with the category pre-selected where appropriate. 
+As check if you can get legal aid is responsible for diagnosing users' category of law we direct users to a version of  find a legal aid adviser with the category pre-selected where appropriate. 
 
-Additionally, we can sometimes include a sub category, which results in additional providers being appended to the search results.
+Additionally, a sub category may be included, where appropriate, which results in additional providers being appended to the search results.
 
-This version of FALA is found at:
-https://find-legal-advice.justice.gov.uk/check
+This version of FALA is found at: https://find-legal-advice.justice.gov.uk/check
 
 This endpoint supports the following query string parameters:
 
