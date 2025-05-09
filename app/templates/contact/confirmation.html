@@ -50,6 +50,7 @@
         const content = await response.json();
 
         if (response.ok && content.success) {
+          //Update placed in wrapper to avoid GTM reading this as a reload
           const messageWrapper = document.createElement("div");
           messageWrapper.innerHTML = `
             <p class="govuk-body">
