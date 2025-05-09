@@ -5,7 +5,7 @@ from app.contact.forms import (
     ConfirmationEmailForm,
 )
 import logging
-from flask import session, render_template, request, redirect, url_for
+from flask import session, render_template, request, redirect, url_for, jsonify
 from app.api import cla_backend
 from app.contact.notify.api import notify
 from app.means_test.api import is_eligible, EligibilityState
@@ -181,23 +181,33 @@ class ConfirmationPage(View):
         }
 
     def dispatch_request(self):
-        if not session.get("case_reference", None):
+        if not session.get("case_reference"):
             logger.error(
                 "FAILED confirmation page due to invalid session", exc_info=True
             )
             return redirect(url_for("main.session_expired"))
+
         form = ConfirmationEmailForm()
         context = self.get_context()
         email_sent = False
 
-        if form.validate_on_submit():
-            notify.create_and_send_confirmation_email(
-                email_address=form.email.data,
-                case_reference=context["case_reference"],
-                callback_time=context["callback_time"],
-                contact_type=context["contact_type"],
-            )
-            email_sent = True
+        is_ajax = request.headers.get("X-Requested-With") == "XMLHttpRequest"
+
+        if request.method == "POST":
+            if form.validate_on_submit():
+                # Send the email
+                notify.create_and_send_confirmation_email(
+                    email_address=form.email.data,
+                    case_reference=context["case_reference"],
+                    callback_time=context["callback_time"],
+                    contact_type=context["contact_type"],
+                )
+                email_sent = True
+                if is_ajax:
+                    return jsonify(success=True, email=form.email.data)
+
+            if is_ajax:
+                return jsonify(success=False, errors=form.errors), 400
 
         return render_template(
             self.template,

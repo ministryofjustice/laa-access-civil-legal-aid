@@ -31,8 +31,54 @@
 
 {% block content %}
   <script nonce="{{ csp_nonce() }}">
-      form.addEventListener('submit', function(event) {
-        event.preventDefault();
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.querySelector(".confirmation-email-form");
+      if (!form) return;
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const response = await fetch(window.location.href, {
+          method: "POST",
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+          },
+          body: formData,
+        });
+
+        const content = await response.json();
+
+        if (response.ok && content.success) {
+          form.innerHTML = `
+            <p class="govuk-body">
+              {{ _('Your reference number was sent to') }}
+              <strong>${content.email}</strong>.
+            </p>
+          `;
+        } else {
+          // Error handling
+          const emailInput = document.querySelector("#email");
+          const formGroup = emailInput.closest(".govuk-form-group");
+          formGroup.classList.remove("govuk-form-group--error");
+
+          const oldError = formGroup.querySelector(".govuk-error-message");
+          if (oldError) oldError.remove();
+
+          const errorText = content.errors?.email?.[0];
+          if (errorText) {
+            formGroup.classList.add("govuk-form-group--error");
+
+            const errorEl = document.createElement("span");
+            errorEl.className = "govuk-error-message";
+            errorEl.id = "email-error";
+            errorEl.innerHTML = `<span class="govuk-visually-hidden">Error:</span> ${errorText}`;
+
+            emailInput.setAttribute("aria-describedby", "email-error");
+            formGroup.insertBefore(errorEl, emailInput);
+          }
+        }
+      });
     });
   </script>
     <div class="govuk-grid-row">
