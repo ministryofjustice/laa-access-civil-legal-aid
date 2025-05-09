@@ -5,7 +5,7 @@ from app.contact.forms import (
     ConfirmationEmailForm,
 )
 import logging
-from flask import session, render_template, request, redirect, url_for
+from flask import session, render_template, request, redirect, url_for, jsonify
 from app.api import cla_backend
 from app.contact.notify.api import notify
 from app.means_test.api import is_eligible, EligibilityState
@@ -180,6 +180,27 @@ class ConfirmationPage(View):
             "category": session.get("category", {}),
         }
 
+    def handle_confirmation_email_ajax_request(self, form, context):
+        if not request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            return None
+
+        if form.validate_on_submit():
+            notify.create_and_send_confirmation_email(
+                email_address=form.email.data,
+                case_reference=context["case_reference"],
+                callback_time=context["callback_time"],
+                contact_type=context["contact_type"],
+            )
+            return jsonify(
+                {
+                    "success": True,
+                    "message": "Confirmation email sent successfully.",
+                    "email": form.email.data,
+                }
+            )
+
+        return jsonify({"success": False, "errors": form.errors}), 400
+
     def dispatch_request(self):
         if not session.get("case_reference", None):
             logger.error(
@@ -190,15 +211,10 @@ class ConfirmationPage(View):
         context = self.get_context()
         email_sent = False
 
-        if form.validate_on_submit():
-            notify.create_and_send_confirmation_email(
-                email_address=form.email.data,
-                case_reference=context["case_reference"],
-                callback_time=context["callback_time"],
-                contact_type=context["contact_type"],
-            )
-            email_sent = True
-            form._submitted = False
+        if isinstance(form, ConfirmationEmailForm):
+            response = self.handle_confirmation_email_ajax_request(form, context)
+            if response is not None:
+                return response
 
         return render_template(
             self.template,
