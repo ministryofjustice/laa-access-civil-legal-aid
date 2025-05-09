@@ -30,59 +30,7 @@
 
 
 {% block content %}
-  <script nonce="{{ csp_nonce() }}">
-    document.addEventListener("DOMContentLoaded", function () {
-      const form = document.querySelector(".confirmation-email-form");
-      if (!form) return;
-
-      form.addEventListener("submit", async function (e) {
-        e.preventDefault();
-
-        const formData = new FormData(form);
-        const response = await fetch(window.location.href, {
-          method: "POST",
-          headers: {
-            "X-Requested-With": "XMLHttpRequest",
-          },
-          body: formData,
-        });
-
-        const content = await response.json();
-
-        if (response.ok && content.success) {
-          //Update placed in wrapper to avoid GTM reading this as a reload
-          const messageWrapper = document.createElement("div");
-          messageWrapper.innerHTML = `
-            <p class="govuk-body">
-              Your reference number was sent to <strong>${content.email}</strong>.
-            </p>
-          `;
-          form.replaceWith(messageWrapper);
-        } else {
-          // Error handling
-          const emailInput = document.querySelector("#email");
-          const formGroup = emailInput.closest(".govuk-form-group");
-          formGroup.classList.remove("govuk-form-group--error");
-
-          const oldError = formGroup.querySelector(".govuk-error-message");
-          if (oldError) oldError.remove();
-
-          const errorText = content.errors?.email?.[0];
-          if (errorText) {
-            formGroup.classList.add("govuk-form-group--error");
-
-            const errorEl = document.createElement("span");
-            errorEl.className = "govuk-error-message";
-            errorEl.id = "email-error";
-            errorEl.innerHTML = `<span class="govuk-visually-hidden">Error:</span> ${errorText}`;
-
-            emailInput.setAttribute("aria-describedby", "email-error");
-            formGroup.insertBefore(errorEl, emailInput);
-          }
-        }
-      });
-    });
-  </script>
+  <script src="{{ url_for('static', filename='confirmation.js') }}" nonce="{{ csp_nonce() }}"></script>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             {% set panelTitle =  _('We will call you back') if callback_time else _("Your details have been submitted") %}
@@ -97,13 +45,24 @@
                   {{ _('Your reference number was sent to') }}
                   <strong>{{ confirmation_email }}</strong>.
                 </p>
-              {% else %}
+            {% else %}
                 <form class="confirmation-email-form" method="POST" novalidate>
                     {{ form.csrf_token }}
-                    {{ form.email }}
+                    <div class="govuk-form-group" id="email-form-group">
+                        {{ form.email }}
+                        <span class="govuk-error-message" id="email-error" style="display: none;">
+                          <span class="govuk-visually-hidden">Error:</span>
+                          <span class="error-text"></span>
+                        </span>
+                    </div>
                     {{ form.submit }}
                 </form>
             {% endif %}
+            
+            <!-- Success message, initially hidden -->
+            <div id="confirmation-message" class="govuk-body" style="display: none;">
+              {{ _('Your reference number was sent to') }} <strong id="confirmed-email"></strong>.
+            </div>
 
             {% if category.code in ['debt', 'housing'] %}
                 {{ govukWarningText({

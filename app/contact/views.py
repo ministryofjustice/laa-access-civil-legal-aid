@@ -193,21 +193,20 @@ class ConfirmationPage(View):
 
         is_ajax = request.headers.get("X-Requested-With") == "XMLHttpRequest"
 
-        if request.method == "POST":
-            if form.validate_on_submit():
-                # Send the email
-                notify.create_and_send_confirmation_email(
-                    email_address=form.email.data,
-                    case_reference=context["case_reference"],
-                    callback_time=context["callback_time"],
-                    contact_type=context["contact_type"],
-                )
-                email_sent = True
-                if is_ajax:
-                    return jsonify(success=True, email=form.email.data)
+        if form.validate_on_submit():
+            # Send the email
+            notify.create_and_send_confirmation_email(
+                email_address=form.email.data,
+                case_reference=context["case_reference"],
+                callback_time=context["callback_time"],
+                contact_type=context["contact_type"],
+            )
+            email_sent = True
 
-            if is_ajax:
-                return jsonify(success=False, errors=form.errors), 400
+        if request.method == "POST" and is_ajax:
+            if email_sent:
+                return jsonify(success=True, email=form.email.data)
+            return jsonify(success=False, errors=form.errors), 400
 
         return render_template(
             self.template,
