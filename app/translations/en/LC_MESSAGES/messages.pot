@@ -1647,6 +1647,38 @@ msgstr ""
 msgid "Next steps to get help"
 msgstr ""
 
+msgid "Legal aid covers this problem"
+msgstr ""
+
+msgid ""
+"Next, you need to contact a legal aid adviser. They will check if you can"
+" get legal aid."
+msgstr ""
+
+msgid "You do not have to pay for this."
+msgstr ""
+
+msgid "They will:"
+msgstr ""
+
+msgid "ask about your problem and finances"
+msgstr ""
+
+msgid "tell you if you can get legal aid"
+msgstr ""
+
+msgid "If you’re not eligible for legal aid, you can ask them:"
+msgstr ""
+
+msgid "where else you can get help for free"
+msgstr ""
+
+msgid "how much they would charge for legal advice"
+msgstr ""
+
+msgid "Find a legal aid adviser"
+msgstr ""
+
 msgid "Legal aid is available for this type of problem"
 msgstr ""
 

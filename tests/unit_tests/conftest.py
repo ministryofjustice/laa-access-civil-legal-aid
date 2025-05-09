@@ -12,6 +12,7 @@ class TestConfig(Config):
     RATELIMIT_ENABLED = False
     SECRET_KEY = "TEST_KEY"
     CLA_BACKEND_URL = "http://backend-test.local"
+    FALA_URL = "https://staging.find-legal-advice.justice.gov.uk"
     WTF_CSRF_ENABLED = False
 
 

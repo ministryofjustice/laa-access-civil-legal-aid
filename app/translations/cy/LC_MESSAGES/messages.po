@@ -1869,6 +1869,38 @@ msgstr ""
 msgid "Next steps to get help"
 msgstr "Camau nesaf i gael cymorth"
 
+msgid "Legal aid covers this problem"
+msgstr "Mae cymorth cyfreithiol yn mynd i’r afael â’r broblem hon"
+
+msgid ""
+"Next, you need to contact a legal aid adviser. They will check if you can"
+" get legal aid."
+msgstr "Nesaf, mae angen i chi gysylltu â chynghorydd cymorth cyfreithiol. Byddant yn gwirio a allwch gael cymorth cyfreithiol."
+
+msgid "You do not have to pay for this."
+msgstr "Nid oes rhaid i chi dalu am hyn."
+
+msgid "They will:"
+msgstr "Byddant:"
+
+msgid "ask about your problem and finances"
+msgstr "yn gofyn i chi am eich problem a'ch cyllid"
+
+msgid "tell you if you can get legal aid"
+msgstr "yn dweud wrthych p’un a allwch gael cymorth cyfreithiol ai peidio"
+
+msgid "If you’re not eligible for legal aid, you can ask them:"
+msgstr "Os nad ydych yn gymwys i gael cymorth cyfreithiol, gallwch ofyn iddynt:"
+
+msgid "where else you can get help for free"
+msgstr "ble arall y gallwch gael help am ddim"
+
+msgid "how much they would charge for legal advice"
+msgstr "faint y byddent yn ei godi am gyngor cyfreithiol"
+
+msgid "Find a legal aid adviser"
+msgstr "Dod o hyd i gynghorydd cymorth cyfreithiol"
+
 msgid "Legal aid is available for this type of problem"
 msgstr "Mae cymorth cyfreithiol ar gael ar gyfer y math hwn o broblem"
 
