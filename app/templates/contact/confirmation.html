@@ -58,11 +58,6 @@
                     {{ form.submit }}
                 </form>
             {% endif %}
-            
-            <!-- Success message, initially hidden -->
-            <div id="confirmation-message" class="govuk-body" style="display: none;">
-              {{ _('Your reference number was sent to') }} <strong id="confirmed-email"></strong>.
-            </div>
 
             {% if category.code in ['debt', 'housing'] %}
                 {{ govukWarningText({
