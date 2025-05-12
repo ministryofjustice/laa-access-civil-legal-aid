@@ -1,5 +1,6 @@
 from app.find_a_legal_adviser import bp
-from flask import render_template, request
+from flask import render_template, request, current_app
+from app.find_a_legal_adviser.fala import create_fala_url
 from app.find_a_legal_adviser.forms import FindLegalAdviserForm
 from app.find_a_legal_adviser.laalaa import laalaa_search, is_valid_category_code
 from app.find_a_legal_adviser.utils import get_pagination_data
@@ -19,6 +20,12 @@ def search():
 
     if not is_valid_category_code(secondary_category):
         secondary_category = None
+
+    if current_app.config["REDIRECT_FALA_REQUESTS"]:
+        fala_url = create_fala_url(
+            category=category, secondary_category=secondary_category
+        )
+        return render_template("categories/fala-interstitial.html", fala_url=fala_url)
 
     if "postcode" in request.args and form.validate():
         postcode: str | None = form.postcode.data

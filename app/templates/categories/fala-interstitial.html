@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{%- from 'components/back_link.html' import govukBackLink -%}
+{%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton %}
+{%- from 'categories/components/help-organisations.html' import helpOrganisationsList %}
+
+{% set title = _('Legal aid covers this problem') %}
+{% block pageTitle %}{{ title }} - {{ super() }}{% endblock %}
+
+{% block beforeContent%}
+{{ super() }}
+{{ govukBackLink({}) }}
+{% endblock %}
+
+{% block content %}
+{{ super() }}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">{{ title }}</h1>
+
+        <p class="govuk-body">{% trans %}Next, you need to contact a legal aid adviser. They will check if you can get legal aid.{% endtrans %}</p>
+
+        <p class="govuk-body">{% trans %}You do not have to pay for this.{% endtrans %}</p>
+
+        <p class="govuk-body">{% trans %}They will:{% endtrans %}</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+            <li>{% trans %}ask about your problem and finances{% endtrans %}</li>
+            <li>{% trans %}tell you if you can get legal aid{% endtrans %}</li>
+        </ul>
+
+        <p class="govuk-body">{% trans %}If you’re not eligible for legal aid, you can ask them:{% endtrans %}</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+            <li>{% trans %}where else you can get help for free{% endtrans %}</li>
+            <li>{% trans %}how much they would charge for legal advice{% endtrans %}</li>
+        </ul>
+
+        {{ govukButton(params={
+                "text": _("Find a legal aid adviser"),
+                "href": fala_url,
+                "isStartButton": True,
+                "classes": "govuk-!-margin-top-2 govuk-!-margin-bottom-8"
+                }) }}
+
+    </div>
+</div>
+{% endblock %}

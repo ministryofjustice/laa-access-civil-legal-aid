@@ -75,6 +75,10 @@ class TestDispatchRequest:
             patch("app.means_test.views.is_eligible") as mock_is_eligible,
             patch("app.means_test.views.MeansTestPayload") as mock_payload_class,
             patch("app.means_test.views.redirect") as mock_redirect,
+            patch(
+                "app.means_test.views.MeansTest.ensure_form_protection",
+                return_value=None,
+            ),
         ):
             mock_payload = mock_payload_class.return_value
             mock_update_means_test.return_value = {"reference": "test-reference"}
@@ -118,6 +122,10 @@ class TestDispatchRequest:
             patch("app.means_test.views.is_eligible") as mock_is_eligible,
             patch("app.means_test.views.MeansTestPayload"),
             patch("app.means_test.views.redirect") as mock_redirect,
+            patch(
+                "app.means_test.views.MeansTest.ensure_form_protection",
+                return_value=None,
+            ),
         ):
             mock_update_means_test.return_value = {"reference": "test-reference"}
             mock_is_eligible.return_value = EligibilityState.YES
@@ -146,6 +154,10 @@ class TestDispatchRequest:
             patch("app.means_test.views.SavingsForm", return_value=mock_form),
             patch("app.means_test.views.update_means_test") as mock_update_means_test,
             patch("app.means_test.views.MeansTestPayload"),
+            patch(
+                "app.means_test.views.MeansTest.ensure_form_protection",
+                return_value=None,
+            ),
         ):
             mock_update_means_test.return_value = {}
 

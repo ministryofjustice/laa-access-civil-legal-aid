@@ -1,9 +1,9 @@
-{% macro progress_bar(completed, offset=-2) %}
+{% macro progress_bar(completed) %}
   {% if completed is number %}
     {# This is a workaround to avoid using inline styles, as nonces can only be applied to script/ style tags #}
     <style nonce="{{ csp_nonce() }}">
       .progress-value {
-        width: {{ completed + offset }}%;
+        width: {{ completed }}%;
       }
     </style>
     <div class="progress-bar">
@@ -26,7 +26,7 @@
 
 {% macro progress(steps, current_step, completion_percentage) %}
 
-    {% set is_about_you_complete = (steps|selectattr('key', 'equalto', 'about-you')|list)[0].is_completed   %}
+    {% set show_collapsed_steps = (steps|selectattr('key', 'equalto', 'about-you')|list)[0].is_current and steps|length < 6 %}
     {% set has_remaining_forms = steps|rejectattr('is_completed')|list|length > 0 %}
     {% set is_contact_page = request.path.startswith('/result/') %}
 
@@ -36,6 +36,14 @@
         <ul class="govuk-list progress-steps">
             {# Steps to do #}
             {% for step in steps %}
+                {# Optional collapsed steps #}
+                {% if show_collapsed_steps and step.key == "review" %}
+                  <li class="progress-step m-collapsed">
+                    {% for n in range(3) %}
+                      <div class="step-name"></div>
+                    {% endfor %}
+                  </li>
+                {% endif %}
                 <li class="progress-step
                     {% if step.is_completed %}completed-step {% endif %}
                     {% if step.is_current %}current-step{% endif %}">
@@ -52,37 +60,6 @@
                 {% endif %}
                 </li>
             {% endfor %}
-          {# Optional collapsed steps #}
-            {% if not is_about_you_complete %}
-              <li class="progress-step m-collapsed">
-                {% for n in range(3) %}
-                  <div class="step-name"></div>
-                {% endfor %}
-              </li>
-            {% endif %}
-          {# Review/ final steps #}
-            <li class="progress-step
-              {% if current_step.name == 'review' %}current-step{% endif %}
-              {% if not has_remaining_forms and current_step.name != 'review' %}completed-step{% endif %}">
-              {% if has_remaining_forms or is_contact_page or current_step.name == 'review'%}
-                <span class="step-name">
-              {% else %}
-                <a class="step-name" href="{{ url_for('means_test.review') }}">
-              {% endif %}
-                {{ step_status(not has_remaining_forms, current_step.name == 'review') }}
-                {% trans %}Check your answers and confirm{% endtrans %}
-              {% if has_remaining_forms or is_contact_page %}
-                </span>
-              {% else %}
-                </a>
-              {% endif %}
-            </li>
-            <li class="progress-step {% if is_contact_page %}current-step{% endif %}">
-              <span class="step-name">
-                {{ step_status(false, is_contact_page) }}
-                {% trans %}Contact information{% endtrans %}
-              </span>
-            </li>
         </ul>
     </div>
 {% endmacro %}
