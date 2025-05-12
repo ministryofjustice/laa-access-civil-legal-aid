@@ -51,16 +51,11 @@
                 </div>
                 {{ form.submit }}
             </form>
-
-            <style nonce="{{ csp_nonce() }}">
-              .confirmation-body {
-                display: none;
-              }
-            </style>
             
             <!-- Success message, initially hidden -->
-            <div id="confirmation-message" class="govuk-body confirmation-body">
-              {{ _('Your reference number was sent to') }} <strong id="confirmed-email"></strong>.
+            <span id="email-sent-label" class="govuk-body confirmation-body" data-translate="{{ _('Your reference number was sent to') }}" hidden></span>
+            <div id="confirmation-message" class="govuk-body confirmation-body" style="display: none;">
+              <!-- Populated by JS -->
             </div>
 
             {% if category.code in ['debt', 'housing'] %}
