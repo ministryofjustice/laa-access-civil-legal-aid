@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
             form.style.display = "none";
 
             // Update the confirmation message with the translated label
-            confirmationMessage.innerHTML = `${label} <strong>${content.email}</strong>`;
+            confirmationMessage.innerHTML = `${label} <strong>${content.email}.</strong>`;
             confirmationMessage.style.display = "block";  // Ensure message is visible
         } else {
             const errorText = content.errors?.email?.[0];
