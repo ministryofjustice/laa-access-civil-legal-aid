@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const confirmationMessage = document.getElementById("confirmation-message");
         const confirmedEmail = document.getElementById("confirmed-email");
 
-        // Get translated label from the hidden span (this should already have the correct translation in the dataset)
+        // Get translated label from the hidden span
         const label = document.getElementById("email-sent-label")?.dataset.translate || "Your reference number was sent to";
 
         // Reset previous errors
