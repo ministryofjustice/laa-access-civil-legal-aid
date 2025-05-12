@@ -129,6 +129,6 @@ if(cookie_policy) {
     cookie_policy = JSON.parse(cookie_policy.replace('"{', '{').replace('}"', '}'));
 }
 
-if (cookie_policy && cookie_policy["analytics"] == "yes" && cookie_policy["functional"] == "yes" && !GTM_Loaded) {
+if (cookie_policy && cookie_policy["analytics"] == "yes" && !GTM_Loaded) {
     add_GTM();
 }
