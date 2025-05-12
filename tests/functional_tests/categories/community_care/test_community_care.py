@@ -1,7 +1,7 @@
 from playwright.sync_api import Page, expect
 import pytest
 
-fala_page_heading = ["Find a legal adviser", "community care"]
+fala_page_heading = "Legal aid covers this problem"
 
 ROUTING = [
     {
@@ -49,10 +49,4 @@ class TestHousingLandingPage:
         page.get_by_role("link", name=routing["link_text"]).click()
 
         next_page_heading = routing["next_page_heading"]
-        next_page_heading = (
-            next_page_heading
-            if isinstance(next_page_heading, list)
-            else [next_page_heading]
-        )
-        for page_heading in next_page_heading:
-            expect(page.get_by_text(page_heading)).to_be_visible()
+        expect(page.get_by_text(next_page_heading)).to_be_visible()

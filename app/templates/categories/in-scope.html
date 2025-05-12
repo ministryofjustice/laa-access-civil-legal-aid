@@ -65,7 +65,6 @@
         <p class="govuk-body">{% trans %}Your adviser will check whether you qualify for legal aid at no cost to you by asking about your problem and your finances.
             If you qualify, in some cases you may need to pay a contribution towards your legal aid.{% endtrans %}</p>
 
-        {% set fala_url = url_for("find-a-legal-adviser.search", category=fala_category_code.lower() if fala_category_code else None) %}
         <p class="govuk-body"><a class="govuk-link" href="{{ fala_url }}">{% trans %}Find a legal adviser{% endtrans %}</a></p>
 
 
