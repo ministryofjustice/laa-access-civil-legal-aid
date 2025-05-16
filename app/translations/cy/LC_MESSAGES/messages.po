@@ -880,7 +880,7 @@ msgid "Select what time you want to be called"
 msgstr ""
 
 msgid "Can we say that we're calling from Civil Legal Advice?"
-msgstr ""
+msgstr "Gallwn ni ddweud ein bod ni’n galw o Gymorth Cyfreithiol Sifil?"
 
 msgid "No - do not say where you are calling from"
 msgstr "Na allwch – peidiwch â dweud o le rydych chi’n galw."
@@ -1009,6 +1009,9 @@ msgstr "pob mis"
 
 msgid "per year"
 msgstr "y flwyddyn"
+
+msgid "Contact information"
+msgstr "Gwybodaeth gyswllt"
 
 msgid "The problem you need help with"
 msgstr "Y broblem y mae angen cymorth arnoch gyda hi"
@@ -1426,7 +1429,7 @@ msgid "Tell us how often you receive Child Tax Credit"
 msgstr "Dywedwch wrthym pa mor aml rydych chi’n derbyn Credyd Treth Plant"
 
 msgid "Tell us how much Child Tax Credit you receive"
-msgstr ""
+msgstr "Dywedwch wrthym faint o Gredyd Treth Plant rydych chi’n ei dderbyn"
 
 msgid "Maintenance received"
 msgstr "Taliadau Cynhaliaeth yr ydych chi’n eu cael"
@@ -1843,6 +1846,12 @@ msgstr "Rhowch 0 os nad oes gennych eitemau gwerthfawr sy’n werth dros £500 y
 msgid "Exit this page"
 msgstr "Gadael y dudalen hon"
 
+msgid "Contact us"
+msgstr "Cysylltwch â ni"
+
+msgid "if you need help or would like to give feedback to improve this service"
+msgstr "os oes arnoch angen help neu os hoffech roi adborth i’n helpu i wella’r gwasanaeth hwn"
+
 msgid "Staying safe online"
 msgstr "Cadw’n ddiogel ar-lein"
 
@@ -1875,7 +1884,9 @@ msgstr "Mae cymorth cyfreithiol yn mynd i’r afael â’r broblem hon"
 msgid ""
 "Next, you need to contact a legal aid adviser. They will check if you can"
 " get legal aid."
-msgstr "Nesaf, mae angen i chi gysylltu â chynghorydd cymorth cyfreithiol. Byddant yn gwirio a allwch gael cymorth cyfreithiol."
+msgstr ""
+"Nesaf, mae angen i chi gysylltu â chynghorydd cymorth cyfreithiol. "
+"Byddant yn gwirio a allwch gael cymorth cyfreithiol."
 
 msgid "You do not have to pay for this."
 msgstr "Nid oes rhaid i chi dalu am hyn."
@@ -1952,7 +1963,7 @@ msgstr "Pan nad oes angen i chi gwblhau’r asesiad ariannol"
 msgid ""
 "You should %(contact_us_link)s without completing the financial "
 "assessment if you are:"
-msgstr ""
+msgstr "Dyma pryd ddylech %(contact_us_link)s heb gwblhau'r asesiad ariannol:"
 
 msgid "under 18"
 msgstr "os ydych o dan 18 oed"
@@ -1978,7 +1989,7 @@ msgstr ""
 msgid ""
 "Fill in the '%(contact_us_link)s' page. Select 'BSL' under 'Communication"
 " needs'."
-msgstr ""
+msgstr "Llenwch y dudalen '%(contact_us_link)s' . Dewiswch 'BSL' o dan 'Anghenion cyfathrebu'."
 
 msgid "Check if you qualify financially"
 msgstr "Gwirio a ydych yn gymwys yn ariannol"
@@ -2058,7 +2069,7 @@ msgid "housing"
 msgstr "tai"
 
 msgid "SEND"
-msgstr ""
+msgstr "Anghenion Addysgol Arbennig"
 
 msgid ""
 "These organisations give free, independent advice for problems about "
@@ -2568,7 +2579,7 @@ msgid ""
 "        %(call_charges_link)s apply) or ask us to call you back, which is"
 " free.\n"
 "        "
-msgstr ""
+msgstr "Gallwch ddewis cysylltu â <abbr title=\"Cyngor Cyfreithiol Sifil\">CLA</abbr> eich hun a siarad â rhywun ar unwaith (mae hwn yn rhif 0345 - %(call_charges_link)s) neu gallwch ofyn i ni eich ffonio yn ôl, sydd yn rhad ac am ddim."
 
 #, python-format
 msgid "%(miles)s miles away"
@@ -2579,14 +2590,14 @@ msgid ""
 "            clinical negligence if your child has suffered a brain injury"
 " during pregnancy,\n"
 "            birth or in the first 8 weeks of life."
-msgstr ""
+msgstr "Fel arfer, dim ond os yw’ch plentyn wedi cael anaf i’r ymennydd yn ystod beichiogrwydd, genedigaeth neu yn ystod 8 wythnos gyntaf ei fywyd y byddwch chi’n cael cymorth cyfreithiol ar gyfer cyngor ar esgeuluster clinigol."
 
 msgid ""
 "Civil Legal Advice does not provide advice about issues\n"
 "            related to welfare benefits but you may be able to get free "
 "advice from\n"
 "            a legal adviser in your area."
-msgstr ""
+msgstr "Nid yw Cyngor Cyfreithiol Sifil yn darparu cyngor ynghylch materion sy’n berthnasol i fudd-daliadau lles, ond efallai y cewch gyngor am ddim gan gynghorydd cyfreithiol yn eich ardal."
 
 msgid ""
 "To get advice about appealing a decision made by the social\n"
@@ -2594,21 +2605,21 @@ msgid ""
 "Court of\n"
 "            Appeal or Supreme Court, you should contact a legal adviser.\n"
 "            "
-msgstr ""
+msgstr "I gael cyngor am apelio penderfyniad a wnaethpwyd gan y tribiwnlys nawdd cymdeithasol am eich budd-daliadau i’r Uwch Dribiwnlys, y Llys Apêl neu’r Goruchaf Lys, dylech gysylltu â chynghorydd cyfreithiol."
 
 msgid ""
 "If you don’t qualify for legal aid, you will have to pay for\n"
 "            legal advice. You should ask your adviser about the cost of "
 "their\n"
 "            advice."
-msgstr ""
+msgstr Os nad ydych yn gymwys i gael Cymorth Cyfreithiol, bydd rhaid ichi dalu am gyngor cyfreithiol. Dylech holi gyda’ch cynghorydd am gost eu cyngor."
 
 msgid "mygov.scot"
 msgstr ""
 
 #, python-format
 msgid "Legal Aid is different in Scotland. Visit %(link)s for more information."
-msgstr ""
+msgstr "Mae Cymorth Cyfreithiol yn wahanol yn Yr Alban. Ewch i %(link)s i gael rhagor o wybodaeth."
 
 msgid "nidirect.gov.uk"
 msgstr ""
@@ -2617,7 +2628,7 @@ msgstr ""
 msgid ""
 "Legal Aid is different in Northern Ireland. Visit %(link)s for more "
 "information."
-msgstr ""
+msgstr "Mae Cymorth Cyfreithiol yn wahanol yng Ngogledd Iwerddon. Ewch i %(link)s i gael rhagor o wybodaeth."
 
 msgid "gov.im"
 msgstr ""
@@ -2626,21 +2637,21 @@ msgstr ""
 msgid ""
 "Legal Aid is different on the Isle of Man. Visit %(link)s for more "
 "information."
-msgstr ""
+msgstr "Mae Cymorth Cyfreithiol yn wahanol yn Ynys Manaw. Ewch i %(link)s i gael rhagor o wybodaeth."
 
 msgid "legalaid.je"
 msgstr ""
 
 #, python-format
 msgid "Legal Aid is different in Jersey. Visit %(link)s for more information."
-msgstr ""
+msgstr "Mae Cymorth Cyfreithiol yn wahanol yn Jersey. Ewch i %(link)s i gael rhagor o wybodaeth."
 
 msgid "gov.gg"
 msgstr ""
 
 #, python-format
 msgid "Legal Aid is different in Guernsey. Visit %(link)s for more information."
-msgstr ""
+msgstr "Mae Cymorth Cyfreithiol yn wahanol yn Ynys y Garn. Ewch i %(link)s i gael rhagor o wybodaeth."
 
 msgid "the Housing Loss Prevention Advice Service"
 msgstr ""
@@ -3023,13 +3034,13 @@ msgid ""
 msgstr ""
 
 msgid "Name"
-msgstr ""
+msgstr "Enw"
 
 msgid "Purpose"
 msgstr "Pwrpas"
 
 msgid "Expires"
-msgstr ""
+msgstr "Dod i ben"
 
 msgid "Saves your cookie consent settings"
 msgstr ""
@@ -3547,9 +3558,9 @@ msgid ""
 "personal data shared with the data processor for this purpose is governed"
 " by model contract clauses under data protection law."
 msgstr ""
-"Rydym yn contractio â Advantis Credit Ltd fel prosesydd data ar gyfer casglu"
-" a gorfodi cyfraniadau cymorth cyfreithiol troseddol. Mae unrhyw ddata "
-"personol a rennir gyda’r prosesydd data at y diben hwn yn cael ei "
+"Rydym yn contractio â Advantis Credit Ltd fel prosesydd data ar gyfer "
+"casglu a gorfodi cyfraniadau cymorth cyfreithiol troseddol. Mae unrhyw "
+"ddata personol a rennir gyda’r prosesydd data at y diben hwn yn cael ei "
 "lywodraethu gan gymalau contract enghreifftiol o dan gyfraith ddiogelu "
 "data."
 
@@ -3861,7 +3872,7 @@ msgstr ""
 msgid ""
 "We only need to know about any money you received last month, even if "
 "this varies from month to month."
-msgstr ""
+msgstr "Dim ond gwybodaeth am unrhyw arian yr ydych wedi ei dderbyn y mis diwethaf yr ydym ei angen, hyd yn oed os yw’n amrywio o fis i fis."
 
 msgid ""
 "Please tell us about any property owned by you, your partner or both of "
@@ -3993,9 +4004,6 @@ msgstr "Tudalen i’r dyfodol"
 
 msgid "Your progress"
 msgstr "Eich cynnydd"
-
-msgid "Contact information"
-msgstr "Gwybodaeth gyswllt"
 
 msgid "What valuable items should I include?"
 msgstr "Pa eitemau gwerthfawr dylwn i eu cynnwys?"
@@ -4193,4 +4201,25 @@ msgstr "Offerynnau cerddorol, oni bai’ch bod yn gerddor proffesiynol"
 #~ "materion sy’n ymwneud â %(category)s. "
 #~ "Nid oes rhaid i chi fod yn "
 #~ "gymwys i gael cymorth cyfreithiol."
+
+#~ msgid "if you need help or would like to give feedback to improve this service"
+#~ msgstr ""
+
+#~ msgid "Exit this page"
+#~ msgstr "Gadael y dudalen hon"
+
+#~ msgid "Contact us"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "%(contact_link)s if you need help or "
+#~ "would like to give feedback to "
+#~ "improve this service"
+#~ msgstr ""
+
+#~ msgid "Privacy Policy"
+#~ msgstr "Polisi preifatrwydd"
+
+#~ msgid "Contact"
+#~ msgstr "Cysylltu"
 
