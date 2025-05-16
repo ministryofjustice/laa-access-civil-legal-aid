@@ -11,6 +11,9 @@ on:
       ACCESS_ECR_REPOSITORY:
         required: true
         type: string
+      DEPLOYMENT_URL:
+        required: false
+        type: string
     secrets:
       ECR_REGISTRY:
         required: true
@@ -29,7 +32,9 @@ on:
 jobs:
   deploy:
     name: Deploy
-    environment: ${{ inputs.environment }}
+    environment:
+      name: ${{ inputs.environment }}
+      url: ${{ vars.DEPLOYMENT_URL }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write # This is required for requesting the JWT
