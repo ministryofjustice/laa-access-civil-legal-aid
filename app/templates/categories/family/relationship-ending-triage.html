@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{%- from 'components/back_link.html' import govukBackLink -%}
+{%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton %}
+{%- from 'categories/components/list-item.html' import list_item -%}
+{%- from 'categories/components/cannot-find-your-problem.html' import cannot_find_your_problem -%}
+
+{% block beforeContent %}
+    {{ super() }}
+    {{ govukBackLink() }}
+{% endblock %}
+
+{% set title = _("Problems about children and money after a relationship ends") %}
+{% block pageTitle %}{{ title }} - GOV.UK{% endblock %}
+
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">{{ title }}</h1>
+
+        <p class="govuk-body">Legal aid covers 2 options, depending on your situation.</p>
+
+        {{ list_item("Family mediation", "You could get legal aid for family mediation. A professional mediator will help you and your ex-partner agree arrangements for children and finances. You do not need to be in the same room", "https://find-legal-advice.justice.gov.uk/check?categories=fmed") }}
+
+        {{ list_item("If there’s domestic abuse or you’re worried about a child", "You could get legal aid for advice or help in court. Domestic abuse includes controlling behaviour, emotional abuse, or if someone is harassing, threatening or hurting you or a child. It also includes child neglect. This could be by a partner, ex-partner, or family member", "categories.domestic_abuse.are_you_at_risk_of_harm"|category_url_for) }}
+
+        {{ cannot_find_your_problem(None, url_for("categories.family.cannot_find_your_problem"), _("If you do not see the right option:"))}}
+
+    </div>
+</div>
+{% endblock %}
