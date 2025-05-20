@@ -49,4 +49,4 @@ def inject_exit_this_page():
 
 @bp.app_context_processor
 def inject_risk_of_harm():
-    return {"get_risk_of_harm_answer": session.get_risk_of_harm_answer()}
+    return {"at_risk_of_harm": session.at_risk_of_harm()}

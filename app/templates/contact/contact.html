@@ -195,7 +195,7 @@
         {% endblock %}
 
         {% block formDescription %}
-            {% if get_risk_of_harm_answer %}
+            {% if at_risk_of_harm %}
             {{ govukWarningText({
                 "text": _("If you’re in an emergency situation, please call the police on 999.")
               }) }}

@@ -380,7 +380,7 @@ class Session(SecureCookieSession):
             "subcategory": subcategory_information,
         }
 
-    def get_risk_of_harm_answer(self):
+    def at_risk_of_harm(self):
         answer = self.get_category_question_answer(
             "Are you worried about someone's safety?"
         )
