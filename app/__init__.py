@@ -54,7 +54,8 @@ def create_app(config_class=Config):
         ]
     )
 
-    configure_logging()
+    if not app.config["TESTING"]:
+        configure_logging()
 
     # Set content security policy
     csp = {
