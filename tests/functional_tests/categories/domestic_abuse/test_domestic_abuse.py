@@ -58,7 +58,7 @@ CONTACT_ROUTING = [
     {
         "link_text": "Help to keep yourself safe and protect children",
         "choice": "No",
-        "url": "/contact-us/fast-tracked?reason=more-info-required",
+        "url": "/contact-us/fast-tracked?reason=other",
     },
 ]
 
