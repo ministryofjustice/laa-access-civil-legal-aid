@@ -431,8 +431,12 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
             eligibility == EligibilityState.YES
             or eligibility == EligibilityState.UNKNOWN
         ):
+            logger.info(f"Eligibility check result successful - state is {eligibility}")
             return redirect(url_for("contact.eligible"))
 
         if session.subcategory and session.subcategory.eligible_for_HLPAS:
+            logger.info(f"Eligibility check result HLPAS - state is {eligibility}")
             return redirect(url_for("means_test.result.hlpas"))
+
+        logger.info(f"Eligibility check result unsuccessful - state is {eligibility}")
         return redirect(url_for("means_test.result.ineligible"))
