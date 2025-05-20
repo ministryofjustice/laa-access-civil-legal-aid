@@ -49,7 +49,10 @@ class SafeguardingQuestionForm(QuestionForm):
 
     next_step_mapping = {
         "yes": {"endpoint": "contact.contact_us_fast_tracked", "reason": "harm"},
-        "no": {"endpoint": "contact.contact_us_fast_tracked", "reason": "other"},
+        "no": {
+            "endpoint": "contact.contact_us_fast_tracked",
+            "reason": "more-info-required",
+        },
     }
 
     question = RadioField(
