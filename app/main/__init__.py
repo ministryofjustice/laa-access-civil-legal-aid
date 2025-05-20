@@ -45,3 +45,8 @@ def inject_exit_this_page():
         return {"show_exit_this_page": False}
 
     return {"show_exit_this_page": getattr(category, "exit_page", False)}
+
+
+@bp.app_context_processor
+def inject_risk_of_harm():
+    return {"get_risk_of_harm_answer": session.get_risk_of_harm_answer()}
