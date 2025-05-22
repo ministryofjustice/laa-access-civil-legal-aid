@@ -76,6 +76,7 @@ class ContactUs(View):
             session["case_reference"] = cla_backend.post_case(payload=payload)[
                 "reference"
             ]
+            logger.info(f"Case created {session['case_reference']}")
 
             if ReasonsForContactingForm.MODEL_REF_SESSION_KEY in session:
                 self._attach_rfc_to_case(
@@ -205,6 +206,7 @@ class ConfirmationPage(View):
 
         if request.method == "POST" and is_ajax:
             if email_sent:
+                logger.info("Confirmation email sent")
                 return jsonify(success=True, email=form.email.data)
             return jsonify(success=False, errors=form.errors), 400
 
