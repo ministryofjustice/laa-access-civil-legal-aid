@@ -44,6 +44,15 @@ def inject_exit_this_page():
     if not category:
         return {"show_exit_this_page": False}
 
+    category_questions = session.get("category_answers", [])
+
+    for question in category_questions:
+        if (
+            question["question"] == "Are you worried about someone's safety?"
+            and question["answer_value"] == "no"
+        ):
+            return {"show_exit_this_page": False}
+
     return {"show_exit_this_page": getattr(category, "exit_page", False)}
 
 
