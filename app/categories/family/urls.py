@@ -1,7 +1,6 @@
 from app.categories.family import bp
-from app.categories.family.forms import HaveYouHadFamilyMediationBefore
 from app.categories.results.views import NextStepsPage, CannotFindYourProblemPage
-from app.categories.views import CategoryLandingPage, CategoryPage, QuestionPage
+from app.categories.views import CategoryLandingPage, CategoryPage
 from app.categories.constants import FAMILY
 
 
@@ -70,11 +69,5 @@ bp.add_url_rule(
         "relationship-ending-triage",
         template="categories/family/relationship-ending-triage.html",
         category=FAMILY,
-    ),
-)
-bp.add_url_rule(
-    "/children-families-relationships/taken-part-in-family-mediation",
-    view_func=QuestionPage.as_view(
-        "taken_part_in_family_mediation", form_class=HaveYouHadFamilyMediationBefore
     ),
 )
