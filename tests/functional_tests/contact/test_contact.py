@@ -248,7 +248,7 @@ fast_track_routing = [
             "Special educational needs and disability (SEND)",
             "Help with a child or young person's SEND",
             {"type": "form", "selector": "Yes"},
-            {"endpoint": "contact.contact_us_fast_tracked", "reason": "harm"},
+            {"endpoint": "contact.contact_us_fast_tracked", "reason": "other"},
         ]
     ),
     pytest.param(
@@ -256,7 +256,7 @@ fast_track_routing = [
             "Special educational needs and disability (SEND)",
             "SEND tribunals",
             {"type": "form", "selector": "Yes"},
-            {"endpoint": "contact.contact_us_fast_tracked", "reason": "harm"},
+            {"endpoint": "contact.contact_us_fast_tracked", "reason": "other"},
         ]
     ),
 ]
