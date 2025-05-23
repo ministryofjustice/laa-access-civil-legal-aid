@@ -144,11 +144,16 @@
 {% endblock %}
 
 {% block beforeContent %}
+    {% set contact_link %}
+      <a class="govuk-link" href="{{ url_for('contact.reasons_for_contacting') }}">
+        {{ _('Contact us') }}
+      </a>
+    {% endset %}
     {{ govukPhaseBanner({
         'tag': {
           'text': config['ENVIRONMENT'].title() if config['ENVIRONMENT'].lower() != "uat" else "UAT",
         },
-        'html': '<a class="govuk-link" href="' + url_for('contact.reasons_for_contacting') + '">Contact us</a> if you need help or would like to give feedback to improve this service'
+        'html': contact_link + " " + (_("if you need help or would like to give feedback to improve this service"))
     }) }}
     
     {% if show_exit_this_page %}

@@ -1,3 +1,4 @@
+import logging
 from unittest.mock import patch, MagicMock
 from flask import url_for, redirect
 from app.contact.forms import ReasonsForContactingForm
@@ -66,6 +67,7 @@ class TestContactUsView:
         mock_redirect,
         mock_form,
         client,
+        caplog,
     ):
         mock_form_instance = MagicMock()
         mock_form.return_value = mock_form_instance
@@ -85,7 +87,10 @@ class TestContactUsView:
         mock_cla_backend.post_case.return_value = {"reference": "AB-1234-5678"}
 
         view = ContactUs()
-        view.dispatch_request()
+
+        with caplog.at_level(logging.INFO):
+            view.dispatch_request()
+            assert "Case created AB-1234-5678" in caplog.messages
 
         mock_cla_backend.post_case.assert_called_once()
         mock_notify.create_and_send_confirmation_email.assert_called_once()
