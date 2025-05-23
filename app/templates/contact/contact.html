@@ -195,7 +195,7 @@
         {% endblock %}
 
         {% block formDescription %}
-            {% if form.call_today_time.choices|length == 1 %}
+            {% if form.call_today_time.choices|length == 1 and form.call_another_day.choices|length == 1 %}
                 {# If no callback slots are available #}
                 {% if at_risk_of_harm %}
                     {{ govukWarningText({
