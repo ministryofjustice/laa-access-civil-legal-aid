@@ -2170,6 +2170,33 @@ msgstr ""
 msgid "You must be with the person when we call."
 msgstr ""
 
+msgid "If you’re in danger now, call 999."
+msgstr ""
+
+msgid "If you need urgent legal help, call Civil Legal Advice on "
+msgstr ""
+
+msgid "Call charges apply, but you can ask us to call you back."
+msgstr ""
+
+msgid ""
+"Civil Legal Advice will check if you can get legal aid and help you "
+"contact the right legal adviser. If you cannot get legal aid, we’ll tell "
+"you about other help you can get."
+msgstr ""
+
+msgid ""
+"We’ll ask questions about your legal problem and your financial "
+"situation. You might need to provide evidence of any financial "
+"information you give us."
+msgstr ""
+
+msgid ""
+"We’ll give you the phone number for Civil Legal Advice when you submit "
+"your details. This is an 0345 number, so call charges apply, but you can "
+"ask us to call you back. "
+msgstr ""
+
 msgid "If you’re in an emergency situation, please call the police on 999."
 msgstr ""
 
@@ -2183,21 +2210,9 @@ msgid "You can also ask us to call you back using the form below, which is free.
 msgstr ""
 
 msgid ""
-"Civil Legal Advice will check if you can get legal aid and help you "
-"contact the right legal adviser. If you cannot get legal aid, we’ll tell "
-"you about other help you can get."
-msgstr ""
-
-msgid ""
 "You can call Civil Legal Advice yourself - this is an 0345 number, so <a "
 "class=\"govuk-link\" href=\"https://www.gov.uk/call-charges\">call "
 "charges</a> apply. Or you can ask us to call you back, which is free."
-msgstr ""
-
-msgid ""
-"We’ll ask questions about your legal problem and your financial "
-"situation. You might need to provide evidence of any financial "
-"information you give us."
 msgstr ""
 
 msgid "Address"
