@@ -38,11 +38,13 @@ service:
 ingress:
   enabled: true
   className: "modsec"
-  annotations: {}
   cluster:
     name: green
     weight: '100'
-  tls: []
+  tls: {}
+
+whitelist:
+  enabled: true
 
 resources: {}
 
@@ -77,4 +79,18 @@ envVars:
     configmap:
       name: ratelimit
       key: enabled
+      optional: true
+  OS_PLACES_API_KEY:
+    secret:
+      name: os-places
+      key: key
+  EMAIL_ORCHESTRATOR_URL:
+    configmap:
+      name: notify-orchestrator
+      key: url
+      optional: true
+  FALA_URL:
+    configmap:
+      name: fala-url
+      key: url
       optional: true

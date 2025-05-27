@@ -1,10 +1,12 @@
-from flask import Blueprint, request, url_for
+from flask import Blueprint, request, url_for, session
 from flask import current_app
 
 bp = Blueprint("main", __name__, template_folder="../templates/main")
 
 from app.main import routes  # noqa: E402,F401
 from app.main import filters  # noqa: E402,F401
+from app.main import middleware  # noqa: E402,F401
+from app.main import redirects  # noqa: E402,F401
 
 
 def get_locale():
@@ -30,3 +32,21 @@ def inject_language_switcher():
             },
         }
     }
+
+
+@bp.app_context_processor
+def inject_exit_this_page():
+    if session.subcategory:
+        category = session.subcategory
+    else:
+        category = session.category
+
+    if not category:
+        return {"show_exit_this_page": False}
+
+    return {"show_exit_this_page": getattr(category, "exit_page", False)}
+
+
+@bp.app_context_processor
+def inject_risk_of_harm():
+    return {"at_risk_of_harm": session.at_risk_of_harm()}

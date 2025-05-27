@@ -1,10 +1,10 @@
 from flask import session
-from wtforms.validators import InputRequired, NumberRange
+from wtforms.validators import InputRequired
 from app.means_test.fields import MoneyField
 from app.means_test.forms import BaseMeansTestForm
 from app.means_test.widgets import MoneyInput
 from flask_babel import lazy_gettext as _
-from app.means_test.validators import ValidateIfSession
+from app.means_test.validators import ValidateIfSession, NumberRangeAllowZero
 
 
 class SavingsForm(BaseMeansTestForm):
@@ -20,7 +20,8 @@ class SavingsForm(BaseMeansTestForm):
             "The total amount of savings in cash, bank or building society; or enter 0 if you have none"
         ),
         validators=[
-            InputRequired(message=_("Enter your total savings, or 0 if you have none"))
+            ValidateIfSession("has_savings", True),
+            InputRequired(message=_("Enter your total savings, or 0 if you have none")),
         ],
     )
 
@@ -31,9 +32,10 @@ class SavingsForm(BaseMeansTestForm):
             "This includes stocks, shares, bonds (but not property); enter 0 if you have none"
         ),
         validators=[
+            ValidateIfSession("has_savings", True),
             InputRequired(
                 message=_("Enter your total investments, or 0 if you have none")
-            )
+            ),
         ],
     )
 
@@ -44,7 +46,7 @@ class SavingsForm(BaseMeansTestForm):
         validators=[
             ValidateIfSession("has_valuables", True),
             InputRequired(message=_("Enter the total of all valuable items over £500")),
-            NumberRange(
+            NumberRangeAllowZero(
                 min=50000,
                 message=_("Enter 0 if you have no valuable items worth over £500 each"),
             ),  # This value is in pence

@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {%- from 'components/back_link.html' import govukBackLink -%}
 {%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton %}
-{%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
 {%- from 'categories/components/help-organisations.html' import helpOrganisationsList %}
 
 {% set title = _('Legal aid is available for this type of problem') %}
@@ -17,7 +16,6 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <h1 class="govuk-heading-xl">{% trans %}Legal aid is available for this type of problem{% endtrans %}</h1>
-        <p>{{ category }}</p>
 
         <p class="govuk-body-lead">{% trans %}However, you may need to also qualify financially.{% endtrans %}</p>
 
@@ -25,7 +23,7 @@
 
         <p class="govuk-body">{% trans %}The CLA operator will check all the information you’ve given through this service.{% endtrans %}</p>
 
-        <h3 class="govuk-heading-m">{% trans %}What you need to check if you qualify financially{% endtrans %}</h3>
+        <h2 class="govuk-heading-m">{% trans %}What you need to check if you qualify financially{% endtrans %}</h2>
 
         <p class="govuk-body">{% trans %}You and your partner (if you have one) will need:{% endtrans %}</p>
 
@@ -39,18 +37,19 @@
 
         <h2 class="govuk-heading-m">{% trans %}When you do not need to complete the financial assessment{% endtrans %}</h2>
 
-        <p class="govuk-body">{% trans %}You should <a class="govuk-link" href="/contact">contact CLA</a> without completing the financial assessment if you are:{% endtrans %}</p>
+        {% set contact_us_link %}<a class="govuk-link" href={{ url_for('contact.contact_us_fast_tracked') }}>contact CLA</a>{% endset %}
+        <p class="govuk-body">{% trans %}You should {{ contact_us_link }} without completing the financial assessment if you are:{% endtrans %}</p>
 
         <ul class="govuk-list govuk-list--bullet">
             <li>{% trans %}under 18{% endtrans %}</li>
             <li>{% trans %}have capital trapped in a property you own or other money or assets that you cannot access{% endtrans %}</li>
         </ul>
 
-        <h4 class="govuk-heading-s">{% trans %}If you use British Sign Language (BSL){% endtrans %}</h4>
+        <h3 class="govuk-heading-s">{% trans %}If you use British Sign Language (BSL){% endtrans %}</h3>
 
         <p class="govuk-body">{% trans %}You can choose not to complete the financial assessment online, and instead ask for a call with a BSL interpreter.{% endtrans %}</p>
 
-        <p class="govuk-body">{% trans %}Fill in the '<a class="govuk-link" href="/contact">Contact CLA</a>' page. Select 'BSL' under 'Communication needs'.{% endtrans %}</p>
+        <p class="govuk-body">{% trans %}Fill in the '{{ contact_us_link }}' page. Select 'BSL' under 'Communication needs'.{% endtrans %}</p>
 
         {{ govukButton(params={
                 "text": _("Check if you qualify financially"),
@@ -66,14 +65,13 @@
         <p class="govuk-body">{% trans %}Your adviser will check whether you qualify for legal aid at no cost to you by asking about your problem and your finances.
             If you qualify, in some cases you may need to pay a contribution towards your legal aid.{% endtrans %}</p>
 
-        {% set fala_url = url_for("find-a-legal-adviser.search", category=fala_category_code.lower() if fala_category_code else None) %}
         <p class="govuk-body"><a class="govuk-link" href="{{ fala_url }}">{% trans %}Find a legal adviser{% endtrans %}</a></p>
 
 
         {% if organisations %}
             <h2 class="govuk-heading-m">{{ _('Other sources of help') }}</h2>
             <p class="govuk-body">
-                {% trans category_name=_(category_name) | lowercase_category_name %}You can also get advice from alternative help organisations for issues related to {{ category_name }}. You don’t have to qualify for legal aid.{% endtrans %}
+                {% trans category_name=category.title | lowercase_category_name %}You can also get advice from alternative help organisations for issues related to {{ category_name }}. You don’t have to qualify for legal aid.{% endtrans %}
             </p>
             {{ helpOrganisationsList(organisations) }}
         {% endif %}

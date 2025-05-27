@@ -3,3 +3,4 @@ import './custom.js';
 import './timeout.js';
 import './conditional-questions.js'
 import './back_link'
+import './history-state-replacement.js';

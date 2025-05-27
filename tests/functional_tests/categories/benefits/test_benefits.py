@@ -7,8 +7,7 @@ class TestAsylumAndImmigrationLandingPage:
     def assert_outcome(self, page: Page, option: str) -> None:
         page.get_by_label(option).check()
         page.get_by_role("button", name="Continue").click()
-        expect(page.get_by_text("Find a legal adviser")).to_be_visible()
-        expect(page.get_by_text("For welfare benefits")).to_be_visible()
+        expect(page.get_by_text("Legal aid covers this problem")).to_be_visible()
 
     def test_appeal_upper_tribunal(self, page: Page):
         page.get_by_role("link", name="Benefits").click()

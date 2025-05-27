@@ -11,6 +11,10 @@ class Config(object):
     GOV_UK_START_PAGE = os.environ.get(
         "GOV_UK_START_PAGE", "https://www.gov.uk/check-legal-aid"
     )
+    WELSH_GOV_UK_START_PAGE = os.environ.get(
+        "WELSH_GOV_UK_START_PAGE",
+        "https://www.gov.uk/gwirio-os-ydych-yn-gymwys-i-gael-cymorth-cyfreithiol",
+    )
     CONTACT_EMAIL = os.environ.get("CONTACT_EMAIL", "")
     CONTACT_PHONE = os.environ.get("CONTACT_PHONE", "")
     DEPARTMENT_NAME = os.environ.get("DEPARTMENT_NAME", "MOJ Digital")
@@ -20,18 +24,16 @@ class Config(object):
     RATELIMIT_HEADERS_ENABLED = RATELIMIT_ENABLED
     RATELIMIT_STORAGE_URI = os.environ.get("REDIS_URL")
     SECRET_KEY = os.environ["SECRET_KEY"]
-    SERVICE_NAME = "Access Civil Legal Aid"
+    SERVICE_NAME = "Check if you can get legal aid"
     SERVICE_PHASE = os.environ.get("SERVICE_PHASE", "Beta")
     SERVICE_URL = os.environ.get("SERVICE_URL", "")
     SESSION_COOKIE_HTTP_ONLY = ENVIRONMENT != "local"
     SENTRY_DSN = os.environ.get("SENTRY_DSN")
     LANGUAGES = {"en": "English", "cy": "Welsh"}
     SERVICE_UNAVAILABLE = os.environ.get("MAINTENANCE_MODE", "False").lower() == "true"
-    LAALAA_URL = os.environ.get(
-        "LAALAA_URL",
-        "https://laa-legal-adviser-api-production.cloud-platform.service.justice.gov.uk",
-    )
-    POSTCODES_IO_URL = os.environ.get("POSTCODES_IO_URL", "https://api.postcodes.io")
+    FALA_URL = os.environ.get("FALA_URL", "https://find-legal-advice.justice.gov.uk")
     CLA_BACKEND_URL = os.environ.get("CLA_BACKEND_URL", "http://localhost:8010")
     SESSION_TIMEOUT = timedelta(minutes=30)
     SESSION_COOKIE_SECURE = True
+    OS_PLACES_API_KEY = os.environ.get("OS_PLACES_API_KEY")
+    EMAIL_ORCHESTRATOR_URL = os.environ.get("EMAIL_ORCHESTRATOR_URL")

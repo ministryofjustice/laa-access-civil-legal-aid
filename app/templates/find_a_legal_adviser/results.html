@@ -9,6 +9,7 @@
 {%- from 'find_a_legal_adviser/components/instructions.html' import resultInstructions -%}
 {%- from 'govuk_frontend_jinja/components/pagination/macro.html' import govukPagination -%}
 {%- from 'categories/components/list-item.html' import list_item, list_item_small, list_item_arrow -%}
+{%- from 'components/survey.html' import satisfaction_survey %}
 
 {% block pageTitle %}Contact a legal adviser - GOV.UK{% endblock %}
 
@@ -31,6 +32,8 @@
         {{ resultInstructions(category)}}
 
         {{ categoryInformation(category) }}
+
+        {{ satisfaction_survey("FALA") }}
 
         <p class="govuk-body">Results in order of closeness to <b>{{data.origin.postcode}}</b></p>
 

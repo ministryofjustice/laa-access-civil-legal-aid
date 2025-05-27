@@ -1,8 +1,14 @@
 from app.categories.domestic_abuse import bp
 from app.categories.domestic_abuse.forms import WorriedAboutSomeonesSafetyForm
 from app.categories.results.views import CannotFindYourProblemPage, NextStepsPage
-from app.categories.views import QuestionPage, CategoryLandingPage
-from app.categories.constants import DOMESTIC_ABUSE
+from app.categories.views import (
+    QuestionPage,
+    CategoryLandingPage,
+    CategoryAnswerPage,
+    CategoryAnswer,
+)
+from app.categories.constants import DOMESTIC_ABUSE, HOUSING
+from app.categories.models import QuestionType
 
 
 class DomesticAbuseLandingPage(CategoryLandingPage):
@@ -33,7 +39,13 @@ class DomesticAbuseLandingPage(CategoryLandingPage):
                 DOMESTIC_ABUSE.sub.fgm,
                 "categories.domestic_abuse.are_you_at_risk_of_harm",
             ),
-            (DOMESTIC_ABUSE.sub.problems_with_neighbours, "contact.contact_us"),
+            (
+                HOUSING.sub.problems_with_neighbours,
+                {
+                    "endpoint": "contact.contact_us_fast_tracked",
+                    "reason": "more-info-required",
+                },
+            ),
             (
                 DOMESTIC_ABUSE.sub.housing_homelessness_losing_home,
                 "categories.housing.landing",
@@ -44,6 +56,21 @@ class DomesticAbuseLandingPage(CategoryLandingPage):
 
 
 DomesticAbuseLandingPage.register_routes(bp)
+bp.add_url_rule(
+    "/domestic-abuse/accused-da",
+    view_func=CategoryAnswerPage.as_view(
+        "accused_of_domestic_abuse",
+        category_answer=CategoryAnswer(
+            question="more_problems",
+            answer_value=DOMESTIC_ABUSE.sub.accused_of_domestic_abuse.code,
+            answer_label=DOMESTIC_ABUSE.sub.accused_of_domestic_abuse.title,
+            category=DOMESTIC_ABUSE.sub.accused_of_domestic_abuse,
+            question_page="categories.more_problems.landing",
+            next_page="categories.results.in_scope",
+            question_type=QuestionType.SUB_CATEGORY,
+        ),
+    ),
+)
 bp.add_url_rule(
     "/domestic-abuse/are-you-at-risk-of-harm",
     view_func=QuestionPage.as_view(

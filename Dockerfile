@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=python:3.12-slim
+ARG BASE_IMAGE=python:3.13-slim
 
 FROM node:lts-iron as node_build
 WORKDIR /home/node
@@ -10,6 +10,10 @@ RUN npm run build
 
 FROM $BASE_IMAGE AS base
 ARG REQUIREMENTS_FILE=requirements-production.txt
+RUN apt-get update
+# Upgrade perl-base to install latests security update
+# https://avd.aquasec.com/nvd/2024/cve-2024-56406/
+RUN apt-get install --only-upgrade perl-base -y
 
 # Set environment variables
 ENV FLASK_RUN_HOST=0.0.0.0
@@ -45,8 +49,7 @@ EXPOSE $FLASK_RUN_PORT
 
 # Run the Flask application for production
 FROM base AS production
-# TODO: Use a production ready WSGI
-CMD ["flask", "run"]
+CMD gunicorn --bind "$FLASK_RUN_HOST:$FLASK_RUN_PORT" "app:create_app()"
 
 # Run the Flask application for development
 FROM base AS development

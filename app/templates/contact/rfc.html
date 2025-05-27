@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {%- from 'components/back_link.html' import govukBackLink -%}
 {%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton %}
-{%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
 
 
 {% block pageTitle %}Why do you want to contact Civil Legal Advice?{% endblock %}
@@ -23,7 +22,7 @@
         </form>
     
         <div class="govuk-inset-text">
-            Your session will time out after 30 minutes of inactivity. We do this for your security.
+            {% trans %}Your session will time out after 30 minutes of inactivity. We do this for your security.{% endtrans %}
         </div>
 
     </div>
