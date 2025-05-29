@@ -13,7 +13,7 @@
     "govuk-frontend": "^5.4.0"
   },
   "devDependencies": {
-    "esbuild": "0.24.0",
+    "esbuild": "0.25.0",
     "esbuild-sass-plugin": "^3.3.1"
   }
 }
