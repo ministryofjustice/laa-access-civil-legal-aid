@@ -1,0 +1,37 @@
+---
+title: Fast Track
+---
+
+# Fast Tracking Users
+
+When users follow certain journey's they are immediately taken to the contact us page.
+
+Although this journey is recorded in the URL, no additional information is passed to the CLA Backend.
+
+This additional URL information is used as part of our analytics for user fast track reasons. 
+
+## Adding fast track
+
+To add a fast track to a routing map, include both the endpoint and reason like so:
+
+```python
+{"endpoint": "contact.contact_us_fast_tracked", "reason": "harm"}
+```
+
+If you are needing to add a fast track URL in a HTML it can be done as so: 
+
+```html
+href={{ url_for('contact.contact_us_fast_tracked', reason='other') }}
+```
+
+## Reasons for fast track
+
+Currently there are the below reasons for fast track:
+
+| Reason |
+| -------------------|
+| harm   |
+| more-info-required |
+| other  |
+
+Any url that does not include a fast track reason will default to `other`.
