@@ -1,0 +1,31 @@
+---
+title: Session Data
+---
+
+# Session Data
+
+A large portion of the user journey is handled via the session and used in the payload during submission.
+
+The class Session is stored in app/session. It contains multiple functions to assist in diagnosising users and also 
+to help display the correct information on the screen.
+
+Session information is cleared once the user reaches the confirmation page or if the user navigates away from Check.
+
+## What is saved in a Session
+
+| Data Name  | Parent Field | Nested Fields | Purpose |
+| ---------- | ------------ | ------------- | ------- |
+| _ec_reference | N/A | | N/A    | Contains the eligibility check reference from CLA backend |
+| category | N/A | code     | Contains the code of the category the user has selected |
+| category_answers  | N/A  | answer_label, answer_value, category, next_page, question, question_page, question_type    | Contains the users selections through the category section of Check. Also contains what page will be next and the originating pages |
+| csrf_token | N/A | N/A | The csrf token used by the site to prevent Cross Site Request Forgery |
+| gtm_anon_id | N/A | N/A | Allows the user session to be tracked from Check into the Call Handling System |
+| about-you | eligibility | aged_60_or_over, has_children, has_dependants, has_partner, has_savings, has_valuables, in_dispute, is_employed, is_self_employed, num_children, num_dependants, on_benefits, own_property, partner_is_employed, partner_is_self_employed | Contains user answers from the About You form page |
+| additional-benefits | eligibility | benefits, other_benefits, total_other_benefit | Used for the additional benefits page including any income from those benefits |
+| benefits | eligibility | benefits[], child_benefits | Contains a list of benefits the user is on and the amount received in child benefit |
+| income | eligibility | child_tax_credit, earnings, income_tax, maintenance_received, national_insurance, other_income, partner_earnings, partner_income_tax, partner_maintenance_received, partner_national_insurance, partner_other_income, partner_pension, partner_working_tax_credit, pension, working_tax_credit | Contains money interval fields of users income |
+| property | eligibility | properties[is_main_home, is_rented, mortgage_payments, mortgage_remaining, property_value, rent_amount, other_shareholders, in_dispute] | Contains user property information, each property is a dictionary in a list |
+| savings | eligibility | investments, savings, valuables | Contains user savings information as integers |
+| case_reference | N/A | N/A | Contains the case number which is initially provided via CLA Backend and then stored in the session |
+| callback_time | N/A | N/A | Contains a datetime field of the users selected callback time |
+| contact_type | N/A | N/A | Contains the requested contact method for the user |

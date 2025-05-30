@@ -1,0 +1,34 @@
+---
+title: Callbacks
+---
+
+# Callbacks
+
+When a user books a callback from the call centre, a system is in place to ensure call handlers have enough capacity.
+
+There are a few notes in regards to callbacks:
+
+- Callbacks are provided to users for the next week (8 days, today + 7)
+- Thirdparty callback slots have no limit
+- In the case where all non-thridparty callbacks are booked for today or the week, a message is displayed on the contact us page with the options removed
+
+## Callback slots
+
+The slots for the period are provided via the CLA Backend using the `get_time_slots(num_days=8, is_third_party_callback=False)` 
+function.
+
+This function probes the endpoint: `checker/api/v1/callback_time_slots/`
+
+This outputs a JSON with the slots for the period which can then be used in our service.
+
+On our service, slots are controlled by the `_setup_callback_time_choices` function. This uses the `_format_slots_by_day` function to 
+transform the json data into day slots.
+
+## Callback Capping
+
+Slots to the call centre for callbacks are controlled via CLA Backend. Either a CSV is uploaded with the upcoming timeslot capacity 
+or a user can manually update.
+
+Once slots are filled, options will be reduced on the contact us form. Slot availability handling is dealt with in the contact form 
+via `_adjust_contact_options_for_availability`.
+

@@ -1,4 +1,4 @@
-# Access Civil Legal Aid
+# Check if you can get legal aid
 
 [![Standards Icon]][Standards Link]
 
