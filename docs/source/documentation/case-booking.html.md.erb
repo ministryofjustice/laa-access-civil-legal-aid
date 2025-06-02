@@ -4,7 +4,7 @@ title: Case Bookings
 
 # Case Bookings
 Cases are created at the contact stage of a users journey. When the user selects `Submit details`, the full payload is sent to the 
-CLA backend endpoint which via `post_case`. This sends the full payload to backend with all required information including information 
+CLA Backend endpoint via `post_case`. This sends the full payload to backend with all required information including information 
 provided on the contact us form.
 
 ### Case reference
@@ -19,7 +19,7 @@ This in turn also posts the case to CLA Backend.
 
 ### Reason for contacting
 When a user goes directly to Contact Us via the Reasons for Contacting form, the payload only creates a case with a 
-case number and the selections on the reasons for contacting form.
+case reference and the selections on the reasons for contacting form.
 
 This is handled by the RFC `MODEL_REF_SESSION_KEY` to determine whether the user has followed this journey instead.
 
@@ -28,5 +28,5 @@ This is handled by the RFC `MODEL_REF_SESSION_KEY` to determine whether the user
 On contact us submission, if a user has provided an email address a confirmation email is sent. More information can be found 
 [here](../documentation/notify.html).
 
-The confirmation email uses the case reference generated to attach to the email to further help the users. Dependant on the user 
-selections on the contact us page, a specific template is used.
+The confirmation email uses the generated case reference and includes this in the email. Dependent on the user selections on 
+the contact us page, a specific template is used.
