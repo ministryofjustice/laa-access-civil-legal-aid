@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{%- from 'components/back_link.html' import govukBackLink -%}
+{%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton %}
+{%- from 'govuk_frontend_jinja/components/details/macro.html' import govukDetails %}
+{%- from 'categories/components/list-item.html' import list_item -%}
+{%- from 'categories/components/cannot-find-your-problem.html' import cannot_find_your_problem -%}
+
+
+{% block beforeContent %}
+    {{ super() }}
+    {{ govukBackLink() }}
+{% endblock %}
+
+
+{% set title = _("Problems about children and money when a relationship ends ") %}
+{% block pageTitle %}{{ title }} - GOV.UK{% endblock %}
+
+
+{% set family_mediation_html %}
+    <p class="govuk-body">{% trans %}Family mediators are trained professionals. They help you and the other parent agree on things like where your children live, contact with children, money and property.{% endtrans %}</p>
+    <ul class="govuk-list govuk-list--bullet">
+        <li>{% trans %}Mediators do not take sides or tell you what to do.{% endtrans %}</li>
+        <li>{% trans %}It is not relationship counselling.{% endtrans %}</li>
+        <li>{% trans %}You can choose to do mediation by phone or video call.{% endtrans %}</li>
+        <li>{% trans %}You do not have to see or speak to your ex-partner.{% endtrans %}</li>
+    </ul>
+    <p class="govuk-body">{% trans %}Mediation is probably not right if your ex-partner is abusive, controlling, or putting your children at risk.{% endtrans %}</p>
+{% endset %}
+
+
+
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">{{ title }}</h1>
+
+
+        <p class="govuk-body">Legal aid covers 2 options, depending on your situation.</p>
+
+
+        {{ list_item("Legal aid for family mediation", "A trained mediator will help you and your ex-partner make decisions about your children and money. You do not need to be in the same room.", url_for("find-a-legal-adviser.search", category="fmed")) }}
+
+
+        {{ govukDetails({
+            "summaryText": "About family mediation",
+            "html": family_mediation_html
+        }) }}
+
+
+        {{ list_item("Legal aid if there is domestic abuse or a child is at risk", "You could get legal aid for advice and help in court. Domestic abuse can include:", "categories.domestic_abuse.are_you_at_risk_of_harm"|category_url_for) }}
+        <ul class="govuk-list govuk-list--bullet">
+            <li>{% trans %}controlling behaviour, emotional or financial abuse{% endtrans %}</li>
+            <li>{% trans %}harassing, stalking, threatening or hurting you{% endtrans %}</li>
+            <li>{% trans %}putting a child at risk{% endtrans %}</li>
+        </ul>
+
+
+        <p class="govuk-body">This could be by a partner, ex-partner or family member.</p>
+
+
+        {{ cannot_find_your_problem(None, url_for("categories.family.cannot_find_your_problem"), _("If you cannot find the right option"))}}
+
+
+    </div>
+</div>
+{% endblock %}
