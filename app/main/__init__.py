@@ -40,7 +40,7 @@ def inject_exit_this_page():
         category = session.subcategory
     else:
         category = session.category
-    print(session)
+
     if not category:
         return {"show_exit_this_page": False}
 
