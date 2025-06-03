@@ -27,7 +27,10 @@ class FamilyLandingPage(CategoryLandingPage):
                 FAMILY.sub.domestic_abuse,
                 "categories.domestic_abuse.are_you_at_risk_of_harm",
             ),
-            (FAMILY.sub.family_mediation, "categories.results.in_scope"),
+            (
+                FAMILY.sub.family_mediation,
+                "categories.family.previous_family_mediation",
+            ),
             (
                 FAMILY.sub.child_abducted,
                 {
