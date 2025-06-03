@@ -36,19 +36,19 @@
         <h1 class="govuk-heading-xl">{{ title }}</h1>
 
 
-        <p class="govuk-body">Legal aid covers 2 options, depending on your situation.</p>
+        <p class="govuk-body">{% trans %}Legal aid covers 2 options, depending on your situation.{% endtrans %}</p>
 
 
-        {{ list_item("Legal aid for family mediation", "A trained mediator will help you and your ex-partner make decisions about your children and money. You do not need to be in the same room.", "categories.family.previous_family_mediation" |category_url_for) }}
+        {{ list_item(_("Legal aid for family mediation"), _("A trained mediator will help you and your ex-partner make decisions about your children and money. You do not need to be in the same room."), "categories.family.previous_family_mediation" |category_url_for) }}
 
 
         {{ govukDetails({
-            "summaryText": "About family mediation",
+            "summaryText": _("About family mediation"),
             "html": family_mediation_html
         }) }}
 
 
-        {{ list_item("Legal aid if there is domestic abuse or a child is at risk", "You could get legal aid for advice and help in court. Domestic abuse can include:", "categories.domestic_abuse.are_you_at_risk_of_harm"|category_url_for) }}
+        {{ list_item(_("Legal aid if there is domestic abuse or a child is at risk"), _("You could get legal aid for advice and help in court. Domestic abuse can include:"), "categories.domestic_abuse.are_you_at_risk_of_harm"|category_url_for) }}
         <ul class="govuk-list govuk-list--bullet">
             <li>{% trans %}controlling behaviour, emotional or financial abuse{% endtrans %}</li>
             <li>{% trans %}harassing, stalking, threatening or hurting you{% endtrans %}</li>
@@ -56,7 +56,7 @@
         </ul>
 
 
-        <p class="govuk-body">This could be by a partner, ex-partner or family member.</p>
+        <p class="govuk-body">{% trans %}This could be by a partner, ex-partner or family member.{% endtrans %}</p>
 
 
         {{ cannot_find_your_problem(None, url_for("categories.family.cannot_find_your_problem"), _("If you cannot find the right option"))}}
