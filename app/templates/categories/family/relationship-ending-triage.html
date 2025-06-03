@@ -39,7 +39,7 @@
         <p class="govuk-body">Legal aid covers 2 options, depending on your situation.</p>
 
 
-        {{ list_item("Legal aid for family mediation", "A trained mediator will help you and your ex-partner make decisions about your children and money. You do not need to be in the same room.", url_for("find-a-legal-adviser.search", category="fmed")) }}
+        {{ list_item("Legal aid for family mediation", "A trained mediator will help you and your ex-partner make decisions about your children and money. You do not need to be in the same room.", "categories.family.previous_family_mediation" |category_url_for) }}
 
 
         {{ govukDetails({
