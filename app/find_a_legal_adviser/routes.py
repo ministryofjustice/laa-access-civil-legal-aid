@@ -21,7 +21,4 @@ def search():
         return abort(404, f"Invalid secondary category: {category}")
 
     fala_url = create_fala_url(category=category, secondary_category=secondary_category)
-    return render_template(
-        "categories/fala-interstitial.html",
-        fala_url=fala_url,
-    )
+    return render_template("categories/fala-interstitial.html", fala_url=fala_url)

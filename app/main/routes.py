@@ -135,12 +135,7 @@ def cookies():
         flash("You’ve set your cookie preferences.", "success")
 
         # Create the response so we can set the cookie before returning
-        response = make_response(
-            render_template(
-                "cookies.html",
-                form=form,
-            )
-        )
+        response = make_response(render_template("cookies.html", form=form))
 
         if cookies_policy["analytics"].lower() == "no":
             for name, value in request.cookies.items():
@@ -167,7 +162,7 @@ def cookies():
             # If conset not previously set, use default "no" policy
             form.functional.data = cookies_policy["functional"]
             form.analytics.data = cookies_policy["analytics"]
-    return render_template("cookies.html")
+    return render_template("cookies.html", form=form)
 
 
 @bp.route("/privacy", methods=["GET"])

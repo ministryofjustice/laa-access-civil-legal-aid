@@ -261,10 +261,7 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
             "category_answers": self.get_category_answers_summary(),
             "form_progress": self.get_form_progress(current_form=self.form),
         }
-        return render_template(
-            "means_test/review.html",
-            **params,
-        )
+        return render_template("means_test/review.html", **params)
 
     @staticmethod
     def get_category_answers_summary():
