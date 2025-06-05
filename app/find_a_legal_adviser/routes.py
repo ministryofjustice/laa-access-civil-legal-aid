@@ -1,5 +1,5 @@
 from app.find_a_legal_adviser import bp
-from flask import render_template, request, abort
+from flask import render_template, request, abort, current_app
 
 from app.find_a_legal_adviser.categories import FALACategory
 from app.find_a_legal_adviser.fala import create_fala_url
@@ -21,4 +21,8 @@ def search():
         return abort(404, f"Invalid secondary category: {category}")
 
     fala_url = create_fala_url(category=category, secondary_category=secondary_category)
-    return render_template("categories/fala-interstitial.html", fala_url=fala_url)
+    return render_template(
+        "categories/fala-interstitial.html",
+        fala_url=fala_url,
+        govukRebrand=current_app.config.get("GOVUK_REBRAND"),
+    )

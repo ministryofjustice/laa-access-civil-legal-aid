@@ -117,7 +117,9 @@ def service_unavailable_page():
 
 @bp.route("/accessibility", methods=["GET"])
 def accessibility():
-    return render_template("accessibility.html")
+    return render_template(
+        "accessibility.html", govukRebrand=current_app.config.get("GOVUK_REBRAND")
+    )
 
 
 @bp.route("/cookies", methods=["GET", "POST"])
@@ -135,7 +137,13 @@ def cookies():
         flash("You’ve set your cookie preferences.", "success")
 
         # Create the response so we can set the cookie before returning
-        response = make_response(render_template("cookies.html", form=form))
+        response = make_response(
+            render_template(
+                "cookies.html",
+                form=form,
+                govukRebrand=current_app.config.get("GOVUK_REBRAND"),
+            )
+        )
 
         if cookies_policy["analytics"].lower() == "no":
             for name, value in request.cookies.items():
@@ -162,29 +170,39 @@ def cookies():
             # If conset not previously set, use default "no" policy
             form.functional.data = cookies_policy["functional"]
             form.analytics.data = cookies_policy["analytics"]
-    return render_template("cookies.html", form=form)
+    return render_template(
+        "cookies.html", form=form, govukRebrand=current_app.config.get("GOVUK_REBRAND")
+    )
 
 
 @bp.route("/privacy", methods=["GET"])
 def privacy():
-    return render_template("main/privacy.html")
+    return render_template(
+        "main/privacy.html", govukRebrand=current_app.config.get("GOVUK_REBRAND")
+    )
 
 
 @bp.route("/online-safety")
 def online_safety():
-    return render_template("main/online-safety.html")
+    return render_template(
+        "main/online-safety.html", govukRebrand=current_app.config.get("GOVUK_REBRAND")
+    )
 
 
 @bp.route("/session-expired", methods=["GET"])
 def session_expired():
     session.clear()
     session["gtm_anon_id"] = get_gtm_anon_id_from_cookie()
-    return render_template("session_expired.html")
+    return render_template(
+        "session_expired.html", govukRebrand=current_app.config.get("GOVUK_REBRAND")
+    )
 
 
 @bp.app_errorhandler(HTTPException)
 def http_exception(error):
-    return render_template(f"{error.code}.html"), error.code
+    return render_template(
+        f"{error.code}.html", govukRebrand=current_app.config.get("GOVUK_REBRAND")
+    ), error.code
 
 
 @bp.app_errorhandler(CSRFError)

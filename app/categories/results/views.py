@@ -1,6 +1,6 @@
 from app.categories.constants import Category
 from app.categories.views import CategoryPage
-from flask import session, render_template
+from flask import session, render_template, current_app
 from app.find_a_legal_adviser.fala import create_fala_url
 from app.find_a_legal_adviser.categories import FALACategory
 from app.api import cla_backend
@@ -30,7 +30,11 @@ class ResultPage(CategoryPage):
         }
 
     def dispatch_request(self):
-        return render_template(self.template, **self.get_context(session.category))
+        return render_template(
+            self.template,
+            **self.get_context(session.category),
+            govukRebrand=current_app.config.get("GOVUK_REBRAND"),
+        )
 
 
 class OutOfScopePage(ResultPage):
@@ -44,7 +48,11 @@ class OutOfScopePage(ResultPage):
 
     def dispatch_request(self):
         """Gets the category from the view (url) rather than the session."""
-        return render_template(self.template, **self.get_context(self.category))
+        return render_template(
+            self.template,
+            **self.get_context(self.category),
+            govukRebrand=current_app.config.get("GOVUK_REBRAND"),
+        )
 
 
 class CannotFindYourProblemPage(OutOfScopePage):

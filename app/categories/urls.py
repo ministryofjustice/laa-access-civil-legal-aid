@@ -1,4 +1,4 @@
-from flask import url_for, render_template
+from flask import url_for, render_template, current_app
 from app.categories import bp
 from app.categories.views import CategoryPage
 from app.categories.constants import (
@@ -31,7 +31,11 @@ class IndexPage(CategoryPage):
             (ASYLUM_AND_IMMIGRATION, url_for("categories.asylum_immigration.landing")),
             (MENTAL_CAPACITY, url_for("categories.mental_capacity.landing")),
         ]
-        return render_template(self.template, listing=listing)
+        return render_template(
+            self.template,
+            listing=listing,
+            govukRebrand=current_app.config.get("GOVUK_REBRAND"),
+        )
 
 
 bp.add_url_rule(

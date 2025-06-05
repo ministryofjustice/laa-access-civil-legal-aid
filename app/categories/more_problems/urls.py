@@ -1,4 +1,4 @@
-from flask import render_template, url_for, session
+from flask import render_template, url_for, session, current_app
 from app.categories.more_problems import bp
 from app.categories.views import CategoryPage, CategoryAnswerPage, CategoryAnswer
 from app.categories.results.views import CannotFindYourProblemPage, NextStepsPage
@@ -101,7 +101,11 @@ class MoreProblemsPage(CategoryPage):
         """
         session.clear_category()
 
-        return render_template(self.template, listing=self.get_listing())
+        return render_template(
+            self.template,
+            listing=self.get_listing(),
+            govukRebrand=current_app.config.get("GOVUK_REBRAND"),
+        )
 
 
 bp.add_url_rule(

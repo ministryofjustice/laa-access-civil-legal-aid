@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch, ANY
 from datetime import datetime, timezone
-from flask import url_for
+from flask import url_for, current_app
 from app.contact.views import ConfirmationPage
 
 
@@ -58,6 +58,7 @@ class TestConfirmationPage:
                 category={"code": "asylum_and_immigration"},
                 confirmation_email=None,
                 email_sent=False,
+                govukRebrand=current_app.config.get("GOVUK_REBRAND"),
             )
 
     def test_post_confirmation_page_valid_form(self, client, mock_notify):
@@ -89,6 +90,7 @@ class TestConfirmationPage:
                 category=ANY,
                 confirmation_email=test_email,
                 email_sent=True,
+                govukRebrand=current_app.config.get("GOVUK_REBRAND"),
             )
 
     def test_post_confirmation_page_invalid_form(self, client, mock_notify):

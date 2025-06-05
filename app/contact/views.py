@@ -5,7 +5,15 @@ from app.contact.forms import (
     ConfirmationEmailForm,
 )
 import logging
-from flask import session, render_template, request, redirect, url_for, jsonify
+from flask import (
+    session,
+    render_template,
+    request,
+    redirect,
+    url_for,
+    jsonify,
+    current_app,
+)
 from app.api import cla_backend
 from app.contact.notify.api import notify
 from app.means_test.api import is_eligible, EligibilityState
@@ -39,7 +47,11 @@ class ReasonForContacting(View):
             if result and "reference" in result:
                 session[form.MODEL_REF_SESSION_KEY] = result["reference"]
             return redirect(url_for(next_step))
-        return render_template(self.template, form=form)
+        return render_template(
+            self.template,
+            form=form,
+            govukRebrand=current_app.config.get("GOVUK_REBRAND"),
+        )
 
 
 class ContactUs(View):
@@ -111,7 +123,12 @@ class ContactUs(View):
             session["contact_type"] = contact_type
             session["category"] = category
             return redirect(url_for("contact.confirmation"))
-        return render_template(self.template, form=form, form_progress=form_progress)
+        return render_template(
+            self.template,
+            form=form,
+            form_progress=form_progress,
+            govukRebrand=current_app.config.get("GOVUK_REBRAND"),
+        )
 
     @staticmethod
     def _attach_rfc_to_case(case_ref: str, rfc_ref: str):
@@ -216,4 +233,5 @@ class ConfirmationPage(View):
             confirmation_email=form.email.data if email_sent else None,
             email_sent=email_sent,
             **context,
+            govukRebrand=current_app.config.get("GOVUK_REBRAND"),
         )
