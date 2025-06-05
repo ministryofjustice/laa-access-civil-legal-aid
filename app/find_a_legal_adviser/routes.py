@@ -1,5 +1,5 @@
 from app.find_a_legal_adviser import bp
-from flask import render_template, request, abort, current_app
+from flask import render_template, request, abort
 
 from app.find_a_legal_adviser.categories import FALACategory
 from app.find_a_legal_adviser.fala import create_fala_url
@@ -24,5 +24,4 @@ def search():
     return render_template(
         "categories/fala-interstitial.html",
         fala_url=fala_url,
-        govukRebrand=current_app.config.get("GOVUK_REBRAND"),
     )

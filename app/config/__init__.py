@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from datetime import timedelta
+import datetime
 
 # Allows .env to be used in project for local development.
 load_dotenv()
@@ -37,4 +38,6 @@ class Config(object):
     SESSION_COOKIE_SECURE = True
     OS_PLACES_API_KEY = os.environ.get("OS_PLACES_API_KEY")
     EMAIL_ORCHESTRATOR_URL = os.environ.get("EMAIL_ORCHESTRATOR_URL")
-    GOVUK_REBRAND = os.environ.get("GOVUK_REBRAND", "False").lower() == "true"
+    GOVUK_REBRAND = True
+
+    GOVUK_REBRAND_ENABLED = datetime.datetime.now() > datetime.datetime(2025, 6, 25)

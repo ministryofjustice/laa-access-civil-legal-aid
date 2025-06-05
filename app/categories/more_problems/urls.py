@@ -1,4 +1,4 @@
-from flask import render_template, url_for, session, current_app
+from flask import render_template, url_for, session
 from app.categories.more_problems import bp
 from app.categories.views import CategoryPage, CategoryAnswerPage, CategoryAnswer
 from app.categories.results.views import CannotFindYourProblemPage, NextStepsPage
@@ -104,7 +104,6 @@ class MoreProblemsPage(CategoryPage):
         return render_template(
             self.template,
             listing=self.get_listing(),
-            govukRebrand=current_app.config.get("GOVUK_REBRAND"),
         )
 
 

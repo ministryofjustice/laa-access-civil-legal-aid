@@ -1,5 +1,5 @@
 from unittest.mock import patch
-from flask import url_for, current_app
+from flask import url_for
 import pytest
 import json
 
@@ -65,7 +65,6 @@ def test_privacy_template(mock_render_template, client):
     assert response.status_code == 200
     mock_render_template.assert_called_once_with(
         "main/privacy.html",
-        govukRebrand=current_app.config.get("GOVUK_REBRAND"),
     )
 
 
@@ -75,7 +74,6 @@ def test_online_safety_template(mock_render_template, client):
     assert response.status_code == 200
     mock_render_template.assert_called_once_with(
         "main/online-safety.html",
-        govukRebrand=current_app.config.get("GOVUK_REBRAND"),
     )
 
 

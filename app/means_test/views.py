@@ -1,7 +1,7 @@
 import logging
 from typing import List
 from flask.views import View, MethodView
-from flask import render_template, url_for, redirect, session, request, current_app
+from flask import render_template, url_for, redirect, session, request
 from flask_babel import lazy_gettext as _, gettext
 from werkzeug.datastructures import MultiDict
 from app.means_test.api import (
@@ -125,7 +125,6 @@ class MeansTest(FormsMixin, InScopeMixin, View):
             self.form_class.template,
             form=form,
             form_progress=self.get_form_progress(current_form=form),
-            govukRebrand=current_app.config.get("GOVUK_REBRAND"),
         )
 
     def ensure_form_protection(self, current_form):
@@ -198,7 +197,6 @@ class MeansTest(FormsMixin, InScopeMixin, View):
             self.form_class.template,
             form=form,
             form_progress=self.get_form_progress(current_form=form),
-            govukRebrand=current_app.config.get("GOVUK_REBRAND"),
         )
 
     def get_next_page(self, current_key):
@@ -266,7 +264,6 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
         return render_template(
             "means_test/review.html",
             **params,
-            govukRebrand=current_app.config.get("GOVUK_REBRAND"),
         )
 
     @staticmethod

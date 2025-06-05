@@ -1,6 +1,6 @@
 import logging
 from unittest.mock import patch, MagicMock
-from flask import url_for, redirect, current_app
+from flask import url_for, redirect
 from app.contact.forms import ReasonsForContactingForm
 from app.contact.views import (
     ContactUs,
@@ -54,7 +54,6 @@ class TestContactUsView:
                 "contact/contact.html",
                 form=mock_form_instance,
                 form_progress=mock_form_progress,
-                govukRebrand=current_app.config.get("GOVUK_REBRAND"),
             )
 
     @patch("app.contact.views.ContactUsForm")
@@ -118,7 +117,6 @@ class TestContactUsView:
                 "contact/contact.html",
                 form=mock_form_instance,
                 form_progress={"step": "Review", "percentage_complete": 100},
-                govukRebrand=current_app.config.get("GOVUK_REBRAND"),
             )
 
     @patch("app.contact.views.render_template")

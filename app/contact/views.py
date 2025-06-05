@@ -12,7 +12,6 @@ from flask import (
     redirect,
     url_for,
     jsonify,
-    current_app,
 )
 from app.api import cla_backend
 from app.contact.notify.api import notify
@@ -50,7 +49,6 @@ class ReasonForContacting(View):
         return render_template(
             self.template,
             form=form,
-            govukRebrand=current_app.config.get("GOVUK_REBRAND"),
         )
 
 
@@ -127,7 +125,6 @@ class ContactUs(View):
             self.template,
             form=form,
             form_progress=form_progress,
-            govukRebrand=current_app.config.get("GOVUK_REBRAND"),
         )
 
     @staticmethod
@@ -233,5 +230,4 @@ class ConfirmationPage(View):
             confirmation_email=form.email.data if email_sent else None,
             email_sent=email_sent,
             **context,
-            govukRebrand=current_app.config.get("GOVUK_REBRAND"),
         )

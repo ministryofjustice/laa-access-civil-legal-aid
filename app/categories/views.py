@@ -1,7 +1,7 @@
 import logging
 from flask.sansio.blueprints import Blueprint
 from flask.views import View
-from flask import render_template, redirect, url_for, session, request, current_app
+from flask import render_template, redirect, url_for, session, request
 from flask_babel import LazyString
 from app.categories.forms import QuestionForm
 from app.categories.constants import Category
@@ -30,7 +30,7 @@ class CategoryPage(View):
         response = self.process_request()
         if not response:
             response = render_template(
-                self.template, govukRebrand=current_app.config.get("GOVUK_REBRAND")
+                self.template,
             )
         return response
 
@@ -90,7 +90,6 @@ class CategoryLandingPage(CategoryPage):
             self.template,
             category=self.category,
             listing=self.listing,
-            govukRebrand=current_app.config.get("GOVUK_REBRAND"),
         )
 
     @classmethod
@@ -285,5 +284,4 @@ class QuestionPage(CategoryPage):
         return render_template(
             self.template,
             form=form,
-            govukRebrand=current_app.config.get("GOVUK_REBRAND"),
         )

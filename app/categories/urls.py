@@ -1,4 +1,4 @@
-from flask import url_for, render_template, current_app
+from flask import url_for, render_template
 from app.categories import bp
 from app.categories.views import CategoryPage
 from app.categories.constants import (
@@ -34,7 +34,6 @@ class IndexPage(CategoryPage):
         return render_template(
             self.template,
             listing=listing,
-            govukRebrand=current_app.config.get("GOVUK_REBRAND"),
         )
 
 

@@ -2,7 +2,6 @@ from unittest.mock import patch
 
 import pytest
 from app.find_a_legal_adviser.fala import create_fala_url
-from flask import current_app
 
 
 class TestCreateFALARedirect:
@@ -96,7 +95,6 @@ class TestFindALegalAdviserRedirect:
                 mock_render_template.assert_called_once_with(
                     "categories/fala-interstitial.html",
                     fala_url="https://staging.find-legal-advice.justice.gov.uk/check?categories=housing&sub-category=eviction",
-                    govukRebrand=current_app.config.get("GOVUK_REBRAND"),
                 )
 
     def test_redirect_with_invalid_categories(self, app, client):
