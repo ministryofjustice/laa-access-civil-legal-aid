@@ -94,7 +94,3 @@ envVars:
       name: fala-url
       key: url
       optional: true
-  GOVUK_REBRAND:
-    configmap:
-      name: govuk-rebrand
-      key: value
