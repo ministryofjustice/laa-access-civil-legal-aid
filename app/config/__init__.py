@@ -38,6 +38,4 @@ class Config(object):
     SESSION_COOKIE_SECURE = True
     OS_PLACES_API_KEY = os.environ.get("OS_PLACES_API_KEY")
     EMAIL_ORCHESTRATOR_URL = os.environ.get("EMAIL_ORCHESTRATOR_URL")
-    GOVUK_REBRAND = True
-
-    GOVUK_REBRAND_ENABLED = datetime.datetime.now() > datetime.datetime(2025, 6, 25)
+    GOVUK_REBRAND = datetime.datetime.now() > datetime.datetime(2025, 6, 25)
