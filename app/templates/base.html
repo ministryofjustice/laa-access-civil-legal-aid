@@ -141,7 +141,8 @@
         'homepageUrl': "https://www.gov.uk",
         'serviceName': config['SERVICE_NAME'] if not govukRebrand,
         'serviceUrl': url_for('main.start_page'),
-        'useTudorCrown': true
+        'useTudorCrown': true,
+        'rebrand': govukRebrand
   }) }}
 
   {% if govukRebrand %}
