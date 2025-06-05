@@ -31,10 +31,7 @@ class IndexPage(CategoryPage):
             (ASYLUM_AND_IMMIGRATION, url_for("categories.asylum_immigration.landing")),
             (MENTAL_CAPACITY, url_for("categories.mental_capacity.landing")),
         ]
-        return render_template(
-            self.template,
-            listing=listing,
-        )
+        return render_template(self.template, listing=listing)
 
 
 bp.add_url_rule(

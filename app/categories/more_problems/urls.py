@@ -101,10 +101,7 @@ class MoreProblemsPage(CategoryPage):
         """
         session.clear_category()
 
-        return render_template(
-            self.template,
-            listing=self.get_listing(),
-        )
+        return render_template(self.template, listing=self.get_listing())
 
 
 bp.add_url_rule(

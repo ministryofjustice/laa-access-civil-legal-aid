@@ -29,9 +29,7 @@ class CategoryPage(View):
     def dispatch_request(self):
         response = self.process_request()
         if not response:
-            response = render_template(
-                self.template,
-            )
+            response = render_template(self.template)
         return response
 
     def process_request(self):
@@ -87,9 +85,7 @@ class CategoryLandingPage(CategoryPage):
     def process_request(self):
         self.set_category_answer()
         return render_template(
-            self.template,
-            category=self.category,
-            listing=self.listing,
+            self.template, category=self.category, listing=self.listing
         )
 
     @classmethod
