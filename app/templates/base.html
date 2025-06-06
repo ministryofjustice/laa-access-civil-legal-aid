@@ -1,5 +1,6 @@
 {%  set htmlLang = language.current %}
 {%  set cspNonce = csp_nonce() %}
+{%  set govukRebrand = config['GOVUK_REBRAND'] %}
 {% set htmlClasses = "govuk-environment-" + config["ENVIRONMENT"] %}
 {% extends 'govuk_frontend_jinja/template.html' %}
 
@@ -8,6 +9,7 @@
 {%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
 {%- from 'govuk_frontend_jinja/components/notification-banner/macro.html' import govukNotificationBanner -%}
 {%- from 'govuk_frontend_jinja/components/phase-banner/macro.html' import govukPhaseBanner -%}
+{%- from "govuk_frontend_jinja/components/service-navigation/macro.html" import govukServiceNavigation -%}
 {%- from 'main/_modal-dialog.html' import timeout_dialog %}
 
 {% set assetPath = url_for('static', filename='').rstrip('/') %}
@@ -135,12 +137,21 @@
 {% endblock %}
 
 {% block header %}
-    {{ govukHeader({
+  {{ govukHeader({
         'homepageUrl': "https://www.gov.uk",
-        'serviceName': config['SERVICE_NAME'],
+        'serviceName': config['SERVICE_NAME'] if not govukRebrand,
         'serviceUrl': url_for('main.start_page'),
-        'useTudorCrown': true
+        'useTudorCrown': true,
+        'rebrand': govukRebrand
   }) }}
+
+  {% if govukRebrand %}
+    {{ govukServiceNavigation({
+      'serviceName': config['SERVICE_NAME'],
+      'serviceUrl': "/"
+    }) }}
+  {% endif %}
+
 {% endblock %}
 
 {% block beforeContent %}
