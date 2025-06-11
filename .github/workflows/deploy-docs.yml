@@ -1,0 +1,45 @@
+name: Publish documentation
+
+on:
+  workflow_call:
+    secrets:
+      github-token:
+        description: "GitHub token for downloading artifacts"
+        required: true
+
+permissions:
+  contents: read     # Needed for downloading artifacts
+  pages: write      # Needed for GitHub Pages deployment
+  id-token: write   # Needed for deployment authentication
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: github-pages
+          github-token: ${{ secrets.github-token }}
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5.0.0
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

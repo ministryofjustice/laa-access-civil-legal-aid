@@ -1,0 +1,66 @@
+name: Build documentation
+
+on:
+  workflow_call:
+    outputs:
+      artifact-name:
+        description: "GitHub Pages deployment artifact identifier"
+        value: github-pages
+      success:
+        description: "Whether the build completed successfully"
+        value: ${{ jobs.build.outputs.success }}
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    container:
+      image: ministryofjustice/tech-docs-github-pages-publisher:v3
+    steps:
+      # We only checkout the docs directory, which allows us to keep all necessary files for
+      # generating the docs separate from the app.
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            docs
+          sparse-checkout-cone-mode: false
+      # We move the docs directory to the root so it is treated as if the docs directory was
+      # the only thing in the repository.
+      - name: Move directory to root
+        run: |
+          mv docs/* .
+          rm -rf docs
+      - name: Compile Markdown to HTML and create artifact
+        run: |
+          /scripts/deploy.sh
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: github-pages
+          path: artifact.tar
+          retention-days: 1
+          overwrite: true
+
+  url-check:
+    name: Check URLs
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: github-pages
+      - name: Unpack files and check URL links
+        run: |
+          cd github-pages
+          tar -xvf artifact.tar
+          npm install linkinator
+          npx linkinator . --recurse --markdown \
+            --skip https://ministryofjustice.github.io/laa-civil-case-api/images/govuk-large.png \
+            --skip https://moj-documentation-template-civil-case-api.cloud-platform.service.justice.gov.uk/ \
+            --skip laa-civil-case-api-uat.cloud-platform.service.justice.gov.uk/
