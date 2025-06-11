@@ -18,7 +18,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     container:
-      image: ministryofjustice/tech-docs-github-pages-publisher:v5.1.0
+      image: ministryofjustice/tech-docs-github-pages-publisher:v4.0.0
     steps:
       # We only checkout the docs directory, which allows us to keep all necessary files for
       # generating the docs separate from the app.
