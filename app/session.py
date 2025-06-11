@@ -274,7 +274,8 @@ class Session(SecureCookieSession):
                 self["category_answers"] = [
                     ans
                     for ans in self["category_answers"]
-                    if ans.get("question_type") != QuestionType.ONWARD
+                    if ans.get("question_type")
+                    not in [QuestionType.ONWARD, QuestionType.SUB_CATEGORY]
                 ]
 
         # Remove translation from the category_answer object before saving
