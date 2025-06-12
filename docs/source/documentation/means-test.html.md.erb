@@ -1,0 +1,120 @@
+---
+title: Means Test
+weight: 200
+---
+
+# Means Test
+The means test, often referred to as the eligbility check is undertaken by users after the service has 
+given them an in-scope, non-fast tracked route.
+
+The journey begins when the user selects `Check if you qualify financially`.
+
+## Check Financial Eligbility API
+The CFE API is used to check whether a user is financially eligbile as part of the means test.
+
+Check if you can get legal aid sends a request to CLA Backend which returns an eligibility check result when a `GET` request is sent to the following endpoint:
+```
+/checker/api/v1/eligibility_check/{reference}/is_eligible/
+```
+
+
+
+### Check user eligbility
+
+Our service uses `app.means_test.api.is_eligible(reference)` to return either a `YES`, `NO` or `UNKNOWN` result.
+This is handled by the `EligibilityState` constant. The `UNKNOWN` state is reserved for cases where a decision of eligibility 
+has not been made such as a case in progress.
+
+## Means test payload
+
+The payload sent to the backend is handled via the payload logic in app/means_test/payload. The `MeansTestPayload` uses the 
+`update_from_form` function to collect the payloads from each page of the means test journey. The payload is then passed to the 
+backend on the `dispatch_request`.
+
+### Updating the means test
+
+Updating the means test is handled by `app.means_test.api.update_means_test(payload)`. The payload provided can be a full payload 
+or partial but needs to return a response.
+
+An example payload json is displayed below:
+
+```json
+"about-you": {
+    "is_employed": True,
+    "is_self_employed": False,
+    "has_partner": True,
+    "in_dispute": False,
+    "partner_is_employed": False,
+    "partner_is_self_employed": True,
+},
+"income": {
+    "earnings": {
+        "per_interval_value": 250000,
+        "per_interval_value_pounds": 2500.00,
+        "interval_period": "per_month",
+    },
+    "child_tax_credit": {
+        "per_interval_value": 30000,
+        "per_interval_value_pounds": 300.00,
+        "interval_period": "per_month",
+    },
+    "working_tax_credit": {
+        "per_interval_value": 10000,
+        "per_interval_value_pounds": 100.00,
+        "interval_period": "per_month",
+    },
+    "partner_earnings": {
+        "per_interval_value": 200000,
+        "per_interval_value_pounds": 2000.00,
+        "interval_period": "per_month",
+    },
+    "maintenance_received": {
+        "per_interval_value": 0,
+        "per_interval_value_pounds": 0,
+        "interval_period": "per_month",
+    },
+    "pension": {
+        "per_interval_value": 0,
+        "per_interval_value_pounds": 0,
+        "interval_period": "per_month",
+    },
+    "other_income": {
+        "per_interval_value": 1000,
+        "per_interval_value_pounds": 0,
+        "interval_period": "per_month",
+    },
+    "income_tax": {
+        "per_interval_value": 2000,
+        "interval_period": "per_month",
+    },
+    "national_insurance": {
+        "per_interval_value": 3000,
+        "interval_period": "per_month",
+    },
+    "partner_working_tax_credit": {
+        "per_interval_value": 50,
+        "interval_period": "per_month",
+    },
+    "partner_maintenance_received": {
+        "per_interval_value": 50,
+        "interval_period": "per_month",
+    },
+    "partner_pension": {
+        "per_interval_value": 0,
+        "interval_period": "per_month",
+    },
+    "partner_other_income": {
+        "per_interval_value": 1000,
+        "interval_period": "per_month",
+    },
+    "partner_income_tax": {
+        "per_interval_value": 2500,
+        "interval_period": "per_month",
+    },
+    "partner_national_insurance": {
+        "per_interval_value": 3500,
+        "interval_period": "per_month",
+    },
+},
+},
+```
