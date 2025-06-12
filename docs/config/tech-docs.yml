@@ -5,7 +5,6 @@ host: https://ministryofjustice.github.io/laa-access-civil-legal-aid
 show_govuk_logo: true
 service_name: Check if you can get legal aid docs
 service_link: https://ministryofjustice.github.io/laa-access-civil-legal-aid
-phase: Alpha
 
 # Links to show on right-hand-side of header
 header_links:
