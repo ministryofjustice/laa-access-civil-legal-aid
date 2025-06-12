@@ -216,16 +216,6 @@ fast_track_routing = [
     pytest.param(
         [
             "Children, families, relationships",
-            "Problems with an ex-partner, divorce, when a relationship ends",
-            {
-                "endpoint": "contact.contact_us_fast_tracked",
-                "reason": "more-info-required",
-            },
-        ]
-    ),
-    pytest.param(
-        [
-            "Children, families, relationships",
             "Child taken without your consent",
             {
                 "endpoint": "contact.contact_us_fast_tracked",

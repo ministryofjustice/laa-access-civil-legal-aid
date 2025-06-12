@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-05-21 12:55+0100\n"
+"POT-Creation-Date: 2025-06-03 13:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -530,6 +530,12 @@ msgid "Is this about a child who is or has been in care?"
 msgstr ""
 
 msgid "Select if the child is or has been in care"
+msgstr ""
+
+msgid "Have you taken part in a family mediation session?"
+msgstr ""
+
+msgid "Select if you have taken part in a family mediation session"
 msgstr ""
 
 msgid "or"
@@ -1961,6 +1967,69 @@ msgid "Opening hours"
 msgstr ""
 
 msgid "Email"
+msgstr ""
+
+msgid "Problems about children and money when a relationship ends "
+msgstr ""
+
+msgid ""
+"Family mediators are trained professionals. They help you and the other "
+"parent agree on things like where your children live, contact with "
+"children, money and property."
+msgstr ""
+
+msgid "Mediators do not take sides or tell you what to do."
+msgstr ""
+
+msgid "It is not relationship counselling."
+msgstr ""
+
+msgid "You can choose to do mediation by phone or video call."
+msgstr ""
+
+msgid "You do not have to see or speak to your ex-partner."
+msgstr ""
+
+msgid ""
+"Mediation is probably not right if your ex-partner is abusive, "
+"controlling, or putting your children at risk."
+msgstr ""
+
+msgid "Legal aid covers 2 options, depending on your situation."
+msgstr ""
+
+msgid "Legal aid for family mediation"
+msgstr ""
+
+msgid ""
+"A trained mediator will help you and your ex-partner make decisions about"
+" your children and money. You do not need to be in the same room."
+msgstr ""
+
+msgid "About family mediation"
+msgstr ""
+
+msgid "Legal aid if there is domestic abuse or a child is at risk"
+msgstr ""
+
+msgid ""
+"You could get legal aid for advice and help in court. Domestic abuse can "
+"include:"
+msgstr ""
+
+msgid "controlling behaviour, emotional or financial abuse"
+msgstr ""
+
+msgid "harassing, stalking, threatening or hurting you"
+msgstr ""
+
+msgid "putting a child at risk"
+msgstr ""
+
+msgid "This could be by a partner, ex-partner or family member."
+msgstr ""
+
+msgid "If you cannot find the right option"
 msgstr ""
 
 msgid "Legal action against public organisations"

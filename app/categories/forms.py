@@ -87,3 +87,28 @@ class ChildInCareQuestionForm(QuestionForm):
             ("no", _("No")),
         ],
     )
+
+
+class PreviousFamilyMediationQuestionForm(QuestionForm):
+    category = "Question category"
+
+    title = _("Have you taken part in a family mediation session?")
+
+    next_step_mapping = {
+        "yes": "categories.results.in_scope",
+        "no": {"endpoint": "find-a-legal-adviser.search", "category": "fmed"},
+    }
+
+    question = RadioField(
+        title,
+        widget=CategoryRadioInput(show_divider=False, is_inline=True),
+        validators=[
+            InputRequired(
+                message=_("Select if you have taken part in a family mediation session")
+            )
+        ],
+        choices=[
+            ("yes", _("Yes")),
+            ("no", _("No")),
+        ],
+    )
