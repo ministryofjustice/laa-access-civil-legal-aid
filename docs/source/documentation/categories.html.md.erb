@@ -5,13 +5,22 @@ weight: 10
 
 # Category Pages
 
-The main category page views are defined in `app.categories.views`. 
+Category pages are the first pages on a user journey through the service. Their purpose is to diagnose' the category of law of 
+a users' problem.
+
+The main category page views are defined in `app.category.views`. 
 
 All views inherit from `CategoryPage`, a page can be registered to use this view by adding the following to a blueprint:
 
 ```python
 bp.add_url_rule('/url_endpoint', view_func=CategoryPage.as_view('page_name', template='template.html'))
 ```
+
+## Index Page
+The index page is the first page a user will see once starting their journey, it presents a list of categories of law
+where a user can select which is most applicable to their problem based on the provided descriptions.
+
+It is found at the `/find-your-problem/` endpoint.
 
 ## Category Landing Page
 Category landing pages are typically the first page a user is directed to after selecting a category, they allow the user 
@@ -48,6 +57,8 @@ HousingLandingPage.register_routes(bp)
 The `/housing` url rule registers the URL for the landing page and calling `register_routes` creates url rules for the sub categories.
 
 This means the routing logic is handled in the LandingPage class rather than via the template.
+
+These routes are registered to the `/housing/answer/{answer_key}/` endpoint where `answer_key` would be "homelessness", "eviction", or "other".
 
 ### Routing with additional arguments
 If you need to route to a page which accepts additional arguments, such as FALA, then map your route to a dictionary rather than an endpoint.
