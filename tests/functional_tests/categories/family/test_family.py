@@ -11,13 +11,16 @@ ROUTING = [
     },
     {
         "link_text": "Problems with an ex-partner, divorce",
-        "next_page_heading": contact_us_page_heading,
+        "next_page_heading": "Problems about children and money when a relationship ends",
     },
     {
         "link_text": "If there is domestic abuse",
         "next_page_heading": "Are you worried about someone's safety?",
     },
-    {"link_text": "Family mediation", "next_page_heading": in_scope_page_heading},
+    {
+        "link_text": "Family mediation",
+        "next_page_heading": "Have you taken part in a family mediation session?",
+    },
     {
         "link_text": "Child taken without your consent",
         "next_page_heading": contact_us_page_heading,

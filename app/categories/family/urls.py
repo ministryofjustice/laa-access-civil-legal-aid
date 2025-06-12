@@ -1,6 +1,7 @@
 from app.categories.family import bp
 from app.categories.results.views import NextStepsPage, CannotFindYourProblemPage
-from app.categories.views import CategoryLandingPage
+from app.categories.family.forms import PreviousFamilyMediationForm
+from app.categories.views import CategoryLandingPage, CategoryPage, QuestionPage
 from app.categories.constants import FAMILY
 
 
@@ -20,16 +21,16 @@ class FamilyLandingPage(CategoryLandingPage):
             ),
             (
                 FAMILY.sub.divorce,
-                {
-                    "endpoint": "contact.contact_us_fast_tracked",
-                    "reason": "more-info-required",
-                },
+                "categories.family.relationship-ending-triage",
             ),
             (
                 FAMILY.sub.domestic_abuse,
                 "categories.domestic_abuse.are_you_at_risk_of_harm",
             ),
-            (FAMILY.sub.family_mediation, "categories.results.in_scope"),
+            (
+                FAMILY.sub.family_mediation,
+                "categories.family.previous_family_mediation",
+            ),
             (
                 FAMILY.sub.child_abducted,
                 {
@@ -64,5 +65,19 @@ bp.add_url_rule(
     view_func=NextStepsPage.as_view(
         "next_steps",
         category=FAMILY,
+    ),
+)
+bp.add_url_rule(
+    "/children-families-relationships/problems-after-relationship-ends",
+    view_func=CategoryPage.as_view(
+        "relationship-ending-triage",
+        template="categories/family/relationship-ending-triage.html",
+        category=FAMILY,
+    ),
+)
+bp.add_url_rule(
+    "/children-families-relationships/family-mediation-session",
+    view_func=QuestionPage.as_view(
+        "previous_family_mediation", form_class=PreviousFamilyMediationForm
     ),
 )

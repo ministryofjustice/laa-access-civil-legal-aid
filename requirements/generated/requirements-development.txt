@@ -31,7 +31,7 @@ flask-wtf==1.2.2
 freezegun==1.5.1
 gitdb==4.0.12
 gitpython==3.1.41
-govuk-frontend-jinja==3.5.0
+govuk-frontend-jinja==3.6.0
 govuk-frontend-wtf==3.2.0
 greenlet==3.1.1
 identify==2.6.8
