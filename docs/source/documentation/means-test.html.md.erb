@@ -12,9 +12,9 @@ The journey begins when the user selects `Check if you qualify financially`.
 ## Check Financial Eligbility API
 The CFE API is used to check whether a user is financially eligbile as part of the means test.
 
-Check if you can get legal aid sends a request to CLA Backend which returns an eligibility check result via the endpoint:
+Check if you can get legal aid sends a request to CLA Backend which returns an eligibility check result when a `GET` request is sent to the following endpoint:
 ```
-checker/api/v1/eligibility_check/{reference}/is_eligible
+/checker/api/v1/eligibility_check/{reference}/is_eligible/
 ```
 
 
