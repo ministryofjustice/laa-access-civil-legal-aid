@@ -4,6 +4,45 @@
 
 var GTM_Loaded = false;
 
+
+function element_click() {
+    const element_click = (event) => {
+      var clickInputTypes = ['checkbox', 'radio', 'button', 'textarea', 'summary'];
+      var thisIsAClickInput = clickInputTypes.includes(event.target.getAttribute('type'));
+
+      // Don't track changes for clickable input types, only clicks
+      if(event.type === 'change' && thisIsAClickInput)return;
+
+      var elem = event.target.tagName.toLowerCase();
+      var value = '';
+
+      switch(elem) {
+        case 'textarea':
+        case 'input': value = thisIsAClickInput ? event.target.value : 'Redacted'; break;
+        case 'button': value = event.target.innerText; break;
+          case 'select': value = event.target.options[event.target.selectedIndex].text; break;
+      }
+
+      value = value.trim().replace(/\n/g,'').substring(0,30); // can be up to 100 if needed
+
+      window.dataLayer.push({
+        'event': 'element-' + event.type,
+        'element_tag': elem,
+        'element_id': event.target.id,
+        'element_value': value,
+        'element_checked': event.target.checked  === true
+      });
+
+    }
+    ['input', 'select', 'button', 'textarea'].forEach((tagName) => {
+        const elements = document.getElementsByTagName(tagName);
+        for (const element of elements) {
+            element.addEventListener("click", element_click);
+            element.addEventListener("change", element_click);
+        }
+    });
+}
+
 function add_GTM() {
 
     // Standard GTM code
@@ -95,8 +134,10 @@ function trackPageLoadTime() {
 // GTM Dom Push Events
 document.addEventListener('DOMContentLoaded', function () {
     if (GTM_Loaded) {
+        console.log("GTM LOADED");
         diagnosed();
         push_GTM_anon_id();
+        element_click();
     }
 });
 
