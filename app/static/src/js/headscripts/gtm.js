@@ -7,7 +7,7 @@ var GTM_Loaded = false;
 
 function element_click() {
     const element_click = (event) => {
-      var clickInputTypes = ['checkbox', 'radio', 'button', 'textarea', 'summary'];
+      var clickInputTypes = ['checkbox', 'radio', 'button', 'textarea'];
       var thisIsAClickInput = clickInputTypes.includes(event.target.getAttribute('type'));
 
       // Don't track changes for clickable input types, only clicks
@@ -20,21 +20,24 @@ function element_click() {
         case 'textarea':
         case 'input': value = thisIsAClickInput ? event.target.value : 'Redacted'; break;
         case 'button': value = event.target.innerText; break;
-          case 'select': value = event.target.options[event.target.selectedIndex].text; break;
+        case 'select': value = event.target.options[event.target.selectedIndex].text; break;
+        case 'span': value = event.target.innerText; break;
       }
 
       value = value.trim().replace(/\n/g,'').substring(0,30); // can be up to 100 if needed
-
-      window.dataLayer.push({
+        const data = {
         'event': 'element-' + event.type,
         'element_tag': elem,
         'element_id': event.target.id,
         'element_value': value,
         'element_checked': event.target.checked  === true
-      });
+      }
+      console.log(data)
+      window.dataLayer.push(data);
 
     }
-    ['input', 'select', 'button', 'textarea'].forEach((tagName) => {
+    ['input', 'select', 'button', 'textarea', 'summary'].forEach((tagName) => {
+
         const elements = document.getElementsByTagName(tagName);
         for (const element of elements) {
             element.addEventListener("click", element_click);
