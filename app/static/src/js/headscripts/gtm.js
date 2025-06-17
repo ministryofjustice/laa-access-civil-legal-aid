@@ -5,44 +5,51 @@
 var GTM_Loaded = false;
 
 
-function element_click() {
-    const element_click = (event) => {
-      var clickInputTypes = ['checkbox', 'radio', 'button', 'textarea'];
-      var thisIsAClickInput = clickInputTypes.includes(event.target.getAttribute('type'));
+function add_element_click_tracker() {
+    ['input', 'select', 'button', 'textarea', 'details'].forEach((tag_name) => {
+        const events = tag_name === "details" ? ["toggle"] : ["click", "change"];
+        const elements = document.getElementsByTagName(tag_name);
+        for (const element of elements) {
+            events.forEach((event_name)=>{
+                element.addEventListener(event_name, element_click_handler);
+            });
+        }
+    });
+}
 
-      // Don't track changes for clickable input types, only clicks
-      if(event.type === 'change' && thisIsAClickInput)return;
+function element_click_handler(event) {
+    console.log(event);
+    const clickInputTypes = ['checkbox', 'radio', 'button', 'textarea'];
+    const thisIsAClickInput = clickInputTypes.includes(event.target.getAttribute('type'));
 
-      var elem = event.target.tagName.toLowerCase();
-      var value = '';
+    // Don't track changes for clickable input types, only clicks
+    if(event.type === 'change' && thisIsAClickInput){
+        console.log("Return early");
+        return;
+    };
+    // Don't track details closed events
+    if (event.type === "toggle" && event.newState === "closed") {
+        return;
+    }
 
-      switch(elem) {
-        case 'textarea':
-        case 'input': value = thisIsAClickInput ? event.target.value : 'Redacted'; break;
-        case 'button': value = event.target.innerText; break;
-        case 'select': value = event.target.options[event.target.selectedIndex].text; break;
-        case 'span': value = event.target.innerText; break;
-      }
+    const elem = event.target.tagName.toLowerCase();
+    let value = '';
 
-      value = value.trim().replace(/\n/g,'').substring(0,30); // can be up to 100 if needed
-        const data = {
+    switch(elem) {
+    case 'textarea':
+    case 'input': value = thisIsAClickInput ? event.target.value : 'Redacted'; break;
+    case 'button': value = event.target.innerText; break;
+    case 'select': value = event.target.options[event.target.selectedIndex].text; break;
+    case 'details': value = event.target.querySelector(".govuk-details__summary-text").innerText; break;
+    }
+
+    value = value.trim().replace(/\n/g,'').substring(0,30); // can be up to 100 if needed
+    window.dataLayer.push({
         'event': 'element-' + event.type,
         'element_tag': elem,
         'element_id': event.target.id,
         'element_value': value,
-        'element_checked': event.target.checked  === true
-      }
-      console.log(data)
-      window.dataLayer.push(data);
-
-    }
-    ['input', 'select', 'button', 'textarea', 'summary'].forEach((tagName) => {
-
-        const elements = document.getElementsByTagName(tagName);
-        for (const element of elements) {
-            element.addEventListener("click", element_click);
-            element.addEventListener("change", element_click);
-        }
+        'element_checked': event.target.checked  === true,
     });
 }
 
@@ -137,10 +144,9 @@ function trackPageLoadTime() {
 // GTM Dom Push Events
 document.addEventListener('DOMContentLoaded', function () {
     if (GTM_Loaded) {
-        console.log("GTM LOADED");
         diagnosed();
         push_GTM_anon_id();
-        element_click();
+        add_element_click_tracker();
     }
 });
 
