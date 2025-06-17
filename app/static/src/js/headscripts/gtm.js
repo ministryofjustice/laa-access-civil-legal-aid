@@ -18,15 +18,13 @@ function add_element_click_tracker() {
 }
 
 function element_click_handler(event) {
-    console.log(event);
     const clickInputTypes = ['checkbox', 'radio', 'button', 'textarea'];
     const thisIsAClickInput = clickInputTypes.includes(event.target.getAttribute('type'));
 
     // Don't track changes for clickable input types, only clicks
     if(event.type === 'change' && thisIsAClickInput){
-        console.log("Return early");
         return;
-    };
+    }
     // Don't track details closed events
     if (event.type === "toggle" && event.newState === "closed") {
         return;
