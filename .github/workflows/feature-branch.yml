@@ -40,6 +40,13 @@ jobs:
     name: Build Documentation
     uses: ./.github/workflows/build-docs.yml
 
+  deploy-docs:
+    name: Deploy Documentation
+    needs: build-docs
+    uses: ./.github/workflows/deploy-docs.yml
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+
   scan-image:
     uses: ./.github/workflows/trivy-image-scan.yml
     needs: build-and-push
