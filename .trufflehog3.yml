@@ -12,6 +12,9 @@ exclude: # exclude matching issues
       - node_modules/**
       - .pytest_cache/**
       - .idea/**
+      - .github/workflows/build-docs.yml
+      - .github/workflows/deploy-docs.yml
+      - docs/makefile
   - message: Examples and data necessary for running auto-tests
     paths:
       - docs/*.html
