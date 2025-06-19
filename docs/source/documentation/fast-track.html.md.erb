@@ -29,10 +29,10 @@ href={{ url_for('contact.contact_us_fast_tracked', reason='other') }}
 
 These are the current valid fast track reasons:
 
-| Reason |
-| -------------------|
-| harm   |
-| more-info-required |
-| other  |
+| Constant           | Reason |
+|--------------------|--------------------|
+| `HARM`             |User has indicated they are at risk of harmv
+| `MORE_INFO_REQUIRED` |Further scoping information is required|
+| `OTHER `           |Other|
 
-Any url that does not include a fast track reason will default to `other`.
+If no fast track reason is provided the reason will default to `OTHER`.
