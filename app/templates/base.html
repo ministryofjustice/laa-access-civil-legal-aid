@@ -1,6 +1,6 @@
 {%  set htmlLang = language.current %}
 {%  set cspNonce = csp_nonce() %}
-{%  set govukRebrand = config['GOVUK_REBRAND'] %}
+{%  set govukRebrand = GOVUK_REBRAND_ENABLED %}
 {% set htmlClasses = "govuk-environment-" + config["ENVIRONMENT"] %}
 {% extends 'govuk_frontend_jinja/template.html' %}
 
