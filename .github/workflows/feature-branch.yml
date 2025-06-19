@@ -36,6 +36,10 @@ jobs:
     secrets:
       ACCESS_ECR_ROLE_TO_ASSUME: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
 
+  build-docs:
+    name: Build Documentation
+    uses: ./.github/workflows/build-docs.yml
+
   scan-image:
     uses: ./.github/workflows/trivy-image-scan.yml
     needs: build-and-push
@@ -66,7 +70,7 @@ jobs:
   deploy-uat:
     name: UAT
     uses: ./.github/workflows/deploy.yml
-    needs: [build-and-push, static-analysis, test]
+    needs: [deploy-dev]
     with:
       environment: uat
       ACCESS_ECR_REGION: ${{vars.ACCESS_ECR_REGION}}

@@ -40,4 +40,4 @@ def runner(app):
 
 @pytest.fixture(scope="function", autouse=True)
 def startup(app, page):
-    page.goto(url_for("main.index", _external=True))
+    page.goto(url_for("categories.index", _external=True))

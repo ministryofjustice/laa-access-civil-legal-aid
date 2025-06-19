@@ -1,3 +1,4 @@
+from app.categories.results.views import CannotFindYourProblemPage, NextStepsPage
 from app.categories.send import bp
 from app.categories.send.forms import SendChildInCareQuestionForm
 from app.categories.views import CategoryLandingPage, QuestionPage
@@ -19,7 +20,7 @@ class SendLandingPage(CategoryLandingPage):
             (EDUCATION.sub.schools, "categories.results.in_scope"),
             (EDUCATION.sub.care, "categories.community_care.landing"),
         ],
-        "other": "categories.results.refer",
+        "other": "categories.send.cannot_find_your_problem",
     }
 
 
@@ -29,5 +30,19 @@ bp.add_url_rule(
     view_func=QuestionPage.as_view(
         "child_in_care",
         form_class=SendChildInCareQuestionForm,
+    ),
+)
+bp.add_url_rule(
+    "/send/cannot-find-your-problem",
+    view_func=CannotFindYourProblemPage.as_view(
+        "cannot_find_your_problem",
+        next_steps_page="categories.send.next_steps",
+    ),
+)
+bp.add_url_rule(
+    "/send/next-steps",
+    view_func=NextStepsPage.as_view(
+        "next_steps",
+        category=EDUCATION,
     ),
 )

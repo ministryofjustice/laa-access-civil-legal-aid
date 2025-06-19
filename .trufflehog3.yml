@@ -1,9 +1,10 @@
 exclude: # exclude matching issues
   - message: Build directories
     paths:
+      - .env
       - build/**
       - dist/**
-      - python3.12/**
+      - python3.*/**
       - package-lock.json
       - README.md
       - app/static/**
@@ -11,6 +12,9 @@ exclude: # exclude matching issues
       - node_modules/**
       - .pytest_cache/**
       - .idea/**
+      - .github/workflows/build-docs.yml
+      - .github/workflows/deploy-docs.yml
+      - docs/makefile
   - message: Examples and data necessary for running auto-tests
     paths:
       - docs/*.html

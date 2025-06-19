@@ -3,7 +3,7 @@ import re
 from decimal import Decimal, InvalidOperation
 from enum import Enum
 from flask import session
-from wtforms.validators import StopValidation
+from wtforms.validators import StopValidation, NumberRange
 
 
 class ValidateIfType(Enum):
@@ -75,8 +75,9 @@ class MoneyIntervalAmountRequired(object):
 
         try:
             CurrencyValidator.validate_currency(amount)
-        except ValueError as e:
-            field.errors.append(str(e))
+        except ValueError:
+            message = messages["amount_message"]
+            field.errors.append(message)
             field.field_with_error.add("value")
 
         if (amount == "0") and not interval:
@@ -126,3 +127,13 @@ class CurrencyValidator:
             raise ValueError("Enter a valid amount (maximum 2 decimal places)")
 
         return decimal_value
+
+
+class NumberRangeAllowZero(NumberRange):
+    """Number range validator that allows 0 as a valid input."""
+
+    def __call__(self, form, field):
+        if field.data == 0:
+            return
+
+        super().__call__(form, field)

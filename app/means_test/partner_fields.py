@@ -1,5 +1,6 @@
 from flask import session
-from wtforms.fields import SelectMultipleField, RadioField
+from wtforms.fields import SelectMultipleField
+from app.means_test.fields import YesNoField
 
 
 class PartnerMixin(object):
@@ -18,5 +19,5 @@ class PartnerMultiCheckboxField(PartnerMixin, SelectMultipleField):
     pass
 
 
-class PartnerYesNoField(PartnerMixin, RadioField):
+class PartnerYesNoField(PartnerMixin, YesNoField):
     pass

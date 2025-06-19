@@ -16,12 +16,27 @@ from flask import (
 from flask_wtf.csrf import CSRFError
 from werkzeug.exceptions import HTTPException
 from app.main import bp
+from app.main.gtm import get_gtm_anon_id_from_cookie
 from app.main.forms import CookiesForm
 
 
-@bp.get("/main")
-def index():
-    return redirect(url_for("categories.index"))
+@bp.get("/")
+def start_page():
+    """Directs the user to the start page of the service, hosted on GOV.UK
+    This is the endpoint directed to from the header text, clicking this link will reset the users' session.
+    """
+    session.clear()
+    if current_app.config.get("ENVIRONMENT") != "production":
+        return redirect(url_for("categories.index"))
+
+    from app.main import get_locale
+
+    GOVUK_url = (
+        current_app.config.get("WELSH_GOV_UK_START_PAGE")
+        if get_locale() == "cy"
+        else current_app.config.get("GOV_UK_START_PAGE")
+    )
+    return redirect(GOVUK_url)
 
 
 @bp.get("/start")
@@ -38,8 +53,8 @@ def start():
     return response
 
 
-@bp.get("/bsl-start")
-def bsl_start():
+@bp.get("/start-bsl")
+def start_bsl():
     """This an entry point for the service from www.gov.uk/check-legal-aid
     This is a route for users who need to contact us via BSL, they are routed directly to the contact us page
     """
@@ -96,7 +111,7 @@ def status():
 @bp.route("/service-unavailable", methods=["GET"])
 def service_unavailable_page():
     if not current_app.config["SERVICE_UNAVAILABLE"]:
-        return redirect(url_for("main.index"))
+        return redirect(url_for("categories.index"))
     abort(503)
 
 
@@ -122,13 +137,18 @@ def cookies():
         # Create the response so we can set the cookie before returning
         response = make_response(render_template("cookies.html", form=form))
 
+        if cookies_policy["analytics"].lower() == "no":
+            for name, value in request.cookies.items():
+                if name.startswith("_ga") or name.startswith("gtm_anon_id"):
+                    response.delete_cookie(name)
+
         # Set cookies policy for one year
         response.set_cookie(
             "cookies_policy",
             json.dumps(cookies_policy),
             max_age=31557600,
             secure=True,
-            httponly=True,
+            httponly=False,  # This needs to be read by the client so we set HTTPOnly to false.
             samesite="Strict",
         )
         return response
@@ -147,11 +167,18 @@ def cookies():
 
 @bp.route("/privacy", methods=["GET"])
 def privacy():
-    return render_template("privacy.html")
+    return render_template("main/privacy.html")
+
+
+@bp.route("/online-safety")
+def online_safety():
+    return render_template("main/online-safety.html")
 
 
 @bp.route("/session-expired", methods=["GET"])
 def session_expired():
+    session.clear()
+    session["gtm_anon_id"] = get_gtm_anon_id_from_cookie()
     return render_template("session_expired.html")
 
 
@@ -169,6 +196,10 @@ def csrf_error(error):
 @bp.before_app_request
 def service_unavailable_middleware():
     if not current_app.config["SERVICE_UNAVAILABLE"]:
+        return
+
+    # Allow requests for static assets, this is required for the service unavailable page to render correctly
+    if request.path.startswith("/assets/"):
         return
 
     service_unavailable_url = url_for("main.service_unavailable_page")

@@ -1,23 +1,46 @@
 {%  set htmlLang = language.current %}
 {%  set cspNonce = csp_nonce() %}
+{%  set govukRebrand = GOVUK_REBRAND_ENABLED %}
+{% set htmlClasses = "govuk-environment-" + config["ENVIRONMENT"] %}
 {% extends 'govuk_frontend_jinja/template.html' %}
 
 {%- from 'govuk_frontend_jinja/components/cookie-banner/macro.html' import govukCookieBanner-%}
 {%- from 'govuk_frontend_jinja/components/error-summary/macro.html' import govukErrorSummary-%}
+{%- from 'govuk_frontend_jinja/components/exit-this-page/macro.html' import govukExitThisPage -%}
 {%- from 'govuk_frontend_jinja/components/notification-banner/macro.html' import govukNotificationBanner -%}
 {%- from 'govuk_frontend_jinja/components/phase-banner/macro.html' import govukPhaseBanner -%}
+{%- from "govuk_frontend_jinja/components/service-navigation/macro.html" import govukServiceNavigation -%}
 {%- from 'main/_modal-dialog.html' import timeout_dialog %}
 
 {% set assetPath = url_for('static', filename='').rstrip('/') %}
 
 {% block pageTitle %}{{config['SERVICE_NAME']}} – GOV.UK{% endblock %}
 
+{% block skipLink %}
+    {{ super() }}
+    {% if show_exit_this_page %}
+        <a href="https://bbc.co.uk/weather/" class="govuk-skip-link govuk-js-exit-this-page-skiplink" rel="nofollow noreferrer" data-module="govuk-skip-link">{% trans %}Exit this page{% endtrans %}</a>
+    {% endif %}
+{% endblock %}
+
 {% block head %}
     <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet" nonce="{{ csp_nonce() }}" />
     <script src="{{ url_for('static', filename='headscripts.js') }}" nonce="{{ csp_nonce() }}" ></script>
+    {% set session_category = session.get('category') %}
+    {% if session_category and session_category.get('code') %}
+      {% set session_category = session_category.get('code') | get_category_from_code %}
+    {% else %}
+      {% set session_category = None %}
+    {% endif %}
     <script nonce="{{ csp_nonce() }}">
         gtm_anon_id = '{{ gtm_anon_id }}';
+        window.sessionData = {{ {
+          "category_code": session_category.code if session_category else "",
+          "category_name": session_category.title if session_category else "" ,
+          "category_traversal": session.get('category_answers', []) | map(attribute='answer_label') | list,
+        } | tojson | safe }};
     </script>
+
     <meta name="description" content="{{config['SERVICE_NAME']}}">
     <meta name="author" content="{{config['DEPARTMENT_NAME']}}">
 {% endblock %}
@@ -114,27 +137,49 @@
 {% endblock %}
 
 {% block header %}
-    {{ govukHeader({
-    'homepageUrl': url_for('categories.index'),
-    'serviceName': config['SERVICE_NAME'],
-    'serviceUrl': url_for('categories.index'),
-    'useTudorCrown': true
+  {{ govukHeader({
+        'homepageUrl': "https://www.gov.uk",
+        'serviceName': config['SERVICE_NAME'] if not govukRebrand,
+        'serviceUrl': url_for('main.start_page'),
+        'useTudorCrown': true,
+        'rebrand': govukRebrand
   }) }}
+
+  {% if govukRebrand %}
+    {{ govukServiceNavigation({
+      'serviceName': config['SERVICE_NAME'],
+      'serviceUrl': "/"
+    }) }}
+  {% endif %}
+
 {% endblock %}
 
 {% block beforeContent %}
+    {% set contact_link %}
+      <a class="govuk-link" href="{{ url_for('contact.reasons_for_contacting') }}">
+        {{ _('Contact us') }}
+      </a>
+    {% endset %}
     {{ govukPhaseBanner({
         'tag': {
-          'text': config['SERVICE_PHASE'],
+          'text': config['ENVIRONMENT'].title() if config['ENVIRONMENT'].lower() != "uat" else "UAT",
         },
-        'html': '<a class="govuk-link" href="' + url_for('contact.reasons_for_contacting') + '">Contact us</a> if you need help or would like to give feedback to improve this service'
+        'html': contact_link + " " + (_("if you need help or would like to give feedback to improve this service"))
     }) }}
-
+    
+    {% if show_exit_this_page %}
+      {{ govukExitThisPage({
+        "text": _("Exit this page")
+      }) }}
+    {% endif %}
+    {% block timeoutDialog %}
+        {{ timeout_dialog() }}
+    {% endblock %}
 {% endblock %}
+
 
 {% block content %}
 
-    {{ timeout_dialog() }}
     {% if form and form.errors %}
         {{ govukErrorSummary(wtforms_errors(form)) }}
     {% endif %}
@@ -157,18 +202,26 @@
            'text': language.switch.text,
            'attributes': {'x-data': 'language-switcher'},
         },
+         {
+          'href': url_for('main.online_safety'),
+          'text': _("Staying safe online")
+        },
         {
-          'href': url_for('main.accessibility'),
-          'text': "Accessibility"
+          'href': url_for('main.privacy'),
+          'text': _("Privacy Policy")
         },
         {
           'href': url_for('main.cookies'),
-          'text': "Cookies"
+          'text': _("Cookies")
         },
         {
-            'href': url_for('main.privacy'),
-            'text': "Privacy"
-          }
+          'href': url_for('contact.reasons_for_contacting'),
+          'text': _("Contact")
+        },
+        {
+          'href': url_for('main.accessibility'),
+          'text': _("Accessibility statement")
+        },
       ],
       'html': 'Built by <a href="' + config['DEPARTMENT_URL'] +'" class="govuk-footer__link">' + config['DEPARTMENT_NAME'] + '</a>'
     }

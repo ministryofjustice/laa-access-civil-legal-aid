@@ -145,14 +145,35 @@ def test_conditional_fields(page: Page):
     page.locator("#has_partner").check()
     expect(page.get_by_role("group", name="Are you in a dispute with")).to_be_visible()
 
-    expect(page.locator("#conditional-have_children div")).not_to_be_visible()
+    expect(page.locator("#conditional-has_children div")).not_to_be_visible()
     page.get_by_role("group", name="Do you have any children aged").get_by_label(
         "Yes"
     ).check()
-    expect(page.locator("#conditional-have_children div")).to_be_visible()
+    expect(page.locator("#conditional-has_children div")).to_be_visible()
 
-    expect(page.locator("#conditional-have_dependents div")).not_to_be_visible()
+    expect(page.locator("#conditional-has_dependants div")).not_to_be_visible()
     page.get_by_role("group", name="Do you have any dependants").get_by_label(
         "Yes"
     ).check()
-    expect(page.locator("#conditional-have_dependents div")).to_be_visible()
+    expect(page.locator("#conditional-has_dependants div")).to_be_visible()
+
+
+@pytest.mark.usefixtures("live_server")
+def test_partner_field(page: Page):
+    page.get_by_role("link", name="Housing, homelessness, losing").click()
+    page.get_by_role("link", name="Homelessness").click()
+    page.get_by_role("button", name="Check if you qualify").click()
+
+    expect(
+        page.get_by_role("group", name="Are you in a dispute with")
+    ).not_to_be_visible()
+    page.locator("#has_partner").check()
+    expect(page.get_by_role("group", name="Are you in a dispute with")).to_be_visible()
+
+    page.locator("#in_dispute-2").click()
+    expect(page.get_by_role("group", name="Is your partner employed?")).to_be_visible()
+
+    page.locator("#has_partner-2").click()
+    expect(
+        page.get_by_role("group", name="Is your partner employed?")
+    ).not_to_be_visible()

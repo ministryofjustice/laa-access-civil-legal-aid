@@ -34,6 +34,17 @@ jobs:
     secrets:
       ACCESS_ECR_ROLE_TO_ASSUME: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
 
+  build-docs:
+    name: Build Documentation
+    uses: ./.github/workflows/build-docs.yml
+
+  deploy-docs:
+    name: Deploy Documentation
+    needs: build-docs
+    uses: ./.github/workflows/deploy-docs.yml
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+
   scan-image:
     uses: ./.github/workflows/trivy-image-scan.yml
     needs: build-and-push
@@ -43,6 +54,22 @@ jobs:
     secrets:
       ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
       ACCESS_ECR_ROLE_TO_ASSUME: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
+
+  deploy-uat:
+    name: UAT
+    uses: ./.github/workflows/deploy.yml
+    needs: build-and-push
+    with:
+      environment: uat
+      ACCESS_ECR_REGION: ${{vars.ACCESS_ECR_REGION}}
+      ACCESS_ECR_REPOSITORY: ${{vars.ACCESS_ECR_REPOSITORY}}
+    secrets:
+      ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+      ACCESS_ECR_ROLE_TO_ASSUME: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
+      KUBE_CERT: ${{ secrets.KUBE_CERT }}
+      KUBE_CLUSTER: ${{ secrets.KUBE_CLUSTER }}
+      KUBE_NAMESPACE: ${{ secrets.KUBE_NAMESPACE }}
+      KUBE_TOKEN: ${{ secrets.KUBE_TOKEN }}
 
   deploy-staging:
     name: Staging

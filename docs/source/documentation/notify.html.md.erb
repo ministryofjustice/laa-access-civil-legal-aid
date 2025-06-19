@@ -1,0 +1,39 @@
+---
+title: Notify Emails
+weight: 1000
+---
+
+# Notify Emails
+
+All of our email orchestration across all services is handled via our email orchestrator found at this [link](https://github.com/ministryofjustice/laa_govuk_notify_orchestrator).
+
+As part of this project, the notify API connections are set in the app/contact/notify/api.py. 
+
+Our service uses the `NotifyEmailOrchestrator` object to handle all requests to the API.
+
+## Sending an email
+Emails are typically sent with the `create_and_send_confirmation_email` function as exampled below:
+
+```python
+notify.create_and_send_confirmation_email(
+    email_address,
+    session["case_reference"],
+    session["callback_time"],
+    session["contact_type"],
+    form.data.get("full_name"),
+    form.data.get("thirdparty_full_name"),
+    form.data.get("contact_number"),
+    form.data.get("thirdparty_contact_number"),
+)
+```
+
+The `send_email` function is currently used as a helper function but can be used to send emails directly without parameters.
+Emails can only be sent if `TESTING` is set to False.
+
+## Email templates
+
+All emails sent to the Notify Orchestrator require a template to be provided which are set in `app/contact/notify/api/templates`.
+
+To update templates or retrieve their id's, head to the [notify website](https://www.notifications.service.gov.uk/).
+
+You can request a new account via the notify support. 

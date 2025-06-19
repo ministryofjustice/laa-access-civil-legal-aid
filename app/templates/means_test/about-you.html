@@ -1,8 +1,8 @@
 {% extends "means_test/form-page.html" %}
 {%- from 'govuk_frontend_jinja/components/details/macro.html' import govukDetails %}
 
-{% set areYouInADisputeHtml %}
-    {{ form.are_you_in_a_dispute() }}
+{% set inDisputeHtml %}
+    {{ form.in_dispute() }}
 {% endset %}
 
 {% set howManyChildrenUnder16Html %}
@@ -16,8 +16,8 @@
     }) }}
 {% endset %}
 
-{% set howManyDependentsOver16Html %}
-    {{ form.num_dependents(params={
+{% set howManyDependantsOver16Html %}
+    {{ form.num_dependants(params={
         "label": {
             "classes": "govuk-label--s"
         },
@@ -34,7 +34,7 @@
         'items': [
             {
                 'conditional': {
-                    'html': areYouInADisputeHtml
+                    'html': inDisputeHtml
                 },
             },
             {
@@ -44,7 +44,7 @@
 
     {{ form.on_benefits() }}
 
-    {{ form.have_children(params={
+    {{ form.has_children(params={
         'items': [
             {
                 'conditional': {
@@ -56,11 +56,11 @@
         ]
     }) }}
 
-    {{ form.have_dependents(params={
+    {{ form.has_dependants(params={
         'items': [
             {
                 'conditional': {
-                    'html': howManyDependentsOver16Html
+                    'html': howManyDependantsOver16Html
                 }
             },
             {
@@ -74,8 +74,8 @@
 
     {{ form.partner_is_employed(params={
         "attributes": {
-            "data-controlled-by": "are_you_in_a_dispute",
-            "data-show-value": "0"
+            "data-controlled-by": "in_dispute",
+            "data-show-value": "False"
         }
     }) }}
 
@@ -83,18 +83,23 @@
 
     {{ form.partner_is_self_employed(params={
         "attributes": {
-            "data-controlled-by": "are_you_in_a_dispute",
-            "data-show-value": "0"
+            "data-controlled-by": "in_dispute",
+            "data-show-value": "False"
         }
     }) }}
 
     {{ form.aged_60_or_over() }}
 
-    {{ form.have_savings() }}
+    {{ form.has_savings() }}
 
-    {{ form.have_valuables() }}
+    {{ form.has_valuables() }}
 
     {% include "means_test/components/valuable-info.html" %}
 
     {{ form.submit }}
+{% endblock %}
+
+{% block bodyEnd %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='about-you.js') }}" nonce="{{ csp_nonce() }}"></script>
 {% endblock %}

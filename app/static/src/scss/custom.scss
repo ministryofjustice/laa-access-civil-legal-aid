@@ -49,3 +49,17 @@
 	@include govuk-responsive-margin(8, "top");
 	@include govuk-responsive-margin(9, "bottom");
 }
+
+.address-container {
+    margin-left: 40px;
+}
+
+.cla-telephone {
+	white-space: nowrap;
+}
+
+.govuk-environment-production {
+	.govuk-phase-banner__content__tag {
+		display: none;
+	}
+}

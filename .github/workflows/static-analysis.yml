@@ -15,7 +15,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.12'
+        python-version: '3.13'
 
     - name: Run pip-compile pre-commit
       id: pip_compile
@@ -46,8 +46,8 @@ jobs:
         with:
           args: format --check
 
-  sonarcloud:
-    name: Sonar cloud
+  sonarqube:
+    name: SonarQube
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -60,11 +60,11 @@ jobs:
         with:
           name: coverage-xml-report
           path: coverage
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@master
         with:
           args: >
-            -Dsonar.python.version=3.12
+            -Dsonar.python.version=3.13
             -Dsonar.sources=app
             -Dsonar.python.coverage.reportPaths=coverage/coverage.xml
         env:
@@ -82,7 +82,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.12'
+        python-version: '3.13'
         cache: 'pip' # caching pip dependencies
 
     - name: Install dependencies

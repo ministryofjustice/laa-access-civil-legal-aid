@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{%- from 'components/back_link.html' import govukBackLink -%}
+{%- from 'govuk_frontend_jinja/components/button/macro.html' import govukButton -%}
+{%- from 'categories/components/help-organisations.html' import helpOrganisationsList %}
+{%- from 'categories/components/exceptional-case-funding.html' import exceptionalCaseFundingSidebar %}
+{%- from 'components/survey.html' import satisfaction_survey %}
+
+{% set fala_url = url_for("find-a-legal-adviser.search", category=fala_category_code.lower() if fala_category_code else None) %}
+
+{% set title = _('Legal aid doesn’t cover all types of problem') %}
+{% block pageTitle %}{{ title }} - {{ super() }}{% endblock %}
+
+{% block beforeContent%}
+{{ super() }}
+{{ govukBackLink() }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-xl">{{ title }}</h1>
+        {% if category != 'other' %}
+            <p class="govuk-body">{% trans %}You can still ask a solicitor for help – you will have to pay for their advice.{% endtrans %}</p>
+        {% else %}
+            <p class="govuk-body">You can <a class="govuk-link">ask a legal adviser</a> if an application might succeed in your case and how to apply.</p>
+            <p class="govuk-body">{{ _('You can still ask a solicitor for help - you will have to pay for their advice.') }}</p>
+        {% endif %}
+
+        {{ govukButton({
+          "text": _("Find a solicitor"),
+          "href": "https://www.gov.uk/find-a-legal-adviser"
+        }) }}
+
+        {{ satisfaction_survey("failed_means") }}
+
+        {% if category != 'other' and organisations %}
+            <p class="govuk-body">
+              {% trans %}You may still get help and advice from the organisations listed below. You don’t have to qualify for legal aid.{% endtrans %}
+            </p>
+
+            {# We use lowercase_category_name rather than lower, to not convert acronyms to lowercase #}
+            <h2 class="govuk-heading-l">{% trans category_name=_(category_name) | lowercase_category_name %}Help organisations for problems about {{ category_name }}{% endtrans %}</h2>
+            {{ helpOrganisationsList(organisations, truncate=5) }}
+        {% endif %}
+    </div>
+    <div class="govuk-grid-column-one-third">
+        {{ exceptionalCaseFundingSidebar(category) }}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+---
+title: Case Bookings
+weight: 400
+---
+
+# Case Bookings
+Cases are created at the contact stage of a users journey. When the user selects `Submit details`, the full payload is sent to the 
+CLA Backend endpoint via `post_case`. This sends the full payload to backend with all required information including information 
+provided on the contact us form.
+
+## Case reference
+The case reference is provided when the endpoint is called. This is then updated in the session to be provided on the confirmation page 
+by:
+
+```python
+session["case_reference"] = cla_backend.post_case(payload=payload)["reference"]
+```
+
+This in turn also posts the case to CLA Backend.
+
+## Reason for contacting
+When a user goes directly to Contact Us via the Reasons for Contacting form, the payload only creates a case with a 
+case reference and the selections on the reasons for contacting form.
+
+This is handled by the RFC `MODEL_REF_SESSION_KEY` to determine whether the user has followed this journey instead.
+
+
+## Email confirmation
+On contact us submission, if a user has provided an email address a confirmation email is sent. More information can be found 
+[here](../documentation/notify.html).
+
+The confirmation email uses the generated case reference and includes this in the email. Dependent on the user 
+selections on the contact us page, a specific template is used.

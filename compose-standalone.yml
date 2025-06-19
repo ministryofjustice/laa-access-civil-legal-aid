@@ -13,7 +13,7 @@ services:
     build:
       context: .
       args:
-        BASE_IMAGE: python:3.12-bookworm
+        BASE_IMAGE: python:3.13-bookworm
         REQUIREMENTS_FILE: "requirements-development.txt"
       target: development
     restart: always
@@ -23,6 +23,8 @@ services:
       - MAINTENANCE_MODE=FALSE
       - FLASK_RUN_PORT=8020
       - SENTRY_DSN=${SENTRY_DSN:-}
+      - GOVUK_NOTIFY_API_KEY=${GOVUK_NOTIFY_API_KEY:-}
+      - EMAIL_ORCHESTRATOR_URL=${EMAIL_ORCHESTRATOR_URL:-}
     ports:
       - "8020:8020"
     volumes:

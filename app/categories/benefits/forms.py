@@ -19,7 +19,7 @@ class AppealQuestionForm(QuestionForm):
         "supreme_court": FALA_REDIRECT,
         "upper_tribunal": FALA_REDIRECT,
         "appeal_court": FALA_REDIRECT,
-        "none": "categories.results.refer",
+        "none": "categories.benefits.cannot_find_your_problem",
     }
     question = RadioField(
         title,
@@ -32,6 +32,6 @@ class AppealQuestionForm(QuestionForm):
             ("supreme_court", _("Supreme Court")),
             ("appeal_court", _("Court of Appeal")),
             ("", ""),
-            ("none", _("None of the above")),
+            ("none", _("None of these")),
         ],
     )

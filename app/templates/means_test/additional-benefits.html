@@ -1,11 +1,17 @@
 {% extends "means_test/form-page.html" %}
 
+{% block formDescription %}
+    <p class="govuk-body-l">
+    {% trans %}You’ll need to provide evidence of the financial information you’ve given us through this service.{% endtrans %}
+    </p>
+{% endblock %}
+
 {% block form %}
 
     {{ form.csrf_token }}
 
     {{ form.benefits }}
-    {{ form.render_conditional(form.other_benefits, form.total_other_benefit, "1") }}
+    {{ form.render_conditional(form.other_benefits, form.total_other_benefit, "True") }}
 
     {{ form.submit }}
 {% endblock %}

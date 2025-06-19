@@ -81,13 +81,12 @@ class MoneyInterval(dict):
 
         try:
             self["per_interval_value"] = to_amount(value)
-
         except (InvalidOperation, ValueError):
-            raise ValueError(
-                "Invalid value for amount {0} ({1})".format(value, type(value))
-            )
+            return False
 
     def amount_to_pounds(self):
+        if self["per_interval_value"] == 0:
+            return 0
         if not self["per_interval_value"]:
             return None
         return self["per_interval_value"] / 100
@@ -144,5 +143,9 @@ class MoneyInterval(dict):
     def is_money_interval(cls, other):
         if hasattr(other, "keys") and callable(other.keys):
             keys = set(other.keys())
-            return keys == set(["per_interval_value", "interval_period"])
+            return keys == {"per_interval_value", "interval_period"} or keys == {
+                "per_interval_value",
+                "per_interval_value_pence",
+                "interval_period",
+            }
         return False

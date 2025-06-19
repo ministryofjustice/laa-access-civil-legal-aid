@@ -1,10 +1,14 @@
-{% macro cannot_find_your_problem(category, url) -%}
+{% macro cannot_find_your_problem(category, url, text_override=None) -%}
     <div class="govuk-inset-text cannot-find-your-problem">
         <p class="govuk-heading-m govuk-!-margin-bottom-1">
-            {% trans %}If you cannot find your problem{% endtrans %}
+            {% if not text_override %}
+                {% trans %}If you cannot find your problem{% endtrans %}
+            {% else %}
+                {{ text_override }}
+            {% endif %}
             {% if category %}: {{ category }}
             {% endif %}
         </p>
-        <a class="govuk-link govuk-link--no-visited-state" href="{{ url }}">Next steps to get help</a>
+        <a class="govuk-link govuk-link--no-visited-state" href="{{ url }}">{% trans %}Next steps to get help{% endtrans %}</a>
     </div>
 {% endmacro %}

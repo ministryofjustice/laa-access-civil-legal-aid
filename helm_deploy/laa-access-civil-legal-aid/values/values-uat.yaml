@@ -3,11 +3,12 @@ environment: "uat"
 
 ingress:
   enabled: true
-  hosts:
-    - host: "access-civil-legal-aid-uat.cloud-platform.service.justice.gov.uk"
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
+  host: "uat.checklegalaid.service.gov.uk"
+  tls:
+    secretName: "tls-certificate"
+
+whitelist:
+  enabled: true
 
 # Lists don't deep merge, so this list of envVars overrides anything defined in an earlier values file
 envVars:
