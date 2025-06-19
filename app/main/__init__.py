@@ -74,8 +74,3 @@ def inject_govuk_rebrand():
         )
 
     return {"GOVUK_REBRAND_ENABLED": govuk_rebrand_enabled}
-
-
-@bp.app_context_processor
-def inject_time():
-    return {"TIME": datetime.now()}
