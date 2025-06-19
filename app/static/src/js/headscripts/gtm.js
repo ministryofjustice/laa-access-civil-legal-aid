@@ -42,9 +42,9 @@ function element_click_handler(event) {
     }
 
     value = value.trim().replace(/\n/g,'').substring(0,50); // can be up to 100 if needed
-    const label_element = undefined;
+    let label_element;
     if (event.target.id) {
-        document.querySelector(`label[for=${event.target.id}]`);
+        label_element = document.querySelector(`label[for=${event.target.id}]`);
     }
 
     window.dataLayer.push({
@@ -52,7 +52,7 @@ function element_click_handler(event) {
         'element_tag': elem,
         'element_id': event.target.id,
         'element_value': value,
-        "element_text": label_element === undefined ? '': label_element.innerText,
+        "element_text": label_element == undefined ? '': label_element.innerText,
         'element_checked': event.target.checked  === true,
     });
 }
