@@ -36,6 +36,10 @@ jobs:
     secrets:
       ACCESS_ECR_ROLE_TO_ASSUME: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
 
+  build-docs:
+    name: Build Documentation
+    uses: ./.github/workflows/build-docs.yml
+
   scan-image:
     uses: ./.github/workflows/trivy-image-scan.yml
     needs: build-and-push
