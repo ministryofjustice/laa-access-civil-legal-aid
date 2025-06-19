@@ -18,7 +18,7 @@ function add_element_click_tracker() {
 }
 
 function element_click_handler(event) {
-    const clickInputTypes = ['checkbox', 'radio', 'button', 'textarea'];
+    const clickInputTypes = ['checkbox', 'radio', 'button'];
     const thisIsAClickInput = clickInputTypes.includes(event.target.getAttribute('type'));
 
     // Don't track changes for clickable input types, only clicks
@@ -34,19 +34,25 @@ function element_click_handler(event) {
     let value = '';
 
     switch(elem) {
-    case 'textarea':
-    case 'input': value = thisIsAClickInput ? event.target.value : 'Redacted'; break;
-    case 'button': value = event.target.innerText; break;
-    case 'select': value = event.target.options[event.target.selectedIndex].text; break;
-    case 'details': value = event.target.querySelector(".govuk-details__summary-text").innerText; break;
+        case 'textarea':
+        case 'input': value = thisIsAClickInput ? event.target.value : 'Redacted'; break;
+        case 'button': value = event.target.innerText; break;
+        case 'select': value = event.target.options[event.target.selectedIndex].text; break;
+        case 'details': value = event.target.querySelector(".govuk-details__summary-text").innerText; break;
     }
 
-    value = value.trim().replace(/\n/g,'').substring(0,30); // can be up to 100 if needed
+    value = value.trim().replace(/\n/g,'').substring(0,50); // can be up to 100 if needed
+    const label_element = undefined;
+    if (event.target.id) {
+        document.querySelector(`label[for=${event.target.id}]`);
+    }
+
     window.dataLayer.push({
         'event': 'element-' + event.type,
         'element_tag': elem,
         'element_id': event.target.id,
         'element_value': value,
+        "element_text": label_element === undefined ? '': label_element.innerText,
         'element_checked': event.target.checked  === true,
     });
 }
