@@ -4,6 +4,59 @@
 
 var GTM_Loaded = false;
 
+
+function add_element_click_tracker() {
+    ['input', 'select', 'button', 'textarea', 'details'].forEach((tag_name) => {
+        const events = tag_name === "details" ? ["toggle"] : ["click", "change"];
+        const elements = document.getElementsByTagName(tag_name);
+        for (const element of elements) {
+            events.forEach((event_name)=>{
+                element.addEventListener(event_name, element_click_handler);
+            });
+        }
+    });
+}
+
+function element_click_handler(event) {
+    const clickInputTypes = ['checkbox', 'radio', 'button'];
+    const thisIsAClickInput = clickInputTypes.includes(event.target.getAttribute('type'));
+
+    // Don't track changes for clickable input types, only clicks
+    if(event.type === 'change' && thisIsAClickInput){
+        return;
+    }
+    // Don't track details closed events
+    if (event.type === "toggle" && event.newState === "closed") {
+        return;
+    }
+
+    const elem = event.target.tagName.toLowerCase();
+    let value = '';
+
+    switch(elem) {
+        case 'textarea':
+        case 'input': value = thisIsAClickInput ? event.target.value : 'Redacted'; break;
+        case 'button': value = event.target.innerText; break;
+        case 'select': value = event.target.options[event.target.selectedIndex].text; break;
+        case 'details': value = event.target.querySelector(".govuk-details__summary-text").innerText; break;
+    }
+
+    value = value.trim().replace(/\n/g,'').substring(0,50); // can be up to 100 if needed
+    let label_element;
+    if (event.target.id) {
+        label_element = document.querySelector(`label[for=${event.target.id}]`);
+    }
+
+    window.dataLayer.push({
+        'event': 'element-' + event.type,
+        'element_tag': elem,
+        'element_id': event.target.id,
+        'element_value': value,
+        "element_text": label_element == undefined ? '': label_element.innerText,
+        'element_checked': event.target.checked  === true,
+    });
+}
+
 function add_GTM() {
 
     // Standard GTM code
@@ -97,6 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (GTM_Loaded) {
         diagnosed();
         push_GTM_anon_id();
+        add_element_click_tracker();
     }
 });
 
