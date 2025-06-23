@@ -34,8 +34,13 @@ document.addEventListener("DOMContentLoaded", function () {
             // Hide form after successful submission
             form.style.display = "none";
 
+            const boldEmailAddress = document.createElement('strong');
+            boldEmailAddress.textContent = content.email;
+
             // Update the confirmation message with the translated label
-            confirmationMessage.innerHTML = `${label} <strong>${content.email}.</strong>`;
+            confirmationMessage.textContent = `${label} `;
+            confirmationMessage.appendChild(boldEmailAddress);
+            confirmationMessage.appendChild(document.createTextNode('.'));
             confirmationMessage.style.display = "block";  // Ensure message is visible
         } else {
             const errorText = content.errors?.email?.[0];
