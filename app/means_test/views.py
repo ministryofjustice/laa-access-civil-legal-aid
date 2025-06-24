@@ -78,9 +78,7 @@ class FormsMixin:
         forms.append(
             {
                 "key": "contact-us",
-                "title": _(
-                    "Contact information"
-                ),  # This is intentionally different from the page title
+                "title": _("Contact information"),  # This is intentionally different from the page title
                 "url": url_for("contact.contact_us"),
                 "is_current": current_form.page_title == ContactUsForm.page_title,
                 "is_completed": False,  # This can always be false as we don't show the progress bar after the contact us form
@@ -182,10 +180,7 @@ class MeansTest(FormsMixin, InScopeMixin, View):
             # Once we are sure of the user's eligibility we should not ask the user subsequent questions
             # and instead ask them to confirm their answers before proceeding.
             # We skip this check on the about-you page to match existing behaviour from CLA Public.
-            if (
-                eligibility_result != EligibilityState.UNKNOWN
-                and self.current_name not in ["about-you", "benefits"]
-            ):
+            if eligibility_result != EligibilityState.UNKNOWN and self.current_name not in ["about-you", "benefits"]:
                 return redirect(url_for("means_test.review"))
 
             return redirect(next_page)
@@ -250,9 +245,7 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
             form_data = MultiDict(eligibility.forms.get(key, {}))
             form = form_class(form_data)
             if form.should_show():
-                means_test_summary[str(form.page_title)] = self.get_form_summary(
-                    form, key
-                )
+                means_test_summary[str(form.page_title)] = self.get_form_summary(form, key)
 
         params = {
             "means_test_summary": means_test_summary,
@@ -271,9 +264,7 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
                     "key": {"text": _("The problem you need help with")},
                     "value": {"text": category.title},
                     "actions": {
-                        "items": [
-                            {"text": _("Change"), "href": url_for("categories.index")}
-                        ],
+                        "items": [{"text": _("Change"), "href": url_for("categories.index")}],
                     },
                 },
             ]
@@ -290,9 +281,7 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
                     "key": {"text": _("The problem you need help with")},
                     "value": {"markdown": value},
                     "actions": {
-                        "items": [
-                            {"text": _("Change"), "href": url_for("categories.index")}
-                        ],
+                        "items": [{"text": _("Change"), "href": url_for("categories.index")}],
                     },
                 },
             ]
@@ -310,9 +299,7 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
             # if a category doesn't have children then it does not have subpages so we don't show the category description
             results = get_your_problem__no_description(subcategory)
 
-        onward_questions = filter(
-            lambda answer: answer.question_type == QuestionType.ONWARD, answers
-        )
+        onward_questions = filter(lambda answer: answer.question_type == QuestionType.ONWARD, answers)
 
         for answer in onward_questions:
             answer_key = "text"
@@ -328,9 +315,7 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
                 {
                     "key": {"text": gettext(answer.question)},
                     "value": {answer_key: answer_label},
-                    "actions": {
-                        "items": [{"text": _("Change"), "href": answer.edit_url}]
-                    },
+                    "actions": {"items": [{"text": _("Change"), "href": answer.edit_url}]},
                 }
             )
         return results
@@ -359,22 +344,14 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
 
                         if isinstance(items.get(key)["answer"], list):
                             answer_key = "markdown"
-                            items.get(key)["answer"] = "\n".join(
-                                items.get(key)["answer"]
-                            )
+                            items.get(key)["answer"] = "\n".join(items.get(key)["answer"])
 
-                        change_link = url_for(
-                            f"means_test.{form_name}", _anchor=items.get(key)["id"]
-                        )
+                        change_link = url_for(f"means_test.{form_name}", _anchor=items.get(key)["id"])
                         summary.append(
                             {
                                 "key": {"text": items.get(key)["question"]},
                                 "value": {answer_key: items.get(key)["answer"]},
-                                "actions": {
-                                    "items": [
-                                        {"href": change_link, "text": _("Change")}
-                                    ]
-                                },
+                                "actions": {"items": [{"href": change_link, "text": _("Change")}]},
                             }
                         )
             else:
@@ -385,22 +362,14 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
 
                         if isinstance(items.get(key)["answer"], list):
                             answer_key = "markdown"
-                            items.get(key)["answer"] = "\n".join(
-                                items.get(key)["answer"]
-                            )
+                            items.get(key)["answer"] = "\n".join(items.get(key)["answer"])
 
-                        change_link = url_for(
-                            f"means_test.{form_name}", _anchor=items.get(key)["id"]
-                        )
+                        change_link = url_for(f"means_test.{form_name}", _anchor=items.get(key)["id"])
                         summary.append(
                             {
                                 "key": {"text": items.get(key)["question"]},
                                 "value": {answer_key: items.get(key)["answer"]},
-                                "actions": {
-                                    "items": [
-                                        {"href": change_link, "text": _("Change")}
-                                    ]
-                                },
+                                "actions": {"items": [{"href": change_link, "text": _("Change")}]},
                             }
                         )
             return summary
@@ -427,10 +396,7 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
         eligibility = is_eligible(session.ec_reference)
 
         # Failsafe, if we are unsure of the eligibility state at this point send the user to the call centre
-        if (
-            eligibility == EligibilityState.YES
-            or eligibility == EligibilityState.UNKNOWN
-        ):
+        if eligibility == EligibilityState.YES or eligibility == EligibilityState.UNKNOWN:
             logger.info(f"Eligibility check result successful - state is {eligibility}")
             return redirect(url_for("contact.eligible"))
 

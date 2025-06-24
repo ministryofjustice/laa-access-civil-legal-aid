@@ -8,9 +8,7 @@ load_dotenv()
 
 class Config(object):
     ENVIRONMENT = os.environ.get("CLA_ENVIRONMENT", "production")
-    GOV_UK_START_PAGE = os.environ.get(
-        "GOV_UK_START_PAGE", "https://www.gov.uk/check-legal-aid"
-    )
+    GOV_UK_START_PAGE = os.environ.get("GOV_UK_START_PAGE", "https://www.gov.uk/check-legal-aid")
     WELSH_GOV_UK_START_PAGE = os.environ.get(
         "WELSH_GOV_UK_START_PAGE",
         "https://www.gov.uk/gwirio-os-ydych-yn-gymwys-i-gael-cymorth-cyfreithiol",

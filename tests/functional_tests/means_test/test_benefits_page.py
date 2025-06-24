@@ -72,9 +72,7 @@ def navigate_to_benefits(page: Page, answers: dict, navigate_to_means_test):
 @pytest.mark.usefixtures("live_server")
 @pytest.mark.parametrize("answers", about_you_form_routing)
 @pytest.mark.parametrize("selections,expected_heading", rfc_form_routing)
-def test_means_test_benefits_page(
-    page: Page, selections: list, expected_heading: str, navigate_to_benefits
-):
+def test_means_test_benefits_page(page: Page, selections: list, expected_heading: str, navigate_to_benefits):
     """
     Test the means test benefits page with different combinations of selections.
 
@@ -109,9 +107,7 @@ def test_additional_benefits_routing(page: Page, navigate_to_benefits):
     expect(page.get_by_role("heading", name="Your additional benefits")).to_be_visible()
     page.get_by_role("link", name="Completed page: About you").click()
     expect(page.get_by_role("heading", name="About you")).to_be_visible()
-    page.get_by_role(
-        "group", name="Do you receive any benefits (including Child Benefit)?"
-    ).get_by_label("No").click()
+    page.get_by_role("group", name="Do you receive any benefits (including Child Benefit)?").get_by_label("No").click()
     page.get_by_role("button", name="Continue").click()
     expect(page.get_by_role("heading", name="Your money coming in")).to_be_visible()
 

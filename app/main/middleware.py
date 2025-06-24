@@ -13,15 +13,11 @@ def add_noindex_header(response):
 def add_no_cache_headers(response):
     """Prevents the webbrowser from caching webpages"""
     if not request.path.startswith("/assets"):
-        response.headers["Cache-Control"] = (
-            "no-store, no-cache, must-revalidate, max-age=0"
-        )
+        response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
         response.headers["Pragma"] = "no-cache"
         response.headers["Expires"] = "0"
     else:
-        response.headers["Cache-Control"] = (
-            "public, max-age=1800"  # Max age of 30 minutes
-        )
+        response.headers["Cache-Control"] = "public, max-age=1800"  # Max age of 30 minutes
         response.headers["Pragma"] = "cache"
 
     return response

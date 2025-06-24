@@ -35,13 +35,9 @@ class TestCreateFALARedirect:
             (None, "ignored", "https://staging.find-legal-advice.justice.gov.uk/check"),
         ],
     )
-    def test_create_fala_url_with_parameters(
-        self, app, client, category, secondary_category, expected_url
-    ):
+    def test_create_fala_url_with_parameters(self, app, client, category, secondary_category, expected_url):
         with client.application.test_request_context("/"):
-            result = create_fala_url(
-                category=category, secondary_category=secondary_category
-            )
+            result = create_fala_url(category=category, secondary_category=secondary_category)
             assert result == expected_url
 
     def test_create_fala_url_without_trailing_slash(self, app, client):
@@ -70,14 +66,12 @@ class TestFindALegalAdviserRedirect:
         category = "hou"
         secondary_category = "immas"
 
-        with patch(
-            "app.find_a_legal_adviser.routes.create_fala_url"
-        ) as mock_create_fala_url:
-            mock_create_fala_url.return_value = "https://staging.find-legal-advice.justice.gov.uk/check?categories=housing&sub-category=eviction"
+        with patch("app.find_a_legal_adviser.routes.create_fala_url") as mock_create_fala_url:
+            mock_create_fala_url.return_value = (
+                "https://staging.find-legal-advice.justice.gov.uk/check?categories=housing&sub-category=eviction"
+            )
 
-            with patch(
-                "app.find_a_legal_adviser.routes.render_template"
-            ) as mock_render_template:
+            with patch("app.find_a_legal_adviser.routes.render_template") as mock_render_template:
                 response = client.get(
                     "/find-a-legal-adviser",
                     query_string={
@@ -88,9 +82,7 @@ class TestFindALegalAdviserRedirect:
 
                 assert response.status_code == 200
 
-                mock_create_fala_url.assert_called_once_with(
-                    category=category, secondary_category=secondary_category
-                )
+                mock_create_fala_url.assert_called_once_with(category=category, secondary_category=secondary_category)
 
                 mock_render_template.assert_called_once_with(
                     "categories/fala-interstitial.html",
@@ -101,12 +93,8 @@ class TestFindALegalAdviserRedirect:
         """
         Test that invalid categories are not passed to create_fala_url
         """
-        with patch(
-            "app.find_a_legal_adviser.routes.create_fala_url"
-        ) as mock_create_fala_url:
-            mock_create_fala_url.return_value = (
-                "https://staging.find-legal-advice.justice.gov.uk/check"
-            )
+        with patch("app.find_a_legal_adviser.routes.create_fala_url") as mock_create_fala_url:
+            mock_create_fala_url.return_value = "https://staging.find-legal-advice.justice.gov.uk/check"
 
             with patch("app.find_a_legal_adviser.routes.abort") as mock_abort:
                 client.get(
@@ -128,10 +116,10 @@ class TestFindALegalAdviserRedirect:
         valid_category = "housing"
         invalid_category = "invalid"
 
-        with patch(
-            "app.find_a_legal_adviser.routes.create_fala_url"
-        ) as mock_create_fala_url:
-            mock_create_fala_url.return_value = "https://staging.find-legal-advice.justice.gov.uk/check?categories=housing"
+        with patch("app.find_a_legal_adviser.routes.create_fala_url") as mock_create_fala_url:
+            mock_create_fala_url.return_value = (
+                "https://staging.find-legal-advice.justice.gov.uk/check?categories=housing"
+            )
 
             with patch("app.find_a_legal_adviser.routes.abort") as mock_abort:
                 client.get(
