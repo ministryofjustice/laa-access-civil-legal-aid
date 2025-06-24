@@ -48,10 +48,7 @@ def inject_exit_this_page():
     category_questions = session.get("category_answers", [])
 
     for question in category_questions:
-        if (
-            question["question"] == "Are you worried about someone's safety?"
-            and question["answer_value"] == "no"
-        ):
+        if question["question"] == "Are you worried about someone's safety?" and question["answer_value"] == "no":
             return {"show_exit_this_page": False}
 
     return {"show_exit_this_page": getattr(category, "exit_page", False)}
@@ -65,12 +62,7 @@ def inject_risk_of_harm():
 @bp.app_context_processor
 def inject_govuk_rebrand():
     govuk_rebrand_enabled = datetime.now() > datetime(2025, 6, 25)
-    if (
-        not govuk_rebrand_enabled
-        and current_app.config.get("ENVIRONMENT") != "production"
-    ):
-        govuk_rebrand_enabled = (
-            request.args.get("govuk_rebrand_enabled", "false").lower() == "true"
-        )
+    if not govuk_rebrand_enabled and current_app.config.get("ENVIRONMENT") != "production":
+        govuk_rebrand_enabled = request.args.get("govuk_rebrand_enabled", "false").lower() == "true"
 
     return {"GOVUK_REBRAND_ENABLED": govuk_rebrand_enabled}

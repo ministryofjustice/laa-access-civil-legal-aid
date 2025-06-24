@@ -60,9 +60,7 @@ class Category:
 
             def __getattr__(self, item):
                 if item not in self.children:
-                    raise AttributeError(
-                        f"Could not find {item} in category {self.category.title}"
-                    )
+                    raise AttributeError(f"Could not find {item} in category {self.category.title}")
                 return self.children.get(item)
 
         return Subcategory(self)
@@ -137,9 +135,7 @@ DOMESTIC_ABUSE = Category(
         ),
         "forced_marriage": Category(
             title=_("Forced Marriage"),
-            description=_(
-                "Help with forced marriage and Forced Marriage Protection Orders."
-            ),
+            description=_("Help with forced marriage and Forced Marriage Protection Orders."),
             code="forced_marriage",
             in_scope=True,
         ),
@@ -204,9 +200,7 @@ FAMILY = Category(
         ),
         "child_abducted": Category(
             title=_("Child taken without your consent"),
-            description=_(
-                "If a child has been abducted (taken without your permission), including outside the UK."
-            ),
+            description=_("If a child has been abducted (taken without your permission), including outside the UK."),
             code="child_abducted",
             in_scope=True,
         ),
@@ -225,9 +219,7 @@ FAMILY = Category(
         ),
         "forced_marriage": Category(
             title=_("Forced marriage"),
-            description=_(
-                "Help with forced marriage and Forced Marriage Protection Orders."
-            ),
+            description=_("Help with forced marriage and Forced Marriage Protection Orders."),
             code="forced_marriage",
         ),
     },
@@ -299,32 +291,24 @@ HOUSING = Category(
         ),
         "discrimination": Category(
             title=_("Discrimination"),
-            description=_(
-                "Treated unfairly by a landlord, council or housing association."
-            ),
+            description=_("Treated unfairly by a landlord, council or housing association."),
             code="discrimination",
         ),
         "antisocial_behaviour": Category(
             title=_("If you’ve been accused of anti-social behaviour"),
-            description=_(
-                "Accused of anti-social behaviour by the landlord, council or housing association."
-            ),
+            description=_("Accused of anti-social behaviour by the landlord, council or housing association."),
             code="antisocial_behaviour",
             in_scope=True,
         ),
         "antisocial_behaviour_gangs": Category(
             title=_("Anti-social behaviour and gangs"),
-            description=_(
-                "If you’re accused or taken to court for anti-social behaviour, including being in a gang."
-            ),
+            description=_("If you’re accused or taken to court for anti-social behaviour, including being in a gang."),
             code="antisocial_behaviour_gangs",
             in_scope=True,
         ),
         "problems_with_neighbours": Category(
             title=_("Problems with neighbours, landlords or other people"),
-            description=_(
-                "Threats, abuse or harassment by someone who is not a family member."
-            ),
+            description=_("Threats, abuse or harassment by someone who is not a family member."),
             code="problems_with_neighbours",
             in_scope=True,
         ),
@@ -359,9 +343,7 @@ EDUCATION = Category(
         ),
         "tribunals": Category(
             title=_("SEND tribunals"),
-            description=_(
-                "Applying for or going to a SEND tribunal, appealing a decision by a tribunal."
-            ),
+            description=_("Applying for or going to a SEND tribunal, appealing a decision by a tribunal."),
             code="tribunals",
             in_scope=True,
         ),
@@ -423,9 +405,7 @@ COMMUNITY_CARE = Category(
         ),
         "care_or_funding_stops": Category(
             title=_("If care or funding stops"),
-            description=_(
-                "Problems if care or money for care is stopped or reduced, or if care facilities close."
-            ),
+            description=_("Problems if care or money for care is stopped or reduced, or if care facilities close."),
             code="care_or_funding_stops",
         ),
         "placement_care_homes_care_housing": Category(
@@ -463,9 +443,7 @@ BENEFITS = Category(
 
 PUBLIC_LAW = Category(
     title=_("Legal action against police and public organisations"),
-    description=_(
-        "Includes police, government, prisons, NHS, the council, care facilities and schools."
-    ),
+    description=_("Includes police, government, prisons, NHS, the council, care facilities and schools."),
     article_category_name="Public",
     chs_code="publiclaw",
     code="public_law",
@@ -473,25 +451,19 @@ PUBLIC_LAW = Category(
 
 ASYLUM_AND_IMMIGRATION = Category(
     title=_("Asylum and immigration"),
-    description=_(
-        "Help if you’re seeking asylum. Help to stay in the UK if you experienced domestic abuse."
-    ),
+    description=_("Help if you’re seeking asylum. Help to stay in the UK if you experienced domestic abuse."),
     chs_code="immigration",
     code="asylum_and_immigration",
     article_category_name="Immigration and asylum",
     children={
         "apply": Category(
             title=_("Applying for asylum"),
-            description=_(
-                "Help to apply for asylum, go to asylum interviews, or appeal an asylum decision."
-            ),
+            description=_("Help to apply for asylum, go to asylum interviews, or appeal an asylum decision."),
             code="apply",
         ),
         "housing": Category(
             title=_("Housing and homelessness"),
-            description=_(
-                "Help to apply for housing, problems with housing or if you are homeless."
-            ),
+            description=_("Help to apply for housing, problems with housing or if you are homeless."),
             code="housing",
             in_scope=True,
             eligible_for_HLPAS=True,
@@ -564,20 +536,14 @@ ADOPTING = Category(
     exit_page=False,
 )
 WORK_WITH_VULNERABLE = Category(
-    title=_(
-        "Appeal a decision that you cannot work with children or vulnerable adults"
-    ),
-    description=_(
-        "Including if you’re on a ‘barred list’ or disqualified from teaching."
-    ),
+    title=_("Appeal a decision that you cannot work with children or vulnerable adults"),
+    description=_("Including if you’re on a ‘barred list’ or disqualified from teaching."),
     code="work_with_vulnerable",
     exit_page=False,
 )
 CLINICAL_NEGLIGENCE = Category(
     title=_("Clinical negligence in babies"),
-    description=_(
-        "Help if a baby has brain or nerve damage caused during pregnancy, childbirth or up to 8 weeks old."
-    ),
+    description=_("Help if a baby has brain or nerve damage caused during pregnancy, childbirth or up to 8 weeks old."),
     article_category_name="Clinical Negligence",
     code="clinical_negligence",
     exit_page=False,
@@ -592,9 +558,7 @@ COMPENSATION = Category(
 )
 ENVIRONMENTAL_POLLUTION = Category(
     title=_("Environmental pollution"),
-    description=_(
-        "Issues about air, water or land pollution that is harming you or the environment."
-    ),
+    description=_("Issues about air, water or land pollution that is harming you or the environment."),
     article_category_name="Public",
     chs_code="publiclaw",
     code="environmental_pollution",
@@ -642,12 +606,8 @@ def init_children(category: Category) -> None:
     for child in category.children.values():
         child.chs_code = child.chs_code or category.chs_code
         child.parent_code = category.code
-        child.article_category_name = (
-            child.article_category_name or category.article_category_name
-        )
-        child.exit_page = (
-            child.exit_page if child.exit_page is not None else category.exit_page
-        )
+        child.article_category_name = child.article_category_name or category.article_category_name
+        child.exit_page = child.exit_page if child.exit_page is not None else category.exit_page
 
 
 ALL_CATEGORIES = {

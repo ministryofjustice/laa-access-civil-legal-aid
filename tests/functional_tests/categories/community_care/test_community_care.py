@@ -43,9 +43,7 @@ ROUTING = [
 class TestHousingLandingPage:
     @pytest.mark.parametrize("routing", ROUTING)
     def test_onward_routing(self, page: Page, routing: dict):
-        page.get_by_role(
-            "link", name="Care needs for disability and old age (social care)"
-        ).click()
+        page.get_by_role("link", name="Care needs for disability and old age (social care)").click()
         page.get_by_role("link", name=routing["link_text"]).click()
 
         next_page_heading = routing["next_page_heading"]

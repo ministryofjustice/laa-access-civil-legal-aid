@@ -85,9 +85,7 @@ def fill_about_form(page: Page, questions: dict) -> None:
 def test_savings_form(page: Page, scenario: str, form_inputs: dict, expected: dict):
     page.goto(url_for("means_test.about-you", _external=True))
 
-    page.locator(
-        "#has_partner" if form_inputs["has_partner"] == "Yes" else "#has_partner-2"
-    ).check()
+    page.locator("#has_partner" if form_inputs["has_partner"] == "Yes" else "#has_partner-2").check()
     del form_inputs["has_partner"]
 
     fill_about_form(page, form_inputs)
@@ -122,11 +120,7 @@ def test_savings_form(page: Page, scenario: str, form_inputs: dict, expected: di
             {
                 "Total value of items worth over": "499",
             },
-            {
-                "errors": [
-                    "Error: Enter 0 if you have no valuable items worth over £500 each"
-                ]
-            },
+            {"errors": ["Error: Enter 0 if you have no valuable items worth over £500 each"]},
         ),
         (
             "single_person_savings_valuables",
@@ -207,11 +201,7 @@ def test_savings_form_validators(
 ):
     page.goto(url_for("means_test.about-you", _external=True))
 
-    page.locator(
-        "#has_partner"
-        if about_you_form_inputs["has_partner"] == "Yes"
-        else "#has_partner-2"
-    ).check()
+    page.locator("#has_partner" if about_you_form_inputs["has_partner"] == "Yes" else "#has_partner-2").check()
     del about_you_form_inputs["has_partner"]
 
     fill_about_form(page, about_you_form_inputs)

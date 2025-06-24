@@ -34,9 +34,7 @@ class TestConfirmationPage:
                 context = ConfirmationPage.get_context()
 
                 assert context["case_reference"] == "AB-1234-5678"
-                assert context["callback_time"] == datetime(
-                    2025, 3, 10, 10, 30, 0, tzinfo=timezone.utc
-                )
+                assert context["callback_time"] == datetime(2025, 3, 10, 10, 30, 0, tzinfo=timezone.utc)
                 assert context["contact_type"] == "callback"
                 assert context["category"] == {"code": "asylum_and_immigration"}
 
@@ -69,9 +67,7 @@ class TestConfirmationPage:
         with patch("app.contact.views.render_template") as mock_render:
             mock_render.return_value = "Rendered Template"
 
-            client.post(
-                "/confirmation", data={"email": test_email}, follow_redirects=True
-            )
+            client.post("/confirmation", data={"email": test_email}, follow_redirects=True)
 
             mock_notify.create_and_send_confirmation_email.assert_called_once_with(
                 email_address=test_email,
@@ -95,9 +91,7 @@ class TestConfirmationPage:
         with client.session_transaction() as session:
             session.update(self.session_data)
 
-        client.post(
-            "/confirmation", data={"email": "invalid-email"}, follow_redirects=True
-        )
+        client.post("/confirmation", data={"email": "invalid-email"}, follow_redirects=True)
 
         mock_notify.create_and_send_confirmation_email.assert_not_called()
 

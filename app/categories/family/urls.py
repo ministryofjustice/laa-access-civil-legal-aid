@@ -77,7 +77,5 @@ bp.add_url_rule(
 )
 bp.add_url_rule(
     "/children-families-relationships/family-mediation-session",
-    view_func=QuestionPage.as_view(
-        "previous_family_mediation", form_class=PreviousFamilyMediationForm
-    ),
+    view_func=QuestionPage.as_view("previous_family_mediation", form_class=PreviousFamilyMediationForm),
 )

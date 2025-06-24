@@ -55,9 +55,7 @@ class TestDispatchRequest:
             # Verify render_template was called
             mock_render.assert_called_once()
 
-    def test_form_submission_normal_flow(
-        self, app, client, mock_eligibility, mock_url_for
-    ):
+    def test_form_submission_normal_flow(self, app, client, mock_eligibility, mock_url_for):
         """Test successful form submission with normal flow to next page."""
         # Create a mock form that validates successfully
         mock_form = Mock()
@@ -84,15 +82,11 @@ class TestDispatchRequest:
             mock_update_means_test.return_value = {"reference": "test-reference"}
             mock_is_eligible.return_value = EligibilityState.UNKNOWN
 
-            view = MeansTest.as_view(
-                "benefits", Mock(return_value=mock_form), "benefits"
-            )
+            view = MeansTest.as_view("benefits", Mock(return_value=mock_form), "benefits")
             view()
 
             # Verify the form data was added to eligibility
-            mock_eligibility.add.assert_called_once_with(
-                "benefits", {"benefits": "pension_credit"}
-            )
+            mock_eligibility.add.assert_called_once_with("benefits", {"benefits": "pension_credit"})
 
             # Verify URL for next page was called
             mock_url_for.assert_called()
@@ -103,9 +97,7 @@ class TestDispatchRequest:
             # Verify redirect was called
             mock_redirect.assert_called_once()
 
-    def test_redirect_to_review_when_eligible(
-        self, app, client, mock_eligibility, mock_url_for
-    ):
+    def test_redirect_to_review_when_eligible(self, app, client, mock_eligibility, mock_url_for):
         """Test that form submission redirects to review page when eligibility is determined."""
         mock_form = Mock()
         mock_form.validate_on_submit.return_value = True
@@ -165,9 +157,7 @@ class TestDispatchRequest:
 
             view = MeansTest.as_view("savings", Mock(return_value=mock_form), "savings")
 
-            with pytest.raises(
-                ValueError, match="Eligibility reference not found in response"
-            ):
+            with pytest.raises(ValueError, match="Eligibility reference not found in response"):
                 view()
 
             mock_update_means_test.assert_called_once()
@@ -175,22 +165,16 @@ class TestDispatchRequest:
 
 @patch.object(InScopeMixin, "ensure_in_scope", return_value=None)
 class TestCheckYourAnswersSubmission:
-    @pytest.mark.parametrize(
-        "eligibility", [EligibilityState.YES, EligibilityState.UNKNOWN]
-    )
+    @pytest.mark.parametrize("eligibility", [EligibilityState.YES, EligibilityState.UNKNOWN])
     def test_post_eligible(self, app, client, mock_url_for, eligibility):
         """Test post method when eligibility state is YES/ UNKNOWN."""
         with client.session_transaction() as session:
             session["ec_reference"] = "test-reference"
 
         with (
-            patch(
-                "app.means_test.views.is_eligible", return_value=eligibility
-            ) as mock_is_eligible,
+            patch("app.means_test.views.is_eligible", return_value=eligibility) as mock_is_eligible,
             patch("app.means_test.views.redirect") as mock_redirect,
-            patch.object(
-                CheckYourAnswers, "ensure_all_forms_are_complete", return_value=None
-            ),
+            patch.object(CheckYourAnswers, "ensure_all_forms_are_complete", return_value=None),
         ):
             client.post("/review")
 
@@ -204,14 +188,10 @@ class TestCheckYourAnswersSubmission:
             sess["ec_reference"] = "test-reference"
 
         with (
-            patch(
-                "app.means_test.views.is_eligible", return_value=EligibilityState.NO
-            ) as mock_is_eligible,
+            patch("app.means_test.views.is_eligible", return_value=EligibilityState.NO) as mock_is_eligible,
             patch("app.means_test.views.redirect") as mock_redirect,
             patch("app.means_test.views.session") as mock_session,
-            patch.object(
-                CheckYourAnswers, "ensure_all_forms_are_complete", return_value=None
-            ),
+            patch.object(CheckYourAnswers, "ensure_all_forms_are_complete", return_value=None),
         ):
             mock_subcategory = Mock()
             mock_subcategory.eligible_for_HLPAS = True
@@ -231,14 +211,10 @@ class TestCheckYourAnswersSubmission:
             sess["ec_reference"] = "test-reference"
 
         with (
-            patch(
-                "app.means_test.views.is_eligible", return_value=EligibilityState.NO
-            ) as mock_is_eligible,
+            patch("app.means_test.views.is_eligible", return_value=EligibilityState.NO) as mock_is_eligible,
             patch("app.means_test.views.redirect") as mock_redirect,
             patch("app.means_test.views.session") as mock_session,
-            patch.object(
-                CheckYourAnswers, "ensure_all_forms_are_complete", return_value=None
-            ),
+            patch.object(CheckYourAnswers, "ensure_all_forms_are_complete", return_value=None),
         ):
             mock_subcategory = Mock()
             mock_subcategory.eligible_for_HLPAS = False
@@ -249,6 +225,4 @@ class TestCheckYourAnswersSubmission:
             mock_is_eligible.assert_called()
 
             mock_url_for.assert_called_once_with("means_test.result.ineligible")
-            mock_redirect.assert_called_once_with(
-                "/mocked/means_test.result.ineligible"
-            )
+            mock_redirect.assert_called_once_with("/mocked/means_test.result.ineligible")
