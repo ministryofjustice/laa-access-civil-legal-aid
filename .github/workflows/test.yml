@@ -80,14 +80,13 @@ jobs:
 
       - name: Run CLA Backend with Docker Compose
         run: |
-            echo "CLA_BACKEND_IMAGE=$REGISTRY/$REPOSITORY:latest" >> .env
-            
             docker compose -f tests/backend-compose.yml up -d --wait --wait-timeout 30
           
             sleep 5
           
             docker compose -f tests/backend-compose.yml exec cla_backend bin/create_db.sh
         env:
+            CLA_BACKEND_IMAGE: ${{ steps.login-ecr.outputs.registry }}/${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}:latest
             REGISTRY: ${{ steps.login-ecr.outputs.registry }}
             REPOSITORY: ${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}
 
@@ -113,11 +112,11 @@ jobs:
   
       - name: Functional test with pytest
         run: |
-          pip install pytest pytest-cov
+          pip install pytest pytest-cov pytest-xdist
           npm install
           npm run build
           playwright install
-          pytest tests/functional_tests --doctest-modules --junitxml=junit/functional-test-results.xml --cov=com --cov-report=xml --cov-report=html
+          pytest -n 4 tests/functional_tests --doctest-modules --junitxml=junit/functional-test-results.xml --cov=com --cov-report=xml --cov-report=html
 
       - name: Upload pytest test results
         uses: actions/upload-artifact@v4

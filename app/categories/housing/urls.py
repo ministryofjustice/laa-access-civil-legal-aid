@@ -12,9 +12,9 @@ class HousingLandingPage(CategoryLandingPage):
 
     routing_map = {
         "main": [
-            (HOUSING.sub.homelessness, "categories.results.in_scope_hlpas"),
-            (HOUSING.sub.eviction, "categories.results.in_scope_hlpas"),
-            (HOUSING.sub.forced_to_sell, "categories.results.in_scope_hlpas"),
+            (HOUSING.sub.homelessness, "categories.results.in_scope"),
+            (HOUSING.sub.eviction, "categories.results.in_scope"),
+            (HOUSING.sub.forced_to_sell, "categories.results.in_scope"),
             (HOUSING.sub.repairs, "categories.results.in_scope"),
             (HOUSING.sub.council_housing, "categories.results.in_scope"),
         ],
@@ -40,6 +40,21 @@ bp.add_url_rule(
             category=HOUSING.sub.antisocial_behaviour_gangs,
             question_page="categories.more_problems.landing",
             next_page="categories.x_cat.landlord-council",
+            question_type=QuestionType.SUB_CATEGORY,
+        ),
+    ),
+)
+bp.add_url_rule(
+    "/housing/problems-with-neighbours",
+    view_func=CategoryAnswerPage.as_view(
+        "problems_with_neighbours",
+        category_answer=CategoryAnswer(
+            question="more_problems",
+            answer_value=HOUSING.sub.problems_with_neighbours.code,
+            answer_label=HOUSING.sub.problems_with_neighbours.title,
+            category=HOUSING.sub.problems_with_neighbours,
+            question_page="categories.housing.landing",
+            next_page="contact.contact_us",
             question_type=QuestionType.SUB_CATEGORY,
         ),
     ),

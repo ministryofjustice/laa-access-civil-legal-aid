@@ -136,7 +136,7 @@ def test_reviews_page_change_sub_category(page: Page, complete_benefits_form):
     page.get_by_text("Housing, homelessness, losing your home").click()
     page.get_by_text("Eviction, told to leave your home").click()
     expect(page).to_have_title(
-        "Legal aid is available for this type of problem - Access Civil Legal Aid – GOV.UK"
+        "Legal aid is available for this type of problem - Check if you can get legal aid – GOV.UK"
     )
 
     page.locator("a[href='/about-you']").click()
@@ -172,7 +172,7 @@ def test_reviews_page_change_category(page: Page, complete_benefits_form):
     page.get_by_label("No").check()
     page.get_by_role("button", name="Continue").click()
     expect(page).to_have_title(
-        "Legal aid is available for this type of problem - Access Civil Legal Aid – GOV.UK"
+        "Legal aid is available for this type of problem - Check if you can get legal aid – GOV.UK"
     )
     page.goto(url_for("means_test.review", _external=True))
     answers = get_answers()
@@ -227,7 +227,7 @@ def test_change_answer_nolonger_passported(page: Page, complete_benefits_form):
     expect(page).to_have_title("Your money coming in - GOV.UK")
     answers["Your money coming in"] = {
         "Maintenance received": {
-            "Amount": "120.56",
+            "Amount": "1420.56",
             "Frequency": "per month",
             "prefix": "maintenance_received",
         },
@@ -237,7 +237,7 @@ def test_change_answer_nolonger_passported(page: Page, complete_benefits_form):
             "prefix": "pension",
         },
         "Any other income": {
-            "Amount": "100.50",
+            "Amount": "10.00",
             "Frequency": "per month",
             "prefix": "other_income",
         },
@@ -276,3 +276,56 @@ def test_change_answer_nolonger_passported(page: Page, complete_benefits_form):
     assert_answers(page, answers)
 
     expect(page.get_by_text("Which benefits do you receive?")).not_to_be_visible()
+
+
+@pytest.mark.usefixtures("live_server")
+def test_review_page_failed_access_without_completing_means(page: Page, request):
+    """Attempt to access review page after completing the scope answers only but not the means test forms.."""
+    page.goto(url_for("means_test.review", _external=True))
+    assert page.title() == "You’ve reached the end of this service"
+
+    request.getfixturevalue("navigate_to_means_test")
+    page.goto(url_for("means_test.review", _external=True))
+    assert page.title() == "You’ve reached the end of this service"
+
+
+@pytest.mark.usefixtures("live_server")
+@pytest.mark.parametrize(
+    "about_you_answers",
+    [
+        {
+            "Do you receive any benefits (including Child Benefit)?": "Yes",
+        }
+    ],
+)
+def test_review_page_failed_access_incomplete_means(
+    page: Page, complete_about_you_form
+):
+    """Attempt to access review page without completing all means forms."""
+    page.goto(url_for("means_test.review", _external=True))
+    assert page.title() == "You’ve reached the end of this service"
+
+
+@pytest.mark.usefixtures("live_server")
+@pytest.mark.parametrize(
+    "benefits_answers",
+    [
+        {
+            "Which benefits do you receive?": [
+                "Universal Credit",
+            ],
+        }
+    ],
+)
+@pytest.mark.parametrize(
+    "about_you_answers",
+    [
+        {
+            "Do you receive any benefits (including Child Benefit)?": "Yes",
+        }
+    ],
+)
+def test_review_page_success_access_completed_means(page: Page, complete_benefits_form):
+    """Attempt to access review page without completing all means forms."""
+    page.goto(url_for("means_test.review", _external=True))
+    assert page.title() == "Check your answers and confirm - GOV.UK"

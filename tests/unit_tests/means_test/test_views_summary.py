@@ -1,9 +1,11 @@
+import logging
 from unittest import mock
 from flask_babel import lazy_gettext as _
 from app.means_test.views import CheckYourAnswers, ReviewForm
 from app.session import Eligibility
 from app.categories.models import CategoryAnswer, QuestionType
 from app.categories.constants import DISCRIMINATION, HOUSING
+from app.means_test.api import EligibilityState
 
 
 def mock_render_template(template_name, **kwargs):
@@ -17,8 +19,8 @@ def mock_session_get_eligibility():
                 "about-you": {
                     "has_partner": False,
                     "on_benefits": True,
-                    "have_children": False,
-                    "have_dependants": False,
+                    "has_children": False,
+                    "has_dependants": False,
                     "own_property": False,
                 },
                 "benefits": {"benefits": ["employment_support", "universal_credit"]},
@@ -54,7 +56,7 @@ def test_views_summary(app):
                 "key": {"text": "Do you have any children aged 15 or under?"},
                 "value": {"text": "No"},
                 "actions": {
-                    "items": [{"href": "/about-you#have_children", "text": _("Change")}]
+                    "items": [{"href": "/about-you#has_children", "text": _("Change")}]
                 },
             },
             {
@@ -62,7 +64,7 @@ def test_views_summary(app):
                 "value": {"text": "No"},
                 "actions": {
                     "items": [
-                        {"href": "/about-you#have_dependants", "text": _("Change")}
+                        {"href": "/about-you#has_dependants", "text": _("Change")}
                     ]
                 },
             },
@@ -228,3 +230,37 @@ def test_get_category_answers_summary_with_description(app):
         assert summary == expected_summary
 
     category_mocker.stop()
+
+
+@mock.patch(
+    "app.means_test.views.is_eligible", side_effect=lambda x: EligibilityState.NO
+)
+def test_post_ineligible(app, client, caplog):
+    from flask import url_for
+
+    with app.app_context():
+        with caplog.at_level(logging.INFO):
+            response = CheckYourAnswers().post()
+            assert (
+                "Eligibility check result unsuccessful - state is EligibilityState.NO"
+                in caplog.messages
+            )
+        assert response.status_code == 302
+        assert response.location == url_for("means_test.result.ineligible")
+
+
+@mock.patch(
+    "app.means_test.views.is_eligible", side_effect=lambda x: EligibilityState.YES
+)
+def test_post_eligible(app, client, caplog):
+    from flask import url_for
+
+    with app.app_context():
+        with caplog.at_level(logging.INFO):
+            response = CheckYourAnswers().post()
+            assert (
+                "Eligibility check result successful - state is EligibilityState.YES"
+                in caplog.messages
+            )
+        assert response.status_code == 302
+        assert response.location == url_for("contact.eligible")

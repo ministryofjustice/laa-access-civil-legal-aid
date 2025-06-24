@@ -1,7 +1,15 @@
 import pytest
 from unittest.mock import patch, ANY
 from datetime import datetime, timezone
+from flask import url_for
 from app.contact.views import ConfirmationPage
+
+
+@pytest.fixture
+def valid_session(client):
+    with client.session_transaction() as sess:
+        sess["case_reference"] = "CASE123"
+    return client
 
 
 class TestConfirmationPage:
@@ -92,3 +100,35 @@ class TestConfirmationPage:
         )
 
         mock_notify.create_and_send_confirmation_email.assert_not_called()
+
+    def test_ajax_post_validation_failure(self, valid_session):
+        with patch("app.contact.views.ConfirmationEmailForm") as MockForm:
+            mock_form = MockForm.return_value
+            mock_form.validate_on_submit.return_value = False
+            mock_form.errors = {"email": ["Invalid email address"]}
+
+            response = valid_session.post(
+                "/confirmation",
+                data={"email": "invalid"},
+                headers={"X-Requested-With": "XMLHttpRequest"},
+            )
+
+            assert response.status_code == 400
+            json_data = response.get_json()
+            assert json_data["success"] is False
+            assert "email" in json_data["errors"]
+            assert json_data["errors"]["email"] == ["Invalid email address"]
+
+
+def test_confirmation_page_access_failure(app, client):
+    response = client.get("/confirmation")
+    assert response.status_code == 302
+    assert response.location == url_for("main.session_expired")
+
+
+def test_confirmation_page_access_success(app, client):
+    with client.session_transaction() as session:
+        session.update({"case_reference": "AB-1234-5678"})
+
+    response = client.get("/confirmation")
+    assert response.status_code == 200

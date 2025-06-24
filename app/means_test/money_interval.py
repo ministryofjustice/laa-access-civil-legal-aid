@@ -81,13 +81,12 @@ class MoneyInterval(dict):
 
         try:
             self["per_interval_value"] = to_amount(value)
-
         except (InvalidOperation, ValueError):
-            raise ValueError(
-                "Invalid value for amount {0} ({1})".format(value, type(value))
-            )
+            return False
 
     def amount_to_pounds(self):
+        if self["per_interval_value"] == 0:
+            return 0
         if not self["per_interval_value"]:
             return None
         return self["per_interval_value"] / 100

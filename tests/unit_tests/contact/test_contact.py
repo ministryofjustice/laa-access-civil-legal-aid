@@ -116,7 +116,7 @@ def test_post_case(mock_post, api_client, app):
     payload = {"test": "data"}
 
     with app.test_request_context():
-        session["ec_reference"] = "elig123"
+        session.ec_reference = "elig123"
         api_client.post_case(payload=payload)
 
         expected_payload = {
@@ -218,6 +218,13 @@ def test_by_postcode_formatted(mock_by_postcode, formatted_address_lookup):
             ValidationError,
             "Can not schedule a callback at the requested time",
         ),  # invalid time slot
+        (
+            "invalid-day",
+            "1000",
+            ValidationError,
+            "Can not schedule a callback at the requested time",
+        ),
+        ("", "1000", StopValidation, None),
     ],
 )
 def test_validate_day_time(day, time, expected_exception, expected_message):
@@ -236,6 +243,8 @@ def test_validate_day_time(day, time, expected_exception, expected_message):
         with pytest.raises(ValidationError) as context:
             validator(form, form.time)
         assert str(context.value) == expected_message
+    elif not expected_exception:
+        validator(form, form.time)
 
 
 # Test for time slots functionality

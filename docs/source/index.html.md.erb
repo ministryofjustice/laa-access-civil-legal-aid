@@ -1,0 +1,44 @@
+---
+title: Check if you can get legal aid docs
+weight: 0
+---
+
+<!-- Do not delete this file it is the website entry point -->
+
+# Check if you can get legal aid
+
+Check if you can get legal aid is a public facing service available on GOV.UK which gives members of the public clear guidance
+on whether they can receive civil legal aid for their problem, and provides guidance and next steps tailored to their outcome.
+
+The service provides a route for users to raise a case and optionally book an appointment with the Civil Legal Advice (CLA) call centre if their problem is in-scope for Civil Legal Advice
+and if the user is financially eligible for legal aid, however, the financial eligibility check may be skipped at this stage in certain cases.
+
+The application is split into three main components:
+
+- Category traversal, responsible for diagnosing whether a user's problem is in-scope for civil legal aid.
+- Means test, responsible for checking if a user financially qualifies for legal aid.
+- Contact, allows the user to raise their case with the CLA call centre and optionally book a callback.
+
+## Technical information
+Check if you can get legal aid (Check) is a Flask based web service that is hosted on the [MOJs Cloud Platform](https://user-guide.cloud-platform.service.justice.gov.uk/).
+
+It resides in the `live.cloud-platform.service.justice.gov.uk` Kubernetes cluster in the `laa-access-civil-legal-aid-[environment]` namespace.
+
+Docker images of the application are stored in a Cloud Platform AWS ECR defined by the [Terraform configuration](https://github.com/ministryofjustice/cloud-platform-environments/blob/main/namespaces/live.cloud-platform.service.justice.gov.uk/laa-access-civil-legal-aid-production/resources/ecr.tf) in the `laa-access-civil-legal-aid-production` namespace.
+
+## Environments
+The service is deployed across four environments (Dev, UAT, Staging & Production) these environments can be accessed at:
+
+- Production: [https://checklegalaid.service.gov.uk/](https://checklegalaid.service.gov.uk/)
+- Staging: [https://staging.checklegalaid.service.gov.uk/](https://staging.checklegalaid.service.gov.uk/)
+- UAT: [https://uat.checklegalaid.service.gov.uk/](https://uat.checklegalaid.service.gov.uk/)
+- Dev: A new deployment and URL is dynamically generated based on your branch name once a branch has been pushed to remote.
+
+All non-production environments have an IP whitelist.
+
+## Support
+
+This service is maintained by the Civil Legal Aid team within LAA Digital.
+
+If you need to get in contact please email us at:
+[cladevs-gg@justice.gov.uk](mailto:cladevs-gg@justice.gov.uk)

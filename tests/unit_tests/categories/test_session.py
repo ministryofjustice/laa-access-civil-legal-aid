@@ -1,7 +1,6 @@
+from app.categories.constants import Category, HOUSING, COMMUNITY_CARE, EDUCATION
 import pytest
 from flask import url_for
-
-from app.categories.constants import Category, HOUSING
 from app.categories.models import CategoryAnswer, QuestionType
 
 
@@ -94,14 +93,37 @@ def test_get_category_question_answer_not_found(app, client):
 
 
 def test_set_category_dataclass(app, client):
-    from app.categories.constants import EDUCATION
-
     assert isinstance(EDUCATION, Category)
 
     with client.session_transaction() as session:
         session["category"] = {"code": EDUCATION.code}
         assert session.category == EDUCATION
         assert isinstance(session.category, Category)
+
+
+def test_in_scope(client):
+    in_scope_answer = CategoryAnswer(
+        question="What is your favourite mode of transport?",
+        answer_value="bus",
+        answer_label="Bus",
+        next_page="categories.index",
+        question_page="categories.housing.homelessness",
+        category=HOUSING.sub.homelessness,
+    )
+    out_scope_answer = CategoryAnswer(
+        question="What is your favourite mode of transport?",
+        answer_value="car",
+        answer_label="Car",
+        next_page="categories.index",
+        question_page="categories.housing.homelessness",
+        category=COMMUNITY_CARE.sub.problems_with_quality_of_care,
+    )
+    with client.session_transaction() as session:
+        assert session.in_scope is False
+        session.set_category_question_answer(in_scope_answer)
+        assert session.in_scope is True
+        session.set_category_question_answer(out_scope_answer)
+        assert session.in_scope is False
 
 
 class TestPrimaryCategoryAnswer:
@@ -225,3 +247,20 @@ class TestRemoveCategoryQuestionAnswer:
                 {"question": "Q1", "answer": "A1", "category": "C1"},
                 {"question": "Q3", "answer": "A1", "category": "C3"},
             ]
+
+
+def test_clear_category(app, client):
+    with client.session_transaction() as session:
+        session["category"] = {"code": "housing"}
+        session["category_answers"] = [
+            {"question": "Q1", "answer": "A1", "category": "C1"}
+        ]
+
+    assert session["category"] == {"code": "housing"}
+    assert session["category_answers"] == [
+        {"question": "Q1", "answer": "A1", "category": "C1"}
+    ]
+
+    session.clear_category()
+    assert "category" not in session
+    assert session["category_answers"] == []

@@ -54,21 +54,29 @@ def create_app(config_class=Config):
         ]
     )
 
-    configure_logging()
+    if not app.config["TESTING"]:
+        configure_logging()
 
     # Set content security policy
     csp = {
         "default-src": "'self'",
         "script-src": [
             "'self'",
-            "www.googletagmanager.com",
+            "https://*.googletagmanager.com",
         ],
         "style-src": ["'self'"],
         "connect-src": [
             "'self'",
-            "www.google-analytics.com",
+            "https://*.google-analytics.com",
+            "https://*.analytics.google.com",
+            "https://*.googletagmanager.com",
         ],
-        "img-src": ["'self'", "www.googletagmanager.com", "www.gov.uk"],
+        "img-src": [
+            "'self'",
+            "https://*.google-analytics.com",
+            "https://*.googletagmanager.com",
+            "www.gov.uk",
+        ],
     }
 
     # Set permissions policy

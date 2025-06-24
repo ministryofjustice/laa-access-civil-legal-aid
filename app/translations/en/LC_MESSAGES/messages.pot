@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-18 23:03+0000\n"
+"POT-Creation-Date: 2025-06-03 13:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,12 +52,6 @@ msgid ""
 " if a child is taken or kept without your permission."
 msgstr ""
 
-msgid "Problems with neighbours, landlords or other people"
-msgstr ""
-
-msgid "Threats, abuse or harassment by someone who is not a family member."
-msgstr ""
-
 msgid "Housing, homelessness, losing your home"
 msgstr ""
 
@@ -76,6 +70,14 @@ msgid "Female genital mutilation (FGM)"
 msgstr ""
 
 msgid "If you or someone else is at risk of FGM."
+msgstr ""
+
+msgid "Domestic abuse - if you have been accused"
+msgstr ""
+
+msgid ""
+"Legal help if you’ve been accused of domestic abuse or forced marriage. "
+"Includes non-molestation orders and other court orders."
 msgstr ""
 
 msgid "Children, families, relationships"
@@ -216,6 +218,20 @@ msgstr ""
 msgid ""
 "Accused of anti-social behaviour by the landlord, council or housing "
 "association."
+msgstr ""
+
+msgid "Anti-social behaviour and gangs"
+msgstr ""
+
+msgid ""
+"If you’re accused or taken to court for anti-social behaviour, including "
+"being in a gang."
+msgstr ""
+
+msgid "Problems with neighbours, landlords or other people"
+msgstr ""
+
+msgid "Threats, abuse or harassment by someone who is not a family member."
 msgstr ""
 
 msgid ""
@@ -421,6 +437,71 @@ msgid ""
 " is under a community treatment order. Help with mental health tribunals."
 msgstr ""
 
+msgid "Adopting a child from outside the UK"
+msgstr ""
+
+msgid "Adoption processes in the courts."
+msgstr ""
+
+msgid "Appeal a decision that you cannot work with children or vulnerable adults"
+msgstr ""
+
+msgid "Including if you’re on a ‘barred list’ or disqualified from teaching."
+msgstr ""
+
+msgid "Clinical negligence in babies"
+msgstr ""
+
+msgid ""
+"Help if a baby has brain or nerve damage caused during pregnancy, "
+"childbirth or up to 8 weeks old."
+msgstr ""
+
+msgid "Compensation for abuse, assault or neglect"
+msgstr ""
+
+msgid ""
+"Includes child abuse, sexual assault, abuse of a vulnerable adult. Claims"
+" can be against a person or an organisation."
+msgstr ""
+
+msgid "Environmental pollution"
+msgstr ""
+
+msgid ""
+"Issues about air, water or land pollution that is harming you or the "
+"environment."
+msgstr ""
+
+msgid "Inquests for family members"
+msgstr ""
+
+msgid "Advice to prepare for the inquest of a family member."
+msgstr ""
+
+msgid "Mental health detention"
+msgstr ""
+
+msgid ""
+"Help if you’re held in hospital (‘sectioned’), mental health tribunals "
+"and community treatment orders."
+msgstr ""
+
+msgid "Proceeds of Crime Act"
+msgstr ""
+
+msgid "If you’re facing legal action to take your money or other assets."
+msgstr ""
+
+msgid "Terrorism"
+msgstr ""
+
+msgid "If you’re accused of terrorism or financing terrorist groups."
+msgstr ""
+
+msgid "Help if you’re a victim of human trafficking or modern slavery."
+msgstr ""
+
 msgid "special educational needs and disability (SEND)"
 msgstr ""
 
@@ -449,6 +530,12 @@ msgid "Is this about a child who is or has been in care?"
 msgstr ""
 
 msgid "Select if the child is or has been in care"
+msgstr ""
+
+msgid "Have you taken part in a family mediation session?"
+msgstr ""
+
+msgid "Select if you have taken part in a family mediation session"
 msgstr ""
 
 msgid "or"
@@ -778,6 +865,21 @@ msgstr ""
 msgid "There is a problem"
 msgstr ""
 
+msgid "Can we use functional cookies?"
+msgstr ""
+
+msgid "Select yes if you want to accept functional cookies"
+msgstr ""
+
+msgid "Can we use analytics cookies?"
+msgstr ""
+
+msgid "Select yes if you want to accept analytics cookies"
+msgstr ""
+
+msgid "Save cookie settings"
+msgstr ""
+
 msgid "per week"
 msgstr ""
 
@@ -791,6 +893,9 @@ msgid "per month"
 msgstr ""
 
 msgid "per year"
+msgstr ""
+
+msgid "Contact information"
 msgstr ""
 
 msgid "The problem you need help with"
@@ -1527,13 +1632,66 @@ msgstr ""
 msgid "Exit this page"
 msgstr ""
 
+msgid "Contact us"
+msgstr ""
+
+msgid "if you need help or would like to give feedback to improve this service"
+msgstr ""
+
 msgid "Staying safe online"
+msgstr ""
+
+msgid "Privacy Policy"
+msgstr ""
+
+msgid "Cookies"
+msgstr ""
+
+msgid "Contact"
+msgstr ""
+
+msgid "Accessibility statement"
 msgstr ""
 
 msgid "Sorry, you’re not likely to get legal aid"
 msgstr ""
 
+msgid "If you cannot find your problem, it’s probably not covered by legal aid."
+msgstr ""
+
 msgid "Next steps to get help"
+msgstr ""
+
+msgid "Legal aid covers this problem"
+msgstr ""
+
+msgid ""
+"Next, you need to contact a legal aid adviser. They will check if you can"
+" get legal aid."
+msgstr ""
+
+msgid "You do not have to pay for this."
+msgstr ""
+
+msgid "They will:"
+msgstr ""
+
+msgid "ask about your problem and finances"
+msgstr ""
+
+msgid "tell you if you can get legal aid"
+msgstr ""
+
+msgid "If you’re not eligible for legal aid, you can ask them:"
+msgstr ""
+
+msgid "where else you can get help for free"
+msgstr ""
+
+msgid "how much they would charge for legal advice"
+msgstr ""
+
+msgid "Find a legal aid adviser"
 msgstr ""
 
 msgid "Legal aid is available for this type of problem"
@@ -1578,7 +1736,7 @@ msgstr ""
 
 #, python-format
 msgid ""
-"You should %(contact_us_link)s  without completing the financial "
+"You should %(contact_us_link)s without completing the financial "
 "assessment if you are:"
 msgstr ""
 
@@ -1670,87 +1828,6 @@ msgstr ""
 msgid "SEND"
 msgstr ""
 
-msgid "Adopting a child from outside the UK"
-msgstr ""
-
-msgid "Adoption processes in the courts."
-msgstr ""
-
-msgid "Appeal a decision that you cannot work with children or vulnerable adults"
-msgstr ""
-
-msgid "Including if you’re on a ‘barred list’ or disqualified from teaching."
-msgstr ""
-
-msgid "Anti-social behaviour and gangs"
-msgstr ""
-
-msgid ""
-"If you’re accused or taken to court for anti-social behaviour, including "
-"being in a gang."
-msgstr ""
-
-msgid "Clinical negligence in babies"
-msgstr ""
-
-msgid ""
-"Help if a baby has brain or nerve damage caused during pregnancy, "
-"childbirth or up to 8 weeks old."
-msgstr ""
-
-msgid "Compensation for abuse, assault or neglect"
-msgstr ""
-
-msgid ""
-"Includes child abuse, sexual assault, abuse of a vulnerable adult. Claims"
-" can be against a person or an organisation."
-msgstr ""
-
-msgid "Domestic abuse - if you have been accused"
-msgstr ""
-
-msgid ""
-"Legal help if you’ve been accused of domestic abuse or forced marriage. "
-"Includes non-molestation orders and other court orders."
-msgstr ""
-
-msgid "Environmental pollution"
-msgstr ""
-
-msgid ""
-"Issues about air, water or land pollution that is harming you or the "
-"environment."
-msgstr ""
-
-msgid "Inquests for family members"
-msgstr ""
-
-msgid "Advice to prepare for the inquest of a family member."
-msgstr ""
-
-msgid "Mental health detention"
-msgstr ""
-
-msgid ""
-"Help if you’re held in hospital (‘sectioned’), mental health tribunals "
-"and community treatment orders."
-msgstr ""
-
-msgid "Proceeds of Crime Act"
-msgstr ""
-
-msgid "If you’re facing legal action to take your money or other assets."
-msgstr ""
-
-msgid "Terrorism"
-msgstr ""
-
-msgid "If you’re accused of terrorism or financing terrorist groups."
-msgstr ""
-
-msgid "Help if you’re a victim of human trafficking or modern slavery."
-msgstr ""
-
 msgid ""
 "These organisations give free, independent advice for problems about "
 "domestic abuse."
@@ -1816,35 +1893,25 @@ msgstr ""
 msgid "Speak to an advice organisation"
 msgstr ""
 
+msgid "You can get free, independent advice from:"
+msgstr ""
+
 msgid "Citizen’s Advice (opens new tab)"
 msgstr ""
 
 msgid "Advicelocal (opens new tab)"
 msgstr ""
 
-msgid "Legal aid doesn’t cover all types of problem"
+msgid "exceptional case funding (opens new tab)"
 msgstr ""
 
-msgid ""
-"You can still ask a solicitor for help – you will have to pay for their "
-"advice."
-msgstr ""
-
-msgid ""
-"You can still ask a solicitor for help - you will have to pay for their "
-"advice."
-msgstr ""
-
-msgid "Find a solicitor"
-msgstr ""
-
-msgid ""
-"You may still get help and advice from the organisations listed below. "
-"You don’t have to qualify for legal aid."
+msgid "Exceptional case funding"
 msgstr ""
 
 #, python-format
-msgid "Help organisations for problems about %(category_name)s"
+msgid ""
+"In rare cases, you can still get government-funded legal help. Go to "
+"GOV.UK to find out about %(ecf_link)s."
 msgstr ""
 
 msgid "Appeal a decision about your benefits"
@@ -1900,6 +1967,69 @@ msgid "Opening hours"
 msgstr ""
 
 msgid "Email"
+msgstr ""
+
+msgid "Problems about children and money when a relationship ends "
+msgstr ""
+
+msgid ""
+"Family mediators are trained professionals. They help you and the other "
+"parent agree on things like where your children live, contact with "
+"children, money and property."
+msgstr ""
+
+msgid "Mediators do not take sides or tell you what to do."
+msgstr ""
+
+msgid "It is not relationship counselling."
+msgstr ""
+
+msgid "You can choose to do mediation by phone or video call."
+msgstr ""
+
+msgid "You do not have to see or speak to your ex-partner."
+msgstr ""
+
+msgid ""
+"Mediation is probably not right if your ex-partner is abusive, "
+"controlling, or putting your children at risk."
+msgstr ""
+
+msgid "Legal aid covers 2 options, depending on your situation."
+msgstr ""
+
+msgid "Legal aid for family mediation"
+msgstr ""
+
+msgid ""
+"A trained mediator will help you and your ex-partner make decisions about"
+" your children and money. You do not need to be in the same room."
+msgstr ""
+
+msgid "About family mediation"
+msgstr ""
+
+msgid "Legal aid if there is domestic abuse or a child is at risk"
+msgstr ""
+
+msgid ""
+"You could get legal aid for advice and help in court. Domestic abuse can "
+"include:"
+msgstr ""
+
+msgid "controlling behaviour, emotional or financial abuse"
+msgstr ""
+
+msgid "harassing, stalking, threatening or hurting you"
+msgstr ""
+
+msgid "putting a child at risk"
+msgstr ""
+
+msgid "This could be by a partner, ex-partner or family member."
+msgstr ""
+
+msgid "If you cannot find the right option"
 msgstr ""
 
 msgid "Legal action against public organisations"
@@ -2109,6 +2239,33 @@ msgstr ""
 msgid "You must be with the person when we call."
 msgstr ""
 
+msgid "If you’re in danger now, call 999."
+msgstr ""
+
+msgid "If you need urgent legal help, call Civil Legal Advice on "
+msgstr ""
+
+msgid "Call charges apply, but you can ask us to call you back."
+msgstr ""
+
+msgid ""
+"Civil Legal Advice will check if you can get legal aid and help you "
+"contact the right legal adviser. If you cannot get legal aid, we’ll tell "
+"you about other help you can get."
+msgstr ""
+
+msgid ""
+"We’ll ask questions about your legal problem and your financial "
+"situation. You might need to provide evidence of any financial "
+"information you give us."
+msgstr ""
+
+msgid ""
+"We’ll give you the phone number for Civil Legal Advice when you submit "
+"your details. This is an 0345 number, so call charges apply, but you can "
+"ask us to call you back. "
+msgstr ""
+
 msgid "If you’re in an emergency situation, please call the police on 999."
 msgstr ""
 
@@ -2122,21 +2279,9 @@ msgid "You can also ask us to call you back using the form below, which is free.
 msgstr ""
 
 msgid ""
-"Civil Legal Advice will check if you can get legal aid and help you "
-"contact the right legal adviser. If you cannot get legal aid, we’ll tell "
-"you about other help you can get."
-msgstr ""
-
-msgid ""
 "You can call Civil Legal Advice yourself - this is an 0345 number, so <a "
 "class=\"govuk-link\" href=\"https://www.gov.uk/call-charges\">call "
 "charges</a> apply. Or you can ask us to call you back, which is free."
-msgstr ""
-
-msgid ""
-"We’ll ask questions about your legal problem and your financial "
-"situation. You might need to provide evidence of any financial "
-"information you give us."
 msgstr ""
 
 msgid "Address"
@@ -2150,10 +2295,13 @@ msgid ""
 " your security."
 msgstr ""
 
-msgid "If you're having trouble completing this form, "
+msgid "Civil Legal Advice Privacy Statement"
 msgstr ""
 
-msgid "get in touch"
+#, python-format
+msgid ""
+"Protecting your personal data and your privacy is important to us. Read "
+"the full %(privacy_link)s."
 msgstr ""
 
 msgid "In some cases, you may need to pay a contribution towards your legal aid."
@@ -2249,6 +2397,9 @@ msgstr ""
 msgid "Legal Aid is different in Guernsey. Visit %(link)s for more information."
 msgstr ""
 
+msgid "the Housing Loss Prevention Advice Service"
+msgstr ""
+
 msgid "Sorry, the service is unavailable"
 msgstr ""
 
@@ -2303,6 +2454,312 @@ msgid "Extend time limit"
 msgstr ""
 
 msgid "Exit service"
+msgstr ""
+
+msgid "civil-legal-advice@digital.justice.gov.uk"
+msgstr ""
+
+msgid "Web Content Accessibility Guidelines version 2.1 (opens in new tab)"
+msgstr ""
+
+msgid "Using this service"
+msgstr ""
+
+msgid ""
+"This accessibility statement applies to <a class=\"govuk-link\" "
+"href=\"https://checklegalaid.service.gov.uk/\">https://checklegalaid.service.gov.uk/</a>."
+" "
+msgstr ""
+
+msgid ""
+"The Legal Aid Agency (<abbr>LAA</abbr>) is responsible for the Civil "
+"Legal Advice (<abbr>CLA</abbr>) service."
+msgstr ""
+
+msgid ""
+"We want as many people as possible to be able to use this service. For "
+"example, that means you should be able to:"
+msgstr ""
+
+msgid "change colours, contrast levels and fonts"
+msgstr ""
+
+msgid "zoom in up to 300&#37; without the text spilling off the screen"
+msgstr ""
+
+msgid "navigate the service using just a keyboard"
+msgstr ""
+
+msgid ""
+"AbilityNet has advice on making your device easier to use if you have a "
+"disability (opens in new tab)"
+msgstr ""
+
+msgid "Feedback and contact information"
+msgstr ""
+
+#, python-format
+msgid ""
+"If you need information on this service in a different format, you can "
+"contact us at %(email_link)s."
+msgstr ""
+
+msgid "Reporting accessibility problems"
+msgstr ""
+
+#, python-format
+msgid ""
+"We’re always looking to improve the accessibility of this service. If you"
+" find any problems that aren’t listed on this page or think we’re not "
+"meeting the requirements of the accessibility regulations, contact "
+"%(email_link)s giving details of the issue and any assistive technology "
+"you are using."
+msgstr ""
+
+msgid "Enforcement procedure"
+msgstr ""
+
+msgid ""
+"The Equality and Human Rights Commission (<abbr>EHRC</abbr>) is "
+"responsible for enforcing the accessibility regulations. If you’re not "
+"happy with how we respond to your complaint, contact the <a class"
+"=\"govuk-link\" href=\"https://www.equalityadvisoryservice.com/\" "
+"is_external=True target=\"_blank\" rel=\"noopener noreferrer\">Equality "
+"Advisory and Support Service (<abbr>EASS</abbr>) (opens in new tab)</a>."
+msgstr ""
+
+msgid "Technical information about this service’s accessibility"
+msgstr ""
+
+msgid ""
+"The Legal Aid Agency is committed to making its service accessible, in "
+"accordance with the Public Sector Bodies (Websites and Mobile "
+"Applications) (&#8470; 2) Accessibility Regulations 2018."
+msgstr ""
+
+msgid "Compliance status"
+msgstr ""
+
+#, python-format
+msgid ""
+"This service is partially compliant with the %(wcag_link)s AA standard, "
+"due to the non-compliance issues listed below."
+msgstr ""
+
+msgid "Non-accessible content"
+msgstr ""
+
+msgid "The content listed below is non-accessible for the following reasons."
+msgstr ""
+
+msgid "Non-compliance with the accessibility regulations"
+msgstr ""
+
+msgid ""
+"Some link text is ambiguous which might result in some users not "
+"understanding the link destination. This fails WCAG 2.2. success "
+"criterion 2.4.4 Link Purpose (In Context). We plan to ensure all link "
+"text is clear and able to be understood by all by the end of December "
+"2025."
+msgstr ""
+
+msgid ""
+"Some page elements have incorrect aria attributes. This might cause some "
+"assistive technology users to have difficulty identifying form elements. "
+"This fails WCAG 2.2. success criterion 4.1.2 Name, Role, Value. We plan "
+"to ensure that all aria is correct by the end of December 2025."
+msgstr ""
+
+msgid ""
+"When a page is about to time out, a dialog box lets the user extend the "
+"time to complete the page and gives a countdown until the page will time "
+"out. The time left is read out every second to screen reader users which "
+"will be distracting. This fails WCAG 2.2. success criterion 4.1.3 Status "
+"messages. We plan to ensure that the timeout dialog does not announce the"
+" time remaining every second by the end of December 2025."
+msgstr ""
+
+msgid "Time-out"
+msgstr ""
+
+msgid ""
+"Users are not able to turn off, adjust or extend the time in which "
+"inactivity will result in a loss of data. This fails WCAG 2.1 2.2.1 A "
+"(Timing Adjustable)."
+msgstr ""
+
+msgid ""
+"We are experiencing intermittent problems with the time-out feature where"
+" users are unexpectedly timed-out without the time-out warning appearing."
+" We are currently investigating the source of this issue."
+msgstr ""
+
+msgid "Hide this page"
+msgstr ""
+
+msgid ""
+"The ‘Hide this page’ button does not accurately describe the link "
+"destination. This fails WCAG 2.1 1.3.1 A (Info and relationships) and "
+"2.4.6 AA (Headings and Labels)."
+msgstr ""
+
+msgid ""
+"We understand that ‘Hide this page’ does not describe the link "
+"destination. We have purposely designed the feature to protect vulnerable"
+" users and provide a quick exit from the service rather than take users "
+"to a specific destination."
+msgstr ""
+
+msgid "Disproportionate burden"
+msgstr ""
+
+msgid "Not applicable"
+msgstr ""
+
+msgid "Content that’s not within the scope of the accessibility regulations"
+msgstr ""
+
+msgid "What we’re doing to improve accessibility"
+msgstr ""
+
+msgid "We are working to fix the time-out issue listed in this statement."
+msgstr ""
+
+msgid ""
+"We will monitor the accessibility of this service on an ongoing basis and"
+" fix any accessibility issues reported to us."
+msgstr ""
+
+msgid "Preparation of this accessibility statement"
+msgstr ""
+
+#, python-format
+msgid "This statement was prepared on %(day)s %(month)s %(year)s."
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "March"
+msgstr ""
+
+#, python-format
+msgid ""
+"This statement was last reviewed in an internal review by Justice "
+"Digital’s Digital Accessibility Team in %(month)s %(year)s."
+msgstr ""
+
+#, python-format
+msgid ""
+"This service was tested on %(day1)s %(month1)s %(year1)s and issues were "
+"re-tested on %(day2)s %(month2)s %(year2)s."
+msgstr ""
+
+msgid "July"
+msgstr ""
+
+msgid "October"
+msgstr ""
+
+msgid ""
+"The tests were carried out by the Digital Accessibility Centre "
+"(<abbr>DAC</abbr>)."
+msgstr ""
+
+msgid ""
+"The <abbr title='Digital Accessibility Centre'>DAC</abbr> tested core "
+"journeys, key functionality and interactive features that reflect the "
+"content that the average user may encounter."
+msgstr ""
+
+msgid ""
+"The <abbr title='Digital Accessibility Centre'>DAC</abbr> tested the "
+"service available at <a class='govuk-link' "
+"href='https://checklegalaid.service.gov.uk/'>https://checklegalaid.service.gov.uk/</a>."
+msgstr ""
+
+msgid ""
+"Cookies are small files saved on your phone, tablet or computer when you "
+"visit a website."
+msgstr ""
+
+msgid ""
+"We use cookies to make this service work and to collect information about"
+" how you use our service."
+msgstr ""
+
+msgid "Cookies will not collect any information that can identify you."
+msgstr ""
+
+msgid "Essential cookies"
+msgstr ""
+
+msgid ""
+"Essential cookies keep your information secure while you use this "
+"service. We do not need to ask permission to use them."
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Purpose"
+msgstr ""
+
+msgid "Expires"
+msgstr ""
+
+msgid "Saves your cookie consent settings"
+msgstr ""
+
+msgid "1 year"
+msgstr ""
+
+msgid ""
+"Saves your current progress on this computer and tracks how long you are "
+"inactive for."
+msgstr ""
+
+msgid "When you stop using the website"
+msgstr ""
+
+msgid "Functional cookies"
+msgstr ""
+
+msgid ""
+"We only use one functional cookie, and that is to remember if you chose "
+"to use the service in Welsh. The service will still work if you do not "
+"choose this cookie."
+msgstr ""
+
+msgid "Remembers which language you chose"
+msgstr ""
+
+msgid "30 Days"
+msgstr ""
+
+msgid "Analytics cookies"
+msgstr ""
+
+msgid ""
+"With your permission, we use Google Analytics to collect data about how "
+"you use this service. This information helps us to improve our service."
+msgstr ""
+
+msgid "Google is not allowed to use or share our analytics data with anyone."
+msgstr ""
+
+msgid "None of this information can be used to identify you in any way."
+msgstr ""
+
+msgid ""
+"Helps us count how many people visit this website and what they do on the"
+" website. Your data is anonymised."
+msgstr ""
+
+msgid "2 years"
+msgstr ""
+
+msgid "Change which cookies we can use"
 msgstr ""
 
 msgid "Stay safe when you use this website"
@@ -2433,34 +2890,395 @@ msgstr ""
 msgid "Secure your tech."
 msgstr ""
 
-msgid "Privacy notice"
-msgstr ""
-
-msgid "Links to other websites"
-msgstr ""
-
-msgid "This service contains links to other websites."
+msgid "Civil Legal Advice (CLA) &ndash; Legal Aid Agency Privacy Notice"
 msgstr ""
 
 msgid ""
-"This privacy notice only applies to this service and does not cover other"
-" government services and transactions that we link to."
+"This privacy notice sets out the standards that you can expect from the "
+"Legal Aid Agency when we request or hold personal information (‘personal "
+"data’) about you; how you can get access to a copy of your personal data;"
+" and what you can do if you think the standards are not being met."
 msgstr ""
 
 msgid ""
-"If you follow a link to a service provided by another government "
-"department or agency, that organisation will:"
-msgstr ""
-
-msgid "be the data controller"
-msgstr ""
-
-msgid "be responsible for processing any data you share with them"
+"The Legal Aid Agency is an Executive Agency of the Ministry of Justice "
+"(<abbr>MoJ</abbr>). The <abbr>MoJ</abbr> is the data controller for the "
+"personal information we hold. The Legal Aid Agency collects and processes"
+" personal data for the exercise of its own and associated public "
+"functions. Our public function is to provide legal aid."
 msgstr ""
 
 msgid ""
-"publish and manage their own privacy notice with details of how to "
-"contact them"
+"The <abbr title=\"Civil Legal Advice\">CLA</abbr> Operator Service is "
+"delivered by Hinduja Global Solutions UK Ltd, a contractor employed by "
+"the Legal Aid Agency to deliver <abbr title=\"Civil Legal "
+"Advice\">CLA</abbr>. If it is determined that you qualify for <abbr "
+"title=\"Civil Legal Advice\">CLA</abbr>, we may put you through to one of"
+" a number of <abbr title=\"Civil Legal Advice\">CLA</abbr> Specialist "
+"Advice Providers. These organisations are data processors on behalf of "
+"the Legal Aid Agency and Ministry of Justice."
+msgstr ""
+
+msgid "About personal information"
+msgstr ""
+
+msgid ""
+"Personal data is information about you as an individual. It can be your "
+"name, address or telephone number."
+msgstr ""
+
+msgid ""
+"The kind of information that <abbr title=\"Civil Legal "
+"Advice\">CLA</abbr> will collect about you includes:"
+msgstr ""
+
+msgid ""
+"Personal details including your name, address, date of birth, contact "
+"details, diversity monitoring information and national insurance number;"
+msgstr ""
+
+msgid "Financial information needed to determine if you qualify for legal aid;"
+msgstr ""
+
+msgid ""
+"Reason for contacting <abbr title=\"Civil Legal Advice\">CLA</abbr>, such"
+" as the nature of your problem or specific details about your situation;"
+msgstr ""
+
+msgid ""
+"Details of any specific needs that you may have in order to access the "
+"<abbr title=\"Civil Legal Advice\">CLA</abbr> service;"
+msgstr ""
+
+msgid ""
+"Responses to any customer satisfaction survey or details of any feedback,"
+" complaints or requests for a review of our decision about whether you "
+"qualify for legal aid."
+msgstr ""
+
+msgid ""
+"We will only save the information you enter if you decide to contact a "
+"Civil Legal Advice operator. Therefore, the personal information that you"
+" have submitted, will only be stored when you click ‘submit your "
+"application’."
+msgstr ""
+
+msgid ""
+"We know how important it is to protect customers’ privacy and to comply "
+"with data protection laws. We will safeguard your personal data and will "
+"only disclose it where it is lawful to do so, or with your consent."
+msgstr ""
+
+msgid "Types of personal data we process"
+msgstr ""
+
+msgid ""
+"We only process personal data that is relevant for the services we are "
+"providing to you. The personal data which you have provided will only be "
+"used for the purposes set out below."
+msgstr ""
+
+msgid "Purpose of processing and the lawful basis for the process"
+msgstr ""
+
+msgid ""
+"The purpose of the Legal Aid Agency collecting and processing the "
+"personal data which you have provided in a legal aid application is for "
+"the purposes of providing legal aid. Our lawful basis is ‘the performance"
+" of a task carried out in the public interest or in the exercise of "
+"official authority’ as set out in Article 6(1)(e) of UK GDPR. The tasks "
+"are those set out in the Legal Aid, Sentencing and Punishment of "
+"Offenders Act 2012. Specifically, we will use this personal data in the "
+"following ways:"
+msgstr ""
+
+msgid ""
+"In deciding whether you qualify for legal aid. This is to assess whether "
+"your issue is within the scope of the <abbr title=\"Civil Legal "
+"Advice\">CLA</abbr> and whether you are financially eligible."
+msgstr ""
+
+msgid "In assisting us in providing information and/or advice services to you."
+msgstr ""
+
+msgid "To prevent or detect crime and fraud."
+msgstr ""
+
+msgid ""
+"In conducting periodic assurance audits on legal aid files to ensure that"
+" decisions have been made correctly and accurately."
+msgstr ""
+
+msgid ""
+"In producing statistics and information on our processes to enable us to "
+"improve and monitor our processes to assist us in carrying out our "
+"functions. This information is collated in an anonymous format, it will "
+"not be used to identify you."
+msgstr ""
+
+msgid ""
+"Were the Legal Aid Agency unable to collect this personal information, we"
+" would not be able to conduct the activities above, which would prevent "
+"us from providing legal aid."
+msgstr ""
+
+msgid ""
+"We collect ‘special categories of personal data’. This data is collected "
+"where necessary for the purposes set out above. The condition under which"
+" we process this data is Article 9(g) of UK GDPR – Reasons of substantial"
+" public interest. Our associated Schedule 1 condition is Statutory and "
+"Government purposes. We also collect this data for the purposes of "
+"monitoring equality, this is a legal requirement for public authorities "
+"under the Equality Act 2010. Special categories of personal data will be "
+"treated with the strictest confidence and any information published under"
+" the Equality Act will not identify you or anyone else associated with "
+"your legal aid application."
+msgstr ""
+
+msgid ""
+"We collect ‘personal data relating to criminal convictions and offences "
+"or related security measures’. This data is collected where relevant for "
+"the purposes set out above. The Legal Aid Agency is an Executive Agency "
+"of the <abbr>MoJ</abbr>, an Official Authority for the purposes of "
+"Article 10 of UK GDPR."
+msgstr ""
+
+msgid "Who the information may be shared with"
+msgstr ""
+
+msgid ""
+"We sometimes need to share the personal information we process with other"
+" organisations. When this is necessary, we will comply with all aspects "
+"of the relevant data protection laws. The organisations we may share your"
+" personal information include:"
+msgstr ""
+
+msgid ""
+"Public authorities such as: HM Courts and Tribunal Service "
+"(<abbr>HMCTS</abbr>), HM Revenue and Customs (<abbr>HMRC</abbr>), "
+"Department of Work and Pensions (<abbr>DWP</abbr>) and HM Land Registry;"
+msgstr ""
+
+msgid ""
+"Non-public authorities such as: Credit reference agencies Equifax and "
+"Transunion and our debt collection partners Advantis Credit Ltd;"
+msgstr ""
+
+msgid "Hinduja Global Solutions UK Ltd and"
+msgstr ""
+
+msgid ""
+"If false or inaccurate information is provided or fraud identified, the "
+"Legal Aid Agency can lawfully share your personal information with fraud "
+"prevention agencies to detect and to prevent fraud and money laundering."
+msgstr ""
+
+msgid ""
+"Where a debt is owed to the Legal Aid Agency, we may share your data with"
+" public authorities such as HMRC and DWP and with debt collection "
+"partners such as Advantis Credit Ltd for the purposes of tracing, debt "
+"collection and enforcement."
+msgstr ""
+
+msgid ""
+"You can contact our Data Protection Officer for further information on "
+"the organisations we may share your personal information with."
+msgstr ""
+
+msgid "Data processors"
+msgstr ""
+
+msgid ""
+"We may contract with third party data processors to provide email, system"
+" administration, document management and IT storage services. Any "
+"personal data shared with a data processor for this purpose will be "
+"governed by model contract clauses under data protection law."
+msgstr ""
+
+msgid ""
+"We contract with Advantis Credit Ltd as a data processor for the "
+"collection and enforcement of criminal legal aid contributions. Any "
+"personal data shared with the data processor for this purpose is governed"
+" by model contract clauses under data protection law."
+msgstr ""
+
+msgid "Automated decision making"
+msgstr ""
+
+msgid ""
+"We do not use solely automated decision making within the definition of "
+"Article 22(1) of UK <abbr>GDPR</abbr>. The overall decision on an "
+"application for legal aid or a claim for costs in a legal aid case will "
+"always be made by a human decision maker. This could be a member of our "
+"staff, or a staff member of a legal aid Provider acting under delegated "
+"authority from the Legal Aid Agency."
+msgstr ""
+
+msgid "Details of transfers to third country and safeguards"
+msgstr ""
+
+msgid ""
+"Personal data may be transferred to locations in the European Economic "
+"Area (<abbr>EEA</abbr>) where required by our data processors for "
+"hosting, storage and secure backup of our IT services. Such transfers are"
+" made on the basis of Adequacy decisions between the UK and EEA in "
+"accordance with Article 45 of UK <abbr>GDPR</abbr>."
+msgstr ""
+
+msgid ""
+"In limited and exceptional circumstances, where required for the "
+"provision of technical support, personal data stored in our call centre "
+"software may be accessed by support staff located in USA, Romania, "
+"Philippines, Singapore or Australia. Where transfers for this purpose are"
+" made to locations without Adequacy decisions the transfer is made on the"
+" basis of exceptions under Article 49 of UK <abbr>GDPR</abbr> and is "
+"required for the legitimate interests of the Ministry of Justice. The "
+"software provider maintains the same standards of IT and personnel "
+"security for its services overseas as it does for services in the UK."
+msgstr ""
+
+msgid "Retention period for information collected"
+msgstr ""
+
+msgid ""
+"Your personal information will not be retained for any longer than is "
+"necessary for the lawful purposes for which it has been collected and "
+"processed. This is to ensure that your personal information does not "
+"become inaccurate, out of date or irrelevant. The Legal Aid Agency have "
+"set retention periods for the personal information that we collect, this "
+"can be accessed via our website:"
+msgstr ""
+
+msgid ""
+"You can also contact our Data Protection Officer for a copy of our "
+"retention schedules."
+msgstr ""
+
+msgid ""
+"While we retain your personal data, we will ensure that it is protected "
+"from loss, misuse or unauthorised access and disclosure. Once the "
+"retention period has been reached, your personal data will be permanently"
+" and securely deleted and destroyed."
+msgstr ""
+
+msgid "Access to personal information"
+msgstr ""
+
+msgid ""
+"You can find out if we hold any personal data about you by making a "
+"‘subject access request’. If you wish to make a subject access request "
+"please contact:"
+msgstr ""
+
+msgid ""
+"\n"
+"          Disclosure Team - Post point 10.25<br/>\n"
+"          Ministry of Justice<br/>\n"
+"          102 Petty France<br/>\n"
+"          London<br/>\n"
+"          SW1H 9AJ <br/>    \n"
+"          <a class=\"govuk-link email\" "
+"href=\"mailto:data.access@justice.gov.uk\">data.access@justice.gov.uk</a>"
+"\n"
+"          "
+msgstr ""
+
+msgid "When we ask you for personal data"
+msgstr ""
+
+msgid ""
+"We promise to inform you why we need your personal data and ask only for "
+"the personal data we need and not collect information that is irrelevant "
+"or excessive."
+msgstr ""
+
+msgid ""
+"When we collect your personal data, we have responsibilities, and you "
+"have rights. These include:"
+msgstr ""
+
+msgid "That you can withdraw consent at any time, where relevant;"
+msgstr ""
+
+msgid "That you can lodge a complaint with the supervisory authority;"
+msgstr ""
+
+msgid ""
+"That we will protect and ensure that no unauthorised person has access to"
+" it;"
+msgstr ""
+
+msgid ""
+"That your personal data is shared with other organisations only for "
+"legitimate purposes;"
+msgstr ""
+
+msgid "That we don’t keep it longer than is necessary;"
+msgstr ""
+
+msgid ""
+"That we will not make your personal data available for commercial use "
+"without your consent; and"
+msgstr ""
+
+msgid ""
+"That we will consider your request to correct, stop processing or erase "
+"your personal data."
+msgstr ""
+
+msgid "You can get more details on:"
+msgstr ""
+
+msgid "Agreements we have with other organisations for sharing information;"
+msgstr ""
+
+msgid ""
+"Circumstances where we can pass on personal information without telling "
+"you, for example, to help with the prevention or detection of crime or to"
+" produce anonymised statistics;"
+msgstr ""
+
+msgid ""
+"Our instructions to staff on how to collect, use or delete your personal "
+"information;"
+msgstr ""
+
+msgid "How we check that the information we hold is accurate and up-to-date;"
+msgstr ""
+
+msgid "How to make a complaint."
+msgstr ""
+
+msgid ""
+"For more information about the above issues, please contact the "
+"<abbr>MoJ</abbr> Data Protection Officer:"
+msgstr ""
+
+msgid ""
+"The Data Protection Officer<br/>Ministry of Justice<br/>102 Petty "
+"France<br/>London<br/>SW1H 9AJ<br/>"
+msgstr ""
+
+msgid ""
+"For more information on how and why your information is processed, please"
+" see the information provided when you accessed our services or were "
+"contacted by us."
+msgstr ""
+
+msgid "Complaints"
+msgstr ""
+
+msgid ""
+"When we ask you for information, we will keep to the law. If you consider"
+" that your information has been handled incorrectly, you can contact the "
+"Information Commissioner for independent advice about data protection. "
+"You can contact the Information Commissioner at:"
+msgstr ""
+
+msgid "Information Commissioner’s Office<br />"
+msgstr ""
+
+msgid "Tel:"
 msgstr ""
 
 msgid "You’ve reached the end of this service"
@@ -2483,6 +3301,34 @@ msgid ""
 "href=\"%(contact_url)s\" class=\"govuk-link\">get in touch</a>."
 msgstr ""
 
+msgid "You might qualify for free legal advice"
+msgstr ""
+
+msgid ""
+"You might be able to get free legal advice through the Housing Loss "
+"Prevention Advice Scheme."
+msgstr ""
+
+msgid ""
+"This advice is free to anyone who can show their home is at risk. It does"
+" not depend on what you earn or your financial situation."
+msgstr ""
+
+msgid "Next steps"
+msgstr ""
+
+msgid "We’ll show you a list of legal advisors."
+msgstr ""
+
+msgid "You need to contact the legal adviser."
+msgstr ""
+
+msgid "Explain that you could lose your home."
+msgstr ""
+
+msgid "Tell them if you have any letters or documents about your situation."
+msgstr ""
+
 msgid ""
 "We only need to know about any money you received last month, even if "
 "this varies from month to month."
@@ -2500,6 +3346,31 @@ msgid "Remove Property"
 msgstr ""
 
 msgid "Add another property"
+msgstr ""
+
+msgid "Legal aid doesn’t cover all types of problem"
+msgstr ""
+
+msgid ""
+"You can still ask a solicitor for help – you will have to pay for their "
+"advice."
+msgstr ""
+
+msgid ""
+"You can still ask a solicitor for help - you will have to pay for their "
+"advice."
+msgstr ""
+
+msgid "Find a solicitor"
+msgstr ""
+
+msgid ""
+"You may still get help and advice from the organisations listed below. "
+"You don’t have to qualify for legal aid."
+msgstr ""
+
+#, python-format
+msgid "Help organisations for problems about %(category_name)s"
 msgstr ""
 
 msgid "About the problem"
@@ -2577,9 +3448,6 @@ msgid "Future page"
 msgstr ""
 
 msgid "Your progress"
-msgstr ""
-
-msgid "Contact information"
 msgstr ""
 
 msgid "What valuable items should I include?"

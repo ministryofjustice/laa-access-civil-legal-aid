@@ -53,6 +53,7 @@ class DiscriminationWhereForm(DiscriminationQuestionForm):
 
 
 class DiscriminationWhyForm(DiscriminationQuestionForm):
+    depends_on = DiscriminationWhereForm
     title = _("Why were you discriminated against?")
 
     next_step_mapping = {
@@ -102,9 +103,10 @@ class DiscriminationWhyForm(DiscriminationQuestionForm):
 
 
 class DiscriminationAreYouUnder18Form(AreYouUnder18Form):
+    depends_on = DiscriminationWhyForm
     category = DISCRIMINATION
 
     next_step_mapping = {
-        "yes": "contact.contact_us",
+        "yes": {"endpoint": "contact.contact_us_fast_tracked", "reason": "other"},
         "no": "categories.results.in_scope",
     }

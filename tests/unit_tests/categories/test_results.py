@@ -19,7 +19,8 @@ def test_get_context_with_housing_category(mock_organisations):
             return_value=mock_organisations,
         ) as mock_get_orgs,
         patch(
-            "app.categories.results.views.get_fala_category_code", return_value="HOU"
+            "app.categories.results.views.create_fala_url",
+            return_value="https://find-legal-advice.justice.gov.uk/",
         ),
     ):
         view = ResultPage(template="categories/results/housing.html")
@@ -27,7 +28,6 @@ def test_get_context_with_housing_category(mock_organisations):
 
         assert result["category"].title == "Housing, homelessness, losing your home"
         assert result["organisations"] == mock_organisations
-        assert result["fala_category_code"] == "HOU"
 
         # Verify correct article_category_name was used
         mock_get_orgs.assert_called_once_with("Housing")
@@ -40,7 +40,8 @@ def test_get_context_with_immigration_category():
             return_value=[],
         ) as mock_get_orgs,
         patch(
-            "app.categories.results.views.get_fala_category_code", return_value="IMMAS"
+            "app.categories.results.views.create_fala_url",
+            return_value="https://find-legal-advice.justice.gov.uk/",
         ),
     ):
         view = ResultPage(template="")
@@ -48,7 +49,6 @@ def test_get_context_with_immigration_category():
 
         assert result["category"].title == "Asylum and immigration"
         assert result["organisations"] == []
-        assert result["fala_category_code"] == "IMMAS"
 
         # Verify correct article_category_name was used
         mock_get_orgs.assert_called_once_with("Immigration and asylum")
@@ -60,7 +60,10 @@ def test_get_context_with_no_category():
             "app.categories.results.views.cla_backend.get_help_organisations",
             return_value=[],
         ) as mock_get_orgs,
-        patch("app.categories.results.views.get_fala_category_code", return_value=None),
+        patch(
+            "app.categories.results.views.create_fala_url",
+            return_value="https://find-legal-advice.justice.gov.uk/",
+        ),
     ):
         view = ResultPage(template="")
         result = view.get_context()
@@ -68,7 +71,6 @@ def test_get_context_with_no_category():
         # Assertions
         assert result["category"] is None
         assert result["organisations"] == []
-        assert result["fala_category_code"] is None
 
         # Verify that "other" was used as article_category_name
         mock_get_orgs.assert_called_once_with("other")
@@ -80,14 +82,16 @@ def test_get_context_with_invalid_category():
             "app.categories.results.views.cla_backend.get_help_organisations",
             return_value=[],
         ) as mock_get_orgs,
-        patch("app.categories.results.views.get_fala_category_code", return_value=None),
+        patch(
+            "app.categories.results.views.create_fala_url",
+            return_value="https://find-legal-advice.justice.gov.uk/",
+        ),
     ):
         view = ResultPage(template="")
         result = view.get_context(category="not_a_category_object")
 
         assert result["category"] is None
         assert result["organisations"] == []
-        assert result["fala_category_code"] is None
 
         # Verify that "other" was used as article_category_name
         mock_get_orgs.assert_called_once_with("other")

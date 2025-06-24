@@ -1,0 +1,49 @@
+name: Build documentation
+
+on:
+  workflow_call:
+    outputs:
+      artifact-name:
+        description: "GitHub Pages deployment artifact identifier"
+        value: github-pages
+      success:
+        description: "Whether the build completed successfully"
+        value: ${{ jobs.build.outputs.success }}
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/ministryofjustice/tech-docs-github-pages-publisher@sha256:0b9c705b053850f47908e9691f3b77212c5f85bee7db5f0938feb634485ef05b # v6.0.0
+    steps:
+      # We only checkout the docs directory, which allows us to keep all necessary files for
+      # generating the docs separate from the app.
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          sparse-checkout: |
+            docs
+          sparse-checkout-cone-mode: false
+
+      # We move the docs directory to the root so it is treated as if the docs directory was
+      # the only thing in the repository.
+      - name: Move directory to root
+        run: |
+          mv docs/* .
+          rm -rf docs
+
+      - name: Compile Markdown to HTML and create artifact
+        run: |
+          /usr/local/bin/package
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: github-pages
+          path: artifact.tar
+          retention-days: 1
+          overwrite: true

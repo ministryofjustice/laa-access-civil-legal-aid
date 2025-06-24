@@ -15,6 +15,13 @@ class ValidateDayTime:
         selected_time = field.data
         selected_day = form._fields.get(self.day_field).data
 
+        if not selected_day:
+            #  Do not attempt to validate further, let this be handled by the selected day InputRequired validator.
+            raise StopValidation()
+
+        if selected_day not in form.time_slots:
+            raise ValidationError(self.message)
+
         valid_time_slots = form.time_slots[selected_day]
 
         for time in valid_time_slots:

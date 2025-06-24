@@ -72,14 +72,14 @@ multi_property_form_routing = [
         {
             "Is this property your main home?": ["No", "radio"],
             "Does anyone else own a share of the property?": ["No", "radio"],
-            "How much is the property worth?": ["300000", "input"],
+            "How much is the property worth?": ["3000", "input"],
             "How much is left to pay on the mortgage?": ["200000", "input"],
             "How much was your monthly mortgage repayment last month?": [
                 "1000",
                 "input",
             ],
             "Do you rent out any part of this property?": ["Yes", "radio"],
-            "Amount": ["500", "input"],
+            "Amount": ["50", "input"],
             "Frequency": ["per month", "select"],
             "Is your share of the property in dispute?": ["No", "radio"],
         },
@@ -168,6 +168,19 @@ def test_multi_property_routing(
             property_form_group.get_by_label(question).select_option(answer[0])
     page.get_by_role("button", name="Continue").click()
     expect(page.get_by_role("heading", name="Your money coming in")).to_be_visible()
+
+    page.get_by_role("group", name="Maintenance received").get_by_label("Amount").fill(
+        "0"
+    )
+    page.get_by_role("group", name="Pension received").get_by_label("Amount").fill("0")
+    page.get_by_role("group", name="Any other income").get_by_label("Amount").fill("0")
+    page.get_by_role("button", name="Continue").click()
+    expect(
+        page.get_by_role("heading", name="Check your answers and confirm")
+    ).to_be_visible()
+
+    expect(page.get_by_text("Property 1")).to_be_visible()
+    expect(page.get_by_text("Property 2")).to_be_visible()
 
 
 @pytest.mark.usefixtures("live_server")

@@ -30,6 +30,7 @@
 
 
 {% block content %}
+  <script src="{{ url_for('static', filename='confirmation.js') }}" nonce="{{ csp_nonce() }}"></script>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             {% set panelTitle =  _('We will call you back') if callback_time else _("Your details have been submitted") %}
@@ -39,18 +40,23 @@
                 "html": panelHtml
             }) }}
 
-            {% if confirmation_email and not form.errors %}
-                <p class="govuk-body">
-                  {{ _('Your reference number was sent to') }}
-                  <strong>{{ confirmation_email }}</strong>.
-                </p>
-              {% else %}
-                <form class="confirmation-email-form" method="POST" novalidate>
-                    {{ form.csrf_token }}
+              <form class="confirmation-email-form" method="POST" novalidate>
+                {{ form.csrf_token }}
+                <div class="govuk-form-group" id="email-form-group">
                     {{ form.email }}
-                    {{ form.submit }}
-                </form>
-            {% endif %}
+                    <span class="govuk-error-message" id="email-error">
+                      <span class="govuk-visually-hidden">Error:</span>
+                      <span class="error-text"></span>
+                    </span>
+                </div>
+                {{ form.submit }}
+            </form>
+            
+            <!-- Success message, initially hidden -->
+            <span id="email-sent-label" class="govuk-body confirmation-body" data-translate="{{ _('Your reference number was sent to') }}" hidden></span>
+            <div id="confirmation-message" class="govuk-body confirmation-body" style="display: none;">
+              <!-- Populated by JS -->
+            </div>
 
             {% if category.code in ['debt', 'housing'] %}
                 {{ govukWarningText({

@@ -26,7 +26,7 @@ class Eligibility:
     def has_partner(self):
         return self.forms.get("about-you", {}).get(
             "has_partner", False
-        ) and not self.forms.get("about-you", {}).get("are_you_in_a_dispute", False)
+        ) and not self.forms.get("about-you", {}).get("in_dispute", False)
 
     @property
     def owns_property(self) -> bool:
@@ -60,19 +60,19 @@ class Eligibility:
 
     @property
     def has_savings(self):
-        return self.forms.get("about-you", {}).get("have_savings", False)
+        return self.forms.get("about-you", {}).get("has_savings", False)
 
     @property
     def has_valuables(self):
-        return self.forms.get("about-you", {}).get("have_valuables", False)
+        return self.forms.get("about-you", {}).get("has_valuables", False)
 
     @property
     def has_children(self) -> bool:
-        return self.forms.get("about-you", {}).get("have_children", False)
+        return self.forms.get("about-you", {}).get("has_children", False)
 
     @property
     def has_dependants(self) -> bool:
-        return self.forms.get("about-you", {}).get("have_dependants", False)
+        return self.forms.get("about-you", {}).get("has_dependants", False)
 
     @property
     def on_benefits(self) -> bool:
@@ -137,6 +137,14 @@ class Session(SecureCookieSession):
 
     def clear_eligibility(self):
         self["eligibility"] = Eligibility(forms={}, _notes={})
+
+    @property
+    def ec_reference(self):
+        return self.get("_ec_reference", None)
+
+    @ec_reference.setter
+    def ec_reference(self, ec_reference):
+        self["_ec_reference"] = ec_reference
 
     @property
     def category(self) -> Category | None:
@@ -208,6 +216,11 @@ class Session(SecureCookieSession):
         return True
 
     @property
+    def in_scope(self):
+        category = self.subcategory or self.category
+        return bool(category and category.in_scope)
+
+    @property
     def category_answers(self) -> list[CategoryAnswer]:
         items: list[dict] = self.get("category_answers", [])
         category_answers = []
@@ -251,6 +264,20 @@ class Session(SecureCookieSession):
             Updates session['category_answers'] list
         """
 
+        # If the user changes subcategory we should reset their onward question answers.
+        if (
+            category_answer.question_type == QuestionType.SUB_CATEGORY
+            and self.subcategory
+        ):
+            is_changing_sub_cat = category_answer.answer_value != self.subcategory.code
+            if is_changing_sub_cat:
+                self["category_answers"] = [
+                    ans
+                    for ans in self["category_answers"]
+                    if ans.get("question_type")
+                    not in [QuestionType.ONWARD, QuestionType.SUB_CATEGORY]
+                ]
+
         # Remove translation from the category_answer object before saving
         category_answer = self._untranslate_category_answer(category_answer)
 
@@ -265,11 +292,14 @@ class Session(SecureCookieSession):
 
         answers: list[CategoryAnswer] = self.category_answers
 
-        # Remove existing entry if present
-        answers = [
-            entry for entry in answers if entry.question != category_answer.question
-        ]
-        answers.append(category_answer)
+        # Update existing entry if present
+        question_exists = False
+        for i in range(len(answers)):
+            if answers[i].question == category_answer.question:
+                answers[i] = category_answer
+                question_exists = True
+        if not question_exists:
+            answers.append(category_answer)
 
         category_answers = []
         for answer in answers:
@@ -313,6 +343,51 @@ class Session(SecureCookieSession):
         answers = [entry for entry in answers if entry["question"] != question_title]
 
         self["category_answers"] = answers
+
+    def get_scope_traversal(self):
+        """Used to populate the users' case data with their answers from this service."""
+
+        def get_users_answers(answers: list[CategoryAnswer]) -> list[dict]:
+            """Only get the fields that we need to store in the backend."""
+            return [
+                {
+                    "question": answer.question,
+                    "answer": answer.answer_label,
+                    "type": answer.question_type,
+                }
+                for answer in answers
+            ]
+
+        category_information = (
+            {"name": self.category.title._args[0], "code": self.category.chs_code}
+            if self.category
+            else None
+        )
+
+        subcategory_information = (
+            {
+                "name": self.subcategory.title._args[
+                    0
+                ],  # Get the non-translated string
+                "description": self.subcategory.description._args[0],
+            }
+            if self.subcategory
+            else None
+        )
+
+        return {
+            "scope_answers": get_users_answers(self.category_answers),
+            "category": category_information,
+            "subcategory": subcategory_information,
+        }
+
+    def at_risk_of_harm(self):
+        answer = self.get_category_question_answer(
+            "Are you worried about someone's safety?"
+        )
+        if answer == "yes":
+            return True
+        return False
 
 
 class SessionInterface(SecureCookieSessionInterface):

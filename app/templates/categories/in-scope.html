@@ -37,10 +37,8 @@
 
         <h2 class="govuk-heading-m">{% trans %}When you do not need to complete the financial assessment{% endtrans %}</h2>
 
-        {% set contact_us_link %}
-            <a class="govuk-link" href={{ url_for('contact.contact_us') }}>contact CLA</a>
-        {% endset %}
-        <p class="govuk-body">{% trans %}You should {{ contact_us_link }}  without completing the financial assessment if you are:{% endtrans %}</p>
+        {% set contact_us_link %}<a class="govuk-link" href={{ url_for('contact.contact_us_fast_tracked', reason='other') }}>contact CLA</a>{% endset %}
+        <p class="govuk-body">{% trans %}You should {{ contact_us_link }} without completing the financial assessment if you are:{% endtrans %}</p>
 
         <ul class="govuk-list govuk-list--bullet">
             <li>{% trans %}under 18{% endtrans %}</li>
@@ -67,14 +65,13 @@
         <p class="govuk-body">{% trans %}Your adviser will check whether you qualify for legal aid at no cost to you by asking about your problem and your finances.
             If you qualify, in some cases you may need to pay a contribution towards your legal aid.{% endtrans %}</p>
 
-        {% set fala_url = url_for("find-a-legal-adviser.search", category=fala_category_code.lower() if fala_category_code else None) %}
         <p class="govuk-body"><a class="govuk-link" href="{{ fala_url }}">{% trans %}Find a legal adviser{% endtrans %}</a></p>
 
 
         {% if organisations %}
             <h2 class="govuk-heading-m">{{ _('Other sources of help') }}</h2>
             <p class="govuk-body">
-                {% trans category_name=_(category_name) | lowercase_category_name %}You can also get advice from alternative help organisations for issues related to {{ category_name }}. You don’t have to qualify for legal aid.{% endtrans %}
+                {% trans category_name=category.title | lowercase_category_name %}You can also get advice from alternative help organisations for issues related to {{ category_name }}. You don’t have to qualify for legal aid.{% endtrans %}
             </p>
             {{ helpOrganisationsList(organisations) }}
         {% endif %}
