@@ -57,15 +57,11 @@ class CategoryLandingPage(CategoryPage):
         if self.routing_map and route_endpoint:
             self.listing["main"] = []
             for category, next_page in self.routing_map["main"]:
-                self.listing["main"].append(
-                    (category, f"categories.{route_endpoint}.{category.code}")
-                )
+                self.listing["main"].append((category, f"categories.{route_endpoint}.{category.code}"))
 
             self.listing["more"] = []
             for category, next_page in self.routing_map["more"]:
-                self.listing["more"].append(
-                    (category, f"categories.{route_endpoint}.{category.code}")
-                )
+                self.listing["more"].append((category, f"categories.{route_endpoint}.{category.code}"))
 
             self.listing["other"] = f"categories.{route_endpoint}.other"
 
@@ -84,9 +80,7 @@ class CategoryLandingPage(CategoryPage):
 
     def process_request(self):
         self.set_category_answer()
-        return render_template(
-            self.template, category=self.category, listing=self.listing
-        )
+        return render_template(self.template, category=self.category, listing=self.listing)
 
     @classmethod
     def register_routes(cls, blueprint: Blueprint, path: str = None):
@@ -95,9 +89,7 @@ class CategoryLandingPage(CategoryPage):
 
         blueprint.add_url_rule(
             f"/{path}/",
-            view_func=cls.as_view(
-                "landing", route_endpoint=blueprint.name, template=cls.template
-            ),
+            view_func=cls.as_view("landing", route_endpoint=blueprint.name, template=cls.template),
         )
         cls.register_sub_routes(blueprint, path, cls.routing_map["main"])
         cls.register_sub_routes(blueprint, path, cls.routing_map["more"])
@@ -129,9 +121,7 @@ class CategoryLandingPage(CategoryPage):
             )
             blueprint.add_url_rule(
                 f"/{path}/answer/{sub_category.url_friendly_name}",
-                view_func=CategoryAnswerPage.as_view(
-                    sub_category.code, category_answer
-                ),
+                view_func=CategoryAnswerPage.as_view(sub_category.code, category_answer),
             )
 
 
@@ -217,9 +207,7 @@ class QuestionPage(CategoryPage):
     def update_session(self, form: QuestionForm) -> None:
         answer = form.question.data
         answer = answer if isinstance(answer, list) else [answer]
-        answer_labels = [
-            label for value, label in form.question.choices if value in answer
-        ]
+        answer_labels = [label for value, label in form.question.choices if value in answer]
         category_answer = CategoryAnswer(
             question=form.title,
             answer_value=form.question.data,
@@ -240,9 +228,7 @@ class QuestionPage(CategoryPage):
                 title = title._args[0]
             answer = session.get_category_question_answer(title)
             if answer is None:
-                logger.error(
-                    "FAILED ensuring form dependency for %s", form.title, exc_info=True
-                )
+                logger.error("FAILED ensuring form dependency for %s", form.title, exc_info=True)
                 return redirect(url_for("main.session_expired"))
 
         return None

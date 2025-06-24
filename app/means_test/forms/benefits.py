@@ -101,21 +101,13 @@ class BenefitsForm(BaseMeansTestForm):
         # Remove child-benefit option if they don't have any children or dependants
         eligibility = session.get_eligibility()
         if not eligibility.is_eligible_for_child_benefits:
-            self.benefits.choices = list(
-                filter(
-                    lambda benefit: benefit[0] != "child_benefit", self.benefits.choices
-                )
-            )
+            self.benefits.choices = list(filter(lambda benefit: benefit[0] != "child_benefit", self.benefits.choices))
 
     @property
     def data(self):
         # Only return data for our fields and not including the core fields
         data = super().data
-        return {
-            key: value
-            for key, value in data.items()
-            if key not in ["csrf_token", "submit"]
-        }
+        return {key: value for key, value in data.items() if key not in ["csrf_token", "submit"]}
 
     @classmethod
     def should_show(cls) -> bool:
@@ -135,9 +127,7 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
         widget=MeansTestCheckboxInput(
             is_inline=False,
             show_divider=False,
-            hint_text=_(
-                "These benefits don’t count as income. Please tick the ones you receive."
-            ),
+            hint_text=_("These benefits don’t count as income. Please tick the ones you receive."),
         ),
         choices=[
             ("armed-forces-independance", _("Armed Forces Independence payment")),
@@ -162,18 +152,14 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
 
     other_benefits = PartnerYesNoField(
         label=_("Do you receive any other benefits not listed above? "),
-        partner_label=_(
-            "Do you or your partner receive any other benefits not listed above? "
-        ),
+        partner_label=_("Do you or your partner receive any other benefits not listed above? "),
         description=_(
             "For example, National Asylum Support Service Benefit, "
             "Incapacity Benefit, Contribution-based Jobseeker’s "
             "Allowance"
         ),
         widget=MeansTestRadioInput(),
-        validators=[
-            InputRequired(message=_("Tell us whether you receive any other benefits"))
-        ],
+        validators=[InputRequired(message=_("Tell us whether you receive any other benefits"))],
     )
     total_other_benefit = MoneyIntervalField(
         label=_("If Yes, total amount of benefits not listed above"),
@@ -194,17 +180,9 @@ class AdditionalBenefitsForm(BaseMeansTestForm):
     def data(self):
         # Only return data for our fields and not including the core fields
         data = super().data
-        return {
-            key: value
-            for key, value in data.items()
-            if key not in ["csrf_token", "submit"]
-        }
+        return {key: value for key, value in data.items() if key not in ["csrf_token", "submit"]}
 
     @classmethod
     def should_show(cls) -> bool:
         data = session.get("eligibility").forms.get("benefits")
-        return (
-            session.get_eligibility().on_benefits
-            and data
-            and "other-benefit" in data["benefits"]
-        )
+        return session.get_eligibility().on_benefits and data and "other-benefit" in data["benefits"]

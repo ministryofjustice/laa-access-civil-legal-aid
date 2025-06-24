@@ -35,9 +35,7 @@ class TestForm(Form):
         description="Single description",
         partner_description="Partner description",
     )
-    interval_field = PartnerMoneyIntervalField(
-        hint_text="Hint for single", partner_hint_text="Hint for partners"
-    )
+    interval_field = PartnerMoneyIntervalField(hint_text="Hint for single", partner_hint_text="Hint for partners")
 
 
 def test_description_no_partner(mock_session):

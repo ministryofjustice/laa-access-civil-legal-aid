@@ -85,15 +85,11 @@ def test_reviews_page(page: Page, complete_benefits_form):
     expect(page.get_by_role("heading", name="Your property")).not_to_be_visible()
 
     # This was a conditional field which was not triggered and should not be on the review form
-    expect(
-        page.get_by_text("Are you in a dispute with your partner?")
-    ).not_to_be_visible()
+    expect(page.get_by_text("Are you in a dispute with your partner?")).not_to_be_visible()
 
     # These forms WERE completed and should be on the reviews form
     expect(page.get_by_role("heading", name="About you")).to_be_visible()
-    expect(
-        page.get_by_role("heading", name="Which benefits do you receive?")
-    ).to_be_visible()
+    expect(page.get_by_role("heading", name="Which benefits do you receive?")).to_be_visible()
 
     assert_answers(page, get_answers())
 
@@ -113,16 +109,10 @@ def test_reviews_page_change_benefits_answer(page: Page, complete_benefits_form)
     page.get_by_role("button", name="Continue").click()
     expect(page).to_have_title("Check your answers and confirm - GOV.UK")
 
-    benefits_answers = answers["Which benefits do you receive?"][
-        "Which benefits do you receive?"
-    ][:]
+    benefits_answers = answers["Which benefits do you receive?"]["Which benefits do you receive?"][:]
     # Remove universal credit from the list of answers
-    benefits_answers = [
-        item for item in benefits_answers if item not in ["Universal Credit"]
-    ]
-    answers["Which benefits do you receive?"]["Which benefits do you receive?"] = (
-        benefits_answers
-    )
+    benefits_answers = [item for item in benefits_answers if item not in ["Universal Credit"]]
+    answers["Which benefits do you receive?"]["Which benefits do you receive?"] = benefits_answers
     assert_answers(page, answers)
 
 
@@ -163,9 +153,7 @@ def test_reviews_page_change_category(page: Page, complete_benefits_form):
     expect(page).to_have_title("Check your answers and confirm - GOV.UK")
     page.goto(url_for("categories.index", _external=True))
     page.get_by_text("Discrimination").click()
-    page.get_by_label(
-        "Work - including colleagues, employer or employment agency"
-    ).check()
+    page.get_by_label("Work - including colleagues, employer or employment agency").check()
     page.get_by_role("button", name="Continue").click()
     page.get_by_label("Race, colour, ethnicity, nationality").check()
     page.get_by_role("button", name="Continue").click()
@@ -218,9 +206,7 @@ def test_change_answer_nolonger_passported(page: Page, complete_benefits_form):
     page.goto(url_for("means_test.about-you", _external=True))
     assert_about_you_form_is_prefilled(page, answers["About you"])
     # You no longer receive benefits
-    locator = page.get_by_text(
-        "Do you receive any benefits (including Child Benefit)?"
-    ).locator("..")
+    locator = page.get_by_text("Do you receive any benefits (including Child Benefit)?").locator("..")
     locator.get_by_label("No").click()
     page.get_by_role("button", name="Continue").click()
 
@@ -298,9 +284,7 @@ def test_review_page_failed_access_without_completing_means(page: Page, request)
         }
     ],
 )
-def test_review_page_failed_access_incomplete_means(
-    page: Page, complete_about_you_form
-):
+def test_review_page_failed_access_incomplete_means(page: Page, complete_about_you_form):
     """Attempt to access review page without completing all means forms."""
     page.goto(url_for("means_test.review", _external=True))
     assert page.title() == "You’ve reached the end of this service"

@@ -65,17 +65,13 @@ class ContactUs(View):
             # If the user used the "Contact Us" journey rather than completing scope diagnosis then their
             # previous answers should not be attached to their case
             payload["scope_traversal"] = (
-                session.get_scope_traversal()
-                if ReasonsForContactingForm.MODEL_REF_SESSION_KEY not in session
-                else {}
+                session.get_scope_traversal() if ReasonsForContactingForm.MODEL_REF_SESSION_KEY not in session else {}
             )
             financial_status, financial_reason = self.get_financial_eligibility_status()
             payload["scope_traversal"]["financial_assessment_status"] = financial_status
             payload["scope_traversal"]["fast_track_reason"] = financial_reason
 
-            session["case_reference"] = cla_backend.post_case(payload=payload)[
-                "reference"
-            ]
+            session["case_reference"] = cla_backend.post_case(payload=payload)["reference"]
             logger.info(f"Case created {session['case_reference']}")
 
             if ReasonsForContactingForm.MODEL_REF_SESSION_KEY in session:
@@ -183,9 +179,7 @@ class ConfirmationPage(View):
 
     def dispatch_request(self):
         if not session.get("case_reference", None):
-            logger.error(
-                "FAILED confirmation page due to invalid session", exc_info=True
-            )
+            logger.error("FAILED confirmation page due to invalid session", exc_info=True)
             return redirect(url_for("main.session_expired"))
 
         form = ConfirmationEmailForm()

@@ -136,9 +136,7 @@ def fill_about_form(page: Page, questions: dict) -> None:
 def test_about_form(page: Page, scenario: str, form_inputs: dict, expected: dict):
     page.goto(url_for("means_test.about-you", _external=True))
 
-    page.locator(
-        "#has_partner" if form_inputs["has_partner"] == "Yes" else "#has_partner-2"
-    ).check()
+    page.locator("#has_partner" if form_inputs["has_partner"] == "Yes" else "#has_partner-2").check()
     del form_inputs["has_partner"]
 
     fill_about_form(page, form_inputs)
@@ -158,10 +156,6 @@ def test_about_form(page: Page, scenario: str, form_inputs: dict, expected: dict
 def test_string_validation_error(page: Page, complete_about_you_form):
     page.get_by_role("button", name="Continue").click()
     expect(page.get_by_role("heading", name="Your money coming in")).to_be_visible()
-    page.locator('role=group[name="Maintenance received"]').locator(
-        'label:has-text("Amount")'
-    ).fill("test")
+    page.locator('role=group[name="Maintenance received"]').locator('label:has-text("Amount")').fill("test")
     page.get_by_role("button", name="Continue").click()
-    assert page.locator(
-        "text=Error: Tell us how much maintenance you receive"
-    ).is_visible()
+    assert page.locator("text=Error: Tell us how much maintenance you receive").is_visible()

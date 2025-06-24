@@ -13,9 +13,7 @@ class InScopeResultPage(InScopeMixin, ResultPage):
 
 bp.add_url_rule(
     "/legal-aid-available",
-    view_func=InScopeResultPage.as_view(
-        "in_scope", template="categories/in-scope.html"
-    ),
+    view_func=InScopeResultPage.as_view("in_scope", template="categories/in-scope.html"),
 )
 bp.add_url_rule(
     "/cannot-find-your-problem",
