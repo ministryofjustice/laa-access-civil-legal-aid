@@ -34,9 +34,7 @@ def test_redirect_map(client, path, expected_endpoint):
 )
 def test_fala_redirect(client, category, expected_category, expected_secondary):
     """Tests FALA category redirects."""
-    response = client.get(
-        f"/scope/refer/legal-adviser?category={category}", follow_redirects=False
-    )
+    response = client.get(f"/scope/refer/legal-adviser?category={category}", follow_redirects=False)
     assert response.status_code == 301
 
     if expected_category:

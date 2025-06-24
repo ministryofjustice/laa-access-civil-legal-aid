@@ -13,17 +13,13 @@ def test_get_gtm_anon_id_from_valid_cookie(app, client):
 
 
 def test_get_gtm_anon_id_from_invalid_cookie(app):
-    with app.test_request_context(
-        "/", headers={"Cookie": "gtm_anon_id=not-a-valid-uuid"}
-    ):
+    with app.test_request_context("/", headers={"Cookie": "gtm_anon_id=not-a-valid-uuid"}):
         result = get_gtm_anon_id_from_cookie()
         assert result is None
 
 
 def test_gtm_anon_id_not_set_without_analytics_consent(client):
-    client.set_cookie(
-        "cookies_policy", json.dumps({"analytics": "no", "functional": "yes"})
-    )
+    client.set_cookie("cookies_policy", json.dumps({"analytics": "no", "functional": "yes"}))
 
     response = client.get("/find-your-problem")
     with client.session_transaction() as sesh:
@@ -32,9 +28,7 @@ def test_gtm_anon_id_not_set_without_analytics_consent(client):
 
 
 def test_gtm_anon_id_set_with_analytics_consent(client):
-    client.set_cookie(
-        "cookies_policy", json.dumps({"analytics": "yes", "functional": "yes"})
-    )
+    client.set_cookie("cookies_policy", json.dumps({"analytics": "yes", "functional": "yes"}))
 
     response = client.get("/find-your-problem")
 

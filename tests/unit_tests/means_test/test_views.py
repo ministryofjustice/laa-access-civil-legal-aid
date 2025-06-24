@@ -18,9 +18,7 @@ def mock_benefits_should_show():
 
 def test_form_protection_in_scope(app, client):
     with app.app_context():
-        with mock.patch.object(
-            Session, "in_scope", new_callable=mock.PropertyMock
-        ) as mock_in_scope:
+        with mock.patch.object(Session, "in_scope", new_callable=mock.PropertyMock) as mock_in_scope:
             mock_in_scope.return_value = True
             view = MeansTest(FormsMixin.forms["about-you"], "about-you")
             with mock.patch.object(
@@ -33,9 +31,7 @@ def test_form_protection_in_scope(app, client):
 
 def test_form_protection_not_in_scope(app, client):
     with app.app_context():
-        with mock.patch.object(
-            Session, "in_scope", new_callable=mock.PropertyMock
-        ) as mock_in_scope:
+        with mock.patch.object(Session, "in_scope", new_callable=mock.PropertyMock) as mock_in_scope:
             mock_in_scope.return_value = False
             view = MeansTest(FormsMixin.forms["about-you"], "about-you")
             response = view.dispatch_request()
@@ -46,9 +42,7 @@ def test_form_protection_not_in_scope(app, client):
 def test_form_protection_sequence_failed(app, client):
     """User needs to complete about-you before going to benefits"""
     with app.app_context():
-        with mock.patch.object(
-            Session, "in_scope", new_callable=mock.PropertyMock
-        ) as mock_in_scope:
+        with mock.patch.object(Session, "in_scope", new_callable=mock.PropertyMock) as mock_in_scope:
             mock_in_scope.return_value = True
             view = MeansTest(FormsMixin.forms["benefits"], "benefits")
             ensure_form_protection = view.ensure_form_protection
@@ -67,9 +61,7 @@ def test_form_protection_sequence_failed(app, client):
 def test_form_protection_sequence_success(app, client, mock_benefits_should_show):
     """User needs to complete about-you before going to benefits"""
     with app.app_context():
-        with mock.patch.object(
-            Session, "in_scope", new_callable=mock.PropertyMock
-        ) as mock_in_scope:
+        with mock.patch.object(Session, "in_scope", new_callable=mock.PropertyMock) as mock_in_scope:
             mock_in_scope.return_value = True
             view = MeansTest(FormsMixin.forms["benefits"], "benefits")
             ensure_form_protection = view.ensure_form_protection

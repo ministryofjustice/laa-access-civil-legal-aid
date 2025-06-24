@@ -106,9 +106,7 @@ class MoreProblemsPage(CategoryPage):
 
 bp.add_url_rule(
     "/more-problems",
-    view_func=MoreProblemsPage.as_view(
-        "landing", template="categories/more-problems.html"
-    ),
+    view_func=MoreProblemsPage.as_view("landing", template="categories/more-problems.html"),
 )
 
 for category, endpoint, next_page in MoreProblemsPage.listing:

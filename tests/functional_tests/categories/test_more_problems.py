@@ -8,9 +8,7 @@ find_a_legal_adviser_heading = "Legal aid covers this problem"
 @pytest.mark.parametrize(
     "category_name, expected_heading, category",
     [
-        pytest.param(
-            "Adopting a child from outside the UK", find_a_legal_adviser_heading, "mat"
-        ),
+        pytest.param("Adopting a child from outside the UK", find_a_legal_adviser_heading, "mat"),
         pytest.param(
             "Appeal a decision that you cannot work with children or vulnerable adults",
             find_a_legal_adviser_heading,
@@ -83,16 +81,12 @@ find_a_legal_adviser_heading = "Legal aid covers this problem"
         ),
     ],
 )
-def test_more_problems(
-    page: Page, category_name: str, expected_heading: str, category: str
-):
+def test_more_problems(page: Page, category_name: str, expected_heading: str, category: str):
     page.get_by_role("link", name="More problems covered by legal aid").click()
     page.get_by_role("link", name=category_name).click()
     expect(page.get_by_role("heading", name=expected_heading)).to_be_visible()
     if len(category) > 0:
         if category_name == "Terrorism":
-            assert page.url.endswith(
-                f"find-a-legal-adviser?category={category}&secondary_category=pub"
-            )
+            assert page.url.endswith(f"find-a-legal-adviser?category={category}&secondary_category=pub")
         else:
             assert page.url.endswith(f"find-a-legal-adviser?category={category}")

@@ -12,11 +12,7 @@ class ResultPage(CategoryPage):
         self.get_help_organisations = get_help_organisations
 
     def get_context(self, category: Category = None):
-        article_category_name = (
-            category.article_category_name
-            if isinstance(category, Category)
-            else "other"
-        )
+        article_category_name = category.article_category_name if isinstance(category, Category) else "other"
         organisations = (
             cla_backend.get_help_organisations(article_category_name)
             if article_category_name and self.get_help_organisations

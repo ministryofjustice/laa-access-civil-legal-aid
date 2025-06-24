@@ -69,13 +69,8 @@ class TestDomesticAbuseLandingPage:
     def test_onward_routing(self, page: Page, routing: dict):
         page.get_by_role("link", name="Domestic abuse").click()
         page.get_by_role("link", name=routing["link_text"]).click()
-        expect(
-            page.get_by_role("heading", name=routing["next_page_heading"])
-        ).to_be_visible()
-        if (
-            page.get_by_role("heading", name=routing["next_page_heading"])
-            == risk_of_harm_page_heading
-        ):
+        expect(page.get_by_role("heading", name=routing["next_page_heading"])).to_be_visible()
+        if page.get_by_role("heading", name=routing["next_page_heading"]) == risk_of_harm_page_heading:
             page.get_by_label("Yes").click()
             page.get_by_role("button", name="submit").click()
             expect(page.get_by_text(in_scope_page_heading)).to_be_visible()
@@ -85,27 +80,19 @@ class TestDomesticAbuseLandingPage:
         page.get_by_role("link", name="Domestic abuse").click()
         expect(page.get_by_role("button", name="Exit this page")).to_be_visible()
         page.get_by_role("link", name=routing["link_text"]).click()
-        expect(
-            page.get_by_role("heading", name=routing["next_page_heading"])
-        ).to_be_visible()
+        expect(page.get_by_role("heading", name=routing["next_page_heading"])).to_be_visible()
         if routing["exit_page_button"]:
             expect(page.get_by_role("button", name="Exit this page")).to_be_visible()
         elif not routing["exit_page_button"]:
-            expect(
-                page.get_by_role("button", name="Exit this page")
-            ).not_to_be_visible()
+            expect(page.get_by_role("button", name="Exit this page")).not_to_be_visible()
 
     @pytest.mark.parametrize("contact_routing", CONTACT_ROUTING)
     def test_contact_routing(self, page: Page, contact_routing: dict):
         page.get_by_role("link", name="Domestic abuse").click()
         expect(page.get_by_role("button", name="Exit this page")).to_be_visible()
         page.get_by_role("link", name=contact_routing["link_text"]).click()
-        expect(
-            page.get_by_role("heading", name="Are you worried about someone's safety?")
-        ).to_be_visible()
+        expect(page.get_by_role("heading", name="Are you worried about someone's safety?")).to_be_visible()
         page.get_by_role("radio", name=contact_routing["choice"]).click()
         page.get_by_role("button", name="Continue").click()
-        expect(
-            page.get_by_role("heading", name="Contact Civil Legal Advice")
-        ).to_be_visible()
+        expect(page.get_by_role("heading", name="Contact Civil Legal Advice")).to_be_visible()
         assert page.url.endswith(contact_routing["url"])

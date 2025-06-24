@@ -50,6 +50,4 @@ class TestFamilyLandingPage:
     def test_onward_routing(self, page: Page, routing: dict):
         page.get_by_role("link", name="Children, families, relationships").click()
         page.get_by_role("link", name=routing["link_text"]).click()
-        expect(
-            page.get_by_role("heading", name=routing["next_page_heading"])
-        ).to_be_visible()
+        expect(page.get_by_role("heading", name=routing["next_page_heading"])).to_be_visible()

@@ -140,9 +140,7 @@ class TestCallbackSlots:
     def setup_method(self, mock_api_response):
         self.client = BackendAPIClient()
         self.client.get = MagicMock(return_value=mock_api_response)
-        self.client.CALLBACK_API_DATETIME_FORMAT = (
-            "%Y-%m-%dT%H:%M:%S"  # Ensure format is correct
-        )
+        self.client.CALLBACK_API_DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S"  # Ensure format is correct
 
     def test_get_time_slots(self):
         expected = [

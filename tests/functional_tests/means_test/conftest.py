@@ -13,9 +13,7 @@ def navigate_to_means_test(page: Page):
 
 
 @pytest.fixture
-def complete_about_you_form(
-    page: Page, navigate_to_means_test, about_you_answers: dict
-):
+def complete_about_you_form(page: Page, navigate_to_means_test, about_you_answers: dict):
     questions = {
         "Do you have a partner?": "No",
         "Do you receive any benefits (including Child Benefit)?": "No",
@@ -81,9 +79,7 @@ def assert_benefits_form_is_prefilled(page: Page, benefits_answers: dict):
     for question, answer in benefits_answers.items():
         if question == "If yes, enter the total amount you get for all your children":
             expect(page.get_by_label("Amount")).to_have_value(answer["Amount"])
-            expect(
-                page.get_by_label("Frequency").locator("option:checked")
-            ).to_have_text(answer["Frequency"])
+            expect(page.get_by_label("Frequency").locator("option:checked")).to_have_text(answer["Frequency"])
         elif isinstance(answer, list):
             for label in answer:
                 expect(page.get_by_label(label)).to_be_checked()

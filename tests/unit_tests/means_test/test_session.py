@@ -18,9 +18,7 @@ def test_has_partner():
 
 
 def test_employment_status():
-    eligibility = Eligibility(
-        forms={"about-you": {"is_employed": True, "is_self_employed": False}}, _notes={}
-    )
+    eligibility = Eligibility(forms={"about-you": {"is_employed": True, "is_self_employed": False}}, _notes={})
 
     assert eligibility.is_employed
 

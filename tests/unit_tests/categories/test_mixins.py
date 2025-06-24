@@ -22,8 +22,6 @@ def test_in_scope_mixin(app):
     with app.app_context():
         assert TestView().dispatch_request().status_code == 302
         session.set_category_question_answer(in_scope)
-        with mock.patch(
-            "flask.views.View.dispatch_request"
-        ) as mock_super_dispatch_request:
+        with mock.patch("flask.views.View.dispatch_request") as mock_super_dispatch_request:
             TestView().dispatch_request()
             assert mock_super_dispatch_request.called is True

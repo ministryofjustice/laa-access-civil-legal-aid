@@ -61,9 +61,7 @@ def handle_fala_redirect():
             url_for(
                 "find-a-legal-adviser.search",
                 category=FALA_REDIRECT_MAP[category].get("category"),
-                secondary_category=FALA_REDIRECT_MAP[category].get(
-                    "secondary_category"
-                ),
+                secondary_category=FALA_REDIRECT_MAP[category].get("secondary_category"),
             ),
             code=301,
         )
