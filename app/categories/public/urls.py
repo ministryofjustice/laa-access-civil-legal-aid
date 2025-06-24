@@ -12,7 +12,9 @@ class PublicLandingPage(CategoryLandingPage):
 
 bp.add_url_rule(
     "/public-organisations",
-    view_func=PublicLandingPage.as_view("landing", template="categories/public/landing.html"),
+    view_func=PublicLandingPage.as_view(
+        "landing", template="categories/public/landing.html"
+    ),
 )
 
 bp.add_url_rule(

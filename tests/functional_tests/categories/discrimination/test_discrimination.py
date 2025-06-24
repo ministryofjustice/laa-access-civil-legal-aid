@@ -58,7 +58,9 @@ why_form_routing = [
         "Are you under 18?",
         id="multiple_answers",
     ),
-    pytest.param(["None of these"], "Sorry, you’re not likely to get legal aid", id="not_sure"),
+    pytest.param(
+        ["None of these"], "Sorry, you’re not likely to get legal aid", id="not_sure"
+    ),
 ]
 
 
@@ -107,7 +109,9 @@ class TestUnder18Form:
         self.navigate_to_form(page)
         page.get_by_label("Yes").check()
         page.get_by_role("button", name="Continue").click()
-        expect(page.get_by_role("heading", name=self.CONTACT_PAGE_HEADING)).to_be_visible()
+        expect(
+            page.get_by_role("heading", name=self.CONTACT_PAGE_HEADING)
+        ).to_be_visible()
 
     @pytest.mark.usefixtures("live_server")
     def test_are_you_under_18_form_no(self, page: Page):
@@ -128,14 +132,20 @@ class TestWhereMultipleSelections:
     def test_select_exclusive_value(self, page: Page):
         self.navigate_to_form(page)
         page.get_by_role("checkbox", name="Disability, health condition").check()
-        expect(page.get_by_role("checkbox", name="Disability, health condition")).to_be_checked()
+        expect(
+            page.get_by_role("checkbox", name="Disability, health condition")
+        ).to_be_checked()
         page.get_by_role("checkbox", name="None of these").check()
-        expect(page.get_by_role("checkbox", name="Disability, health condition")).not_to_be_checked()
+        expect(
+            page.get_by_role("checkbox", name="Disability, health condition")
+        ).not_to_be_checked()
 
     @pytest.mark.usefixtures("live_server")
     def test_select_non_exclusive_values(self, page: Page):
         self.navigate_to_form(page)
         page.get_by_role("checkbox", name="Disability, health condition").check()
         page.get_by_role("checkbox", name="Age").check()
-        expect(page.get_by_role("checkbox", name="Disability, health condition")).to_be_checked()
+        expect(
+            page.get_by_role("checkbox", name="Disability, health condition")
+        ).to_be_checked()
         expect(page.get_by_role("checkbox", name="Age")).to_be_checked()

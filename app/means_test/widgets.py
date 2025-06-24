@@ -68,7 +68,9 @@ class MeansTestRadioInput(MeansTestInputField, RenderConditionalFields, GovRadio
     pass
 
 
-class MeansTestCheckboxInput(MeansTestInputField, RenderConditionalFields, GovCheckboxesInput):
+class MeansTestCheckboxInput(
+    MeansTestInputField, RenderConditionalFields, GovCheckboxesInput
+):
     pass
 
 

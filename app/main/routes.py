@@ -67,7 +67,9 @@ def set_locale_cookie(response: Response, locale: str) -> Response:
         return abort(404)
 
     expires = datetime.datetime.now() + datetime.timedelta(days=30)
-    response.set_cookie("locale", locale, expires=expires, secure=True, httponly=True, samesite="Strict")
+    response.set_cookie(
+        "locale", locale, expires=expires, secure=True, httponly=True, samesite="Strict"
+    )
     return response
 
 

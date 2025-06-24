@@ -114,7 +114,9 @@ def test_shown_fields(client, eligibility_data, expected_fields, expected_title)
     mock_eligibility.is_self_employed = eligibility_data["is_self_employed"]
     mock_eligibility.has_partner = eligibility_data["has_partner"]
     mock_eligibility.is_partner_employed = eligibility_data["is_partner_employed"]
-    mock_eligibility.is_partner_self_employed = eligibility_data["is_partner_self_employed"]
+    mock_eligibility.is_partner_self_employed = eligibility_data[
+        "is_partner_self_employed"
+    ]
 
     with patch(
         "app.means_test.forms.income.session.get_eligibility",
@@ -126,6 +128,10 @@ def test_shown_fields(client, eligibility_data, expected_fields, expected_title)
         assert len(actual_fields["self"]) == len(expected_fields["self"])
         assert len(actual_fields["partner"]) == len(expected_fields["partner"])
 
-        assert [field.name for field in actual_fields["self"]] == expected_fields["self"]
-        assert [field.name for field in actual_fields["partner"]] == expected_fields["partner"]
+        assert [field.name for field in actual_fields["self"]] == expected_fields[
+            "self"
+        ]
+        assert [field.name for field in actual_fields["partner"]] == expected_fields[
+            "partner"
+        ]
         assert income_form.page_title == expected_title["title"]

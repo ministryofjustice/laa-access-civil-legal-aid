@@ -12,7 +12,9 @@ bp.add_url_rule(
 )
 bp.add_url_rule(
     "/legal-aid-available-hlpas",
-    view_func=HlpasInScopePage.as_view("in_scope_hlpas", template="categories/in-scope.html"),
+    view_func=HlpasInScopePage.as_view(
+        "in_scope_hlpas", template="categories/in-scope.html"
+    ),
 )
 bp.add_url_rule(
     "/refer",

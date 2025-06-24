@@ -19,7 +19,9 @@ class TestPostcodeSearch:
             page.get_by_label("Postcode").click()
             page.get_by_label("Postcode").fill(postcode)
             page.get_by_role("button", name="Search").click()
-            expect(page.get_by_role("heading", name="Contact a legal adviser")).to_be_visible()
+            expect(
+                page.get_by_role("heading", name="Contact a legal adviser")
+            ).to_be_visible()
             page.get_by_role("button", name="Back").click()
 
     def test_channel_islands_postcodes(self, page: Page, navigate_to_search) -> None:
@@ -30,14 +32,18 @@ class TestPostcodeSearch:
             page.get_by_label("Postcode").click()
             page.get_by_label("Postcode").fill(postcode)
             page.get_by_role("button", name="Search").click()
-            expect(page.get_by_role("link", name="No results returned for")).to_be_visible()
+            expect(
+                page.get_by_role("link", name="No results returned for")
+            ).to_be_visible()
 
     def test_isle_of_man_postcode(self, page: Page, navigate_to_search) -> None:
         """Test Isle of Man postcode shows no results"""
         page.get_by_label("Postcode").click()
         page.get_by_label("Postcode").fill("im1")
         page.get_by_role("button", name="Search").click()
-        expect(page.get_by_role("link", name="No results returned for the")).to_be_visible()
+        expect(
+            page.get_by_role("link", name="No results returned for the")
+        ).to_be_visible()
 
     def test_invalid_postcode_format(self, page: Page, navigate_to_search) -> None:
         """Test invalid postcode format shows error"""
@@ -58,4 +64,6 @@ class TestPostcodeSearch:
         page.get_by_label("Postcode").click()
         page.get_by_label("Postcode").fill("    sw1")
         page.get_by_role("button", name="Search").click()
-        expect(page.get_by_role("heading", name="Contact a legal adviser")).to_be_visible()
+        expect(
+            page.get_by_role("heading", name="Contact a legal adviser")
+        ).to_be_visible()

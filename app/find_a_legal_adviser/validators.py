@@ -22,9 +22,7 @@ class ValidRegionPostcode:
 
         try:
             region = get_postcode_region(field.data)
-            form.postcode_region = (
-                region  # Store the region information on the form so we don't need to look it up again
-            )
+            form.postcode_region = region  # Store the region information on the form so we don't need to look it up again
 
             # Handle case sensitivity
             if isinstance(region, str):
@@ -37,6 +35,8 @@ class ValidRegionPostcode:
         except ValidationError:
             raise
         except ConnectionError:
-            raise ValidationError("This service is not available at the moment, try again later")
+            raise ValidationError(
+                "This service is not available at the moment, try again later"
+            )
         except Exception:
             raise ValidationError("Postcode not found")

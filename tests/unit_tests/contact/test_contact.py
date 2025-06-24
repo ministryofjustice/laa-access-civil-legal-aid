@@ -25,7 +25,9 @@ def test_post_reasons_for_contacting_success(mocker, app):
 
         response = cla_backend.post_reasons_for_contacting(payload={"key": "value"})
 
-        mock_post.assert_called_once_with("checker/api/v1/reasons_for_contacting/", json={"key": "value"})
+        mock_post.assert_called_once_with(
+            "checker/api/v1/reasons_for_contacting/", json={"key": "value"}
+        )
         assert response == mock_response
 
 
@@ -79,7 +81,9 @@ class MockForm(Form):
 def test_get_time_slots(mock_datetime, mock_get, api_client, app):
     """Test get_time_slots correctly formats slots"""
     mock_datetime.today.return_value = datetime(2025, 3, 1)
-    mock_datetime.strptime.side_effect = lambda *args, **kw: datetime.strptime(*args, **kw)
+    mock_datetime.strptime.side_effect = lambda *args, **kw: datetime.strptime(
+        *args, **kw
+    )
 
     mock_get.return_value = {
         "slots": [
@@ -132,7 +136,9 @@ def test_update_reasons_for_contacting(mock_patch, api_client, app):
     with app.test_request_context():
         response = api_client.update_reasons_for_contacting(reference, payload=payload)
 
-    mock_patch.assert_called_once_with(f"checker/api/v1/reasons_for_contacting/{reference}", json=payload)
+    mock_patch.assert_called_once_with(
+        f"checker/api/v1/reasons_for_contacting/{reference}", json=payload
+    )
     assert response == {"success": True}
 
 
@@ -148,7 +154,9 @@ def address_lookup(app):
 def test_by_postcode_success(mock_get, address_lookup):
     """Test successful address lookup"""
     mock_get.return_value.status_code = 200
-    mock_get.return_value.json.return_value = {"results": [{"DPA": {"POSTCODE": "SW1A 1AA"}}]}
+    mock_get.return_value.json.return_value = {
+        "results": [{"DPA": {"POSTCODE": "SW1A 1AA"}}]
+    }
 
     results = address_lookup.by_postcode("SW1A 1AA")
     assert results == [{"DPA": {"POSTCODE": "SW1A 1AA"}}]
@@ -192,7 +200,9 @@ def formatted_address_lookup(app):
 @patch.object(AddressLookup, "by_postcode")
 def test_by_postcode_formatted(mock_by_postcode, formatted_address_lookup):
     """Test formatted address lookup"""
-    mock_by_postcode.return_value = [{"DPA": {"POSTCODE": "SW1A 1AA", "POST_TOWN": "London"}}]
+    mock_by_postcode.return_value = [
+        {"DPA": {"POSTCODE": "SW1A 1AA", "POST_TOWN": "London"}}
+    ]
     results = formatted_address_lookup.by_postcode("SW1A 1AA")
     assert results == ["London\nSW1A 1AA"]
 

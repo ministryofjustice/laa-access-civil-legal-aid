@@ -55,7 +55,9 @@ def navigate_to_additional_benefits(page: Page, answers: dict, navigate_to_means
         form_group.get_by_label(answer).first.check()
     # Submit form
     page.get_by_role("button", name="Continue").click()
-    expect(page.locator('legend:text("Which benefits do you receive?")')).to_be_visible()
+    expect(
+        page.locator('legend:text("Which benefits do you receive?")')
+    ).to_be_visible()
     page.get_by_label("Any other benefits").check()
     page.get_by_role("button", name="Continue").click()
     expect(page.get_by_role("heading", name="Your additional benefits")).to_be_visible()
@@ -91,7 +93,9 @@ def test_means_test_additional_benefits_page(
 
 @pytest.mark.usefixtures("live_server")
 @pytest.mark.parametrize("answers", about_you_form_routing)
-def test_additional_benefits_page_other_benefits_required(page, navigate_to_additional_benefits):
+def test_additional_benefits_page_other_benefits_required(
+    page, navigate_to_additional_benefits
+):
     """Test that Tell us whether you receive any other benefits question is required"""
     page.get_by_role("button", name="Continue").scroll_into_view_if_needed()
     page.get_by_role("button", name="Continue").click()
@@ -103,7 +107,9 @@ def test_additional_benefits_page_other_benefits_required(page, navigate_to_addi
 
 @pytest.mark.usefixtures("live_server")
 @pytest.mark.parametrize("answers", about_you_form_routing)
-def test_additional_benefits_page_total_other_benefits_required(page, navigate_to_additional_benefits):
+def test_additional_benefits_page_total_other_benefits_required(
+    page, navigate_to_additional_benefits
+):
     """Test that Tell us whether you receive any other benefits question is required when they select other benefits."""
     # Say yes to Do you receive any other benefits not listed above?
     page.get_by_label("Yes").check()
@@ -117,7 +123,9 @@ def test_additional_benefits_page_total_other_benefits_required(page, navigate_t
 
 @pytest.mark.usefixtures("live_server")
 @pytest.mark.parametrize("answers", about_you_form_routing)
-def test_additional_benefits_page_total_other_benefits(page, navigate_to_additional_benefits):
+def test_additional_benefits_page_total_other_benefits(
+    page, navigate_to_additional_benefits
+):
     # Say yes to Do you receive any other benefits not listed above?
     page.get_by_label("Yes").check()
     # Complete the If Yes, total amount of benefits not listed above question

@@ -37,24 +37,36 @@ ROUTING = [
 class TestSendLandingPage:
     @pytest.mark.parametrize("routing", ROUTING)
     def test_onward_routing(self, page: Page, routing: dict):
-        page.get_by_role("link", name="Special educational needs and disability (SEND)").click()
+        page.get_by_role(
+            "link", name="Special educational needs and disability (SEND)"
+        ).click()
         page.get_by_role("link", name=routing["link_text"]).click()
 
         next_page_heading = routing["next_page_heading"]
-        next_page_heading = next_page_heading if isinstance(next_page_heading, list) else [next_page_heading]
+        next_page_heading = (
+            next_page_heading
+            if isinstance(next_page_heading, list)
+            else [next_page_heading]
+        )
         for page_heading in next_page_heading:
             expect(page.get_by_role("heading", name=page_heading)).to_be_visible()
 
     def test_child_in_care_form_yes(self, page: Page):
-        page.get_by_role("link", name="Special educational needs and disability (SEND)").click()
+        page.get_by_role(
+            "link", name="Special educational needs and disability (SEND)"
+        ).click()
         page.get_by_role("link", name="SEND tribunals").click()
         page.get_by_label("Yes").check()
         page.get_by_role("button", name="Continue").click()
         expect(page.get_by_role("heading", name=contact_page_heading)).to_be_visible()
 
     def test_child_in_care_form_no(self, page: Page):
-        page.get_by_role("link", name="Special educational needs and disability (SEND)").click()
+        page.get_by_role(
+            "link", name="Special educational needs and disability (SEND)"
+        ).click()
         page.get_by_role("link", name="SEND tribunals").click()
         page.get_by_label("No").check()
         page.get_by_role("button", name="Continue").click()
-        expect(page.get_by_role("heading", name=legalaid_available_page)).to_be_visible()
+        expect(
+            page.get_by_role("heading", name=legalaid_available_page)
+        ).to_be_visible()

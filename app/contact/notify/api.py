@@ -105,18 +105,22 @@ class NotifyEmailOrchestrator(object):
                         "case_reference": case_reference,
                         "date_time": formatted_callback_time,
                     }
-                    template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CONFIRMATION_EMAIL_CALLBACK_REQUESTED_THIRDPARTY"][
-                        locale
-                    ]
+                    template_id = GOVUK_NOTIFY_TEMPLATES[
+                        "PUBLIC_CONFIRMATION_EMAIL_CALLBACK_REQUESTED_THIRDPARTY"
+                    ][locale]
                 else:
                     personalisation = {
                         "case_reference": case_reference,
                         "date_time": formatted_callback_time,
                     }
-                    template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CONFIRMATION_EMAIL_CALLBACK_REQUESTED"][locale]
+                    template_id = GOVUK_NOTIFY_TEMPLATES[
+                        "PUBLIC_CONFIRMATION_EMAIL_CALLBACK_REQUESTED"
+                    ][locale]
             else:
                 personalisation = {"case_reference": case_reference}
-                template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CONFIRMATION_NO_CALLBACK"][locale]
+                template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CONFIRMATION_NO_CALLBACK"][
+                    locale
+                ]
 
             return template_id, personalisation
 
@@ -128,7 +132,9 @@ class NotifyEmailOrchestrator(object):
         }
 
         if callback_requested is False:
-            template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CALLBACK_NOT_REQUESTED"][locale]
+            template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CALLBACK_NOT_REQUESTED"][
+                locale
+            ]
             return template_id, personalisation
 
         # Decides between a personal callback or a third party callback

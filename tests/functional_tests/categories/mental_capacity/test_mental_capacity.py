@@ -46,4 +46,6 @@ class TestMentalCapacityLandingPage:
                 expect(page).to_have_url(re.compile(f".*category={primary_category}*"))
             if "secondary" in routing["fala_categories"]:
                 secondary_category = routing["fala_categories"]["secondary"]
-                expect(page).to_have_url(re.compile(f".*secondary_category={secondary_category}*"))
+                expect(page).to_have_url(
+                    re.compile(f".*secondary_category={secondary_category}*")
+                )

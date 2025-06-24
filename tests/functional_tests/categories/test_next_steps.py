@@ -60,7 +60,9 @@ def test_discrimination_next_steps_page(page: Page):
     page.get_by_role("button", name="Next steps to get help").click()
     expect(page.get_by_role("heading", name="Next steps to get help")).to_be_visible()
     expect(
-        page.get_by_text("These organisations give free, independent advice for problems about discrimination.")
+        page.get_by_text(
+            "These organisations give free, independent advice for problems about discrimination."
+        )
     ).to_be_visible()
 
 
@@ -71,5 +73,7 @@ def test_benefits_next_steps_page(page: Page):
     page.get_by_role("button", name="Next steps to get help").click()
     expect(page.get_by_role("heading", name="Next steps to get help")).to_be_visible()
     expect(
-        page.get_by_text("These organisations give free, independent advice for problems about benefits.")
+        page.get_by_text(
+            "These organisations give free, independent advice for problems about benefits."
+        )
     ).to_be_visible()

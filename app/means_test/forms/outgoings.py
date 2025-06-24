@@ -17,7 +17,11 @@ class PartnerMoneyIntervalField(MoneyIntervalField):
 
     @property
     def hint_text(self):
-        return self._partner_hint_text if session.get_eligibility().has_partner else self._hint_text
+        return (
+            self._partner_hint_text
+            if session.get_eligibility().has_partner
+            else self._hint_text
+        )
 
     @hint_text.setter
     def hint_text(self, value):
@@ -25,7 +29,9 @@ class PartnerMoneyIntervalField(MoneyIntervalField):
 
 
 class PartnerMoneyField(MoneyField):
-    def __init__(self, label=None, description=None, partner_description=None, *args, **kwargs):
+    def __init__(
+        self, label=None, description=None, partner_description=None, *args, **kwargs
+    ):
         self._description = description
         self._partner_description = partner_description
 
@@ -35,7 +41,11 @@ class PartnerMoneyField(MoneyField):
 
     @property
     def description(self):
-        return self._partner_description if session.get_eligibility().has_partner else self._description
+        return (
+            self._partner_description
+            if session.get_eligibility().has_partner
+            else self._description
+        )
 
     @description.setter
     def description(self, value):
@@ -62,7 +72,9 @@ class OutgoingsForm(BaseMeansTestForm):
 
     rent = PartnerMoneyIntervalField(
         _("Rent"),
-        hint_text=_("Money you pay your landlord for rent. Do not include rent that is paid by Housing Benefit."),
+        hint_text=_(
+            "Money you pay your landlord for rent. Do not include rent that is paid by Housing Benefit."
+        ),
         partner_hint_text=_(
             "Money you and your partner pay your landlord for rent, or enter 0 if you don’t pay rent. Do not include rent that is paid by Housing Benefit."
         ),
@@ -79,7 +91,9 @@ class OutgoingsForm(BaseMeansTestForm):
 
     maintenance = PartnerMoneyIntervalField(
         _("Maintenance"),
-        hint_text=_("Money you pay to an ex-partner for their living costs, or enter 0 if this doesn’t apply to you"),
+        hint_text=_(
+            "Money you pay to an ex-partner for their living costs, or enter 0 if this doesn’t apply to you"
+        ),
         partner_hint_text=_(
             "Money you and/or your partner pay to an ex-partner for their living costs, or enter 0 if this doesn’t apply"
         ),
@@ -105,13 +119,17 @@ class OutgoingsForm(BaseMeansTestForm):
         ),
         validators=[
             InputRequired(message=_("Tell us the approximate value of this property")),
-            NumberRange(min=0, max=999999999, message=_("Enter a value of more than £0")),
+            NumberRange(
+                min=0, max=999999999, message=_("Enter a value of more than £0")
+            ),
         ],
     )
 
     childcare = PartnerMoneyIntervalField(
         _("Childcare"),
-        hint_text=_("Money you pay for your child to be looked after while you work or study outside of your home"),
+        hint_text=_(
+            "Money you pay for your child to be looked after while you work or study outside of your home"
+        ),
         partner_hint_text=_(
             "Money you and your partner pay for your child to be looked after while you work or study outside of your home"
         ),

@@ -11,11 +11,15 @@ def test_result_page_with_single_category(app):
     # laalaa_search results
     mock_results = {
         "count": 1,
-        "results": [{"categories": ["COM"], "organisation": {"name": "Mock Organisation"}}],
+        "results": [
+            {"categories": ["COM"], "organisation": {"name": "Mock Organisation"}}
+        ],
     }
 
     # Mocks laalaa_search
-    with patch("app.find_a_legal_adviser.laalaa.laalaa_search", return_value=mock_results) as mock_laalaa_search:
+    with patch(
+        "app.find_a_legal_adviser.laalaa.laalaa_search", return_value=mock_results
+    ) as mock_laalaa_search:
         mock_laalaa_search(postcode=postcode, categories=[category], page=page_num)
         # Mocks results page
         with app.test_client() as client:
@@ -58,8 +62,12 @@ def test_result_page_with_secondary_category(app):
     }
 
     # Mocks laalaa_search
-    with patch("app.find_a_legal_adviser.laalaa.laalaa_search", return_value=mock_results) as mock_laalaa_search:
-        mock_laalaa_search(postcode=postcode, categories=[category, secondary_category], page=page_num)
+    with patch(
+        "app.find_a_legal_adviser.laalaa.laalaa_search", return_value=mock_results
+    ) as mock_laalaa_search:
+        mock_laalaa_search(
+            postcode=postcode, categories=[category, secondary_category], page=page_num
+        )
         # Mocks results page
         with app.test_client() as client:
             response = client.get(

@@ -19,8 +19,12 @@ class CategoryInputField:
         self.show_divider = show_divider
         self.is_inline = is_inline
         self.hint_text = hint_text
-        self.is_page_heading = is_page_heading  # This should be True for all single page questions
-        self.label_class = label_class if label_class is not None else "govuk-fieldset__legend--l"
+        self.is_page_heading = (
+            is_page_heading  # This should be True for all single page questions
+        )
+        self.label_class = (
+            label_class if label_class is not None else "govuk-fieldset__legend--l"
+        )
 
     def map_gov_params(self, field, **kwargs):
         if self.hint_text:
@@ -44,7 +48,9 @@ class CategoryInputField:
                     item["checked"] = True
 
         params["fieldset"]["legend"]["classes"] = self.label_class
-        params["fieldset"]["legend"]["isPageHeading"] = self.is_page_heading  # Sets the question text as the page H1
+        params["fieldset"]["legend"]["isPageHeading"] = (
+            self.is_page_heading
+        )  # Sets the question text as the page H1
         return params
 
 

@@ -62,7 +62,9 @@ class BackendAPIClient:
             endpoint = f"{endpoint}/"
 
         if params:
-            params = self.clean_params(params)  # Clean the params, covering LazyStrings to strings
+            params = self.clean_params(
+                params
+            )  # Clean the params, covering LazyStrings to strings
 
         request = requests.Request(
             method=method.upper(),
@@ -76,7 +78,9 @@ class BackendAPIClient:
         # Send the request and capture response
         response = requests.Session().send(request)
 
-        logging.info(f"Response from {request.url}: {response.status_code} {response.reason}")
+        logging.info(
+            f"Response from {request.url}: {response.status_code} {response.reason}"
+        )
 
         response.raise_for_status()
         return response.json()
@@ -135,7 +139,9 @@ class BackendAPIClient:
             "checker/api/v1/callback_time_slots/",
             params=params,
         )["slots"]
-        slots = [datetime.strptime(slot, self.CALLBACK_API_DATETIME_FORMAT) for slot in slots]
+        slots = [
+            datetime.strptime(slot, self.CALLBACK_API_DATETIME_FORMAT) for slot in slots
+        ]
 
         return slots
 
@@ -147,7 +153,9 @@ class BackendAPIClient:
         return response
 
     def update_reasons_for_contacting(self, reference, payload=None):
-        return self.patch(f"checker/api/v1/reasons_for_contacting/{reference}", json=payload)
+        return self.patch(
+            f"checker/api/v1/reasons_for_contacting/{reference}", json=payload
+        )
 
 
 cla_backend = BackendAPIClient()

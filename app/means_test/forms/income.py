@@ -38,7 +38,10 @@ class IncomeForm(BaseMeansTestForm):
     @property
     def page_title(self):
         has_partner = session.get_eligibility().has_partner
-        employed = session.get_eligibility().is_employed or session.get_eligibility().is_self_employed
+        employed = (
+            session.get_eligibility().is_employed
+            or session.get_eligibility().is_self_employed
+        )
         if has_partner:
             if employed:
                 return _("You and your partner’s income and tax")
@@ -77,7 +80,9 @@ class IncomeForm(BaseMeansTestForm):
         self_employed_hint_text={
             "employed": _("Tax paid directly out of wages"),
             "self_employed": _("Any tax paid on self-employed earnings"),
-            "both": _("Tax paid directly out of wages and any tax paid on self-employed earnings"),
+            "both": _(
+                "Tax paid directly out of wages and any tax paid on self-employed earnings"
+            ),
         },
         widget=MoneyIntervalWidget(),
         validators=[
@@ -96,7 +101,9 @@ class IncomeForm(BaseMeansTestForm):
         self_employed_hint_text={
             "employed": _("Check the payslip"),
             "self_employed": _("Check the National Insurance statement"),
-            "both": _("Check the payslip or National Insurance statement if self-employed"),
+            "both": _(
+                "Check the payslip or National Insurance statement if self-employed"
+            ),
         },
         widget=MoneyIntervalWidget(),
         validators=[
@@ -112,12 +119,16 @@ class IncomeForm(BaseMeansTestForm):
 
     working_tax_credit = MoneyIntervalField(
         _("Working Tax Credit"),
-        hint_text=_("Extra money for people who work and have a low income, enter 0 if this doesn't apply to you"),
+        hint_text=_(
+            "Extra money for people who work and have a low income, enter 0 if this doesn't apply to you"
+        ),
         widget=MoneyIntervalWidget(),
         validators=[
             ValidateIfSession("is_employed_or_self_employed", True),
             MoneyIntervalAmountRequired(
-                message=_("Enter the Working Tax Credit you receive, or 0 if this doesn't apply to you"),
+                message=_(
+                    "Enter the Working Tax Credit you receive, or 0 if this doesn't apply to you"
+                ),
                 freq_message=_("Tell us how often you receive Working Tax Credit"),
                 amount_message=_("Tell us how much Working Tax Credit you receive"),
             ),
@@ -127,12 +138,16 @@ class IncomeForm(BaseMeansTestForm):
 
     child_tax_credit = MoneyIntervalField(
         _("Child Tax Credit"),
-        hint_text=_("The total amount you get for all your children, enter 0 if this doesn't apply to you"),
+        hint_text=_(
+            "The total amount you get for all your children, enter 0 if this doesn't apply to you"
+        ),
         widget=MoneyIntervalWidget(),
         validators=[
             ValidateIfSession("is_employed_or_self_employed", True),
             MoneyIntervalAmountRequired(
-                message=_("Enter the Child Tax Credit you receive, or 0 if this doesn't apply to you"),
+                message=_(
+                    "Enter the Child Tax Credit you receive, or 0 if this doesn't apply to you"
+                ),
                 freq_message=_("Tell us how often you receive Child Tax Credit"),
                 amount_message=_("Tell us how much Child Tax Credit you receive"),
             ),
@@ -142,11 +157,15 @@ class IncomeForm(BaseMeansTestForm):
 
     maintenance_received = MoneyIntervalField(
         _("Maintenance received"),
-        hint_text=_("Payments you get from an ex-partner, or enter 0 if this doesn't apply to you"),
+        hint_text=_(
+            "Payments you get from an ex-partner, or enter 0 if this doesn't apply to you"
+        ),
         widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
-                message=_("Enter the total amount of maintenance you receive, or 0 if this doesn't apply to you"),
+                message=_(
+                    "Enter the total amount of maintenance you receive, or 0 if this doesn't apply to you"
+                ),
                 freq_message=_("Tell us how often you receive maintenance"),
                 amount_message=_("Tell us how much maintenance you receive"),
             )
@@ -156,11 +175,15 @@ class IncomeForm(BaseMeansTestForm):
 
     pension = MoneyIntervalField(
         _("Pension received"),
-        hint_text=_("Payments you receive if you're retired, enter 0 if this doesn't apply to you"),
+        hint_text=_(
+            "Payments you receive if you're retired, enter 0 if this doesn't apply to you"
+        ),
         widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
-                message=_("Enter the pension you receive, or 0 if this doesn't apply to you"),
+                message=_(
+                    "Enter the pension you receive, or 0 if this doesn't apply to you"
+                ),
                 freq_message=_("Tell us how often you receive your pension"),
                 amount_message=_("Tell us how much pension you receive"),
             )
@@ -176,7 +199,9 @@ class IncomeForm(BaseMeansTestForm):
         widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
-                message=_("Enter the total amount of other income you receive, or 0 if this doesn't apply to you"),
+                message=_(
+                    "Enter the total amount of other income you receive, or 0 if this doesn't apply to you"
+                ),
                 freq_message=_("Tell us how often you receive this other income"),
                 amount_message=_("Tell us how much other income you receive"),
             )
@@ -210,7 +235,9 @@ class IncomeForm(BaseMeansTestForm):
         self_employed_hint_text={
             "employed": _("Tax paid directly out of wages"),
             "self_employed": _("Any tax paid on self-employed earnings"),
-            "both": _("Tax paid directly out of wages and any tax paid on self-employed earnings"),
+            "both": _(
+                "Tax paid directly out of wages and any tax paid on self-employed earnings"
+            ),
         },
         widget=MoneyIntervalWidget(),
         validators=[
@@ -230,7 +257,9 @@ class IncomeForm(BaseMeansTestForm):
         self_employed_hint_text={
             "employed": _("Check the payslip"),
             "self_employed": _("Check the National Insurance statement"),
-            "both": _("Check the payslip or National Insurance statement if self-employed"),
+            "both": _(
+                "Check the payslip or National Insurance statement if self-employed"
+            ),
         },
         widget=MoneyIntervalWidget(),
         validators=[
@@ -238,8 +267,12 @@ class IncomeForm(BaseMeansTestForm):
             ValidateIfSession("is_partner_employed", True),
             MoneyIntervalAmountRequired(
                 message=_("Tell us how much National Insurance your partner pays"),
-                freq_message=_("Tell us how often your partner pays National Insurance"),
-                amount_message=_("Tell us how much National Insurance your partner pays"),
+                freq_message=_(
+                    "Tell us how often your partner pays National Insurance"
+                ),
+                amount_message=_(
+                    "Tell us how much National Insurance your partner pays"
+                ),
             ),
         ],
         exclude_intervals=["per_2week"],
@@ -255,21 +288,31 @@ class IncomeForm(BaseMeansTestForm):
             ValidateIfSession("has_partner", True),
             ValidateIfSession("is_partner_employed", True),
             MoneyIntervalAmountRequired(
-                message=_("Enter the Working Tax Credit your partner receives, or 0 if it doesn't apply"),
-                freq_message=_("Tell us how often your partner receives Working Tax Credit"),
-                amount_message=_("Tell us how much Working Tax Credit your partner receives"),
+                message=_(
+                    "Enter the Working Tax Credit your partner receives, or 0 if it doesn't apply"
+                ),
+                freq_message=_(
+                    "Tell us how often your partner receives Working Tax Credit"
+                ),
+                amount_message=_(
+                    "Tell us how much Working Tax Credit your partner receives"
+                ),
             ),
         ],
     )
 
     partner_maintenance_received = MoneyIntervalField(
         _("Maintenance received"),
-        hint_text=_("Payments your partner gets from an ex-partner, or enter 0 if this doesn't apply to your partner"),
+        hint_text=_(
+            "Payments your partner gets from an ex-partner, or enter 0 if this doesn't apply to your partner"
+        ),
         widget=MoneyIntervalWidget(),
         validators=[
             ValidateIfSession("has_partner", True),
             MoneyIntervalAmountRequired(
-                message=_("Enter the total amount of maintenance your partner receives, or 0 if this doesn't apply"),
+                message=_(
+                    "Enter the total amount of maintenance your partner receives, or 0 if this doesn't apply"
+                ),
                 freq_message=_("Tell us how often your partner receives maintenance"),
                 amount_message=_("Tell us how much maintenance your partner receives"),
             ),
@@ -279,12 +322,16 @@ class IncomeForm(BaseMeansTestForm):
 
     partner_pension = MoneyIntervalField(
         _("Pension received"),
-        hint_text=_("Payments your partner receives if they're retired, enter 0 if this doesn't apply to your partner"),
+        hint_text=_(
+            "Payments your partner receives if they're retired, enter 0 if this doesn't apply to your partner"
+        ),
         widget=MoneyIntervalWidget(),
         validators=[
             ValidateIfSession("has_partner", True),
             MoneyIntervalAmountRequired(
-                message=_("Enter the pension your partner receives, or 0 if this doesn't apply"),
+                message=_(
+                    "Enter the pension your partner receives, or 0 if this doesn't apply"
+                ),
                 freq_message=_("Tell us how often your partner receives their pension"),
                 amount_message=_("Tell us how much pension your partner receives"),
             ),
@@ -301,8 +348,12 @@ class IncomeForm(BaseMeansTestForm):
         validators=[
             ValidateIfSession("has_partner", True),
             MoneyIntervalAmountRequired(
-                message=_("Enter the other income your partner receives, or 0 if this doesn't apply"),
-                freq_message=_("Tell us how often your partner receives this other income"),
+                message=_(
+                    "Enter the other income your partner receives, or 0 if this doesn't apply"
+                ),
+                freq_message=_(
+                    "Tell us how often your partner receives this other income"
+                ),
                 amount_message=_("Tell us how much other income your partner receives"),
             ),
         ],
@@ -312,7 +363,10 @@ class IncomeForm(BaseMeansTestForm):
     @property
     def shown_fields(self):
         fields = {"self": [], "partner": []}
-        if session.get_eligibility().is_employed or session.get_eligibility().is_self_employed:
+        if (
+            session.get_eligibility().is_employed
+            or session.get_eligibility().is_self_employed
+        ):
             fields["self"].extend(
                 [
                     self.earnings,
@@ -323,10 +377,15 @@ class IncomeForm(BaseMeansTestForm):
                 ]
             )
 
-        fields["self"].extend([self.maintenance_received, self.pension, self.other_income])
+        fields["self"].extend(
+            [self.maintenance_received, self.pension, self.other_income]
+        )
 
         if session.get_eligibility().has_partner:
-            if session.get_eligibility().is_partner_employed or session.get_eligibility().is_partner_self_employed:
+            if (
+                session.get_eligibility().is_partner_employed
+                or session.get_eligibility().is_partner_self_employed
+            ):
                 fields["partner"].extend(
                     [
                         self.partner_earnings,

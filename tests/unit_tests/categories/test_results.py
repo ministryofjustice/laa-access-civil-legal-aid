@@ -18,7 +18,9 @@ def test_get_context_with_housing_category(mock_organisations):
             "app.categories.results.views.cla_backend.get_help_organisations",
             return_value=mock_organisations,
         ) as mock_get_orgs,
-        patch("app.categories.results.views.get_fala_category_code", return_value="HOU"),
+        patch(
+            "app.categories.results.views.get_fala_category_code", return_value="HOU"
+        ),
     ):
         view = ResultPage(template="categories/results/housing.html")
         result = view.get_context(category=HOUSING)
@@ -37,7 +39,9 @@ def test_get_context_with_immigration_category():
             "app.categories.results.views.cla_backend.get_help_organisations",
             return_value=[],
         ) as mock_get_orgs,
-        patch("app.categories.results.views.get_fala_category_code", return_value="IMMAS"),
+        patch(
+            "app.categories.results.views.get_fala_category_code", return_value="IMMAS"
+        ),
     ):
         view = ResultPage(template="")
         result = view.get_context(category=ASYLUM_AND_IMMIGRATION)

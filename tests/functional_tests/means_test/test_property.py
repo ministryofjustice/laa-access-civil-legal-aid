@@ -134,7 +134,9 @@ def test_property_routing(page: Page, property_answers: dict, navigate_to_proper
 @pytest.mark.usefixtures("live_server")
 @pytest.mark.parametrize("answers", about_you_form_routing)
 @pytest.mark.parametrize("property_answers", multi_property_form_routing)
-def test_multi_property_routing(page: Page, property_answers: dict, navigate_to_property):
+def test_multi_property_routing(
+    page: Page, property_answers: dict, navigate_to_property
+):
     """
     Test the property form routing.
 
@@ -202,7 +204,9 @@ def test_multi_main_property(page: Page, property_answers: dict, navigate_to_pro
         elif answer[1] == "select":
             property_form_group.get_by_label(question).select_option(answer[0])
     page.get_by_role("button", name="Continue").click()
-    expect(page.get_by_role("link", name="You can only have 1 main property")).to_be_visible()
+    expect(
+        page.get_by_role("link", name="You can only have 1 main property")
+    ).to_be_visible()
 
 
 @pytest.mark.usefixtures("live_server")
@@ -219,13 +223,31 @@ def test_property_page_errors(page: Page, navigate_to_property):
     page.get_by_role("button", name="Continue").click()
 
     # Check that all error messages are visible
-    expect(page.get_by_role("link", name="Tell us whether this is your main home")).to_be_visible()
-    expect(page.get_by_role("link", name="Tell us whether anyone else owns a share of this property")).to_be_visible()
-    expect(page.get_by_role("link", name="Tell us the approximate value of this property")).to_be_visible()
-    expect(page.get_by_role("link", name="Tell us how much is left to pay on the mortgage")).to_be_visible()
-    expect(page.get_by_role("link", name="Enter your mortgage repayment for last month")).to_be_visible()
-    expect(page.get_by_role("link", name="Tell us whether you rent out some of this property")).to_be_visible()
-    expect(page.get_by_role("link", name="Tell us whether this property is in dispute")).to_be_visible()
+    expect(
+        page.get_by_role("link", name="Tell us whether this is your main home")
+    ).to_be_visible()
+    expect(
+        page.get_by_role(
+            "link", name="Tell us whether anyone else owns a share of this property"
+        )
+    ).to_be_visible()
+    expect(
+        page.get_by_role("link", name="Tell us the approximate value of this property")
+    ).to_be_visible()
+    expect(
+        page.get_by_role("link", name="Tell us how much is left to pay on the mortgage")
+    ).to_be_visible()
+    expect(
+        page.get_by_role("link", name="Enter your mortgage repayment for last month")
+    ).to_be_visible()
+    expect(
+        page.get_by_role(
+            "link", name="Tell us whether you rent out some of this property"
+        )
+    ).to_be_visible()
+    expect(
+        page.get_by_role("link", name="Tell us whether this property is in dispute")
+    ).to_be_visible()
 
 
 @pytest.mark.usefixtures("live_server")
@@ -251,14 +273,20 @@ def test_multiple_properties(page: Page, navigate_to_property):
     expect(page.get_by_text("Property 2")).to_be_visible()
     expect(page.get_by_text("Property 3")).to_be_visible()
 
-    page.get_by_role("group", name="Property 3").get_by_label("How much is the property").fill("3000")
+    page.get_by_role("group", name="Property 3").get_by_label(
+        "How much is the property"
+    ).fill("3000")
 
     page.locator('button[name="remove-property-2"]').click()
     expect(page.get_by_text("Property 1")).to_be_visible()
     expect(page.get_by_text("Property 2")).to_be_visible()
     expect(page.get_by_text("Property 3")).not_to_be_visible()
 
-    expect(page.get_by_role("group", name="Property 2").get_by_label("How much is the property")).to_have_value("3000")
+    expect(
+        page.get_by_role("group", name="Property 2").get_by_label(
+            "How much is the property"
+        )
+    ).to_have_value("3000")
 
     page.locator('button[name="remove-property-2"]').click()
     expect(page.get_by_text("Property 1")).not_to_be_visible()

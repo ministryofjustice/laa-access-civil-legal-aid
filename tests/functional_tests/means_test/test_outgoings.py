@@ -83,13 +83,19 @@ def test_outgoings_routing(page: Page, navigate_to_outgoings):
     expect(page.get_by_role("heading", name="Your outgoings")).to_be_visible()
 
     page.get_by_role("group", name="Rent").get_by_label("Amount").fill("500")
-    page.get_by_role("group", name="Rent").get_by_label("Frequency").select_option("per_month")
+    page.get_by_role("group", name="Rent").get_by_label("Frequency").select_option(
+        "per_month"
+    )
     page.get_by_role("group", name="Maintenance").get_by_label("Amount").fill("500")
-    page.get_by_role("group", name="Maintenance").get_by_label("Frequency").select_option("per_month")
+    page.get_by_role("group", name="Maintenance").get_by_label(
+        "Frequency"
+    ).select_option("per_month")
     page.get_by_role("textbox", name="Monthly Income Contribution").fill("500")
 
     page.get_by_role("button", name="Review your answers").click()
-    expect(page.get_by_role("heading", name="Check your answers and confirm")).to_be_visible()
+    expect(
+        page.get_by_role("heading", name="Check your answers and confirm")
+    ).to_be_visible()
 
 
 @pytest.mark.usefixtures("live_server")
@@ -105,12 +111,20 @@ def test_outgoings_childcare(page: Page, navigate_to_outgoings):
     expect(page.get_by_role("heading", name="Your outgoings")).to_be_visible()
 
     page.get_by_role("group", name="Rent").get_by_label("Amount").fill("500")
-    page.get_by_role("group", name="Rent").get_by_label("Frequency").select_option("per_month")
+    page.get_by_role("group", name="Rent").get_by_label("Frequency").select_option(
+        "per_month"
+    )
     page.get_by_role("group", name="Maintenance").get_by_label("Amount").fill("500")
-    page.get_by_role("group", name="Maintenance").get_by_label("Frequency").select_option("per_month")
+    page.get_by_role("group", name="Maintenance").get_by_label(
+        "Frequency"
+    ).select_option("per_month")
     page.get_by_role("textbox", name="Monthly Income Contribution").fill("500")
     page.get_by_role("group", name="Childcare").get_by_label("Amount").fill("500")
-    page.get_by_role("group", name="Childcare").get_by_label("Frequency").select_option("per_month")
+    page.get_by_role("group", name="Childcare").get_by_label("Frequency").select_option(
+        "per_month"
+    )
 
     page.get_by_role("button", name="Review your answers").click()
-    expect(page.get_by_role("heading", name="Check your answers and confirm")).to_be_visible()
+    expect(
+        page.get_by_role("heading", name="Check your answers and confirm")
+    ).to_be_visible()

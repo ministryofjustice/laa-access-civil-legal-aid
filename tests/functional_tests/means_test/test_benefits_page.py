@@ -72,7 +72,9 @@ def navigate_to_benefits(page: Page, answers: dict, navigate_to_means_test):
 @pytest.mark.usefixtures("live_server")
 @pytest.mark.parametrize("answers", about_you_form_routing)
 @pytest.mark.parametrize("selections,expected_heading", rfc_form_routing)
-def test_means_test_benefits_page(page: Page, selections: list, expected_heading: str, navigate_to_benefits):
+def test_means_test_benefits_page(
+    page: Page, selections: list, expected_heading: str, navigate_to_benefits
+):
     """
     Test the means test benefits page with different combinations of selections.
 
@@ -101,7 +103,9 @@ def test_child_benefits_available_have_children(page: Page, client):
     #
     with client.session_transaction() as session:
         # update the session
-        session.get_eligibility().add("about-you", {"have_children": True, "have_dependants": False})
+        session.get_eligibility().add(
+            "about-you", {"have_children": True, "have_dependants": False}
+        )
 
     url = url_for("means_test.benefits", _external=True)
     response = client.get(url)
@@ -117,7 +121,9 @@ def test_child_benefits_available_have_dependants(page: Page, client):
     #
     with client.session_transaction() as session:
         # update the session
-        session.get_eligibility().add("about-you", {"have_children": False, "have_dependants": True})
+        session.get_eligibility().add(
+            "about-you", {"have_children": False, "have_dependants": True}
+        )
 
     url = url_for("means_test.benefits", _external=True)
     response = client.get(url)

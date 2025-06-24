@@ -18,7 +18,9 @@ class TestValidateIf:
         form = TestForm()
         validator = ValidateIf("non_existent_field", "test_value")
 
-        with pytest.raises(ValueError, match='no field named "non_existent_field" in form'):
+        with pytest.raises(
+            ValueError, match='no field named "non_existent_field" in form'
+        ):
             validator(form, form.field)
 
     @pytest.mark.parametrize(
@@ -89,7 +91,9 @@ class TestValidateIf:
 
         if test_case["should_validate"]:
             form.validate()
-            assert form.dependent_field.errors == [], f"Unexpected errors: {form.dependent_field.errors}"
+            assert form.dependent_field.errors == [], (
+                f"Unexpected errors: {form.dependent_field.errors}"
+            )
         else:
             assert form.validate() is False
             assert "This field is required." in form.dependent_field.errors, (
@@ -118,7 +122,9 @@ class TestNumberRange:
 
     def test_respects_maximum(self):
         class TestForm(Form):
-            amount = IntegerField("Amount", validators=[NumberRangeAllowZero(min=500, max=1000)])
+            amount = IntegerField(
+                "Amount", validators=[NumberRangeAllowZero(min=500, max=1000)]
+            )
 
         # Test zero (should pass)
         form = TestForm(amount=0)

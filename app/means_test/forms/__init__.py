@@ -149,7 +149,9 @@ class BaseMeansTestForm(FlaskForm):
             return "£0"
         amount = decimal.Decimal(int(field_instance.data["per_interval_value"]) / 100)
         amount = amount.quantize(decimal.Decimal("0.01"))
-        interval = MoneyInterval._intervals[field_instance.data["interval_period"]]["label"]
+        interval = MoneyInterval._intervals[field_instance.data["interval_period"]][
+            "label"
+        ]
         return f"£{amount} ({interval})"
 
     @staticmethod

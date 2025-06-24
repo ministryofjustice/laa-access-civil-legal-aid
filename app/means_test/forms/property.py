@@ -31,7 +31,9 @@ class PropertyPayload(dict):
                 "mortgage_left": to_amount(val("mortgage_remaining") * 100),
                 "share": 100 if not form_data.get("other_shareholders") else None,
                 "disputed": val("in_dispute"),
-                "rent": MoneyInterval(val("rent_amount")) if form_data.get("is_rented") else MoneyInterval(0),
+                "rent": MoneyInterval(val("rent_amount"))
+                if form_data.get("is_rented")
+                else MoneyInterval(0),
                 "main": val("is_main_home"),
             }
         )
@@ -76,25 +78,39 @@ class PropertyForm(BaseMeansTestForm):
     is_main_home = YesNoField(
         _("Is this property your main home?"),
         widget=MeansTestRadioInput(),
-        description=_("If you’re temporarily living away from the property, select ‘Yes’"),
+        description=_(
+            "If you’re temporarily living away from the property, select ‘Yes’"
+        ),
         validators=[InputRequired(message=_("Tell us whether this is your main home"))],
     )
 
     other_shareholders = PartnerRadioField(
-        partner_label=_("Does anyone else (other than you or your partner) own a share of the property?"),
+        partner_label=_(
+            "Does anyone else (other than you or your partner) own a share of the property?"
+        ),
         label=_("Does anyone else own a share of the property?"),
         widget=MeansTestRadioInput(),
-        description=_("Select ‘Yes’ if you share ownership with a friend, relative or ex-partner"),
-        validators=[InputRequired(message=_("Tell us whether anyone else owns a share of this property"))],
+        description=_(
+            "Select ‘Yes’ if you share ownership with a friend, relative or ex-partner"
+        ),
+        validators=[
+            InputRequired(
+                message=_("Tell us whether anyone else owns a share of this property")
+            )
+        ],
     )
 
     property_value = MoneyField(
         _("How much is the property worth?"),
         widget=GovTextInput(),
-        description=_("Use a property website or the Land Registry house prices website."),
+        description=_(
+            "Use a property website or the Land Registry house prices website."
+        ),
         validators=[
             InputRequired(message=_("Tell us the approximate value of this property")),
-            NumberRange(min=0, max=999999999, message=_("Enter a value of more than £0")),
+            NumberRange(
+                min=0, max=999999999, message=_("Enter a value of more than £0")
+            ),
         ],
     )
 
@@ -106,7 +122,9 @@ class PropertyForm(BaseMeansTestForm):
         ),
         validators=[
             InputRequired(message=_("Tell us how much is left to pay on the mortgage")),
-            NumberRange(min=0, max=999999999, message=_("Enter a value of more than £0")),
+            NumberRange(
+                min=0, max=999999999, message=_("Enter a value of more than £0")
+            ),
         ],
     )
 
@@ -115,14 +133,20 @@ class PropertyForm(BaseMeansTestForm):
         widget=GovTextInput(),
         validators=[
             InputRequired(message=_("Enter your mortgage repayment for last month")),
-            NumberRange(min=0, max=999999999, message=_("Enter a value of more than £0")),
+            NumberRange(
+                min=0, max=999999999, message=_("Enter a value of more than £0")
+            ),
         ],
     )
 
     is_rented = YesNoField(
         _("Do you rent out any part of this property?"),
         widget=MeansTestRadioInput(),
-        validators=[InputRequired(message=_("Tell us whether you rent out some of this property"))],
+        validators=[
+            InputRequired(
+                message=_("Tell us whether you rent out some of this property")
+            )
+        ],
     )
 
     rent_amount = MoneyIntervalField(
@@ -144,7 +168,9 @@ class PropertyForm(BaseMeansTestForm):
         _("Is your share of the property in dispute?"),
         widget=MeansTestRadioInput(),
         description=_("For example, as part of the financial settlement of a divorce"),
-        validators=[InputRequired(message=_("Tell us whether this property is in dispute"))],
+        validators=[
+            InputRequired(message=_("Tell us whether this property is in dispute"))
+        ],
     )
 
 
@@ -154,7 +180,11 @@ class MultiplePropertiesForm(BaseMeansTestForm):
 
     @classmethod
     def should_show(cls) -> bool:
-        return session.get_eligibility().forms.get("about-you", {}).get("own_property", False)
+        return (
+            session.get_eligibility()
+            .forms.get("about-you", {})
+            .get("own_property", False)
+        )
 
     properties = FieldList(
         FormField(PropertyForm),  # Each entry is an instance of PropertyForm

@@ -40,7 +40,13 @@ class AntiSocialBehaviourForm(QuestionForm):
     question = RadioField(
         title,
         widget=CategoryRadioInput(show_divider=False, is_inline=True),
-        validators=[InputRequired(message=_("Select ‘Yes’ if you were accused by a landlord or the council"))],
+        validators=[
+            InputRequired(
+                message=_(
+                    "Select ‘Yes’ if you were accused by a landlord or the council"
+                )
+            )
+        ],
         choices=[
             ("yes", _("Yes")),
             ("no", _("No")),

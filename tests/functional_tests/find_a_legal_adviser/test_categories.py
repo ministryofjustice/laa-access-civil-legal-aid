@@ -40,7 +40,9 @@ CATEGORIES = [
 @pytest.mark.usefixtures("live_server")
 class TestLegalAdviserCategories:
     @pytest.mark.parametrize("category", CATEGORIES)
-    def test_category_search(self, page: Page, category: Dict[str, Optional[str]]) -> None:
+    def test_category_search(
+        self, page: Page, category: Dict[str, Optional[str]]
+    ) -> None:
         """Test that each category shows the correct header text and additional information if applicable"""
         page.goto(
             url_for(
@@ -100,7 +102,9 @@ class TestCategoriesURL:
     def test_single_category_url(self, page: Page) -> None:
         # Select more problems and clinical negligence
         page.get_by_role("link", name="More problems covered by legal aid").click()
-        expect(page.get_by_role("link", name="Clinical negligence in babies")).to_be_visible()
+        expect(
+            page.get_by_role("link", name="Clinical negligence in babies")
+        ).to_be_visible()
         page.get_by_role("link", name="Clinical negligence in babies").click()
         expect(page.get_by_text("For clinical negligence")).to_be_visible()
 

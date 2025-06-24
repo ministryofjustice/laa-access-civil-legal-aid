@@ -87,7 +87,9 @@ class TestContactUsView:
     @patch("app.contact.views.ContactUsForm")
     @patch("app.contact.views.render_template")
     @patch.object(MeansTest, "get_form_progress")
-    def test_post_request_validation_failure(self, mock_means_test, mock_render_template, mock_form):
+    def test_post_request_validation_failure(
+        self, mock_means_test, mock_render_template, mock_form
+    ):
         mock_form_instance = MagicMock()
         mock_form.return_value = mock_form_instance
         mock_form_instance.validate_on_submit.return_value = False
@@ -106,7 +108,9 @@ class TestContactUsView:
 
     @patch("app.contact.views.render_template")
     @patch.object(MeansTest, "get_form_progress")
-    def test_attach_rfc_to_case(self, mock_get_form_progress, mock_render_template, app, client):
+    def test_attach_rfc_to_case(
+        self, mock_get_form_progress, mock_render_template, app, client
+    ):
         with client.session_transaction() as session:
             session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY] = "1234"
 
@@ -130,7 +134,9 @@ class TestContactUsView:
             mock_attach_rfc_to_case.assert_called_once_with("AB-1234-5678", "1234")
 
     @patch("app.contact.views.update_means_test")
-    def test_append_notes_to_eligibility_check_with_valid_notes(self, mock_update_means_test, app, client):
+    def test_append_notes_to_eligibility_check_with_valid_notes(
+        self, mock_update_means_test, app, client
+    ):
         notes_data = "User notes"
 
         view = ContactUs()
@@ -142,7 +148,9 @@ class TestContactUsView:
         assert eligibility_check["notes"] == "User problem:\nUser notes"
 
     @patch("app.contact.views.update_means_test")
-    def test_append_notes_to_eligibility_check_with_empty_notes(self, mock_update_means_test, app, client):
+    def test_append_notes_to_eligibility_check_with_empty_notes(
+        self, mock_update_means_test, app, client
+    ):
         # Test with empty string
         view = ContactUs()
         view._append_notes_to_eligibility_check("")

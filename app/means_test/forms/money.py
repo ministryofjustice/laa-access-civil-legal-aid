@@ -14,7 +14,9 @@ class ExampleForm(BaseMeansTestForm):
         widget=MoneyIntervalWidget(),
         validators=[
             MoneyIntervalAmountRequired(
-                message=_("Enter the Working Tax Credit you receive, or 0 if this doesn’t apply to you"),
+                message=_(
+                    "Enter the Working Tax Credit you receive, or 0 if this doesn’t apply to you"
+                ),
                 freq_message=_("Tell us how often you receive Working Tax Credit"),
                 amount_message=_(
                     "Tell us how much Working Tax Credit you receive"
@@ -30,8 +32,12 @@ class ExampleForm(BaseMeansTestForm):
         validators=[
             ValidateIfSession("has_partner", True),
             MoneyIntervalAmountRequired(
-                message=_("Enter the Working Tax Credit your partner receives, or 0 if it doesn’t apply"),
-                freq_message=_("Tell us how often your partner receives Working Tax Credit"),
+                message=_(
+                    "Enter the Working Tax Credit your partner receives, or 0 if it doesn’t apply"
+                ),
+                freq_message=_(
+                    "Tell us how often your partner receives Working Tax Credit"
+                ),
                 amount_message=_(
                     "Tell us how much Working Tax Credit your partner receives"
                 ),  # this is followed by the time period, e.g. "... each week"

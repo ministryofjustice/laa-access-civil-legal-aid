@@ -5,7 +5,11 @@ from wtforms.validators import StopValidation
 class ValidateDayTime:
     def __init__(self, day_field: str, message: bool = None):
         self.day_field = day_field
-        self.message = message if message is not None else "Can not schedule a callback at the requested time"
+        self.message = (
+            message
+            if message is not None
+            else "Can not schedule a callback at the requested time"
+        )
 
     def __call__(self, form, field):
         selected_time = field.data

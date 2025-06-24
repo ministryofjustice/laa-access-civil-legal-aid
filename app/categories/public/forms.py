@@ -23,7 +23,13 @@ class PolicePrisonOrDetentionCentreForm(QuestionForm):
     question = RadioField(
         title,
         widget=CategoryRadioInput(show_divider=False, is_inline=True),
-        validators=[InputRequired(message=_("Select if this is about the police, prisons or detention centres"))],
+        validators=[
+            InputRequired(
+                message=_(
+                    "Select if this is about the police, prisons or detention centres"
+                )
+            )
+        ],
         choices=[
             ("yes", _("Yes")),
             ("no", _("No")),

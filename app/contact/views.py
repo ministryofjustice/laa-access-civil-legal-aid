@@ -53,7 +53,9 @@ class ContactUs(View):
 
             self._append_notes_to_eligibility_check(form.data.get("extra_notes"))
 
-            session["case_reference"] = cla_backend.post_case(payload=payload)["reference"]
+            session["case_reference"] = cla_backend.post_case(payload=payload)[
+                "reference"
+            ]
 
             if ReasonsForContactingForm.MODEL_REF_SESSION_KEY in session:
                 self._attach_rfc_to_case(

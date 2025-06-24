@@ -23,7 +23,9 @@ class DiscriminationCategoryLandingPage(CategoryLandingPage):
         return redirect(url_for("categories.discrimination.where"))
 
 
-bp.add_url_rule("/discrimination/", view_func=DiscriminationCategoryLandingPage.as_view("landing"))
+bp.add_url_rule(
+    "/discrimination/", view_func=DiscriminationCategoryLandingPage.as_view("landing")
+)
 bp.add_url_rule(
     "/discrimination/where",
     view_func=QuestionPage.as_view("where", form_class=DiscriminationWhereForm),

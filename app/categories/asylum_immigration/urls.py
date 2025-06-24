@@ -28,7 +28,9 @@ class AsylumAndImmigrationLandingPage(CategoryLandingPage):
     }
 
 
-AsylumAndImmigrationLandingPage.register_routes(blueprint=bp, path="/asylum-and-immigration")
+AsylumAndImmigrationLandingPage.register_routes(
+    blueprint=bp, path="/asylum-and-immigration"
+)
 bp.add_url_rule(
     "/asylum-and-immigration/cannot-find-your-problem",
     view_func=CannotFindYourProblemPage.as_view(

@@ -47,7 +47,9 @@ def test_summary(app):
 
     with app.app_context():
         salary = {"per_interval_value": 20050, "interval_period": "per_4week"}
-        form = TestForm(**{"confirm": "yes", "age": 20, "colour": ["red"], "salary": salary})
+        form = TestForm(
+            **{"confirm": "yes", "age": 20, "colour": ["red"], "salary": salary}
+        )
         summary = form.summary()
         assert summary == expected_summary
 
@@ -74,13 +76,17 @@ def test_summary_with_multiple(app):
 
 def test_is_unvalidated_conditional_field(app):
     class TestConditionalForm(BaseMeansTestForm):
-        confirm = RadioField("Do you like colours", choices=[("yes", "Yes"), ("no", "No")])
+        confirm = RadioField(
+            "Do you like colours", choices=[("yes", "Yes"), ("no", "No")]
+        )
         colours = SelectMultipleField(
             validators=[ValidateIf("confirm", "yes")],
             label="Please select your favourite colour",
             choices=[("red", "Red"), ("green", "Green"), ("blue", "Blue")],
         )
-        user_id = IntegerField("User Id", validators=[ValidateIfSession("is_returning_user", "yes")])
+        user_id = IntegerField(
+            "User Id", validators=[ValidateIfSession("is_returning_user", "yes")]
+        )
 
     with app.app_context():
         form = TestConditionalForm(**{"confirm": "yes", "colours": ["red", "blue"]})

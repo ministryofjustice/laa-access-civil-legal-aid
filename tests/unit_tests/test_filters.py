@@ -11,7 +11,10 @@ def test_filter_category_url(app):
             "secondary_category": "com",
         }
         # url is a dict
-        assert category_url_for(endpoint) == "/find-a-legal-adviser?category=mhe&secondary_category=com"
+        assert (
+            category_url_for(endpoint)
+            == "/find-a-legal-adviser?category=mhe&secondary_category=com"
+        )
 
         # url is invalid(missing endpoint)
         endpoint = {

@@ -32,7 +32,9 @@ def test_get_postcode_region(postcode, mock_return, expected_region):
 
         assert result == expected_region
 
-        mock_lookup.assert_called_once_with(postcode)  # Verify postcode lookup was called with the correct postcode
+        mock_lookup.assert_called_once_with(
+            postcode
+        )  # Verify postcode lookup was called with the correct postcode
 
 
 def test_get_postcode_region_raises_exception():

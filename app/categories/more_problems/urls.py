@@ -70,7 +70,9 @@ class MoreProblemsPage(CategoryPage):
 
 bp.add_url_rule(
     "/more-problems",
-    view_func=MoreProblemsPage.as_view("landing", template="categories/more-problems.html"),
+    view_func=MoreProblemsPage.as_view(
+        "landing", template="categories/more-problems.html"
+    ),
 )
 bp.add_url_rule(
     "/more-problems/cannot-find-your-problem",

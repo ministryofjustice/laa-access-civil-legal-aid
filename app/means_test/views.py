@@ -137,7 +137,9 @@ class CheckYourAnswers(FormsMixin, MethodView):
             form_data = MultiDict(eligibility.forms.get(key, {}))
             form = form_class(form_data)
             if form.should_show():
-                means_test_summary[str(form.page_title)] = self.get_form_summary(form, key)
+                means_test_summary[str(form.page_title)] = self.get_form_summary(
+                    form, key
+                )
 
         params = {
             "means_test_summary": means_test_summary,
@@ -155,7 +157,9 @@ class CheckYourAnswers(FormsMixin, MethodView):
                     "key": {"text": _("The problem you need help with")},
                     "value": {"text": category.title},
                     "actions": {
-                        "items": [{"text": _("Change"), "href": url_for("categories.index")}],
+                        "items": [
+                            {"text": _("Change"), "href": url_for("categories.index")}
+                        ],
                     },
                 },
             ]
@@ -172,7 +176,9 @@ class CheckYourAnswers(FormsMixin, MethodView):
                     "key": {"text": _("The problem you need help with")},
                     "value": {"markdown": value},
                     "actions": {
-                        "items": [{"text": _("Change"), "href": url_for("categories.index")}],
+                        "items": [
+                            {"text": _("Change"), "href": url_for("categories.index")}
+                        ],
                     },
                 },
             ]
@@ -190,7 +196,9 @@ class CheckYourAnswers(FormsMixin, MethodView):
             # if a category doesn't have children then it does not have subpages so we don't show the category description
             results = get_your_problem__no_description(subcategory)
 
-        onward_questions = filter(lambda answer: answer.question_type == QuestionType.ONWARD, answers)
+        onward_questions = filter(
+            lambda answer: answer.question_type == QuestionType.ONWARD, answers
+        )
 
         for answer in onward_questions:
             answer_key = "text"
@@ -206,7 +214,9 @@ class CheckYourAnswers(FormsMixin, MethodView):
                 {
                     "key": {"text": gettext(answer.question)},
                     "value": {answer_key: answer_label},
-                    "actions": {"items": [{"text": _("Change"), "href": answer.edit_url}]},
+                    "actions": {
+                        "items": [{"text": _("Change"), "href": answer.edit_url}]
+                    },
                 }
             )
         return results
