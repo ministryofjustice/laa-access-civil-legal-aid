@@ -1,5 +1,5 @@
 from flask.views import View
-from app.contact.forms import (
+from app.contact_backup.forms import (
     ContactUsForm,
     ReasonsForContactingForm,
     ConfirmationEmailForm,
@@ -7,7 +7,7 @@ from app.contact.forms import (
 import logging
 from flask import session, render_template, request, redirect, url_for, jsonify
 from app.api import cla_backend
-from app.contact.notify.api import notify
+from app.contact_backup.notify.api import notify
 from app.means_test.api import is_eligible, EligibilityState
 from app.means_test.views import MeansTest
 from datetime import datetime

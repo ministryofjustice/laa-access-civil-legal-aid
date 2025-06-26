@@ -4,8 +4,8 @@ import requests
 from datetime import datetime
 
 from app import get_locale
-from app.contact.notify.templates import GOVUK_NOTIFY_TEMPLATES
-from app.contact.helpers import format_callback_time
+from app.contact_backup.notify.templates import GOVUK_NOTIFY_TEMPLATES
+from app.contact_backup.helpers import format_callback_time
 
 logger = logging.getLogger(__name__)
 

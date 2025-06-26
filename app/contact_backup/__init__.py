@@ -6,4 +6,4 @@ bp = Blueprint(
     template_folder="./templates",
 )
 
-from app.contact import urls  # noqa: E402,F401
+from app.contact_backup import urls  # noqa: E402,F401

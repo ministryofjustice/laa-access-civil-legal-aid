@@ -16,7 +16,7 @@ from govuk_frontend_wtf.wtforms_widgets import (
     GovSelect,
 )
 
-from app.contact.widgets import (
+from app.contact_backup.widgets import (
     ContactRadioInput,
     ContactCheckboxInput,
     ContactSelectField,
@@ -24,7 +24,7 @@ from app.contact.widgets import (
 )
 from wtforms.fields import SubmitField
 from app.categories.widgets import CategoryCheckboxInput
-from app.contact.constants import (
+from app.contact_backup.constants import (
     LANG_CHOICES,
     THIRDPARTY_RELATIONSHIP_CHOICES,
     CONTACT_PREFERENCE,
@@ -33,7 +33,7 @@ from app.contact.constants import (
 from flask_babel import lazy_gettext as _
 from wtforms.validators import InputRequired, Length, Optional, Email
 from app.main import get_locale
-from app.contact.validators import (
+from app.contact_backup.validators import (
     ValidateDayTime,
 )
 from app.means_test.validators import ValidateIf, ValidateIfType

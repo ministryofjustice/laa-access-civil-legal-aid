@@ -38,7 +38,7 @@ class FormsMixin:
 
     def get_form_progress(self, current_form: BaseMeansTestForm) -> dict:
         """Gets the users progress through the means test. This is used to populate the progress bar."""
-        from app.contact.forms import ContactUsForm
+        from app.contact_backup.forms import ContactUsForm
 
         forms = []
         current_form_key = ""

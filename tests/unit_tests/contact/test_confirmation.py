@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import patch, ANY
 from datetime import datetime, timezone
 from flask import url_for
-from app.contact.views import ConfirmationPage
+from app.contact_backup.views import ConfirmationPage
 
 
 @pytest.fixture
@@ -22,7 +22,7 @@ class TestConfirmationPage:
 
     @pytest.fixture
     def mock_notify(self):
-        with patch("app.contact.views.notify") as mock_notify:
+        with patch("app.contact_backup.views.notify") as mock_notify:
             yield mock_notify
 
     def test_get_context(self, client):
@@ -30,7 +30,7 @@ class TestConfirmationPage:
             session.update(self.session_data)
 
         with client.application.test_request_context():
-            with patch("app.contact.views.session", dict(session)):
+            with patch("app.contact_backup.views.session", dict(session)):
                 context = ConfirmationPage.get_context()
 
                 assert context["case_reference"] == "AB-1234-5678"
@@ -42,7 +42,7 @@ class TestConfirmationPage:
         with client.session_transaction() as session:
             session.update(self.session_data)
 
-        with patch("app.contact.views.render_template") as mock_render:
+        with patch("app.contact_backup.views.render_template") as mock_render:
             mock_render.return_value = "Rendered Template"
 
             client.get("/confirmation")
@@ -64,7 +64,7 @@ class TestConfirmationPage:
 
         test_email = "test@example.com"
 
-        with patch("app.contact.views.render_template") as mock_render:
+        with patch("app.contact_backup.views.render_template") as mock_render:
             mock_render.return_value = "Rendered Template"
 
             client.post("/confirmation", data={"email": test_email}, follow_redirects=True)
@@ -96,7 +96,7 @@ class TestConfirmationPage:
         mock_notify.create_and_send_confirmation_email.assert_not_called()
 
     def test_ajax_post_validation_failure(self, valid_session):
-        with patch("app.contact.views.ConfirmationEmailForm") as MockForm:
+        with patch("app.contact_backup.views.ConfirmationEmailForm") as MockForm:
             mock_form = MockForm.return_value
             mock_form.validate_on_submit.return_value = False
             mock_form.errors = {"email": ["Invalid email address"]}

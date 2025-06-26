@@ -3,14 +3,14 @@ from unittest.mock import patch
 from flask import request, session, current_app
 from wtforms.fields.choices import SelectField
 from app.api import cla_backend, BackendAPIClient
-from app.contact.forms import ReasonsForContactingForm, ContactUsForm
-from app.contact.helpers import format_callback_time
+from app.contact_backup.forms import ReasonsForContactingForm, ContactUsForm
+from app.contact_backup.helpers import format_callback_time
 import requests
 from datetime import datetime
-from app.contact.address_finder.widgets import AddressLookup, FormattedAddressLookup
+from app.contact_backup.address_finder.widgets import AddressLookup, FormattedAddressLookup
 from wtforms import Form, StringField
 from wtforms.validators import ValidationError, StopValidation
-from app.contact.validators import ValidateDayTime
+from app.contact_backup.validators import ValidateDayTime
 from freezegun import freeze_time
 
 
@@ -144,7 +144,7 @@ def address_lookup(app):
         yield AddressLookup()
 
 
-@patch("app.contact.address_finder.widgets.requests.get")
+@patch("app.contact_backup.address_finder.widgets.requests.get")
 def test_by_postcode_success(mock_get, address_lookup):
     """Test successful address lookup"""
     mock_get.return_value.status_code = 200
@@ -165,7 +165,7 @@ def test_by_postcode_success(mock_get, address_lookup):
 
 
 @patch(
-    "app.contact.address_finder.widgets.requests.get",
+    "app.contact_backup.address_finder.widgets.requests.get",
     side_effect=requests.exceptions.ConnectTimeout,
 )
 def test_by_postcode_timeout(mock_get, address_lookup):
@@ -174,7 +174,7 @@ def test_by_postcode_timeout(mock_get, address_lookup):
     assert results == []
 
 
-@patch("app.contact.address_finder.widgets.requests.get")
+@patch("app.contact_backup.address_finder.widgets.requests.get")
 def test_by_postcode_request_exception(mock_get, address_lookup):
     """Test handling of a general request failure"""
     mock_get.side_effect = requests.exceptions.RequestException("API failure")
@@ -340,7 +340,7 @@ def test_get_payload_callback(app):
 
 
 # Test get email
-@patch("app.contact.forms.cla_backend")
+@patch("app.contact_backup.forms.cla_backend")
 def test_get_email(app, client):
     # Test when "email" is in the data
     form_with_email = ContactUsForm(data={"email": "test@example.com"})
@@ -356,14 +356,14 @@ def test_get_email(app, client):
 
 
 class TestCallbackTimeFunctions:
-    @patch("app.contact.forms.cla_backend")
+    @patch("app.contact_backup.forms.cla_backend")
     def test_get_callback_time_no_callback(self, app, client):
         form_data = {"contact_type": "email"}
         form = ContactUsForm(data=form_data)
         result = form.get_callback_time()
         assert result is None
 
-    @patch("app.contact.forms.cla_backend")
+    @patch("app.contact_backup.forms.cla_backend")
     def test_get_callback_time_call_today(self, app, client):
         form_data = {
             "contact_type": "callback",
@@ -378,7 +378,7 @@ class TestCallbackTimeFunctions:
             expected = datetime(2025, 2, 26, 14, 30)
             assert result == expected
 
-    @patch("app.contact.forms.cla_backend")
+    @patch("app.contact_backup.forms.cla_backend")
     def test_get_callback_time_call_another_day(self, app, client):
         form_data = {
             "contact_type": "callback",
@@ -393,7 +393,7 @@ class TestCallbackTimeFunctions:
         expected = datetime(2025, 2, 26, 10, 0)
         assert result == expected
 
-    @patch("app.contact.forms.cla_backend")
+    @patch("app.contact_backup.forms.cla_backend")
     def test_get_callback_time_thirdparty(self, app, client):
         form_data = {
             "contact_type": "thirdparty",
@@ -408,7 +408,7 @@ class TestCallbackTimeFunctions:
         expected = datetime(2025, 5, 19, 16, 0)
         assert result == expected
 
-    @patch("app.contact.forms.cla_backend")
+    @patch("app.contact_backup.forms.cla_backend")
     def test_get_callback_time_invalid_selection(self, app, client):
         form_data = {
             "contact_type": "callback",
@@ -419,23 +419,23 @@ class TestCallbackTimeFunctions:
         result = form.get_callback_time()
         assert result is None
 
-    @patch("app.contact.forms.cla_backend")
+    @patch("app.contact_backup.forms.cla_backend")
     def test_format_callback_time_none_input(self, app, client):
         result = format_callback_time(None)
         assert result is None
 
-    @patch("app.contact.forms.cla_backend")
+    @patch("app.contact_backup.forms.cla_backend")
     def test_format_callback_time_invalid_input(self, app, client):
         result = format_callback_time("not a datetime")
         assert result is None
 
-    @patch("app.contact.forms.cla_backend")
+    @patch("app.contact_backup.forms.cla_backend")
     def test_format_callback_time_valid(self, app, client):
         test_time = datetime(2024, 1, 1, 9, 0)
         result = format_callback_time(test_time)
         assert result == "Monday, 1 January at 09:00 - 09:30"
 
-    @patch("app.contact.forms.cla_backend")
+    @patch("app.contact_backup.forms.cla_backend")
     def test_format_callback_time_with_midnight_crossing(self, app, client):
         test_time = datetime(2024, 1, 1, 23, 45)
         result = format_callback_time(test_time)

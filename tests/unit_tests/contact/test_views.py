@@ -1,14 +1,14 @@
 import logging
 from unittest.mock import patch, MagicMock
 from flask import url_for, redirect
-from app.contact.forms import ReasonsForContactingForm
-from app.contact.views import (
+from app.contact_backup.forms import ReasonsForContactingForm
+from app.contact_backup.views import (
     ContactUs,
     FastTrackedContactUs,
     FinancialAssessmentReason,
     FinancialAssessmentStatus,
 )
-from app.contact.urls import EligibleContactUsPage
+from app.contact_backup.urls import EligibleContactUsPage
 from app.means_test.views import MeansTest
 from app.session import Session
 from app.means_test.api import EligibilityState
@@ -31,9 +31,9 @@ class TestContactUsView:
         assert view.template == "contact/contact.html"
         assert view.attach_eligibility_data is True
 
-    @patch("app.contact.views.ContactUsForm")
-    @patch("app.contact.views.MeansTest")
-    @patch("app.contact.views.render_template")
+    @patch("app.contact_backup.views.ContactUsForm")
+    @patch("app.contact_backup.views.MeansTest")
+    @patch("app.contact_backup.views.render_template")
     def test_get_request(self, mock_render_template, mock_means_test, mock_form, app, client):
         mock_form_instance = MagicMock()
         mock_form.return_value = mock_form_instance
@@ -54,10 +54,10 @@ class TestContactUsView:
                 form_progress=mock_form_progress,
             )
 
-    @patch("app.contact.views.ContactUsForm")
-    @patch("app.contact.views.redirect")
-    @patch("app.contact.views.cla_backend")
-    @patch("app.contact.views.notify")
+    @patch("app.contact_backup.views.ContactUsForm")
+    @patch("app.contact_backup.views.redirect")
+    @patch("app.contact_backup.views.cla_backend")
+    @patch("app.contact_backup.views.notify")
     def test_post_request_success(
         self,
         mock_notify,
@@ -94,8 +94,8 @@ class TestContactUsView:
         mock_notify.create_and_send_confirmation_email.assert_called_once()
         mock_redirect.assert_called_once_with(url_for("contact.confirmation"))
 
-    @patch("app.contact.views.ContactUsForm")
-    @patch("app.contact.views.render_template")
+    @patch("app.contact_backup.views.ContactUsForm")
+    @patch("app.contact_backup.views.render_template")
     @patch.object(MeansTest, "get_form_progress")
     def test_post_request_validation_failure(self, mock_means_test, mock_render_template, mock_form, app, client):
         mock_form_instance = MagicMock()
@@ -115,7 +115,7 @@ class TestContactUsView:
                 form_progress={"step": "Review", "percentage_complete": 100},
             )
 
-    @patch("app.contact.views.render_template")
+    @patch("app.contact_backup.views.render_template")
     @patch.object(MeansTest, "get_form_progress")
     def test_attach_rfc_to_case(self, mock_get_form_progress, mock_render_template, app, client):
         with client.session_transaction() as session:
@@ -129,9 +129,9 @@ class TestContactUsView:
         }
 
         with (
-            patch("app.contact.forms.cla_backend"),
+            patch("app.contact_backup.forms.cla_backend"),
             patch(
-                "app.contact.views.cla_backend.post_case",
+                "app.contact_backup.views.cla_backend.post_case",
                 return_value={"reference": "AB-1234-5678"},
             ),
             patch.object(ContactUs, "_attach_rfc_to_case") as mock_attach_rfc_to_case,
@@ -140,7 +140,7 @@ class TestContactUsView:
 
             mock_attach_rfc_to_case.assert_called_once_with("AB-1234-5678", "1234")
 
-    @patch("app.contact.views.cla_backend.update_reasons_for_contacting")
+    @patch("app.contact_backup.views.cla_backend.update_reasons_for_contacting")
     def test_attaching_rfc_to_case(self, mock_update_rfc, app, client):
         with client.session_transaction() as session:
             session[ReasonsForContactingForm.MODEL_REF_SESSION_KEY] = "1234"
@@ -158,8 +158,8 @@ class TestContactUsView:
 
 
 class TestFastTrackedContactUsView:
-    @patch("app.contact.views.ContactUs.dispatch_request", return_value=None)
-    @patch("app.contact.views.FastTrackedContactUs.ensure_in_scope")
+    @patch("app.contact_backup.views.ContactUs.dispatch_request", return_value=None)
+    @patch("app.contact_backup.views.FastTrackedContactUs.ensure_in_scope")
     def test_dispatch_request_failure(self, mock_ensure_in_scope, mock_dispatch_request, app):
         with app.app_context():
             mock_ensure_in_scope.return_value = redirect(url_for("main.session_expired"))
@@ -170,8 +170,8 @@ class TestFastTrackedContactUsView:
             assert mock_ensure_in_scope.called is True
             assert mock_dispatch_request.called is False
 
-    @patch("app.contact.views.ContactUs.dispatch_request", return_value=None)
-    @patch("app.contact.views.FastTrackedContactUs.ensure_in_scope", return_value=None)
+    @patch("app.contact_backup.views.ContactUs.dispatch_request", return_value=None)
+    @patch("app.contact_backup.views.FastTrackedContactUs.ensure_in_scope", return_value=None)
     def test_dispatch_request_success(self, mock_ensure_in_scope, mock_dispatch_request, app):
         with app.app_context():
             view = FastTrackedContactUs()
@@ -186,8 +186,8 @@ class TestFastTrackedContactUsView:
             assert financial_reason == FinancialAssessmentReason.HARM
 
 
-@patch("app.contact.views.is_eligible", return_value=EligibilityState.YES)
-@patch("app.contact.views.ContactUs.dispatch_request")
+@patch("app.contact_backup.views.is_eligible", return_value=EligibilityState.YES)
+@patch("app.contact_backup.views.ContactUs.dispatch_request")
 @patch.object(Session, "ec_reference", return_value="5ae7d8ba-daf2-471f-a082-7aaec590e83b")
 def test_eligible_view_success(mock_is_eligible, mock_super_dispatch_request, mock_ec_reference, app):
     with app.app_context():
@@ -196,7 +196,7 @@ def test_eligible_view_success(mock_is_eligible, mock_super_dispatch_request, mo
         assert mock_super_dispatch_request.called is True
 
 
-@patch("app.contact.views.is_eligible", return_value=EligibilityState.UNKNOWN)
+@patch("app.contact_backup.views.is_eligible", return_value=EligibilityState.UNKNOWN)
 @patch.object(Session, "ec_reference", return_value="5ae7d8ba-daf2-471f-a082-7aaec590e83b")
 def test_eligible_view_failure(mock_is_eligible, mock_ec_reference, app):
     with app.app_context():
@@ -206,7 +206,7 @@ def test_eligible_view_failure(mock_is_eligible, mock_ec_reference, app):
         assert response.location == url_for("main.session_expired")
 
 
-@patch("app.contact.views.is_eligible", return_value=EligibilityState.UNKNOWN)
+@patch("app.contact_backup.views.is_eligible", return_value=EligibilityState.UNKNOWN)
 def test_eligible_view_failure_no_ec_reference(mock_is_eligible, app):
     with app.app_context():
         view = EligibleContactUsPage()

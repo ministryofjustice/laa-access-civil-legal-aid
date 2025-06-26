@@ -1,8 +1,8 @@
 import logging
 from flask import jsonify
-from app.contact import bp
-from app.contact.address_finder.widgets import FormattedAddressLookup
-from app.contact.views import (
+from app.contact_backup import bp
+from app.contact_backup.address_finder.widgets import FormattedAddressLookup
+from app.contact_backup.views import (
     ContactUs,
     ReasonForContacting,
     ConfirmationPage,
