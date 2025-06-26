@@ -95,7 +95,7 @@ def test_contact_page_rfc_routing(page: Page):
 
     page.get_by_role("button", name="Continue").click()
 
-    expect(page).to_have_url(re.compile(".*/contact-us"))
+    expect(page).to_have_url(re.compile(".*/backup-contact-us"))
 
 
 ''' Test to be updated once review your answers is in
