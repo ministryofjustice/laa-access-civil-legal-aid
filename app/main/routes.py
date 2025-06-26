@@ -94,7 +94,7 @@ def set_locale(locale):
             parsed.scheme in ("http", "https")
             and parsed.netloc == request.host
             and parsed.path.startswith("/")
-            and not parsed.path.startswith("//")
+            and not parsed.path.startswith("//")  # Prevents protocol-relative URLs being used in redirects
         ):
             redirect_url = parsed.path
         else:
