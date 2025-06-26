@@ -12,6 +12,14 @@ from flask_babel import LazyString
 
 
 @dataclass
+class Contact:
+    forms: dict[str, dict]
+
+    def add(self, form_name, data):
+        self.forms[form_name] = data
+
+
+@dataclass
 class Eligibility:
     def __init__(self, forms, _notes=None):
         self.forms = forms
@@ -117,9 +125,12 @@ class Session(SecureCookieSession):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         eligibility = {}
+        contact = {}
         if args:
             eligibility = args[0].get("eligibility", {})
+            contact = args[0].get("contact", {})
         self["eligibility"] = Eligibility(forms=eligibility.get("forms", {}), _notes={})
+        self["contact"] = Contact(forms=contact.get("forms", {}))
 
     def clear_category(self):
         if self.category:
