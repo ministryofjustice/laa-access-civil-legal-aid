@@ -33,6 +33,8 @@ jobs:
       name: ${{ inputs.environment }}
       url: ${{ env.DEPLOYMENT_URL }}
     runs-on: ubuntu-latest
+    outputs:
+      hostname: ${{ steps.export-hostname.outputs.hostname }}
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read  # This is required for actions/checkout
@@ -75,6 +77,8 @@ jobs:
           export HOST_NAME=${CLEANED_BRANCH_NAME}-${DEV_HOST}
           echo "DEPLOYMENT_URL=https://${HOST_NAME}" >> $GITHUB_ENV
 
+          echo "${HOST_NAME}" > hostname.txt
+
           helm upgrade ${CLEANED_BRANCH_NAME} \
           ${HELM_DIR} \
           --namespace=${{ secrets.KUBE_NAMESPACE }} \
@@ -87,3 +91,9 @@ jobs:
           --set pingdomIPs=$PINGDOM_IPS \
           --force \
           --install
+
+      - name: Upload HOST_NAME as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-name
+          path: hostname.txt
