@@ -217,4 +217,4 @@ def test_post_eligible(app, client, caplog):
             response = CheckYourAnswers().post()
             assert "Eligibility check result successful - state is EligibilityState.YES" in caplog.messages
         assert response.status_code == 302
-        assert response.location == url_for("contact.eligible")
+        assert response.location == url_for("contact_backup.eligible")

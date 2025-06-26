@@ -79,7 +79,7 @@ class FormsMixin:
             {
                 "key": "contact-us",
                 "title": _("Contact information"),  # This is intentionally different from the page title
-                "url": url_for("contact.contact_us"),
+                "url": url_for("contact_backup.contact_us"),
                 "is_current": current_form.page_title == ContactUsForm.page_title,
                 "is_completed": False,  # This can always be false as we don't show the progress bar after the contact us form
             }
@@ -398,7 +398,7 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
         # Failsafe, if we are unsure of the eligibility state at this point send the user to the call centre
         if eligibility == EligibilityState.YES or eligibility == EligibilityState.UNKNOWN:
             logger.info(f"Eligibility check result successful - state is {eligibility}")
-            return redirect(url_for("contact.eligible"))
+            return redirect(url_for("contact_backup.eligible"))
 
         if session.subcategory and session.subcategory.eligible_for_HLPAS:
             logger.info(f"Eligibility check result HLPAS - state is {eligibility}")

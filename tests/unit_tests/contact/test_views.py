@@ -92,7 +92,7 @@ class TestContactUsView:
 
         mock_cla_backend.post_case.assert_called_once()
         mock_notify.create_and_send_confirmation_email.assert_called_once()
-        mock_redirect.assert_called_once_with(url_for("contact.confirmation"))
+        mock_redirect.assert_called_once_with(url_for("contact_backup.confirmation"))
 
     @patch("app.contact_backup.views.ContactUsForm")
     @patch("app.contact_backup.views.render_template")
@@ -179,7 +179,7 @@ class TestFastTrackedContactUsView:
             assert mock_dispatch_request.called is True
 
     def test_get_financial_eligibility_status(self, app):
-        with app.test_request_context(url_for("contact.contact_us_fast_tracked", reason="harm")):
+        with app.test_request_context(url_for("contact_backup.contact_us_fast_tracked", reason="harm")):
             view = FastTrackedContactUs()
             financial_status, financial_reason = view.get_financial_eligibility_status()
             assert financial_status == FinancialAssessmentStatus.FAST_TRACK

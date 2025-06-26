@@ -160,7 +160,7 @@ fast_track_routing = [
             "Domestic abuse",
             "Help to keep yourself safe and protect children",
             {"type": "form", "selector": "Yes"},
-            {"endpoint": "contact.contact_us_fast_tracked", "reason": "harm"},
+            {"endpoint": "contact_backup.contact_us_fast_tracked", "reason": "harm"},
         ]
     ),
     pytest.param(
@@ -168,7 +168,7 @@ fast_track_routing = [
             "Domestic abuse",
             "Forced Marriage",
             {"type": "form", "selector": "Yes"},
-            {"endpoint": "contact.contact_us_fast_tracked", "reason": "harm"},
+            {"endpoint": "contact_backup.contact_us_fast_tracked", "reason": "harm"},
         ]
     ),
     pytest.param(
@@ -176,7 +176,7 @@ fast_track_routing = [
             "Domestic abuse",
             "FGM",
             {"type": "form", "selector": "Yes"},
-            {"endpoint": "contact.contact_us_fast_tracked", "reason": "harm"},
+            {"endpoint": "contact_backup.contact_us_fast_tracked", "reason": "harm"},
         ]
     ),
     pytest.param(
@@ -184,7 +184,7 @@ fast_track_routing = [
             "Domestic abuse",
             "Leaving an abusive relationship",
             {"type": "form", "selector": "Yes"},
-            {"endpoint": "contact.contact_us_fast_tracked", "reason": "harm"},
+            {"endpoint": "contact_backup.contact_us_fast_tracked", "reason": "harm"},
         ]
     ),
     pytest.param(
@@ -192,7 +192,7 @@ fast_track_routing = [
             "Domestic abuse",
             "Problems with an ex-partner: children or money",
             {"type": "form", "selector": "Yes"},
-            {"endpoint": "contact.contact_us_fast_tracked", "reason": "harm"},
+            {"endpoint": "contact_backup.contact_us_fast_tracked", "reason": "harm"},
         ]
     ),
     pytest.param(
@@ -200,7 +200,7 @@ fast_track_routing = [
             "Domestic abuse",
             "Problems with neighbours, landlords or other people",
             {
-                "endpoint": "contact.contact_us_fast_tracked",
+                "endpoint": "contact_backup.contact_us_fast_tracked",
                 "reason": "more-info-required",
             },
         ]
@@ -210,7 +210,7 @@ fast_track_routing = [
             "Children, families, relationships",
             "If there is domestic abuse in your family",
             {"type": "form", "selector": "Yes"},
-            {"endpoint": "contact.contact_us_fast_tracked", "reason": "harm"},
+            {"endpoint": "contact_backup.contact_us_fast_tracked", "reason": "harm"},
         ]
     ),
     pytest.param(
@@ -218,7 +218,7 @@ fast_track_routing = [
             "Children, families, relationships",
             "Child taken without your consent",
             {
-                "endpoint": "contact.contact_us_fast_tracked",
+                "endpoint": "contact_backup.contact_us_fast_tracked",
                 "reason": "more-info-required",
             },
         ]
@@ -228,7 +228,7 @@ fast_track_routing = [
             "Children, families, relationships",
             "Children and social services, children in care",
             {
-                "endpoint": "contact.contact_us_fast_tracked",
+                "endpoint": "contact_backup.contact_us_fast_tracked",
                 "reason": "more-info-required",
             },
         ]
@@ -238,7 +238,7 @@ fast_track_routing = [
             "Special educational needs and disability (SEND)",
             "Help with a child or young person's SEND",
             {"type": "form", "selector": "Yes"},
-            {"endpoint": "contact.contact_us_fast_tracked", "reason": "other"},
+            {"endpoint": "contact_backup.contact_us_fast_tracked", "reason": "other"},
         ]
     ),
     pytest.param(
@@ -246,7 +246,7 @@ fast_track_routing = [
             "Special educational needs and disability (SEND)",
             "SEND tribunals",
             {"type": "form", "selector": "Yes"},
-            {"endpoint": "contact.contact_us_fast_tracked", "reason": "other"},
+            {"endpoint": "contact_backup.contact_us_fast_tracked", "reason": "other"},
         ]
     ),
 ]

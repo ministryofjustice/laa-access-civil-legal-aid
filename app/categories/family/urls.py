@@ -15,7 +15,7 @@ class FamilyLandingPage(CategoryLandingPage):
             (
                 FAMILY.sub.social_services,
                 {
-                    "endpoint": "contact.contact_us_fast_tracked",
+                    "endpoint": "contact_backup.contact_us_fast_tracked",
                     "reason": "more-info-required",
                 },
             ),
@@ -34,7 +34,7 @@ class FamilyLandingPage(CategoryLandingPage):
             (
                 FAMILY.sub.child_abducted,
                 {
-                    "endpoint": "contact.contact_us_fast_tracked",
+                    "endpoint": "contact_backup.contact_us_fast_tracked",
                     "reason": "more-info-required",
                 },
             ),

@@ -179,7 +179,7 @@ class TestCheckYourAnswersSubmission:
             client.post("/review")
 
             mock_is_eligible.assert_called_once()
-            mock_url_for.assert_called_once_with("contact.eligible")
+            mock_url_for.assert_called_once_with("contact_backup.eligible")
             mock_redirect.assert_called_once_with("/mocked/contact.eligible")
 
     def test_post_ineligible_with_hlpas(self, app, client, mock_url_for):

@@ -106,7 +106,7 @@ class ContactUs(View):
             session["callback_time"] = callback_time
             session["contact_type"] = contact_type
             session["category"] = category
-            return redirect(url_for("contact.confirmation"))
+            return redirect(url_for("contact_backup.confirmation"))
         return render_template(self.template, form=form, form_progress=form_progress)
 
     @staticmethod

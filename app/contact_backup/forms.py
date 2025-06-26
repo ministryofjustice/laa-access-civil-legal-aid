@@ -45,7 +45,7 @@ from babel.dates import format_date
 class ReasonsForContactingForm(FlaskForm):
     MODEL_REF_SESSION_KEY = "reason_for_contact"
     next_step_mapping = {
-        "*": "contact.contact_us",
+        "*": "contact_backup.contact_us",
     }
 
     title = _("Why do you want to contact Civil Legal Advice?")

@@ -156,7 +156,7 @@
 
 {% block beforeContent %}
     {% set contact_link %}
-      <a class="govuk-link" href="{{ url_for('contact_us.booking') }}">
+      <a class="govuk-link" href="{{ url_for('contact_backup.contact_us') }}">
         {{ _('Contact us') }}
       </a>
     {% endset %}
@@ -215,7 +215,7 @@
           'text': _("Cookies")
         },
         {
-          'href': url_for('contact_us.booking'),
+          'href': url_for('contact_backup.contact_us'),
           'text': _("Contact")
         },
         {

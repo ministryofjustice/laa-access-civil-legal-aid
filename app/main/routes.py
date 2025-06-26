@@ -60,7 +60,7 @@ def start_bsl():
     """
     session.clear()
 
-    response = redirect(url_for("contact.contact_us"))
+    response = redirect(url_for("contact_backup.contact_us"))
     locale = request.args.get("locale")
     if locale:
         response = set_locale_cookie(response, locale)
