@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch, MagicMock
-from app.contact.notify.api import NotifyEmailOrchestrator, notify
+from app.contact_backup.notify.api import NotifyEmailOrchestrator, notify
 from datetime import datetime
 
 
@@ -260,12 +260,12 @@ def test_generate_confirmation_email_data(input_data, expected_template_id, expe
         locale: The locale to mock (en or cy)
     """
     with (
-        patch("app.contact.notify.api.get_locale") as mock_get_locale,
+        patch("app.contact_backup.notify.api.get_locale") as mock_get_locale,
         patch(
-            "app.contact.notify.api.format_callback_time",
+            "app.contact_backup.notify.api.format_callback_time",
             return_value="formatted-time",
         ),
-        patch("app.contact.notify.api.GOVUK_NOTIFY_TEMPLATES", MOCK_GOVUK_NOTIFY_TEMPLATES),
+        patch("app.contact_backup.notify.api.GOVUK_NOTIFY_TEMPLATES", MOCK_GOVUK_NOTIFY_TEMPLATES),
     ):
         mock_get_locale.return_value = locale
 

@@ -42,7 +42,7 @@ class DomesticAbuseLandingPage(CategoryLandingPage):
             (
                 HOUSING.sub.problems_with_neighbours,
                 {
-                    "endpoint": "contact.contact_us_fast_tracked",
+                    "endpoint": "contact_backup.contact_us_fast_tracked",
                     "reason": "more-info-required",
                 },
             ),

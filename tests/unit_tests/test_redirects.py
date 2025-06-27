@@ -6,7 +6,7 @@ from flask import url_for
     "path, expected_endpoint",
     [
         ("/scope/diagnosis", "categories.index"),
-        ("/contact", "contact.contact_us"),
+        ("/contact", "contact_backup.contact_us"),
         (
             "/scope/refer/discrimination",
             "categories.discrimination.cannot_find_your_problem",

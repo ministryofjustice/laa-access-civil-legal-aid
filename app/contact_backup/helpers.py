@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from app.contact import bp
+from app.contact_backup import bp
 
 
 @bp.app_template_filter("format_callback_time")

@@ -3,7 +3,7 @@
 {%- from 'govuk_frontend_jinja/components/inset-text/macro.html' import govukInsetText %}
 {%- from 'means_test/components/progress-bar.html' import progress as means_test_progress %}
 
-{% block pageTitle %}{%- if form.errors %}Error: {% endif -%}{{ form.page_title }} - GOV.UK{% endblock %}
+{% block pageTitle %}{%- if form.errors %}Error: {% endif -%}{{ form.title }} - GOV.UK{% endblock %}
 
 {% block beforeContent%}
 {{ super() }}
@@ -19,7 +19,7 @@
     <div class="govuk-grid-column-two-thirds">
 
         {% block formHeading %}
-            <h1 class="govuk-heading-xl">{{ form.page_title }}</h1>
+            <h1 class="govuk-heading-xl">{{ form.title }}</h1>
         {% endblock %}
 
         {% block formDescription %}
@@ -29,8 +29,7 @@
 
             {% block form %}
                 {{ form.csrf_token }}
-                {{ form.question() }}
-                {{ form.partner_question() }}
+                <p> Override this template</p>
                 {{ form.submit }}
             {% endblock %}
         </form>
@@ -42,11 +41,6 @@
                 {% set contact_url = url_for('contact_backup.reasons_for_contacting') %}
                 <p class="govuk-body">{% trans contact_url=contact_url %}If you're having trouble completing this form, <a href="{{ contact_url }}" class="govuk-link">get in touch</a>.{% endtrans %}</p>
             {% endblock %}
-    </div>
-    <div class="govuk-grid-column-one-third">
-        <aside class="sidebar">
-            {{ means_test_progress(form_progress["steps"], form_progress["current_step"], form_progress["completion_percentage"]) }}
-        </aside>
     </div>
 </div>
 {% endblock %}
