@@ -4,11 +4,13 @@ from flask.views import View, MethodView
 from flask import render_template, url_for, redirect, session, request
 from flask_babel import lazy_gettext as _, gettext
 from werkzeug.datastructures import MultiDict
+
+from app.libs.eligibility_calculator.calculator import EligibilityChecker
+from app.libs.eligibility_calculator.models import CaseData
 from app.means_test.api import (
     is_eligible,
 )
 from app.categories.constants import Category
-from app.means_test.api import update_means_test
 from app.means_test.constants import EligibilityState
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
@@ -19,8 +21,7 @@ from app.means_test.forms.outgoings import OutgoingsForm
 from app.means_test.forms.review import ReviewForm, BaseMeansTestForm
 from app.categories.models import CategoryAnswer, QuestionType
 from app.categories.mixins import InScopeMixin
-from app.means_test.payload import MeansTestPayload
-
+from app.means_test.payload import CFEMeansTestPayload
 
 logger = logging.getLogger(__name__)
 
@@ -170,17 +171,20 @@ class MeansTest(FormsMixin, InScopeMixin, View):
         if form.validate_on_submit():
             session.get_eligibility().add(self.current_name, form.data)
             next_page = url_for(f"means_test.{self.get_next_page(self.current_name)}")
-            payload = MeansTestPayload()
+            payload = CFEMeansTestPayload()
             payload.update_from_session()
-            response = update_means_test(payload)
-            if "reference" not in response:
-                raise ValueError("Eligibility reference not found in response")
+            import json
 
-            eligibility_result = is_eligible(response["reference"])
+            print(json.dumps(payload, indent=2))
+
+            case_data = CaseData(**payload)
+            ec = EligibilityChecker(case_data)
+            eligibility_state, _, _, _ = ec.is_eligible_with_reasons()
+            session["is_eligible"] = eligibility_state
             # Once we are sure of the user's eligibility we should not ask the user subsequent questions
             # and instead ask them to confirm their answers before proceeding.
             # We skip this check on the about-you page to match existing behaviour from CLA Public.
-            if eligibility_result != EligibilityState.UNKNOWN and self.current_name not in ["about-you", "benefits"]:
+            if eligibility_state != EligibilityState.UNKNOWN and self.current_name not in ["about-you", "benefits"]:
                 return redirect(url_for("means_test.review"))
 
             return redirect(next_page)
@@ -215,8 +219,10 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
         super().__init__(*args, **kwargs)
 
     def ensure_all_forms_are_complete(self):
+        return None
         progress = self.get_form_progress(current_form=self.form)
         for form in progress["steps"]:
+            print(progress["steps"])
             if not form["is_completed"]:
                 logger.error(
                     "FAILED ensuring all forms are completed before the review page",
@@ -226,7 +232,7 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
 
     def dispatch_request(self):
         # TODO: Store eligiblity in the session to prevent frequently requesting this.
-        if session.ec_reference and is_eligible(session.ec_reference) in [
+        if is_eligible() in [
             EligibilityState.YES,
             EligibilityState.NO,
         ]:
@@ -393,7 +399,7 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
 
     @staticmethod
     def post():
-        eligibility = is_eligible(session.ec_reference)
+        eligibility = is_eligible()
 
         # Failsafe, if we are unsure of the eligibility state at this point send the user to the call centre
         if eligibility == EligibilityState.YES or eligibility == EligibilityState.UNKNOWN:

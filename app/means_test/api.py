@@ -22,12 +22,5 @@ def update_means_test(payload):
         return response
 
 
-def is_eligible(reference) -> EligibilityState:
-    if not reference:
-        raise ValueError("Eligibility reference cannot be empty")
-
-    means_test_endpoint = "checker/api/v1/eligibility_check/"
-    response = cla_backend.post(f"{means_test_endpoint}{reference}/is_eligible/", {})
-    state = response["is_eligible"]
-    logger.info(f"Eligibility check {reference}, has eligibility state: {state}.")
-    return getattr(EligibilityState, state.upper(), EligibilityState.UNKNOWN)
+def is_eligible() -> EligibilityState:
+    return session["is_eligible"]

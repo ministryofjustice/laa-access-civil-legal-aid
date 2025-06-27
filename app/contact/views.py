@@ -141,7 +141,7 @@ class FastTrackedContactUs(InScopeMixin, ContactUs):
 
 class EligibleContactUsPage(ContactUs):
     def get_financial_eligibility_status(self):
-        eligibility_result = is_eligible(session.ec_reference)
+        eligibility_result = is_eligible()
         if eligibility_result.YES:
             return (
                 FinancialAssessmentStatus.PASSED,
@@ -154,6 +154,7 @@ class EligibleContactUsPage(ContactUs):
             )
 
     def dispatch_request(self):
+        return super().dispatch_request()
         if not session.ec_reference:
             return redirect(url_for("main.session_expired"))
 

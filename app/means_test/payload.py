@@ -483,3 +483,36 @@ class MeansTestPayload(dict):
     def update_from_session(self):
         for form_name, form_data in session.get_eligibility().forms.items():
             self.update_from_form(form_name, form_data)
+
+
+class CFEMeansTestPayload(MeansTestPayload):
+    def __init__(self, *args, **kwargs):
+        pass
+
+    def update_from_session(self):
+        super().update_from_session()
+        print(self)
+        self["facts"] = {
+            "dependants_young": self["dependants_young"],
+            "dependants_old": self["dependants_old"],
+            "is_you_or_your_partner_over_60": self["is_you_or_your_partner_over_60"],
+            "has_partner": self["has_partner"],
+        }
+        del self["dependants_young"]
+        del self["dependants_old"]
+        del self["is_you_or_your_partner_over_60"]
+        del self["has_partner"]
+
+        if "on_passported_benefits" in self:
+            self["facts"]["on_passported_benefits"] = self["on_passported_benefits"]
+            del self["on_passported_benefits"]
+
+        if "property_set" in self:
+            self["property_data"] = self["property_set"]
+            del self["property_set"]
+
+        if "notes" in self:
+            del self["notes"]
+
+        if "specific_benefits" in self:
+            del self["specific_benefits"]
