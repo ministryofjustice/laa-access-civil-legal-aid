@@ -1,5 +1,5 @@
 import pytest
-from app.means_test.api import EligibilityState
+from app.means_test import EligibilityState
 
 
 class TestEligibilityState:
