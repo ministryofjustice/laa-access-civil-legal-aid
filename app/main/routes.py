@@ -88,17 +88,18 @@ def set_locale(locale):
     if locale not in current_app.config["LANGUAGES"]:
         abort(404)
 
-    if request.referrer:
-        parsed = urlparse(request.referrer)
+    redirect_url = url_for("main.start_page")  # Default URL
+
+    referrer = request.referrer
+    if referrer:
+        parsed = urlparse(referrer)
         if (
             parsed.scheme in ("http", "https")
             and parsed.netloc == request.host
             and parsed.path.startswith("/")
             and not parsed.path.startswith("//")  # Prevents protocol-relative URLs being used in redirects
         ):
-            redirect_url = parsed.path
-        else:
-            redirect_url = url_for("main.start_page")
+            redirect_url = "/" + parsed.path.lstrip("/")
 
     response = redirect(redirect_url)
     response = set_locale_cookie(response, locale)
