@@ -131,5 +131,5 @@ class TestGetFormProgress:
             for step in result["steps"]:
                 expected_route = f"means_test.{step['key']}"
                 if step["key"] == "contact-us":
-                    expected_route = "contact.contact_us"
+                    expected_route = "contact_backup.contact_us"
                 assert step["url"] == url_for(expected_route)

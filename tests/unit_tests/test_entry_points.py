@@ -52,7 +52,7 @@ class TestBSLStartRoute:
     def test_bsl_start_redirects_to_contact_us(self, client):
         response = client.get("/start-bsl")
         assert response.status_code == 302
-        assert response.location == url_for("contact.contact_us")
+        assert response.location == url_for("contact_backup.contact_us")
 
     def test_bsl_start_sets_locale_cookie_when_provided(self, client):
         response = client.get("/start-bsl?locale=cy_GB")

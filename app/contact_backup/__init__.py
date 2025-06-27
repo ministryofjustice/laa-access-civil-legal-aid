@@ -1,7 +1,7 @@
 from flask import Blueprint
 
 bp = Blueprint(
-    "contact",
+    "contact_backup",
     __name__,
     template_folder="./templates",
 )

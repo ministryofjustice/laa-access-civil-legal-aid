@@ -4,7 +4,7 @@ from app.main import bp
 REDIRECT_MAP = {
     "/scope/diagnosis": "categories.index",
     "/accessibility-statement": "main.accessibility",
-    "/contact": "contact.contact_us",
+    "/contact": "contact_backup.contact_us",
     "/scope/refer/domestic-abuse": "categories.domestic_abuse.cannot_find_your_problem",
     "/scope/refer/discrimination": "categories.discrimination.cannot_find_your_problem",
     "/scope/refer/education": "categories.send.cannot_find_your_problem",

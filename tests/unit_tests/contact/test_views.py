@@ -92,7 +92,7 @@ class TestContactUsView:
 
         mock_cla_backend.post_case.assert_called_once()
         mock_notify.create_and_send_confirmation_email.assert_called_once()
-        mock_redirect.assert_called_once_with(url_for("contact.confirmation"))
+        mock_redirect.assert_called_once_with(url_for("contact_backup.confirmation"))
 
     @patch("app.contact_backup.views.ContactUsForm")
     @patch("app.contact_backup.views.render_template")
@@ -136,7 +136,7 @@ class TestContactUsView:
             ),
             patch.object(ContactUs, "_attach_rfc_to_case") as mock_attach_rfc_to_case,
         ):
-            client.post("/contact-us", data=form_data)
+            client.post("/backup-contact-us", data=form_data)
 
             mock_attach_rfc_to_case.assert_called_once_with("AB-1234-5678", "1234")
 
@@ -179,7 +179,7 @@ class TestFastTrackedContactUsView:
             assert mock_dispatch_request.called is True
 
     def test_get_financial_eligibility_status(self, app):
-        with app.test_request_context(url_for("contact.contact_us_fast_tracked", reason="harm")):
+        with app.test_request_context(url_for("contact_backup.contact_us_fast_tracked", reason="harm")):
             view = FastTrackedContactUs()
             financial_status, financial_reason = view.get_financial_eligibility_status()
             assert financial_status == FinancialAssessmentStatus.FAST_TRACK
@@ -220,6 +220,6 @@ def test_existing_case_ref_leads_to_session_expired(app, client):
     with client.session_transaction() as session:
         session["case_reference"] = "AB-1234-5678"
 
-    response = client.get("/contact-us")
+    response = client.get("/backup-contact-us")
     assert response.status_code == 302
     assert response.location == url_for("main.session_expired")

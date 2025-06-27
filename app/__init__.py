@@ -139,12 +139,14 @@ def create_app(config_class=Config):
     from app.categories import bp as categories_bp
     from app.find_a_legal_adviser import bp as fala_bp
     from app.means_test import bp as means_test_bp
-    from app.contact_backup import bp as contact_bp
+    from app.contact_backup import bp as backup_contact_bp
+    from app.contact import bp as contacts_bp
 
     app.register_blueprint(main_bp)
     app.register_blueprint(categories_bp)
     app.register_blueprint(fala_bp)
     app.register_blueprint(means_test_bp)
-    app.register_blueprint(contact_bp)
+    app.register_blueprint(backup_contact_bp)
+    app.register_blueprint(contacts_bp)
 
     return app

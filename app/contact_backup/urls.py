@@ -35,7 +35,7 @@ def geocode(postcode):
 
 
 bp.add_url_rule(
-    "/contact-us",
+    "/backup-contact-us",
     view_func=ContactUs.as_view("contact_us", attach_eligibility_data=False),
 )
 bp.add_url_rule(

@@ -60,7 +60,7 @@ def test_all_page_accessibility(app, page: Page):
         "/",
         "main.status",
         "main.set_locale",
-        "contact.geocode",
+        "contact_backup.geocode",
         "main.handle_redirects",
         "main.handle_scope_diagnosis_redirect",
     ]
