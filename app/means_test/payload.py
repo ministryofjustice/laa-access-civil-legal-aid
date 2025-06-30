@@ -528,4 +528,12 @@ class CFEMeansTestPayload(MeansTestPayload):
 
         self["category"] = session.category.chs_code
 
+        for prop, value in self["you"]["deductions"].items():
+            if isinstance(value, MoneyInterval):
+                self["you"]["deductions"][prop] = value.per_month().amount
+
+        for prop, value in self["you"]["income"].items():
+            if isinstance(value, MoneyInterval):
+                self["you"]["income"][prop] = value.per_month().amount
+
         print(self)
