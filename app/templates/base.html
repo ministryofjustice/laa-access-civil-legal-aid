@@ -12,8 +12,6 @@
 {%- from "govuk_frontend_jinja/components/service-navigation/macro.html" import govukServiceNavigation -%}
 {%- from 'main/_modal-dialog.html' import timeout_dialog %}
 
-{% set assetPath = url_for('static', filename='').rstrip('/') %}
-
 {% block pageTitle %}{{config['SERVICE_NAME']}} – GOV.UK{% endblock %}
 
 {% block skipLink %}
