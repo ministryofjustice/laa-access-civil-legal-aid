@@ -1,8 +1,8 @@
 # coding=utf-8
 import unittest
 
-import mock
-import test_vcr
+from unittest import mock
+from . import test_vcr
 
 from . import fixtures
 from ..calculator import EligibilityChecker
