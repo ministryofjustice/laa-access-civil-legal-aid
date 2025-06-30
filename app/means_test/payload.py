@@ -484,6 +484,7 @@ class CFEMeansTestPayload(MeansTestPayload):
             "is_you_or_your_partner_over_60",
             "has_partner",
             "on_passported_benefits",
+            "on_nass_benefits",
         ]
 
         for fact in facts:
@@ -497,8 +498,12 @@ class CFEMeansTestPayload(MeansTestPayload):
         elif not session.get_eligibility().owns_property:
             #  If the user doesn't own property this should be set to an empty list so the capital section can be marked as complete.
             self["property_data"] = []
-            if self["you"]["deductions"]:
+            if "deductions" in self["you"]:
                 self["you"]["deductions"]["mortgage"] = 0
+        else:
+            self["property_data"] = [
+                {"disputed": None, "main": None, "share": None, "value": None, "mortgage_left": None}
+            ]
 
         if not session.get_eligibility().has_savings:
             self["you"]["savings"] = {"bank_balance": 0, "investment_balance": 0, "asset_balance": 0}
@@ -518,9 +523,10 @@ class CFEMeansTestPayload(MeansTestPayload):
 
         self["category"] = session.category.chs_code
 
-        for prop, value in self["you"]["deductions"].items():
-            if isinstance(value, MoneyInterval):
-                self["you"]["deductions"][prop] = value.per_month().amount
+        if "deductions" in self["you"]:
+            for prop, value in self["you"]["deductions"].items():
+                if isinstance(value, MoneyInterval):
+                    self["you"]["deductions"][prop] = value.per_month().amount
 
         for prop, value in self["you"]["income"].items():
             if isinstance(value, MoneyInterval):
