@@ -8,7 +8,7 @@ import logging
 from flask import session, render_template, request, redirect, url_for, jsonify
 from app.api import cla_backend
 from app.contact.notify.api import notify
-from app.means_test.api import EligibilityState
+from app.means_test import EligibilityState
 from app.means_test.views import MeansTest
 from datetime import datetime
 from app.categories.constants import (
@@ -107,6 +107,7 @@ class ContactUs(View):
             session["contact_type"] = contact_type
             session["category"] = category
             return redirect(url_for("contact.confirmation"))
+        print(form_progress)
         return render_template(self.template, form=form, form_progress=form_progress)
 
     @staticmethod
@@ -154,7 +155,6 @@ class EligibleContactUsPage(ContactUs):
             )
 
     def dispatch_request(self):
-        return super().dispatch_request()
         if not session.ec_reference:
             return redirect(url_for("main.session_expired"))
 

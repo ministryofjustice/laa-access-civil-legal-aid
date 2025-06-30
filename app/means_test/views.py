@@ -4,10 +4,8 @@ from flask.views import View, MethodView
 from flask import render_template, url_for, redirect, session, request
 from flask_babel import lazy_gettext as _, gettext
 from werkzeug.datastructures import MultiDict
-
-from app.libs.eligibility_calculator.calculator import EligibilityChecker
-from app.libs.eligibility_calculator.models import CaseData
 from app.categories.constants import Category
+from app.means_test.api import check_eligibility
 from app.means_test.constants import EligibilityState
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
@@ -18,7 +16,6 @@ from app.means_test.forms.outgoings import OutgoingsForm
 from app.means_test.forms.review import ReviewForm, BaseMeansTestForm
 from app.categories.models import CategoryAnswer, QuestionType
 from app.categories.mixins import InScopeMixin
-from app.means_test.payload import CFEMeansTestPayload
 
 logger = logging.getLogger(__name__)
 
@@ -168,15 +165,7 @@ class MeansTest(FormsMixin, InScopeMixin, View):
         if form.validate_on_submit():
             session.get_eligibility().add(self.current_name, form.data)
             next_page = url_for(f"means_test.{self.get_next_page(self.current_name)}")
-            payload = CFEMeansTestPayload()
-            payload.update_from_session()
-            import json
-
-            print(json.dumps(payload, indent=2))
-
-            case_data = CaseData(**payload)
-            ec = EligibilityChecker(case_data)
-            eligibility_result, _, _, _ = ec.is_eligible_with_reasons()
+            eligibility_result = check_eligibility()
             session["eligibility_result"] = eligibility_result
             # Once we are sure of the user's eligibility we should not ask the user subsequent questions
             # and instead ask them to confirm their answers before proceeding.

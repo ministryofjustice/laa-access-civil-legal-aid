@@ -78,7 +78,6 @@ class EligibilityChecker(object):
         cfe_request_dict = self._translate_case(self.case_data)
 
         user_agent = "cla_backend/1 (%s)" % "development"
-        print(json.dumps(cfe_request_dict, indent=2))
         cfe_raw_response = requests.post(
             "https://cfe-civil-staging.cloud-platform.service.justice.gov.uk/v6/assessments",
             json=cfe_request_dict,

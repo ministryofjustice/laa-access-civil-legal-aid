@@ -531,5 +531,3 @@ class CFEMeansTestPayload(MeansTestPayload):
         for prop, value in self["you"]["income"].items():
             if isinstance(value, MoneyInterval):
                 self["you"]["income"][prop] = value.per_month().amount
-
-        print(self)

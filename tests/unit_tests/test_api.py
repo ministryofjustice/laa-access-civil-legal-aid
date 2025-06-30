@@ -3,7 +3,6 @@ from unittest.mock import Mock, patch, MagicMock
 from flask_babel import LazyString
 from app.api import BackendAPIClient
 from datetime import datetime
-from app.means_test.api import is_eligible, EligibilityState
 
 
 class TestHostname:
@@ -153,24 +152,3 @@ class TestCallbackSlots:
         result = self.client.get_time_slots()
 
         assert result == expected, f"Expected {expected}, but got {result}"
-
-
-def test_is_eligible_yes(app):
-    with app.app_context():
-        with patch("app.means_test.api.cla_backend") as mock_client:
-            mock_client.post = MagicMock(return_value={"is_eligible": "yes"})
-            assert is_eligible("ABC-123-456") == EligibilityState.YES
-
-
-def test_is_eligible_no(app):
-    with app.app_context():
-        with patch("app.means_test.api.cla_backend") as mock_client:
-            mock_client.post = MagicMock(return_value={"is_eligible": "no"})
-            assert is_eligible("ABC-123-456") == EligibilityState.NO
-
-
-def test_is_eligible_unknown(app):
-    with app.app_context():
-        with patch("app.means_test.api.cla_backend") as mock_client:
-            mock_client.post = MagicMock(return_value={"is_eligible": "unknown"})
-            assert is_eligible("ABC-123-456") == EligibilityState.UNKNOWN
