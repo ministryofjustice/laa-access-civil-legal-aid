@@ -475,9 +475,16 @@ class CFEMeansTestPayload(MeansTestPayload):
 
     def update_from_session(self):
         super().update_from_session()
+        self._process_facts()
+        self._handle_property_data()
+        self._process_savings()
+        self._process_benefits()
+        self._cleanup_payload()
+        self._set_category()
+        self._convert_money_intervals()
 
+    def _process_facts(self):
         self["facts"] = {}
-
         facts = [
             "dependants_young",
             "dependants_old",
@@ -486,17 +493,16 @@ class CFEMeansTestPayload(MeansTestPayload):
             "on_passported_benefits",
             "on_nass_benefits",
         ]
-
         for fact in facts:
             if fact in self:
                 self["facts"][fact] = self[fact]
                 del self[fact]
 
+    def _handle_property_data(self):
         if "property_set" in self:
             self["property_data"] = self["property_set"]
             del self["property_set"]
         elif not session.get_eligibility().owns_property:
-            #  If the user doesn't own property this should be set to an empty list so the capital section can be marked as complete.
             self["property_data"] = []
             if "deductions" in self["you"]:
                 self["you"]["deductions"]["mortgage"] = 0
@@ -505,29 +511,31 @@ class CFEMeansTestPayload(MeansTestPayload):
                 {"disputed": None, "main": None, "share": None, "value": None, "mortgage_left": None}
             ]
 
+    def _process_savings(self):
         if not session.get_eligibility().has_savings:
             self["you"]["savings"] = {"bank_balance": 0, "investment_balance": 0, "asset_balance": 0}
-
-        # Hacky workaround to see if this works
         if "savings" in self["you"]:
             self["you"]["savings"]["credit_balance"] = 0
 
-        if "benefits" not in self["you"]["income"]:
-            self["you"]["income"]["benefits"] = 0
+    def _process_benefits(self):
+        if not session.get_eligibility().on_benefits:
+            if "income" in self["you"]:
+                self["you"]["income"]["benefits"] = 0
 
+    def _cleanup_payload(self):
         if "notes" in self:
             del self["notes"]
-
         if "specific_benefits" in self:
             del self["specific_benefits"]
 
+    def _set_category(self):
         self["category"] = session.category.chs_code
 
+    def _convert_money_intervals(self):
         if "deductions" in self["you"]:
             for prop, value in self["you"]["deductions"].items():
                 if isinstance(value, MoneyInterval):
                     self["you"]["deductions"][prop] = value.per_month().amount
-
         for prop, value in self["you"]["income"].items():
             if isinstance(value, MoneyInterval):
                 self["you"]["income"][prop] = value.per_month().amount
