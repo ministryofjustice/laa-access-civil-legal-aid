@@ -54,22 +54,6 @@ class AboutYouPayload(dict):
         if yes("has_partner") and not yes("in_dispute") and yes("partner_is_self_employed"):
             payload["partner"] = {"income": {"self_employed": yes("partner_is_self_employed")}}
 
-        if yes("own_property"):
-            payload = recursive_update(payload, PropertiesPayload())
-        else:
-            payload = recursive_update(payload, PropertiesPayload.default())
-
-        if yes("has_savings") or yes("has_valuables"):
-            payload = recursive_update(payload, SavingsPayload())
-        else:
-            payload = recursive_update(payload, SavingsPayload.default())
-
-        if not yes("on_benefits"):
-            payload = recursive_update(payload, YourBenefitsPayload.default())
-
-        payload = recursive_update(payload, IncomePayload())
-        payload = recursive_update(payload, OutgoingsPayload())
-
         self.update(payload)
 
 
@@ -510,12 +494,18 @@ class CFEMeansTestPayload(MeansTestPayload):
         if "property_set" in self:
             self["property_data"] = self["property_set"]
             del self["property_set"]
-        # elif not session.get_eligibility().owns_property:
-        # If the user doesn't own property this should be set to an empty list so the capital section can be marked as complete.
-        # self["property_data"] = []
+        elif not session.get_eligibility().owns_property:
+            #  If the user doesn't own property this should be set to an empty list so the capital section can be marked as complete.
+            self["property_data"] = []
+            if self["you"]["deductions"]:
+                self["you"]["deductions"]["mortgage"] = 0
+
+        if not session.get_eligibility().has_savings:
+            self["you"]["savings"] = {"bank_balance": 0, "investment_balance": 0, "asset_balance": 0}
 
         # Hacky workaround to see if this works
-        self["you"]["savings"]["credit_balance"] = 0
+        if "savings" in self["you"]:
+            self["you"]["savings"]["credit_balance"] = 0
 
         if "benefits" not in self["you"]["income"]:
             self["you"]["income"]["benefits"] = 0
