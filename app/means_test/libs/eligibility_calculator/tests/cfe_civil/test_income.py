@@ -23,6 +23,24 @@ class TestTranslateIncome(TestCase):
                     "category": "benefits",
                     "operation": "credit",
                     "frequency": "monthly",
+                    "amount": 1.0,
+                },
+                {
+                    "category": "maintenance_in",
+                    "operation": "credit",
+                    "frequency": "monthly",
+                    "amount": 100,
+                },
+                {
+                    "category": "pension",
+                    "operation": "credit",
+                    "frequency": "monthly",
+                    "amount": 4.0,
+                },
+                {
+                    "category": "benefits",
+                    "operation": "credit",
+                    "frequency": "monthly",
                     "amount": 800,
                 },
                 {
