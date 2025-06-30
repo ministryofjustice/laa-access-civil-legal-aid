@@ -491,28 +491,41 @@ class CFEMeansTestPayload(MeansTestPayload):
 
     def update_from_session(self):
         super().update_from_session()
-        print(self)
-        self["facts"] = {
-            "dependants_young": self["dependants_young"],
-            "dependants_old": self["dependants_old"],
-            "is_you_or_your_partner_over_60": self["is_you_or_your_partner_over_60"],
-            "has_partner": self["has_partner"],
-        }
-        del self["dependants_young"]
-        del self["dependants_old"]
-        del self["is_you_or_your_partner_over_60"]
-        del self["has_partner"]
 
-        if "on_passported_benefits" in self:
-            self["facts"]["on_passported_benefits"] = self["on_passported_benefits"]
-            del self["on_passported_benefits"]
+        self["facts"] = {}
+
+        facts = [
+            "dependants_young",
+            "dependants_old",
+            "is_you_or_your_partner_over_60",
+            "has_partner",
+            "on_passported_benefits",
+        ]
+
+        for fact in facts:
+            if fact in self:
+                self["facts"][fact] = self[fact]
+                del self[fact]
 
         if "property_set" in self:
             self["property_data"] = self["property_set"]
             del self["property_set"]
+        # elif not session.get_eligibility().owns_property:
+        # If the user doesn't own property this should be set to an empty list so the capital section can be marked as complete.
+        # self["property_data"] = []
+
+        # Hacky workaround to see if this works
+        self["you"]["savings"]["credit_balance"] = 0
+
+        if "benefits" not in self["you"]["income"]:
+            self["you"]["income"]["benefits"] = 0
 
         if "notes" in self:
             del self["notes"]
 
         if "specific_benefits" in self:
             del self["specific_benefits"]
+
+        self["category"] = session.category.chs_code
+
+        print(self)
