@@ -7,9 +7,6 @@ from werkzeug.datastructures import MultiDict
 
 from app.libs.eligibility_calculator.calculator import EligibilityChecker
 from app.libs.eligibility_calculator.models import CaseData
-from app.means_test.api import (
-    is_eligible,
-)
 from app.categories.constants import Category
 from app.means_test.constants import EligibilityState
 from app.means_test.forms.about_you import AboutYouForm
@@ -179,12 +176,12 @@ class MeansTest(FormsMixin, InScopeMixin, View):
 
             case_data = CaseData(**payload)
             ec = EligibilityChecker(case_data)
-            eligibility_state, _, _, _ = ec.is_eligible_with_reasons()
-            session["is_eligible"] = eligibility_state
+            eligibility_result, _, _, _ = ec.is_eligible_with_reasons()
+            session["eligibility_result"] = eligibility_result
             # Once we are sure of the user's eligibility we should not ask the user subsequent questions
             # and instead ask them to confirm their answers before proceeding.
             # We skip this check on the about-you page to match existing behaviour from CLA Public.
-            if eligibility_state != EligibilityState.UNKNOWN and self.current_name not in ["about-you", "benefits"]:
+            if eligibility_result != EligibilityState.UNKNOWN and self.current_name not in ["about-you", "benefits"]:
                 return redirect(url_for("means_test.review"))
 
             return redirect(next_page)
@@ -219,7 +216,6 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
         super().__init__(*args, **kwargs)
 
     def ensure_all_forms_are_complete(self):
-        return None
         progress = self.get_form_progress(current_form=self.form)
         for form in progress["steps"]:
             print(progress["steps"])
@@ -231,8 +227,7 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
                 return redirect(url_for("main.session_expired"))
 
     def dispatch_request(self):
-        # TODO: Store eligiblity in the session to prevent frequently requesting this.
-        if is_eligible() in [
+        if session.get("eligibility_result", None) in [
             EligibilityState.YES,
             EligibilityState.NO,
         ]:
@@ -399,7 +394,7 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
 
     @staticmethod
     def post():
-        eligibility = is_eligible()
+        eligibility = session.get("eligibility_result")
 
         # Failsafe, if we are unsure of the eligibility state at this point send the user to the call centre
         if eligibility == EligibilityState.YES or eligibility == EligibilityState.UNKNOWN:

@@ -1,6 +1,5 @@
 from app.api import cla_backend
 from flask import session
-from app.means_test.constants import EligibilityState
 from logging import getLogger
 
 logger = getLogger(__name__)
@@ -20,7 +19,3 @@ def update_means_test(payload):
         session.ec_reference = response["reference"]
         logger.info(f"Created new eligibility check with reference {response['reference']}.")
         return response
-
-
-def is_eligible() -> EligibilityState:
-    return session["is_eligible"]
