@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from cla_backend.libs.eligibility_calculator.cfe_civil.applicant import translate_applicant
-from cla_backend.libs.eligibility_calculator.models import Facts
+from app.means_test.libs.eligibility_calculator.cfe_civil.applicant import translate_applicant
+from app.means_test.libs.eligibility_calculator.models import Facts
 
 
 class TestOneBenefitKnown(TestCase):

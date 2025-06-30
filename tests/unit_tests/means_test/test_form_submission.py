@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch, Mock, PropertyMock
-from app.means_test.api import EligibilityState
+from app.means_test.constants import EligibilityState
 from app.means_test.views import MeansTest, InScopeMixin, CheckYourAnswers
 
 

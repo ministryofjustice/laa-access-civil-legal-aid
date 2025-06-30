@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from cla_backend.libs.eligibility_calculator.cfe_civil.proceeding_types import translate_proceeding_types
-from cla_backend.libs.eligibility_calculator.models import CaseData
+from app.means_test.libs.eligibility_calculator.cfe_civil.proceeding_types import translate_proceeding_types
+from app.means_test.libs.eligibility_calculator.models import CaseData
 
 
 class TestProceedingTypes(TestCase):

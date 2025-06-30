@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from cla_backend.libs.eligibility_calculator.cfe_civil.deductions import translate_deductions
-from cla_backend.libs.eligibility_calculator.models import Deductions
+from app.means_test.libs.eligibility_calculator.cfe_civil.deductions import translate_deductions
+from app.means_test.libs.eligibility_calculator.models import Deductions
 
 
 class TestTranslateDeductions(TestCase):

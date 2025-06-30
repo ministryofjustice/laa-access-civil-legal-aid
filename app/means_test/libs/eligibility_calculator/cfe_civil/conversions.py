@@ -1,11 +1,9 @@
 from decimal import Decimal
 
-from app.means_test.money_interval import MoneyInterval
 
-
-def pence_to_pounds(value: MoneyInterval | int):
-    if isinstance(value, MoneyInterval):
-        value = value.per_month().amount
+def pence_to_pounds(value: int):
+    if not isinstance(value, int):
+        raise ValueError(f"Cannot convert type: {type(value)} to pence.")
     decimal_value = (Decimal(value) / 100).quantize(Decimal(".01"))
     return float(decimal_value)
 

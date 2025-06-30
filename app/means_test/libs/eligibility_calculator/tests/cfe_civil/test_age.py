@@ -1,8 +1,8 @@
 import datetime
 from unittest import TestCase
 
-from cla_backend.libs.eligibility_calculator.cfe_civil.age import translate_age
-from cla_backend.libs.eligibility_calculator.models import Facts
+from app.means_test.libs.eligibility_calculator.cfe_civil.age import translate_age
+from app.means_test.libs.eligibility_calculator.models import Facts
 
 
 class TestTranslateAge(TestCase):

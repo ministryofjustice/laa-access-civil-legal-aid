@@ -15,7 +15,7 @@ exclude: # exclude matching issues
       - .github/workflows/build-docs.yml
       - .github/workflows/deploy-docs.yml
       - docs/makefile
-      - app/libs/eligibility_calculator/tests/cassettes/**
+      - app/means_test/libs/eligibility_calculator/tests/cassettes/**
   - message: Examples and data necessary for running auto-tests
     paths:
       - docs/*.html

@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from cla_backend.libs.eligibility_calculator.cfe_civil.employment import translate_employment
-from cla_backend.libs.eligibility_calculator.models import Income, Deductions
+from app.means_test.libs.eligibility_calculator.cfe_civil.employment import translate_employment
+from app.means_test.libs.eligibility_calculator.models import Income, Deductions
 
 
 class TestCfeIncome(TestCase):

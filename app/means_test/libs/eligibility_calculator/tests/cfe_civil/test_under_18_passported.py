@@ -1,6 +1,6 @@
 from unittest import TestCase
-from cla_backend.libs.eligibility_calculator.cfe_civil.under_18_passported import translate_under_18_passported
-from cla_backend.libs.eligibility_calculator.models import Facts
+from app.means_test.libs.eligibility_calculator.cfe_civil.under_18_passported import translate_under_18_passported
+from app.means_test.libs.eligibility_calculator.models import Facts
 
 
 class TestUnder18Passported(TestCase):

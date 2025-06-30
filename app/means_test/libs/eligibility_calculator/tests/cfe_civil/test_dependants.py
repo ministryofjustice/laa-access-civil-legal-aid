@@ -1,8 +1,8 @@
 import datetime
 from unittest import TestCase
 
-from cla_backend.libs.eligibility_calculator.cfe_civil.dependants import translate_dependants
-from cla_backend.libs.eligibility_calculator.models import Facts
+from app.means_test.libs.eligibility_calculator.cfe_civil.dependants import translate_dependants
+from app.means_test.libs.eligibility_calculator.models import Facts
 
 
 class TestTranslateDependants(TestCase):

@@ -1,4 +1,4 @@
-from app.libs.eligibility_calculator.cfe_civil.conversions import pence_to_pounds, none_filter
+from app.means_test.libs.eligibility_calculator.cfe_civil.conversions import pence_to_pounds, none_filter
 
 
 def _savings_value(value, description, subject_matter_of_dispute):

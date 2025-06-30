@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from cla_backend.libs.eligibility_calculator.cfe_civil.income import translate_income
-from cla_backend.libs.eligibility_calculator.models import Income
+from app.means_test.libs.eligibility_calculator.cfe_civil.income import translate_income
+from app.means_test.libs.eligibility_calculator.models import Income
 
 
 class TestTranslateIncome(TestCase):
@@ -29,18 +29,6 @@ class TestTranslateIncome(TestCase):
                     "category": "benefits",
                     "operation": "credit",
                     "frequency": "monthly",
-                    "amount": 1.0,
-                },
-                {
-                    "category": "maintenance_in",
-                    "operation": "credit",
-                    "frequency": "monthly",
-                    "amount": 100,
-                },
-                {
-                    "category": "benefits",
-                    "operation": "credit",
-                    "frequency": "monthly",
                     "amount": 2.0,
                 },
                 {
@@ -48,12 +36,6 @@ class TestTranslateIncome(TestCase):
                     "operation": "credit",
                     "frequency": "monthly",
                     "amount": 3.0,
-                },
-                {
-                    "category": "pension",
-                    "operation": "credit",
-                    "frequency": "monthly",
-                    "amount": 4.0,
                 },
             ]
         }

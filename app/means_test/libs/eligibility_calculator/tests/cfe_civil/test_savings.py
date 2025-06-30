@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from cla_backend.libs.eligibility_calculator.cfe_civil.savings import translate_savings
-from cla_backend.libs.eligibility_calculator.models import Savings
+from app.means_test.libs.eligibility_calculator.cfe_civil.savings import translate_savings
+from app.means_test.libs.eligibility_calculator.models import Savings
 
 
 class TestTranslateSavings(TestCase):

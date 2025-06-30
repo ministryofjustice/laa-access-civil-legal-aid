@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from cla_backend.libs.eligibility_calculator.cfe_civil.property import translate_property
+from app.means_test.libs.eligibility_calculator.cfe_civil.property import translate_property
 
 
 class TestTranslateProperty(TestCase):

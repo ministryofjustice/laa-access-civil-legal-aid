@@ -1,4 +1,4 @@
-from app.libs.eligibility_calculator.cfe_civil.conversions import pence_to_pounds
+from app.means_test.libs.eligibility_calculator.cfe_civil.conversions import pence_to_pounds
 
 
 def _convert_house(house_data):

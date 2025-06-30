@@ -5,7 +5,7 @@ from app.means_test.views import CheckYourAnswers, ReviewForm
 from app.session import Eligibility
 from app.categories.models import CategoryAnswer, QuestionType
 from app.categories.constants import DISCRIMINATION, HOUSING
-from app.means_test.api import EligibilityState
+from app.means_test import EligibilityState
 
 
 def mock_render_template(template_name, **kwargs):
