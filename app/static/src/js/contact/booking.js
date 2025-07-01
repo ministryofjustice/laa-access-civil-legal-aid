@@ -1,29 +1,29 @@
 async function handlePostcodeSearch() {
-    let postcode = document.getElementById("postcode").value.trim();
-    let addressInfo = document.getElementById("address-information-container");
-    let addressSelect = document.getElementById("address_finder");
+    const postcode = document.getElementById("postcode").value.trim();
+    const addressInfo = document.getElementById("address-information-container");
+    const addressSelect = document.getElementById("address_finder");
+    const postcodeSearchForm = document.getElementById("postcode-search")
 
     if (!postcode) {
+        postcodeSearchForm.querySelector(".govuk-error-message").classList.remove("govuk-visually-hidden")
         addressInfo.classList.add("govuk-!-display-none");
         return;
     }
 
     try {
-        let response = await fetch(`/addresses/${postcode}`);
-        let data = await response.json();
-        let addressCount = data.length;
-        const postcodeSearchForm = document.getElementById("postcode-search")
+        const response = await fetch(`/addresses/${postcode}`);
+        const data = await response.json();
+        const addressCount = data.length;
+
 
         if (addressCount === 0){
-            if (!postcodeSearchForm.classList.contains("govuk-form-group--error")) {
-                let error = document.createElement("p");
-                error.classList.add("govuk-error-message");
-                error.innerHTML = '<span class="govuk-visually-hidden">Error:</span>No addresses were found with that postcode, but you can still enter your address manually</p>'
-                postcodeSearchForm.classList.add('govuk-form-group--error')
-                postcodeSearchForm.insertBefore(error, document.getElementById("field-label-address-post_code"))
-                addressInfo.classList.add("govuk-!-display-none");
-            }
+            postcodeSearchForm.querySelector(".govuk-error-message").classList.remove("govuk-visually-hidden")
+            addressInfo.classList.add("govuk-!-display-none");
             return;
+        }
+        else {
+            postcodeSearchForm.querySelector(".govuk-error-message").classList.add("govuk-visually-hidden")
+            addressInfo.classList.remove("govuk-!-display-none");
         }
 
         if (postcodeSearchForm.classList.contains("govuk-form-group--error")) {
@@ -33,15 +33,15 @@ async function handlePostcodeSearch() {
         addressInfo.classList.remove("govuk-!-display-none");
         addressSelect.innerHTML = '';
 
-        let labelText = `${addressCount} address${addressCount !== 1 ? 'es' : ''} found`;
+        const labelText = `${addressCount} address${addressCount !== 1 ? 'es' : ''} found`;
 
-        let initialOption = document.createElement('option');
+        const initialOption = document.createElement('option');
         initialOption.value = '';
         initialOption.textContent = labelText;
         addressSelect.appendChild(initialOption);
 
         data.forEach(item => {
-            let option = document.createElement('option');
+            const option = document.createElement('option');
             option.value = item.formatted_address;
             option.textContent = item.formatted_address;
             addressSelect.appendChild(option);

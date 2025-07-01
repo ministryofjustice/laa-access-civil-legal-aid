@@ -1,10 +1,9 @@
 {% extends "contact/form-page.html" %}
 
 {% block formDescription %}
-<p class="govuk-body">The Civil Legal Advice helpline will check if you can get legal aid and help you contact the right legal aid adviser.
-    If you cannot get legal aid, we will tell you about other help you can get.</p>
+<p class="govuk-body">{% trans %}The Civil Legal Advice helpline will check if you can get legal aid and help you contact the right legal aid adviser. If you cannot get legal aid, we will tell you about other help you can get.{% endtrans %}</p>
 
-<p class="govuk-body">We’ll ask questions about your problem and your financial situation. You might need to provide evidence of your finances.</p>
+<p class="govuk-body">{% trans %}We’ll ask questions about your problem and your financial situation. You might need to provide evidence of your finances.{% endtrans %}</p>
 {% endblock %}
 
 {% block form %}
@@ -14,6 +13,7 @@
 
     <div class="govuk-form-group govuk-!-margin-bottom-0" id="postcode-search">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">{% trans %}Home address (optional){% endtrans %}</legend>
+        <p class="govuk-error-message govuk-visually-hidden">{% trans %}No addresses were found with that postcode, but you can still enter your address manually{% endtrans %}</p>
         <label class="govuk-label" for="postcode" id="field-label-address-postcode">
             {% trans %}Enter a UK postcode (optional){% endtrans %}
         </label>
