@@ -38,6 +38,7 @@ class BookingForm(BaseForm):
     street_address = TextAreaField(
         _("Enter your home address (optional)"),
         widget=GovTextArea(),
+        render_kw={"autocomplete": "street-address"},
         validators=[
             Length(max=255, message=_("Your address must be 255 characters or less")),
             Optional(),

@@ -37,9 +37,6 @@
                 {{ govukInsetText({
                   "text": _("Your session will time out after 30 minutes of inactivity. We do this for your security.")
                 }) }}
-                <hr class="govuk-section-break--l">
-                {% set contact_url = url_for('contact_backup.reasons_for_contacting') %}
-                <p class="govuk-body">{% trans contact_url=contact_url %}If you're having trouble completing this form, <a href="{{ contact_url }}" class="govuk-link">get in touch</a>.{% endtrans %}</p>
             {% endblock %}
     </div>
 </div>
