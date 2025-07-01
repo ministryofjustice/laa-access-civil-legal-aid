@@ -1,0 +1,47 @@
+{% extends "contact/form-page.html" %}
+
+{% block formDescription %}
+<p class="govuk-body">The Civil Legal Advice helpline will check if you can get legal aid and help you contact the right legal aid adviser.
+    If you cannot get legal aid, we will tell you about other help you can get.</p>
+
+<p class="govuk-body">We’ll ask questions about your problem and your financial situation. You might need to provide evidence of your finances.</p>
+{% endblock %}
+
+{% block form %}
+    {{ form.csrf_token }}
+    {{ form.full_name }}
+    {{ form.email }}
+
+    <div class="govuk-form-group govuk-!-margin-bottom-0" id="postcode-search">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">{% trans %}Home address (optional){% endtrans %}</legend>
+        <label class="govuk-label" for="postcode" id="field-label-address-postcode">
+            {% trans %}Enter a UK postcode (optional){% endtrans %}
+        </label>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-third">
+                {{ form.postcode(params={
+                    "label": {
+                        "classes": "govuk-label govuk-visually-hidden",
+                    },
+                    "classes": "govuk-input govuk-input--width-10 govuk-!-margin-bottom-0 postcode-search",
+                }) }}
+            </div>
+            <div class="govuk-grid-column-two-third">
+                <button id="show-postcode" class="govuk-button govuk-button--secondary" type="button">
+                    {{ _('Find UK Address') }}
+                </button>
+            </div>
+            <div id="address-information-container" class="govuk-!-display-none govuk-radios__conditional address-container">
+                {{ form.address_finder(params={
+                    "label": {
+                        "classes": "govuk-label--s"
+                    },
+                }) }}
+            </div>
+        </div>
+    </div>
+
+    {{ form.street_address }}
+
+    {{ form.submit }}
+{% endblock %}
