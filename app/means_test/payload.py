@@ -451,6 +451,23 @@ class MeansTestPayload(dict):
         other.update(kwargs)
         recursive_update(self, other)
 
+    def _set_default_backend_values(self, about_you_form_data):
+        if about_you_form_data.get("own_property", False):
+            recursive_update(self, PropertiesPayload())
+        else:
+            recursive_update(self, PropertiesPayload.default())
+
+        if about_you_form_data.get("has_savings", False) or about_you_form_data.get("has_valuables", False):
+            recursive_update(self, SavingsPayload())
+        else:
+            recursive_update(self, SavingsPayload.default())
+
+        if not about_you_form_data.get("on_benefits", False):
+            recursive_update(self, YourBenefitsPayload.default())
+
+        recursive_update(self, IncomePayload())
+        recursive_update(self, OutgoingsPayload())
+
     def update_from_form(self, form_name, form_data):
         payload_class_mapping = {
             "about-you": AboutYouPayload,
@@ -467,6 +484,8 @@ class MeansTestPayload(dict):
     def update_from_session(self):
         for form_name, form_data in session.get_eligibility().forms.items():
             self.update_from_form(form_name, form_data)
+            if form_name == "about-you":
+                self._set_default_backend_values(form_data)
 
 
 class CFEMeansTestPayload(MeansTestPayload):
@@ -474,7 +493,9 @@ class CFEMeansTestPayload(MeansTestPayload):
         pass
 
     def update_from_session(self):
-        super().update_from_session()
+        for form_name, form_data in session.get_eligibility().forms.items():
+            self.update_from_form(form_name, form_data)
+
         self._process_facts()
         self._handle_property_data()
         self._process_savings()
