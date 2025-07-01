@@ -490,6 +490,8 @@ class MeansTestPayload(dict):
 
 class CFEMeansTestPayload(MeansTestPayload):
     def __init__(self, *args, **kwargs):
+        # The eligibility calculator expects the payload to start from a blank slate and for keys to only
+        # be included when the question has been answered by the user.
         pass
 
     def update_from_session(self):
