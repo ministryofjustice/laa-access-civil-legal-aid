@@ -14,7 +14,10 @@ class OptionForm(BaseForm):
     url = "option-for-appointment"
 
     contact_type = RadioField(
-        widget=ContactRadioInput(is_inline=False, heading_class="govuk-fieldset__legend--m"),
+        _(""),
+        widget=ContactRadioInput(
+            is_inline=False, choice_hint={"call": "This is an 0345 number - there might be a call charge."}
+        ),
         choices=CONTACT_PREFERENCE,
-        validators=[InputRequired(message=_("Tell us how we should get in contact"))],
+        validators=[InputRequired(message=_("Select an option for your appointment"))],
     )
