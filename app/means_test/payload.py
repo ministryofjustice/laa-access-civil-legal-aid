@@ -518,9 +518,8 @@ class CFEMeansTestPayload(MeansTestPayload):
             self["you"]["savings"]["credit_balance"] = 0
 
     def _process_benefits(self):
-        if not session.get_eligibility().on_benefits:
-            if "income" in self["you"]:
-                self["you"]["income"]["benefits"] = 0
+        if "income" in self["you"] and "benefits" not in self["you"]["income"]:
+            self["you"]["income"]["benefits"] = 0
 
     def _cleanup_payload(self):
         if "notes" in self:
@@ -532,10 +531,16 @@ class CFEMeansTestPayload(MeansTestPayload):
         self["category"] = session.category.chs_code
 
     def _convert_money_intervals(self):
-        if "deductions" in self["you"]:
-            for prop, value in self["you"]["deductions"].items():
-                if isinstance(value, MoneyInterval):
-                    self["you"]["deductions"][prop] = value.per_month().amount
-        for prop, value in self["you"]["income"].items():
-            if isinstance(value, MoneyInterval):
-                self["you"]["income"][prop] = value.per_month().amount
+        for person in ["you", "partner"]:
+            person_data = self.get(person)
+            if not person_data:
+                continue
+
+            for category in ["deductions", "income"]:
+                category_data = person_data.get(category)
+                if not category_data:
+                    continue
+
+                for prop, value in category_data.items():
+                    if isinstance(value, MoneyInterval):
+                        category_data[prop] = value.per_month().amount
