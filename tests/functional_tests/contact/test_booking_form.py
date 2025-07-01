@@ -42,9 +42,5 @@ def test_postcode_field(page: Page):
     address_selector.wait_for(state="visible")
     address_selector.select_option(index=1)
 
-    import time
-
-    time.sleep(0.5)
-    address = page.get_by_role("textbox", name="Enter your home address (optional)").input_value().split("\n")
-
-    assert address == ["Ministry of Justice", "10 South Colonnade", "London", "E14 4PU"]
+    street_address = page.get_by_role("textbox", name="Enter your home address (optional)")
+    expect(street_address).to_have_value("Ministry of Justice\n10 South Colonnade\nLondon\nE14 4PU", timeout=5000)
