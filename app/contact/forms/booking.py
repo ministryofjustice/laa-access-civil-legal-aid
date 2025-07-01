@@ -10,6 +10,7 @@ from app.contact.forms import BaseForm
 class BookingForm(BaseForm):
     template = "contact/booking.html"
     title = _("Book an appointment with Civil Legal Advice")
+    url = "book-appointment-cla"
 
     full_name = StringField(
         _("Your full name"),
