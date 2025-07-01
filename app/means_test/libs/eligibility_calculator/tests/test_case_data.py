@@ -349,7 +349,6 @@ class TestCaseData(unittest.TestCase):
 
     def test_get_non_disputed_non_property_capital_savings_random_values_no_partner(self):
         for i in range(0, 500):
-            # ghetto quick-check
             steps = [random.randint(0, 50000)]
             for n in range(3):
                 step = random.randint(0, steps[-1])
@@ -366,7 +365,6 @@ class TestCaseData(unittest.TestCase):
 
     def test_get_non_disputed_non_property_capital_savings_random_values_with_partner(self):
         for i in range(0, 500):
-            # ghetto quick-check
             steps = [random.randint(0, 50000)]
             for n in range(7):
                 step = random.randint(0, steps[-1])
@@ -388,7 +386,6 @@ class TestCaseData(unittest.TestCase):
 
     def test_get_non_disputed_non_property_capital_savings_random_values_only_partner(self):
         for i in range(0, 500):
-            # ghetto quick-check
             steps = [random.randint(0, 50000)]
             for n in range(3):
                 step = random.randint(0, steps[-1])
