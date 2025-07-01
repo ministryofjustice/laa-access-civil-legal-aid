@@ -143,12 +143,12 @@ class FastTrackedContactUs(InScopeMixin, ContactUs):
 class EligibleContactUsPage(ContactUs):
     def get_financial_eligibility_status(self):
         eligibility_result = session.get("eligibility_result")
-        if eligibility_result.YES:
+        if eligibility_result == EligibilityState.YES:
             return (
                 FinancialAssessmentStatus.PASSED,
                 FinancialAssessmentReason.MORE_INFO_REQUIRED,
             )
-        elif eligibility_result.NO:
+        elif eligibility_result == EligibilityState.NO:
             return (
                 FinancialAssessmentStatus.FAILED,
                 FinancialAssessmentReason.MORE_INFO_REQUIRED,

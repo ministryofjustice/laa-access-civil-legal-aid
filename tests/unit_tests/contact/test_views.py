@@ -1,6 +1,6 @@
 import logging
 from unittest.mock import patch, MagicMock
-from flask import url_for, redirect
+from flask import url_for, redirect, session
 from app.contact.forms import ReasonsForContactingForm
 from app.contact.views import (
     ContactUs,
@@ -10,7 +10,6 @@ from app.contact.views import (
 )
 from app.contact.urls import EligibleContactUsPage
 from app.means_test.views import MeansTest
-from app.session import Session
 from app.means_test.api import EligibilityState
 
 
@@ -186,32 +185,33 @@ class TestFastTrackedContactUsView:
             assert financial_reason == FinancialAssessmentReason.HARM
 
 
-@patch("app.contact.views.is_eligible", return_value=EligibilityState.YES)
 @patch("app.contact.views.ContactUs.dispatch_request")
-@patch.object(Session, "ec_reference", return_value="5ae7d8ba-daf2-471f-a082-7aaec590e83b")
-def test_eligible_view_success(mock_is_eligible, mock_super_dispatch_request, mock_ec_reference, app):
-    with app.app_context():
+def test_eligible_view_success(mock_super_dispatch_request, app):
+    with app.test_request_context():
+        session["eligibility_result"] = EligibilityState.YES
+        session["_ec_reference"] = "5ae7d8ba-daf2-471f-a082-7aaec590e83b"
+
         view = EligibleContactUsPage()
         view.dispatch_request()
         assert mock_super_dispatch_request.called is True
 
 
-@patch("app.contact.views.is_eligible", return_value=EligibilityState.UNKNOWN)
-@patch.object(Session, "ec_reference", return_value="5ae7d8ba-daf2-471f-a082-7aaec590e83b")
-def test_eligible_view_failure(mock_is_eligible, mock_ec_reference, app):
-    with app.app_context():
+def test_eligible_view_failure(app):
+    with app.test_request_context():
+        session["eligibility_result"] = EligibilityState.UNKNOWN
+        session["_ec_reference"] = "5ae7d8ba-daf2-471f-a082-7aaec590e83b"
+
         view = EligibleContactUsPage()
         response = view.dispatch_request()
         assert response.status_code == 302
         assert response.location == url_for("main.session_expired")
 
 
-@patch("app.contact.views.is_eligible", return_value=EligibilityState.UNKNOWN)
-def test_eligible_view_failure_no_ec_reference(mock_is_eligible, app):
-    with app.app_context():
+def test_eligible_view_failure_no_ec_reference(app):
+    with app.test_request_context():
+        session["eligibility_result"] = EligibilityState.UNKNOWN
         view = EligibleContactUsPage()
         response = view.dispatch_request()
-        assert mock_is_eligible.called is False
         assert response.status_code == 302
         assert response.location == url_for("main.session_expired")
 
