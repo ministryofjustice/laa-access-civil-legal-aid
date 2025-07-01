@@ -16,6 +16,7 @@ from .cfe_civil.applicant import translate_applicant
 from .cfe_civil.under_18_passported import translate_under_18_passported
 from .cfe_civil.proceeding_types import translate_proceeding_types, DEFAULT_PROCEEDING_TYPE
 from app.means_test.constants import EligibilityState
+from flask import current_app
 
 logger = __import__("logging").getLogger(__name__)
 
@@ -77,9 +78,14 @@ class EligibilityChecker(object):
 
         cfe_request_dict = self._translate_case(self.case_data)
 
-        user_agent = "cla_backend/1 (%s)" % "development"
+        user_agent = f"cla_backend/1 ({current_app.config.get('ENVIRONMENT')})"
+
+        cfe_host = (
+            current_app.config.get("CFE_URL", "https://cfe-civil-staging.cloud-platform.service.justice.gov.uk"),
+        )
+
         cfe_raw_response = requests.post(
-            "https://cfe-civil-staging.cloud-platform.service.justice.gov.uk/v6/assessments",
+            f"{cfe_host}/v6/assessments",
             json=cfe_request_dict,
             headers={"User-Agent": user_agent},
         )
