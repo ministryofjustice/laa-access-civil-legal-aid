@@ -39,3 +39,6 @@ class Config(object):
     MEANS_TEST_CALCULATOR: MeansTestCalculator = MeansTestCalculator.from_env(
         os.getenv("DECISION_TYPE"), default=MeansTestCalculator.CFE
     )
+    RUN_MEANS_TEST_CALCULATORS_IN_PARALLEL = (
+        os.environ.get("RUN_MEANS_TEST_CALCULATORS_IN_PARALLEL", "True").lower() == "true"
+    )

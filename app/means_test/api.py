@@ -112,7 +112,7 @@ def check_eligibility() -> EligibilityState:
         valid_types = [e.value for e in MeansTestCalculator]
         raise ValueError(f"Unknown calculator: {calculator_type}. Valid: {valid_types}")
 
-    run_in_parallel = current_app.config.get("RUN_CALCULATORS_IN_PARALLEL", True)
+    run_in_parallel = current_app.config.get("RUN_MEANS_TEST_CALCULATORS_IN_PARALLEL", True)
 
     if run_in_parallel:
         return _run_parallel_eligibility_check(calculator_type)
