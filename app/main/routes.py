@@ -88,15 +88,20 @@ def set_locale(locale):
     if locale not in current_app.config["LANGUAGES"]:
         abort(404)
 
-    if request.referrer:
-        parse = urlparse(request.referrer)
-        redirect_url = ["/", parse.path.strip("/")]
-        if parse.query:
-            redirect_url.append("?" + parse.query)
-    else:
-        redirect_url = ["/"]
+    redirect_url = url_for("main.start_page")  # Default URL
 
-    response = redirect("".join(redirect_url))
+    referrer = request.referrer
+    if referrer:
+        parsed = urlparse(referrer)
+        if (
+            parsed.scheme in ("http", "https")
+            and parsed.netloc == request.host
+            and parsed.path.startswith("/")
+            and not parsed.path.startswith("//")  # Prevents protocol-relative URLs being used in redirects
+        ):
+            redirect_url = "/" + parsed.path.lstrip("/")
+
+    response = redirect(redirect_url)
     response = set_locale_cookie(response, locale)
     return response
 
@@ -188,7 +193,7 @@ def http_exception(error):
 @bp.app_errorhandler(CSRFError)
 def csrf_error(error):
     flash("The form you were submitting has expired. Please try again.")
-    return redirect(request.full_path)
+    return redirect(url_for("main.session_expired"))
 
 
 @bp.before_app_request
