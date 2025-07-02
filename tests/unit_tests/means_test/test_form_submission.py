@@ -23,24 +23,123 @@ class TestDispatchRequest:
     def mock_eligibility(self):
         mock = Mock()
         mock.forms = {
-            "about-you": {"name": "Test User", "email": "test@example.com"},
-            "benefits": {"receives_benefits": True},
-            "savings": {"amount": 5000},
-            "income": {"salary": 25000},
-            "property": {"property_value": 200000},
+            "about-you": {
+                "aged_60_or_over": False,
+                "has_children": False,
+                "has_dependants": False,
+                "has_partner": False,
+                "has_savings": True,
+                "has_valuables": False,
+                "in_dispute": None,
+                "is_employed": False,
+                "is_self_employed": False,
+                "num_children": None,
+                "num_dependants": None,
+                "on_benefits": False,
+                "own_property": True,
+                "partner_is_employed": None,
+                "partner_is_self_employed": None,
+            },
+            "savings": {"investments": 60000, "savings": 70000, "valuables": None},
+            "income": {
+                "child_tax_credit": {
+                    "interval_period": None,
+                    "per_interval_value": None,
+                    "per_interval_value_pounds": None,
+                },
+                "earnings": {"interval_period": None, "per_interval_value": None, "per_interval_value_pounds": None},
+                "income_tax": {"interval_period": None, "per_interval_value": None, "per_interval_value_pounds": None},
+                "maintenance_received": {
+                    "interval_period": "per_month",
+                    "per_interval_value": 100000,
+                    "per_interval_value_pounds": 1000.0,
+                },
+                "national_insurance": {
+                    "interval_period": None,
+                    "per_interval_value": None,
+                    "per_interval_value_pounds": None,
+                },
+                "other_income": {
+                    "interval_period": "per_month",
+                    "per_interval_value": 3000,
+                    "per_interval_value_pounds": 30.0,
+                },
+                "partner_earnings": {
+                    "interval_period": None,
+                    "per_interval_value": None,
+                    "per_interval_value_pounds": None,
+                },
+                "partner_income_tax": {
+                    "interval_period": None,
+                    "per_interval_value": None,
+                    "per_interval_value_pounds": None,
+                },
+                "partner_maintenance_received": {
+                    "interval_period": None,
+                    "per_interval_value": None,
+                    "per_interval_value_pounds": None,
+                },
+                "partner_national_insurance": {
+                    "interval_period": None,
+                    "per_interval_value": None,
+                    "per_interval_value_pounds": None,
+                },
+                "partner_other_income": {
+                    "interval_period": None,
+                    "per_interval_value": None,
+                    "per_interval_value_pounds": None,
+                },
+                "partner_pension": {
+                    "interval_period": None,
+                    "per_interval_value": None,
+                    "per_interval_value_pounds": None,
+                },
+                "partner_working_tax_credit": {
+                    "interval_period": None,
+                    "per_interval_value": None,
+                    "per_interval_value_pounds": None,
+                },
+                "pension": {
+                    "interval_period": "per_month",
+                    "per_interval_value": 2000,
+                    "per_interval_value_pounds": 20.0,
+                },
+                "working_tax_credit": {
+                    "interval_period": None,
+                    "per_interval_value": None,
+                    "per_interval_value_pounds": None,
+                },
+            },
+            "property": {
+                "properties": [
+                    {
+                        "csrf_token": None,
+                        "in_dispute": False,
+                        "is_main_home": True,
+                        "is_rented": False,
+                        "mortgage_payments": 100000,
+                        "mortgage_remaining": 200000,
+                        "other_shareholders": False,
+                        "property_value": 1000000,
+                        "rent_amount": {
+                            "interval_period": None,
+                            "per_interval_value": None,
+                            "per_interval_value_pounds": None,
+                        },
+                    }
+                ]
+            },
         }
         return mock
 
     @pytest.fixture
     def mock_form(self):
-        """Create a mock form with validate_on_submit returning False by default."""
         mock = Mock()
         mock.validate_on_submit.return_value = False
         mock.data = {}
         return mock
 
     def test_get_request_displays_form(self, app, client, mock_eligibility):
-        """Test that a GET request displays the form."""
         with (
             patch(
                 "app.means_test.views.session.get_eligibility",
@@ -50,14 +149,10 @@ class TestDispatchRequest:
         ):
             response = client.get("/about-you")
 
-            # Assert the response status
             assert response.status_code == 200
-            # Verify render_template was called
             mock_render.assert_called_once()
 
     def test_form_submission_normal_flow(self, app, client, mock_eligibility, mock_url_for):
-        """Test successful form submission with normal flow to next page."""
-        # Create a mock form that validates successfully
         mock_form = Mock()
         mock_form.validate_on_submit.return_value = True
         mock_form.data = {"benefits": "pension_credit"}
@@ -79,15 +174,12 @@ class TestDispatchRequest:
             view = MeansTest.as_view("benefits", Mock(return_value=mock_form), "benefits")
             view()
 
-            # Verify the form data was added to eligibility
             mock_eligibility.add.assert_called_once_with("benefits", {"benefits": "pension_credit"})
 
             mock_check_eligibility.assert_called()
 
-            # Verify URL for next page was called
             mock_url_for.assert_called()
 
-            # Verify redirect was called
             mock_redirect.assert_called_once()
 
     def test_redirect_to_review_when_eligible(self, app, client, mock_eligibility, mock_url_for):
