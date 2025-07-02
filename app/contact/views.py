@@ -107,7 +107,6 @@ class ContactUs(View):
             session["contact_type"] = contact_type
             session["category"] = category
             return redirect(url_for("contact.confirmation"))
-        print(form_progress)
         return render_template(self.template, form=form, form_progress=form_progress)
 
     @staticmethod
