@@ -78,7 +78,7 @@ class EligibilityChecker(object):
 
         cfe_request_dict = self._translate_case(self.case_data)
 
-        user_agent = f"cla_backend/1 ({current_app.config.get('ENVIRONMENT')})"
+        user_agent = f"Check/1 ({current_app.config.get('ENVIRONMENT')})"
 
         cfe_host = current_app.config.get("CFE_URL", "https://cfe-civil-staging.cloud-platform.service.justice.gov.uk")
 
