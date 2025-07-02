@@ -80,9 +80,7 @@ class EligibilityChecker(object):
 
         user_agent = f"cla_backend/1 ({current_app.config.get('ENVIRONMENT')})"
 
-        cfe_host = (
-            current_app.config.get("CFE_URL", "https://cfe-civil-staging.cloud-platform.service.justice.gov.uk"),
-        )
+        cfe_host = current_app.config.get("CFE_URL", "https://cfe-civil-staging.cloud-platform.service.justice.gov.uk")
 
         cfe_raw_response = requests.post(
             f"{cfe_host}/v6/assessments",
