@@ -4,11 +4,8 @@ from flask.views import View, MethodView
 from flask import render_template, url_for, redirect, session, request
 from flask_babel import lazy_gettext as _, gettext
 from werkzeug.datastructures import MultiDict
-from app.means_test.api import (
-    is_eligible,
-)
 from app.categories.constants import Category
-from app.means_test.api import update_means_test
+from app.means_test.api import check_eligibility
 from app.means_test.constants import EligibilityState
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
@@ -19,8 +16,6 @@ from app.means_test.forms.outgoings import OutgoingsForm
 from app.means_test.forms.review import ReviewForm, BaseMeansTestForm
 from app.categories.models import CategoryAnswer, QuestionType
 from app.categories.mixins import InScopeMixin
-from app.means_test.payload import MeansTestPayload
-
 
 logger = logging.getLogger(__name__)
 
@@ -170,13 +165,8 @@ class MeansTest(FormsMixin, InScopeMixin, View):
         if form.validate_on_submit():
             session.get_eligibility().add(self.current_name, form.data)
             next_page = url_for(f"means_test.{self.get_next_page(self.current_name)}")
-            payload = MeansTestPayload()
-            payload.update_from_session()
-            response = update_means_test(payload)
-            if "reference" not in response:
-                raise ValueError("Eligibility reference not found in response")
-
-            eligibility_result = is_eligible(response["reference"])
+            eligibility_result = check_eligibility()
+            session["eligibility_result"] = eligibility_result
             # Once we are sure of the user's eligibility we should not ask the user subsequent questions
             # and instead ask them to confirm their answers before proceeding.
             # We skip this check on the about-you page to match existing behaviour from CLA Public.
@@ -217,6 +207,7 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
     def ensure_all_forms_are_complete(self):
         progress = self.get_form_progress(current_form=self.form)
         for form in progress["steps"]:
+            print(progress["steps"])
             if not form["is_completed"]:
                 logger.error(
                     "FAILED ensuring all forms are completed before the review page",
@@ -225,8 +216,7 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
                 return redirect(url_for("main.session_expired"))
 
     def dispatch_request(self):
-        # TODO: Store eligiblity in the session to prevent frequently requesting this.
-        if session.ec_reference and is_eligible(session.ec_reference) in [
+        if session.get("eligibility_result", None) in [
             EligibilityState.YES,
             EligibilityState.NO,
         ]:
@@ -393,7 +383,7 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
 
     @staticmethod
     def post():
-        eligibility = is_eligible(session.ec_reference)
+        eligibility = session.get("eligibility_result")
 
         # Failsafe, if we are unsure of the eligibility state at this point send the user to the call centre
         if eligibility == EligibilityState.YES or eligibility == EligibilityState.UNKNOWN:

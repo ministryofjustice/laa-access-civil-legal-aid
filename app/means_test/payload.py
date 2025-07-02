@@ -54,22 +54,6 @@ class AboutYouPayload(dict):
         if yes("has_partner") and not yes("in_dispute") and yes("partner_is_self_employed"):
             payload["partner"] = {"income": {"self_employed": yes("partner_is_self_employed")}}
 
-        if yes("own_property"):
-            payload = recursive_update(payload, PropertiesPayload())
-        else:
-            payload = recursive_update(payload, PropertiesPayload.default())
-
-        if yes("has_savings") or yes("has_valuables"):
-            payload = recursive_update(payload, SavingsPayload())
-        else:
-            payload = recursive_update(payload, SavingsPayload.default())
-
-        if not yes("on_benefits"):
-            payload = recursive_update(payload, YourBenefitsPayload.default())
-
-        payload = recursive_update(payload, IncomePayload())
-        payload = recursive_update(payload, OutgoingsPayload())
-
         self.update(payload)
 
 
@@ -467,6 +451,23 @@ class MeansTestPayload(dict):
         other.update(kwargs)
         recursive_update(self, other)
 
+    def _set_default_backend_values(self, about_you_form_data):
+        if about_you_form_data.get("own_property", False):
+            recursive_update(self, PropertiesPayload())
+        else:
+            recursive_update(self, PropertiesPayload.default())
+
+        if about_you_form_data.get("has_savings", False) or about_you_form_data.get("has_valuables", False):
+            recursive_update(self, SavingsPayload())
+        else:
+            recursive_update(self, SavingsPayload.default())
+
+        if not about_you_form_data.get("on_benefits", False):
+            recursive_update(self, YourBenefitsPayload.default())
+
+        recursive_update(self, IncomePayload())
+        recursive_update(self, OutgoingsPayload())
+
     def update_from_form(self, form_name, form_data):
         payload_class_mapping = {
             "about-you": AboutYouPayload,
@@ -483,3 +484,86 @@ class MeansTestPayload(dict):
     def update_from_session(self):
         for form_name, form_data in session.get_eligibility().forms.items():
             self.update_from_form(form_name, form_data)
+            if form_name == "about-you":
+                self._set_default_backend_values(form_data)
+
+
+class CFEMeansTestPayload(MeansTestPayload):
+    def __init__(self, *args, **kwargs):
+        # The eligibility calculator expects the payload to start from a blank slate and for keys to only
+        # be included when the question has been answered by the user.
+        pass
+
+    def update_from_session(self):
+        for form_name, form_data in session.get_eligibility().forms.items():
+            self.update_from_form(form_name, form_data)
+
+        self._process_facts()
+        self._handle_property_data()
+        self._process_savings()
+        self._process_benefits()
+        self._cleanup_payload()
+        self._set_category()
+        self._convert_money_intervals()
+
+    def _process_facts(self):
+        self["facts"] = {}
+        facts = [
+            "dependants_young",
+            "dependants_old",
+            "is_you_or_your_partner_over_60",
+            "has_partner",
+            "on_passported_benefits",
+            "on_nass_benefits",
+        ]
+        for fact in facts:
+            if fact in self:
+                self["facts"][fact] = self[fact]
+                del self[fact]
+
+    def _handle_property_data(self):
+        if "property_set" in self:
+            self["property_data"] = self["property_set"]
+            del self["property_set"]
+        elif not session.get_eligibility().owns_property:
+            self["property_data"] = []
+            if "deductions" in self["you"]:
+                self["you"]["deductions"]["mortgage"] = 0
+        else:
+            self["property_data"] = [
+                {"disputed": None, "main": None, "share": None, "value": None, "mortgage_left": None}
+            ]
+
+    def _process_savings(self):
+        if not session.get_eligibility().has_savings:
+            self["you"]["savings"] = {"bank_balance": 0, "investment_balance": 0, "asset_balance": 0}
+        if "savings" in self["you"]:
+            self["you"]["savings"]["credit_balance"] = 0
+
+    def _process_benefits(self):
+        if "income" in self["you"] and "benefits" not in self["you"]["income"]:
+            self["you"]["income"]["benefits"] = 0
+
+    def _cleanup_payload(self):
+        if "notes" in self:
+            del self["notes"]
+        if "specific_benefits" in self:
+            del self["specific_benefits"]
+
+    def _set_category(self):
+        self["category"] = session.category.chs_code
+
+    def _convert_money_intervals(self):
+        for person in ["you", "partner"]:
+            person_data = self.get(person)
+            if not person_data:
+                continue
+
+            for category in ["deductions", "income"]:
+                category_data = person_data.get(category)
+                if not category_data:
+                    continue
+
+                for prop, value in category_data.items():
+                    if isinstance(value, MoneyInterval):
+                        category_data[prop] = value.per_month().amount
