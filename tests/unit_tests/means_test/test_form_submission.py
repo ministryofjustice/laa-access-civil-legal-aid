@@ -45,69 +45,56 @@ class TestDispatchRequest:
                 "child_tax_credit": {
                     "interval_period": None,
                     "per_interval_value": None,
-                    "per_interval_value_pounds": None,
                 },
-                "earnings": {"interval_period": None, "per_interval_value": None, "per_interval_value_pounds": None},
-                "income_tax": {"interval_period": None, "per_interval_value": None, "per_interval_value_pounds": None},
+                "earnings": {"interval_period": None, "per_interval_value": None},
+                "income_tax": {"interval_period": None, "per_interval_value": None},
                 "maintenance_received": {
                     "interval_period": "per_month",
                     "per_interval_value": 100000,
-                    "per_interval_value_pounds": 1000.0,
                 },
                 "national_insurance": {
                     "interval_period": None,
                     "per_interval_value": None,
-                    "per_interval_value_pounds": None,
                 },
                 "other_income": {
                     "interval_period": "per_month",
                     "per_interval_value": 3000,
-                    "per_interval_value_pounds": 30.0,
                 },
                 "partner_earnings": {
                     "interval_period": None,
                     "per_interval_value": None,
-                    "per_interval_value_pounds": None,
                 },
                 "partner_income_tax": {
                     "interval_period": None,
                     "per_interval_value": None,
-                    "per_interval_value_pounds": None,
                 },
                 "partner_maintenance_received": {
                     "interval_period": None,
                     "per_interval_value": None,
-                    "per_interval_value_pounds": None,
                 },
                 "partner_national_insurance": {
                     "interval_period": None,
                     "per_interval_value": None,
-                    "per_interval_value_pounds": None,
                 },
                 "partner_other_income": {
                     "interval_period": None,
                     "per_interval_value": None,
-                    "per_interval_value_pounds": None,
                 },
                 "partner_pension": {
                     "interval_period": None,
                     "per_interval_value": None,
-                    "per_interval_value_pounds": None,
                 },
                 "partner_working_tax_credit": {
                     "interval_period": None,
                     "per_interval_value": None,
-                    "per_interval_value_pounds": None,
                 },
                 "pension": {
                     "interval_period": "per_month",
                     "per_interval_value": 2000,
-                    "per_interval_value_pounds": 20.0,
                 },
                 "working_tax_credit": {
                     "interval_period": None,
                     "per_interval_value": None,
-                    "per_interval_value_pounds": None,
                 },
             },
             "property": {
