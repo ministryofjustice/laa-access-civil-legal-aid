@@ -15,7 +15,7 @@ class OptionForm(BaseForm):
 
     def _adjust_contact_options_for_availability(self, slots):
         """Remove callback option if no slots are available"""
-        if len(slots) <= 1:
+        if len(slots) < 1:
             self.contact_type.choices = NO_SLOT_CONTACT_PREFERENCE
 
     title = _("Choose an option for your appointment")
