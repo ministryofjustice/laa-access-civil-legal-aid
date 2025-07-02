@@ -10,7 +10,6 @@ from flask import session
 class OptionForm(BaseForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Get the valid timeslots once from backend and cache them
         self._adjust_contact_options_for_availability(session["contact"].time_slots)
 
     def _adjust_contact_options_for_availability(self, slots):
