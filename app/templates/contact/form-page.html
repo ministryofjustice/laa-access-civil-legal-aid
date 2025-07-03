@@ -28,9 +28,6 @@
         <form action="" method="post" novalidate>
 
             {% block form %}
-                {{ form.csrf_token }}
-                <p> Override this template</p>
-                {{ form.submit }}
             {% endblock %}
         </form>
             {% block belowForm %}

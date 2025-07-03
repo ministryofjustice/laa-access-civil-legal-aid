@@ -1,6 +1,7 @@
 from flask.views import View
 from flask import session, url_for, redirect, render_template, request
 from app.contact.forms.booking import BookingForm
+from app.contact.forms.choose_an_option import OptionForm
 from app.contact.forms.check_your_answers import CheckYourAnswers
 
 
@@ -8,6 +9,7 @@ class ContactView(View):
     forms = {
         "booking": BookingForm,
         "review": CheckYourAnswers,
+        "choose_an_option": OptionForm,
     }
 
     def __init__(self, current_form_class, current_name):

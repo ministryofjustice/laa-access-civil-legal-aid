@@ -1,0 +1,11 @@
+{% extends "contact/form-page.html" %}
+
+{% block formHeading %}
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">{{ form.title }}</h1>
+{% endblock %}
+
+{% block form %}
+    {{ form.csrf_token }}
+    {{ form.contact_type }}
+    {{ form.submit }}
+{% endblock %}
