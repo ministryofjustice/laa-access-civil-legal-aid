@@ -1,8 +1,8 @@
 from govuk_frontend_wtf.wtforms_widgets import GovRadioInput
-from app.means_test.widgets import MeansTestInputField
+from app.categories.widgets import CategoryInputField
 
 
-class ContactRadioInput(MeansTestInputField, GovRadioInput):
+class ContactRadioInput(CategoryInputField, GovRadioInput):
     def __init__(self, choice_hint, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.choice_hint = choice_hint
