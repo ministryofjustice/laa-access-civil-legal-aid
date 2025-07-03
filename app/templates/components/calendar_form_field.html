@@ -1,0 +1,101 @@
+{% macro calendar_form_field(field, calendar_data, legend_text=None, hint_text=None, error_message=None, has_sunday_slots=True) %}
+<div class="govuk-form-group {% if field.errors %}govuk-form-group--error{% endif %}">
+  <fieldset class="govuk-fieldset">
+    {% if legend_text %}
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+      <h1 class="govuk-fieldset__heading">{{ legend_text }}</h1>
+    </legend>
+    {% endif %}
+    
+    {% if hint_text %}
+    <div id="{{ field.id }}-hint" class="govuk-hint">
+      {{ hint_text }}
+    </div>
+    {% endif %}
+    
+    {% if field.errors %}
+    <div id="{{ field.id }}-error" class="govuk-error-message">
+      <span class="govuk-visually-hidden">Error:</span>
+      {{ field.errors[0] }}
+    </div>
+    {% endif %}
+    
+    <div class="visits-calendar{% if not has_sunday_slots %} visits-calendar--no-sunday{% endif %}">
+      {% for month_name, month_data in calendar_data.items() %}
+        <div class="visits-calendar__month-section">
+          <h2 class="govuk-heading-m">{{ month_name }}</h2>
+
+          {% if loop.first %}
+            <ul class="govuk-list visits-calendar__day-headings" aria-hidden="true">
+              <li>M<span>on</span></li>
+              <li>T<span>ue</span></li>
+              <li>W<span>ed</span></li>
+              <li>T<span>hu</span></li>
+              <li>F<span>ri</span></li>
+              <li>S<span>at</span></li>
+              {% if has_sunday_slots %}
+              <li>S<span>un</span></li>
+              {% endif %}
+            </ul>
+          {% endif %}
+
+          <ul class="govuk-list visits-calendar__month">
+
+            {% for date, slots in month_data.items() %}
+              <li data-date="{{ date.strftime('%Y-%m-%d') }}" 
+                  class="visits-calendar__day
+                  {%- if loop.first %} visits-calendar__day--start-col-{{ date.strftime('%u') }}{% endif %}
+                  {%- if field.data and field.data.startswith(date.strftime('%Y-%m-%d')) %} visits-calendar__day--selected{% endif %}"
+                  {%- if not sessions %}aria-hidden="true"{% endif %}>
+
+                {% if slots %}
+                  <a id="day-link-{{ date.strftime('%Y-%m-%d') }}"
+                     href="#day-group-{{ date.strftime('%Y-%m-%d') }}">
+                    {{ date.strftime('%-d') }}
+                    <span class="govuk-visually-hidden">
+                      {{ date.strftime('%B - %A') }} - {{ sessions|length }} visit {{ 'time' if sessions|length == 1 else 'times' }} available
+                    </span>
+                  </a>
+                {% else %}
+                  <span>{{ date.strftime('%-d') }}</span>
+                  <span class="govuk-visually-hidden">
+                    {{ date.strftime('%B - %A') }} - no visits available
+                  </span>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+
+          {% for date, slots in month_data.items() %}
+            {% if slots %}
+              <div id="day-group-{{ date.strftime('%Y-%m-%d') }}" 
+                   class="visits-calendar__day-group{% if field.data and field.data.startswith(date.strftime('%Y-%m-%d')) %} visits-calendar__day-group--active{% endif %}">
+                <h3 class="govuk-heading-s">{{ date.strftime('%A %-d %B %Y') }}</h3>
+                <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+                  {% for slot in slots %}
+                    <div class="govuk-radios__item">
+                      <input class="govuk-radios__input" 
+                             id="slot-{{ date.strftime('%Y-%m-%d') }}-{{ loop.index }}"
+                             name="{{ field.name }}" 
+                             type="radio" 
+                             value="{{ date.strftime('%Y-%m-%d') }}_{{ slot.time }}"
+                             {% if field.data and field.data == (date.strftime('%Y-%m-%d') + '_' + (slot.time)) %}checked{% endif %}
+                             {% if field.errors %}aria-describedby="{{ field.id }}-error"{% endif %}
+                             {% if hint_text %}aria-describedby="{{ field.id }}-hint"{% endif %}>
+                      <label class="govuk-label govuk-radios__label" 
+                             for="slot-{{ date.strftime('%Y-%m-%d') }}-{{ loop.index }}">
+                        {{ slot.time | format_callback_time_slot }}
+                      </label>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  </fieldset>
+</div>
+
+{% endmacro %}

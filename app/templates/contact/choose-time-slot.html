@@ -1,0 +1,29 @@
+{% extends "contact/form-page.html" %}
+{% from "components/calendar_form_field.html" import calendar_form_field %}
+
+{% block formHeading %}
+{% endblock %}
+
+{% block form %}
+    {{ form.csrf_token }}
+    
+    {% if calendar_data %}
+        {{ calendar_form_field(
+            field=form.time_slot,
+            calendar_data=calendar_data,
+            legend_text=form.title,
+            hint_text="Select a date and time for your callback appointment",
+            has_sunday_slots=has_sunday_slots
+        ) }}
+    {% else %}
+        <div class="govuk-warning-text">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+                <span class="govuk-warning-text__assistive">Warning</span>
+                No appointment times are currently available. Please try again later.
+            </strong>
+        </div>
+    {% endif %}
+    
+    {{ form.submit }}
+{% endblock %}

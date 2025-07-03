@@ -2,14 +2,16 @@ from flask.views import View
 from flask import session, url_for, redirect, render_template, request
 from app.contact.forms.booking import BookingForm
 from app.contact.forms.choose_an_option import OptionForm
+from app.contact.forms.choose_time_slot import ChooseTimeSlotForm
 from app.contact.forms.check_your_answers import CheckYourAnswers
 
 
 class ContactView(View):
     forms = {
         "booking": BookingForm,
-        "review": CheckYourAnswers,
         "choose_an_option": OptionForm,
+        "choose_time_slot": ChooseTimeSlotForm,
+        "review": CheckYourAnswers,
     }
 
     def __init__(self, current_form_class, current_name):
@@ -30,10 +32,15 @@ class ContactView(View):
         return self.render_form(form)
 
     def render_form(self, form):
-        return render_template(
-            self.form_class.template,
-            form=form,
-        )
+        template_vars = {"form": form}
+
+        # Add calendar data for time slot form
+        if hasattr(form, "get_calendar_data"):
+            calendar_info = form.get_calendar_data()
+            template_vars["calendar_data"] = calendar_info.get("calendar_data", {})
+            template_vars["has_sunday_slots"] = calendar_info.get("has_sunday_slots", False)
+
+        return render_template(self.form_class.template, **template_vars)
 
     def get_next_page(self, current_key):
         keys = list(self.forms.keys())  # Convert to list for easier indexing

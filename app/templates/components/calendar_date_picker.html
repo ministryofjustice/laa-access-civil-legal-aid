@@ -1,0 +1,120 @@
+{% macro calendar_date_picker(calendar_data, selected_date=None, field_name='selected_date') %}
+<div class="visits-calendar">
+  {% for month_name, month_data in calendar_data.items() %}
+    <div class="visits-calendar__month-section">
+      <h2 class="govuk-heading-m">{{ month_name }}</h2>
+
+      {% if loop.first %}
+        <ul class="govuk-list visits-calendar__day-headings" aria-hidden="true">
+          <li>M<span>on</span></li>
+          <li>T<span>ue</span></li>
+          <li>W<span>ed</span></li>
+          <li>T<span>hu</span></li>
+          <li>F<span>ri</span></li>
+          <li>S<span>at</span></li>
+          <li>S<span>un</span></li>
+        </ul>
+      {% endif %}
+
+      <ul class="govuk-list visits-calendar__month">
+        {% for date, sessions in month_data.items() %}
+          <li data-date="{{ date }}" 
+              class="visits-calendar__day
+              {%- if loop.first %} visits-calendar__day--start-col-{{ date.strftime('%u') }}{% endif %}
+              {%- if selected_date and selected_date == date.strftime('%Y-%m-%d') %} visits-calendar__day--selected{% endif %}"
+              {%- if not sessions %}aria-hidden="true"{% endif %}>
+
+            {% if sessions %}
+              <a id="day-link-{{ date.strftime('%Y-%m-%d') }}" 
+                 href="#day-group-{{ date.strftime('%Y-%m-%d') }}"
+                 onclick="selectDate('{{ date.strftime('%Y-%m-%d') }}', '{{ field_name }}')">
+                {{ date.strftime('%-d') }}
+                <span class="govuk-visually-hidden">
+                  {{ date.strftime('%B - %A') }} - {{ sessions|length }} visit {{ 'time' if sessions|length == 1 else 'times' }} available
+                </span>
+              </a>
+            {% else %}
+              <span>{{ date.strftime('%-d') }}</span>
+              <span class="govuk-visually-hidden">
+                {{ date.strftime('%B - %A') }} - no visits available
+              </span>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+
+      {% for date, sessions in month_data.items() %}
+        {% if sessions %}
+          <div id="day-group-{{ date.strftime('%Y-%m-%d') }}" class="visits-calendar__day-group"
+               {% if not (selected_date and selected_date == date.strftime('%Y-%m-%d')) %}style="display: none;"{% endif %}>
+            <h3 class="govuk-heading-s">{{ date.strftime('%A %-d %B %Y') }}</h3>
+            <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
+              {% for session in sessions %}
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" 
+                         id="session-{{ date.strftime('%Y-%m-%d') }}-{{ loop.index }}" 
+                         name="{{ field_name }}" 
+                         type="radio" 
+                         value="{{ date.strftime('%Y-%m-%d') }}_{{ session.time }}"
+                         {% if selected_date and selected_date == (date.strftime('%Y-%m-%d') + '_' + session.time) %}checked{% endif %}>
+                  <label class="govuk-label govuk-radios__label" 
+                         for="session-{{ date.strftime('%Y-%m-%d') }}-{{ loop.index }}">
+                    {{ session.time }}
+                    {% if session.capacity %}
+                      <span class="govuk-body-s govuk-!-display-block">{{ session.capacity }} spaces available</span>
+                    {% endif %}
+                  </label>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endfor %}
+</div>
+
+<script>
+function selectDate(date, fieldName) {
+  // Hide all day groups
+  document.querySelectorAll('.visits-calendar__day-group').forEach(group => {
+    group.style.display = 'none';
+  });
+  
+  // Remove selected class from all days
+  document.querySelectorAll('.visits-calendar__day--selected').forEach(day => {
+    day.classList.remove('visits-calendar__day--selected');
+  });
+  
+  // Show selected day group
+  const dayGroup = document.getElementById('day-group-' + date);
+  if (dayGroup) {
+    dayGroup.style.display = 'block';
+  }
+  
+  // Add selected class to clicked day
+  const dayElement = document.querySelector('[data-date="' + date + '"]');
+  if (dayElement) {
+    dayElement.classList.add('visits-calendar__day--selected');
+  }
+  
+  // Scroll to the time selection
+  dayGroup.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// Handle form submission to ensure a time is selected
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.querySelector('form');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      const selectedTime = document.querySelector('input[name="{{ field_name }}"]:checked');
+      if (!selectedTime) {
+        e.preventDefault();
+        alert('Please select a visit time');
+        return false;
+      }
+    });
+  }
+});
+</script>
+{% endmacro %}
