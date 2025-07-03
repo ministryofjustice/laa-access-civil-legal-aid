@@ -25,10 +25,7 @@ def test_map_gov_params_calls_assign_hint_text():
     radio_input = ContactRadioInput(choice_hint=choice_hint)
     mock_items = [{"value": "call"}, {"value": "callback"}]
 
-    mocked_parent_response = {
-        "items": mock_items,
-        "label": {"classes": ""},
-    }
+    mocked_parent_response = {"items": mock_items, "label": {"classes": ""}, "fieldset": {"legend": {"classes": ""}}}
 
     with (
         patch.object(GovRadioInput, "map_gov_params", return_value=mocked_parent_response) as mock_super_map,
