@@ -1,4 +1,5 @@
-from app.contact.widgets import ContactRadioInput
+from app.contact.widgets import ContactRadioInput, GovRadioInput
+from unittest.mock import patch, Mock
 
 
 def test_assign_hint_text_adds_hints_correctly():
@@ -19,24 +20,21 @@ def test_assign_hint_text_adds_hints_correctly():
     assert "hint" not in items[2]
 
 
-def test_map_gov_params_adds_expected_hints():
-    choice_hint = {"call": "You will call us", "callback": "We will call you"}
+def test_map_gov_params_calls_assign_hint_text():
+    choice_hint = {"call": "I will call", "callback": "Call me back"}
+    radio_input = ContactRadioInput(choice_hint=choice_hint)
+    mock_items = [{"value": "call"}, {"value": "callback"}]
 
-    class TestContactRadioInput(ContactRadioInput):
-        def map_gov_params(self, field, **kwargs):
-            params = {
-                "items": [
-                    {"value": "call", "text": "I will call"},
-                    {"value": "callback", "text": "Call me back"},
-                    {"value": "thirdparty", "text": "Someone else calls"},
-                ]
-            }
-            self._assign_hint_text(params["items"])
-            return params
+    mocked_parent_response = {
+        "items": mock_items,
+        "label": {"classes": ""},
+    }
 
-    widget = TestContactRadioInput(choice_hint)
-    params = widget.map_gov_params(None)
+    with (
+        patch.object(GovRadioInput, "map_gov_params", return_value=mocked_parent_response) as mock_super_map,
+        patch.object(radio_input, "_assign_hint_text") as mock_assign,
+    ):
+        radio_input.map_gov_params(Mock())
 
-    assert params["items"][0]["hint"] == {"text": "You will call us"}
-    assert params["items"][1]["hint"] == {"text": "We will call you"}
-    assert "hint" not in params["items"][2]
+        mock_super_map.assert_called_once()
+        mock_assign.assert_called_once_with(mock_items)
