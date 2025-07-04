@@ -22,7 +22,7 @@ class OptionForm(BaseForm):
     url = "option-for-appointment"
 
     contact_type = RadioField(
-        _(""),
+        title,
         widget=ContactRadioInput(
             is_inline=False, choice_hint={"call": _("This is an 0345 number - there might be a call charge.")}
         ),
