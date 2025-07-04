@@ -3,7 +3,7 @@ from flask_babel import lazy_gettext as _
 from app.means_test.forms import BaseMeansTestForm
 from app.means_test.fields import MoneyIntervalField, MoneyIntervalWidget, MoneyField
 from app.means_test.validators import MoneyIntervalAmountRequired, ValidateIfSession
-from app.means_test.widgets import MoneyInput
+from app.main.widgets import MoneyInput
 from wtforms.validators import InputRequired, NumberRange
 from wtforms import SubmitField
 from govuk_frontend_wtf.wtforms_widgets import GovSubmitInput

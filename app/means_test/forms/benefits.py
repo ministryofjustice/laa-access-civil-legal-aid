@@ -1,7 +1,7 @@
 from flask import session
 from flask_babel import lazy_gettext as _
 from wtforms.validators import InputRequired
-from app.means_test.widgets import MeansTestCheckboxInput, MeansTestRadioInput
+from app.main.widgets import MeansTestCheckboxInput, MeansTestRadioInput
 from app.means_test.forms import BaseMeansTestForm
 from app.means_test.fields import MoneyIntervalField, MoneyIntervalWidget
 from app.means_test.partner_fields import PartnerMultiCheckboxField, PartnerYesNoField
@@ -75,7 +75,7 @@ class BenefitsForm(BaseMeansTestForm):
             is_inline=False,
             show_divider=True,
             hint_text=_("Select all that apply"),
-            heading_class="govuk-fieldset__legend--xl",
+            label_class="govuk-fieldset__legend--xl",
         ),
         choices=get_benefits_choices(),
     )

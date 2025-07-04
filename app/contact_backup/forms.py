@@ -15,15 +15,8 @@ from govuk_frontend_wtf.wtforms_widgets import (
     GovTextArea,
     GovSelect,
 )
-
-from app.contact_backup.widgets import (
-    ContactRadioInput,
-    ContactCheckboxInput,
-    ContactSelectField,
-    ContactTextInput,
-)
 from wtforms.fields import SubmitField
-from app.categories.widgets import CategoryCheckboxInput
+from app.main.widgets import BaseCheckboxInput, BaseRadioInput, BaseTextInput, ContactSelectField
 from app.contact_backup.constants import (
     LANG_CHOICES,
     THIRDPARTY_RELATIONSHIP_CHOICES,
@@ -52,7 +45,7 @@ class ReasonsForContactingForm(FlaskForm):
 
     reasons = SelectMultipleField(
         title,
-        widget=CategoryCheckboxInput(hint_text=_("Select all that apply")),
+        widget=BaseCheckboxInput(hint_text=_("Select all that apply")),
         choices=[
             ("CANT_ANSWER", _("I don’t know how to answer a question")),
             ("MISSING_PAPERWORK", _("I don’t have the paperwork I need")),
@@ -239,7 +232,7 @@ class ContactUsForm(FlaskForm):
 
     contact_type = RadioField(
         _("Select a contact option"),
-        widget=ContactRadioInput(is_inline=False, heading_class="govuk-fieldset__legend--m"),
+        widget=BaseRadioInput(is_inline=False, label_class="govuk-fieldset__legend--m"),
         choices=CONTACT_PREFERENCE,
         validators=[InputRequired(message=_("Tell us how we should get in contact"))],
     )
@@ -257,7 +250,7 @@ class ContactUsForm(FlaskForm):
 
     time_to_call = RadioField(
         _("Select a time for us to call"),
-        widget=ContactRadioInput(is_inline=False, heading_class="govuk-fieldset__legend--s"),
+        widget=BaseRadioInput(is_inline=False, label_class="govuk-fieldset__legend--s"),
         validators=[
             ValidateIf("contact_type", "callback"),
             InputRequired(message=_("Select a time for us to call")),
@@ -301,7 +294,7 @@ class ContactUsForm(FlaskForm):
 
     announce_call_from_cla = RadioField(
         _("Can we say that we're calling from Civil Legal Advice?"),
-        widget=ContactRadioInput(is_inline=False, heading_class="govuk-fieldset__legend--s"),
+        widget=BaseRadioInput(is_inline=False, label_class="govuk-fieldset__legend--s"),
         choices=[
             (True, _("Yes")),
             (False, _("No - do not say where you are calling from")),
@@ -345,7 +338,7 @@ class ContactUsForm(FlaskForm):
 
     thirdparty_time_to_call = RadioField(
         _("Select a time for us to call"),
-        widget=ContactRadioInput(is_inline=False, heading_class="govuk-fieldset__legend--s"),
+        widget=BaseRadioInput(is_inline=False, label_class="govuk-fieldset__legend--s"),
         validators=[
             ValidateIf("contact_type", "thirdparty"),
             InputRequired(message=_("Select a time for us to call")),
@@ -432,7 +425,7 @@ class ContactUsForm(FlaskForm):
 
     adaptations = SelectMultipleField(
         _("Do you have any special communication needs? (optional)"),
-        widget=ContactCheckboxInput(is_inline=False, heading_class="govuk-fieldset__legend--m"),
+        widget=BaseCheckboxInput(is_inline=False, label_class="govuk-fieldset__legend--m"),
         choices=[
             ("bsl_webcam", _("British Sign Language (BSL)")),
             ("text_relay", _("Text relay")),
@@ -555,8 +548,8 @@ class ContactUsForm(FlaskForm):
 class ConfirmationEmailForm(FlaskForm):
     email = StringField(
         _("Receive this confirmation by email"),
-        widget=ContactTextInput(
-            heading_class="govuk-fieldset__legend--s",
+        widget=BaseTextInput(
+            label_class="govuk-fieldset__legend--s",
             hint_text=_("We will use this to send your reference number."),
         ),
         validators=[

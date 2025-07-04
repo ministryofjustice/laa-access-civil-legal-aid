@@ -10,7 +10,7 @@ from app.categories.results.views import (
 )
 from wtforms import RadioField, StringField, IntegerField
 from wtforms.validators import InputRequired
-from app.categories.widgets import CategoryRadioInput
+from app.main.widgets import BaseRadioInput
 from app.categories.views import QuestionPage, QuestionForm
 
 
@@ -212,7 +212,7 @@ def test_question_page_next_page(app):
         }
         question = RadioField(
             "This is a test question?",
-            widget=CategoryRadioInput(
+            widget=BaseRadioInput(
                 show_divider=False
             ),  # Uses our override class to support setting custom CSS on the label title
             validators=[InputRequired(message="Validation failed message")],

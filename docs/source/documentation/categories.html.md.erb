@@ -130,7 +130,7 @@ class DiscriminationWhereForm(QuestionForm):
 
     question = RadioField(
         title,
-        widget=CategoryRadioInput(show_divider=True),
+        widget=BaseRadioInput(show_divider=True),
         validators=[InputRequired(message="Select where the discrimination happened")],
         choices=[
             ("work", "Work - including colleagues, employer or employment agency"),

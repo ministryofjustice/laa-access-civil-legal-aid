@@ -1,7 +1,7 @@
 from flask_babel import lazy_gettext as _
 from wtforms import RadioField
 from wtforms.validators import InputRequired
-from app.categories.widgets import CategoryRadioInput
+from app.main.widgets import BaseRadioInput
 from app.categories.forms import QuestionForm
 from app.categories.constants import PUBLIC_LAW
 
@@ -22,7 +22,7 @@ class PolicePrisonOrDetentionCentreForm(QuestionForm):
 
     question = RadioField(
         title,
-        widget=CategoryRadioInput(show_divider=False, is_inline=True),
+        widget=BaseRadioInput(show_divider=False, is_inline=True),
         validators=[InputRequired(message=_("Select if this is about the police, prisons or detention centres"))],
         choices=[
             ("yes", _("Yes")),

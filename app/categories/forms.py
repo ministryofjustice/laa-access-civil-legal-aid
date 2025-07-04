@@ -1,7 +1,7 @@
 from wtforms import SubmitField, RadioField
 from flask_wtf import FlaskForm
 from govuk_frontend_wtf.wtforms_widgets import GovSubmitInput
-from app.categories.widgets import CategoryRadioInput
+from app.main.widgets import BaseRadioInput
 from wtforms.validators import InputRequired
 from flask_babel import lazy_gettext as _
 from app.categories.constants import Category
@@ -24,7 +24,7 @@ class QuestionForm(FlaskForm):
 
     question = RadioField(
         title,  #  The question title should be the label of the form
-        widget=CategoryRadioInput(
+        widget=BaseRadioInput(
             show_divider=False
         ),  # Uses our override class to support setting custom CSS on the label title
         validators=[InputRequired(message=_("Validation failed message"))],
@@ -55,7 +55,7 @@ class SafeguardingQuestionForm(QuestionForm):
     question = RadioField(
         title,
         description=_("This could be you, a child or someone else."),
-        widget=CategoryRadioInput(show_divider=False, is_inline=True),
+        widget=BaseRadioInput(show_divider=False, is_inline=True),
         validators=[InputRequired(message=_("Select if you’re worried about someone’s safety"))],
         choices=[
             ("yes", _("Yes")),
@@ -76,7 +76,7 @@ class ChildInCareQuestionForm(QuestionForm):
 
     question = RadioField(
         title,
-        widget=CategoryRadioInput(show_divider=False, is_inline=True),
+        widget=BaseRadioInput(show_divider=False, is_inline=True),
         validators=[InputRequired(message=_("Select if the child is or has been in care"))],
         choices=[
             ("yes", _("Yes")),
@@ -97,7 +97,7 @@ class PreviousFamilyMediationQuestionForm(QuestionForm):
 
     question = RadioField(
         title,
-        widget=CategoryRadioInput(show_divider=False, is_inline=True),
+        widget=BaseRadioInput(show_divider=False, is_inline=True),
         validators=[InputRequired(message=_("Select if you have taken part in a family mediation session"))],
         choices=[
             ("yes", _("Yes")),
