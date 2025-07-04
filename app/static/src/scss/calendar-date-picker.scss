@@ -1,9 +1,10 @@
-// Calendar Date Picker Styles - Adapted from MoJ Prison Visit UI
+// hide calendar on unsupported browsers
 .visits-calendar {
   display: none;
 }
 
 .govuk-frontend-supported {
+
   .visits-calendar {
     display: block;
   }
@@ -30,6 +31,7 @@
       max-width: 3rem;
     }
 
+    // only show abbreviated weekday names on mobile
     span {
       @include govuk-media-query($until: tablet) {
         display: none;
@@ -46,22 +48,18 @@
     a, span {
       padding: govuk-spacing(1);
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 47%;
       transform: translate(-50%, -50%);
     }
 
     a {
       @include govuk-link-style-no-visited-state;
-      
-      & {
-        font-weight: $govuk-font-weight-bold;
-        min-width: 1.5rem;
-      }
+      font-weight: $govuk-font-weight-bold;
+      min-width: 1.5rem;
     }
   }
 
-  // Generate classes to offset start day column
+  // generate classes to offset start day column
   @for $i from 2 through 7 {
     .visits-calendar__day--start-col-#{$i} {
       grid-column-start: $i;
@@ -78,61 +76,43 @@
 
     a {
       @include govuk-link-style-inverse;
-      
-      & {
-        text-decoration: none;
-      }
+      text-decoration: none;
 
       &:focus {
-        @include govuk-focused-text;
+        background-color: transparent;
+        box-shadow: 0 4px $govuk-focus-text-colour;
       }
     }
   }
 
+  // start with each day's form group of radios hidden
   .visits-calendar__day-group {
-    margin-top: govuk-spacing(4);
-    padding: govuk-spacing(4);
-    border: 1px solid govuk-colour("mid-grey");
-    background-color: govuk-colour("light-grey");
-    display: none; // Hidden by default
-    
-    &--active {
-      display: block; // Show when active
-    }
-    
-    .govuk-heading-s {
+    display: none;
+    margin-bottom: govuk-spacing(2);
+
+    legend {
       margin-bottom: govuk-spacing(3);
     }
-
-    .govuk-radios {
-      .govuk-radios__item {
-        margin-bottom: govuk-spacing(2);
-      }
-      
-      .govuk-radios__label {
-        font-weight: bold;
-        
-        .govuk-body-s {
-          font-weight: normal;
-          color: govuk-colour("dark-grey");
-          margin-top: govuk-spacing(1);
-        }
-      }
-    }
   }
-}
 
-// Responsive adjustments
-@include govuk-media-query($from: tablet) {
-  .visits-calendar {
-    .visits-calendar__day {
-      min-width: 3rem;
-      max-width: 4rem;
+  .visits-calendar__day-group--active {
+    display: block;
+  }
+
+  // split time & duration to separate lines and vertically centre by radio
+  @include govuk-media-query($until: desktop) {
+    .govuk-radios__item  {
+      margin-top: govuk-spacing(1);
     }
-    
-    .visits-calendar__day-headings li {
-      min-width: 3rem;
-      max-width: 4rem;
+
+    .visits-calendar__day-group .govuk-label {
+      margin-top: govuk-spacing(-2);
+    }
+
+    .visits-calendar__session-duration {
+      display: block;
+      padding-bottom: govuk-spacing(1);
+
     }
   }
 }

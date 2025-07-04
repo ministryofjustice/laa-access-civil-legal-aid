@@ -12,7 +12,11 @@ class ChooseTimeSlotForm(BaseForm):
 
     def _set_time_slot_choices(self):
         """Set time slot choices based on session data"""
-        time_slots = session["contact"].time_slots
+        time_slots = (
+            session["contact"].time_slots
+            if session["contact"].contact_type
+            else session["contact"].third_party_time_slots
+        )
 
         if not time_slots:
             self.time_slot.choices = []
@@ -23,7 +27,7 @@ class ChooseTimeSlotForm(BaseForm):
         for slot in time_slots:
             # slot is already a datetime object
             try:
-                value = slot.isoformat()
+                value = slot.strftime("%Y-%m-%d_%H:%M")
                 label = f"{slot.strftime('%A %d %B %Y')} at {slot.strftime('%H:%M')}"
                 choices.append((value, label))
             except (ValueError, AttributeError):
@@ -70,20 +74,17 @@ class ChooseTimeSlotForm(BaseForm):
     def should_show(cls) -> bool:
         """Show this form only if callback option was selected and time slots exist"""
         contact = session["contact"]
-        forms_data = contact.forms
-        choose_option_data = forms_data.get("choose_an_option", {})
+        contact_type = contact.contact_type
 
-        # Only show if user selected callback option
-        if choose_option_data.get("contact_type") != "callback":
-            return False
+        # Only show if user selected to be called back
+        if contact_type in ["callback", "thirdparty"]:
+            return True
 
-        # Only show if time slots are available
-        time_slots = contact.time_slots
-        return len(time_slots) > 0
+        return False
 
-    title = _("Choose a time for your callback")
+    title = _("Choose a time for your appointment")
     template = "contact/choose-time-slot.html"
-    url = "choose-time-slot"
+    url = "choose-time"
 
     time_slot = RadioField(
         title,

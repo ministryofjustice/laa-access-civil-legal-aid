@@ -6,7 +6,7 @@ from app.categories.constants import (
 )
 from flask import session
 from dataclasses import dataclass
-from datetime import timedelta
+from datetime import timedelta, datetime
 from app.categories.models import CategoryAnswer, QuestionType
 from flask_babel import LazyString
 from app.api import cla_backend
@@ -30,6 +30,20 @@ class Contact:
         if "_third_party_time_slots" not in session:
             session["_third_party_time_slots"] = cla_backend.get_time_slots(num_days=8, is_third_party_callback=True)
         return session["_third_party_time_slots"]
+
+    @property
+    def contact_type(self) -> str | None:
+        if "contact" not in session:
+            return None
+        return session["contact"].forms["choose_an_option"].get("contact_type")
+
+    @property
+    def callback_time(self) -> datetime | None:
+        if "contact" not in session:
+            return None
+        callback_dt_str_format = "%Y-%m-%d_%H:%M"
+        callback_time: str = session["contact"].forms["choose_time_slot"].get("time_slot")
+        return datetime.strptime(callback_time, callback_dt_str_format)
 
 
 @dataclass

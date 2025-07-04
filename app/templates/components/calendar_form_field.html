@@ -1,3 +1,27 @@
+{% macro time_slot_group(slots, period, date, field, first_available_date=None) %}
+  {% if slots %}
+    <h4 class="govuk-heading-s govuk-!-margin-bottom-1 govuk-!-margin-top-5">{{ period }}</h4>
+    <p class="govuk-body govuk-!-margin-bottom-2">Between:</p>
+    <div class="govuk-radios" data-module="govuk-radios">
+      {% for slot in slots %}
+        <div class="govuk-radios__item">
+          <input class="govuk-radios__input" 
+                 id="slot-{{ date.strftime('%Y-%m-%d') }}-{{ period.lower() }}-{{ loop.index }}"
+                 name="{{ field.name }}"
+                 type="radio" 
+                 value="{{ date.strftime('%Y-%m-%d') }}_{{ slot.time }}"
+                 {% if field.data and field.data == (date.strftime('%Y-%m-%d') + '_' + (slot.time)) %}checked{% endif %}
+                 {% if field.errors %}aria-describedby="{{ field.id }}-error"{% endif %}>
+          <label class="govuk-label govuk-radios__label" 
+                 for="slot-{{ date.strftime('%Y-%m-%d') }}-{{ period.lower() }}-{{ loop.index }}">
+            {{ slot.time | format_callback_time_slot }}
+          </label>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endmacro %}
+
 {% macro calendar_form_field(field, calendar_data, legend_text=None, hint_text=None, error_message=None, has_sunday_slots=True) %}
 <div class="govuk-form-group {% if field.errors %}govuk-form-group--error{% endif %}">
   <fieldset class="govuk-fieldset">
@@ -8,10 +32,12 @@
     {% endif %}
     
     {% if hint_text %}
-    <div id="{{ field.id }}-hint" class="govuk-hint">
+    <div id="{{ field.id }}-hint" class="govuk-body">
       {{ hint_text }}
     </div>
     {% endif %}
+
+    <h2 class="govuk-heading-m">Choose a day</h2>
     
     {% if field.errors %}
     <div id="{{ field.id }}-error" class="govuk-error-message">
@@ -21,8 +47,19 @@
     {% endif %}
     
     <div class="visits-calendar{% if not has_sunday_slots %} visits-calendar--no-sunday{% endif %}">
+      {% set first_available_date = namespace(value=none) %}
+      
+      {# First pass: find the first available date #}
       {% for month_name, month_data in calendar_data.items() %}
-        <div class="visits-calendar__month-section">
+        {% for date, slots in month_data.items() %}
+          {% if slots and not field.data and first_available_date.value is none %}
+            {% set first_available_date.value = date.strftime('%Y-%m-%d') %}
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+      
+      {% for month_name, month_data in calendar_data.items() %}
+        <div class="visits-calendar__month-section govuk-!-margin-left-2">
           <h2 class="govuk-heading-m">{{ month_name }}</h2>
 
           {% if loop.first %}
@@ -42,18 +79,19 @@
           <ul class="govuk-list visits-calendar__month">
 
             {% for date, slots in month_data.items() %}
+              {% set is_first_available = (date.strftime('%Y-%m-%d') == first_available_date.value) and not field.data %}
               <li data-date="{{ date.strftime('%Y-%m-%d') }}" 
                   class="visits-calendar__day
                   {%- if loop.first %} visits-calendar__day--start-col-{{ date.strftime('%u') }}{% endif %}
-                  {%- if field.data and field.data.startswith(date.strftime('%Y-%m-%d')) %} visits-calendar__day--selected{% endif %}"
-                  {%- if not sessions %}aria-hidden="true"{% endif %}>
+                  {%- if field.data and field.data.startswith(date.strftime('%Y-%m-%d')) or is_first_available %} visits-calendar__day--selected{% endif %}"
+                  {%- if not slots %}aria-hidden="true"{% endif %}>
 
                 {% if slots %}
                   <a id="day-link-{{ date.strftime('%Y-%m-%d') }}"
                      href="#day-group-{{ date.strftime('%Y-%m-%d') }}">
                     {{ date.strftime('%-d') }}
                     <span class="govuk-visually-hidden">
-                      {{ date.strftime('%B - %A') }} - {{ sessions|length }} visit {{ 'time' if sessions|length == 1 else 'times' }} available
+                      {{ date.strftime('%B - %A') }} - {{ slots|length }} visit {{ 'time' if slots|length == 1 else 'times' }} available
                     </span>
                   </a>
                 {% else %}
@@ -65,34 +103,45 @@
               </li>
             {% endfor %}
           </ul>
-
-          {% for date, slots in month_data.items() %}
-            {% if slots %}
-              <div id="day-group-{{ date.strftime('%Y-%m-%d') }}" 
-                   class="visits-calendar__day-group{% if field.data and field.data.startswith(date.strftime('%Y-%m-%d')) %} visits-calendar__day-group--active{% endif %}">
-                <h3 class="govuk-heading-s">{{ date.strftime('%A %-d %B %Y') }}</h3>
-                <div class="govuk-radios govuk-radios--small" data-module="govuk-radios">
-                  {% for slot in slots %}
-                    <div class="govuk-radios__item">
-                      <input class="govuk-radios__input" 
-                             id="slot-{{ date.strftime('%Y-%m-%d') }}-{{ loop.index }}"
-                             name="{{ field.name }}" 
-                             type="radio" 
-                             value="{{ date.strftime('%Y-%m-%d') }}_{{ slot.time }}"
-                             {% if field.data and field.data == (date.strftime('%Y-%m-%d') + '_' + (slot.time)) %}checked{% endif %}
-                             {% if field.errors %}aria-describedby="{{ field.id }}-error"{% endif %}
-                             {% if hint_text %}aria-describedby="{{ field.id }}-hint"{% endif %}>
-                      <label class="govuk-label govuk-radios__label" 
-                             for="slot-{{ date.strftime('%Y-%m-%d') }}-{{ loop.index }}">
-                        {{ slot.time | format_callback_time_slot }}
-                      </label>
-                    </div>
-                  {% endfor %}
-                </div>
-              </div>
-            {% endif %}
-          {% endfor %}
         </div>
+      {% endfor %}
+
+      {# Radio button sections for all dates #}
+      {% for month_name, month_data in calendar_data.items() %}
+        {% for date, slots in month_data.items() %}
+          {% if slots %}
+            {% set is_first_available = (date.strftime('%Y-%m-%d') == first_available_date.value) and not field.data %}
+            {% set should_show = field.data and field.data.startswith(date.strftime('%Y-%m-%d')) or is_first_available %}
+            <div id="day-group-{{ date.strftime('%Y-%m-%d') }}" 
+                 class="visits-calendar__day-group{% if should_show %} visits-calendar__day-group--active{% endif %}">
+              <!--<h3 class="govuk-heading-s govuk-!-margin-left-2">{{ date.strftime('%A %-d %B %Y') }}</h3>-->
+
+           <h2 class="govuk-heading-m govuk-!-margin-bottom-0">Choose a time</h2>
+
+              {% set morning_slots = [] %}
+              {% set afternoon_slots = [] %}
+              {% set evening_slots = [] %}
+
+              
+              {% for slot in slots %}
+                {% set hour = slot.time.split(':')[0]|int %}
+                {% if hour < 12 %}
+                  {% if morning_slots.append(slot) %}{% endif %}
+                {% elif hour < 17 %}
+                  {% if afternoon_slots.append(slot) %}{% endif %}
+                {% else %}
+                  {% if evening_slots.append(slot) %}{% endif %}
+                {% endif %}
+              {% endfor %}
+
+                <div class="govuk-!-margin-left-2">
+                  {{ time_slot_group(morning_slots, "Morning", date, field, first_available_date.value) }}
+                  {{ time_slot_group(afternoon_slots, "Afternoon", date, field, first_available_date.value) }}
+                  {{ time_slot_group(evening_slots, "Evening", date, field, first_available_date.value) }}
+                </div>
+            </div>
+          {% endif %}
+        {% endfor %}
       {% endfor %}
     </div>
   </fieldset>
