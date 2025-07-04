@@ -1,9 +1,5 @@
 from flask import Blueprint
 
-bp = Blueprint(
-    "contact",
-    __name__,
-    template_folder="./templates",
-)
+bp = Blueprint("contact_us", __name__)
 
 from app.contact import urls  # noqa: E402,F401

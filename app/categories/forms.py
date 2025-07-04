@@ -48,8 +48,8 @@ class SafeguardingQuestionForm(QuestionForm):
     title = _("Are you worried about someone's safety?")
 
     next_step_mapping = {
-        "yes": {"endpoint": "contact.contact_us_fast_tracked", "reason": "harm"},
-        "no": {"endpoint": "contact.contact_us_fast_tracked", "reason": "other"},
+        "yes": {"endpoint": "contact_backup.contact_us_fast_tracked", "reason": "harm"},
+        "no": {"endpoint": "contact_backup.contact_us_fast_tracked", "reason": "other"},
     }
 
     question = RadioField(
@@ -70,7 +70,7 @@ class ChildInCareQuestionForm(QuestionForm):
     title = _("Is this about a child who is or has been in care?")
 
     next_step_mapping = {
-        "yes": {"endpoint": "contact.contact_us_fast_tracked", "reason": "other"},
+        "yes": {"endpoint": "contact_backup.contact_us_fast_tracked", "reason": "other"},
         "no": "categories.results.in_scope",
     }
 

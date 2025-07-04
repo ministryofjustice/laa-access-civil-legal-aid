@@ -54,7 +54,7 @@ bp.add_url_rule(
             answer_label=HOUSING.sub.problems_with_neighbours.title,
             category=HOUSING.sub.problems_with_neighbours,
             question_page="categories.housing.landing",
-            next_page="contact.contact_us",
+            next_page="contact_backup.contact_us",
             question_type=QuestionType.SUB_CATEGORY,
         ),
     ),

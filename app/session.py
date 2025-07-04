@@ -9,6 +9,27 @@ from dataclasses import dataclass
 from datetime import timedelta
 from app.categories.models import CategoryAnswer, QuestionType
 from flask_babel import LazyString
+from app.api import cla_backend
+
+
+@dataclass
+class Contact:
+    forms: dict[str, dict]
+
+    def add(self, form_name, data):
+        self.forms[form_name] = data
+
+    @property
+    def time_slots(self) -> list:
+        if "_time_slots" not in session:
+            session["_time_slots"] = cla_backend.get_time_slots(num_days=8)
+        return session["_time_slots"]
+
+    @property
+    def third_party_time_slots(self) -> list:
+        if "_third_party_time_slots" not in session:
+            session["_third_party_time_slots"] = cla_backend.get_time_slots(num_days=8, is_third_party_callback=True)
+        return session["_third_party_time_slots"]
 
 
 @dataclass
@@ -117,9 +138,12 @@ class Session(SecureCookieSession):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         eligibility = {}
+        contact = {}
         if args:
             eligibility = args[0].get("eligibility", {})
+            contact = args[0].get("contact", {})
         self["eligibility"] = Eligibility(forms=eligibility.get("forms", {}), _notes={})
+        self["contact"] = Contact(forms=contact.get("forms", {}))
 
     def clear_category(self):
         if self.category:
