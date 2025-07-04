@@ -1,7 +1,7 @@
 from wtforms.fields.choices import RadioField
 from wtforms.validators import InputRequired
 from app.categories.forms import QuestionForm
-from app.categories.widgets import CategoryRadioInput
+from app.main.widgets import BaseRadioInput
 from flask_babel import lazy_gettext as _
 from app.categories.constants import HOUSING
 
@@ -16,7 +16,7 @@ class AreYouUnder18Form(QuestionForm):
 
     question = RadioField(
         title,
-        widget=CategoryRadioInput(show_divider=False, is_inline=True),
+        widget=BaseRadioInput(show_divider=False, is_inline=True),
         validators=[InputRequired(message=_("Select if you’re under 18"))],
         choices=[
             ("yes", _("Yes")),
@@ -39,7 +39,7 @@ class AntiSocialBehaviourForm(QuestionForm):
 
     question = RadioField(
         title,
-        widget=CategoryRadioInput(show_divider=False, is_inline=True),
+        widget=BaseRadioInput(show_divider=False, is_inline=True),
         validators=[InputRequired(message=_("Select ‘Yes’ if you were accused by a landlord or the council"))],
         choices=[
             ("yes", _("Yes")),

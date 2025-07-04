@@ -1,7 +1,7 @@
 from govuk_frontend_wtf.wtforms_widgets import GovTextInput
 from wtforms.validators import InputRequired, NumberRange
 from app.means_test.validators import ValidateIf
-from app.means_test.widgets import MeansTestRadioInput
+from app.main.widgets import MeansTestRadioInput
 from flask_babel import lazy_gettext as _
 from app.means_test.forms import BaseMeansTestForm
 from app.means_test.fields import IntegerField, YesNoField

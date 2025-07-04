@@ -1,6 +1,6 @@
 from wtforms import SelectMultipleField
 from app.categories.validators import ExclusiveValue
-from app.categories.widgets import CategoryCheckboxInput
+from app.main.widgets import BaseCheckboxInput
 from app.categories.forms import QuestionForm
 from wtforms.validators import InputRequired
 from app.categories.x_cat.forms import AreYouUnder18Form
@@ -22,7 +22,7 @@ class DiscriminationWhereForm(DiscriminationQuestionForm):
 
     question = SelectMultipleField(
         title,
-        widget=CategoryCheckboxInput(show_divider=True, hint_text=_("You can select more than one.")),
+        widget=BaseCheckboxInput(show_divider=True, hint_text=_("You can select more than one.")),
         validators=[InputRequired(message=_("Select where the discrimination happened"))],
         choices=[
             ("work", _("Work - including colleagues, employer or employment agency")),
@@ -57,7 +57,7 @@ class DiscriminationWhyForm(DiscriminationQuestionForm):
 
     question = SelectMultipleField(
         title,
-        widget=CategoryCheckboxInput(
+        widget=BaseCheckboxInput(
             show_divider=True,
             hint_text=_("You can select more than one."),
             behaviour="exclusive",

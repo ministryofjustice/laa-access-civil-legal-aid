@@ -1,4 +1,4 @@
-from app.contact.widgets import ContactRadioInput, GovRadioInput
+from app.main.widgets import BaseRadioInput, GovRadioInput
 from unittest.mock import patch, Mock
 
 
@@ -11,7 +11,7 @@ def test_assign_hint_text_adds_hints_correctly():
         {"value": "thirdparty", "text": "Someone else calls"},
     ]
 
-    widget = ContactRadioInput(choice_hint=choice_hint)
+    widget = BaseRadioInput(choice_hint=choice_hint)
 
     widget._assign_hint_text(items)
 
@@ -22,7 +22,7 @@ def test_assign_hint_text_adds_hints_correctly():
 
 def test_map_gov_params_calls_assign_hint_text():
     choice_hint = {"call": "I will call", "callback": "Call me back"}
-    radio_input = ContactRadioInput(choice_hint=choice_hint)
+    radio_input = BaseRadioInput(choice_hint=choice_hint)
     mock_items = [{"value": "call"}, {"value": "callback"}]
 
     mocked_parent_response = {"items": mock_items, "label": {"classes": ""}, "fieldset": {"legend": {"classes": ""}}}

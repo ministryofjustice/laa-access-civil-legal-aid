@@ -1,7 +1,7 @@
 from flask_babel import lazy_gettext as _
 from app.contact.forms import BaseForm
 from app.contact.constants import CONTACT_PREFERENCE, NO_SLOT_CONTACT_PREFERENCE
-from app.contact.widgets import ContactRadioInput
+from app.main.widgets import BaseRadioInput
 from wtforms import RadioField
 from wtforms.validators import InputRequired
 from flask import session
@@ -23,7 +23,7 @@ class OptionForm(BaseForm):
 
     contact_type = RadioField(
         title,
-        widget=ContactRadioInput(
+        widget=BaseRadioInput(
             is_inline=False, choice_hint={"call": _("This is an 0345 number - there might be a call charge.")}
         ),
         choices=CONTACT_PREFERENCE,

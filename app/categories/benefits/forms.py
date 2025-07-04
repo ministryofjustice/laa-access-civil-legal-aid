@@ -1,7 +1,7 @@
 from wtforms import RadioField
 from wtforms.validators import InputRequired
 from flask_babel import lazy_gettext as _
-from app.categories.widgets import CategoryRadioInput
+from app.main.widgets import BaseRadioInput
 from app.categories.forms import QuestionForm
 from app.categories.constants import BENEFITS
 
@@ -23,7 +23,7 @@ class AppealQuestionForm(QuestionForm):
     }
     question = RadioField(
         title,
-        widget=CategoryRadioInput(show_divider=True, label_class="govuk-body", is_page_heading=False),
+        widget=BaseRadioInput(show_divider=True, label_class="govuk-body", is_page_heading=False),
         validators=[InputRequired(message=_("Select where the appeal will be held"))],
         choices=[
             ("upper_tribunal", _("Upper Tribunal (Administrative Appeals Chamber)")),

@@ -2,7 +2,7 @@ from flask import session
 from wtforms.validators import InputRequired
 from app.means_test.fields import MoneyField
 from app.means_test.forms import BaseMeansTestForm
-from app.means_test.widgets import MoneyInput
+from app.main.widgets import MoneyInput
 from flask_babel import lazy_gettext as _
 from app.means_test.validators import ValidateIfSession, NumberRangeAllowZero
 
