@@ -7,6 +7,7 @@ class TestConfig(Config):
     DEBUG = True
     RATELIMIT_ENABLED = False
     SECRET_KEY = "TEST_KEY"
+    CFE_URL = "https://cfe-civil-staging.cloud-platform.service.justice.gov.uk"
 
 
 @pytest.fixture(scope="session")
