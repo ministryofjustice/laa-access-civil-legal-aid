@@ -11,7 +11,7 @@ DISPOSABLE_INCOME_THRESHOLD = 73300  # £733 per month
 
 class TestCFEMeansTestThresholds:
     def test_capital_threshold(self, app, client):
-        """Tests that having over £8000 in capital causes the means test to fail."""
+        """Tests that having over £8000 in capital causes the means test to return ineligible."""
         mock = Mock()
         mock.forms = {
             "about-you": {
@@ -34,7 +34,7 @@ class TestCFEMeansTestThresholds:
         assert result == EligibilityState.NO
 
     def test_gross_income_threshold(self, app, client):
-        """Tests that having over £2657 in gross income causes the means test to fail."""
+        """Tests that having over £2657 in gross income causes the means test to return ineligible."""
         mock = Mock()
         mock.forms = {
             "about-you": {
@@ -64,7 +64,7 @@ class TestCFEMeansTestThresholds:
         assert result == EligibilityState.NO
 
     def test_disposable_income_threshold(self, app, client):
-        """Tests that having over £733 in disposable income causes the means test to fail."""
+        """Tests that having over £733 in disposable income causes the means test to return ineligible."""
         mock = Mock()
         mock.forms = {
             "about-you": {
