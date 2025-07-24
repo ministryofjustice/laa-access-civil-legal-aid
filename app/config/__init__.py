@@ -36,7 +36,7 @@ class Config(object):
     SESSION_COOKIE_SECURE = True
     OS_PLACES_API_KEY = os.environ.get("OS_PLACES_API_KEY")
     EMAIL_ORCHESTRATOR_URL = os.environ.get("EMAIL_ORCHESTRATOR_URL")
-    CFE_URL = os.environ.get("CFE_URL", "https://cfe-civil-staging.cloud-platform.service.justice.gov.uk")
+    CFE_URL = os.environ.get("CFE_URL", "https://cfe-civil.cloud-platform.service.justice.gov.uk")
     MEANS_TEST_CALCULATOR: MeansTestCalculator = MeansTestCalculator.from_env(
         os.getenv("MEANS_TEST_CALCULATOR"), default=MeansTestCalculator.CLA_BACKEND
     )
