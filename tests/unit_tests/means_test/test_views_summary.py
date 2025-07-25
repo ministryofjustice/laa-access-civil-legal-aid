@@ -1,11 +1,12 @@
 import logging
 from unittest import mock
+from flask import session
 from flask_babel import lazy_gettext as _
 from app.means_test.views import CheckYourAnswers, ReviewForm
 from app.session import Eligibility
 from app.categories.models import CategoryAnswer, QuestionType
 from app.categories.constants import DISCRIMINATION, HOUSING
-from app.means_test.api import EligibilityState
+from app.means_test import EligibilityState
 
 
 def mock_render_template(template_name, **kwargs):
@@ -196,11 +197,11 @@ def test_get_category_answers_summary_with_description(app):
     category_mocker.stop()
 
 
-@mock.patch("app.means_test.views.is_eligible", side_effect=lambda x: EligibilityState.NO)
 def test_post_ineligible(app, client, caplog):
     from flask import url_for
 
-    with app.app_context():
+    with app.test_request_context():
+        session["eligibility_result"] = EligibilityState.NO
         with caplog.at_level(logging.INFO):
             response = CheckYourAnswers().post()
             assert "Eligibility check result unsuccessful - state is EligibilityState.NO" in caplog.messages
@@ -208,11 +209,11 @@ def test_post_ineligible(app, client, caplog):
         assert response.location == url_for("means_test.result.ineligible")
 
 
-@mock.patch("app.means_test.views.is_eligible", side_effect=lambda x: EligibilityState.YES)
 def test_post_eligible(app, client, caplog):
     from flask import url_for
 
-    with app.app_context():
+    with app.test_request_context():
+        session["eligibility_result"] = EligibilityState.YES
         with caplog.at_level(logging.INFO):
             response = CheckYourAnswers().post()
             assert "Eligibility check result successful - state is EligibilityState.YES" in caplog.messages

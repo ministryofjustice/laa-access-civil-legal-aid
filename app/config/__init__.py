@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from datetime import timedelta
+from .enums import MeansTestCalculator
 
 # Allows .env to be used in project for local development.
 load_dotenv()
@@ -35,3 +36,10 @@ class Config(object):
     SESSION_COOKIE_SECURE = True
     OS_PLACES_API_KEY = os.environ.get("OS_PLACES_API_KEY")
     EMAIL_ORCHESTRATOR_URL = os.environ.get("EMAIL_ORCHESTRATOR_URL")
+    CFE_URL = os.environ.get("CFE_URL", "https://cfe-civil.cloud-platform.service.justice.gov.uk")
+    MEANS_TEST_CALCULATOR: MeansTestCalculator = MeansTestCalculator.from_env(
+        os.getenv("MEANS_TEST_CALCULATOR"), default=MeansTestCalculator.CLA_BACKEND
+    )
+    RUN_MEANS_TEST_CALCULATORS_IN_PARALLEL = (
+        os.environ.get("RUN_MEANS_TEST_CALCULATORS_IN_PARALLEL", "True").lower() == "true"
+    )

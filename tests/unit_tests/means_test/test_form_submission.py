@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch, Mock, PropertyMock
-from app.means_test.api import EligibilityState
+from app.means_test.constants import EligibilityState
 from app.means_test.views import MeansTest, InScopeMixin, CheckYourAnswers
 
 
@@ -23,24 +23,110 @@ class TestDispatchRequest:
     def mock_eligibility(self):
         mock = Mock()
         mock.forms = {
-            "about-you": {"name": "Test User", "email": "test@example.com"},
-            "benefits": {"receives_benefits": True},
-            "savings": {"amount": 5000},
-            "income": {"salary": 25000},
-            "property": {"property_value": 200000},
+            "about-you": {
+                "aged_60_or_over": False,
+                "has_children": False,
+                "has_dependants": False,
+                "has_partner": False,
+                "has_savings": True,
+                "has_valuables": False,
+                "in_dispute": None,
+                "is_employed": False,
+                "is_self_employed": False,
+                "num_children": None,
+                "num_dependants": None,
+                "on_benefits": False,
+                "own_property": True,
+                "partner_is_employed": None,
+                "partner_is_self_employed": None,
+            },
+            "savings": {"investments": 60000, "savings": 70000, "valuables": None},
+            "income": {
+                "child_tax_credit": {
+                    "interval_period": None,
+                    "per_interval_value": None,
+                },
+                "earnings": {"interval_period": None, "per_interval_value": None},
+                "income_tax": {"interval_period": None, "per_interval_value": None},
+                "maintenance_received": {
+                    "interval_period": "per_month",
+                    "per_interval_value": 100000,
+                },
+                "national_insurance": {
+                    "interval_period": None,
+                    "per_interval_value": None,
+                },
+                "other_income": {
+                    "interval_period": "per_month",
+                    "per_interval_value": 3000,
+                },
+                "partner_earnings": {
+                    "interval_period": None,
+                    "per_interval_value": None,
+                },
+                "partner_income_tax": {
+                    "interval_period": None,
+                    "per_interval_value": None,
+                },
+                "partner_maintenance_received": {
+                    "interval_period": None,
+                    "per_interval_value": None,
+                },
+                "partner_national_insurance": {
+                    "interval_period": None,
+                    "per_interval_value": None,
+                },
+                "partner_other_income": {
+                    "interval_period": None,
+                    "per_interval_value": None,
+                },
+                "partner_pension": {
+                    "interval_period": None,
+                    "per_interval_value": None,
+                },
+                "partner_working_tax_credit": {
+                    "interval_period": None,
+                    "per_interval_value": None,
+                },
+                "pension": {
+                    "interval_period": "per_month",
+                    "per_interval_value": 2000,
+                },
+                "working_tax_credit": {
+                    "interval_period": None,
+                    "per_interval_value": None,
+                },
+            },
+            "property": {
+                "properties": [
+                    {
+                        "csrf_token": None,
+                        "in_dispute": False,
+                        "is_main_home": True,
+                        "is_rented": False,
+                        "mortgage_payments": 100000,
+                        "mortgage_remaining": 200000,
+                        "other_shareholders": False,
+                        "property_value": 1000000,
+                        "rent_amount": {
+                            "interval_period": None,
+                            "per_interval_value": None,
+                            "per_interval_value_pounds": None,
+                        },
+                    }
+                ]
+            },
         }
         return mock
 
     @pytest.fixture
     def mock_form(self):
-        """Create a mock form with validate_on_submit returning False by default."""
         mock = Mock()
         mock.validate_on_submit.return_value = False
         mock.data = {}
         return mock
 
     def test_get_request_displays_form(self, app, client, mock_eligibility):
-        """Test that a GET request displays the form."""
         with (
             patch(
                 "app.means_test.views.session.get_eligibility",
@@ -50,14 +136,10 @@ class TestDispatchRequest:
         ):
             response = client.get("/about-you")
 
-            # Assert the response status
             assert response.status_code == 200
-            # Verify render_template was called
             mock_render.assert_called_once()
 
     def test_form_submission_normal_flow(self, app, client, mock_eligibility, mock_url_for):
-        """Test successful form submission with normal flow to next page."""
-        # Create a mock form that validates successfully
         mock_form = Mock()
         mock_form.validate_on_submit.return_value = True
         mock_form.data = {"benefits": "pension_credit"}
@@ -68,33 +150,23 @@ class TestDispatchRequest:
                 "app.means_test.views.session.get_eligibility",
                 return_value=mock_eligibility,
             ),
+            patch("app.means_test.views.check_eligibility") as mock_check_eligibility,
             patch("app.means_test.views.BenefitsForm", return_value=mock_form),
-            patch("app.means_test.views.update_means_test") as mock_update_means_test,
-            patch("app.means_test.views.is_eligible") as mock_is_eligible,
-            patch("app.means_test.views.MeansTestPayload") as mock_payload_class,
             patch("app.means_test.views.redirect") as mock_redirect,
             patch(
                 "app.means_test.views.MeansTest.ensure_form_protection",
                 return_value=None,
             ),
         ):
-            mock_payload = mock_payload_class.return_value
-            mock_update_means_test.return_value = {"reference": "test-reference"}
-            mock_is_eligible.return_value = EligibilityState.UNKNOWN
-
             view = MeansTest.as_view("benefits", Mock(return_value=mock_form), "benefits")
             view()
 
-            # Verify the form data was added to eligibility
             mock_eligibility.add.assert_called_once_with("benefits", {"benefits": "pension_credit"})
 
-            # Verify URL for next page was called
+            mock_check_eligibility.assert_called()
+
             mock_url_for.assert_called()
 
-            # Verify API was called with payload
-            mock_update_means_test.assert_called_once_with(mock_payload)
-
-            # Verify redirect was called
             mock_redirect.assert_called_once()
 
     def test_redirect_to_review_when_eligible(self, app, client, mock_eligibility, mock_url_for):
@@ -110,57 +182,23 @@ class TestDispatchRequest:
                 return_value=mock_eligibility,
             ),
             patch("app.means_test.views.IncomeForm", return_value=mock_form),
-            patch("app.means_test.views.update_means_test") as mock_update_means_test,
-            patch("app.means_test.views.is_eligible") as mock_is_eligible,
-            patch("app.means_test.views.MeansTestPayload"),
+            patch("app.means_test.views.check_eligibility") as mock_check_eligibility,
             patch("app.means_test.views.redirect") as mock_redirect,
             patch(
                 "app.means_test.views.MeansTest.ensure_form_protection",
                 return_value=None,
             ),
         ):
-            mock_update_means_test.return_value = {"reference": "test-reference"}
-            mock_is_eligible.return_value = EligibilityState.YES
-
             from app.means_test.views import MeansTest
 
             view = MeansTest.as_view("income", Mock(return_value=mock_form), "income")
             view()
 
+            mock_check_eligibility.assert_called()
+
             mock_url_for.assert_called_with("means_test.review")
 
             mock_redirect.assert_called_once()
-
-    def test_no_reference(self, app, client, mock_eligibility):
-        """Test that we raise an error if we get no eligibility reference back."""
-        mock_form = Mock()
-        mock_form.validate_on_submit.return_value = True
-        mock_form.data = {"amount": 15000}
-
-        with (
-            app.test_request_context("/savings", method="POST"),
-            patch(
-                "app.means_test.views.session.get_eligibility",
-                return_value=mock_eligibility,
-            ),
-            patch("app.means_test.views.SavingsForm", return_value=mock_form),
-            patch("app.means_test.views.update_means_test") as mock_update_means_test,
-            patch("app.means_test.views.MeansTestPayload"),
-            patch(
-                "app.means_test.views.MeansTest.ensure_form_protection",
-                return_value=None,
-            ),
-        ):
-            mock_update_means_test.return_value = {}
-
-            from app.means_test.views import MeansTest
-
-            view = MeansTest.as_view("savings", Mock(return_value=mock_form), "savings")
-
-            with pytest.raises(ValueError, match="Eligibility reference not found in response"):
-                view()
-
-            mock_update_means_test.assert_called_once()
 
 
 @patch.object(InScopeMixin, "ensure_in_scope", return_value=None)
@@ -170,15 +208,14 @@ class TestCheckYourAnswersSubmission:
         """Test post method when eligibility state is YES/ UNKNOWN."""
         with client.session_transaction() as session:
             session["ec_reference"] = "test-reference"
+            session["eligibility_result"] = eligibility
 
         with (
-            patch("app.means_test.views.is_eligible", return_value=eligibility) as mock_is_eligible,
             patch("app.means_test.views.redirect") as mock_redirect,
             patch.object(CheckYourAnswers, "ensure_all_forms_are_complete", return_value=None),
         ):
             client.post("/review")
 
-            mock_is_eligible.assert_called_once()
             mock_url_for.assert_called_once_with("contact.eligible")
             mock_redirect.assert_called_once_with("/mocked/contact.eligible")
 
@@ -186,9 +223,9 @@ class TestCheckYourAnswersSubmission:
         """Test post method when ineligible but eligible for HLPAS."""
         with client.session_transaction() as sess:
             sess["ec_reference"] = "test-reference"
+            sess["eligibility_result"] = EligibilityState.NO
 
         with (
-            patch("app.means_test.views.is_eligible", return_value=EligibilityState.NO) as mock_is_eligible,
             patch("app.means_test.views.redirect") as mock_redirect,
             patch("app.means_test.views.session") as mock_session,
             patch.object(CheckYourAnswers, "ensure_all_forms_are_complete", return_value=None),
@@ -200,8 +237,6 @@ class TestCheckYourAnswersSubmission:
 
             client.post("/review")
 
-            mock_is_eligible.assert_called()
-
             mock_url_for.assert_called_once_with("means_test.result.hlpas")
             mock_redirect.assert_called_once_with("/mocked/means_test.result.hlpas")
 
@@ -209,9 +244,9 @@ class TestCheckYourAnswersSubmission:
         """Test post method when ineligible with subcategory but not eligible for HLPAS."""
         with client.session_transaction() as sess:
             sess["ec_reference"] = "test-reference"
+            sess["eligibility_result"] = EligibilityState.NO
 
         with (
-            patch("app.means_test.views.is_eligible", return_value=EligibilityState.NO) as mock_is_eligible,
             patch("app.means_test.views.redirect") as mock_redirect,
             patch("app.means_test.views.session") as mock_session,
             patch.object(CheckYourAnswers, "ensure_all_forms_are_complete", return_value=None),
@@ -221,8 +256,6 @@ class TestCheckYourAnswersSubmission:
             type(mock_session).subcategory = PropertyMock(return_value=mock_subcategory)
 
             client.post("/review")
-
-            mock_is_eligible.assert_called()
 
             mock_url_for.assert_called_once_with("means_test.result.ineligible")
             mock_redirect.assert_called_once_with("/mocked/means_test.result.ineligible")

@@ -39,7 +39,7 @@ jobs:
     - name: Unit test with pytest
       run: |
         pip install pytest pytest-cov
-        coverage run -m pytest tests/unit_tests
+        coverage run -m pytest tests/unit_tests app/means_test/libs/eligibility_calculator/tests
         coverage xml
 
     - name: Upload coverage report

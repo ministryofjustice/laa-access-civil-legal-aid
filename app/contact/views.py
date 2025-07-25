@@ -8,7 +8,7 @@ import logging
 from flask import session, render_template, request, redirect, url_for, jsonify
 from app.api import cla_backend
 from app.contact.notify.api import notify
-from app.means_test.api import is_eligible, EligibilityState
+from app.means_test import EligibilityState
 from app.means_test.views import MeansTest
 from datetime import datetime
 from app.categories.constants import (
@@ -141,13 +141,13 @@ class FastTrackedContactUs(InScopeMixin, ContactUs):
 
 class EligibleContactUsPage(ContactUs):
     def get_financial_eligibility_status(self):
-        eligibility_result = is_eligible(session.ec_reference)
-        if eligibility_result.YES:
+        eligibility_result = session.get("eligibility_result")
+        if eligibility_result == EligibilityState.YES:
             return (
                 FinancialAssessmentStatus.PASSED,
                 FinancialAssessmentReason.MORE_INFO_REQUIRED,
             )
-        elif eligibility_result.NO:
+        elif eligibility_result == EligibilityState.NO:
             return (
                 FinancialAssessmentStatus.FAILED,
                 FinancialAssessmentReason.MORE_INFO_REQUIRED,
@@ -157,7 +157,7 @@ class EligibleContactUsPage(ContactUs):
         if not session.ec_reference:
             return redirect(url_for("main.session_expired"))
 
-        state = is_eligible(session.ec_reference)
+        state = session.get("eligibility_result")
         if state != EligibilityState.YES:
             return redirect(url_for("main.session_expired"))
 
