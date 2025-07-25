@@ -12,3 +12,4 @@ flask-babel==4.0.0
 flask-caching
 markdown
 email-validator
+python-dateutil
