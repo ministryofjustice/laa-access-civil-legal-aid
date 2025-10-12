@@ -1,7 +1,7 @@
 {
   "engines": {
-    "node": "^20.9.0",
-    "npm": "^10.1.0"
+    "node": ">=20.9.0",
+    "npm": ">=10.1.0"
   },
   "scripts": {
     "gov-images": "cp -R node_modules/govuk-frontend/dist/govuk/assets/. app/static/dist",
@@ -10,7 +10,7 @@
     "watch": "npm run gov-images && node esbuild.config.js --watch"
   },
   "dependencies": {
-    "govuk-frontend": "^5.10.0"
+    "govuk-frontend": "^5.13.0"
   },
   "devDependencies": {
     "esbuild": "0.25.0",
