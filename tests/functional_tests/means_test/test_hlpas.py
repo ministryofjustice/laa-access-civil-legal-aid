@@ -34,4 +34,4 @@ def test_hlpas_user_journey(page: Page):
 def test_non_hlpas_user_journey(page: Page):
     navigate_to_means_test_no_hlpas(page)
     fail_means_test(page)
-    expect(page.get_by_role("heading", name="Legal aid doesn’t cover all types of problem")).to_be_visible()
+    expect(page.get_by_role("heading", name="You’re unlikely to get legal aid")).to_be_visible()
