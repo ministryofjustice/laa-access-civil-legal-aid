@@ -13,3 +13,5 @@ flask-caching
 markdown
 email-validator
 python-dateutil
+urllib3>=2.6.3
+Brotli>=1.2.0
