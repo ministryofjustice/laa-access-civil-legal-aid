@@ -24,4 +24,4 @@ repos:
         name: truffleHog3
         entry: bash -c 'trufflehog3 filesystem .'
         language: system
-        stages: ["commit", "push"]
+        stages: ["pre-commit", "pre-push"]
