@@ -1,17 +1,38 @@
 default_language_version:
-    python: python3.13
+  python: python3.13
 repos:
   - repo: https://github.com/jazzband/pip-tools
     rev: v7.5.0
     hooks:
       - id: pip-compile
+        additional_dependencies:
+          - pip==23.3.1
         name: pip-compile requirements-development.in
         files: requirements-(base|development).in
-        args: [ "--strip-extras", "--no-header", requirements/source/requirements-development.in, "--output-file", requirements/generated/requirements-development.txt, "--no-annotate" ]
+        args:
+          [
+            "--strip-extras",
+            "--no-header",
+            requirements/source/requirements-development.in,
+            "--output-file",
+            requirements/generated/requirements-development.txt,
+            "--no-annotate"
+          ]
+
       - id: pip-compile
+        additional_dependencies:
+          - pip==23.3.1
         name: pip-compile requirements-production.in
         files: requirements-(base|production).in
-        args: [ "--strip-extras", "--no-header", requirements/source/requirements-production.in, "--output-file", requirements/generated/requirements-production.txt, "--no-annotate" ]
+        args:
+          [
+            "--strip-extras",
+            "--no-header",
+            requirements/source/requirements-production.in,
+            "--output-file",
+            requirements/generated/requirements-production.txt,
+            "--no-annotate"
+          ]
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.9.3
     hooks:
@@ -24,4 +45,4 @@ repos:
         name: truffleHog3
         entry: bash -c 'trufflehog3 filesystem .'
         language: system
-        stages: ["commit", "push"]
+        stages: ["pre-commit", "pre-push"]
