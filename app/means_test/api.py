@@ -70,7 +70,7 @@ def _log_calculator_mismatch(
 ) -> None:
     """Log calculator result mismatch to both local logs and Sentry."""
     error_msg = f"Means test calculator results mismatch: CFE={cfe_result}, CLA_Backend={cla_backend_result}"
-    logger.error(error_msg)
+    logger.error(error_msg, exc_info=True)
 
     sentry_sdk.set_tag("error_type", "means_test_mismatch")
     sentry_sdk.set_context(

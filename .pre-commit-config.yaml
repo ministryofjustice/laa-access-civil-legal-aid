@@ -9,6 +9,8 @@ repos:
     rev: v7.5.0
     hooks:
       - id: pip-compile
+        additional_dependencies:
+          - pip==23.3.1
         name: pip-compile requirements-development.in
         files: requirements-(base|development).in
         args:
@@ -21,6 +23,8 @@ repos:
             "--no-annotate",
           ]
       - id: pip-compile
+        additional_dependencies:
+          - pip==23.3.1
         name: pip-compile requirements-production.in
         files: requirements-(base|production).in
         args:
