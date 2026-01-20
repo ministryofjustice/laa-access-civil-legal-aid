@@ -103,4 +103,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }} # Mandatory
           dependency-review-config-file: "./.github/dependency-review-config.yml" # Optional
-          trufflehog-config-file: "./.trufflehog3.yml" # Optional
+          trufflehog-config-file: ".trufflehog3.yml" # Optional
