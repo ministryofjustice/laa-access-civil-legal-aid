@@ -10,6 +10,8 @@
 
 Create a virtual environment and install the python dependencies:
 
+> You need python 3.13 for this project
+
 ```shell
 python3 -m venv .venv
 source .venv/bin/activate

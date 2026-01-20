@@ -20,7 +20,7 @@ class TestLogCalculatorMismatch:
             expected_msg = (
                 "Means test calculator results mismatch: CFE=EligibilityState.YES, CLA_Backend=EligibilityState.NO"
             )
-            mock_logger.error.assert_called_once_with(expected_msg)
+            mock_logger.error.assert_called_once_with(expected_msg, exc_info=True)
             mock_sentry.set_tag.assert_called_once_with("error_type", "means_test_mismatch")
             mock_sentry.capture_message.assert_called_once_with(expected_msg, level="error")
 
