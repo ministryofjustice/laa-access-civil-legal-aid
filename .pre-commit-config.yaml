@@ -2,7 +2,7 @@ default_language_version:
   python: python3.13
 repos:
   - repo: https://github.com/ministryofjustice/devsecops-hooks
-    rev: v1.2.0
+    rev: v1.3.0
     hooks:
       - id: baseline
   - repo: https://github.com/jazzband/pip-tools
@@ -38,10 +38,3 @@ repos:
       - id: ruff
         args: [--fix]
       - id: ruff-format
-  - repo: local
-    hooks:
-      - id: trufflehog3
-        name: truffleHog3
-        entry: bash -c 'trufflehog3 filesystem .'
-        language: system
-        stages: ["commit", "push"]
