@@ -35,12 +35,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Lint
-        uses: chartboost/ruff-action@v1
+        uses: astral-sh/ruff-action@57714a7c8a2e59f32539362ba31877a1957dded1 # v3.5.1
         with:
           args: check --output-format=github
           version: 0.9.3
       - name: Format
-        uses: chartboost/ruff-action@v1
+        uses: astral-sh/ruff-action@57714a7c8a2e59f32539362ba31877a1957dded1 # v3.5.1
         with:
           args: format --check
 
