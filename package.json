@@ -10,7 +10,7 @@
     "watch": "npm run gov-images && node esbuild.config.js --watch"
   },
   "dependencies": {
-    "govuk-frontend": "^5.10.0"
+    "govuk-frontend": "^5.14.0"
   },
   "devDependencies": {
     "esbuild": "0.25.0",
