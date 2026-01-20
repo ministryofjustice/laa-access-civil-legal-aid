@@ -18,6 +18,3 @@ app/means_test/libs/eligibility_calculator/tests/cassettes/
 # Examples and data for auto-tests
 docs/*.html
 docs/examples/
-
-# Trufflehog rules file
-trufflehog3/static/rules.yml
