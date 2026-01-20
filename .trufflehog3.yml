@@ -49,6 +49,11 @@ exclude: # exclude matching issues
     pattern: 9e404e6c59d286645b2465aacaf61108ebc12a3a
     paths:
       - trufflehog3/source.py
+
+  - message: Pinned GitHub action SHA (ruff-action)
+    pattern: 57714a7c8a2e59f32539362ba31877a1957dded1
+    paths:
+      - .github/workflows/static-analysis.yml
 # NOTE you can also specify IDs or patterns together or without paths, e.g.
 #
 #   - message: Skip ID everywhere
