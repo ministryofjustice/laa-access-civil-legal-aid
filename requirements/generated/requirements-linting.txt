@@ -12,4 +12,3 @@ markupsafe==3.0.2
 pyyaml==6.0.1
 ruff==0.9.3
 smmap==5.0.2
-trufflehog3==3.0.10

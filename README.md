@@ -134,7 +134,6 @@ For further guidance on writing tests https://playwright.dev/python/docs/writing
 The following will:
 - Generate requirement.txt files from files inside requirements/source/*.in and put them into requirements/generated/*.txt
 - Run linting checks with ruff
-- Run secret detection via trufflehog3
 
 ```shell
 pre-commit install
@@ -154,12 +153,14 @@ ruff format
 ```
 
 ### Manually running secret detection
-The trufflehog3 package looks for any exposed secrets in your project.
+GitLeaks is executed at `pre-hook` commit and can be executed locally by running the following command.
 
-To use trufflehog on your current project, run:
-```shell
-trufflehog3 filesystem .
+```bash
+ prek install # If not already done
+ prek run
 ```
+
+Same scans are also executed on the pipeline under `SCA` alongside with Trufflehog.
 
 ## Translation
 We are using the [Flask-Babel](https://python-babel.github.io/flask-babel/#) package to translate text.
