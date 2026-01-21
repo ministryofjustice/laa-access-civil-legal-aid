@@ -25,13 +25,13 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Assume role in Cloud Platform
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@61815dcd50bd041e203e49132bacad1fd04d2708 # v5.1.1
         with:
           role-to-assume: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
           aws-region: ${{ inputs.ACCESS_ECR_REGION }}
 
       - name: Login to container repository
-        uses: aws-actions/amazon-ecr-login@v2
+        uses: aws-actions/amazon-ecr-login@062b18b96a7aff071d4dc91bc00c4c1a7945b076 # v2.0.1
         id: login-ecr
         with:
           mask-password: true
