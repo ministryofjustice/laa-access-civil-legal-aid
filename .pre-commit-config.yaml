@@ -1,6 +1,10 @@
 default_language_version:
   python: python3.13
 repos:
+  - repo: https://github.com/ministryofjustice/devsecops-hooks
+    rev: v1.3.0
+    hooks:
+      - id: baseline
   - repo: https://github.com/jazzband/pip-tools
     rev: v7.5.0
     hooks:
@@ -16,9 +20,8 @@ repos:
             requirements/source/requirements-development.in,
             "--output-file",
             requirements/generated/requirements-development.txt,
-            "--no-annotate"
+            "--no-annotate",
           ]
-
       - id: pip-compile
         additional_dependencies:
           - pip==23.3.1
@@ -31,18 +34,11 @@ repos:
             requirements/source/requirements-production.in,
             "--output-file",
             requirements/generated/requirements-production.txt,
-            "--no-annotate"
+            "--no-annotate",
           ]
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.9.3
     hooks:
       - id: ruff
-        args: [ --fix ]
+        args: [--fix]
       - id: ruff-format
-  - repo: local
-    hooks:
-      - id: trufflehog3
-        name: truffleHog3
-        entry: bash -c 'trufflehog3 filesystem .'
-        language: system
-        stages: ["pre-commit", "pre-push"]

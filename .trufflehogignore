@@ -1,0 +1,20 @@
+# Build directories
+.env
+build/
+dist/
+python3.*/
+package-lock.json
+README.md
+app/static/
+.ruff_cache/
+node_modules/
+.pytest_cache/
+.idea/
+.github/workflows/build-docs.yml
+.github/workflows/deploy-docs.yml
+docs/makefile
+app/means_test/libs/eligibility_calculator/tests/cassettes/
+
+# Examples and data for auto-tests
+docs/*.html
+docs/examples/
