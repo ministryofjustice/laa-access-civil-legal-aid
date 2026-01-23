@@ -1,6 +1,6 @@
 # Check if you can get legal aid
 
-[![Standards Icon]][Standards Link]
+[![Ministry of Justice Repository Compliance Badge](https://github-community.service.justice.gov.uk/repository-standards/api/laa-access-civil-legal-aid/badge)](https://github-community.service.justice.gov.uk/repository-standards/laa-access-civil-legal-aid)
 
 # Getting started
 
@@ -131,15 +131,19 @@ playwright install
 For further guidance on writing tests https://playwright.dev/python/docs/writing-tests
 
 ## Code formatting and linting
+
 The following will:
-- Generate requirement.txt files from files inside requirements/source/*.in and put them into requirements/generated/*.txt
+
+- Generate requirement.txt files from files inside requirements/source/_.in and put them into requirements/generated/_.txt
 - Run linting checks with ruff
 
 ```shell
 pre-commit install
 ```
+
 ### Manually running linting
-The Ruff linter looks for code quality issues. Ensure there are no ruff issues before committing. 
+
+The Ruff linter looks for code quality issues. Ensure there are no ruff issues before committing.
 
 To lint all files in the directory, run:
 
@@ -148,11 +152,13 @@ ruff check
 ```
 
 To format all files in the directory, run:
+
 ```shell
 ruff format
 ```
 
 ### Manually running secret detection
+
 GitLeaks is executed at `pre-hook` commit and can be executed locally by running the following command.
 
 ```bash
@@ -163,24 +169,29 @@ GitLeaks is executed at `pre-hook` commit and can be executed locally by running
 Same scans are also executed on the pipeline under `SCA` alongside with Trufflehog.
 
 ## Translation
+
 We are using the [Flask-Babel](https://python-babel.github.io/flask-babel/#) package to translate text.
 There are 4 key components to translating text on the website.
+
 1. babel.cfg - Identifies which files to look for strings that can be translated
 2. ./bin/translate.sh - Script to collect/update all translatable strings
 3. pybabel compile - Should be run after updating any messages.po files. The full command is given in the output of translate.sh script
 4. There are two languages(English and Welsh) available on the site. No translation is provided for English as that is the default language
 
 ### How to translate text in template
+
 1. Wrap text in `{% trans %}...{% endtrans %}`
 2. Run `./bin/translate.sh`
 3. Update `app/translations/cy/LC_MESSAGES/messages.po` with welsh text
 4. Run `pybabel compile -d app/translations -l cy -f`
 
 ### How to translate text in python
+
 ```
 from flask_babel import lazy_gettext as _
 _("text to translate")
 ```
+
 2. Run `./bin/translate.sh`
 3. Update `app/translations/cy/LC_MESSAGES/messages.po` with welsh text
 4. Run `pybabel compile -d app/translations -l cy -f`
@@ -202,7 +213,7 @@ Repository uses [MoJ DevSecOps hooks](https://github.com/ministryofjustice/devse
    curl --proto '=https' --tlsv1.2 -LsSf https://raw.githubusercontent.com/ministryofjustice/devsecops-hooks/e85ca6127808ef407bc1e8ff21efed0bbd32bb1a/prek/prek-installer.sh | sh
    ```
 
-   or 
+   or
 
    ```bash
    brew install prek
@@ -214,7 +225,7 @@ Repository uses [MoJ DevSecOps hooks](https://github.com/ministryofjustice/devse
    powershell -ExecutionPolicy ByPass -c "irm https://raw.githubusercontent.com/ministryofjustice/devsecops-hooks/e85ca6127808ef407bc1e8ff21efed0bbd32bb1a/prek/prek-installer.ps1 | iex"
    ```
 
-3. **Activation**
+2. **Activation**
 
    Execute the following command in the repository directory
 
@@ -222,9 +233,9 @@ Repository uses [MoJ DevSecOps hooks](https://github.com/ministryofjustice/devse
    prek install
    ```
 
-4. **Test**
+3. **Test**
 
-    To dry-run the hook
+   To dry-run the hook
 
    ```bash
    prek run
