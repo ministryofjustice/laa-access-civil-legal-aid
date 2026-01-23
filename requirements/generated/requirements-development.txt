@@ -16,7 +16,7 @@ dnspython==2.7.0
 email-validator==2.2.0
 execnet==2.1.2
 filelock==3.18.0
-flask==3.1.1
+flask==3.1.2
 flask-babel==4.0.0
 flask-caching==2.3.1
 flask-compress==1.23
