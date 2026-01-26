@@ -10,7 +10,10 @@ sentry-sdk[flask]>=2.49.0
 flask-babel==4.0.0
 flask-caching
 markdown
+
+# email-validator is required indirectly by Flask-WTF / WTForms for email field validation.
 email-validator
+
 python-dateutil
 urllib3>=2.6.3
 Brotli>=1.2.0
