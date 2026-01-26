@@ -8,8 +8,8 @@ charset-normalizer==3.4.4
 click==8.2.1
 deepmerge==2.0
 deprecated==1.2.18
-dnspython==2.7.0
-email-validator==2.2.0
+dnspython==2.8.0
+email-validator==2.3.0
 flask==3.1.2
 flask-babel==4.0.0
 flask-caching==2.3.1
@@ -34,7 +34,6 @@ pygments==2.19.1
 python-dateutil==2.9.0.post0
 python-dotenv==1.1.0
 pytz==2025.2
-pyyaml==6.0.2
 requests==2.32.5
 rich==13.9.4
 sentry-sdk==2.49.0
