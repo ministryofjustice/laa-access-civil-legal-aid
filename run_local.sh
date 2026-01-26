@@ -18,22 +18,21 @@ fi
 export CLA_BACKEND_DIR="$(cd "$BACKEND_DIR" && pwd)"
 BACKEND_COMPOSE_FILE="$CLA_BACKEND_DIR/docker-compose.yaml"
 
-echo "Running environment: $ENVIRONMENT"
-echo "Using backend: $CLA_BACKEND_DIR"
-
+# Stop and remove any existing containers from previous runs
 docker compose \
   -f compose-standalone.yml \
   -f "$BACKEND_COMPOSE_FILE" \
   -f compose-backend-path.override.yml \
   down --remove-orphans
 
+# Start up the backend and its dependencies
 docker compose \
   -f compose-standalone.yml \
   -f "$BACKEND_COMPOSE_FILE" \
   -f compose-backend-path.override.yml \
   up -d --build
 
-# Wait like backend repo does
+# Run database migrations and start the applications
 docker compose \
   -f compose-standalone.yml \
   -f "$BACKEND_COMPOSE_FILE" \
