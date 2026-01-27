@@ -115,7 +115,7 @@ jobs:
 
       - name: Build frontend assets
         run: |
-          npm ci
+          npm ci --ignore-scripts
           npm run build
 
       - name: Functional test with pytest

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 
 export DOCKER_BUILDKIT=1
 export ENVIRONMENT="${1:-development}"
