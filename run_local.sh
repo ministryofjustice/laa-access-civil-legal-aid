@@ -11,6 +11,7 @@ BACKEND_DIR="${BACKEND_DIR:-../cla_backend}"
 if [ ! -f "$BACKEND_DIR/docker-compose.yaml" ]; then
   echo "Backend not found at $BACKEND_DIR — cloning..."
   TMP_DIR="$(mktemp -d)"
+  trap 'rm -rf "$TMP_DIR"' EXIT
   git clone --depth 1 "$BACKEND_REPO_URL" "$TMP_DIR/cla_backend"
   BACKEND_DIR="$TMP_DIR/cla_backend"
 fi
