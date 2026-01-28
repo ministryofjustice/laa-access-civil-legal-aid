@@ -15,7 +15,7 @@ distlib==0.4.0
 dnspython==2.8.0
 email-validator==2.3.0
 execnet==2.1.2
-filelock==3.18.0
+filelock==3.20.3
 flask==3.1.2
 flask-babel==4.0.0
 flask-caching==2.3.1
@@ -28,7 +28,7 @@ govuk-frontend-jinja==3.10.0
 govuk-frontend-wtf==3.2.0
 greenlet==3.2.3
 identify==2.6.16
-idna==3.10
+idna==3.11
 iniconfig==2.3.0
 isort==6.0.1
 itsdangerous==2.2.0
@@ -36,7 +36,7 @@ jinja2==3.1.4
 limits==5.4.0
 markdown==3.8.2
 markdown-it-py==3.0.0
-markupsafe==3.0.2
+markupsafe==3.0.3
 mdurl==0.1.2
 multidict==6.6.3
 nodeenv==1.9.1
