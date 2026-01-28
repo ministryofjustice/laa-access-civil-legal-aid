@@ -11,9 +11,12 @@ RUN npm run build
 FROM $BASE_IMAGE AS base
 ARG REQUIREMENTS_FILE=requirements-production.txt
 RUN apt-get update
-# Upgrade perl-base to install latests security update
-# https://avd.aquasec.com/nvd/2024/cve-2024-56406/
-RUN apt-get install --only-upgrade perl-base -y
+# Upgrade packages to install latest security updates
+RUN apt-get install --only-upgrade -y \
+    perl-base \
+    libssl3t64 \
+    openssl \
+    openssl-provider-legacy
 
 # Set environment variables
 ENV FLASK_RUN_HOST=0.0.0.0
