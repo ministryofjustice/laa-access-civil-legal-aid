@@ -41,5 +41,5 @@ six==1.17.0
 typing-extensions==4.14.0
 urllib3==2.6.3
 werkzeug==3.1.5
-wrapt==1.17.2
+wrapt==1.17.3
 wtforms==3.2.1
