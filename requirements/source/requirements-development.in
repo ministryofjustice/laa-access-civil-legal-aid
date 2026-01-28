@@ -1,5 +1,6 @@
 -r requirements-base.in
 isort
+pytest-cov
 pytest-flask
 pytest-playwright
 pytest-mock

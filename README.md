@@ -2,11 +2,18 @@
 
 [![Ministry of Justice Repository Compliance Badge](https://github-community.service.justice.gov.uk/repository-standards/api/laa-access-civil-legal-aid/badge)](https://github-community.service.justice.gov.uk/repository-standards/laa-access-civil-legal-aid)
 
-# Getting started
+## Getting started
 
 ## Local install for development
+You can run this project in one of two ways:
 
-### Setup
+- Local development setup (Python + Node on your machine)
+
+- Docker (recommended for quick setup or parity with deployed environments)
+
+👉 Pick one — you don’t need both.
+
+## Local development setup:
 
 Create a virtual environment and install the python dependencies:
 
