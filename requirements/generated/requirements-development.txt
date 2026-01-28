@@ -28,7 +28,7 @@ govuk-frontend-jinja==3.10.0
 govuk-frontend-wtf==3.2.0
 greenlet==3.2.3
 identify==2.6.16
-idna==3.10
+idna==3.11
 iniconfig==2.1.0
 isort==6.0.1
 itsdangerous==2.2.0
