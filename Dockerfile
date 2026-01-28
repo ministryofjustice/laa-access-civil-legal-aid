@@ -10,13 +10,10 @@ RUN npm run build
 
 FROM $BASE_IMAGE AS base
 ARG REQUIREMENTS_FILE=requirements-production.txt
-RUN apt-get update
-# Upgrade packages to install latest security updates
-RUN apt-get install --only-upgrade -y \
-    perl-base \
-    libssl3t64 \
-    openssl \
-    openssl-provider-legacy
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set environment variables
 ENV FLASK_RUN_HOST=0.0.0.0
@@ -40,9 +37,6 @@ COPY app ./app
 
 # Change ownership of the working directory to the non-root user
 RUN chown -R app:app /home/app
-
-# Cleanup container
-RUN rm -rf /var/lib/apt/lists/*
 
 # Switch to the non-root user
 USER app
