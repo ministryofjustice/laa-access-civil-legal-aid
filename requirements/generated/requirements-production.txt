@@ -8,7 +8,7 @@ charset-normalizer==3.4.4
 click==8.3.1
 deepmerge==2.0
 deprecated==1.2.18
-dnspython==2.7.0
+dnspython==2.8.0
 email-validator==2.2.0
 flask==3.1.2
 flask-babel==4.0.0
