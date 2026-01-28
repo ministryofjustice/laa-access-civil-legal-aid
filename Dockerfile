@@ -4,7 +4,7 @@ FROM node:lts-iron as node_build
 WORKDIR /home/node
 COPY esbuild.config.js package.json package-lock.json ./
 COPY app/static/src app/static/src
-RUN npm ci
+RUN npm install
 RUN npm run build
 
 
