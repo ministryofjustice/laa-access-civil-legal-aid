@@ -46,7 +46,7 @@ platformdirs==4.3.8
 playwright==1.52.0
 pluggy==1.6.0
 pre-commit==4.2.0
-propcache==0.3.2
+propcache==0.4.1
 pyee==13.0.0
 pygments==2.19.2
 pytest==8.4.2
