@@ -39,7 +39,7 @@ markdown-it-py==3.0.0
 markupsafe==3.0.2
 mdurl==0.1.2
 multidict==6.6.3
-nodeenv==1.9.1
+nodeenv==1.10.0
 ordered-set==4.1.0
 packaging==25.0
 platformdirs==4.3.8
