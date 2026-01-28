@@ -6,39 +6,41 @@ export ENVIRONMENT="${1:-development}"
 
 BACKEND_REPO_URL="https://github.com/ministryofjustice/cla_backend"
 BACKEND_DIR="${BACKEND_DIR:-../cla_backend}"
+CACHE_DIR=".tmp/cla_backend"
 
-# Use local backend if present, otherwise clone into a temp dir
-if [ ! -f "$BACKEND_DIR/docker-compose.yaml" ]; then
-  echo "Backend not found at $BACKEND_DIR — cloning..."
-  TMP_DIR="$(mktemp -d)"
-  trap 'rm -rf "$TMP_DIR"' EXIT
-  git clone --depth 1 "$BACKEND_REPO_URL" "$TMP_DIR/cla_backend"
-  BACKEND_DIR="$TMP_DIR/cla_backend"
+# Use local backend if present, otherwise use cached backend, otherwise clone into cache
+if [ -f "$BACKEND_DIR/docker-compose.yaml" ]; then
+  echo "Using local backend at: $BACKEND_DIR"
+elif [ -f "$CACHE_DIR/docker-compose.yaml" ]; then
+  echo "Using cached backend at: $CACHE_DIR"
+  BACKEND_DIR="$CACHE_DIR"
+else
+  echo "Backend not found at $BACKEND_DIR — cloning into $CACHE_DIR..."
+  mkdir -p "$(dirname "$CACHE_DIR")"
+  git clone --depth 1 "$BACKEND_REPO_URL" "$CACHE_DIR"
+  BACKEND_DIR="$CACHE_DIR"
+fi
+
+if [ "${UPDATE_BACKEND:-0}" = "1" ] && [ "$BACKEND_DIR" = "$CACHE_DIR" ]; then
+  echo "Refreshing cached backend in $CACHE_DIR..."
+  (cd "$CACHE_DIR" && git fetch --depth 1 origin && git reset --hard origin/main)
 fi
 
 export CLA_BACKEND_DIR="$(cd "$BACKEND_DIR" && pwd)"
 BACKEND_COMPOSE_FILE="$CLA_BACKEND_DIR/docker-compose.yaml"
 
-# Stop and remove any existing containers from previous runs
-docker compose \
-  -f compose-standalone.yml \
-  -f "$BACKEND_COMPOSE_FILE" \
-  -f compose-backend-path.override.yml \
-  down --remove-orphans
+# Helper function to run docker compose with multiple files
+compose() {
+  docker compose \
+    -f compose-standalone.yml \
+    -f "$BACKEND_COMPOSE_FILE" \
+    -f compose-backend-path.override.yml \
+    "$@"
+}
 
-# Start up the backend and its dependencies
-docker compose \
-  -f compose-standalone.yml \
-  -f "$BACKEND_COMPOSE_FILE" \
-  -f compose-backend-path.override.yml \
-  up -d --build
-
-# Run database migrations and start the applications
-docker compose \
-  -f compose-standalone.yml \
-  -f "$BACKEND_COMPOSE_FILE" \
-  -f compose-backend-path.override.yml \
-  run --rm start_applications
+compose down --remove-orphans
+compose up -d --build
+compose run --rm start_applications
 
 docker exec cla_backend bash -lc "bin/create_db.sh"
 
