@@ -110,8 +110,7 @@ jobs:
           python -m pip install -r requirements/generated/requirements-development.txt
   
       - name: Install Playwright browsers
-        run: |
-          playwright install --with-deps
+        run: playwright install --with-deps
 
       - name: Build frontend assets
         run: |
