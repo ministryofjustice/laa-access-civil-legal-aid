@@ -1,0 +1,18 @@
+services:
+  start_applications:
+    platform: linux/amd64
+
+  cla_backend:
+    build:
+      context: ${CLA_BACKEND_DIR}
+    volumes:
+      - ${CLA_BACKEND_DIR}:/home/app
+    working_dir: /home/app
+
+  cla_backend_worker:
+    build:
+      context: ${CLA_BACKEND_DIR}
+    volumes:
+      - ${CLA_BACKEND_DIR}:/home/app
+    working_dir: /home/app
+    command: ["/home/app/docker/run_worker.sh"]
