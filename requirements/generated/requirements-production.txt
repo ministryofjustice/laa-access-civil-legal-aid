@@ -29,7 +29,7 @@ markdown-it-py==3.0.0
 markupsafe==3.0.3
 mdurl==0.1.2
 ordered-set==4.1.0
-packaging==25.0
+packaging==26.0
 pygments==2.19.2
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.1
