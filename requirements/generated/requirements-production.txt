@@ -14,7 +14,7 @@ flask==3.1.2
 flask-babel==4.0.0
 flask-caching==2.3.1
 flask-compress==1.23
-flask-limiter==3.12
+flask-limiter==4.1.1
 flask-talisman==1.1.0
 flask-wtf==1.2.2
 govuk-frontend-jinja==3.10.0
