@@ -71,6 +71,6 @@ urllib3==2.6.3
 vcrpy==7.0.0
 virtualenv==20.36.1
 werkzeug==3.1.5
-wrapt==1.17.3
+wrapt==2.0.1
 wtforms==3.2.1
 yarl==1.22.0
