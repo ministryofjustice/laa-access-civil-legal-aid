@@ -4,4 +4,4 @@
 #
 #    pip-compile --no-annotate --output-file=requirements/generated/requirements-linting.txt requirements/source/requirements-linting.in
 #
-ruff==0.9.3
+ruff==0.14.14
