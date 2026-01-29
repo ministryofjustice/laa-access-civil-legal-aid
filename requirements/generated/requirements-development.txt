@@ -42,7 +42,7 @@ multidict==6.7.1
 nodeenv==1.10.0
 ordered-set==4.1.0
 packaging==25.0
-platformdirs==4.3.8
+platformdirs==4.5.1
 playwright==1.52.0
 pluggy==1.6.0
 pre-commit==4.2.0
