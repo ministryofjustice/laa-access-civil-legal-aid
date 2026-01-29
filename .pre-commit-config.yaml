@@ -6,7 +6,7 @@ repos:
     hooks:
       - id: baseline
   - repo: https://github.com/jazzband/pip-tools
-    rev: v7.5.0
+    rev: v7.5.2
     hooks:
       - id: pip-compile
         additional_dependencies:
@@ -37,7 +37,7 @@ repos:
             "--no-annotate",
           ]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.9.3
+    rev: v0.14.14
     hooks:
       - id: ruff
         args: [--fix]
