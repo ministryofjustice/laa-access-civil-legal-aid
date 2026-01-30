@@ -38,7 +38,6 @@ markdown==3.10.1
 markdown-it-py==4.0.0
 markupsafe==3.0.3
 mdurl==0.1.2
-multidict==6.7.1
 nodeenv==1.10.0
 ordered-set==4.1.0
 packaging==26.0
@@ -46,7 +45,6 @@ platformdirs==4.5.1
 playwright==1.57.0
 pluggy==1.6.0
 pre-commit==4.5.1
-propcache==0.4.1
 pyee==13.0.0
 pygments==2.19.2
 pytest==9.0.2
@@ -73,4 +71,3 @@ virtualenv==20.36.1
 werkzeug==3.1.5
 wrapt==2.0.1
 wtforms==3.2.1
-yarl==1.22.0
