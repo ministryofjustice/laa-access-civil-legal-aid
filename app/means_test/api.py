@@ -59,7 +59,7 @@ def _check_cfe_eligibility(payload: CFEMeansTestPayload | None = None) -> Eligib
             reasons.append(IneligibleReason.CAPITAL)
 
         session["ineligible_reasons"] = reasons
-        session["has_partner"] = case_data.partner is not None
+        session["has_partner"] = bool(getattr(case_data.facts, "has_partner", False))
     return result
 
 

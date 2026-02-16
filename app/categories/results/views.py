@@ -35,7 +35,7 @@ class MeansTestResultPage(ResultPage):
         context = super().get_context(category)
         context["has_partner"] = session.get("has_partner", False)
         context["ineligible_reasons"] = session.get("ineligible_reasons", [])
-        context["INEGIBILITY_REASON"] = IneligibleReason
+        context["INELIGIBILITY_REASONS"] = IneligibleReason
         return context
 
 
