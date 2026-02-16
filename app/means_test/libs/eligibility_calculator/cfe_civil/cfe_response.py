@@ -21,23 +21,26 @@ class CfeResponse(object):
     @staticmethod
     def _result_to_tristate(test_result):
         """Takes the result of one of the three tests, and converts to True/False/None"""
+        print(f"Converting CFE test result to tristate: {test_result}")
         if test_result in ("eligible", "contribution_required"):
             return True
-        elif test_result == "inelgible":
+        elif test_result == "ineligible":
             return False
         return None  # not_yet_known/not_calculated
 
     @property
     def is_gross_eligible(self):
-        return CfeResponse._result_to_tristate(self._result_summary["gross_income"]["proceeding_types"][0])
+        return CfeResponse._result_to_tristate(self._result_summary["gross_income"]["proceeding_types"][0]["result"])
 
     @property
     def is_disposable_eligible(self):
-        return CfeResponse._result_to_tristate(self._result_summary["disposable_income"]["proceeding_types"][0])
+        return CfeResponse._result_to_tristate(
+            self._result_summary["disposable_income"]["proceeding_types"][0]["result"]
+        )
 
     @property
     def is_capital_eligible(self):
-        return CfeResponse._result_to_tristate(self._result_summary["capital"]["proceeding_types"][0])
+        return CfeResponse._result_to_tristate(self._result_summary["capital"]["proceeding_types"][0]["result"])
 
     def applicant_details(self):
         return self._cfe_data["assessment"]["applicant"]

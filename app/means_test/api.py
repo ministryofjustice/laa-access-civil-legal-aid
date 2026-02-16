@@ -5,6 +5,7 @@ import sentry_sdk
 from app.config import MeansTestCalculator
 from app.means_test.libs.eligibility_calculator.calculator import EligibilityChecker
 from app.means_test.constants import EligibilityState
+from app.constants.means_tests import IneligibleReason
 from app.means_test.libs.eligibility_calculator.models import CaseData
 from app.means_test.payload import CFEMeansTestPayload, MeansTestPayload
 
@@ -46,8 +47,19 @@ def _check_cfe_eligibility(payload: CFEMeansTestPayload | None = None) -> Eligib
 
     case_data = CaseData(**payload)
     eligibility_checker = EligibilityChecker(case_data)
-    result, *_ = eligibility_checker.is_eligible_with_reasons()
+    result, gross_ok, disp_ok, cap_ok = eligibility_checker.is_eligible_with_reasons()
 
+    reasons: list[str] = []
+    if result == EligibilityState.NO:
+        if gross_ok is False:
+            reasons.append(IneligibleReason.GROSS_INCOME)
+        if disp_ok is False:
+            reasons.append(IneligibleReason.DISPOSABLE_INCOME)
+        if cap_ok is False:
+            reasons.append(IneligibleReason.CAPITAL)
+
+        session["ineligible_reasons"] = reasons
+        session["has_partner"] = case_data.partner is not None
     return result
 
 
