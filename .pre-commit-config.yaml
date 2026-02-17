@@ -2,11 +2,11 @@ default_language_version:
   python: python3.13
 repos:
   - repo: https://github.com/ministryofjustice/devsecops-hooks
-    rev: v1.3.0
+    rev: v1.4.1
     hooks:
       - id: baseline
   - repo: https://github.com/jazzband/pip-tools
-    rev: v7.5.2
+    rev: v7.5.3
     hooks:
       - id: pip-compile
         additional_dependencies:
@@ -37,7 +37,7 @@ repos:
             "--no-annotate",
           ]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.14
+    rev: v0.15.0
     hooks:
       - id: ruff
         args: [--fix]
