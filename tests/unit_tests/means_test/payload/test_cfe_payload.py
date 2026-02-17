@@ -135,6 +135,7 @@ class TestCFEMeansTestPayload:
             with patch("app.means_test.payload.session") as mock_session:
                 mock_eligibility = Mock()
                 mock_eligibility.has_savings = False
+                mock_eligibility.has_valuables = False
                 mock_session.get_eligibility = Mock(return_value=mock_eligibility)
 
                 payload = CFEMeansTestPayload()
