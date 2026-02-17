@@ -21,7 +21,6 @@ class CfeResponse(object):
     @staticmethod
     def _result_to_tristate(test_result):
         """Takes the result of one of the three tests, and converts to True/False/None"""
-        print(f"Converting CFE test result to tristate: {test_result}")
         if test_result in ("eligible", "contribution_required"):
             return True
         elif test_result == "ineligible":
