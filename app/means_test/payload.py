@@ -535,7 +535,8 @@ class CFEMeansTestPayload(MeansTestPayload):
             ]
 
     def _process_savings(self):
-        if not session.get_eligibility().has_savings:
+        elig = session.get_eligibility()
+        if not elig.has_savings and not elig.has_valuables:
             self["you"]["savings"] = {"bank_balance": 0, "investment_balance": 0, "asset_balance": 0}
         if "savings" in self["you"]:
             self["you"]["savings"]["credit_balance"] = 0
