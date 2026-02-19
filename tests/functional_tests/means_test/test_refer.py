@@ -35,6 +35,10 @@ def test_discrimination_user_journey(page: Page):
     navigate_to_means_test_discrimination(page)
     fail_means_test(page)
     expect(page.get_by_role("heading", name="You’re unlikely to get legal aid")).to_be_visible()
+    expect(page.get_by_text("This is because:")).to_be_visible()
+    expect(
+        page.get_by_text("your gross income is more than the maximum allowedyour disposable income is")
+    ).to_be_visible()
     expect(page.get_by_role("heading", name="Help organisations for problems about discrimination")).to_be_visible()
 
 
@@ -43,6 +47,10 @@ def test_education_user_journey(page: Page):
     navigate_to_means_test_education(page)
     fail_means_test(page)
     expect(page.get_by_role("heading", name="You’re unlikely to get legal aid")).to_be_visible()
+    expect(page.get_by_text("This is because:")).to_be_visible()
+    expect(
+        page.get_by_text("your gross income is more than the maximum allowedyour disposable income is")
+    ).to_be_visible()
     expect(
         page.get_by_role(
             "heading", name="Help organisations for problems about special educational needs and disability (SEND)"
@@ -55,6 +63,10 @@ def test_family_user_journey(page: Page):
     navigate_to_means_test_family(page)
     fail_means_test(page)
     expect(page.get_by_role("heading", name="You’re unlikely to get legal aid")).to_be_visible()
+    expect(page.get_by_text("This is because:")).to_be_visible()
+    expect(
+        page.get_by_text("your gross income is more than the maximum allowedyour disposable income is")
+    ).to_be_visible()
     expect(
         page.get_by_role("heading", name="Help organisations for problems about children, families, relationships")
     ).to_be_visible()
