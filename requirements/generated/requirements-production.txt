@@ -36,6 +36,6 @@ sentry-sdk==2.51.0
 six==1.17.0
 typing-extensions==4.15.0
 urllib3==2.6.3
-werkzeug==3.1.5
+werkzeug==3.1.6
 wrapt==2.0.1
 wtforms==3.2.1
