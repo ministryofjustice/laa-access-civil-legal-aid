@@ -37,6 +37,7 @@ jobs:
       - name: Scan for breaking vulnerabilities
         uses: aquasecurity/trivy-action@b6643a29fecd7f34b3597bc6acb0a98b03d33ff8 # v0.33.1
         with:
+          version: 'v0.69.3'
           image-ref: ${{ secrets.ECR_REGISTRY }}/${{ inputs.ACCESS_ECR_REPOSITORY }}:${{ github.sha }}
           format: 'table'
           exit-code: '1'
@@ -47,6 +48,7 @@ jobs:
       - name: Scan for vulnerabilities (informative, non-breaking)
         uses: aquasecurity/trivy-action@b6643a29fecd7f34b3597bc6acb0a98b03d33ff8 # v0.33.1
         with:
+          version: 'v0.69.3'
           image-ref: ${{ secrets.ECR_REGISTRY }}/${{ inputs.ACCESS_ECR_REPOSITORY }}:${{ github.sha }}
           format: 'table'
           exit-code: '0'
