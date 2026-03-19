@@ -29,7 +29,7 @@ markupsafe==3.0.3
 ordered-set==4.1.0
 packaging==26.0
 python-dateutil==2.9.0.post0
-python-dotenv==1.2.1
+python-dotenv==1.2.2
 pytz==2025.2
 requests==2.32.5
 sentry-sdk==2.55.0
@@ -37,5 +37,5 @@ six==1.17.0
 typing-extensions==4.15.0
 urllib3==2.6.3
 werkzeug==3.1.6
-wrapt==2.1.1
+wrapt==2.1.2
 wtforms==3.2.1
