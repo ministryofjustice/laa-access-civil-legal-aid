@@ -1,60 +1,64 @@
-name: Scan image for vulnerabilities
-on:
-  workflow_call:
-    inputs:
-      ACCESS_ECR_REPOSITORY:
-        required: true
-        type: string
-      ACCESS_ECR_REGION:
-        required: true
-        type: string
-    secrets:
-      ECR_REGISTRY:
-        required: true
-      ACCESS_ECR_ROLE_TO_ASSUME:
-        required: true
+# Trivy scanning temporarily disabled - see Slack Thread
+# Reason: aquasecurity/trivy compromised twice (v0.69.3 is safe but removing
+# pending evaluation of alternative scanner)
+#
+# name: Scan image for vulnerabilities
+# on:
+#   workflow_call:
+#     inputs:
+#       ACCESS_ECR_REPOSITORY:
+#         required: true
+#         type: string
+#       ACCESS_ECR_REGION:
+#         required: true
+#         type: string
+#     secrets:
+#       ECR_REGISTRY:
+#         required: true
+#       ACCESS_ECR_ROLE_TO_ASSUME:
+#         required: true
 
-jobs:
-  trivy-image-scan:
-    name: Trivy Image Scan
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write # This is required for requesting the JWT
-      contents: read  # This is required for actions/checkout
-    steps:
-      - name: Assume role in Cloud Platform
-        uses: aws-actions/configure-aws-credentials@61815dcd50bd041e203e49132bacad1fd04d2708 # v5.1.1
-        with:
-          role-to-assume: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
-          aws-region: ${{ inputs.ACCESS_ECR_REGION }}
+# jobs:
+#   trivy-image-scan:
+#     name: Trivy Image Scan
+#     runs-on: ubuntu-latest
+#     permissions:
+#       id-token: write # This is required for requesting the JWT
+#       contents: read  # This is required for actions/checkout
+#     steps:
+#       - name: Assume role in Cloud Platform
+#         uses: aws-actions/configure-aws-credentials@61815dcd50bd041e203e49132bacad1fd04d2708 # v5.1.1
+#         with:
+#           role-to-assume: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
+#           aws-region: ${{ inputs.ACCESS_ECR_REGION }}
 
-      - name: Login to container repository
-        uses: aws-actions/amazon-ecr-login@062b18b96a7aff071d4dc91bc00c4c1a7945b076 # v2.0.1
-        id: login-ecr
-        with:
-          mask-password: true
+#       - name: Login to container repository
+#         uses: aws-actions/amazon-ecr-login@062b18b96a7aff071d4dc91bc00c4c1a7945b076 # v2.0.1
+#         id: login-ecr
+#         with:
+#           mask-password: true
 
-      - name: Scan for breaking vulnerabilities
-        uses: aquasecurity/trivy-action@b6643a29fecd7f34b3597bc6acb0a98b03d33ff8 # v0.33.1
-        with:
-          version: 'v0.69.3'
-          image-ref: ${{ secrets.ECR_REGISTRY }}/${{ inputs.ACCESS_ECR_REPOSITORY }}:${{ github.sha }}
-          format: 'table'
-          exit-code: '1'
-          ignore-unfixed: true
-          vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
+#       - name: Scan for breaking vulnerabilities
+#         uses: aquasecurity/trivy-action@b6643a29fecd7f34b3597bc6acb0a98b03d33ff8 # v0.33.1
+#         with:
+#           version: 'v0.69.3'
+#           image-ref: ${{ secrets.ECR_REGISTRY }}/${{ inputs.ACCESS_ECR_REPOSITORY }}:${{ github.sha }}
+#           format: 'table'
+#           exit-code: '1'
+#           ignore-unfixed: true
+#           vuln-type: 'os,library'
+#           severity: 'CRITICAL,HIGH'
 
-      - name: Scan for vulnerabilities (informative, non-breaking)
-        uses: aquasecurity/trivy-action@b6643a29fecd7f34b3597bc6acb0a98b03d33ff8 # v0.33.1
-        with:
-          version: 'v0.69.3'
-          image-ref: ${{ secrets.ECR_REGISTRY }}/${{ inputs.ACCESS_ECR_REPOSITORY }}:${{ github.sha }}
-          format: 'table'
-          exit-code: '0'
-          ignore-unfixed: false
-          vuln-type: 'os,library'
-          severity: 'UNKNOWN,LOW,MEDIUM,CRITICAL,HIGH'
-        env:
-          TRIVY_SKIP_DB_UPDATE: true
-          TRIVY_SKIP_JAVA_DB_UPDATE: true
+#       - name: Scan for vulnerabilities (informative, non-breaking)
+#         uses: aquasecurity/trivy-action@b6643a29fecd7f34b3597bc6acb0a98b03d33ff8 # v0.33.1
+#         with:
+#           version: 'v0.69.3'
+#           image-ref: ${{ secrets.ECR_REGISTRY }}/${{ inputs.ACCESS_ECR_REPOSITORY }}:${{ github.sha }}
+#           format: 'table'
+#           exit-code: '0'
+#           ignore-unfixed: false
+#           vuln-type: 'os,library'
+#           severity: 'UNKNOWN,LOW,MEDIUM,CRITICAL,HIGH'
+#         env:
+#           TRIVY_SKIP_DB_UPDATE: true
+#           TRIVY_SKIP_JAVA_DB_UPDATE: true
