@@ -1,2 +1,2 @@
 -r requirements-base.in
-gunicorn==23.0.0
+gunicorn==25.0.1
