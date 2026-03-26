@@ -17,7 +17,7 @@ flask-compress==1.23
 flask-limiter==4.1.1
 flask-talisman==1.1.0
 flask-wtf==1.2.2
-govuk-frontend-jinja==3.10.0
+govuk-frontend-jinja==4.0.0
 govuk-frontend-wtf==3.2.0
 gunicorn==23.0.0
 idna==3.11
@@ -30,9 +30,9 @@ ordered-set==4.1.0
 packaging==26.0
 python-dateutil==2.9.0.post0
 python-dotenv==1.2.2
-pytz==2025.2
+pytz==2026.1.post1
 requests==2.32.5
-sentry-sdk==2.55.0
+sentry-sdk==2.56.0
 six==1.17.0
 typing-extensions==4.15.0
 urllib3==2.6.3
