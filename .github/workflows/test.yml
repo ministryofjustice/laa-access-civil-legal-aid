@@ -42,7 +42,7 @@ jobs:
         coverage xml
 
     - name: Upload coverage report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4 
       with:
         name: coverage-xml-report
         path: coverage.xml
@@ -99,7 +99,7 @@ jobs:
           python-version: '3.13'
           cache: 'pip' # caching pip dependencies
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 #v4 
         with:
           node-version: '20.x'
           cache: 'npm'
@@ -124,14 +124,14 @@ jobs:
             --cov=com --cov-report=xml --cov-report=html
 
       - name: Upload pytest test results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4 
         with:
           name: pytest-functional-results
           path: junit/functional-test-results.xml
         if: ${{ always() }}
   
       - name: Upload axe results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4 
         with:
           name: axe-results
           path: tests/functional_tests/accessibility_output/*.json
