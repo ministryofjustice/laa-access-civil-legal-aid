@@ -94,9 +94,10 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
-      - name: Install
-        shell: bash
-        run: npm ci --ignore-scripts
+      - name: SLSA
+        uses: ministryofjustice/devsecops-actions/sca/slsa@4cd163be7859cd130800d6719d925318826038ea
+
+      - run: npm ci --ignore-scripts
 
       - name: ⚡️ SCA
         uses: ministryofjustice/devsecops-actions/sca@9babea875cafae0e3b05a5ec5aca76d6b560c42e # v1.2.0
