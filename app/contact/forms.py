@@ -463,9 +463,11 @@ class ContactUsForm(FlaskForm):
         ],
     )
     other_adaptation = TextAreaField(
-        description=_("Please tell us what you need"),
+        description=_("Tell us what you need"),
         widget=GovTextArea(),
         validators=[
+            ValidateIf("adaptations", "other_adaptation", condition_type=ValidateIfType.IN),
+            InputRequired(message=_("Tell us what you need")),
             Length(
                 max=4000,
                 message=_("Your other communication needs must be 4000 characters or fewer"),
