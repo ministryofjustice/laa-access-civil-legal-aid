@@ -1,0 +1,23 @@
+name: Snyk image scan
+
+on:
+  pull_request:
+    branches: ["main", "master"]
+
+  push:
+    branches: ["main", "master"]
+
+  workflow_dispatch:
+  branch_protection_rule:
+
+permissions: {}
+
+jobs:
+  snyk-image-scan:
+    name: Snyk Docker image scan
+    uses: ministryofjustice/laa-reusable-github-actions/.github/workflows/snyk.yml@main
+    with:
+      tag: laa-access-civil-legal-aid
+      dockerfile_path: Dockerfile
+    secrets:
+      snyk_token: ${{ secrets.snyk_token }}
