@@ -21,7 +21,7 @@ permissions:
 jobs:
   snyk-image-scan:
     name: Snyk Docker image scan
-    uses: ministryofjustice/laa-reusable-github-actions/.github/workflows/snyk.yml@main
+    uses: ministryofjustice/laa-reusable-github-actions/.github/workflows/snyk.yml@4748f3922f8454c48671f7b372e7ce5769812c34
     with:
       tag: laa-access-civil-legal-aid
       dockerfile_path: Dockerfile
