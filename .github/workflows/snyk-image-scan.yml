@@ -2,15 +2,21 @@ name: Snyk image scan
 
 on:
   pull_request:
-    branches: ["main", "master"]
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
 
   push:
-    branches: ["main", "master"]
+    branches:
+      - main
 
-  workflow_dispatch:
-  branch_protection_rule:
-
-permissions: {}
+permissions:
+  contents: read
+  security-events: write
+  actions: read
 
 jobs:
   snyk-image-scan:
