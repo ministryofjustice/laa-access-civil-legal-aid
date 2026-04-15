@@ -11,7 +11,7 @@ jobs:
     if: ${{ contains(github.event.pull_request.labels, 'snyk') }}
     steps:
     - name: Login
-      uses: atlassian/gajira-login@master
+      uses: atlassian/gajira-login@ca13f8850ea309cf44a6e4e0c49d9aa48ac3ca4c
       env:
         JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
         JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
@@ -30,7 +30,7 @@ jobs:
 
     - name: Create
       id: create
-      uses: atlassian/gajira-create@master
+      uses: atlassian/gajira-create@ca13f8850ea309cf44a6e4e0c49d9aa48ac3ca4c
       with:
           project: LGA
           issuetype: Task
