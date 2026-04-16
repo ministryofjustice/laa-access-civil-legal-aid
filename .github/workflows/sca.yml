@@ -95,12 +95,12 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
 
       - name: SLSA
-        uses: ministryofjustice/devsecops-actions/sca/slsa@4cd163be7859cd130800d6719d925318826038ea
+        uses: ministryofjustice/devsecops-actions/sca/slsa@2f31fcb5145c60d7e4cc66245802b01c3f0581c4
 
       - run: npm ci --ignore-scripts
 
       - name: ⚡️ SCA
-        uses: ministryofjustice/devsecops-actions/sca@9babea875cafae0e3b05a5ec5aca76d6b560c42e # v1.2.0
+        uses: ministryofjustice/devsecops-actions/sca@2f31fcb5145c60d7e4cc66245802b01c3f0581c4 # v1.2.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }} # Mandatory
           dependency-review-config-file: "./.github/dependency-review-config.yml" # Optional
