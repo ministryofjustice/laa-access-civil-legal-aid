@@ -10,7 +10,7 @@
     "watch": "npm run gov-images && node esbuild.config.js --watch"
   },
   "dependencies": {
-    "govuk-frontend": "^5.14.0"
+    "govuk-frontend": "6.0.0"
   },
   "overrides": {
     "picomatch": "4.0.4"
