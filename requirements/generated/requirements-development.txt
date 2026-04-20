@@ -124,9 +124,6 @@ nodeenv==1.10.0
 ordered-set==4.1.0
     # via flask-limiter
 packaging==26.0
-<<<<<<< HEAD
-platformdirs==4.9.6
-=======
     # via
     #   limits
     #   pytest
@@ -134,7 +131,6 @@ platformdirs==4.9.4
     # via
     #   python-discovery
     #   virtualenv
->>>>>>> cf28ccd (updating the requirements file)
 playwright==1.58.0
     # via pytest-playwright
 pluggy==1.6.0
