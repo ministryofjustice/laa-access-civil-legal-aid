@@ -23,11 +23,6 @@ certifi==2026.2.25
     #   requests
     #   sentry-sdk
 cfgv==3.5.0
-<<<<<<< HEAD
-charset-normalizer==3.4.7
-click==8.3.2
-coverage==7.13.5
-=======
     # via pre-commit
 charset-normalizer==3.4.6
     # via requests
@@ -35,7 +30,6 @@ click==8.3.1
     # via flask
 coverage[toml]==7.13.5
     # via pytest-cov
->>>>>>> cf28ccd (updating the requirements file)
 deepmerge==2.0
     # via govuk-frontend-wtf
 deprecated==1.3.1
@@ -144,9 +138,6 @@ propcache==0.4.1
 pyee==13.0.1
     # via playwright
 pygments==2.20.0
-<<<<<<< HEAD
-pytest==9.0.3
-=======
     # via pytest
 pytest==9.0.2
     # via
@@ -156,7 +147,6 @@ pytest==9.0.2
     #   pytest-mock
     #   pytest-playwright
     #   pytest-xdist
->>>>>>> cf28ccd (updating the requirements file)
 pytest-base-url==2.1.0
     # via pytest-playwright
 pytest-cov==7.1.0
