@@ -27,7 +27,7 @@ freezegun==1.5.5
 govuk-frontend-jinja==4.0.0
 govuk-frontend-wtf==3.2.0
 greenlet==3.3.2
-identify==2.6.18
+identify==2.6.19
 idna==3.11
 iniconfig==2.3.0
 isort==8.0.1
