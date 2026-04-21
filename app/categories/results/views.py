@@ -1,6 +1,7 @@
 from app.categories.constants import Category
 from app.categories.views import CategoryPage
 from flask import session, render_template
+from app.constants.means_tests import IneligibleReason
 from app.find_a_legal_adviser.fala import create_fala_url
 from app.find_a_legal_adviser.categories import FALACategory
 from app.api import cla_backend
@@ -27,6 +28,15 @@ class ResultPage(CategoryPage):
 
     def dispatch_request(self):
         return render_template(self.template, **self.get_context(session.category))
+
+
+class MeansTestResultPage(ResultPage):
+    def get_context(self, category=None):
+        context = super().get_context(category)
+        context["has_partner"] = session.get("has_partner", False)
+        context["ineligible_reasons"] = session.get("ineligible_reasons", [])
+        context["INELIGIBILITY_REASONS"] = IneligibleReason
+        return context
 
 
 class OutOfScopePage(ResultPage):
