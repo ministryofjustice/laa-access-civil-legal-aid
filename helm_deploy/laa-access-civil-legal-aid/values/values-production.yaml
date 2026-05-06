@@ -7,12 +7,7 @@ ingress:
   tls:
     secretName: "tls-certificate"
   annotations:
-    allow-duplicate-host: "true"
-    nginx.ingress.kubernetes.io/canary: "true"
-    allowed-duplicate-ns: "laa-cla-public-production,laa-access-civil-legal-aid-production"
-    nginx.ingress.kubernetes.io/canary-weight: "100"
     nginx.ingress.kubernetes.io/affinity: "cookie"
-    nginx.ingress.kubernetes.io/canary-by-cookie: "canary"
     nginx.ingress.kubernetes.io/session-cookie-name: "ROUTE"
     nginx.ingress.kubernetes.io/session-cookie-path: "/"
     nginx.ingress.kubernetes.io/session-cookie-refresh: "true"
