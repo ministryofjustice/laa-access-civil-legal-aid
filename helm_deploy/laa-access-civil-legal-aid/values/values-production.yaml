@@ -14,7 +14,7 @@ ingress:
     nginx.ingress.kubernetes.io/session-cookie-expires: "300"
     nginx.ingress.kubernetes.io/session-cookie-max-age: "300"
 whitelist:
-  enabled: true
+  enabled: false
 
 envVars:
   CLA_BACKEND_URL:
