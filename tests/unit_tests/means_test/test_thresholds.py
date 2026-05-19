@@ -11,86 +11,89 @@ DISPOSABLE_INCOME_THRESHOLD = 73300  # £733 per month
 
 class TestCFEMeansTestThresholds:
     def test_capital_threshold(self, app, client):
-        """Tests that having over £8000 in capital causes the means test to return ineligible."""
-        mock = Mock()
-        mock.forms = {
-            "about-you": {
-                "has_savings": True,
-            },
-            "savings": {"investments": 0, "savings": CAPITAL_THRESHOLD, "valuables": 0},
-            "income": {},
-            "property": {},
-        }
+        with client:
+            """Tests that having over £8000 in capital causes the means test to return ineligible."""
+            mock = Mock()
+            mock.forms = {
+                "about-you": {
+                    "has_savings": True,
+                },
+                "savings": {"investments": 0, "savings": CAPITAL_THRESHOLD, "valuables": 0},
+                "income": {},
+                "property": {},
+            }
 
-        session["eligibility"] = mock
-        session.category = FAMILY
+            session["eligibility"] = mock
+            session.category = FAMILY
 
-        result = _check_cfe_eligibility()
-        assert result == EligibilityState.YES
+            result = _check_cfe_eligibility()
+            assert result == EligibilityState.YES
 
-        mock.forms["savings"]["savings"] = CAPITAL_THRESHOLD + 1
-        session["eligibility"] = mock
-        result = _check_cfe_eligibility()
-        assert result == EligibilityState.NO
+            mock.forms["savings"]["savings"] = CAPITAL_THRESHOLD + 1
+            session["eligibility"] = mock
+            result = _check_cfe_eligibility()
+            assert result == EligibilityState.NO
 
     def test_gross_income_threshold(self, app, client):
-        """Tests that having over £2657 in gross income causes the means test to return ineligible."""
-        mock = Mock()
-        mock.forms = {
-            "about-you": {
-                "is_employed": True,
-            },
-            "savings": {},
-            "income": {
-                "earnings": {"interval_period": "per_month", "per_interval_value": GROSS_INCOME_THRESHOLD},
-            },
-            "property": {},
-        }
+        with client:
+            """Tests that having over £2657 in gross income causes the means test to return ineligible."""
+            mock = Mock()
+            mock.forms = {
+                "about-you": {
+                    "is_employed": True,
+                },
+                "savings": {},
+                "income": {
+                    "earnings": {"interval_period": "per_month", "per_interval_value": GROSS_INCOME_THRESHOLD},
+                },
+                "property": {},
+            }
 
-        session["eligibility"] = mock
-        session.category = FAMILY
+            session["eligibility"] = mock
+            session.category = FAMILY
 
-        result = _check_cfe_eligibility()
-        assert (
-            result == EligibilityState.UNKNOWN
-        )  # Unknown as deductions could reduce the client's disposable income to below the threshold
+            result = _check_cfe_eligibility()
+            assert (
+                result == EligibilityState.UNKNOWN
+            )  # Unknown as deductions could reduce the client's disposable income to below the threshold
 
-        mock.forms["income"]["earnings"] = {
-            "interval_period": "per_month",
-            "per_interval_value": GROSS_INCOME_THRESHOLD + 1,
-        }
-        session["eligibility"] = mock
-        result = _check_cfe_eligibility()
-        assert result == EligibilityState.NO
+            mock.forms["income"]["earnings"] = {
+                "interval_period": "per_month",
+                "per_interval_value": GROSS_INCOME_THRESHOLD + 1,
+            }
+            session["eligibility"] = mock
+            result = _check_cfe_eligibility()
+            assert result == EligibilityState.NO
 
     def test_disposable_income_threshold(self, app, client):
-        """Tests that having over £733 in disposable income causes the means test to return ineligible."""
-        mock = Mock()
-        mock.forms = {
-            "about-you": {
-                "is_employed": True,
-            },
-            "savings": {"investments": 0, "savings": 0, "valuables": 0},
-            "income": {
-                "maintenance_received": {
-                    "interval_period": "per_month",
-                    "per_interval_value": DISPOSABLE_INCOME_THRESHOLD,
+        with client:
+            """Tests that having over £733 in disposable income causes the means test to return ineligible."""
+            mock = Mock()
+            mock.forms = {
+                "about-you": {
+                    "is_employed": True,
                 },
-            },
-            "outgoings": {},
-            "property": {},
-        }
+                "savings": {"investments": 0, "savings": 0, "valuables": 0},
+                "income": {
+                    "maintenance_received": {
+                        "interval_period": "per_month",
+                        "per_interval_value": DISPOSABLE_INCOME_THRESHOLD,
+                    },
+                },
+                "outgoings": {},
+                "property": {},
+            }
 
-        session["eligibility"] = mock
-        session.category = FAMILY
+            session["eligibility"] = mock
+            session.category = FAMILY
 
-        result = _check_cfe_eligibility()
-        assert result == EligibilityState.YES
+            result = _check_cfe_eligibility()
+            assert result == EligibilityState.YES
 
-        mock.forms["income"]["maintenance_received"] = {
-            "interval_period": "per_month",
-            "per_interval_value": DISPOSABLE_INCOME_THRESHOLD + 1,
-        }
-        session["eligibility"] = mock
-        result = _check_cfe_eligibility()
-        assert result == EligibilityState.NO
+            mock.forms["income"]["maintenance_received"] = {
+                "interval_period": "per_month",
+                "per_interval_value": DISPOSABLE_INCOME_THRESHOLD + 1,
+            }
+            session["eligibility"] = mock
+            result = _check_cfe_eligibility()
+            assert result == EligibilityState.NO
