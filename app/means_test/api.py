@@ -135,3 +135,11 @@ def check_eligibility() -> EligibilityState:
     else:
         result = _check_cla_backend_eligibility()
         return result
+
+
+def create_case_reference():
+    """Create a case reference for the current session if it doesn't exist."""
+    payload = MeansTestPayload()
+    payload.update_from_session()
+    response = update_means_test(payload)
+    logger.info(f"Created case reference {response['reference']} for session.")
