@@ -5,7 +5,7 @@ from flask import render_template, url_for, redirect, session, request
 from flask_babel import lazy_gettext as _, gettext
 from werkzeug.datastructures import MultiDict
 from app.categories.constants import Category
-from app.means_test.api import check_eligibility, create_case_reference
+from app.means_test.api import check_eligibility, upsert_case_reference
 from app.means_test.constants import EligibilityState
 from app.means_test.forms.about_you import AboutYouForm
 from app.means_test.forms.benefits import BenefitsForm, AdditionalBenefitsForm
@@ -391,7 +391,7 @@ class CheckYourAnswers(FormsMixin, InScopeMixin, MethodView):
             if not session.ec_reference:
                 # In CFE route, case reference not set during eligibility checks,
                 # create it here so post_case can link the case to an eligibility check
-                create_case_reference()
+                upsert_case_reference()
             return redirect(url_for("contact.eligible"))
 
         if session.subcategory and session.subcategory.eligible_for_HLPAS:

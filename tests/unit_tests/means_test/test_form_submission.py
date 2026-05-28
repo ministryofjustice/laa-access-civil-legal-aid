@@ -211,7 +211,7 @@ class TestCheckYourAnswersSubmission:
 
         with (
             patch("app.means_test.views.redirect") as mock_redirect,
-            patch("app.means_test.views.create_case_reference"),
+            patch("app.means_test.views.upsert_case_reference"),
             patch.object(CheckYourAnswers, "ensure_all_forms_are_complete", return_value=None),
         ):
             client.post("/review")
