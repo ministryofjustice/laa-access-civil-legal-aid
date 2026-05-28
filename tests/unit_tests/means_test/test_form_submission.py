@@ -207,11 +207,11 @@ class TestCheckYourAnswersSubmission:
     def test_post_eligible(self, app, client, mock_url_for, eligibility):
         """Test post method when eligibility state is YES/ UNKNOWN."""
         with client.session_transaction() as session:
+            session["ec_reference"] = "test-reference"
             session["eligibility_result"] = eligibility
 
         with (
             patch("app.means_test.views.redirect") as mock_redirect,
-            patch("app.means_test.views.upsert_case_reference"),
             patch.object(CheckYourAnswers, "ensure_all_forms_are_complete", return_value=None),
         ):
             client.post("/review")
@@ -222,6 +222,7 @@ class TestCheckYourAnswersSubmission:
     def test_post_ineligible_with_hlpas(self, app, client, mock_url_for):
         """Test post method when ineligible but eligible for HLPAS."""
         with client.session_transaction() as sess:
+            sess["ec_reference"] = "test-reference"
             sess["eligibility_result"] = EligibilityState.NO
 
         with (

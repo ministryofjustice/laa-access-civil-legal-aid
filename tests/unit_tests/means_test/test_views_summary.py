@@ -215,8 +215,7 @@ def test_post_eligible(app, client, caplog):
     with app.test_request_context():
         session["eligibility_result"] = EligibilityState.YES
         with caplog.at_level(logging.INFO):
-            with mock.patch("app.means_test.views.upsert_case_reference"):
-                response = CheckYourAnswers().post()
+            response = CheckYourAnswers().post()
             assert "Eligibility check result successful - state is EligibilityState.YES" in caplog.messages
         assert response.status_code == 302
         assert response.location == url_for("contact.eligible")
