@@ -45,6 +45,9 @@ def _check_cfe_eligibility(payload: CFEMeansTestPayload | None = None) -> Eligib
         payload = CFEMeansTestPayload()
         payload.update_from_session()
 
+    # This is to save the case reference needed for backend
+    create_update_case_reference()
+
     case_data = CaseData(**payload)
     eligibility_checker = EligibilityChecker(case_data)
     result, gross_ok, disp_ok, cap_ok = eligibility_checker.is_eligible_with_reasons()
@@ -135,3 +138,10 @@ def check_eligibility() -> EligibilityState:
     else:
         result = _check_cla_backend_eligibility()
         return result
+
+
+def create_update_case_reference():
+    """Create or update a backend case reference."""
+    payload = MeansTestPayload()
+    payload.update_from_session()
+    update_means_test(payload)
