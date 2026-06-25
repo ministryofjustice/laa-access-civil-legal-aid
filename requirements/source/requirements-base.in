@@ -5,7 +5,7 @@ flask-talisman
 Flask-WTF
 govuk-frontend-wtf
 python-dotenv
-requests>=2.32.5
+requests>=2.32.4
 sentry-sdk[flask]>=2.49.0
 flask-babel==4.0.0
 flask-caching
