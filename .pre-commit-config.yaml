@@ -1,5 +1,5 @@
 default_language_version:
-  python: python3.13
+  python: python3.14
 repos:
   - repo: https://github.com/ministryofjustice/devsecops-hooks
     rev: v1.6.0
@@ -15,12 +15,9 @@ repos:
         files: requirements-(base|development).in
         args:
           [
-            "--strip-extras",
-            "--no-header",
             requirements/source/requirements-development.in,
             "--output-file",
             requirements/generated/requirements-development.txt,
-            "--no-annotate",
           ]
       - id: pip-compile
         additional_dependencies:
@@ -29,15 +26,12 @@ repos:
         files: requirements-(base|production).in
         args:
           [
-            "--strip-extras",
-            "--no-header",
             requirements/source/requirements-production.in,
             "--output-file",
             requirements/generated/requirements-production.txt,
-            "--no-annotate",
           ]
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.7
+    rev: v0.15.8
     hooks:
       - id: ruff
         args: [--fix]

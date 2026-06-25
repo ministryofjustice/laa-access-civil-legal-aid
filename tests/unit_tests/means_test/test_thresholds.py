@@ -1,4 +1,5 @@
-from unittest.mock import Mock
+import pytest
+from unittest.mock import Mock, patch
 from flask import session
 from app.categories.constants import FAMILY
 from app.means_test import EligibilityState
@@ -10,6 +11,12 @@ DISPOSABLE_INCOME_THRESHOLD = 73300  # £733 per month
 
 
 class TestCFEMeansTestThresholds:
+    @pytest.fixture(autouse=True)
+    def mock_update_means_test(self):
+        with patch("app.means_test.api.update_means_test") as mock_update:
+            mock_update.return_value = {"reference": "test-reference"}
+            yield mock_update
+
     def test_capital_threshold(self, app, client):
         """Tests that having over £8000 in capital causes the means test to return ineligible."""
         mock = Mock()

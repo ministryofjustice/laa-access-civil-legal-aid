@@ -9,3 +9,5 @@ axe-core-python
 freezegun
 pre-commit
 vcrpy
+mdurl
+multidict
