@@ -62,7 +62,7 @@ govuk-frontend-wtf==3.2.0
     # via -r requirements/source/requirements-base.in
 gunicorn==23.0.0
     # via -r requirements/source/requirements-production.in
-idna==3.11
+idna==3.15
     # via
     #   email-validator
     #   requests
