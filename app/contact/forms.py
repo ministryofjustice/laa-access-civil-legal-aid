@@ -34,7 +34,10 @@ from flask_babel import lazy_gettext as _
 from wtforms.validators import InputRequired, Length, Optional, Email
 from app.main import get_locale
 from app.contact.validators import (
+    NoURLs,
     ValidateDayTime,
+    ValidatePhoneNumber,
+    ValidatePostcode,
 )
 from app.means_test.validators import ValidateIf, ValidateIfType
 from app.api import cla_backend
@@ -232,8 +235,9 @@ class ContactUsForm(FlaskForm):
         _("Your full name"),
         widget=GovTextInput(),
         validators=[
-            Length(max=400, message=_("Your full name must be 400 characters or less")),
+            Length(max=100, message=_("Your full name must be 100 characters or less")),
             InputRequired(message=_("Tell us your name")),
+            NoURLs(message=_("Enter a valid full name")),
         ],
     )
 
@@ -252,6 +256,7 @@ class ContactUsForm(FlaskForm):
             ValidateIf("contact_type", "callback"),
             InputRequired(message=_("Tell us what number to ring")),
             Length(max=20, message=_("Your telephone number must be 20 characters or less")),
+            ValidatePhoneNumber(message=_("Enter a valid phone number")),
         ],
     )
 
@@ -317,8 +322,9 @@ class ContactUsForm(FlaskForm):
         widget=GovTextInput(),
         validators=[
             ValidateIf("contact_type", "thirdparty"),
-            Length(max=400, message=_("Their full name must be 400 characters or less")),
+            Length(max=100, message=_("Their full name must be 100 characters or less")),
             InputRequired(message=_("Tell us the name of the person to call")),
+            NoURLs(message=_("Enter a valid full name")),
         ],
     )
 
@@ -340,6 +346,7 @@ class ContactUsForm(FlaskForm):
             ValidateIf("contact_type", "thirdparty"),
             InputRequired(message=_("Tell us what number to ring")),
             Length(max=20, message=_("Your telephone number must be 20 characters or less")),
+            ValidatePhoneNumber(message=_("Enter a valid phone number")),
         ],
     )
 
@@ -410,6 +417,10 @@ class ContactUsForm(FlaskForm):
     post_code = StringField(
         _("Postcode (optional)"),
         widget=GovTextInput(),
+        validators=[
+            Optional(),
+            ValidatePostcode(message=_("Enter a valid postcode")),
+        ],
     )
     address_finder = SelectField(_("Select an address"), choices=[""], widget=GovSelect(), validate_choice=False)
     street_address = TextAreaField(
@@ -418,6 +429,7 @@ class ContactUsForm(FlaskForm):
         validators=[
             Length(max=255, message=_("Your address must be 255 characters or less")),
             Optional(),
+            NoURLs(message=_("Enter a valid street address")),
         ],
     )
 
@@ -427,6 +439,7 @@ class ContactUsForm(FlaskForm):
         validators=[
             Length(max=4000, message=_("Your notes must be 4000 characters or less")),
             Optional(),
+            NoURLs(message=_("Do not include links in your notes")),
         ],
     )
 
@@ -472,6 +485,7 @@ class ContactUsForm(FlaskForm):
                 max=4000,
                 message=_("Your other communication needs must be 4000 characters or fewer"),
             ),
+            NoURLs(message=_("Do not include links in your communication needs")),
         ],
     )
 
