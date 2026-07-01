@@ -472,7 +472,7 @@ class TestFullName:
         assert "full_name" in form.errors
 
     def test_rejects_too_long(self, app):
-        form = make_contact_form(app, {"full_name": "A" * 101})
+        form = make_contact_form(app, {"full_name": "A" * 256})
         assert "full_name" in form.errors
 
     def test_accepts_valid(self, app):
@@ -490,7 +490,7 @@ class TestThirdPartyFullName:
         assert "thirdparty_full_name" in form.errors
 
     def test_rejects_too_long(self, app):
-        form = make_contact_form(app, {"contact_type": "thirdparty", "thirdparty_full_name": "A" * 101})
+        form = make_contact_form(app, {"contact_type": "thirdparty", "thirdparty_full_name": "A" * 256})
         assert "thirdparty_full_name" in form.errors
 
     def test_accepts_valid(self, app):

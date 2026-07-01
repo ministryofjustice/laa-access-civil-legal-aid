@@ -235,7 +235,7 @@ class ContactUsForm(FlaskForm):
         _("Your full name"),
         widget=GovTextInput(),
         validators=[
-            Length(max=100, message=_("Your full name must be 100 characters or less")),
+            Length(max=255, message=_("Your full name must be 255 characters or less")),
             InputRequired(message=_("Tell us your name")),
             NoURLs(message=_("Enter a valid full name")),
         ],
@@ -322,7 +322,7 @@ class ContactUsForm(FlaskForm):
         widget=GovTextInput(),
         validators=[
             ValidateIf("contact_type", "thirdparty"),
-            Length(max=100, message=_("Their full name must be 100 characters or less")),
+            Length(max=255, message=_("Their full name must be 255 characters or less")),
             InputRequired(message=_("Tell us the name of the person to call")),
             NoURLs(message=_("Enter a valid full name")),
         ],
