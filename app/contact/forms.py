@@ -37,7 +37,6 @@ from app.contact.validators import (
     NoURLs,
     ValidateDayTime,
     ValidatePhoneNumber,
-    ValidatePostcode,
 )
 from app.means_test.validators import ValidateIf, ValidateIfType
 from app.api import cla_backend
@@ -419,7 +418,8 @@ class ContactUsForm(FlaskForm):
         widget=GovTextInput(),
         validators=[
             Optional(),
-            ValidatePostcode(message=_("Enter a valid postcode")),
+            Length(max=12, message=_("Enter a valid postcode")),
+            NoURLs(message=_("Enter a valid postcode")),
         ],
     )
     address_finder = SelectField(_("Select an address"), choices=[""], widget=GovSelect(), validate_choice=False)

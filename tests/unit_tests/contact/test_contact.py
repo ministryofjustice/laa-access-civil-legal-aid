@@ -549,12 +549,16 @@ class TestPostCode:
         form = make_contact_form(app, {"post_code": "https://evil.com"})
         assert "post_code" in form.errors
 
-    def test_rejects_invalid(self, app):
-        form = make_contact_form(app, {"post_code": "NOTAPOSTCODE"})
+    def test_rejects_too_long(self, app):
+        form = make_contact_form(app, {"post_code": "A" * 11})
         assert "post_code" in form.errors
 
-    def test_accepts_valid(self, app):
+    def test_accepts_full_postcode(self, app):
         form = make_contact_form(app, {"post_code": "SW1A 1AA"})
+        assert "post_code" not in form.errors
+
+    def test_accepts_partial_postcode(self, app):
+        form = make_contact_form(app, {"post_code": "SW1"})
         assert "post_code" not in form.errors
 
     def test_accepts_empty(self, app):
