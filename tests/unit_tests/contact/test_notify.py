@@ -1,6 +1,7 @@
 import pytest
 from unittest.mock import patch, MagicMock
 from app.contact.notify.api import NotifyEmailOrchestrator, notify
+from app.contact.validators import sanitise_personalisation
 from datetime import datetime
 
 
@@ -273,3 +274,90 @@ def test_generate_confirmation_email_data(input_data, expected_template_id, expe
 
         assert template_id == expected_template_id
         assert personalisation == expected_personalisation
+
+
+# Sanitisation of personalisation fields
+
+
+class TestSanitisePersonalisation:
+    def test_strips_whitespace(self):
+        assert sanitise_personalisation("  John Smith  ") == "John Smith"
+
+    def test_passes_through_clean_value(self):
+        assert sanitise_personalisation("John Smith") == "John Smith"
+
+    def test_returns_none_for_none(self):
+        assert sanitise_personalisation(None) is None
+
+    def test_blocks_https_url(self):
+        assert sanitise_personalisation("https://evil.com") is None
+
+    def test_blocks_http_url(self):
+        assert sanitise_personalisation("http://evil.com") is None
+
+    def test_blocks_www(self):
+        assert sanitise_personalisation("www.evil.com") is None
+
+    def test_blocks_path(self):
+        assert sanitise_personalisation("evil.com/admin") is None
+
+
+class TestPersonalisationSanitisedInEmail:
+    def _generate(self, **kwargs):
+        with (
+            patch("app.contact.notify.api.get_locale", return_value="en"),
+            patch("app.contact.notify.api.format_callback_time", return_value="formatted-time"),
+            patch("app.contact.notify.api.GOVUK_NOTIFY_TEMPLATES", MOCK_GOVUK_NOTIFY_TEMPLATES),
+        ):
+            return notify.generate_confirmation_email_data(**kwargs)
+
+    def test_url_in_full_name_is_blocked(self):
+        _, personalisation = self._generate(
+            case_reference="AB-1234-5678",
+            callback_time=None,
+            contact_type=None,
+            full_name="https://evil.com",
+            third_party_name=None,
+            phone_number=None,
+            third_party_phone_number=None,
+        )
+        assert personalisation["full_name"] is None
+
+    def test_url_in_thirdparty_name_is_blocked(self):
+        _, personalisation = self._generate(
+            case_reference="AB-1234-5678",
+            callback_time=None,
+            contact_type=None,
+            full_name="John Smith",
+            third_party_name="https://evil.com",
+            phone_number=None,
+            third_party_phone_number=None,
+        )
+        assert personalisation["thirdparty_full_name"] is None
+
+    def test_url_in_phone_number_is_blocked(self):
+        from datetime import datetime
+
+        _, personalisation = self._generate(
+            case_reference="AB-1234-5678",
+            callback_time=datetime(2025, 1, 1, 12, 0),
+            contact_type="callback",
+            full_name="John Smith",
+            third_party_name=None,
+            phone_number="https://evil.com",
+            third_party_phone_number=None,
+        )
+        assert personalisation["contact_number"] is None
+
+    def test_clean_values_pass_through(self):
+        _, personalisation = self._generate(
+            case_reference="AB-1234-5678",
+            callback_time=None,
+            contact_type=None,
+            full_name="John Smith",
+            third_party_name="Jane Doe",
+            phone_number=None,
+            third_party_phone_number=None,
+        )
+        assert personalisation["full_name"] == "John Smith"
+        assert personalisation["thirdparty_full_name"] == "Jane Doe"

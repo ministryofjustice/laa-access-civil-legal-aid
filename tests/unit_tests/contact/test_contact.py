@@ -12,6 +12,7 @@ from wtforms import Form, StringField
 from wtforms.validators import ValidationError, StopValidation
 from app.contact.validators import ValidateDayTime
 from freezegun import freeze_time
+from werkzeug.datastructures import MultiDict
 
 
 def test_post_reasons_for_contacting_success(mocker, app):
@@ -440,3 +441,174 @@ class TestCallbackTimeFunctions:
         test_time = datetime(2024, 1, 1, 23, 45)
         result = format_callback_time(test_time)
         assert result == "Monday, 1 January at 23:45 - 00:15"
+
+
+# ContactUsForm field validation
+
+
+def make_contact_form(app, data):
+    pairs = []
+    for key, value in data.items():
+        if isinstance(value, list):
+            for v in value:
+                pairs.append((key, v))
+        else:
+            pairs.append((key, value))
+
+    with app.app_context():
+        with patch("app.contact.forms.cla_backend"):
+            form = ContactUsForm(formdata=MultiDict(pairs))
+            form.validate()
+            return form
+
+
+class TestFullName:
+    def test_rejects_url(self, app):
+        form = make_contact_form(app, {"full_name": "https://evil.com"})
+        assert "full_name" in form.errors
+
+    def test_rejects_path(self, app):
+        form = make_contact_form(app, {"full_name": "evil.com/admin"})
+        assert "full_name" in form.errors
+
+    def test_rejects_too_long(self, app):
+        form = make_contact_form(app, {"full_name": "A" * 256})
+        assert "full_name" in form.errors
+
+    def test_accepts_valid(self, app):
+        form = make_contact_form(app, {"full_name": "Mary-Jane O'Brien"})
+        assert "full_name" not in form.errors
+
+    def test_accepts_international(self, app):
+        form = make_contact_form(app, {"full_name": "José Müller"})
+        assert "full_name" not in form.errors
+
+
+class TestThirdPartyFullName:
+    def test_rejects_url(self, app):
+        form = make_contact_form(app, {"contact_type": "thirdparty", "thirdparty_full_name": "https://evil.com"})
+        assert "thirdparty_full_name" in form.errors
+
+    def test_rejects_too_long(self, app):
+        form = make_contact_form(app, {"contact_type": "thirdparty", "thirdparty_full_name": "A" * 256})
+        assert "thirdparty_full_name" in form.errors
+
+    def test_accepts_valid(self, app):
+        form = make_contact_form(app, {"contact_type": "thirdparty", "thirdparty_full_name": "John Smith"})
+        assert "thirdparty_full_name" not in form.errors
+
+
+class TestContactNumber:
+    def test_rejects_non_numeric(self, app):
+        form = make_contact_form(app, {"contact_type": "callback", "contact_number": "not-a-number"})
+        assert "contact_number" in form.errors
+
+    def test_rejects_url(self, app):
+        form = make_contact_form(app, {"contact_type": "callback", "contact_number": "https://evil.com"})
+        assert "contact_number" in form.errors
+
+    def test_rejects_too_short(self, app):
+        form = make_contact_form(app, {"contact_type": "callback", "contact_number": "123"})
+        assert "contact_number" in form.errors
+
+    def test_accepts_valid(self, app):
+        form = make_contact_form(app, {"contact_type": "callback", "contact_number": "07911 123456"})
+        assert "contact_number" not in form.errors
+
+    def test_accepts_international(self, app):
+        form = make_contact_form(app, {"contact_type": "callback", "contact_number": "+44 7911 123456"})
+        assert "contact_number" not in form.errors
+
+
+class TestThirdPartyContactNumber:
+    def test_rejects_non_numeric(self, app):
+        form = make_contact_form(app, {"contact_type": "thirdparty", "thirdparty_contact_number": "not-a-number"})
+        assert "thirdparty_contact_number" in form.errors
+
+    def test_accepts_valid(self, app):
+        form = make_contact_form(app, {"contact_type": "thirdparty", "thirdparty_contact_number": "07911 123456"})
+        assert "thirdparty_contact_number" not in form.errors
+
+
+class TestEmail:
+    def test_rejects_invalid_format(self, app):
+        form = make_contact_form(app, {"email": "not-an-email"})
+        assert "email" in form.errors
+
+    def test_accepts_valid(self, app):
+        form = make_contact_form(app, {"email": "user@example.com"})
+        assert "email" not in form.errors
+
+    def test_accepts_empty(self, app):
+        form = make_contact_form(app, {"email": ""})
+        assert "email" not in form.errors
+
+
+class TestPostCode:
+    def test_rejects_url(self, app):
+        form = make_contact_form(app, {"post_code": "https://evil.com"})
+        assert "post_code" in form.errors
+
+    def test_rejects_too_long(self, app):
+        form = make_contact_form(app, {"post_code": "A" * 13})
+        assert "post_code" in form.errors
+
+    def test_accepts_full_postcode(self, app):
+        form = make_contact_form(app, {"post_code": "SW1A 1AA"})
+        assert "post_code" not in form.errors
+
+    def test_accepts_partial_postcode(self, app):
+        form = make_contact_form(app, {"post_code": "SW1"})
+        assert "post_code" not in form.errors
+
+    def test_accepts_empty(self, app):
+        form = make_contact_form(app, {"post_code": ""})
+        assert "post_code" not in form.errors
+
+
+class TestStreetAddress:
+    def test_rejects_url(self, app):
+        form = make_contact_form(app, {"street_address": "https://evil.com"})
+        assert "street_address" in form.errors
+
+    def test_rejects_too_long(self, app):
+        form = make_contact_form(app, {"street_address": "A" * 256})
+        assert "street_address" in form.errors
+
+    def test_accepts_valid(self, app):
+        form = make_contact_form(app, {"street_address": "123 Example Street"})
+        assert "street_address" not in form.errors
+
+    def test_accepts_empty(self, app):
+        form = make_contact_form(app, {"street_address": ""})
+        assert "street_address" not in form.errors
+
+
+class TestExtraNotes:
+    def test_rejects_url(self, app):
+        form = make_contact_form(app, {"extra_notes": "check out https://evil.com"})
+        assert "extra_notes" in form.errors
+
+    def test_rejects_too_long(self, app):
+        form = make_contact_form(app, {"extra_notes": "A" * 4001})
+        assert "extra_notes" in form.errors
+
+    def test_accepts_valid(self, app):
+        form = make_contact_form(app, {"extra_notes": "I need help with my housing issue"})
+        assert "extra_notes" not in form.errors
+
+    def test_accepts_empty(self, app):
+        form = make_contact_form(app, {"extra_notes": ""})
+        assert "extra_notes" not in form.errors
+
+
+class TestOtherAdaptation:
+    def test_rejects_url(self, app):
+        form = make_contact_form(app, {"adaptations": ["other_adaptation"], "other_adaptation": "https://evil.com"})
+        assert "other_adaptation" in form.errors
+
+    def test_accepts_valid(self, app):
+        form = make_contact_form(
+            app, {"adaptations": ["other_adaptation"], "other_adaptation": "Large print documents"}
+        )
+        assert "other_adaptation" not in form.errors
