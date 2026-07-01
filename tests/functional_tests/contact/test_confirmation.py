@@ -81,7 +81,7 @@ def test_thirdparty_callback(page: Page):
     page.get_by_role("radio", name="Call someone else instead of").check()
     page.get_by_role("textbox", name="Full name of the person to").fill("Jane Doe")
     page.get_by_label("Relationship to you").select_option("family_friend")
-    page.get_by_role("textbox", name="Phone number").fill("12345")
+    page.get_by_role("textbox", name="Phone number").fill("07700900000")
     page.get_by_role("radio", name="Call on another day").check()
     page.locator("#thirdparty_call_another_day").select_option(index=1)
     page.locator("#thirdparty_call_another_time").select_option(index=1)
