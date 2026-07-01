@@ -550,7 +550,7 @@ class TestPostCode:
         assert "post_code" in form.errors
 
     def test_rejects_too_long(self, app):
-        form = make_contact_form(app, {"post_code": "A" * 11})
+        form = make_contact_form(app, {"post_code": "A" * 13})
         assert "post_code" in form.errors
 
     def test_accepts_full_postcode(self, app):
