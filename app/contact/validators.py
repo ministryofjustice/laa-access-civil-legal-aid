@@ -49,10 +49,9 @@ class ValidateDayTime:
 class NoURLs:
     def __init__(self, message=None):
         self.message = message or "Enter a valid name"
-        self._pattern = re.compile(r"https?://|www\.|/", re.IGNORECASE)
 
     def __call__(self, form, field):
-        if field.data and self._pattern.search(field.data):
+        if field.data and _URL_PATTERN.search(field.data):
             raise ValidationError(self.message)
 
 
