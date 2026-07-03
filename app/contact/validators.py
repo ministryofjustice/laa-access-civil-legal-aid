@@ -6,13 +6,13 @@ from wtforms.validators import StopValidation
 
 logger = logging.getLogger(__name__)
 
-_URL_PATTERN = re.compile(r"https?://|www\.|/", re.IGNORECASE)
+_URL_PATTERN = re.compile(r"(https?://|www\.|\b[a-z0-9.-]+\.[a-z]{2,}(?:/\S*)?)", re.IGNORECASE)
 
 
 def sanitise_personalisation(value: str | None) -> str | None:
     """Strip whitespace and reject values containing URLs before sending to gov-notify."""
     if not value:
-        return value
+        return
     value = value.strip()
     if _URL_PATTERN.search(value):
         logger.warning("Unsafe personalisation value blocked: %s", value[:50])
