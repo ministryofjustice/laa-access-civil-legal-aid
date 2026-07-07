@@ -1,3 +1,6 @@
+import os
+import time
+
 import pytest
 from app import Config
 from app import create_app
@@ -5,6 +8,24 @@ from flask import url_for
 
 
 import multiprocessing
+
+# LGA-3883 spike: force the pytest-flask live_server port TOCTOU race
+# (fixtures.py binds port 0, closes the probe socket, then forks a child
+# that rebinds the same port number later). Widening the gap here makes
+# an OS port reuse collision far more likely to land inside the window,
+# so it can be caught reliably in CI instead of ~never locally.
+# Remove once LGA-3883 is confirmed/fixed.
+if os.environ.get("FORCE_LIVE_SERVER_RACE"):
+    import pytest_flask.live_server as _live_server_mod
+
+    _orig_start = _live_server_mod.LiveServer.start
+
+    def _slow_start(self):
+        print(f"[race-spike] sleeping before binding port {self.port}", flush=True)
+        time.sleep(float(os.environ.get("FORCE_LIVE_SERVER_RACE_DELAY", "2")))
+        return _orig_start(self)
+
+    _live_server_mod.LiveServer.start = _slow_start
 
 try:
     # From python 3.14 the default fork method has change from fork to forkserver https://docs.python.org/3/whatsnew/3.14.html#concurrent-futures

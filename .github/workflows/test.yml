@@ -117,9 +117,18 @@ jobs:
           npm ci
           npm run build
 
-      - name: Functional test with pytest
+      - name: Port hammer (LGA-3883 race spike)
         run: |
-          pytest -n 4 tests/functional_tests --doctest-modules \
+          for i in $(seq 1 4); do
+            (while true; do python3 -c "import socket; s=socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.bind(('',0)); s.close()"; done) &
+          done
+          echo "started port hammer background loops"
+
+      - name: Functional test with pytest
+        env:
+          FORCE_LIVE_SERVER_RACE: "1"
+        run: |
+          pytest -n 8 tests/functional_tests --doctest-modules \
             --junitxml=junit/functional-test-results.xml \
             --cov=com --cov-report=xml --cov-report=html
 
