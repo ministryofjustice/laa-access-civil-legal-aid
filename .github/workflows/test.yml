@@ -140,8 +140,16 @@ jobs:
         if: ${{ always() }}
   
       - name: Upload axe results
-        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4 
+        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4
         with:
           name: axe-results
           path: tests/functional_tests/accessibility_output/*.json
+        if: ${{ always() }}
+
+      - name: Upload race spike log (LGA-3883)
+        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4
+        with:
+          name: race-spike-log
+          path: /tmp/race_spike.log
+          if-no-files-found: ignore
         if: ${{ always() }}
