@@ -124,11 +124,47 @@ jobs:
             --junitxml=junit/functional-test-results.xml \
             --cov=com --cov-report=xml --cov-report=html
 
-      - name: Backend concurrency race spike (LGA-3883)
-        run: |
-          pytest -n 24 tests/functional_tests/means_test/test_race_spike_backend.py \
-            --junitxml=junit/race-spike-backend-results.xml
+      - name: Backend concurrency race spike (LGA-3883) - n4
+        id: race-spike-n4
+        continue-on-error: true
         if: ${{ always() }}
+        run: |
+          echo "start-time=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+          pytest -n 4 tests/functional_tests/means_test/test_race_spike_backend.py \
+            --junitxml=junit/race-spike-backend-n4-results.xml
+
+      - name: Dump cla_backend logs (n4)
+        if: ${{ always() }}
+        run: |
+          docker compose -f tests/backend-compose.yml logs --since "${{ steps.race-spike-n4.outputs.start-time }}" cla_backend > cla-backend-n4.log || true
+
+      - name: Backend concurrency race spike (LGA-3883) - n12
+        id: race-spike-n12
+        continue-on-error: true
+        if: ${{ always() }}
+        run: |
+          echo "start-time=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+          pytest -n 12 tests/functional_tests/means_test/test_race_spike_backend.py \
+            --junitxml=junit/race-spike-backend-n12-results.xml
+
+      - name: Dump cla_backend logs (n12)
+        if: ${{ always() }}
+        run: |
+          docker compose -f tests/backend-compose.yml logs --since "${{ steps.race-spike-n12.outputs.start-time }}" cla_backend > cla-backend-n12.log || true
+
+      - name: Backend concurrency race spike (LGA-3883) - n24
+        id: race-spike-n24
+        continue-on-error: true
+        if: ${{ always() }}
+        run: |
+          echo "start-time=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+          pytest -n 24 tests/functional_tests/means_test/test_race_spike_backend.py \
+            --junitxml=junit/race-spike-backend-n24-results.xml
+
+      - name: Dump cla_backend logs (n24)
+        if: ${{ always() }}
+        run: |
+          docker compose -f tests/backend-compose.yml logs --since "${{ steps.race-spike-n24.outputs.start-time }}" cla_backend > cla-backend-n24.log || true
 
       - name: Upload pytest test results
         uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4
@@ -141,7 +177,13 @@ jobs:
         uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4
         with:
           name: race-spike-backend-results
-          path: junit/race-spike-backend-results.xml
+          path: |
+            junit/race-spike-backend-n4-results.xml
+            junit/race-spike-backend-n12-results.xml
+            junit/race-spike-backend-n24-results.xml
+            cla-backend-n4.log
+            cla-backend-n12.log
+            cla-backend-n24.log
           if-no-files-found: ignore
         if: ${{ always() }}
 
