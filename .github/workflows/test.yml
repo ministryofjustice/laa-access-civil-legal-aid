@@ -34,7 +34,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install -r requirements/generated/requirements-development.txt
-
+        
 
     - name: Unit test with pytest
       run: |
@@ -42,7 +42,7 @@ jobs:
         coverage xml
 
     - name: Upload coverage report
-      uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4
+      uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4 
       with:
         name: coverage-xml-report
         path: coverage.xml
@@ -80,9 +80,9 @@ jobs:
       - name: Run CLA Backend with Docker Compose
         run: |
             docker compose -f tests/backend-compose.yml up -d --wait --wait-timeout 30
-
+          
             sleep 5
-
+          
             docker compose -f tests/backend-compose.yml exec cla_backend bin/create_db.sh
         env:
             CLA_BACKEND_IMAGE: ${{ steps.login-ecr.outputs.registry }}/${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}:latest
@@ -103,12 +103,12 @@ jobs:
         with:
           node-version: '24.x'
           cache: 'npm'
-
+  
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r requirements/generated/requirements-development.txt
-
+  
       - name: Install Playwright browsers
         run: playwright install --with-deps
 
@@ -120,75 +120,18 @@ jobs:
       - name: Functional test with pytest
         run: |
           pytest -n 4 tests/functional_tests --doctest-modules \
-            --ignore=tests/functional_tests/means_test/test_race_spike_backend.py \
             --junitxml=junit/functional-test-results.xml \
             --cov=com --cov-report=xml --cov-report=html
 
-      - name: Backend concurrency race spike (LGA-3883) - n4
-        id: race-spike-n4
-        continue-on-error: true
-        if: ${{ always() }}
-        run: |
-          echo "start-time=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
-          pytest -n 4 tests/functional_tests/means_test/test_race_spike_backend.py \
-            --junitxml=junit/race-spike-backend-n4-results.xml
-
-      - name: Dump cla_backend logs (n4)
-        if: ${{ always() }}
-        run: |
-          docker compose -f tests/backend-compose.yml logs --since "${{ steps.race-spike-n4.outputs.start-time }}" cla_backend > cla-backend-n4.log || true
-
-      - name: Backend concurrency race spike (LGA-3883) - n12
-        id: race-spike-n12
-        continue-on-error: true
-        if: ${{ always() }}
-        run: |
-          echo "start-time=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
-          pytest -n 12 tests/functional_tests/means_test/test_race_spike_backend.py \
-            --junitxml=junit/race-spike-backend-n12-results.xml
-
-      - name: Dump cla_backend logs (n12)
-        if: ${{ always() }}
-        run: |
-          docker compose -f tests/backend-compose.yml logs --since "${{ steps.race-spike-n12.outputs.start-time }}" cla_backend > cla-backend-n12.log || true
-
-      - name: Backend concurrency race spike (LGA-3883) - n24
-        id: race-spike-n24
-        continue-on-error: true
-        if: ${{ always() }}
-        run: |
-          echo "start-time=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
-          pytest -n 24 tests/functional_tests/means_test/test_race_spike_backend.py \
-            --junitxml=junit/race-spike-backend-n24-results.xml
-
-      - name: Dump cla_backend logs (n24)
-        if: ${{ always() }}
-        run: |
-          docker compose -f tests/backend-compose.yml logs --since "${{ steps.race-spike-n24.outputs.start-time }}" cla_backend > cla-backend-n24.log || true
-
       - name: Upload pytest test results
-        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4
+        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4 
         with:
           name: pytest-functional-results
           path: junit/functional-test-results.xml
         if: ${{ always() }}
-
-      - name: Upload race spike backend results (LGA-3883)
-        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4
-        with:
-          name: race-spike-backend-results
-          path: |
-            junit/race-spike-backend-n4-results.xml
-            junit/race-spike-backend-n12-results.xml
-            junit/race-spike-backend-n24-results.xml
-            cla-backend-n4.log
-            cla-backend-n12.log
-            cla-backend-n24.log
-          if-no-files-found: ignore
-        if: ${{ always() }}
-
+  
       - name: Upload axe results
-        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4
+        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4 
         with:
           name: axe-results
           path: tests/functional_tests/accessibility_output/*.json
