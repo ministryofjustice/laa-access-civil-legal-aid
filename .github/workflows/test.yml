@@ -34,7 +34,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install -r requirements/generated/requirements-development.txt
-        
+
 
     - name: Unit test with pytest
       run: |
@@ -42,7 +42,7 @@ jobs:
         coverage xml
 
     - name: Upload coverage report
-      uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4 
+      uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4
       with:
         name: coverage-xml-report
         path: coverage.xml
@@ -80,9 +80,9 @@ jobs:
       - name: Run CLA Backend with Docker Compose
         run: |
             docker compose -f tests/backend-compose.yml up -d --wait --wait-timeout 30
-          
+
             sleep 5
-          
+
             docker compose -f tests/backend-compose.yml exec cla_backend bin/create_db.sh
         env:
             CLA_BACKEND_IMAGE: ${{ steps.login-ecr.outputs.registry }}/${{ inputs.CLA_BACKEND_ECR_REPOSITORY }}:latest
@@ -103,12 +103,12 @@ jobs:
         with:
           node-version: '24.x'
           cache: 'npm'
-  
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r requirements/generated/requirements-development.txt
-  
+
       - name: Install Playwright browsers
         run: playwright install --with-deps
 
@@ -117,39 +117,37 @@ jobs:
           npm ci
           npm run build
 
-      - name: Port hammer (LGA-3883 race spike)
-        run: |
-          for i in $(seq 1 4); do
-            (while true; do python3 -c "import socket; s=socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.bind(('',0)); s.close()"; done) &
-          done
-          echo "started port hammer background loops"
-
       - name: Functional test with pytest
-        env:
-          FORCE_LIVE_SERVER_RACE: "1"
         run: |
-          pytest -n 8 tests/functional_tests --doctest-modules \
+          pytest -n 4 tests/functional_tests --doctest-modules \
+            --ignore=tests/functional_tests/means_test/test_race_spike_backend.py \
             --junitxml=junit/functional-test-results.xml \
             --cov=com --cov-report=xml --cov-report=html
 
+      - name: Backend concurrency race spike (LGA-3883)
+        run: |
+          pytest -n 24 tests/functional_tests/means_test/test_race_spike_backend.py \
+            --junitxml=junit/race-spike-backend-results.xml
+        if: ${{ always() }}
+
       - name: Upload pytest test results
-        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4 
+        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4
         with:
           name: pytest-functional-results
           path: junit/functional-test-results.xml
         if: ${{ always() }}
-  
+
+      - name: Upload race spike backend results (LGA-3883)
+        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4
+        with:
+          name: race-spike-backend-results
+          path: junit/race-spike-backend-results.xml
+          if-no-files-found: ignore
+        if: ${{ always() }}
+
       - name: Upload axe results
         uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4
         with:
           name: axe-results
           path: tests/functional_tests/accessibility_output/*.json
-        if: ${{ always() }}
-
-      - name: Upload race spike log (LGA-3883)
-        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 #v4
-        with:
-          name: race-spike-log
-          path: /tmp/race_spike.log
-          if-no-files-found: ignore
         if: ${{ always() }}
