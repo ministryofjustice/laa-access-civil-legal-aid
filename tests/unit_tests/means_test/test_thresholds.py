@@ -3,7 +3,7 @@ from unittest.mock import Mock, patch
 from flask import session
 from app.categories.constants import FAMILY
 from app.means_test import EligibilityState
-from app.means_test.api import _check_cfe_eligibility
+from app.means_test.api import check_eligibility
 
 CAPITAL_THRESHOLD = 800000  # £8000
 GROSS_INCOME_THRESHOLD = 265700  # £2657 per month
@@ -32,12 +32,12 @@ class TestCFEMeansTestThresholds:
         session["eligibility"] = mock
         session.category = FAMILY
 
-        result = _check_cfe_eligibility()
+        result = check_eligibility()
         assert result == EligibilityState.YES
 
         mock.forms["savings"]["savings"] = CAPITAL_THRESHOLD + 1
         session["eligibility"] = mock
-        result = _check_cfe_eligibility()
+        result = check_eligibility()
         assert result == EligibilityState.NO
 
     def test_gross_income_threshold(self, app, client):
@@ -57,7 +57,7 @@ class TestCFEMeansTestThresholds:
         session["eligibility"] = mock
         session.category = FAMILY
 
-        result = _check_cfe_eligibility()
+        result = check_eligibility()
         assert (
             result == EligibilityState.UNKNOWN
         )  # Unknown as deductions could reduce the client's disposable income to below the threshold
@@ -67,7 +67,7 @@ class TestCFEMeansTestThresholds:
             "per_interval_value": GROSS_INCOME_THRESHOLD + 1,
         }
         session["eligibility"] = mock
-        result = _check_cfe_eligibility()
+        result = check_eligibility()
         assert result == EligibilityState.NO
 
     def test_disposable_income_threshold(self, app, client):
@@ -91,7 +91,7 @@ class TestCFEMeansTestThresholds:
         session["eligibility"] = mock
         session.category = FAMILY
 
-        result = _check_cfe_eligibility()
+        result = check_eligibility()
         assert result == EligibilityState.YES
 
         mock.forms["income"]["maintenance_received"] = {
@@ -99,5 +99,5 @@ class TestCFEMeansTestThresholds:
             "per_interval_value": DISPOSABLE_INCOME_THRESHOLD + 1,
         }
         session["eligibility"] = mock
-        result = _check_cfe_eligibility()
+        result = check_eligibility()
         assert result == EligibilityState.NO

@@ -6,6 +6,7 @@ from datetime import datetime
 from app import get_locale
 from app.contact.notify.templates import GOVUK_NOTIFY_TEMPLATES
 from app.contact.helpers import format_callback_time
+from app.contact.validators import sanitise_personalisation
 
 logger = logging.getLogger(__name__)
 
@@ -121,8 +122,8 @@ class NotifyEmailOrchestrator(object):
             return template_id, personalisation
 
         personalisation = {
-            "full_name": full_name,
-            "thirdparty_full_name": third_party_name,
+            "full_name": sanitise_personalisation(full_name),
+            "thirdparty_full_name": sanitise_personalisation(third_party_name),
             "case_reference": case_reference,
             "date_time": formatted_callback_time,
         }
@@ -134,10 +135,10 @@ class NotifyEmailOrchestrator(object):
         # Decides between a personal callback or a third party callback
         if phone_number:
             template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CALLBACK_WITH_NUMBER"][locale]
-            personalisation.update(contact_number=phone_number)
+            personalisation.update(contact_number=sanitise_personalisation(phone_number))
         elif third_party_phone_number:
             template_id = GOVUK_NOTIFY_TEMPLATES["PUBLIC_CALLBACK_THIRD_PARTY"][locale]
-            personalisation.update(contact_number=third_party_phone_number)
+            personalisation.update(contact_number=sanitise_personalisation(third_party_phone_number))
 
         return template_id, personalisation
 

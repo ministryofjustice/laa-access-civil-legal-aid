@@ -99,13 +99,3 @@ envVars:
       name: cfe
       key: url
       optional: true
-  MEANS_TEST_CALCULATOR:
-    configmap:
-      name: means-test
-      key: calculator
-      optional: true
-  RUN_MEANS_TEST_CALCULATORS_IN_PARALLEL:
-    configmap:
-      name: means-test
-      key: run-in-parallel
-      optional: true
