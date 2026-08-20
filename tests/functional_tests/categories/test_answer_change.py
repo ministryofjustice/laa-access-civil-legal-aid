@@ -51,8 +51,11 @@ def test_bug_lga_3746_multiple_subcategories(page: Page):
 
 
 @pytest.mark.usefixtures("live_server")
-def test_inquest_category_redirects_to_find_a_legal_adviser(page: Page):
-    url = url_for("find-a-legal-adviser.search", _external=True)
-    assert url.endswith("/find-a-legal-adviser"), url
+def test_inquest_category_is_available_on_find_your_problem(page: Page):
+    url = url_for("categories.index", _external=True)
+    assert url.endswith("/find-your-problem"), url
     page.goto(url)
+
+    expect(page.get_by_role("link", name="Inquests for family members")).to_be_visible()
+    page.get_by_role("link", name="Inquests for family members").click()
     expect(page.get_by_role("heading", name="Legal aid covers this problem")).to_be_visible()
