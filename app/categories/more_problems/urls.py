@@ -10,7 +10,6 @@ from app.categories.constants import (
     CLINICAL_NEGLIGENCE,
     COMPENSATION,
     ENVIRONMENTAL_POLLUTION,
-    INQUEST,
     MENTAL_HEALTH_DETENTION,
     CRIME_ACT,
     TERRORISM,
@@ -64,7 +63,6 @@ class MoreProblemsPage(CategoryPage):
             "categories.domestic_abuse.forced_marriage",
             "_",
         ),
-        (INQUEST, "categories.more_problems.inquest", "find-a-legal-adviser.search"),
         (
             MENTAL_HEALTH_DETENTION,
             "categories.more_problems.mental_health_detention",
