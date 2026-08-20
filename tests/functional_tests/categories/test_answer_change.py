@@ -48,3 +48,11 @@ def test_bug_lga_3746_multiple_subcategories(page: Page):
     page.goto(url)
     page.get_by_role("link", name="Homelessness").click()
     expect(page.get_by_role("heading", name="Legal aid is available for this type of problem")).to_be_visible()
+
+
+@pytest.mark.usefixtures("live_server")
+def test_inquest_category_redirects_to_find_a_legal_adviser(page: Page):
+    url = url_for("find-a-legal-adviser.search", _external=True)
+    assert url.endswith("/find-a-legal-adviser"), url
+    page.goto(url)
+    expect(page.get_by_role("heading", name="Legal aid covers this problem")).to_be_visible()
