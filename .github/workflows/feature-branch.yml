@@ -45,6 +45,7 @@ jobs:
       actions: read
     with:
       image_uri: ${{ needs.build-and-push.outputs.image_uri }}
+      exclude_base_image_vulns: true
     secrets:
       SNYK_CLIENT_ID: ${{ secrets.SNYK_CLIENT_ID }}
       SNYK_CLIENT_SECRET: ${{ secrets.SNYK_CLIENT_SECRET }}

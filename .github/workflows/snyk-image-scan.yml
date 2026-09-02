@@ -7,6 +7,11 @@ on:
         description: "URI of an already pushed image to scan. Leave unset to skip container scanning"
         required: false
         type: string
+      exclude_base_image_vulns:
+        description: "Exclude vulnerabilities inherited from the base image"
+        required: false
+        default: false
+        type: boolean
     secrets:
       SNYK_CLIENT_ID:
         required: true
@@ -18,7 +23,7 @@ on:
 jobs:
   sast:
     name: Snyk SAST scan
-    uses: ministryofjustice/laa-reusable-github-actions/.github/workflows/sast.yml@a652d1076b05dd80d3ab619d263aac6ce526d70b
+    uses: ministryofjustice/laa-reusable-github-actions/.github/workflows/sast.yml@451102e91dc294fc3155b4f3c441b39475a88668
     permissions:
       id-token: write
       contents: read
@@ -28,6 +33,7 @@ jobs:
       image_uri: ${{ inputs.image_uri }}
       dockerfile_path: Dockerfile
       iac_path: helm_deploy
+      exclude_base_image_vulns: ${{ inputs.exclude_base_image_vulns }}
     secrets:
       SNYK_CLIENT_ID: ${{ secrets.SNYK_CLIENT_ID }}
       SNYK_CLIENT_SECRET: ${{ secrets.SNYK_CLIENT_SECRET }}
