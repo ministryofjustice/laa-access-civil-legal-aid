@@ -32,7 +32,6 @@ jobs:
     with:
       image_uri: ${{ inputs.image_uri }}
       dockerfile_path: Dockerfile
-      iac_path: helm_deploy
       exclude_base_image_vulns: ${{ inputs.exclude_base_image_vulns }}
     secrets:
       SNYK_CLIENT_ID: ${{ secrets.SNYK_CLIENT_ID }}
