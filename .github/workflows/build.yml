@@ -11,12 +11,18 @@ on:
     secrets:
       ACCESS_ECR_ROLE_TO_ASSUME:
         required: true
+    outputs:
+      image_uri:
+        description: "Full URI of the image pushed to ECR"
+        value: ${{ jobs.build-and-push-to-ecr.outputs.image_uri }}
 
 
 jobs:
   build-and-push-to-ecr:
     name: Build and Push
     runs-on: ubuntu-latest
+    outputs:
+      image_uri: ${{ steps.meta.outputs.tags }}
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read  # This is required for actions/checkout

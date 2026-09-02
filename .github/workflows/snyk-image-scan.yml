@@ -1,29 +1,34 @@
-name: Snyk image scan
+name: Snyk scan
 
 on:
-  pull_request:
-    branches:
-      - main
-    types:
-      - opened
-      - reopened
-      - synchronize
-
-  push:
-    branches:
-      - main
-
-permissions:
-  contents: read
-  security-events: write
-  actions: read
+  workflow_call:
+    inputs:
+      image_uri:
+        description: "URI of an already pushed image to scan. Leave unset to skip container scanning"
+        required: false
+        type: string
+    secrets:
+      SNYK_CLIENT_ID:
+        required: true
+      SNYK_CLIENT_SECRET:
+        required: true
+      ACCESS_ECR_ROLE_TO_ASSUME:
+        required: false
 
 jobs:
-  snyk-image-scan:
-    name: Snyk Docker image scan
-    uses: ministryofjustice/laa-reusable-github-actions/.github/workflows/snyk.yml@4748f3922f8454c48671f7b372e7ce5769812c34
+  sast:
+    name: Snyk SAST scan
+    uses: ministryofjustice/laa-reusable-github-actions/.github/workflows/sast.yml@a652d1076b05dd80d3ab619d263aac6ce526d70b
+    permissions:
+      id-token: write
+      contents: read
+      security-events: write
+      actions: read
     with:
-      tag: laa-access-civil-legal-aid
+      image_uri: ${{ inputs.image_uri }}
       dockerfile_path: Dockerfile
+      iac_path: helm_deploy
     secrets:
-      snyk_token: ${{ secrets.snyk_token }}
+      SNYK_CLIENT_ID: ${{ secrets.SNYK_CLIENT_ID }}
+      SNYK_CLIENT_SECRET: ${{ secrets.SNYK_CLIENT_SECRET }}
+      ECR_ROLE_TO_ASSUME: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
