@@ -23,7 +23,7 @@ on:
 jobs:
   sast:
     name: Snyk SAST scan
-    uses: ministryofjustice/laa-reusable-github-actions/.github/workflows/sast.yml@451102e91dc294fc3155b4f3c441b39475a88668
+    uses: ministryofjustice/laa-reusable-github-actions/.github/workflows/sast.yml@3b61534ec28baab6171267eb56187bb597e89d45
     permissions:
       id-token: write
       contents: read
