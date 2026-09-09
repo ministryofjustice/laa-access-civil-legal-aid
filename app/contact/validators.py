@@ -1,5 +1,6 @@
 import logging
 import re
+import html
 
 from wtforms.validators import ValidationError
 from wtforms.validators import StopValidation
@@ -51,7 +52,7 @@ class NoURLs:
         self.message = message or "Enter a valid name"
 
     def __call__(self, form, field):
-        if field.data and _URL_PATTERN.search(field.data):
+        if field.data and _URL_PATTERN.search(html.unescape(field.data)):
             raise ValidationError(self.message)
 
 
