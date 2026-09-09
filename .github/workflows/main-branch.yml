@@ -32,6 +32,22 @@ jobs:
     secrets:
       ACCESS_ECR_ROLE_TO_ASSUME: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
 
+  snyk-scan:
+    name: Snyk Scan
+    needs: build-and-push
+    uses: ./.github/workflows/snyk-image-scan.yml
+    permissions:
+      id-token: write
+      contents: read
+      security-events: write
+      actions: read
+    with:
+      image_uri: ${{ needs.build-and-push.outputs.image_uri }}
+    secrets:
+      SNYK_CLIENT_ID: ${{ secrets.SNYK_CLIENT_ID }}
+      SNYK_CLIENT_SECRET: ${{ secrets.SNYK_CLIENT_SECRET }}
+      ACCESS_ECR_ROLE_TO_ASSUME: ${{ secrets.ACCESS_ECR_ROLE_TO_ASSUME }}
+
   build-docs:
     name: Build Documentation
     uses: ./.github/workflows/build-docs.yml
