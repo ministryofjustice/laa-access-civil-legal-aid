@@ -111,7 +111,7 @@ typing-extensions==4.15.0
     # via
     #   flask-limiter
     #   limits
-urllib3==2.7.0
+urllib3==2.8.0
     # via
     #   -r requirements/source/requirements-base.in
     #   requests
