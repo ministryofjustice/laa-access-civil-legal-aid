@@ -10,6 +10,7 @@ from app.categories.constants import (
     COMMUNITY_CARE,
     BENEFITS,
     ASYLUM_AND_IMMIGRATION,
+    INQUEST,
     MENTAL_CAPACITY,
     PUBLIC_LAW,
 )
@@ -30,6 +31,7 @@ class IndexPage(CategoryPage):
             (PUBLIC_LAW, url_for("categories.public.landing")),
             (ASYLUM_AND_IMMIGRATION, url_for("categories.asylum_immigration.landing")),
             (MENTAL_CAPACITY, url_for("categories.mental_capacity.landing")),
+            (INQUEST, url_for("find-a-legal-adviser.search")),
         ]
         return render_template(self.template, listing=listing)
 

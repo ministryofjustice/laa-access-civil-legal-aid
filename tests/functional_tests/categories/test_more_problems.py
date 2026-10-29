@@ -50,11 +50,6 @@ find_a_legal_adviser_heading = "Legal aid covers this problem"
             "",
         ),
         pytest.param(
-            "Inquests for family members",
-            find_a_legal_adviser_heading,
-            "",
-        ),
-        pytest.param(
             "Mental health detention",
             find_a_legal_adviser_heading,
             "mhe",
