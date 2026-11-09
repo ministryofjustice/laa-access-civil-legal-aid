@@ -64,7 +64,7 @@ class MoreProblemsPage(CategoryPage):
             "categories.domestic_abuse.forced_marriage",
             "_",
         ),
-        (INQUEST, "categories.more_problems.inquest", "find-a-legal-adviser.search"),
+        (INQUEST, "categories.more_problems.inquest", {"endpoint": "find-a-legal-adviser.search", "category": "inq"}),
         (
             MENTAL_HEALTH_DETENTION,
             "categories.more_problems.mental_health_detention",
