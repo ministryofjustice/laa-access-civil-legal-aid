@@ -1,4 +1,5 @@
 from flask import render_template, url_for, session
+from app.config import Config
 from app.categories.more_problems import bp
 from app.categories.views import CategoryPage, CategoryAnswerPage, CategoryAnswer
 from app.categories.results.views import CannotFindYourProblemPage, NextStepsPage
@@ -17,6 +18,13 @@ from app.categories.constants import (
     TRAFFICKING,
 )
 from app.categories.models import QuestionType
+
+
+def get_inquest_route():
+    if Config.INQUEST_FEATURE_ENABLED:
+        return {"endpoint": "find-a-legal-adviser.search", "category": "inq"}
+    else:
+        return "find-a-legal-adviser.search"
 
 
 class MoreProblemsPage(CategoryPage):
@@ -64,7 +72,7 @@ class MoreProblemsPage(CategoryPage):
             "categories.domestic_abuse.forced_marriage",
             "_",
         ),
-        (INQUEST, "categories.more_problems.inquest", {"endpoint": "find-a-legal-adviser.search", "category": "inq"}),
+        (INQUEST, "categories.more_problems.inquest", get_inquest_route()),
         (
             MENTAL_HEALTH_DETENTION,
             "categories.more_problems.mental_health_detention",

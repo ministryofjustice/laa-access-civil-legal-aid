@@ -99,3 +99,8 @@ envVars:
       name: cfe
       key: url
       optional: true
+  INQUEST_FEATURE_ENABLED:
+    configmap:
+      name: inquest-feature
+      key: enabled
+      optional: true
