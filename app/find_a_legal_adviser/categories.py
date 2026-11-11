@@ -19,6 +19,7 @@ class FALACategory(Enum):
     HOUSING = "HOU"
     PRISON_LAW = "PL"
     CRIME = "CRM"
+    INQUEST = "INQ"
 
     @classmethod
     def is_valid_category(cls, value: str) -> bool:
