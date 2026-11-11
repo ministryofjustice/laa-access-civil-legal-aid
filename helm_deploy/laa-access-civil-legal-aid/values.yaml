@@ -101,6 +101,6 @@ envVars:
       optional: true
   INQUEST_FEATURE_ENABLED:
     configmap:
-      name: inquest-feature
-      key: enabled
+      name: feature-flags
+      key: inquests
       optional: true
