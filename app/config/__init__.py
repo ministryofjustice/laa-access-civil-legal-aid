@@ -36,3 +36,4 @@ class Config(object):
     OS_PLACES_API_KEY = os.environ.get("OS_PLACES_API_KEY")
     EMAIL_ORCHESTRATOR_URL = os.environ.get("EMAIL_ORCHESTRATOR_URL")
     CFE_URL = os.environ.get("CFE_URL", "https://cfe-civil.cloud-platform.service.justice.gov.uk")
+    INQUEST_FEATURE_ENABLED = os.environ.get("INQUEST_FEATURE_ENABLED", "False").lower() == "true"
