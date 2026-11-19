@@ -577,11 +577,11 @@ msgstr ""
 "Materion am lygredd aer, dŵr a thir sy’n achosi niwed i chi neu'r "
 "amgylchedd."
 
-msgid "Inquests for family members"
-msgstr "Cwestau aelodau o’r teulu"
+msgid "Inquests"
+msgstr "Cwestau"
 
-msgid "Advice to prepare for the inquest of a family member."
-msgstr "Cyngor ar sut i baratoi ar gyfer cwest aelod o’r teulu."
+msgid "Help for coroner's inquests about the death of a family member."
+msgstr "Cymorth ar gyfer cwestau’r crwner am farwolaeth aelod o'r teulu."
 
 msgid "Mental health detention"
 msgstr "Cadw dan glo oherwydd iechyd meddwl"

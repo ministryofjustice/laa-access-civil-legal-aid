@@ -473,10 +473,10 @@ msgid ""
 "environment."
 msgstr ""
 
-msgid "Inquests for family members"
+msgid "Inquests"
 msgstr ""
 
-msgid "Advice to prepare for the inquest of a family member."
+msgid "Help for coroner's inquests about the death of a family member."
 msgstr ""
 
 msgid "Mental health detention"
