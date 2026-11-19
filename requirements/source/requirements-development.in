@@ -3,6 +3,7 @@ isort
 pytest-cov
 pytest-flask
 pytest-playwright
+playwright>=1.60.0
 pytest-mock
 pytest-xdist
 axe-core-python
