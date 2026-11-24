@@ -565,8 +565,8 @@ ENVIRONMENTAL_POLLUTION = Category(
     exit_page=False,
 )
 INQUEST = Category(
-    title=_("Inquests for family members"),
-    description=_("Advice to prepare for the inquest of a family member."),
+    title=_("Inquests"),
+    description=_("Help for coroner's inquests about the death of a family member."),
     code="inquest",
     exit_page=False,
 )
