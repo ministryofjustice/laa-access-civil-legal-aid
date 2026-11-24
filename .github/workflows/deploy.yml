@@ -79,5 +79,5 @@ jobs:
           --set image.tag=${IMAGE_TAG} \
           --set sharedIPRangesLAA=$SHARED_IP_RANGES_LAA \
           --set pingdomIPs=$PINGDOM_IPS \
-          --force \
+          --force-replace \
           --install
